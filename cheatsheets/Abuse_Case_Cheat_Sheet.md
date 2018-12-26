@@ -43,18 +43,24 @@ In order to help build the list of attacks, the notion of **Abuse Case** exists.
 An **Abuse Case** can be defined as:
 
 ```
-A way to use a feature that was not expected by the implementer, allowing an attacker to influence the feature or outcome of use of the feature based on the attacker action (or input).
+A way to use a feature that was not expected by the implementer, 
+allowing an attacker to influence the feature or outcome of use of 
+the feature based on the attacker action (or input).
 ```
 
 Synopsys define an **Abuse Case** like this:
 
+```
+Misuse and abuse cases describe how users misuse or exploit the weaknesses 
+of controls in software features to attack an application.
 
-    Misuse and abuse cases describe how users misuse or exploit the weaknesses of controls in software features to attack an application.
+This can lead to tangible business impact when a direct attack against 
+business functionalities, which may bring in revenue or provide 
+positive user experience, are attacked.
 
-    This can lead to tangible business impact when a direct attack against business functionalities, which may bring in revenue or provide positive user experience, are attacked.
-
-    Abuse cases can also be an effective way to drive security requirements that lead to proper protection of these critical business use cases.
-
+Abuse cases can also be an effective way to drive security requirements 
+that lead to proper protection of these critical business use cases.
+```
 
 [Synopsys source](https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements)
 
@@ -67,13 +73,24 @@ There are many different ways to define the list of abuse cases for a feature (t
 The project [OWASP Open SAMM](https://www.owasp.org/index.php/OWASP_SAMM_Project) proposes the following approach in the *Activity A* of the Security Practice *Threat Assessment* for the Maturity level 2:
 
 ```
-Further considering the threats to the organization, conduct a more formal analysis to determine potential misuse or abuse of functionality. Typically, this process begins with identification of normal usage scenarios, e.g. use-case diagrams if available.
+Further considering the threats to the organization, conduct a more formal analysis to determine 
+potential misuse or abuse of functionality. Typically, this process begins with identification of 
+normal usage scenarios, e.g. use-case diagrams if available.
 
-If a formal abuse-case technique isn’t used, generate a set of abuse-cases for each scenario by starting with a statement of normal usage and brainstorming ways in which the statement might be negated, in whole or in part. The simplest way to get started is to insert the word “no” or “not” into the usage statement in as many ways as possible, typically around nouns and verbs. Each usage scenario should generate several possible abuse-case statements.
+If a formal abuse-case technique isn’t used, generate a set of abuse-cases for each scenario by 
+starting with a statement of normal usage and brainstorming ways in which the statement might be 
+negated, in whole or in part. The simplest way to get started is to insert the word “no” or “not” into 
+the usage statement in as many ways as possible, typically around nouns and verbs. Each usage scenario 
+should generate several possible abuse-case statements.
 
-Further elaborate the abuse-case statements to include any application-specific concerns based on the business function of the software. The ultimate goal is for the completed set of abuse statements to form a model for usage patterns that should be disallowed by the software. If desired, these abuse cases can be combined with existing threat models.
+Further elaborate the abuse-case statements to include any application-specific concerns based on the 
+business function of the software. The ultimate goal is for the completed set of abuse statements to 
+form a model for usage patterns that should be disallowed by the software. If desired, these abuse 
+cases can be combined with existing threat models.
 
-After initial creation, abuse-case models should be updated for active projects during the design phase. For existing projects, new requirements should be analyzed for potential abuse, and existing projects should opportunistically build abuse-cases for established functionality where practical.
+After initial creation, abuse-case models should be updated for active projects during the design 
+phase. For existing projects, new requirements should be analyzed for potential abuse, and existing 
+projects should opportunistically build abuse-cases for established functionality where practical.
 ```    
 
 Open SAMM source: [Threat Assessment Level 2 Actvity A](https://www.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2)
@@ -179,11 +196,14 @@ If the presence of offensive guys is not possible then you can use the following
 Important note on attacks and countermeasure knowledge base(s):
 
 ```
-With the time and across projects, you will obtain your own dictionary of attacks and countermeasures that are applicable to the kind of application in your business domain.
+With the time and across projects, you will obtain your own dictionary of attacks and countermeasures 
+that are applicable to the kind of application in your business domain.
 
 This dictionary will speed up the future workshops in a significant way.
 
-To promote the creation of this dictionary, you can, at the end of the project/sprint, gather the list of attacks and countermeasures identified in a central location (wiki, database, file...) that will be used during the next workshop in combination with the input of the offensive guys.
+To promote the creation of this dictionary, you can, at the end of the project/sprint, gather the list 
+of attacks and countermeasures identified in a central location (wiki, database, file...) that will be 
+used during the next workshop in combination with the input of the offensive guys.
 ``` 
 
 ## Step 3: After the workshop
