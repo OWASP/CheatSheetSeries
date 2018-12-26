@@ -18,7 +18,9 @@ The objective of this cheat sheet is to provide a explanation about what an **Ab
 **Important note about this Cheat Sheet:**
 
 ```
-The main objective is to provide a pragmatic approach in order to allow a company or a project team to start building and handling the list of abuse cases and then customize the elements proposed to its context/culture in order to, finally, build its own method.
+The main objective is to provide a pragmatic approach in order to allow a company or a project team 
+to start building and handling the list of abuse cases and then customize the elements 
+proposed to its context/culture in order to, finally, build its own method.
 
 This cheat sheet can be seen like a getting started tutorial.
 ```
@@ -46,13 +48,13 @@ A way to use a feature that was not expected by the implementer, allowing an att
 
 Synopsys define an **Abuse Case** like this:
 
-```
-Misuse and abuse cases describe how users misuse or exploit the weaknesses of controls in software features to attack an application.
 
-This can lead to tangible business impact when a direct attack against business functionalities, which may bring in revenue or provide positive user experience, are attacked.
+    Misuse and abuse cases describe how users misuse or exploit the weaknesses of controls in software features to attack an application.
 
-Abuse cases can also be an effective way to drive security requirements that lead to proper protection of these critical business use cases.
-```
+    This can lead to tangible business impact when a direct attack against business functionalities, which may bring in revenue or provide positive user experience, are attacked.
+
+    Abuse cases can also be an effective way to drive security requirements that lead to proper protection of these critical business use cases.
+
 
 [Synopsys source](https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements)
 
@@ -109,15 +111,13 @@ An example of unique ID can be **ABUSE_CASE_001**.
 
 The following schema provide an overview of the chaining of the different steps involved (from left to right):
 
-![OverviewSchema](assets/Abuse_Case_Cheat_Sheet_OverviewSchema.png) 
+![OverviewSchema](assets/Abuse_Case_Cheat_Sheet_Overview.png) 
 
 # Proposal
-
 
 The proposal will use the workshop explained in previous section and will focus on the output of the workshop.
 
 ## Step 1: Preparation of the workshop
-
 
 First, even if it seems obvious, the key business people must be sure to know, understand and be able to explain the business features that will be processed during the workshop.
 
@@ -153,7 +153,6 @@ This is the representation of each sheet along with a example of content that wi
 | ABUSE_CASE_001       | FEATURE_001         | Upload Office file with malicious macro in charge of dropping a malware | CAPEC-17                              | HIGH (7.7)                  | CVSS:3.0/AV:N/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:H | Technical          | DEFENSE_001                  | To Address                                      |
 
 ## Step 2: During the workshop
-
 
 Use the spreadsheet to review all the features.
 
@@ -251,7 +250,6 @@ Almost any source of data can be an injection vector, environment variables, par
 As an attacker, I will perform an injection attack (SQL, LDAP, XPath, or NoSQL queries, OS commands, XML parsers, SMTP headers, expression languages, and ORM queries) against input fields of the User or API interfaces
 
 ## A2:2017-Broken Authentication
-
 
 *Epic:*
 
@@ -435,15 +433,13 @@ As an attacker, I attack an organization and the logs, monitoring systems, and t
 
 # Sources of the schemas
 
-
 All schemas were created using https://www.draw.io/ site and exported (as PNG image) for integration into this article.
 
 All XML descriptor files for each schema are available below (using XML description, modification of the schema is possible using DRAW.IO site):
 
-[Schemas descriptors archive](../assets/Abuse_Case_Cheat_Sheet_SchemaBundle.zip)
+[Schemas descriptors archive](assets/Abuse_Case_Cheat_Sheet_SchemaBundle.zip)
 
 # Authors and Primary Editors
-
 
 James Robinson - jrobinson@netskope.com
 
