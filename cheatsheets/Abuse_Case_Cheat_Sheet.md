@@ -128,7 +128,7 @@ An example of unique ID can be **ABUSE_CASE_001**.
 
 The following schema provide an overview of the chaining of the different steps involved (from left to right):
 
-![OverviewSchema](assets/Abuse_Case_Cheat_Sheet_Overview.png) 
+![OverviewSchema](/assets/Abuse_Case_Cheat_Sheet_Overview.png) 
 
 # Proposal
 
@@ -457,7 +457,7 @@ All schemas were created using https://www.draw.io/ site and exported (as PNG im
 
 All XML descriptor files for each schema are available below (using XML description, modification of the schema is possible using DRAW.IO site):
 
-[Schemas descriptors archive](assets/Abuse_Case_Cheat_Sheet_SchemaBundle.zip)
+[Schemas descriptors archive](/assets/Abuse_Case_Cheat_Sheet_SchemaBundle.zip)
 
 # Authors and Primary Editors
 
