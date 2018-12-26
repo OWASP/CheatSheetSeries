@@ -25,9 +25,10 @@ A first mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed usi
 * Use `**bold**` syntax for **bold** text.
 * Use `*italic*` syntax for *italic* text.
 * Use TAB for nested lists and not spaces.
-* Use code fencing syntax along syntax highlighting for code snippet.
+* Use code fencing syntax along syntax highlighting for code snippet (prevent horizontal scrollbar).
 * No HTML code is allowed, only markdown tag are allowed!
-* Use this [site](https://www.tablesgenerator.com/markdown_tables) for generatin of tables.
+* Use this [site](https://www.tablesgenerator.com/markdown_tables) for generation of tables.
+* Use a single new line between a title and the begining of its content.
 
 # Status
 
