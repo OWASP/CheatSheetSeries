@@ -13,6 +13,7 @@ In order to read the cheat sheets and **reference** them, use the project [offic
 
 ### Project Leaders
 
+<<<<<<< HEAD
 - [Jim Manico](https://github.com/jmanico)
 - [Jakub Maćkowski](https://github.com/mackowski)
 - [Shlomo Zalman Heigh](https://github.com/szh)
@@ -22,6 +23,24 @@ In order to read the cheat sheets and **reference** them, use the project [offic
 - [Kevin W. Wall](https://github.com/kwwall)
 
 ## Chat With Us
+=======
+# Conversion rules
+
+* Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).
+* Use `**bold**` syntax for **bold** text.
+* Use `*italic*` syntax for *italic* text.
+* Use TAB for nested lists and not spaces.
+* Use code fencing syntax along syntax highlighting for code snippet (prevent when possible horizontal scrollbar).
+* No HTML code is allowed, only markdown tag are allowed!
+* Use this [site](https://www.tablesgenerator.com/markdown_tables) for generation of tables.
+* Use a single new line between a title and the begining of its content.
+
+# Editor
+
+[Visual Studio Code](https://code.visualstudio.com/) is used for the modification of the markdown files.
+
+# Status
+>>>>>>> 601c4149 (Indicate the editor used)
 
 We're easy to find on Slack:
 
