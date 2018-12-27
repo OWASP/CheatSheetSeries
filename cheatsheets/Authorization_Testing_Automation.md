@@ -66,28 +66,35 @@ This is an example of the XML used to represents the authorization:
       <!-- Describe the possible logical roles used in the system, is used here to provide a list+explanation
       of the different roles (authorization level) -->
       <roles>
-          <role name="ANONYMOUS" description="Indicate that no authorization is needed"/>
-          <role name="BASIC" description="Role affected to a standard user (lowest access right just above anonymous)"/>
-          <role name="ADMIN" description="Role affected to a administrator user (highest access right)"/>
+          <role name="ANONYMOUS" 
+          description="Indicate that no authorization is needed"/>
+          <role name="BASIC" 
+          description="Role affected to a standard user (lowest access right just above anonymous)"/>
+          <role name="ADMIN" 
+          description="Role affected to a administrator user (highest access right)"/>
       </roles>
 
       <!-- List and describe the available services exposed by the system and the associated logical role(s) that can call them -->
       <services>
-          <service name="ReadSingleMessage" uri="/{messageId}" http-method="GET" http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
+          <service name="ReadSingleMessage" uri="/{messageId}" http-method="GET" 
+          http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
               <role name="ANONYMOUS"/>
               <role name="BASIC"/>
               <role name="ADMIN"/>
           </service>
-          <service name="ReadAllMessages" uri="/" http-method="GET" http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
+          <service name="ReadAllMessages" uri="/" http-method="GET" 
+          http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
               <role name="ANONYMOUS"/>
               <role name="BASIC"/>
               <role name="ADMIN"/>
           </service>
-          <service name="CreateMessage" uri="/" http-method="PUT" http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
+          <service name="CreateMessage" uri="/" http-method="PUT" 
+          http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
               <role name="BASIC"/>
               <role name="ADMIN"/>
           </service>
-          <service name="DeleteMessage" uri="/{messageId}" http-method="DELETE" http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
+          <service name="DeleteMessage" uri="/{messageId}" http-method="DELETE" 
+          http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
               <role name="ADMIN"/>
           </service>
       </services>
@@ -390,8 +397,10 @@ The Following XSL stylesheet can be used:
     <html>
       <head>
         <title>Authorization Matrix</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" 
-        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
+        <link rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" 
+        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" 
+        crossorigin="anonymous" />
       </head>
       <body>
         <h3>Roles</h3>
