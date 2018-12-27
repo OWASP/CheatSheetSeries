@@ -1,27 +1,10 @@
----
-title: Authorization Testing Automation
-permalink: /Authorization_Testing_Automation/
----
-
-__NOTOC__
-
-<div style="width:100%;height:160px;border:0,margin:0;overflow: hidden;">
-[link=](/File:Cheatsheets-header.jpg\ "wikilink")
-
-</div>
-{\\| style="padding: 0;margin:0;margin-top:10px;text-align:left;" \\|- \\| valign="top" style="border-right: 1px dotted gray;padding-right:25px;" \\| Last revision (mm/dd/yy): **//**
-
-__TOC__
-
-Introduction
-============
+# Introduction
 
 Authorizations definition and implementation is one of the important protection measure of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to go live, the most signicant number of issues related to authorization came in the maintenance lifetime of the application.
 
 This situation is often explained by the fact that features are added/modified and no review of the authorizations was performed on the application before the publishing of the new release, for cost or time issue reason.
 
-Context
-=======
+# Context
 
 In order to try to address this situation, it's can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations definition.
 
@@ -31,8 +14,7 @@ The representation of the different combinations of these 2 dimensions is often 
 
 During a test of an authorization, a **Logical Role** is also called a **Point Of View**.
 
-Objective
-=========
+# Objective
 
 This article describe a proposition of implementation in order to automate the tests of an *authorization matrix*.
 
@@ -40,8 +22,7 @@ This article use the assumption that 2 dimensions are used to represents an auth
 
 The objective is to provide starting ideas/hints in order to create a tailored way of testing of the authorization matrix for the target application.
 
-Proposition
-===========
+# Proposition
 
 In order to achieve the full automation of the evaluation of the *authorization matrix*, the folowing actions has been performed:
 
@@ -55,16 +36,15 @@ In order to achieve the full automation of the evaluation of the *authorization 
     1.  The minimum possible of maintenance when the authorization matrix pivot file is updated.
     2.  A clear indication, in case of failed test, of the source authorization combination that do not respect the authorization matrix.
 
-Authorization matrix pivot file
--------------------------------
+## Authorization matrix pivot file
 
 The XML format has been used to formalize the authorization matrix.
 
 The XML structure contains 3 main sections:
 
--   Node **roles**: This node describe the possible logical roles used in the system, is used to provide a list and the explanation of the different roles (authorization level).
--   Node **services**: This node list and describe the available services exposed by the system and the associated logical role(s) that can call them.
--   Node **services-testing**: This node provide a test payload for each service if the service use input data other than coming from url or path.
+- Node **roles**: This node describe the possible logical roles used in the system, is used to provide a list and the explanation of the different roles (authorization level).
+- Node **services**: This node list and describe the available services exposed by the system and the associated logical role(s) that can call them.
+- Node **services-testing**: This node provide a test payload for each service if the service use input data other than coming from url or path.
 
 This is an example of the XML used to represents the authorization:
 
@@ -133,8 +113,7 @@ This is an example of the XML used to represents the authorization:
   </authorization-matrix>
 ```
 
-Integration tests
------------------
+## Integration tests
 
 Integration tests are implemented using a maximum of factorized code and one test case by **Point Of View (POV)** has been created in order to group the verifications by profile of access level (logical role) and faciliate the rendering/identification of the errors.
 
@@ -190,8 +169,7 @@ This the implementation of the integration tests case class:
        */
       @BeforeClass
       public static void globalInit() throws Exception {
-          try (FileInputStream fis = new FileInputStream(new File("authorization-matrix.xml"))) {
-              //See https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Prevention_Cheat_Sheet#Unmarshaller
+          try (FileInputStream fis = new FileInputStream(new File("authorization-matrix.xml"))) { 
               SAXParserFactory spf = SAXParserFactory.newInstance();
               spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
               spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
@@ -386,19 +364,20 @@ This the implementation of the integration tests case class:
 
 In case of detection of a authorization issue(s) the output is the following:
 
-    testAccessUsingAnonymousUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  Time elapsed: 1.009 s  ### FAILURE
-    java.lang.AssertionError:
-    Access issues detected using the ANONYMOUS USER point of view:
-      The service 'DeleteMessage' when called with POV 'ANONYMOUS' return a response code 200 that is not the expected one (403 expected).
-      The service 'CreateMessage' when called with POV 'ANONYMOUS' return a response code 200 that is not the expected one (403 expected).
+```
+testAccessUsingAnonymousUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  Time elapsed: 1.009 s  ### FAILURE
+java.lang.AssertionError:
+Access issues detected using the ANONYMOUS USER point of view:
+    The service 'DeleteMessage' when called with POV 'ANONYMOUS' return a response code 200 that is not the expected one (403 expected).
+    The service 'CreateMessage' when called with POV 'ANONYMOUS' return a response code 200 that is not the expected one (403 expected).
 
-    testAccessUsingBasicUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  Time elapsed: 0.05 s  ### FAILURE!
-    java.lang.AssertionError:
-    Access issues detected using the BASIC USER point of view:
-      The service 'DeleteMessage' when called with POV 'BASIC' return a response code 200 that is not the expected one (403 expected).
+testAccessUsingBasicUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  Time elapsed: 0.05 s  ### FAILURE!
+java.lang.AssertionError:
+Access issues detected using the BASIC USER point of view:
+    The service 'DeleteMessage' when called with POV 'BASIC' return a response code 200 that is not the expected one (403 expected).
+```
 
-Rendering of the authorization matrix for audit / review
-========================================================
+# Rendering of the authorization matrix for audit / review
 
 Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discution about the authorization matrix in order to spot potential inconsistencies.
 
@@ -411,7 +390,8 @@ The Following XSL stylesheet can be used:
     <html>
       <head>
         <title>Authorization Matrix</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" 
+        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
       </head>
       <body>
         <h3>Roles</h3>
@@ -507,21 +487,12 @@ The Following XSL stylesheet can be used:
 
 Example of the rendering:
 
-[<File:AuthorizationMatrixTestingAutomationRendering.png>](/File:AuthorizationMatrixTestingAutomationRendering.png "wikilink")
+![RenderingExample](../assets/Authorization_Testing_Automation_AutomationRendering.png)
 
-Sources of the prototype
-========================
+# Sources of the prototype
 
-Github repository: <https://github.com/righettod/poc-authz-testing>.
+[Github repository](https://github.com/righettod/poc-authz-testing)
 
-Authors and Primary Editors
-===========================
+# Authors and Primary Editors
 
-[Dominique Righetto](/User:Dominique_RIGHETTO\ "wikilink") - dominique.righetto@owasp.org
-
-Other Cheatsheets
-=================
-
-\\|}
-
-[Category:Cheatsheets](/Category:Cheatsheets "wikilink")
+Dominique Righetto - dominique.righetto@owasp.org
