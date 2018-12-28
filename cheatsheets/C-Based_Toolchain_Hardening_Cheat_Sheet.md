@@ -8,7 +8,7 @@ For those who would like a deeper treatment of the subject matter, please visit 
 
 # Actionable Items
 
-The C-Based Toolchain Hardening Cheat Sheet]calls for the following actionable items:
+The C-Based Toolchain Hardening Cheat Sheet calls for the following actionable items:
 
 - Provide debug, release, and test configurations
 - Provide an assert with useful behavior
