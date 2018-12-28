@@ -50,7 +50,7 @@ The file **vscode-project.code-workspace** is the workspace file in order to ope
 
 The following [plugin](https://github.com/DavidAnson/vscode-markdownlint) is used to validate the markdown content.
 
-The file **.markdownlint.json** define the validation policy applied.
+The file **.markdownlint.json** define the central validation policy applied at VSCode (IDE) and TravisCI (CI) levels.
 
 Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md).
 
