@@ -67,7 +67,7 @@ Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/ma
     * Create labels for: Request from OPC, Internal task...
 * [ ] **Task 07:** Create all the materials to generate a PDF file of all the CS, automate it via a CircleCI job.
 * [ ] **Task 08:** Create a template for the pull request in order to add a checklist like the one created by the MSTG.
-* [ ] **Task 09:** Add a CI job to validate automatically the Pull Request when they are submitted.
+* [x] **Task 09:** Add a CI job to validate automatically the Pull Request when they are submitted.
 
 # License
 
