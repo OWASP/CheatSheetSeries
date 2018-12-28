@@ -22,13 +22,14 @@ A mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed using thi
 
 * Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).
 * Use this [sheet](https://gist.github.com/molomby/9bc092e4a125f529ae362de7e46e8176) for Superscript and Subscript characters.
+* Use ATX style (`#` syntax) for section head. 
 * Use `**bold**` syntax for **bold** text.
 * Use `*italic*` syntax for *italic* text.
-* Use TAB for nested lists and not spaces.
-* Use code fencing syntax along syntax highlighting for code snippet (prevent when possible horizontal scrollbar).
+* Use `TAB` for nested lists and not spaces.
+* Use [code fencing syntax along syntax highlighting](https://help.github.com/articles/creating-and-highlighting-code-blocks/) for code snippet (prevent when possible horizontal scrollbar).
 * No HTML code is allowed, only markdown syntax is allowed!
 * Use this [site](https://www.tablesgenerator.com/markdown_tables) for generation of tables.
-* Use a single new line between a title and the begining of its content.
+* Use a single new line between a section head and the begining of its content.
 
 # Editor & validation policy
 
@@ -63,6 +64,6 @@ Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/ma
 
 # Status
 
-**Task 1** is pending, 57 CS remaining to migrate :coffee: 
+**Task 1** is pending, 55 CS remaining to migrate :coffee: 
 
 :satellite: Stay tuned...
