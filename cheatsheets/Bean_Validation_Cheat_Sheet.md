@@ -112,7 +112,8 @@ public class ArticleController  {
  ...
 
  @RequestMapping(value = "/postArticle",  method = RequestMethod.POST)
- public @ResponseBody String postArticle(@Valid  Article  article,  BindingResult  result,  HttpServletResponse  response) {     
+ public @ResponseBody String postArticle(@Valid  Article  article,  BindingResult  result,  
+ HttpServletResponse  response) {     
   if (result.hasErrors()) {
    String errorMessage  =  "";
    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -179,7 +180,8 @@ public class CustomerController  {
  ...
 
  @RequestMapping(value = "/registerCustomer",  method = RequestMethod.POST)
- public @ResponseBody String registerCustomer(@Valid Customer customer, BindingResult result,  HttpServletResponse  response) {
+ public @ResponseBody String registerCustomer(@Valid Customer customer, BindingResult result,  
+ HttpServletResponse  response) {
 
   if (result.hasErrors()) {
    String errorMessage = "";
@@ -250,7 +252,8 @@ public class MessageController {
 ...
 
 @RequestMapping(value="/sendMessage", method=RequestMethod.POST)
-public @ResponseBody String sendMessage(@Valid Message message, BindingResult result, HttpServletResponse response){
+public @ResponseBody String sendMessage(@Valid Message message, BindingResult result, 
+HttpServletResponse response){
  
    if(result.hasErrors()){
       String errorMessage = "";
@@ -334,7 +337,8 @@ public class DoctorVisitController {
    ...
 
    @RequestMapping(value="/scheduleVisit", method=RequestMethod.POST)
-   public @ResponseBody String scheduleVisit(@Valid DoctorVisit doctorvisit, BindingResult result, HttpServletResponse response){
+   public @ResponseBody String scheduleVisit(@Valid DoctorVisit doctorvisit, BindingResult result, 
+   HttpServletResponse response){
     
       if(result.hasErrors()){
          String errorMessage = "";
@@ -410,7 +414,8 @@ public class ReviewController {
    ...
 
    @RequestMapping(value="/postReview", method=RequestMethod.POST)
-   public @ResponseBody String postReview(@Valid Review review, BindingResult result, HttpServletResponse response){
+   public @ResponseBody String postReview(@Valid Review review, BindingResult result, 
+   HttpServletResponse response){
     
       if(result.hasErrors()){
          String errorMessage = "";
