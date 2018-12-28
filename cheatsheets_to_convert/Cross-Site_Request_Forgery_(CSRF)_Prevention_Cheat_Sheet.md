@@ -1,18 +1,3 @@
----
-title: Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet
-permalink: /Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet/
----
-
-`__NOTOC__`
-
-<div style="width:100%;height:160px;border:0,margin:0;overflow: hidden;">
-[link=](/File:Cheatsheets-header.jpg\ "wikilink")
-
-</div>
-{\\| style="padding: 0;margin:0;margin-top:10px;text-align:left;" \\|- \\| valign="top" style="border-right: 1px dotted gray;padding-right:25px;" \\| Last revision (mm/dd/yy): **//**
-
-`__TOC__`
-
 Introduction
 ------------
 
@@ -557,10 +542,3 @@ Paul Petefish - <https://www.linkedin.com/in/paulpetefish>
 Eric Sheridan - eric.sheridan\[at\]owasp.org
 
 Dominique Righetto - dominique.righetto\[at\]owasp.org
-
-Other Cheatsheets
------------------
-
-\\|}
-
-[Category:Cheatsheets](/Category:Cheatsheets "wikilink") [Category:Popular](/Category:Popular "wikilink")
