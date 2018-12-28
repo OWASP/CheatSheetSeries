@@ -1,3 +1,7 @@
+![CSMigrationCounterBadge](https://img.shields.io/badge/CheatSheets_remaining_to_migrate-55-orange.svg)
+![StatusTrackingBadge](https://img.shields.io/badge/Current_task-01-yellowgreen.svg)
+![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
+
 # Information & processus
 
 This repository will contains all the cheat sheets of the project and will represent the V2 of the OWASP Cheat Sheet Series project.
