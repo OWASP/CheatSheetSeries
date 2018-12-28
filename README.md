@@ -21,6 +21,7 @@ A mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed using thi
 # Conversion rules
 
 * Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).
+* Use this [sheet](https://gist.github.com/molomby/9bc092e4a125f529ae362de7e46e8176) for Superscript and Subscript characters.
 * Use `**bold**` syntax for **bold** text.
 * Use `*italic*` syntax for *italic* text.
 * Use TAB for nested lists and not spaces.

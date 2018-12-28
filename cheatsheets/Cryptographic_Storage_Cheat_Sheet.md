@@ -140,7 +140,7 @@ Ensure operations staff have the information they need, readily available, when 
 
 #### Rule - Limit quantity of data encrypted with one key
 
-If the amount of data encrypted grows beyond a **certain threshold**, a new key should be used. This **certain threshold** varies depending on the encryption algorithm used, but is typically 2^35 bytes (around 34 gigabytes) for 64 bit block ciphers (DES, 3DES, Blowfish, RC5, ...) and 2^68 bytes (around 295,147,905 terabytes) for 128 bit block ciphers (AES, TwoFish, Serpent). If encrypting with a modern cipher, this threshold is unlikely to be reached, but it should be considered when evaluating algorithms and rotation procedures.
+If the amount of data encrypted grows beyond a **certain threshold**, a new key should be used. This **certain threshold** varies depending on the encryption algorithm used, but is typically 2³⁵ bytes (around 34 gigabytes) for 64 bit block ciphers (DES, 3DES, Blowfish, RC5, ...) and 2⁶⁸ bytes (around 295,147,905 terabytes) for 128 bit block ciphers (AES, TwoFish, Serpent). If encrypting with a modern cipher, this threshold is unlikely to be reached, but it should be considered when evaluating algorithms and rotation procedures.
 
 ### Rule - Follow applicable regulations on use of cryptography
 
