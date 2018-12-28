@@ -25,6 +25,9 @@ A mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed using thi
     * Naming convention is `[CHEAT_CHEET_MARKDOWN_FILE_NAME]_[IDENTIFIER].[EXTENSION]`
     * Use `PNG` format for the images.
 
+**scripts**:
+* Contains all the utility scripts used to operate the project (linter audit...).    
+
 # Conversion rules
 
 * Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).

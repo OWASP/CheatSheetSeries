@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - "node"
+before_script:
+  - npm install -g markdownlint-cli
+  - chmod +x scripts/apply-linter-check.sh
+script:
+  - cd scripts; bash apply-linter-check.sh
