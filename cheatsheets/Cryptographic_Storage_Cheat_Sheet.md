@@ -208,7 +208,7 @@ To perform the strong key management functions we have seen in requirement 3.6 w
 
 ## Documentation
 
-- [Testing for SSL-TLS](Testing_for_SSL-TLS_(OWASP-CM-001))
+- [Testing for SSL-TLS](https://www.owasp.org/index.php/Testing_for_SSL-TLS_(OWASP-CM-001))
 - [Guide to Cryptography](https://www.owasp.org/index.php/Guide_to_Cryptography)
 - [Application Security Verification Standard (ASVS) – Communication Security Verification Requirements (V10)](http://www.owasp.org/index.php/ASVS)
 - [SSLLabs wiki](https://github.com/ssllabs/research/wiki)
