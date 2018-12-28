@@ -1,18 +1,3 @@
----
-title: Securing Cascading Style Sheets (CSS) Cheat Sheet
-permalink: /Securing_Cascading_Style_Sheets_(CSS)_Cheat_Sheet/
----
-
-`__NOTOC__`
-
-<div style="width:100%;height:160px;border:0,margin:0;overflow: hidden;">
-[link=](/File:Cheatsheets-header.jpg\ "wikilink")
-
-</div>
-{\\| style="padding: 0;margin:0;margin-top:10px;text-align:left;" \\|- \\| valign="top" style="border-right: 1px dotted gray;padding-right:25px;" \\| Last revision (mm/dd/yy): **//**
-
-`__TOC__`
-
 Introduction
 ============
 
@@ -85,8 +70,3 @@ Authors and Primary Editors
 ===========================
 
 Santhosh Tuppad - <https://www.linkedin.com/in/santhosh-tuppad-338b7412/>
-
-Other Cheatsheets
-=================
-
-[Category:Cheatsheets](/Category:Cheatsheets "wikilink") [Category:Popular](/Category:Popular "wikilink") \\|}
