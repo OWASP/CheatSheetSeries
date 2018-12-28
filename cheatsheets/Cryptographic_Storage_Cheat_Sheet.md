@@ -8,7 +8,7 @@ An architectural decision must be made to determine the appropriate method to pr
 
 The general practices and required minimum key length depending on the scenario listed below.
 
-- Key exchange: ´Diffie–Hellman key exchange with minimum 2048 bits`
+- Key exchange: `Diffie–Hellman key exchange with minimum 2048 bits`
 - Message Integrity: `HMAC-SHA2`
 - Message Hash: `SHA2 256 bits`
 - Assymetric encryption: `RSA 2048 bits`
@@ -140,7 +140,7 @@ Ensure operations staff have the information they need, readily available, when 
 
 #### Rule - Limit quantity of data encrypted with one key
 
-If the amount of data encrypted grows beyond a **certain threshold**, a new key should be used. This **certain threshold** varies depending on the encryption algorithm used, but is typically 2^35 bytes (~34 gigabytes) for 64 bit block ciphers (DES, 3DES, Blowfish, RC5, ...) and 2^68 bytes (~ 295,147,905 terabytes) for 128 bit block ciphers (AES, TwoFish, Serpent). If encrypting with a modern cipher, this threshold is unlikely to be reached, but it should be considered when evaluating algorithms and rotation procedures.
+If the amount of data encrypted grows beyond a **certain threshold**, a new key should be used. This **certain threshold** varies depending on the encryption algorithm used, but is typically 2^35 bytes (around 34 gigabytes) for 64 bit block ciphers (DES, 3DES, Blowfish, RC5, ...) and 2^68 bytes (around 295,147,905 terabytes) for 128 bit block ciphers (AES, TwoFish, Serpent). If encrypting with a modern cipher, this threshold is unlikely to be reached, but it should be considered when evaluating algorithms and rotation procedures.
 
 ### Rule - Follow applicable regulations on use of cryptography
 
