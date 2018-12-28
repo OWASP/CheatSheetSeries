@@ -1,5 +1,5 @@
 ![StatusTrackingBadge](https://img.shields.io/badge/Current_task-01-yellowgreen.svg)
-![CSMigrationCounterBadge](https://img.shields.io/badge/CheatSheets_remaining_to_migrate-55-orange.svg)
+![CSMigrationCounterBadge](https://img.shields.io/badge/CheatSheets_remaining_to_migrate-48-orange.svg)
 ![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
 
 # Information & processus
@@ -11,7 +11,10 @@ A mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed using thi
 # Folders
 
 **cheatsheets_to_convert**: 
-* Contains the cheat sheets markdown files converted with PANDOC and that need to be modified in order to be cleanly converted to Github markdown.
+* Contains the cheat sheets markdown files converted with PANDOC and for which a convertion work is needed in order to be cleanly converted to Github markdown.
+
+**cheatsheets_excluded**:
+* Contains the cheat sheets markdown files converted with PANDOC and for which a discution must be made in order to decide if we include them into the V2 of the project due to the content has not been updated since a long time or is not relevant anymore.
 
 **cheatsheets**: 
 * Contains the final cheat sheets files. 
