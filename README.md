@@ -65,9 +65,3 @@ Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/ma
 # License
 
 [![LICENSE](https://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/)
-
-# Status
-
-**Task 1** is pending, 55 CS remaining to migrate :coffee: 
-
-:satellite: Stay tuned...
