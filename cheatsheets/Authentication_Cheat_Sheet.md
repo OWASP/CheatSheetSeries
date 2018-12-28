@@ -6,7 +6,6 @@
 
 # Authentication General Guidelines
 
-
 ## User IDs
 
 Make sure your usernames/userids are case insensitive. User 'smith' and user 'Smith' should be the same user. User names should also be unique. For high security applications usernames could be assigned and secret instead of user-defined public data.

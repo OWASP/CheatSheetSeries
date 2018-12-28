@@ -6,7 +6,6 @@ The most popular way to defend against Clickjacking is to include some sort of "
 
 # Defending with Content Security Policy (CSP) frame-ancestors directive
 
-
 The `frame-ancestors` directive can be used in a Content-Security-Policy HTTP response header to indicate whether or not a browser should be allowed to render a page in a `<frame>` or `<iframe>`. Sites can use this to avoid Clickjacking attacks by ensuring that their content is not embedded into other sites.
 
 `frame-ancestors` allows a site to authorize multiple domains using the normal Content Security Policy semantics.

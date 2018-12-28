@@ -81,6 +81,7 @@ Checks if the annotated string matches the regular expression regex considering 
 [Documentation](http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
 
 **Model**:
+
 ```java
 import org.hibernate.validator.constraints.Pattern;
 
@@ -170,6 +171,7 @@ public class Customer { 
 ```
 
 **Controller**:
+
 ```java
 import javax.validation.Valid;
 import com.company.app.model.Customer;
@@ -399,8 +401,6 @@ public class Review {
  ...
 }
 ```
-
-
 
 **Controller**:
 

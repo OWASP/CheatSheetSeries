@@ -29,9 +29,17 @@ A mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed using thi
 * Use this [site](https://www.tablesgenerator.com/markdown_tables) for generation of tables.
 * Use a single new line between a title and the begining of its content.
 
-# Editor
+# Editor & validation policy
 
-[Visual Studio Code](https://code.visualstudio.com/) is used for the modification of the markdown files.
+[Visual Studio Code](https://code.visualstudio.com/) is used for the work on the markdown files. 
+
+The file **vscode-project.code-workspace** is the workspace file in order to open the project in VSCode.
+
+The following [plugin](https://github.com/DavidAnson/vscode-markdownlint) is used to validate the markdown content.
+
+The file **.markdownlint.json** define the validation policy applied.
+
+Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md).
 
 # Migration tasks list
 
