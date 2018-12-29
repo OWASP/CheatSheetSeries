@@ -29,10 +29,16 @@ A mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed using thi
 **scripts**:
 * Contains all the utility scripts used to operate the project (linter audit...).    
 
+**templates**:
+* Contains templates to use for different kinds of files (cheatsheet...).
+
 # Conversion rules
 
 * Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).
 * Use this [sheet](https://gist.github.com/molomby/9bc092e4a125f529ae362de7e46e8176) for Superscript and Subscript characters.
+* Store all assets in the **assets** folder and use the following syntax:
+    * `![ALTERNATE_NAME](../assets/ASSET_NAME.png)` for the insertion of an image.
+    * `[ALTERNATE_NAME](../assets/ASSET_NAME.EXT)` for the insertion of other kinds of media (pdf, zip...).
 * Use ATX style (`#` syntax) for section head. 
 * Use `**bold**` syntax for **bold** text.
 * Use `*italic*` syntax for *italic* text.
@@ -61,12 +67,12 @@ Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/ma
 * [ ] **Task 01:** Migrate all the CS files of the folder **cheatsheets_to_convert**.
 * [ ] **Task 02:** Update each OWASP WIKI page associated to a CS in order to indicate the redirection to the GitHub location in order to do not break cross-reference to CS.
 * [ ] **Task 03:** Create a Python script to auto-generate an markdown index page of all CS like this [page](https://www.owasp.org/index.php/Category:Cheatsheets).
-* [ ] **Task 04:** Create a markdown template file for the new CS.
+* [x] **Task 04:** Create a markdown template file for the new CS.
 * [ ] **Task 05:** Create the index page of the repository based on this README file to provide all the information about the repository and how to contribute.
 * [ ] **Task 06:** Migrate the project [Trello board](https://trello.com/b/w020m3jQ) content to Issues in this repository
     * Create labels for: Request from OPC, Internal task...
 * [ ] **Task 07:** Create all the materials to generate a PDF file of all the CS, automate it via a CircleCI job.
-* [ ] **Task 08:** Create a template for the pull request in order to add a checklist like the one created by the MSTG.
+* [x] **Task 08:** Create a template for the pull request in order to add a checklist like the one created by the MSTG.
 * [x] **Task 09:** Add a CI job to validate automatically the Pull Request when they are submitted.
 
 # License
