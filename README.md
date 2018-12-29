@@ -30,7 +30,10 @@ A mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed using thi
 * Contains all the utility scripts used to operate the project (linter audit...).    
 
 **templates**:
-* Contains templates to use for different kinds of files (cheatsheet...).
+* Contains templates used for different kinds of files (cheatsheet...).
+
+**.github**:
+* Contains materials used to configure different behaviors of GitHub.
 
 # Conversion rules
 
