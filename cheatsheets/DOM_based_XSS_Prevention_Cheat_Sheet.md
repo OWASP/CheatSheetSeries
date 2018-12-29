@@ -156,9 +156,11 @@ document.getElementById("bb").onmouseover = "testIt";
 document.getElementById("bb").onmouseover = \u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0037\u0029;
 
 //The following does NOT work because of the encoded ";". "testIt;testIt" is JavaScript encoded.
-document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073\u0074\u0049\u0074;
+document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073
+                                            \u0074\u0049\u0074;
 
-//The following DOES WORK because the encoded value is a valid variable name or function reference.  "testIt" is JavaScript encoded
+//The following DOES WORK because the encoded value is a valid variable name or function reference.  
+//"testIt" is JavaScript encoded
 document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074;
 
 function testIt() {
@@ -468,7 +470,8 @@ In the above example, untrusted data started in the rendering URL context (`href
 Because the data was introduced in JavaScript code and passed to a URL subcontext the appropriate server-side encoding would be the following:
 
 ```html
-<a href="javascript:myFunction('<%=Encoder.encodeForJS(Encoder.encodeForURL(untrustedData)) %>', 'test');">Click Me</a>
+<a href="javascript:myFunction('<%=Encoder.encodeForJS(Encoder.encodeForURL(untrustedData)) %>', 'test');">
+Click Me</a>
  ...
 ```
 
