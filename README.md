@@ -1,5 +1,5 @@
 ![StatusTrackingBadge](https://img.shields.io/badge/Current_task-01-yellowgreen.svg)
-![CSMigrationCounterBadge](https://img.shields.io/badge/CheatSheets_remaining_to_migrate-46-orange.svg)
+![CSMigrationCounterBadge](https://img.shields.io/badge/CheatSheets_remaining_to_migrate-45-orange.svg)
 ![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
 [![LinterCheckStatusForReleasedCS](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 
@@ -22,7 +22,7 @@ A mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed using thi
 * Any `.md` file present at the root of this folder is considered as `converted` and the associated cheat sheet is considered released.
 
 **assets**: 
-* Contains the assets used by the cheat sheets (images...).
+* Contains the assets used by the cheat sheets (images, pdf, zip...).
     * Naming convention is `[CHEAT_CHEET_MARKDOWN_FILE_NAME]_[IDENTIFIER].[EXTENSION]`
     * Use `PNG` format for the images.
 

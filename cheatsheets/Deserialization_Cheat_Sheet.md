@@ -217,7 +217,8 @@ Even if you have limited the types that can be deserialised remember that some t
 Attackers should be prevented from steering the type that will be instantiated. If this is possible then even `DataContractSerializer` or `XmlSerializer` can be subverted e.g.
 
 ```csharp
-var typename = GetTransactionTypeFromDatabase();  // <-- this is dangerous if the attacker can change the data in the database
+// Action below is dangerous if the attacker can change the data in the database
+var typename = GetTransactionTypeFromDatabase();  
 
 var serializer = new DataContractJsonSerializer(Type.GetType(typename));
 
@@ -229,7 +230,8 @@ Execution can occur within certain .Net types during deserialization. Creating a
 ```csharp
 var suspectObject = myBinaryFormatter.Deserialize(untrustedData);
 
-if (suspectObject is SomeDangerousObjectType) //Too late! Execution may have already occurred.
+//Check below is too late! Execution may have already occurred.
+if (suspectObject is SomeDangerousObjectType) 
 {
     //generate warnings and dispose of suspectObject
 }
