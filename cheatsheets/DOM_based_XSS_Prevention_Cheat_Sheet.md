@@ -155,7 +155,8 @@ document.getElementById("bb").onmouseover = "testIt";
 //"alert(77)" is JavaScript encoded.
 document.getElementById("bb").onmouseover = \u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0037\u0029;
 
-//The following does NOT work because of the encoded ";". "testIt;testIt" is JavaScript encoded.
+//The following does NOT work because of the encoded ";". 
+//"testIt;testIt" is JavaScript encoded.
 document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073
                                             \u0074\u0049\u0074;
 
