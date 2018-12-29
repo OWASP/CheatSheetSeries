@@ -83,7 +83,7 @@ Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/ma
 
 Follow these steps:
 
-1. Create an new [Issue](https://github.com/OWASP/CheatSheetSeries/issues/new) using the `new_cheatsheet_proposal` template.
+1. Create an new [Issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using the `new_cheatsheet_proposal` template.
 2. After a discution on the topic and if the cheat sheet proposal is accepted then:
     1. Clone this GitHub repository.
     2. Create the cheat sheet using the dedicated [template](templates/New_CheatSheet.md).
