@@ -52,7 +52,7 @@ A mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed using thi
 
 [Visual Studio Code](https://code.visualstudio.com/) is used for the work on the markdown files. 
 
-The file **vscode-project.code-workspace** is the workspace file in order to open the project in VSCode.
+The file **Project.code-workspace** is the workspace file in order to open the project in VSCode.
 
 The following [plugin](https://github.com/DavidAnson/vscode-markdownlint) is used to validate the markdown content.
 

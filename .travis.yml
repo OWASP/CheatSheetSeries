@@ -3,6 +3,6 @@ node_js:
   - "node"
 before_script:
   - npm install -g markdownlint-cli
-  - chmod +x scripts/apply-linter-check.sh
+  - chmod +x scripts/Apply_Linter_Check.sh
 script:
-  - cd scripts; bash apply-linter-check.sh
+  - cd scripts; bash Apply_Linter_Check.sh
