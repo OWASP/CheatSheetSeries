@@ -86,8 +86,12 @@ Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/ma
 
 Follow these steps:
 
-1. Create an new [Issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using the `new_cheatsheet_proposal` template.
-2. After a discution on the topic and if the cheat sheet proposal is accepted then:
+1. Create an new [Issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using either:
+   - The `new_cheatsheet_proposal` template if you want to propose a new cheat sheet.
+   - The `update_cheatsheet_proposal` template if you want to modify a existing cheat sheet.
+2. After a discution on the topic/update and if the proposal is accepted then:
     1. Clone this GitHub repository.
-    2. Create the cheat sheet using the dedicated [template](templates/New_CheatSheet.md).
+    2. Either:
+      - Create the cheat sheet using the dedicated [template](templates/New_CheatSheet.md) in case of a new cheat sheet.
+      - Modify the target cheat sheet in case of a update/refactoring.
     3. Submit your [Pull Request](https://help.github.com/articles/creating-a-pull-request/).
