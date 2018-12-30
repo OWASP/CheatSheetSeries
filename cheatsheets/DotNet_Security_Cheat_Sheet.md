@@ -239,7 +239,8 @@ NB: You can still accidentally do this with ORMs or Stored procedures so check e
 e.g
 
 ```sql 
-string strQry = "SELECT * FROM Users WHERE UserName='" + txtUser.Text + "' AND Password='" + txtPassword.Text + "'";
+string strQry = "SELECT * FROM Users WHERE UserName='" + txtUser.Text + "' AND Password='" 
+                + txtPassword.Text + "'";
 EXEC strQry // SQL Injection vulnerability!
 ```
 
@@ -339,7 +340,8 @@ public ActionResult Edit(int id)
   // Establish user has right to edit the details
   if (user.Id != _userIdentity.GetUserId())
   {
-        HandleErrorInfo error = new HandleErrorInfo(new Exception("INFO: You do not have permission to edit these details"));
+        HandleErrorInfo error = new HandleErrorInfo(
+            new Exception("INFO: You do not have permission to edit these details"));
         return View("Error", error);
   }
   return View("Edit", new UserViewModel(user);
@@ -365,7 +367,9 @@ protected void Application_BeginRequest()
     #if !DEBUG
     // SECURE: Ensure any request is returned over SSL/TLS in production
     if (!Request.IsLocal && !Context.Request.IsSecureConnection) {
-        var redirect = Context.Request.Url.ToString().ToLower(CultureInfo.CurrentCulture).Replace("http:", "https:");
+        var redirect = Context.Request.Url.ToString()
+                        .ToLower(CultureInfo.CurrentCulture)
+                        .Replace("http:", "https:");
         Response.Redirect(redirect);
     }
     #endif
@@ -434,7 +438,8 @@ You can also check roles in code using identity features in .net: `System.Web.Se
 DO: Send the anti-forgery token with every Post/Put request:
 
 ```csharp
-using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" }))
+using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", 
+                        @class = "pull-right" }))
 {
     @Html.AntiForgeryToken()
     <ul class="nav nav-pills">
