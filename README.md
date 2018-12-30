@@ -3,11 +3,17 @@
 ![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
 [![LinterCheckStatusForReleasedCS](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 
-# Information & processus
+# Welcome to OWASP Cheat Sheet Series V2
 
 This repository will contains all the cheat sheets of the project and will represent the V2 of the OWASP Cheat Sheet Series project.
 
-A mass conversion from MEDIAWIKI to GITHUB MARKDOWN has been performed using this [tool](https://github.com/philipashlock/mediawiki-to-markdown) based on [PANDOC](https://pandoc.org/MANUAL.html) on 26th of december 2018 so content is frozen from this date.
+# Migration process
+
+A mass conversion from Mediawiki to GitHub flavored Markdown format has been performed using this [tool](https://github.com/philipashlock/mediawiki-to-markdown) based on [PANDOC](https://pandoc.org/MANUAL.html) on **26th of december 2018** on all OWASP wiki pages flagged as [Cheatsheets](https://www.owasp.org/index.php/Category:Cheatsheets).
+
+:warning: **Cheat Sheets content is now frozen from this date**:
+* No modification will be performed anymore on the wiki content.
+* Any modification will be made on this repository using the contribution issue template defined in this document/repository.
 
 # Folders
 
