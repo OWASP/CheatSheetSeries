@@ -5,7 +5,7 @@
 
 # Welcome to OWASP Cheat Sheet Series V2
 
-This repository will contains all the cheat sheets of the project and will represent the V2 of the OWASP Cheat Sheet Series project.
+This repository will contains all the cheat sheets of the project and will represent the V2 of the [OWASP Cheat Sheet Series](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series) project.
 
 # Migration process
 
@@ -14,6 +14,11 @@ A mass conversion from Mediawiki to GitHub flavored Markdown format has been per
 :warning: **Cheat Sheets content is now frozen from this date**:
 * No modification will be performed anymore on the wiki content.
 * Any modification will be made on this repository using the contribution issue template defined in this document/repository.
+
+# Project leaders
+
+* [Jim Manico](https://github.com/jmanico).
+* [Dominique Righetto](https://github.com/righettod).
 
 # Folders
 
@@ -95,7 +100,7 @@ Follow these steps:
 1. Create an new [Issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using either:
    - The `new_cheatsheet_proposal` template if you want to propose a new cheat sheet.
    - The `update_cheatsheet_proposal` template if you want to modify a existing cheat sheet.
-2. After a discution on the topic/update and if the proposal is accepted then:
+2. After a discution on the topic/update and if the proposal is accepted by the project leaders then:
     1. Clone this GitHub repository.
     2. Either:
       - Create the cheat sheet using the dedicated [template](templates/New_CheatSheet.md) in case of a new cheat sheet.
