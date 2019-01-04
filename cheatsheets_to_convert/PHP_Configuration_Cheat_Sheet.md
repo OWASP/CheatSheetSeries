@@ -18,17 +18,13 @@ Web Server Configuration
 Apache
 ------
 
-### suPHP
+NGINX
+------
 
-[suPHP](http://suphp.org) makes every php script run as its file owner. This way you are allowed to upload and modify files in your folders without needing to **chmod 777** any folder, which is very bad security practice and will let to your files be compromised easily. Install and configure it on your web server.
 
 PHP Configuration and Deployment
 ================================
 
-suhosin
--------
-
-Consider using [Suhosin](http://www.hardened-php.net/suhosin/index.html) (Stefan Esser's \[Hardened PHP patch\]) if you want to patch many custom security flaws in various parts of PHP.
 
 php.ini
 -------
@@ -58,8 +54,6 @@ Keep in mind that you need to have display_errors off on a production server and
 ` allow_url_include       = Off`
 ` variables_order         = "GPSE"`
 ` allow_webdav_methods    = Off`
-` register_globals        = Off`
-` safe_mode               = Off`
 ` session.gc_maxlifetime  = 600`
 
 Allow_url_\* prevents LFIs to be easily escalated to RFIs.
@@ -68,7 +62,7 @@ Allow_url_\* prevents LFIs to be easily escalated to RFIs.
 
 ` file_uploads            = On`
 ` upload_tmp_dir          = /path/PHP-uploads/`
-` upload_max_filesize     = 2M`
+` upload_max_filesize     = 10M`
 ` max_file_uploads        = 2`
 ` `
 
@@ -88,20 +82,24 @@ These are dangerous PHP functions. You should disable all that you don't use.
 
 #### PHP session handling
 
-` session.auto_start      = Off`
-` session.save_path       = /path/PHP-session/`
-` session.name            = myPHPSESSID`
-` session.hash_function   = 1`
-` session.hash_bits_per_character = 6`
-` session.use_trans_sid   = 0`
-` session.cookie_domain   = full.qualified.domain.name`
-` #session.cookie_path     = /application/path/`
-` session.cookie_lifetime = 0`
-` session.cookie_secure   = On`
-` session.cookie_httponly = 1`
-` session.use_only_cookies= 1`
-` session.cache_expire    = 30`
-` default_socket_timeout  = 60`
+ ` session.save_path         = /path/PHP-session/ `
+ ` session.name              = myPHPSESSID `
+ ` session.auto_start        = Off `
+ ` session.use_trans_sid     = 0 `
+ ` session.cookie_domain     = full.qualified.domain.name `
+ ` #session.cookie_path      = /application/path/ `
+ ` session.use_strict_mode   = 1 `
+ ` session.use_cookies       = 1 `
+ ` session.use_only_cookies  = 1 `
+ ` session.cookie_lifetime   = 864000 ` # 4 hours 
+ ` session.cookie_secure     = 1 `
+ ` session.cookie_httponly   = 1 `
+ ` session.cookie_samesite   = Strict `
+ ` session.cache_expire      = 30 ` 
+ ` session.sid_length        = 256 `
+ ` session.sid_bits_per_character   = 6 ` # PHP 7.2+
+ ` session.hash_function   = 1 ` # PHP 7.0-7.1
+ ` session.hash_bits_per_character = 6 ` # PHP 7.0-7.1
 
 It is a good practice to change session.name to something new.
 
@@ -115,13 +113,6 @@ It is a good practice to change session.name to something new.
 ` track_errors            = Off`
 ` html_errors             = Off`
 
-#### PHP Database Settings
-
-#### PHP Database User
-
-#### PHP Windows specific Settings
-
-#### PHP Extension
 
 Related Cheat Sheets
 ====================
@@ -131,13 +122,10 @@ Related Cheat Sheets
 Authors and Primary Editors
 ===========================
 
-[Achim](/User:Achim\ "wikilink") Hoffmann - [Achim at owasp.org](mailto:achim_at_owasp.org)
-
 --[AbiusX](/User:Abbas_Naderi\ "wikilink") [email](mailto:abbas.naderi@owasp.org)
 
 --[Achim](/User:Achim\ "wikilink"), 30. November 2012
 
---[User:Tony_Hsu_HsiangChih](/User:Tony_Hsu_HsiangChih "wikilink")
 
 Other Cheatsheets
 =================
