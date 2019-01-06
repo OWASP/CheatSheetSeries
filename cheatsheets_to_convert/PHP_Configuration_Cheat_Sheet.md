@@ -6,8 +6,7 @@ permalink: /PHP_Configuration_Cheat_Sheet/
 Introduction
 ============
 
-This page is part of the [PHP Security Cheat Sheet](/PHP_Security_Cheat_Sheet "wikilink") and is meant for developers and sysadmins. 
-
+This page is meant to help those configuring PHP and the web server it is running on in the most secure way possible. Below you will find information on the proper settings for the `php.ini` file and instructions on configuring Apache, Nginx, and Caddy web servers.
 
 
 ------------------------------------------------------------------------
@@ -17,15 +16,19 @@ Web Server Configuration
 
 Apache
 ------
+- The world's most commonly used HTTP Server
 
 NGINX
 ------
+- High performance web server
 
 Caddy
 ------
+- Modern, secure by default, open source HTTP Server.
 
 ModSecurity
 ------
+- Web Application Firewall for Apache and Nginx.
 
 PHP Configuration and Deployment
 ================================
@@ -128,6 +131,8 @@ Related Cheat Sheets
 
 Authors and Primary Editors
 ===========================
+
+--[DanE](/User:Dan_Ehrlich\ "wikilink") [email](mailto:dan.ehrlich@owasp.org)
 
 --[AbiusX](/User:Abbas_Naderi\ "wikilink") [email](mailto:abbas.naderi@owasp.org)
 
