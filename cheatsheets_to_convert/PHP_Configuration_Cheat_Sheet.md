@@ -6,9 +6,9 @@ permalink: /PHP_Configuration_Cheat_Sheet/
 Introduction
 ============
 
-Draft Cheat Sheet
+This page is part of the [PHP Security Cheat Sheet](/PHP_Security_Cheat_Sheet "wikilink") and is meant for developers and sysadmins. 
 
-This page is part of the [PHP Security Cheat Sheet](/PHP_Security_Cheat_Sheet "wikilink"), for developers and administrators. It describes secure configuration of PHP and its platform.
+
 
 ------------------------------------------------------------------------
 
@@ -21,6 +21,11 @@ Apache
 NGINX
 ------
 
+Caddy
+------
+
+ModSecurity
+------
 
 PHP Configuration and Deployment
 ================================
@@ -29,8 +34,32 @@ PHP Configuration and Deployment
 php.ini
 -------
 
-Note that some of following settings need to be adapted to your system, in particular `/path/` and `/application/`. Also read the [PHP Manual](http://www.php.net/manual/ini.core.php) according dependencies of some settings.
+Some of following settings need to be adapted to your system, in particular `/path/` and `/application/`. ALSO you should be runninng PHP 7.2 or later. If running PHP 7.0 and 7.1, in a couple places you will use slightly different values in your php.ini file. Please see the inline comments below as you go through each value. Finally look through the [PHP Manual](http://www.php.net/manual/ini.core.php) for a complete reference on every value in the php.ini configuration file.
 
+You can find a copy of the following values in a ready-to-go php.ini file at: https://github.com/danehrlich1/very-secure-php-ini
+
+#### PHP session handling
+- Session settings are somme of the MOST important values to concentrate on in configuring
+
+ ` session.save_path         = /path/PHP-session/ `
+ ` session.name              = myPHPSESSID `
+ ` session.auto_start        = Off `
+ ` session.use_trans_sid     = 0 `
+ ` session.cookie_domain     = full.qualified.domain.name `
+ ` #session.cookie_path      = /application/path/ `
+ ` session.use_strict_mode   = 1 `
+ ` session.use_cookies       = 1 `
+ ` session.use_only_cookies  = 1 `
+ ` session.cookie_lifetime   = 864000 ` # 4 hours 
+ ` session.cookie_secure     = 1 `
+ ` session.cookie_httponly   = 1 `
+ ` session.cookie_samesite   = Strict `
+ ` session.cache_expire      = 30 ` 
+ ` session.sid_length        = 256 `
+ ` session.sid_bits_per_character   = 6 ` # PHP 7.2+
+ ` session.hash_function   = 1 ` # PHP 7.0-7.1
+ ` session.hash_bits_per_character = 6 ` # PHP 7.0-7.1
+ 
 #### PHP error handlling
 
 ` expose_php              = Off`
@@ -41,7 +70,6 @@ Note that some of following settings need to be adapted to your system, in parti
 ` error_log               = /valid_path/PHP-logs/php_error.log`
 ` ignore_repeated_errors  = Off`
 
-Keep in mind that you need to have display_errors off on a production server and it's a good idea to frequently notice the logs.
 
 #### PHP general settings
 
@@ -66,7 +94,7 @@ Allow_url_\* prevents LFIs to be easily escalated to RFIs.
 ` max_file_uploads        = 2`
 ` `
 
-It's a good idea to turn it off, if your application is not using file uploads.
+If your application is not using file uploads, and say the only data the user will enter / upload is forms that do not require any document attachments, file_uploads should be turned off.
 
 #### PHP executable handling
 
@@ -79,27 +107,6 @@ It's a good idea to turn it off, if your application is not using file uploads.
 ` disable_classes         = `
 
 These are dangerous PHP functions. You should disable all that you don't use.
-
-#### PHP session handling
-
- ` session.save_path         = /path/PHP-session/ `
- ` session.name              = myPHPSESSID `
- ` session.auto_start        = Off `
- ` session.use_trans_sid     = 0 `
- ` session.cookie_domain     = full.qualified.domain.name `
- ` #session.cookie_path      = /application/path/ `
- ` session.use_strict_mode   = 1 `
- ` session.use_cookies       = 1 `
- ` session.use_only_cookies  = 1 `
- ` session.cookie_lifetime   = 864000 ` # 4 hours 
- ` session.cookie_secure     = 1 `
- ` session.cookie_httponly   = 1 `
- ` session.cookie_samesite   = Strict `
- ` session.cache_expire      = 30 ` 
- ` session.sid_length        = 256 `
- ` session.sid_bits_per_character   = 6 ` # PHP 7.2+
- ` session.hash_function   = 1 ` # PHP 7.0-7.1
- ` session.hash_bits_per_character = 6 ` # PHP 7.0-7.1
 
 It is a good practice to change session.name to something new.
 
@@ -117,7 +124,7 @@ It is a good practice to change session.name to something new.
 Related Cheat Sheets
 ====================
 
-[PHP_Security_Cheat_Sheet](/PHP_Security_Cheat_Sheet "wikilink")
+-
 
 Authors and Primary Editors
 ===========================
