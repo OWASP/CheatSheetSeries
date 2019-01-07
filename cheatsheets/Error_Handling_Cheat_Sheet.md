@@ -78,7 +78,9 @@ Configuration of the redirection into the **web.xml** file:
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ns="http://java.sun.com/xml/ns/javaee" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+version="3.0">
 ...
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
@@ -91,7 +93,8 @@ Configuration of the redirection into the **web.xml** file:
 Content of the **error.jsp** file:
 
 ``` java
-<%@ page language="java" isErrorPage="true" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" isErrorPage="true" contentType="application/json; charset=UTF-8" 
+    pageEncoding="UTF-8"%>
 <%
 String errorMessage = exception.getMessage();
 //Log the exception via the content of the implicit variable named "exception"
@@ -137,7 +140,8 @@ public class RestResponseEntityExceptionHandler {
         responseHeaders.set("X-ERROR", "true");
         JSONObject responseBody = new JSONObject();
         responseBody.put("message", "An error occur, please retry");
-        ResponseEntity<JSONObject> response = new ResponseEntity<>(responseBody, responseHeaders, HttpStatus.OK);
+        ResponseEntity<JSONObject> response = new ResponseEntity<>(responseBody, responseHeaders, 
+                                                                   HttpStatus.OK);
         return (ResponseEntity) response;
     }
 }
@@ -176,7 +180,6 @@ namespace MyProject.Controllers
         /// Action that will be invoked for any call to this Controller in order to handle the current error
         /// </summary>
         /// <returns>A generic error formatted as JSON because we are in a REST API app context</returns>
-        /// <seealso cref="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-2.1"/>
         [HttpGet]
         [HttpPost]
         [HttpHead]
@@ -220,15 +223,16 @@ namespace MyProject
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             //First we configure the error handler middleware!
-            //We enable the global error handler in others environments than DEV because debug page are useful during implementation
-            //See https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-2.1 for technical details about Environment configuration
+            //We enable the global error handler in others environments than DEV 
+            //because debug page are useful during implementation
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                //Our global handler is defined on "/api/error" URL so we indicate to the exception handler to call this API controller
+                //Our global handler is defined on "/api/error" URL so we indicate to the 
+                //exception handler to call this API controller
                 //on any unexpected exception raised by the application
                 app.UseExceptionHandler("/api/error");
             }
@@ -324,7 +328,8 @@ namespace MyProject.Security
                 var responseBody = new Dictionary<String, String> { { "message", "An error occur, please retry" } };
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
                 response.Headers.Add("X-ERROR", "true");
-                response.Content = new StringContent(JsonConvert.SerializeObject(responseBody), Encoding.UTF8, "application/json");
+                response.Content = new StringContent(JsonConvert.SerializeObject(responseBody), 
+                                                     Encoding.UTF8, "application/json");
                 return Task.FromResult(response);
             }
         }
