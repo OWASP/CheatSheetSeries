@@ -52,7 +52,7 @@ It is important to keep audit records when password change requests were submitt
 - Strength of questions used for reset should vary based on the nature of the credential. Administrator credentials should have a higher requirement.
 - The ideal implementation should rotate the questions asked in order to avoid automation.
 
-#  Authors and Primary Editors
+# Authors and Primary Editors
 
 Dave Ferguson - gmdavef@gmail.com
 
