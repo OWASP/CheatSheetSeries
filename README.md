@@ -74,6 +74,8 @@ The file **.markdownlint.json** define the central validation policy applied at 
 
 Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md).
 
+The file **.markdownlinkcheck.json** define the configuration used to validate using this [tool](https://github.com/tcort/markdown-link-check), at TravisCI level, all HTTP/HTTPS links used in cheat sheets.
+
 # Migration tasks list
 
 **CS** = **C**heat **S**heet

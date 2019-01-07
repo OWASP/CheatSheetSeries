@@ -247,7 +247,7 @@ Validations can be of the following kinds:
     - Provide the list of all abuse cases addressed to pentesters so that they may validate the protection efficiency for each abuse case during an intrusion test against the application (the pentester will validate that the attacks identified are no longer effective and will also try to find other possible attacks).
     - ...
 
-Adding automated tests also allow teams to track that countermeasures against the abuse cases are still effective/in place during a maintenance or bug fixing phase of a project (to prevent accidental removal/disabling). It is also useful when a Continuous Delivery approach is used (https://continuousdelivery.com/), to ensure that all abuse cases protections are in place before opening access to the application.
+Adding automated tests also allow teams to track that countermeasures against the abuse cases are still effective/in place during a maintenance or bug fixing phase of a project (to prevent accidental removal/disabling). It is also useful when a [Continuous Delivery](https://continuousdelivery.com/) approach is used, to ensure that all abuse cases protections are in place before opening access to the application.
 
 # Example of derivation of Abuse Cases as User Stories
 
