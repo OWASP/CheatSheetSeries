@@ -1,7 +1,5 @@
 {
-    "ignorePatterns": [{
-        "pattern": "^/assets/"
-    }],
+    "ignorePatterns": [],
     "httpHeaders": [{
         "urls": [
             "https://", "http://"

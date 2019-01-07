@@ -1,2 +1,2 @@
-# Linter audit result file
-linter-result.out
+# Audit result files
+*.out
