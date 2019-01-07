@@ -327,7 +327,7 @@ namespace MyProject.Security
                 //We also add an HTTP response header to indicate to the client app that the response 
                 //is an error
                 var responseBody = new Dictionary<String, String> { { "message", 
-                                                                      "An error occur, please retry" } };
+                                   "An error occur, please retry" } };
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
                 response.Headers.Add("X-ERROR", "true");
                 response.Content = new StringContent(JsonConvert.SerializeObject(responseBody), 
