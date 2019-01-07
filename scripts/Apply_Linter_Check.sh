@@ -4,10 +4,10 @@
 cd ..
 markdownlint -o linter-result.out cheatsheets
 errors=`wc -m linter-result.out | cut -d' ' -f1`
+content=`cat linter-result.out`
 if [[ $errors != "0" ]]
 then
-    echo "[!] Error(s) found by the Linter:"
-    cat linter-result.out
+    echo "[!] Error(s) found by the Linter: $content"
     exit $errors
 else
     echo "[+] No error found by the Linter."
