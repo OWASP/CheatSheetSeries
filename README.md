@@ -38,7 +38,7 @@ A mass conversion from Mediawiki to GitHub flavored Markdown format has been per
     * Use `PNG` format for the images.
 
 **scripts**:
-* Contains all the utility scripts used to operate the project (linter audit...).    
+* Contains all the utility scripts used to operate the project (markdown linter audit, dead link identification...).    
 
 **templates**:
 * Contains templates used for different kinds of files (cheatsheet...).
