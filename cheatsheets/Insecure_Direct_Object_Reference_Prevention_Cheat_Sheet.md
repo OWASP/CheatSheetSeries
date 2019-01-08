@@ -1,31 +1,10 @@
----
-title: Insecure Direct Object Reference Prevention Cheat Sheet
-permalink: /Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet/
----
-
-__NOTOC__
-
-<div style="width:100%;height:160px;border:0,margin:0;overflow: hidden;">
-[link=](/File:Cheatsheets-header.jpg\ "wikilink")
-
-</div>
-{\\| style="padding: 0;margin:0;margin-top:10px;text-align:left;" \\|-
-
-\\| valign="top" style="border-right: 1px dotted gray;padding-right:25px;" \\|
-
-Last revision (mm/dd/yy): **//**
-
-__TOC__
-
-Introduction
-============
+# Introduction
 
 **I**nsecure **D**irect **O**bject **R**eference (called **IDOR** from here) occurs when a application exposes a reference to an internal implementation object. Using this way, it reveals the real identifier and format/pattern used of the element in the storage backend side. The most common example of it (altrough is not limited to this one) is a record identifier in a storage system (database, filesystem and so on).
 
-IDOR is referenced in element [A4](/Top_10_2013-A4-Insecure_Direct_Object_References\ "wikilink") of the OWASP Top 10 in the 2013 edition.
+IDOR is referenced in element [A4](https://www.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References) of the OWASP Top 10 in the 2013 edition.
 
-Context
-=======
+# Context
 
 IDOR do not bring a direct security issue because, by itself, it reveals only the format/pattern used for the object identifier. IDOR bring, depending on the format/pattern in place, a capacity for the attacker to mount a enumeration attack in order to try to probe access to the associated objects.
 
@@ -35,17 +14,18 @@ Enumeration attack can be described in the way in which the attacker build a col
 
 Imagine an HR application exposing a service accepting employee ID in order to return the employee information and for which the format/pattern of the employee ID is the following:
 
-    EMP-00000
-    EMP-00001
-    EMP-00002
-    ...
+```text
+EMP-00000
+EMP-00001
+EMP-00002
+...
+```
 
 Based on this, an attacker can build a collection of valid ID from *EMP-00000* to *EMP-99999*.
 
-To be exploited, an IDOR issue must be combined with an [Access Control](/Access_Control_Cheat_Sheet\ "wikilink") issue because it's the Access Control issue that "allow" the attacker to access to the object for which he have guessed the identifier through is enumeration attack.
+To be exploited, an IDOR issue must be combined with an [Access Control](Access_Control_Cheat_Sheet.md) issue because it's the Access Control issue that "allow" the attacker to access to the object for which he have guessed the identifier through is enumeration attack.
 
-Additional remarks
-==================
+# Additional remarks
 
 **From Jeff Williams**:
 
@@ -61,23 +41,18 @@ I'm "down" with DOR’s for files, directories, etc. But not so much for ALL dat
 
 But, suppose a user has a list of accounts, like a bank where database id 23456 is their checking account. I’d DOR that in a heartbeat. You need to be prudent about this.
 
-Objective
-=========
+# Objective
 
 This article propose an idea to prevent the exposure of real identifier in a simple, portable and stateless way because the proposal need to handle Session and Session-less application topologies.
 
-Proposition
-===========
+# Proposition
 
 The proposal use a hash to replace the direct identifier. This hash is salted with a value defined at application level in order support topology in which the application is deployed in multi-instances mode (case for production).
 
 Using a hash allow the following properties:
 
--   Do not require to maintain a mapping table (real ID vs front end ID) in user session or application level cache.
-
-<!-- -->
-
--   Makes creation of a collection a enumeration values more difficult to achieve because, even if attacker can guess the hash algorithm from the ID size, it cannot reproduce value due to the salt that is not tied to the hidden value.
+- Do not require to maintain a mapping table (real ID vs front end ID) in user session or application level cache.
+- Makes creation of a collection a enumeration values more difficult to achieve because, even if attacker can guess the hash algorithm from the ID size, it cannot reproduce value due to the salt that is not tied to the hidden value.
 
 This is the implementation of the utility class that generate the identifer to use for exchange with the front end side:
 
@@ -88,22 +63,27 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Handle the creation of ID that will be send to front end side in order to prevent IDOR
+ * Handle the creation of ID that will be send to front end side 
+ * in order to prevent IDOR
  */
 
 public class IDORUtil {
     /**
-     * SALT used for the generation of the HASH of the real item identifier in order to prevent to forge it on front end side.
+     * SALT used for the generation of the HASH of the real item identifier 
+     * in order to prevent to forge it on front end side.
      */
     private static final String SALT = "[READ_IT_FROM_APP_CONFIGURATION]";
 
     /**
-     * Compute a identifier that will be send to the front end and be used as item unique identifier on client side.
+     * Compute a identifier that will be send to the front end and be used as item 
+     * unique identifier on client side.
      *
-     * @param realItemBackendIdentifier Identifier of the item on the backend storage (real identifier)
+     * @param realItemBackendIdentifier Identifier of the item on the backend storage 
+     *                                  (real identifier)
      * @return A string representing the identifier to use
      * @throws UnsupportedEncodingException If string's byte cannot be obtained
-     * @throws NoSuchAlgorithmException If the hashing algorithm used is not supported is not available
+     * @throws NoSuchAlgorithmException If the hashing algorithm used is not 
+     *                                  supported is not available
      */
     public static String computeFrontEndIdentifier(String realItemBackendIdentifier) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         String frontEndId = null;
@@ -184,7 +164,8 @@ public Movie obtainMovieName(@PathVariable("id") String id) {
         return match;
     }).findFirst();
 
-    //We have marked the Backend Identifier class field as excluded from the serialization
+    //We have marked the Backend Identifier class field as excluded 
+    //from the serialization
     //So we can send the object to front end through the serializer
     return movie.get();
 }
@@ -197,7 +178,8 @@ public class Movie {
     /**
      * We indicate to serializer that this field must never be serialized
      *
-     * @see "https://fasterxml.github.io/jackson-annotations/javadoc/2.5/com/fasterxml/jackson/annotation/JsonIgnore.html"
+     * @see "https://fasterxml.github.io/jackson-annotations/javadoc/2.5/com/fasterxml/
+             jackson/annotation/JsonIgnore.html"
      */
     @JsonIgnore
     private String backendIdentifier;
@@ -205,23 +187,14 @@ public class Movie {
 }
 ```
 
-Sources of the prototype
-========================
+# Sources of the prototype
 
-Github repository: <https://github.com/righettod/poc-idor>.
+[Github repository](https://github.com/righettod/poc-idor).
 
-Authors and Primary Editors
-===========================
+# Authors and Primary Editors
 
 Eric Sheridan - eric.sheridan@owasp.org
 
-[Jeff Williams](/User:Jeff_Williams\ "wikilink") - jeff.williams@contrastsecurity.com
+Jeff Williams - jeff.williams@contrastsecurity.com
 
-[Dominique Righetto](/User:Dominique_RIGHETTO\ "wikilink") - dominique.righetto@owasp.org
-
-Other Cheatsheets
-=================
-
-\\|}
-
-[Category:Cheatsheets](/Category:Cheatsheets "wikilink")
+Dominique Righetto - dominique.righetto@owasp.org
