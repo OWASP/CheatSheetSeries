@@ -479,7 +479,9 @@ Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent lo
 
 It prevents XSS attacks against viewing logs using a browser. 
 
-OWASP recommends defending against XSS attacks in such situations in the log viewer application itself, not by preencoding all the log messages with HTML encoding as such log entries may be used/viewed in many other log viewing/analysis tools that don't expect the log data to be pre-HTML encoded.
+OWASP recommends defending against XSS attacks in such situations in the log viewer application itself, 
+not by preencoding all the log messages with HTML encoding as such log entries may be used/viewed in many 
+other log viewing/analysis tools that don't expect the log data to be pre-HTML encoded.
 ```    
 
 - [LOG4J Configuration](https://logging.apache.org/log4j/2.x/manual/configuration.html)
