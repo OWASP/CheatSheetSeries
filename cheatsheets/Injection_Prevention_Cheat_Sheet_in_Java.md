@@ -472,7 +472,7 @@ logger.info(logMessage);
 
 ### References
 
-- [PatternLayout](https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout) (See the encode{}{CRLF} function)
+- [PatternLayout](https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout) (See the `encode{}{CRLF}` function)
 
 ```text
 Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent log injection. 
@@ -486,7 +486,7 @@ other log viewing/analysis tools that don't expect the log data to be pre-HTML e
 
 - [LOG4J Configuration](https://logging.apache.org/log4j/2.x/manual/configuration.html)
 - [LOG4J Appender](https://logging.apache.org/log4j/2.x/manual/appenders.html)
-- [Log Forging](https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging) - See the Logback section about the CRLFConverter this library provides.
+- [Log Forging](https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging) - See the Logback section about the `CRLFConverter` this library provides.
 - [Usage of OWASP Security Logging with Logback](https://github.com/javabeanz/owasp-security-logging/wiki/Usage-with-Logback)
 
 # Authors and Primary Editors
