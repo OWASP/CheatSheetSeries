@@ -13,7 +13,7 @@ A mass conversion from Mediawiki to GitHub flavored Markdown format has been per
 
 :warning: **Cheat Sheets content is now frozen from this date**:
 * No modification will be performed anymore on the wiki content.
-* Any modification will be made on this repository using the contribution issue template defined in this document/repository.
+* Any modification will be made on this repository using the contribution issue templates defined in this repository.
 
 # Project leaders
 
