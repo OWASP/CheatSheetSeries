@@ -85,7 +85,8 @@ public class IDORUtil {
      * @throws NoSuchAlgorithmException If the hashing algorithm used is not 
      *                                  supported is not available
      */
-    public static String computeFrontEndIdentifier(String realItemBackendIdentifier) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public static String computeFrontEndIdentifier(String realItemBackendIdentifier) 
+     throws NoSuchAlgorithmException, UnsupportedEncodingException {
         String frontEndId = null;
         if (realItemBackendIdentifier != null && !realItemBackendIdentifier.trim().isEmpty()) {
             //Prefix the value with the SALT
@@ -127,7 +128,8 @@ public Map<String, String> listAllMovies() {
                 //Add the computed ID and the associated item name to the result map
                 result.put(frontEndId, m.getName());
             } catch (Exception e) {
-                LOGGER.error("Error during ID generation for real ID {}: {}", m.getBackendIdentifier(), e.getMessage());
+                LOGGER.error("Error during ID generation for real ID {}: {}", m.getBackendIdentifier(), 
+                             e.getMessage());
             }
         });
     } catch (Exception e) {
@@ -179,7 +181,7 @@ public class Movie {
      * We indicate to serializer that this field must never be serialized
      *
      * @see "https://fasterxml.github.io/jackson-annotations/javadoc/2.5/com/fasterxml/
-             jackson/annotation/JsonIgnore.html"
+     *       jackson/annotation/JsonIgnore.html"
      */
     @JsonIgnore
     private String backendIdentifier;
