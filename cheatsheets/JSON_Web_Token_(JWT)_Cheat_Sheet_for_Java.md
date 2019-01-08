@@ -476,7 +476,8 @@ public class TokenCipher {
                insertedRecordCount = pStatement.executeUpdate();
            }
            if (insertedRecordCount != 1) {
-               throw new IllegalStateException("Number of inserted record is invalid, 1 expected but is " + insertedRecordCount);
+               throw new IllegalStateException("Number of inserted record is invalid, 1 expected but is "
+                + insertedRecordCount);
            }
        }
    }
@@ -536,11 +537,13 @@ Token creation.
  this.secureRandom.nextBytes(randomFgp);
  String userFingerprint = DatatypeConverter.printHexBinary(randomFgp);
 
- //Add the fingerprint in a hardened cookie - Add cookie manually because SameSite attribute is not supported by javax.servlet.http.Cookie class
+ //Add the fingerprint in a hardened cookie - Add cookie manually because SameSite attribute 
+ //is not supported by javax.servlet.http.Cookie class
  String fingerprintCookie = "__Secure-Fgp=" + userFingerprint + "; SameSite=Strict; HttpOnly; Secure";
  response.addHeader("Set-Cookie", fingerprintCookie);
 
- //Compute a SHA256 hash of the fingerprint in order to store the fingerprint hash (instead of the raw value) in the token
+ //Compute a SHA256 hash of the fingerprint in order to store the fingerprint hash (instead of the raw value)
+ //in the token
  //to prevent an XSS to be able to read the fingerprint and set the expected cookie itself
  MessageDigest digest = MessageDigest.getInstance("SHA-256");
  byte[] userFingerprintDigest = digest.digest(userFingerprint.getBytes("utf-8"));
@@ -581,7 +584,8 @@ if (request.getCookies() != null && request.getCookies().length > 0) {
  }
 }
 
-//Compute a SHA256 hash of the received fingerprint in cookie in order to compare it to the fingerprint hash stored in the token
+//Compute a SHA256 hash of the received fingerprint in cookie in order to compare it to the 
+//fingerprint hash stored in the token
 MessageDigest digest = MessageDigest.getInstance("SHA-256");
 byte[] userFingerprintDigest = digest.digest(userFingerprint.getBytes("utf-8"));
 String userFingerprintHash = DatatypeConverter.printHexBinary(userFingerprintDigest);
