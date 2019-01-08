@@ -101,7 +101,7 @@ This attack occur when a token has been intercepted/stolen by a attacker and thi
 
 A way to protect is to add "user context" in the token. User context will be composed by the following information:
 
-- A random string that will be generated during the authentication phase and will be included into the token and also send to the client as an hardened cookie (flags: HttpOnly + Secure + SameSite + cookie prefix).
+- A random string that will be generated during the authentication phase and will be included into the token and also send to the client as an hardened cookie (flags: [HttpOnly + Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies) + [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies) + [cookie prefixes](https://googlechrome.github.io/samples/cookie-prefixes/)).
 - A SHA256 hash of the random string will be stored in the token (instead of the raw value) in order to prevent that any XSS issue allow the attacker to read the random string value and set the expected cookie.
 
 IP address will not be used because there some situation in which IP address can change during the same session like for example when a user access an application through his mobile and he change of mobile operator during the exchange then he change legitimately (often) is IP address. Moreover, using IP address can potentially cause issue at [European GDPR](http://www.eugdpr.org/) compliance level.
