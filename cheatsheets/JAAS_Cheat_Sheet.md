@@ -38,9 +38,9 @@ They are defined by the `LoginModule` and their usage is managed inside the `Log
 - Execution syntax:
 
 ```text
-
 Java –Djava.security.auth.login.config==packageName/packageName.config
         packageName.Main Stanza1
+
 Where:
     packageName is the directory containing the config file.
     packageName.config specifies the config file in the Java package, packageName.
@@ -85,7 +85,7 @@ In `Main()`, after the `LoginContext` reads the correct stanza from the config f
 
 ## login()
 
-Captures user supplied login information. The code snippet below declares an array of two callback objects which, when passed to the `callbackHandler.handle` method in the `callbackHandler.java` program, will be loaded with a user name and password provided interactively by the user.
+Captures user supplied login information. The code snippet below declares an array of two callback objects which, when passed to the `callbackHandler.handle` method in the `callbackHandler.java` program, will be loaded with a user name and password provided interactively by the user:
 
 ```java
 NameCallback nameCB = new NameCallback("Username");
@@ -113,7 +113,7 @@ Principals (i.e. Identities the subject has other than their login name) such as
 
 Below, is an example `commit()` method where first, for each group the authenticated user has membership in, the group name is added as a principal to the subject. The subject’s username is then added to their public credentials.
 
-Code snippet setting then adding any principals and a public credentials to a subject: :
+Code snippet setting then adding any principals and a public credentials to a subject:
 
 ```java
 public boolean commit() {
@@ -136,7 +136,7 @@ The `abort()` method is called when authentication doesn’t succeed. Before the
 
 ## logout()
 
-The release of the users principals and credentials when `LoginContext.logout` is called.
+The release of the users principals and credentials when `LoginContext.logout` is called:
 
 ```java
 public boolean logout() { 
@@ -147,7 +147,7 @@ public boolean logout() {
         subject.getPublicCredentials().removeAll(creds);
         return true;
     } else {
-        return false;
+        return false;
     }
 }
 ```
