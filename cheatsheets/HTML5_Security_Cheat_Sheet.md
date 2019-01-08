@@ -1,110 +1,83 @@
----
-title: HTML5 Security Cheat Sheet
-permalink: /HTML5_Security_Cheat_Sheet/
----
-
-`__NOTOC__`
-
-<div style="width:100%;height:160px;border:0,margin:0;overflow: hidden;">
-[link=](/File:Cheatsheets-header.jpg\ "wikilink")
-
-</div>
-{\\| style="padding: 0;margin:0;margin-top:10px;text-align:left;" \\|- \\| valign="top" style="border-right: 1px dotted gray;padding-right:25px;" \\| Last revision (mm/dd/yy): **//**
-
-Introduction
-============
-
-`__TOC__`
+# Introduction
 
 The following cheat sheet serves as a guide for implementing HTML 5 in a secure fashion.
 
-Communication APIs
-==================
+# Communication APIs
 
-Web Messaging
--------------
+## Web Messaging
 
 Web Messaging (also known as Cross Domain Messaging) provides a means of messaging between documents from different origins in a way that is generally safer than the multiple hacks used in the past to accomplish this task. However, there are still some recommendations to keep in mind:
 
--   When posting a message, explicitly state the expected origin as the second argument to `postMessage` rather than `*` in order to prevent sending the message to an unknown origin after a redirect or some other means of the target window's origin changing.
--   The receiving page should **always**:
-    -   Check the `origin` attribute of the sender to verify the data is originating from the expected location.
-    -   Perform input validation on the `data` attribute of the event to ensure that it's in the desired format.
--   Don't assume you have control over the `data` attribute. A single [Cross Site Scripting](/Cross-site_Scripting_(XSS)\ "wikilink") flaw in the sending page allows an attacker to send messages of any given format.
--   Both pages should only interpret the exchanged messages as **data**. Never evaluate passed messages as code (e.g. via `eval()`) or insert it to a page DOM (e.g. via `innerHTML`), as that would create a DOM-based XSS vulnerability. For more information see [DOM based XSS Prevention Cheat Sheet](/DOM_based_XSS_Prevention_Cheat_Sheet\ "wikilink").
--   To assign the data value to an element, instead of using a insecure method like `element.innerHTML` `=` `data;`, use the safer option: `element.textContent` `=` `data;`
--   Check the origin properly exactly to match the FQDN(s) you expect. Note that the following code: `if(message.orgin.indexOf(".owasp.org")!=-1)` `{` `/*` `...` `*/` `}` is very insecure and will not have the desired behavior as `www.owasp.org.attacker.com` will match.
--   If you need to embed external content/untrusted gadgets and allow user-controlled scripts (which is highly discouraged), consider using a JavaScript rewriting framework such as [Google Caja](http://code.google.com/p/google-caja/) or check the information on [sandboxed frames](/#Sandboxed_frames\ "wikilink").
+- When posting a message, explicitly state the expected origin as the second argument to `postMessage` rather than `*` in order to prevent sending the message to an unknown origin after a redirect or some other means of the target window's origin changing.
+- The receiving page should **always**:
+    - Check the `origin` attribute of the sender to verify the data is originating from the expected location.
+    - Perform input validation on the `data` attribute of the event to ensure that it's in the desired format.
+- Don't assume you have control over the `data` attribute. A single [Cross Site Scripting](XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet.md) flaw in the sending page allows an attacker to send messages of any given format.
+- Both pages should only interpret the exchanged messages as **data**. Never evaluate passed messages as code (e.g. via `eval()`) or insert it to a page DOM (e.g. via `innerHTML`), as that would create a DOM-based XSS vulnerability. For more information see [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md).
+- To assign the data value to an element, instead of using a insecure method like `element.innerHTML=data;`, use the safer option: `element.textContent=data;`
+- Check the origin properly exactly to match the FQDN(s) you expect. Note that the following code: `if(message.orgin.indexOf(".owasp.org")!=-1) { /* ... */ }` is very insecure and will not have the desired behavior as `www.owasp.org.attacker.com` will match.
+- If you need to embed external content/untrusted gadgets and allow user-controlled scripts (which is highly discouraged), consider using a JavaScript rewriting framework such as [Google Caja](http://code.google.com/p/google-caja/) or check the information on [sandboxed frames](HTML5_Security_Cheat_Sheet#Sandboxed_frames).
 
-Cross Origin Resource Sharing
------------------------------
+## Cross Origin Resource Sharing
 
--   Validate URLs passed to `XMLHttpRequest.open`. Current browsers allow these URLs to be cross domain; this behavior can lead to code injection by a remote attacker. Pay extra attention to absolute URLs.
--   Ensure that URLs responding with `Access-Control-Allow-Origin:` `*` do not include any sensitive content or information that might aid attacker in further attacks. Use the `Access-Control-Allow-Origin` header only on chosen URLs that need to be accessed cross-domain. Don't use the header for the whole domain.
--   Allow only selected, trusted domains in the `Access-Control-Allow-Origin` header. Prefer whitelisting domains over blacklisting or allowing any domain (do not use `*` wildcard nor blindly return the `Origin` header content without any checks).
--   Keep in mind that CORS does not prevent the requested data from going to an unauthenticated location. It's still important for the server to perform usual [CSRF](/Cross-Site_Request_Forgery_(CSRF)\ "wikilink") prevention.
--   While the RFC recommends a pre-flight request with the `OPTIONS` verb, current implementations might not perform this request, so it's important that "ordinary" (`GET` and `POST`) requests perform any access control necessary.
--   Discard requests received over plain HTTP with HTTPS origins to prevent mixed content bugs.
--   Don't rely only on the Origin header for Access Control checks. Browser always sends this header in CORS requests, but may be spoofed outside the browser. Application-level protocols should be used to protect sensitive data.
+- Validate URLs passed to `XMLHttpRequest.open`. Current browsers allow these URLs to be cross domain; this behavior can lead to code injection by a remote attacker. Pay extra attention to absolute URLs.
+- Ensure that URLs responding with `Access-Control-Allow-Origin: *` do not include any sensitive content or information that might aid attacker in further attacks. Use the `Access-Control-Allow-Origin` header only on chosen URLs that need to be accessed cross-domain. Don't use the header for the whole domain.
+- Allow only selected, trusted domains in the `Access-Control-Allow-Origin` header. Prefer whitelisting domains over blacklisting or allowing any domain (do not use `*` wildcard nor blindly return the `Origin` header content without any checks).
+- Keep in mind that CORS does not prevent the requested data from going to an unauthenticated location. It's still important for the server to perform usual [CSRF](Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet.md) prevention.
+- While the RFC recommends a pre-flight request with the `OPTIONS` verb, current implementations might not perform this request, so it's important that "ordinary" (`GET` and `POST`) requests perform any access control necessary.
+- Discard requests received over plain HTTP with HTTPS origins to prevent mixed content bugs.
+- Don't rely only on the Origin header for Access Control checks. Browser always sends this header in CORS requests, but may be spoofed outside the browser. Application-level protocols should be used to protect sensitive data.
 
-WebSockets
-----------
+## WebSockets
 
--   Drop backward compatibility in implemented client/servers and use only protocol versions above hybi-00. Popular Hixie-76 version (hiby-00) and older are outdated and insecure.
+- Drop backward compatibility in implemented client/servers and use only protocol versions above hybi-00. Popular Hixie-76 version (hiby-00) and older are outdated and insecure.
 -   The recommended version supported in latest versions of all current browsers is [RFC 6455](http://tools.ietf.org/html/rfc6455) (supported by Firefox 11+, Chrome 16+, Safari 6, Opera 12.50, and IE10).
--   While it's relatively easy to tunnel TCP services through WebSockets (e.g. VNC, FTP), doing so enables access to these tunneled services for the in-browser attacker in case of a Cross Site Scripting attack. These services might also be called directly from a malicious page or program.
--   The protocol doesn't handle authorization and/or authentication. Application-level protocols should handle that separately in case sensitive data is being transferred.
--   Process the messages received by the websocket as data. Don't try to assign it directly to the DOM nor evaluate as code. If the response is JSON, never use the insecure eval() function; use the safe option JSON.parse() instead.
--   Endpoints exposed through the [`ws://`](ws://) protocol are easily reversible to plain text. Only [`wss://`](wss://) (WebSockets over SSL/TLS) should be used for protection against Man-In-The-Middle attacks.
--   Spoofing the client is possible outside a browser, so the WebSockets server should be able to handle incorrect/malicious input. Always validate input coming from the remote site, as it might have been altered.
--   When implementing servers, check the `Origin:` header in the Websockets handshake. Though it might be spoofed outside a browser, browsers always add the Origin of the page that initiated the Websockets connection.
--   As a WebSockets client in a browser is accessible through JavaScript calls, all Websockets communication can be spoofed or hijacked through [Cross Site Scripting](/Cross_Site_Scripting_Flaw\ "wikilink"). Always validate data coming through a WebSockets connection.
+- While it's relatively easy to tunnel TCP services through WebSockets (e.g. VNC, FTP), doing so enables access to these tunneled services for the in-browser attacker in case of a Cross Site Scripting attack. These services might also be called directly from a malicious page or program.
+- The protocol doesn't handle authorization and/or authentication. Application-level protocols should handle that separately in case sensitive data is being transferred.
+- Process the messages received by the websocket as data. Don't try to assign it directly to the DOM nor evaluate as code. If the response is JSON, never use the insecure `eval()` function; use the safe option JSON.parse() instead.
+- Endpoints exposed through the `ws://` protocol are easily reversible to plain text. Only `wss://` (WebSockets over SSL/TLS) should be used for protection against Man-In-The-Middle attacks.
+- Spoofing the client is possible outside a browser, so the WebSockets server should be able to handle incorrect/malicious input. Always validate input coming from the remote site, as it might have been altered.
+- When implementing servers, check the `Origin:` header in the Websockets handshake. Though it might be spoofed outside a browser, browsers always add the Origin of the page that initiated the Websockets connection.
+- As a WebSockets client in a browser is accessible through JavaScript calls, all Websockets communication can be spoofed or hijacked through [Cross Site Scripting](https://www.owasp.org/index.php/Cross_Site_Scripting_Flaw). Always validate data coming through a WebSockets connection.
 
-Server-Sent Events
-------------------
+## Server-Sent Events
 
--   Validate URLs passed to the `EventSource` constructor, even though only same-origin URLs are allowed.
--   As mentioned before, process the messages (`event.data`) as data and never evaluate the content as HTML or script code.
--   Always check the origin attribute of the message (`event.origin`) to ensure the message is coming from a trusted domain. Use a whitelist approach.
+- Validate URLs passed to the `EventSource` constructor, even though only same-origin URLs are allowed.
+- As mentioned before, process the messages (`event.data`) as data and never evaluate the content as HTML or script code.
+- Always check the origin attribute of the message (`event.origin`) to ensure the message is coming from a trusted domain. Use a whitelist approach.
 
-Storage APIs
-============
+# Storage APIs
 
-Local Storage
--------------
+## Local Storage
 
--   Also known as Offline Storage, Web Storage. Underlying storage mechanism may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it's recommended not to store any sensitive information in local storage.
--   Use the object sessionStorage instead of localStorage if persistent storage is not needed. sessionStorage object is available only to that window/tab until the window is closed.
--   A single [Cross Site Scripting](/Cross-site_Scripting_(XSS)\ "wikilink") can be used to steal all the data in these objects, so again it's recommended not to store sensitive information in local storage.
--   A single [Cross Site Scripting](/Cross-site_Scripting_(XSS)\ "wikilink") can be used to load malicious data into these objects too, so don't consider objects in these to be trusted.
--   Pay extra attention to “localStorage.getItem” and “setItem” calls implemented in HTML5 page. It helps in detecting when developers build solutions that put sensitive information in local storage, which is a bad practice.
--   Do not store session identifiers in local storage as the data is always accesible by JavaScript. Cookies can mitigate this risk using the `httpOnly` flag.
--   There is no way to restrict the visibility of an object to a specific path like with the attribute path of HTTP Cookies, every object is shared within an origin and protected with the Same Origin Policy. Avoid host multiple applications on the same origin, all of them would share the same localStorage object, use different subdomains instead.
+- Also known as Offline Storage, Web Storage. Underlying storage mechanism may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it's recommended not to store any sensitive information in local storage.
+- Use the object sessionStorage instead of localStorage if persistent storage is not needed. sessionStorage object is available only to that window/tab until the window is closed.
+- A single [Cross Site Scripting](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)) can be used to steal all the data in these objects, so again it's recommended not to store sensitive information in local storage.
+- A single [Cross Site Scripting](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)) can be used to load malicious data into these objects too, so don't consider objects in these to be trusted.
+- Pay extra attention to “localStorage.getItem” and “setItem” calls implemented in HTML5 page. It helps in detecting when developers build solutions that put sensitive information in local storage, which is a bad practice.
+- Do not store session identifiers in local storage as the data is always accesible by JavaScript. Cookies can mitigate this risk using the `httpOnly` flag.
+- There is no way to restrict the visibility of an object to a specific path like with the attribute path of HTTP Cookies, every object is shared within an origin and protected with the Same Origin Policy. Avoid host multiple applications on the same origin, all of them would share the same localStorage object, use different subdomains instead.
 
-Client-side databases
----------------------
+## Client-side databases
 
--   On November 2010, the W3C announced Web SQL Database (relational SQL database) as a deprecated specification. A new standard Indexed Database API or IndexedDB (formerly WebSimpleDB) is actively developed, which provides key/value database storage and methods for performing advanced queries.
--   Underlying storage mechanisms may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it's recommended not to store any sensitive information in local storage.
--   If utilized, WebDatabase content on the client side can be vulnerable to SQL injection and needs to have proper validation and parameterization.
--   Like Local Storage, a single [Cross Site Scripting](/Cross-site_Scripting_(XSS)\ "wikilink") can be used to load malicious data into a web database as well. Don't consider data in these to be trusted.
+- On November 2010, the W3C announced Web SQL Database (relational SQL database) as a deprecated specification. A new standard Indexed Database API or IndexedDB (formerly WebSimpleDB) is actively developed, which provides key/value database storage and methods for performing advanced queries.
+- Underlying storage mechanisms may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it's recommended not to store any sensitive information in local storage.
+- If utilized, WebDatabase content on the client side can be vulnerable to SQL injection and needs to have proper validation and parameterization.
+- Like Local Storage, a single [Cross Site Scripting](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)) can be used to load malicious data into a web database as well. Don't consider data in these to be trusted.
 
-Geolocation
-===========
+# Geolocation
 
--   The Geolocation RFC recommends that the user agent ask the user's permission before calculating location. Whether or how this decision is remembered varies from browser to browser. Some user agents require the user to visit the page again in order to turn off the ability to get the user's location without asking, so for privacy reasons, it's recommended to require user input before calling `getCurrentPosition` or `watchPosition`.
+- The Geolocation RFC recommends that the user agent ask the user's permission before calculating location. Whether or how this decision is remembered varies from browser to browser. Some user agents require the user to visit the page again in order to turn off the ability to get the user's location without asking, so for privacy reasons, it's recommended to require user input before calling `getCurrentPosition` or `watchPosition`.
 
-Web Workers
-===========
+# Web Workers
 
--   Web Workers are allowed to use `XMLHttpRequest` object to perform in-domain and Cross Origin Resource Sharing requests. See relevant section of this Cheat Sheet to ensure CORS security.
--   While Web Workers don't have access to DOM of the calling page, malicious Web Workers can use excessive CPU for computation, leading to Denial of Service condition or abuse Cross Origin Resource Sharing for further exploitation. Ensure code in all Web Workers scripts is not malevolent. Don't allow creating Web Worker scripts from user supplied input.
--   Validate messages exchanged with a Web Worker. Do not try to exchange snippets of Javascript for evaluation e.g. via eval() as that could introduce a [DOM Based XSS](/DOM_Based_XSS\ "wikilink") vulnerability.
+- Web Workers are allowed to use `XMLHttpRequest` object to perform in-domain and Cross Origin Resource Sharing requests. See relevant section of this Cheat Sheet to ensure CORS security.
+- While Web Workers don't have access to DOM of the calling page, malicious Web Workers can use excessive CPU for computation, leading to Denial of Service condition or abuse Cross Origin Resource Sharing for further exploitation. Ensure code in all Web Workers scripts is not malevolent. Don't allow creating Web Worker scripts from user supplied input.
+- Validate messages exchanged with a Web Worker. Do not try to exchange snippets of Javascript for evaluation e.g. via `eval()` as that could introduce a [DOM Based XSS](DOM_based_XSS_Prevention_Cheat_Sheet.md) vulnerability.
 
-Tabnabbing
-==========
+# Tabnabbing
 
-Attack is described in details into this [article](/Reverse_Tabnabbing\ "wikilink").
+Attack is described in details into this [article](https://www.owasp.org/index.php/Reverse_Tabnabbing).
 
 To resume, it's the capacity from a new opened page to act on parent page's content or location via the back link exposed by the **opener** javascript object instance.
 
@@ -112,16 +85,16 @@ It apply to html link or javascript `window.open` function using the attribute/i
 
 To prevent this issue the following actions are available:
 
-1.  Cut the back link between the parent and the child pages:
-    -   For html link:
-        -   To cut this back link then add the attribute `rel="noopener"` on the tag used to create the link from the parent page to the child page. This attribute value cut the link but, depending on the browser, let referrer information be present in the request to the child page.
-        -   To remove also the referrer information then use this attribute value: `rel="noopener` `noreferrer"`.
-    -   For javascript `window.open` function, add the values `noopener,noreferrer` in the **[windowFeatures](https://developer.mozilla.org/en-US/docs/Web/API/Window/open)** parameter of the `window.open` function.
+Cut the back link between the parent and the child pages:
+- For html link:
+    - To cut this back link then add the attribute `rel="noopener"` on the tag used to create the link from the parent page to the child page. This attribute value cut the link but, depending on the browser, let referrer information be present in the request to the child page.
+    - To remove also the referrer information then use this attribute value: `rel="noopener noreferrer"`.
+- For javascript `window.open` function, add the values `noopener,noreferrer` in the [windowFeatures](https://developer.mozilla.org/en-US/docs/Web/API/Window/open) parameter of the `window.open` function.
 
 As the behavior using the elements above is different between the browsers either using html link or javascript to open a window (or tab) then use this configuration to maximize the cross supports:
 
--   For html link, add the attribute `rel="noopener` `noreferrer"` for every links.
--   For Javascript, use this function to open a window (or tab):
+- For html link, add the attribute `rel="noopener noreferrer"` for every links.
+- For Javascript, use this function to open a window (or tab):
 
 ``` javascript
 function openPopup(url, name, windowFeatures){
@@ -132,96 +105,58 @@ function openPopup(url, name, windowFeatures){
 }
 ```
 
--   Add the HTTP response header `Referrer-Policy:` `no-referrer` the every HTTP responses send by the application ([Header Referrer-Policy information](/OWASP_Secure_Headers_Project#rp\ "wikilink")). This configuration will ensure that no referrer information is sent along with requests from page.
+- Add the HTTP response header `Referrer-Policy: no-referrer` to every HTTP responses send by the application ([Header Referrer-Policy information](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#rp). This configuration will ensure that no referrer information is sent along with requests from page.
 
 Compatibility matrix:
 
--   <https://caniuse.com/#search=noopener>
--   <https://caniuse.com/#search=noreferrer>
--   <https://caniuse.com/#feat=referrer-policy>
+- [noopener](https://caniuse.com/#search=noopener)
+- [noreferrer](https://caniuse.com/#search=noreferrer)
+- [referrer-policy](https://caniuse.com/#feat=referrer-policy)
 
-Sandboxed frames
-================
+# Sandboxed frames
 
--   Use the `sandbox` attribute of an `iframe` for untrusted content.
--   The `sandbox` attribute of an `iframe` enables restrictions on content within a `iframe`. The following restrictions are active when the `sandbox` attribute is set:
+- Use the `sandbox` attribute of an `iframe` for untrusted content.
+- The `sandbox` attribute of an `iframe` enables restrictions on content within a `iframe`. The following restrictions are active when the `sandbox` attribute is set:
     1.  All markup is treated as being from a unique origin.
     2.  All forms and scripts are disabled.
     3.  All links are prevented from targeting other browsing contexts.
     4.  All features that triggers automatically are blocked.
     5.  All plugins are disabled.
 
-It is possible to have a [fine-grained control](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-iframe-element.html#attr-iframe-sandbox) over `iframe` capabilities using the value of the `sandbox` attribute.
+It is possible to have a [fine-grained control](https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-sandbox) over `iframe` capabilities using the value of the `sandbox` attribute.
 
--   In old versions of user agents where this feature is not supported, this attribute will be ignored. Use this feature as an additional layer of protection or check if the browser supports sandboxed frames and only show the untrusted content if supported.
--   Apart from this attribute, to prevent Clickjacking attacks and unsolicited framing it is encouraged to use the header `X-Frame-Options` which supports the `deny` and `same-origin` values. Other solutions like framebusting `if(window!==` `window.top)` `{` `window.top.location` `=` `location;` `}` are not recommended.
+- In old versions of user agents where this feature is not supported, this attribute will be ignored. Use this feature as an additional layer of protection or check if the browser supports sandboxed frames and only show the untrusted content if supported.
+- Apart from this attribute, to prevent Clickjacking attacks and unsolicited framing it is encouraged to use the header `X-Frame-Options` which supports the `deny` and `same-origin` values. Other solutions like framebusting `if(window!==window.top) { window.top.location=location;}` are not recommended.
 
-Offline Applications
-====================
+# Offline Applications
 
--   Whether the user agent requests permission to the user to store data for offline browsing and when this cache is deleted varies from one browser to the next. Cache poisoning is an issue if a user connects through insecure networks, so for privacy reasons it is encouraged to require user input before sending any `manifest` file.
--   Users should only cache trusted websites and clean the cache after browsing through open or insecure networks.
+- Whether the user agent requests permission to the user to store data for offline browsing and when this cache is deleted varies from one browser to the next. Cache poisoning is an issue if a user connects through insecure networks, so for privacy reasons it is encouraged to require user input before sending any `manifest` file.
+- Users should only cache trusted websites and clean the cache after browsing through open or insecure networks.
 
-Progressive Enhancements and Graceful Degradation Risks
-=======================================================
+# Progressive Enhancements and Graceful Degradation Risks
 
--   The best practice now is to determine the capabilities that a browser supports and augment with some type of substitute for capabilities that are not directly supported. This may mean an onion-like element, e.g. falling through to a Flash Player if the
-    <video>
-    tag is unsupported, or it may mean additional scripting code from various sources that should be code reviewed.
+- The best practice now is to determine the capabilities that a browser supports and augment with some type of substitute for capabilities that are not directly supported. This may mean an onion-like element, e.g. falling through to a Flash Player if the `<video>` tag is unsupported, or it may mean additional scripting code from various sources that should be code reviewed.
 
-HTTP Headers to enhance security
-================================
+# HTTP Headers to enhance security
 
-X-Frame-Options
----------------
+Consult the project [OWASP Secure Headers](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers) in order to obtains the list of HTTP security headers that an application should use to enable defenses at browser level.
 
--   This header can be used to prevent ClickJacking in modern browsers.
--   Use the `same-origin` attribute to allow being framed from urls of the same origin or `deny` to block all. Example: `X-Frame-Options:` `DENY`
--   For more information on Clickjacking Defense please see the [Clickjacking Defense Cheat Sheet](/Clickjacking_Defense_Cheat_Sheet "wikilink").
-
-X-XSS-Protection
-----------------
-
--   Enable XSS filter (only works for Reflected XSS).
--   Example: `X-XSS-Protection:` `1;` `mode=block`
-
-Strict Transport Security
--------------------------
-
--   Force every browser request to be sent over TLS/SSL (this can prevent SSL strip attacks).
--   Use includeSubDomains.
--   Example: Strict-Transport-Security: max-age=8640000; includeSubDomains
-
-Content Security Policy
------------------------
-
--   Policy to define a set of content restrictions for web resources which aims to mitigate web application vulnerabilities such as Cross Site Scripting.
--   Example: Content-Security-Policy: allow 'self'; img-src \*; object-src media.example.com; script-src js.example.com
-
-Origin
-------
-
--   Sent by CORS/WebSockets requests.
--   There is a proposal to use this header to mitigate CSRF attacks, but is not yet implemented by vendors for this purpose.
-
-WebSocket implementation hints
-==============================
+# WebSocket implementation hints
 
 In addition to the elements mentioned above, this is the list of area for which caution must be taken during the implementation.
 
--   Access filtering through the "Origin" HTTP request header
--   Input / output validation
--   Authentication
--   Authorization
--   Access token explicit invalidation
--   Confidentiality and Integrity
+- Access filtering through the "Origin" HTTP request header
+- Input / output validation
+- Authentication
+- Authorization
+- Access token explicit invalidation
+- Confidentiality and Integrity
 
 The section below will propose some implementation hints on every area and will be along with an application example showing all the points described.
 
 The complete source code of the example application is available [here](https://github.com/righettod/poc-websocket).
 
-Access filtering
-----------------
+## Access filtering
 
 During a websocket channel initiation, the browser send the **Origin** HTTP request header that contain th source domain initiation the request to handshake. Event if this header can be spoofed in a forged HTTP request (not browser based), it cannot be overrided or forced in a browser context. It then represent a good candidate to apply filtering according to an expected value.
 
@@ -275,12 +210,11 @@ public class EndpointConfigurator extends ServerEndpointConfig.Configurator {
 }
 ```
 
-Authentication and Input/Output validation
-------------------------------------------
+## Authentication and Input/Output validation
 
 When using websocket as communication channel, it's important to use an authentication method allowing the user to receive an access *Token* that is not automatically sent by the browser and then must be expliclty sent by the client code during each exchange.
 
-[JSON Web Token](https://jwt.io/introduction/) is a good candidate because it allow to transport access ticket information in a stateless and not alterable way. Moreover, it define a validity timeframe. You can find additional information about JWT token hardening on this [article](https://www.owasp.org/index.php/JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java).
+[JSON Web Token](https://jwt.io/introduction/) is a good candidate because it allow to transport access ticket information in a stateless and not alterable way. Moreover, it define a validity timeframe. You can find additional information about JWT token hardening on this [cheat sheet](JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java.md).
 
 [JSON Validation Schema](http://json-schema.org/) are used to define and validate the expected content in input and ouput messages.
 
@@ -430,7 +364,7 @@ public class AuthenticationMessageHandler implements MessageHandler.Whole<Authen
             //Send response
             try {
                 this.clientConnection.sendObject(response);
-            } catch (IOException \| EncodeException e) {
+            } catch (IOException | EncodeException e) {
                 LOG.error("[AuthenticationMessageHandler] Error occur in response object sending.", e);
             }
         }
@@ -449,7 +383,7 @@ public class AuthenticationMessageHandler implements MessageHandler.Whole<Authen
 }
 ```
 
-**Utility class to manage JWT token** - Handle the issuing and the validation of the access token. Simple JWT token has been used for the example (focus was made here on the global WS endpoint implementation) here without extra hardening (see [this article](https://www.owasp.org/index.php/JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java) to apply extra hardening on the JWT token)
+**Utility class to manage JWT token** - Handle the issuing and the validation of the access token. Simple JWT token has been used for the example (focus was made here on the global WS endpoint implementation) here without extra hardening (see this [cheat sheet](JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java.md) to apply extra hardening on the JWT token)
 
 ``` java
 import com.auth0.jwt.JWT;
@@ -511,48 +445,50 @@ public class AuthenticationUtils {
 
 **JSON schema of the input and output authentication message** - Define the expected structure of the input and output messages from the authentication endpoint point of view
 
-    {
-      "$schema": "http://json-schema.org/schema#",
-      "title": "AuthenticationRequest",
-      "type": "object",
-      "properties": {
-        "login": {
-          "type": "string",
-          "pattern": "^[a-zA-Z]{1,10}$"
-        },
-        "password": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "login",
-        "password"
-      ]
-    }
-
-    {
+```json
+{
     "$schema": "http://json-schema.org/schema#",
-    "title": "AuthenticationResponse",
+    "title": "AuthenticationRequest",
     "type": "object",
     "properties": {
-      "isSuccess;": {
-        "type": "boolean"
-      },
-      "token": {
+    "login": {
         "type": "string",
-        "pattern": "^[a-zA-Z0-9+/=\\._-]{0,500}$"
-      },
-      "message": {
-        "type": "string",
-        "pattern": "^[a-zA-Z0-9!\\s]{0,100}$"
-      }
+        "pattern": "^[a-zA-Z]{1,10}$"
+    },
+    "password": {
+        "type": "string"
+    }
     },
     "required": [
-      "isSuccess",
-      "token",
-      "message"
+    "login",
+    "password"
     ]
+}
+
+{
+"$schema": "http://json-schema.org/schema#",
+"title": "AuthenticationResponse",
+"type": "object",
+"properties": {
+    "isSuccess;": {
+    "type": "boolean"
+    },
+    "token": {
+    "type": "string",
+    "pattern": "^[a-zA-Z0-9+/=\\._-]{0,500}$"
+    },
+    "message": {
+    "type": "string",
+    "pattern": "^[a-zA-Z0-9!\\s]{0,100}$"
     }
+},
+"required": [
+    "isSuccess",
+    "token",
+    "message"
+]
+}
+```    
 
 **Authentication message decoder and encoder** - Perform the JSON serialization/deserialization and the input/output validation using dedicated JSON Schema. It allow to systematically ensure that all messages received and sent by the endpoint strictly respect the expected structure and content.
 
@@ -611,7 +547,7 @@ public class AuthenticationRequestDecoder implements Decoder.Text<Authentication
                 //Simply reject the message here: Don't care about error details...
                 throw new DecodeException(s, "Validation of the provided representation failed !");
             }
-        } catch (IOException \| ProcessingException e) {
+        } catch (IOException | ProcessingException e) {
             throw new DecodeException(s, "Cannot validate the provided representation to a JSON valid representation !", e);
         }
 
@@ -716,7 +652,7 @@ public class AuthenticationResponseEncoder implements Encoder.Text<Authenticatio
                 //Simply reject the message here: Don't care about error details...
                 throw new EncodeException(object, "Validation of the generated representation failed !");
             }
-        } catch (IOException \| ProcessingException e) {
+        } catch (IOException | ProcessingException e) {
             throw new EncodeException(object, "Cannot validate the generated representation to a JSON valid representation !", e);
         }
 
@@ -744,12 +680,15 @@ public class AuthenticationResponseEncoder implements Encoder.Text<Authenticatio
 
 Note that the same approach is used in the messages handling part of the POC. All messages exchanged between the client and the server are systematically validated using the same way, using dedicated JSON schemas linked to messages dedicated Encoder/Decoder (serialization/deserialization).
 
-Authorization and access token explicit invalidation
-----------------------------------------------------
+## Authorization and access token explicit invalidation
 
 Authorization information is stored in the access token using the JWT *Claim* feature (in the POC the name of the claim is *access_level*). Authorization is validated when a request is received and before any other action using the user input information.
 
-The access token is passed with every message sent to the message endpoint and a blacklist is used in order to allow the user to request an explicit token invalidation. Explicit token invalidation is interesting from a user point of view because, often when token are used, the validity timeframe of the token is relatively long (it's common to see a valid timeframe superior to 1 hour) so it's important to allow a user to have a way to indicate to the system "OK, i have finished my exchange with you so you can close our exchange session and cleanup associated links". It's help also a user to revoke itself is current access if a malicious concurrent access is detected using the same token (case of token stealing).
+The access token is passed with every message sent to the message endpoint and a blacklist is used in order to allow the user to request an explicit token invalidation. 
+
+Explicit token invalidation is interesting from a user point of view because, often when token are used, the validity timeframe of the token is relatively long (it's common to see a valid timeframe superior to 1 hour) so it's important to allow a user to have a way to indicate to the system "OK, i have finished my exchange with you so you can close our exchange session and cleanup associated links". 
+
+It's help also a user to revoke itself is current access if a malicious concurrent access is detected using the same token (case of token stealing).
 
 **Token blacklist** - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore
 
@@ -896,7 +835,7 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
 
             /*Step 2: Verify the authorization (access level)*/
             Claim accessLevel = decodedToken.getClaim("access_level");
-            if (accessLevel == null \|\| AccessLevel.valueOf(accessLevel.asString()) == null) {
+            if (accessLevel == null || AccessLevel.valueOf(accessLevel.asString()) == null) {
                 throw new IllegalAccessException("Token have an invalid access level claim !");
             }
 
@@ -937,7 +876,7 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
             //Send response
             try {
                 this.clientConnection.sendObject(response);
-            } catch (IOException \| EncodeException e) {
+            } catch (IOException | EncodeException e) {
                 LOG.error("[MessageHandler] Error occur in response object sending.", e);
             }
         }
@@ -945,19 +884,18 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
 }
 ```
 
-Confidentiality and Integrity
------------------------------
+## Confidentiality and Integrity
 
-If the raw version of the protocol is used (protocol **<WS://>**) then the transfered data are exposed to eavesdropping and potential on-the-fly alteration.
+If the raw version of the protocol is used (protocol `ws://`) then the transfered data are exposed to eavesdropping and potential on-the-fly alteration.
 
-Example of capture using Wireshark and searching for password exchanges in the stored PCAP file, not printable characters has been explicitly removed from the command result:
+Example of capture using [Wireshark](https://www.wireshark.org/) and searching for password exchanges in the stored PCAP file, not printable characters has been explicitly removed from the command result:
 
 ``` shell
 $ grep -aE '(password)' capture.pcap
 {"login":"bob","password":"bob123"}
 ```
 
-There is a way to check, at WebSocket endpoint level, if the channel is secure by calling the method *isSecure()* on the *session* object instance.
+There is a way to check, at WebSocket endpoint level, if the channel is secure by calling the method `isSecure()` on the *session* object instance.
 
 Example of implementation in the method of the endpoint in charge of setup the session and affect the message handler:
 
@@ -986,16 +924,18 @@ public void start(Session session) {
 }
 ```
 
-Expose WebSocket endpoints only on **[WSS](https://kaazing.com/html5-websocket-security-is-strong/)://** protocol (WebSockets over SSL/TLS) in order to ensure *Confidentiality* and *Integrity* of the traffic like using HTTP over SSL/TLS to secure HTTP exchanges.
+Expose WebSocket endpoints only on [wss://](https://kaazing.com/html5-websocket-security-is-strong/) protocol (WebSockets over SSL/TLS) in order to ensure *Confidentiality* and *Integrity* of the traffic like using HTTP over SSL/TLS to secure HTTP exchanges.
 
-Authors and Primary Editors
-===========================
+# Authors and Primary Editors
 
-{\\|class="wikitable" ! First !! Last !! Email \\|- \\| Mark \\|\\| Roxberry \\|\\| mark.roxberry \[at\] owasp.org \\|- \\| Krzysztof \\|\\| Kotowicz \\|\\| krzysztof \[at\] kotowicz.net \\|- \\| Will \\|\\| Stranathan \\|\\| will \[at\] cltnc.us \\|- \\| Shreeraj \\|\\| Shah \\|\\| shreeraj.shah \[at\] blueinfy.net \\|- \\| Juan \\|\\| Galiana Lara \\|\\| jgaliana \[at\] owasp.org \\|- \\| Dominique \\|\\| Righetto \\|\\| dominique.righetto \[at\] owasp.org \\|}
+Mark Roxberry mark.roxberry@owasp.org
 
-Other Cheatsheets
-=================
+Krzysztof Kotowicz krzysztof@kotowicz.net
 
-\\|}
+Will Stranathan will@cltnc.us
 
-[Category:Cheatsheets](/Category:Cheatsheets "wikilink")
+Shreeraj Shah shreeraj.shah@blueinfy.net
+
+Juan Galiana Lara jgaliana@owasp.org
+
+Dominique Righetto dominique.righetto@owasp.org
