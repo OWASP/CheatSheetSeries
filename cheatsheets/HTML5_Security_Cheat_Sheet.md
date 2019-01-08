@@ -177,7 +177,8 @@ import java.util.List;
  * Setup handshake rules applied to all WebSocket endpoints of the application.
  * Use to setup the Access Filtering using "Origin" HTTP header as input information.
  *
- * @see "http://docs.oracle.com/javaee/7/api/index.html?javax/websocket/server/ServerEndpointConfig.Configurator.html"
+ * @see "http://docs.oracle.com/javaee/7/api/index.html?javax/websocket/server/
+ * ServerEndpointConfig.Configurator.html"
  * @see "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin"
  */
 public class EndpointConfigurator extends ServerEndpointConfig.Configurator {
@@ -200,9 +201,11 @@ public class EndpointConfigurator extends ServerEndpointConfig.Configurator {
         boolean isAllowed = EXPECTED_ORIGINS.contains(originHeaderValue);
         String safeOriginValue = Encode.forHtmlContent(originHeaderValue);
         if (isAllowed) {
-            LOG.info("[EndpointConfigurator] New handshake request received from {} and was accepted.", safeOriginValue);
+            LOG.info("[EndpointConfigurator] New handshake request received from {} and was accepted.", 
+                      safeOriginValue);
         } else {
-            LOG.warn("[EndpointConfigurator] New handshake request received from {} and was rejected !", safeOriginValue);
+            LOG.warn("[EndpointConfigurator] New handshake request received from {} and was rejected !", 
+                      safeOriginValue);
         }
         return isAllowed;
     }
@@ -243,7 +246,9 @@ import javax.websocket.server.ServerEndpoint;
  * @see "http://docs.oracle.com/javaee/7/api/javax/websocket/server/ServerEndpointConfig.Configurator.html"
  * @see "http://svn.apache.org/viewvc/tomcat/trunk/webapps/examples/WEB-INF/classes/websocket/"
  */
-@ServerEndpoint(value = "/auth", configurator = EndpointConfigurator.class, subprotocols = {"authentication"}, encoders = {AuthenticationResponseEncoder.class}, decoders = {AuthenticationRequestDecoder.class})
+@ServerEndpoint(value = "/auth", configurator = EndpointConfigurator.class, 
+subprotocols = {"authentication"}, encoders = {AuthenticationResponseEncoder.class}, 
+decoders = {AuthenticationRequestDecoder.class})
 public class AuthenticationEndpoint {
 
     /**
@@ -258,7 +263,8 @@ public class AuthenticationEndpoint {
      */
     @OnOpen
     public void start(Session session) {
-        //Define connection idle timeout and message limits in order to mitigate as much as possible DOS attacks using massive connection opening or massive big messages sending
+        //Define connection idle timeout and message limits in order to mitigate as much as possible 
+        //DOS attacks using massive connection opening or massive big messages sending
         int msgMaxSize = 1024 * 1024;//1 MB
         session.setMaxIdleTimeout(60000);//1 minute
         session.setMaxTextMessageBufferSize(msgMaxSize);
@@ -267,7 +273,8 @@ public class AuthenticationEndpoint {
         LOG.info("[AuthenticationEndpoint] Session {} started", session.getId());
         //Affect a new message handler instance in order to process the exchange
         session.addMessageHandler(new AuthenticationMessageHandler(session.getBasicRemote()));
-        LOG.info("[AuthenticationEndpoint] Session {} message handler affected for processing", session.getId());
+        LOG.info("[AuthenticationEndpoint] Session {} message handler affected for processing", 
+                  session.getId());
     }
 
     /**
@@ -289,7 +296,8 @@ public class AuthenticationEndpoint {
      */
     @OnClose
     public void onClose(Session session, CloseReason closeReason) {
-        LOG.info("[AuthenticationEndpoint] Session {} closed: {}", session.getId(), closeReason.getReasonPhrase());
+        LOG.info("[AuthenticationEndpoint] Session {} closed: {}", session.getId(), 
+                  closeReason.getReasonPhrase());
     }
 
 }
@@ -415,14 +423,16 @@ public class AuthenticationUtils {
         Algorithm algorithm = Algorithm.HMAC256(loadSecret());
         Calendar c = Calendar.getInstance();
         c.add(Calendar.MINUTE, 30);
-        return JWT.create().withIssuer("WEBSOCKET-SERVER").withSubject(login).withExpiresAt(c.getTime()).withClaim("access_level", accessLevel.trim().toUpperCase(Locale.US)).sign(algorithm);
+        return JWT.create().withIssuer("WEBSOCKET-SERVER").withSubject(login).withExpiresAt(c.getTime())
+                  .withClaim("access_level", accessLevel.trim().toUpperCase(Locale.US)).sign(algorithm);
     }
 
     /**
      * Verify the validity of the provided JWT token
      *
      * @param token JWT token encoded to verify
-     * @return The verified and decoded token with user authentication and authorization (access level) information
+     * @return The verified and decoded token with user authentication and 
+     * authorization (access level) information
      * @throws Exception If any error occur during the token validation
      */
     public static DecodedJWT validateToken(String token) throws Exception {
@@ -432,7 +442,8 @@ public class AuthenticationUtils {
     }
 
     /**
-     * Load the JWT secret used to sign token using a byte array for secret storage in order to avoid persistent string in memory
+     * Load the JWT secret used to sign token using a byte array for secret storage in order 
+     * to avoid persistent string in memory
      *
      * @return The secret as byte array
      * @throws IOException If any error occur during the secret loading
@@ -511,7 +522,8 @@ import java.io.IOException;
 /**
  * Decode JSON text representation to an AuthenticationRequest object
  * <p>
- * As there one instance of the decoder class by endpoint session so we can use the JsonSchema as decoder instance variable.
+ * As there one instance of the decoder class by endpoint session so we can use the 
+ * JsonSchema as decoder instance variable.
  */
 public class AuthenticationRequestDecoder implements Decoder.Text<AuthenticationRequest> {
 
@@ -538,8 +550,10 @@ public class AuthenticationRequestDecoder implements Decoder.Text<Authentication
     public AuthenticationRequest decode(String s) throws DecodeException {
         try {
             //Validate the provided representation against the dedicated schema
-            //Use validation mode with report in order to enable further inspection/tracing of the error details
-            //Moreover the validation method "validInstance()" generate a NullPointerException if the representation do not respect the expected schema
+            //Use validation mode with report in order to enable further inspection/tracing 
+            //of the error details
+            //Moreover the validation method "validInstance()" generate a NullPointerException 
+            //if the representation do not respect the expected schema
             //so it's more proper to use the validation method with report
             ProcessingReport validationReport = this.validationSchema.validate(JsonLoader.fromString(s), true);
             //Ensure there no error
@@ -548,7 +562,8 @@ public class AuthenticationRequestDecoder implements Decoder.Text<Authentication
                 throw new DecodeException(s, "Validation of the provided representation failed !");
             }
         } catch (IOException | ProcessingException e) {
-            throw new DecodeException(s, "Cannot validate the provided representation to a JSON valid representation !", e);
+            throw new DecodeException(s, "Cannot validate the provided representation to a" 
+                                      + " JSON valid representation !", e);
         }
 
         return new Gson().fromJson(s, AuthenticationRequest.class);
@@ -561,12 +576,14 @@ public class AuthenticationRequestDecoder implements Decoder.Text<Authentication
     public boolean willDecode(String s) {
         boolean canDecode = false;
 
-        //If the provided JSON representation is empty/null then we indicate that representation cannot be decoded to our expected object
+        //If the provided JSON representation is empty/null then we indicate that 
+        //representation cannot be decoded to our expected object
         if (s == null \|\| s.trim().isEmpty()) {
             return canDecode;
         }
 
-        //Try to cast the provided JSON representation to our object to validate at least the structure (content validation is done during decoding)
+        //Try to cast the provided JSON representation to our object to validate at least 
+        //the structure (content validation is done during decoding)
         try {
             AuthenticationRequest test = new Gson().fromJson(s, AuthenticationRequest.class);
             canDecode = (test != null);
@@ -614,7 +631,8 @@ import java.io.IOException;
 /**
  * Encode AuthenticationResponse object to JSON text representation.
  * <p>
- * As there one instance of the encoder class by endpoint session so we can use the JsonSchema as encoder instance variable.
+ * As there one instance of the encoder class by endpoint session so we can use 
+ * the JsonSchema as encoder instance variable.
  */
 public class AuthenticationResponseEncoder implements Encoder.Text<AuthenticationResponse> {
 
@@ -643,8 +661,10 @@ public class AuthenticationResponseEncoder implements Encoder.Text<Authenticatio
         String json = new Gson().toJson(object);
         try {
             //Validate the generated representation against the dedicated schema
-            //Use validation mode with report in order to enable further inspection/tracing of the error details
-            //Moreover the validation method "validInstance()" generate a NullPointerException if the representation do not respect the expected schema
+            //Use validation mode with report in order to enable further inspection/tracing 
+            //of the error details
+            //Moreover the validation method "validInstance()" generate a NullPointerException 
+            //if the representation do not respect the expected schema
             //so it's more proper to use the validation method with report
             ProcessingReport validationReport = this.validationSchema.validate(JsonLoader.fromString(json), true);
             //Ensure there no error
@@ -702,16 +722,19 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Utility class to manage the access token that have been declared as no more usable (explicit user logout)
+ * Utility class to manage the access token that have been declared as no 
+ * more usable (explicit user logout)
  */
 public class AccessTokenBlacklistUtils {
     /**
-     * Message content send by user that indicate that the access token that come along the message must be blacklisted for further usage
+     * Message content send by user that indicate that the access token that 
+     * come along the message must be blacklisted for further usage
      */
     public static final String MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG = "INVALIDATE_TOKEN";
 
     /**
-     * Use cache to store blacklisted token hash in order to avoid memory exhaustion and be consistent because token are valid 30 minutes so the item live in cache 60 minutes
+     * Use cache to store blacklisted token hash in order to avoid memory exhaustion and be consistent 
+     * because token are valid 30 minutes so the item live in cache 60 minutes
      */
     private static final CacheAccess<String, String> TOKEN_CACHE;
 
@@ -845,8 +868,10 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
                 MessageUtils.MESSAGES_DB.put(decodedToken.getSubject(), new ArrayList<>());
             }
 
-            //Add message to the list of message of the user if the message is a not a token invalidation order otherwise add the token to the blacklist
-            if (AccessTokenBlacklistUtils.MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG.equalsIgnoreCase(message.getContent().trim())) {
+            //Add message to the list of message of the user if the message is a not a token invalidation 
+            //order otherwise add the token to the blacklist
+            if (AccessTokenBlacklistUtils.MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG
+                .equalsIgnoreCase(message.getContent().trim())) {
                 AccessTokenBlacklistUtils.addToken(message.getToken());
             } else {
                 MessageUtils.MESSAGES_DB.get(decodedToken.getSubject()).add(message.getContent());
@@ -855,13 +880,16 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
             //According to the access level of user either return only is message or return all message
             List<String> messages = new ArrayList<>();
             if (accessLevel.asString().equals(AccessLevel.USER.name())) {
-                MessageUtils.MESSAGES_DB.get(decodedToken.getSubject()).forEach(s -> messages.add(String.format("(%s): %s", decodedToken.getSubject(), s)));
+                MessageUtils.MESSAGES_DB.get(decodedToken.getSubject())
+                .forEach(s -> messages.add(String.format("(%s): %s", decodedToken.getSubject(), s)));
             } else if (accessLevel.asString().equals(AccessLevel.ADMIN.name())) {
-                MessageUtils.MESSAGES_DB.forEach((k, v) -> v.forEach(s -> messages.add(String.format("(%s): %s", k, s))));
+                MessageUtils.MESSAGES_DB.forEach((k, v) -> 
+                v.forEach(s -> messages.add(String.format("(%s): %s", k, s))));
             }
 
             //Build the response object indicating that exchange succeed
-            if (AccessTokenBlacklistUtils.MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG.equalsIgnoreCase(message.getContent().trim())) {
+            if (AccessTokenBlacklistUtils.MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG
+                .equalsIgnoreCase(message.getContent().trim())) {
                 response = new MessageResponse(true, messages, "Token added to the blacklist");
             }else{
                 response = new MessageResponse(true, messages, "");
@@ -871,7 +899,8 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
             LOG.error("[MessageHandler] Error occur in exchange process.", e);
             //Build the response object indicating that exchange fail
             //We send the error detail on client because ware are in POC (it will not the case in a real app)
-            response = new MessageResponse(false, new ArrayList<>(), "Error occur during exchange: " + e.getMessage());
+            response = new MessageResponse(false, new ArrayList<>(), "Error occur during exchange: "
+                       + e.getMessage());
         } finally {
             //Send response
             try {
@@ -912,7 +941,8 @@ public void start(Session session) {
     if(session.isSecure()) {
         session.addMessageHandler(new AuthenticationMessageHandler(session.getBasicRemote()));
     }else{
-        LOG.info("[AuthenticationEndpoint] Session {} do not use a secure channel so no message handler was affected for processing and session was explicitly closed !", session.getId());
+        LOG.info("[AuthenticationEndpoint] Session {} do not use a secure channel so no message handler " + 
+                 "was affected for processing and session was explicitly closed !", session.getId());
         try{
             session.close(new CloseReason(CloseReason.CloseCodes.CANNOT_ACCEPT,"Insecure channel used !"));
         }catch(IOException e){
