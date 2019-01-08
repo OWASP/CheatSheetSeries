@@ -191,7 +191,8 @@ public class EndpointConfigurator extends ServerEndpointConfig.Configurator {
     /**
      * Get the expected source origins from a JVM property in order to allow external configuration
      */
-    private static final List<String> EXPECTED_ORIGINS =  Arrays.asList(System.getProperty("source.origins").split(";"));
+    private static final List<String> EXPECTED_ORIGINS =  Arrays.asList(System.getProperty("source.origins")
+                                                          .split(";"));
 
     /**
      * {@inheritDoc}
@@ -539,7 +540,8 @@ public class AuthenticationRequestDecoder implements Decoder.Text<Authentication
      * @throws ProcessingException If any error occur during the schema loading
      */
     public AuthenticationRequestDecoder() throws IOException, ProcessingException {
-        JsonNode node = JsonLoader.fromFile(new File("src/main/resources/authentication-request-schema.json"));
+        JsonNode node = JsonLoader.fromFile(
+                        new File("src/main/resources/authentication-request-schema.json"));
         this.validationSchema = JsonSchemaFactory.byDefault().getJsonSchema(node);
     }
 
@@ -555,7 +557,8 @@ public class AuthenticationRequestDecoder implements Decoder.Text<Authentication
             //Moreover the validation method "validInstance()" generate a NullPointerException 
             //if the representation do not respect the expected schema
             //so it's more proper to use the validation method with report
-            ProcessingReport validationReport = this.validationSchema.validate(JsonLoader.fromString(s), true);
+            ProcessingReport validationReport = this.validationSchema.validate(JsonLoader.fromString(s), 
+                                                                               true);
             //Ensure there no error
             if (!validationReport.isSuccess()) {
                 //Simply reject the message here: Don't care about error details...
@@ -578,7 +581,7 @@ public class AuthenticationRequestDecoder implements Decoder.Text<Authentication
 
         //If the provided JSON representation is empty/null then we indicate that 
         //representation cannot be decoded to our expected object
-        if (s == null \|\| s.trim().isEmpty()) {
+        if (s == null || s.trim().isEmpty()) {
             return canDecode;
         }
 
@@ -648,7 +651,8 @@ public class AuthenticationResponseEncoder implements Encoder.Text<Authenticatio
      * @throws ProcessingException If any error occur during the schema loading
      */
     public AuthenticationResponseEncoder() throws IOException, ProcessingException {
-        JsonNode node = JsonLoader.fromFile(new File("src/main/resources/authentication-response-schema.json"));
+        JsonNode node = JsonLoader.fromFile(
+                        new File("src/main/resources/authentication-response-schema.json"));
         this.validationSchema = JsonSchemaFactory.byDefault().getJsonSchema(node);
     }
 
@@ -666,14 +670,16 @@ public class AuthenticationResponseEncoder implements Encoder.Text<Authenticatio
             //Moreover the validation method "validInstance()" generate a NullPointerException 
             //if the representation do not respect the expected schema
             //so it's more proper to use the validation method with report
-            ProcessingReport validationReport = this.validationSchema.validate(JsonLoader.fromString(json), true);
+            ProcessingReport validationReport = this.validationSchema.validate(JsonLoader.fromString(json),
+                                                                                true);
             //Ensure there no error
             if (!validationReport.isSuccess()) {
                 //Simply reject the message here: Don't care about error details...
                 throw new EncodeException(object, "Validation of the generated representation failed !");
             }
         } catch (IOException | ProcessingException e) {
-            throw new EncodeException(object, "Cannot validate the generated representation to a JSON valid representation !", e);
+            throw new EncodeException(object, "Cannot validate the generated representation to a"+
+                                              " JSON valid representation !", e);
         }
 
         return json;
@@ -946,7 +952,8 @@ public void start(Session session) {
         try{
             session.close(new CloseReason(CloseReason.CloseCodes.CANNOT_ACCEPT,"Insecure channel used !"));
         }catch(IOException e){
-            LOG.error("[AuthenticationEndpoint] Session {} cannot be explicitly closed !", session.getId(), e);
+            LOG.error("[AuthenticationEndpoint] Session {} cannot be explicitly closed !", session.getId(),
+                      e);
         }
 
     }
