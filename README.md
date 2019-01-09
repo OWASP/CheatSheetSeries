@@ -89,7 +89,7 @@ The file **.markdownlinkcheck.json** define the configuration used to validate u
     * Create labels for: Request from OPC, Internal task...
 * [ ] **Task 07:** Create all the materials to generate a PDF file of all the CS, automate it via a CircleCI job.
 * [x] **Task 08:** Create a template for the pull request in order to add a checklist like the one created by the MSTG.
-* [x] **Task 09:** Add a CI job to validate automatically the Pull Request when they are submitted.
+* [x] **Task 09:** Add a CI job to [validate automatically the Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) when they are submitted.
 
 # License
 
