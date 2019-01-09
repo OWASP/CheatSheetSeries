@@ -14,6 +14,7 @@ from collections import OrderedDict
 cs_md_link_template = "[%s](cheatsheets/%s)."
 header_template = "# %s\n\n"
 top_menu_template = "[%s](Index.md#%s)"
+cs_count_template = "**%s** cheat sheets available."
 
 # Scan all CS files
 index = {}
@@ -28,13 +29,15 @@ index = OrderedDict(sorted(index.items()))
 
 # Generate the index file
 with open("../Index.md", "w") as index_file:
+    index_count = len(index)
+    index_file.write(cs_count_template % index_count)
+    index_file.write("\n\n")
     # Generate the top menu
     for letter in index:
         index_file.write(top_menu_template % (letter, letter.lower()))
         index_file.write(" ")
     index_file.write("\n\n")    
     # Generate letter sections
-    index_count = len(index)
     j = 0
     for letter in index:
         cs_count =  len(index[letter])
@@ -51,4 +54,4 @@ with open("../Index.md", "w") as index_file:
         if j != index_count:
             index_file.write("\n")
 
-print("Update finished.")
+print("Index updated.")
