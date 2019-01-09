@@ -64,7 +64,7 @@ A mass conversion from Mediawiki to GitHub flavored Markdown format has been per
 
 # Editor & validation policy
 
-[Visual Studio Code](https://code.visualstudio.com/) is used for the work on the markdown files. 
+[Visual Studio Code](https://code.visualstudio.com/) is used for the work on the markdown files. It is also used for the work on the scripts.
 
 The file **Project.code-workspace** is the workspace file in order to open the project in VSCode.
 
