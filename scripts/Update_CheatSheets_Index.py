@@ -30,7 +30,7 @@ index = OrderedDict(sorted(index.items()))
 with open("../Index.md", "w") as index_file:
     # Generate the top menu
     for letter in index:
-        index_file.write(top_menu_template % (letter, letter))
+        index_file.write(top_menu_template % (letter, letter.lower()))
         index_file.write(" ")
     index_file.write("\n\n")    
     # Generate letter sections
