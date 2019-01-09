@@ -65,49 +65,48 @@ You can find a copy of the following values in a ready-to-go php.ini file at: ht
  
 #### PHP error handlling
 
-` expose_php              = Off`
-` error_reporting         = E_ALL`
-` display_errors          = Off`
-` display_startup_errors  = Off`
-` log_errors              = On`
-` error_log               = /valid_path/PHP-logs/php_error.log`
-` ignore_repeated_errors  = Off`
+`expose_php              = Off`
+`error_reporting         = E_ALL`
+`display_errors          = Off`
+`display_startup_errors  = Off`
+`log_errors              = On`
+`error_log               = /valid_path/PHP-logs/php_error.log`
+`ignore_repeated_errors  = Off`
 
 
 #### PHP general settings
 
-` doc_root                = /path/DocumentRoot/PHP-scripts/`
-` open_basedir            = /path/DocumentRoot/PHP-scripts/`
-` include_path            = /path/PHP-pear/`
-` extension_dir           = /path/PHP-extensions/`
-` mime_magic.magicfile    = /path/PHP-magic.mime`
-` allow_url_fopen         = Off`
-` allow_url_include       = Off`
-` variables_order         = "GPSE"`
-` allow_webdav_methods    = Off`
-` session.gc_maxlifetime  = 600`
+`doc_root                = /path/DocumentRoot/PHP-scripts/`
+`open_basedir            = /path/DocumentRoot/PHP-scripts/`
+`include_path            = /path/PHP-pear/`
+`extension_dir           = /path/PHP-extensions/`
+`mime_magic.magicfile    = /path/PHP-magic.mime`
+`allow_url_fopen         = Off`
+`allow_url_include       = Off`
+`variables_order         = "GPSE"`
+`allow_webdav_methods    = Off`
+`session.gc_maxlifetime  = 600`
 
 Allow_url_\* prevents LFIs to be easily escalated to RFIs.
 
 #### PHP file upload handling
 
-` file_uploads            = On`
-` upload_tmp_dir          = /path/PHP-uploads/`
-` upload_max_filesize     = 10M`
-` max_file_uploads        = 2`
-` `
+`file_uploads            = On`
+`upload_tmp_dir          = /path/PHP-uploads/`
+`upload_max_filesize     = 10M`
+`max_file_uploads        = 2`
 
 If your application is not using file uploads, and say the only data the user will enter / upload is forms that do not require any document attachments, file_uploads should be turned off.
 
 #### PHP executable handling
 
-` enable_dl               = On`
-` disable_functions       = system, exec, shell_exec, passthru, phpinfo, show_source, popen, proc_open`
-` disable_functions       = fopen_with_path, dbmopen, dbase_open, putenv, move_uploaded_file`
-` disable_functions       = chdir, mkdir, rmdir, chmod, rename`
-` disable_functions       = filepro, filepro_rowcount, filepro_retrieve, posix_mkfifo`
-`   # see also: `[`http://ir.php.net/features.safe-mode`](http://ir.php.net/features.safe-mode)
-` disable_classes         = `
+`enable_dl               = On`
+`disable_functions       = system, exec, shell_exec, passthru, phpinfo, show_source, popen, proc_open`
+`disable_functions       = fopen_with_path, dbmopen, dbase_open, putenv, move_uploaded_file`
+`disable_functions       = chdir, mkdir, rmdir, chmod, rename`
+`disable_functions       = filepro, filepro_rowcount, filepro_retrieve, posix_mkfifo`
+`# see also: `[`http://ir.php.net/features.safe-mode`](http://ir.php.net/features.safe-mode)
+`disable_classes         = `
 
 These are dangerous PHP functions. You should disable all that you don't use.
 
@@ -115,13 +114,13 @@ It is a good practice to change session.name to something new.
 
 #### some more security paranoid checks
 
-` session.referer_check   = /application/path`
-` memory_limit            = 8M`
-` post_max_size           = 8M`
-` max_execution_time       = 60`
-` report_memleaks         = On`
-` track_errors            = Off`
-` html_errors             = Off`
+`session.referer_check   = /application/path`
+`memory_limit            = 8M`
+`post_max_size           = 8M`
+`max_execution_time       = 60`
+`report_memleaks         = On`
+`track_errors            = Off`
+`html_errors             = Off`
 
 
 Related Cheat Sheets
