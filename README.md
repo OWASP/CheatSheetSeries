@@ -15,6 +15,10 @@ A mass conversion from Mediawiki to GitHub flavored Markdown format has been per
 * No modification will be performed anymore on the wiki content.
 * Any modification will be made on this repository using the contribution issue templates defined in this repository.
 
+# Cheat Sheets index
+
+This [Index](Index.md) reference all migrated and released cheat sheets.
+
 # Project leaders
 
 * [Jim Manico](https://github.com/jmanico).
