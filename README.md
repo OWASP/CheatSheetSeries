@@ -108,3 +108,4 @@ Follow these steps:
       - Create the cheat sheet using the dedicated [template](templates/New_CheatSheet.md) in case of a new cheat sheet.
       - Modify the target cheat sheet in case of a update/refactoring.
     3. Submit your [Pull Request](https://help.github.com/articles/creating-a-pull-request/).
+    4. Verify that the CI job [applied on your Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) do not fail!
