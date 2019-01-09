@@ -1,6 +1,6 @@
 [A](Index.md#A) [B](Index.md#B) [C](Index.md#C) [D](Index.md#D) [E](Index.md#E) [F](Index.md#F) [H](Index.md#H) [I](Index.md#I) [J](Index.md#J) [K](Index.md#K) 
 
-# A (6 cheatsheets)
+# A
 
 [Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md).
 
@@ -14,11 +14,11 @@
 
 [Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md).
 
-# B (1 cheatsheets)
+# B
 
 [Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md).
 
-# C (5 cheatsheets)
+# C
 
 [C-Based Toolchain Hardening Cheat Sheet](cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md).
 
@@ -30,7 +30,7 @@
 
 [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md).
 
-# D (4 cheatsheets)
+# D
 
 [Denial of Service Cheat Sheet](cheatsheets/Denial_of_Service_Cheat_Sheet.md).
 
@@ -40,21 +40,21 @@
 
 [DotNet Security Cheat Sheet](cheatsheets/DotNet_Security_Cheat_Sheet.md).
 
-# E (1 cheatsheets)
+# E
 
 [Error Handling Cheat Sheet](cheatsheets/Error_Handling_Cheat_Sheet.md).
 
-# F (1 cheatsheets)
+# F
 
 [Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md).
 
-# H (2 cheatsheets)
+# H
 
 [HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md).
 
 [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md).
 
-# I (3 cheatsheets)
+# I
 
 [Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md).
 
@@ -62,12 +62,12 @@
 
 [Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md).
 
-# J (2 cheatsheets)
+# J
 
 [JAAS Cheat Sheet](cheatsheets/JAAS_Cheat_Sheet.md).
 
 [JSON Web Token (JWT) Cheat Sheet for Java](cheatsheets/JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java.md).
 
-# K (1 cheatsheets)
+# K
 
 [Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md).

@@ -12,7 +12,7 @@ from collections import OrderedDict
 
 # Define templates
 cs_md_link_template = "[%s](cheatsheets/%s)."
-header_template = "# %s (%s cheatsheets)\n\n"
+header_template = "# %s\n\n"
 top_menu_template = "[%s](Index.md#%s)"
 
 # Scan all CS files
@@ -38,7 +38,7 @@ with open("../Index.md", "w") as index_file:
     j = 0
     for letter in index:
         cs_count =  len(index[letter])
-        index_file.write(header_template % (letter,cs_count))
+        index_file.write(header_template % letter)
         i = 0
         for cs_file in index[letter]:
             cs_name = cs_file.replace("_", " ").replace(".md", "").strip()
