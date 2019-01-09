@@ -1,6 +1,6 @@
-**10** cheat sheets available.
+**12** cheat sheets available.
 
-[A](Index.md#a) [B](Index.md#b) [C](Index.md#c) [D](Index.md#d) [E](Index.md#e) [F](Index.md#f) [H](Index.md#h) [I](Index.md#i) [J](Index.md#j) [K](Index.md#k) 
+[A](Index.md#a) [B](Index.md#b) [C](Index.md#c) [D](Index.md#d) [E](Index.md#e) [F](Index.md#f) [H](Index.md#h) [I](Index.md#i) [J](Index.md#j) [K](Index.md#k) [L](Index.md#l) [M](Index.md#m) 
 
 # A
 
@@ -73,3 +73,13 @@
 # K
 
 [Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md).
+
+# L
+
+[LDAP Injection Prevention Cheat Sheet](cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md).
+
+[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md).
+
+# M
+
+[Mass Assignment Cheat Sheet](cheatsheets/Mass_Assignment_Cheat_Sheet.md).
