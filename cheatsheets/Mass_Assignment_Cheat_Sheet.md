@@ -4,11 +4,13 @@
 
 Software frameworks sometime allow developers to automatically bind HTTP request parameters into program code variables or objects to make using that framework easier on developers. This can sometimes cause harm. 
 
-Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended. This is called a **mass assignment** vulnerability.
+Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended. 
+
+This is called a **mass assignment** vulnerability.
 
 ## Alternative Names
 
-Depending on the language/framework in question, this vulnerability can have several [alternative names](https://cwe.mitre.org/data/definitions/915.html)
+Depending on the language/framework in question, this vulnerability can have several [alternative names](https://cwe.mitre.org/data/definitions/915.html):
 
 - **Mass Assignment:** Ruby on Rails, NodeJS.
 - **Autobinding:** Spring MVC, ASP NET MVC.
