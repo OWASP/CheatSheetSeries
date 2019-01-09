@@ -6,7 +6,7 @@ Software frameworks sometime allow developers to automatically bind HTTP request
 
 Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended. 
 
-This is called a **mass assignment** vulnerability.
+This is called a **Mass Assignment** vulnerability.
 
 ## Alternative Names
 
