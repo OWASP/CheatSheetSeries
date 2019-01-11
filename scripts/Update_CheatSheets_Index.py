@@ -31,6 +31,7 @@ cs_count_template = "**%s** cheat sheets available."
 
 # Scan all CS files
 index = {}
+cs_count = 0
 cheatsheets = [f.name for f in os.scandir("../cheatsheets") if f.is_file()]
 for cheatsheet in cheatsheets:
     letter = cheatsheet[0].upper()
@@ -38,12 +39,13 @@ for cheatsheet in cheatsheets:
         index[letter] = [cheatsheet]
     else:
         index[letter].append(cheatsheet)
+    cs_count += 1
 index = OrderedDict(sorted(index.items()))
 
 # Generate the index file
 with open("../Index.md", "w") as index_file:
     index_count = len(index)
-    index_file.write(cs_count_template % index_count)
+    index_file.write(cs_count_template % cs_count)
     index_file.write("\n\n*Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*")
     index_file.write("\n\n")
     # Generate the top menu

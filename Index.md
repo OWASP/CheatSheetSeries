@@ -1,4 +1,4 @@
-**14** cheat sheets available.
+**32** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
