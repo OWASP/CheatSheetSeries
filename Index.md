@@ -32,6 +32,8 @@
 
 [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md).
 
+[Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Html](assets/Index_Html.png) 
+
 [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md).
 
 # D
