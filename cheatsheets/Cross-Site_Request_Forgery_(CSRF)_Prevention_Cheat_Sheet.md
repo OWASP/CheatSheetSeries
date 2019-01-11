@@ -433,21 +433,21 @@ public class CSRFValidationFilter implements Filter {
             String tokenFromHeader = httpReq.getHeader(CSRF_TOKEN_NAME);
             //If empty then we trace the event and we block the request
             if (this.isBlank(tokenFromHeader)) {
-                accessDeniedReason = "CSRFValidationFilter: Token provided via HTTP Header" + 
+                accessDeniedReason = "CSRFValidationFilter: Token provided via HTTP Header"+ 
                 " is absent/empty so we block the request !";
                 LOG.warn(accessDeniedReason);
                 httpResp.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedReason);
             } else if (!tokenFromHeader.equals(tokenCookie.getValue())) {
                 //Verify that token from header and one from cookie are the same
                 //Here is not the case so we trace the event and we block the request
-                accessDeniedReason = "CSRFValidationFilter: Token provided via HTTP Header" + 
+                accessDeniedReason = "CSRFValidationFilter: Token provided via HTTP Header"+ 
                 "and via Cookie are not equals so we block the request !";
                 LOG.warn(accessDeniedReason);
                 httpResp.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedReason);
             } else {
                 //Verify that token from header and one from cookie matches
-                //Here is the case so we let the request reach the target component (ServiceServlet, jsp...) 
-                //and add a new token when we get back the bucket
+                //Here is the case so we let the request reach the target component 
+                //(ServiceServlet, jsp...) and add a new token when we get back the bucket
                 HttpServletResponseWrapper httpRespWrapper = 
                                             new HttpServletResponseWrapper(httpResp);
                 chain.doFilter(request, httpRespWrapper);
@@ -471,7 +471,8 @@ public class CSRFValidationFilter implements Filter {
             LOG.error("Cannot init the filter !", e);
             throw new ServletException(e);
         }
-        LOG.info("CSRFValidationFilter: Filter init, set expected target origin to '{}'.", this.targetOrigin);
+        LOG.info("CSRFValidationFilter: Filter init, set expected target origin to '{}'.", 
+                 this.targetOrigin);
     }
 
     /**
@@ -520,7 +521,8 @@ public class CSRFValidationFilter implements Filter {
      * @param httpRequest  Source HTTP request
      * @param httpResponse HTTP response object to update
      */
-    private void addTokenCookieAndHeader(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+    private void addTokenCookieAndHeader(HttpServletRequest httpRequest, 
+                                         HttpServletResponse httpResponse) {
         //Get new token
         String token = this.generateToken();
         //Add cookie manually because the current Cookie class implementation 
