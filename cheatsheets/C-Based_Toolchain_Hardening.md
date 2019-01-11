@@ -377,7 +377,8 @@ $ gcc -dumpspecs
 …
 *link_ssp: %{fstack-protector:}
 
-*ssp_default: %{!fno-stack-protector:%{!fstack-protector-all: %{!ffreestanding:%{!nostdlib:-fstack-protector}}}}
+*ssp_default: %{!fno-stack-protector:%{!fstack-protector-all: 
+              %{!ffreestanding:%{!nostdlib:-fstack-protector}}}}
 …
 ```    
 

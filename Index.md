@@ -1,4 +1,4 @@
-**32** cheat sheets available.
+**33** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -23,6 +23,8 @@
 [Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Xml](assets/Index_Xml.png) 
 
 # C
+
+[C-Based Toolchain Hardening](cheatsheets/C-Based_Toolchain_Hardening.md). ![C](assets/Index_C.png) ![Bash](assets/Index_Bash.png) 
 
 [C-Based Toolchain Hardening Cheat Sheet](cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md).
 
