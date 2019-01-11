@@ -424,7 +424,8 @@ public class CSRFValidationFilter implements Filter {
             " is null/empty so we provide one and return an HTTP NO_CONTENT response !");
             //Add the CSRF token cookie and header
             this.addTokenCookieAndHeader(httpReq, httpResp);
-            //Set response state to "204 No Content" in order to allow the requester to clearly identify an initial response providing the initial CSRF token
+            //Set response state to "204 No Content" in order to allow the requester to 
+            //clearly identify an initial response providing the initial CSRF token
             httpResp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } else {
             //If the cookie is present then we pass to validation phase
@@ -445,7 +446,8 @@ public class CSRFValidationFilter implements Filter {
                 httpResp.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedReason);
             } else {
                 //Verify that token from header and one from cookie matches
-                //Here is the case so we let the request reach the target component (ServiceServlet, jsp...) and add a new token when we get back the bucket
+                //Here is the case so we let the request reach the target component (ServiceServlet, jsp...) 
+                //and add a new token when we get back the bucket
                 HttpServletResponseWrapper httpRespWrapper = 
                                             new HttpServletResponseWrapper(httpResp);
                 chain.doFilter(request, httpRespWrapper);
@@ -525,7 +527,8 @@ public class CSRFValidationFilter implements Filter {
         //do not support the "SameSite" attribute
         //We let the adding of the "Secure" cookie attribute to the reverse proxy rewriting...
         //Here we lock the cookie from JS access and we use the SameSite new attribute protection
-        String cookieSpec = String.format("%s=%s; Path=%s; HttpOnly; SameSite=Strict", this.determineCookieName(httpRequest), token, httpRequest.getRequestURI());
+        String cookieSpec = String.format("%s=%s; Path=%s; HttpOnly; SameSite=Strict", 
+                            this.determineCookieName(httpRequest), token, httpRequest.getRequestURI());
         httpResponse.addHeader("Set-Cookie", cookieSpec);
         //Add cookie header to give access to the token to the JS code
         httpResponse.setHeader(CSRF_TOKEN_NAME, token);
