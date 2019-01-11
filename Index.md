@@ -1,8 +1,8 @@
-**13** cheat sheets available.
+**14** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
-[A](Index.md#a) [B](Index.md#b) [C](Index.md#c) [D](Index.md#d) [E](Index.md#e) [F](Index.md#f) [H](Index.md#h) [I](Index.md#i) [J](Index.md#j) [K](Index.md#k) [L](Index.md#l) [M](Index.md#m) [O](Index.md#o) 
+[A](Index.md#a) [B](Index.md#b) [C](Index.md#c) [D](Index.md#d) [E](Index.md#e) [F](Index.md#f) [H](Index.md#h) [I](Index.md#i) [J](Index.md#j) [K](Index.md#k) [L](Index.md#l) [M](Index.md#m) [O](Index.md#o) [S](Index.md#s) 
 
 # A
 
@@ -91,3 +91,7 @@
 # O
 
 [OS Command Injection Defense Cheat Sheet](cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Csharp](assets/Index_Csharp.png) ![Shell](assets/Index_Shell.png) 
+
+# S
+
+[Securing Cascading Style Sheets (CSS) Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_(CSS)_Cheat_Sheet.md).
