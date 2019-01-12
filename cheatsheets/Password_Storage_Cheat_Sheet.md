@@ -191,7 +191,8 @@ public final class PasswordUtil {
     *
     * @param password Password to hash
     * @param charset  Charset of the password
-    * @return the hash in format "$argon2i$v=19$m=128000,t=3,p=4$sfSe5MewORVlg8cDtxOTbg$uqWx4mZvLI092oJ8ZwAjAWU0rrBSDQkOezxAuvrE5dM"
+    * @return the hash in format "$argon2i$v=19$m=128000,t=3,
+    *       p=4$sfSe5MewORVlg8cDtxOTbg$uqWx4mZvLI092oJ8ZwAjAWU0rrBSDQkOezxAuvrE5dM"
     */
     public static String hash(@NonNull char[] password, @NonNull Charset charset) {
         String hash;
@@ -298,7 +299,8 @@ Documented configuration is the following, increase the number of the **ITERATIO
 #                 processing time (processing time take 1 second)
 #       See details on https://docs.travis-ci.com/user/reference/overview/
 #                      #Virtualisation-Environment-vs-Operating-System
-#       "Ubuntu Precise" and "Ubuntu Trusty" using infrastructure "Virtual machine on GCE" were used (GCE = Google Compute Engine)
+#       "Ubuntu Precise" and "Ubuntu Trusty" using infrastructure 
+#                      "Virtual machine on GCE" were used (GCE = Google Compute Engine)
 ITERATIONS=40
 # The memory usage of 2^N KiB, here set to recommended value from Issue n°9 of PHC project (128 MB)
 MEMORY=128000
@@ -340,7 +342,7 @@ public class TryVeryBigPassword {
 
 There no problem meet, library and binding supports it:
 
-``` python
+``` text
 DELAY => 2 seconds
 HASH  => $argon2i$v=19$m=128000,t=40,
          p=4$RAQHs/CUlVGVgi92Mofgdg$xSovVoh7U4iiPUTvrk6wFanOn1w5kOwUes+nTa+tZiQ
