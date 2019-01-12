@@ -94,6 +94,13 @@ The file **.markdownlinkcheck.json** define the configuration used to validate u
 * [ ] **Task 07:** Create all the materials to generate a PDF file of all the CS, automate it via a CircleCI job.
 * [x] **Task 08:** Create a template for the pull request in order to add a checklist like the one created by the MSTG.
 * [x] **Task 09:** Add a CI job to [validate automatically the Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) when they are submitted.
+* [ ] **Task 10:** Add an Index to address the following [problem](https://twitter.com/Kerberosmansour/status/1084063530251440128):
+
+```text
+Too many best practices:
+It would be nice to have them structured so people drill down to Exactly what they want.
+Like the @thoughtworks tech radar: https://www.thoughtworks.com/radar
+```
 
 # License
 
