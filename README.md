@@ -84,7 +84,7 @@ The file **.markdownlinkcheck.json** define the configuration used to validate u
 
 :construction: All the tasks below represents the work that must be performed before that the V2 will be considered as Go Live! (**CS** = **C**heat **S**heet).
 
-:triangular_flag_on_post: = Critical tasks.
+:triangular_flag_on_post: = Critical task.
 
 * [ ] **Task 01:** :triangular_flag_on_post: Migrate all the CS files of the folder **cheatsheets_to_convert**.
 * [ ] **Task 02:** :triangular_flag_on_post: Update each OWASP WIKI page associated to a CS in order to indicate the redirection to the GitHub location in order **to do not break cross-reference** to CS.
