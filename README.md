@@ -82,10 +82,12 @@ The file **.markdownlinkcheck.json** define the configuration used to validate u
 
 # Migration tasks list
 
-**CS** = **C**heat **S**heet
+:construction: All the tasks below represents the work that must be performed before that the V2 will be considered as Go Live! (**CS** = **C**heat **S**heet).
 
-* [ ] **Task 01:** Migrate all the CS files of the folder **cheatsheets_to_convert**.
-* [ ] **Task 02:** Update each OWASP WIKI page associated to a CS in order to indicate the redirection to the GitHub location in order to do not break cross-reference to CS.
+:triangular_flag_on_post: = Critical tasks.
+
+* [ ] **Task 01:** :triangular_flag_on_post: Migrate all the CS files of the folder **cheatsheets_to_convert**.
+* [ ] **Task 02:** :triangular_flag_on_post: Update each OWASP WIKI page associated to a CS in order to indicate the redirection to the GitHub location in order **to do not break cross-reference** to CS.
 * [x] **Task 03:** Create [a Python script to auto-generate an markdown index page of all CS](scripts/Update_CheatSheets_Index.py) like this [page](https://www.owasp.org/index.php/Category:Cheatsheets).
 * [x] **Task 04:** Create [a markdown template file for the new CS](templates/New_CheatSheet.md).
 * [ ] **Task 05:** Create the index page of the repository based on this README file to provide all the information about the repository and how to contribute.
@@ -94,13 +96,17 @@ The file **.markdownlinkcheck.json** define the configuration used to validate u
 * [ ] **Task 07:** Create all the materials to generate a PDF file of all the CS, automate it via a CircleCI job.
 * [x] **Task 08:** Create a template for the pull request in order to add a checklist like the one created by the MSTG.
 * [x] **Task 09:** Add a CI job to [validate automatically the Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) when they are submitted.
-* [ ] **Task 10:** Add an Index to address the following [problem](https://twitter.com/Kerberosmansour/status/1084063530251440128):
+* [ ] **Task 10:** :triangular_flag_on_post: Classify the CS collections in order to address the following important [problem](https://twitter.com/Kerberosmansour/status/1084063530251440128) raised by the community:
 
 ```text
 Too many best practices:
 It would be nice to have them structured so people drill down to Exactly what they want.
 Like the @thoughtworks tech radar: https://www.thoughtworks.com/radar
 ```
+
+**Idea:** In addition to the [alphabetical index](Index.md), the following indexes will be created: 
+* An Index from that will classify every cheat sheets by [OWASP Proactive Controls sections](https://www.owasp.org/index.php/OWASP_Proactive_Controls).
+* An Index from that will classify every cheat sheets by [OWASP Application Security Verification Standard Project sections](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project).
 
 # License
 
