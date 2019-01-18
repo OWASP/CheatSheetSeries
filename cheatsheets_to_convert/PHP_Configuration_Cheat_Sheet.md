@@ -6,9 +6,9 @@ permalink: /PHP_Configuration_Cheat_Sheet/
 Introduction
 ============
 
-This page is meant to help those configuring PHP and the web server it is running on in the most secure way possible. Below you will find information on the proper settings for the php.ini file and instructions on configuring Apache, Nginx, and Caddy web servers.
+This page is meant to help those configuring PHP and the web server it is running on to be very secure. Below you will find information on the proper settings for the php.ini file and instructions on configuring Apache, Nginx, and Caddy web servers.
 
-For general PHP code base security please refer to the two following great guides:
+For general PHP codebase security please refer to the two following great guides:
 - [Paragonie's 2018 PHP Security Guide](https://paragonie.com/blog/2017/12/2018-guide-building-secure-php-software)
 - [Awesome PHP Security](https://github.com/guardrailsio/awesome-php-security)
 
