@@ -476,7 +476,8 @@ public class ImageDocumentSanitizerImpl implements DocumentSanitizer {
                             formatName = imageInfo.getFormat().getName();
                             fallbackOnApacheCommonsImaging = true;
                         } else {
-                            throw new IOException("Format of the original image is not supported for read operation !");
+                            throw new IOException("Format of the original image is " + 
+                                                "not supported for read operation !");
                         }
                     } else {
                         ImageReader reader = imageReaderIterator.next();
@@ -509,7 +510,9 @@ public class ImageDocumentSanitizerImpl implements DocumentSanitizer {
                                                                      Image.SCALE_SMOOTH);
 
                 // Resize the resized image by adding 1px on Width and Height - In fact set image to is initial size
-                Image initialSizedImage = resizedImage.getScaledInstance(originalWidth, originalHeight, Image.SCALE_SMOOTH);
+                Image initialSizedImage = resizedImage.getScaledInstance(originalWidth, 
+                                                                         originalHeight,
+                                                                         Image.SCALE_SMOOTH);
 
                 // Save image by overwriting the provided source file content
                 BufferedImage sanitizedImage = new BufferedImage(initialSizedImage.getWidth(null), 
@@ -564,7 +567,8 @@ public class ImageDocumentSanitizerImpl implements DocumentSanitizer {
                                 break;
                             }
                             default: {
-                                throw new IOException("Format of the original image is not supported for write operation !");
+                                throw new IOException("Format of the original image is not" + 
+                                                      " supported for write operation !");
                             }
 
                         }
