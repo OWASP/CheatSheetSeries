@@ -158,7 +158,7 @@ BEGIN
 END;
 ```
 
-### SQL Server with Transact-SQL
+### SQL Server using Transact-SQL
 
 #### Normal Stored Procedure
 
