@@ -62,8 +62,10 @@ By default, in Rails 3.0 and up protection against XSS comes as the default beha
 ``` ruby
 # Wrong! Older rails versions, do not do this!
 <%= raw @product.name %> 
+
 # Wrong! Newer rails versions, do not do this!
 <%= @product.name.html_safe %>
+
 # Wrong! Newer rails versions, do not do this!
 <%= content_tag @product.name %>
 ```
@@ -202,13 +204,13 @@ This gem is configured similar to the devise gem itself. It also requires omniau
 
 ```bash
 # token-based authentication
-gem 'devise_token_auth'
-gem 'omniauth'
+$ gem 'devise_token_auth'
+$ gem 'omniauth'
 ```
 
 Then a route is defined:
 
-```bash
+```ruby
 mount_devise_token_auth_for 'User', at: 'auth'
 ```
 
