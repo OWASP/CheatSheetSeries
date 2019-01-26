@@ -1,4 +1,4 @@
-**38** cheat sheets available.
+**39** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -109,6 +109,8 @@
 # R
 
 [REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md).
+
+[REST cheat sheet](cheatsheets/REST_cheat_sheet.md).
 
 # S
 
