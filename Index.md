@@ -110,7 +110,7 @@
 
 [REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md).
 
-[REST cheat sheet](cheatsheets/REST_cheat_sheet.md).
+[REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md).
 
 # S
 
