@@ -14,7 +14,7 @@ from collections import OrderedDict
 def extract_languages_snippet_provided(cheatsheet):
     languages = []
     markers = ["javascript", "java", "csharp", "c", "cpp", "html", "xml", "python", 
-               "ruby", "php", "json", "sql", "bash", "shell"]
+               "ruby", "php", "json", "sql", "bash", "shell", "coldfusion", "perl"]
     with open("../cheatsheets/" + cheatsheet, encoding="utf8") as cs_file:
         cs_content = cs_file.read().lower().replace(" ","")
     for marker in markers:
