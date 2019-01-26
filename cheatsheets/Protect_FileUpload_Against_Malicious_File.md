@@ -391,7 +391,7 @@ public class PdfDocumentDetectorImpl implements DocumentDetector {
                         namesArray = embeddedFiles.getAsArray(PdfName.NAMES);
                     }
                     // Get safe state from number of embedded files
-                    safeState = ((namesArray == null) \|\| namesArray.isEmpty());
+                    safeState = ((namesArray == null) || namesArray.isEmpty());
                 }
             }
         } catch (Exception e) {
