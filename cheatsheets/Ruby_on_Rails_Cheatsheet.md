@@ -507,11 +507,11 @@ Launched in May 2013 and very similiar to brakeman scanner, the [dawnscanner](ht
 
 Matt Konda - mkonda@jemurai.com
 
-Neil Matatall neil@matatall.com
+Neil Matatall - neil@matatall.com
 
-Ken Johnson cktricky@gmail.com
+Ken Johnson - cktricky@gmail.com
 
-Justin Collins justin@presidentbeef.com
+Justin Collins - justin@presidentbeef.com
 
 Jon Rose - jrose400@gmail.com
 
@@ -519,10 +519,10 @@ Lance Vaughn - lance@cabforward.com
 
 Jon Claudius - jonathan.claudius@gmail.com
 
-Jim Manico jim@owasp.org
+Jim Manico - jim@owasp.org
 
-Aaron Bedra aaron@aaronbedra.com
+Aaron Bedra - aaron@aaronbedra.com
 
-Egor Homakov homakov@gmail.com
+Egor Homakov - homakov@gmail.com
 
-Zaur Molotnikov qutorial@gmail.com
+Zaur Molotnikov - qutorial@gmail.com
