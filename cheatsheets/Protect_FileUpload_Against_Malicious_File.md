@@ -509,7 +509,8 @@ public class ImageDocumentSanitizerImpl implements DocumentSanitizer {
                                                                      originalHeight - 1, 
                                                                      Image.SCALE_SMOOTH);
 
-                // Resize the resized image by adding 1px on Width and Height - In fact set image to is initial size
+                // Resize the resized image by adding 1px on Width and Height
+                // In fact set image to is initial size
                 Image initialSizedImage = resizedImage.getScaledInstance(originalWidth, 
                                                                          originalHeight,
                                                                          Image.SCALE_SMOOTH);
