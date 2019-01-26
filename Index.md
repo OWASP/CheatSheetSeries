@@ -1,4 +1,4 @@
-**39** cheat sheets available.
+**40** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -111,6 +111,8 @@
 [REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md).
 
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md).
+
+[Ruby on Rails Cheatsheet](cheatsheets/Ruby_on_Rails_Cheatsheet.md). ![Html](assets/Index_Html.png) ![Ruby](assets/Index_Ruby.png) ![Bash](assets/Index_Bash.png) 
 
 # S
 
