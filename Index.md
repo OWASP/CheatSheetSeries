@@ -1,4 +1,4 @@
-**41** cheat sheets available.
+**42** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -119,3 +119,5 @@
 [SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md).
 
 [Securing Cascading Style Sheets (CSS) Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_(CSS)_Cheat_Sheet.md).
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md).
