@@ -4,7 +4,7 @@
 Python3 script to generate the index markdown page that
 reference all cheat sheets grouped by the first letter.
 
-The index markdown page is loacted on the root folder 
+The index markdown page is located on the root folder 
 and is named "Index.md".
 """
 import os

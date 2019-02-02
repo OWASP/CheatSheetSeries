@@ -50,6 +50,15 @@ This [Index](Index.md) reference all migrated and released cheat sheets.
 **.github**:
 * Contains materials used to configure different behaviors of GitHub.
 
+# Offline website
+
+Unfortunately, a PDF file generation is not possible because the content is cut in some cheat sheet like for example the abuse case one.
+
+However, to propose the possibility the consult, in a full offline mode, the collection of all cheat sheets, a script to generate a offline site *is under creation* using [GitBook](https://toolchain.gitbook.com/).
+
+* **book.json**: Gitbook configuration file.
+* **Preface.md**: Project preface description applied on the generated site.
+
 # Conversion rules
 
 * Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).

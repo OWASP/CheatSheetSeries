@@ -1,0 +1,12 @@
+{
+   "root": "./cheatsheets",
+   "plugins": [
+      "anchors"
+   ],
+   "structure": {
+      "readme": "Preface.md"
+   },
+   "title": "OWASP Cheat Sheet Series",
+   "language": "en",
+   "description": "Website with the collection of all the cheat sheets of the project."
+}
