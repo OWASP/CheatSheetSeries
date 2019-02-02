@@ -1,4 +1,4 @@
-**40** cheat sheets available.
+**41** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -115,5 +115,7 @@
 [Ruby on Rails Cheatsheet](cheatsheets/Ruby_on_Rails_Cheatsheet.md). ![Html](assets/Index_Html.png) ![Ruby](assets/Index_Ruby.png) ![Bash](assets/Index_Bash.png) 
 
 # S
+
+[SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md).
 
 [Securing Cascading Style Sheets (CSS) Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_(CSS)_Cheat_Sheet.md).
