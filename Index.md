@@ -1,4 +1,4 @@
-**42** cheat sheets available.
+**43** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -121,3 +121,5 @@
 [Securing Cascading Style Sheets (CSS) Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_(CSS)_Cheat_Sheet.md).
 
 [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md).
+
+[SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Csharp](assets/Index_Csharp.png) ![Php](assets/Index_Php.png) ![Sql](assets/Index_Sql.png) 
