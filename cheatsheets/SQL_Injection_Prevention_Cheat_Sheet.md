@@ -30,7 +30,8 @@ SQL injection flaws typically look like this:
 The following (Java) example is UNSAFE, and would allow an attacker to inject code into the query that would be executed by the database. The unvalidated "customerName" parameter that is simply appended to the query allows an attacker to inject any SQL code they want. Unfortunately, this method for accessing databases is all too common.
 
 ```java
-String query = "SELECT account_balance FROM user_data WHERE user_name = " + request.getParameter("customerName");
+String query = "SELECT account_balance FROM user_data WHERE user_name = " 
+             + request.getParameter("customerName");
 try {
     Statement statement = connection.createStatement( ... );
     ResultSet results = statement.executeQuery( query );
@@ -133,7 +134,7 @@ try {
 
 The following code example uses a `SqlCommand`, .NET’s implementation of the stored procedure interface, to execute the same database query. The `sp_getAccountBalance` stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.
 
-```visualbasic
+```vbnet
  Try
    Dim command As SqlCommand = new SqlCommand("sp_getAccountBalance", connection)
    command.CommandType = CommandType.StoredProcedure
