@@ -4,22 +4,25 @@ The **S**ecurity **A**ssertion **M**arkup **L**anguage ([SAML](https://en.wikipe
 
 # Validate Message Confidentiality and Integrity
 
-- [TLS 1.2](Transport_Layer_Protection_Cheat_Sheet.md) is the most common solution to guarantee message confidentiality and integrity. Refer to [SAML Security (section 4)](http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) for additional information. This step will help counter the following attacks:
-    - Eavesdropping 7.1.1.1
-    - Theft of User Authentication Information 7.1.1.2
-    - Theft of the Bearer Token 7.1.1.3
-    - Message Deletion 7.1.1.6
-    - Message Modification 7.1.1.7
-    - Man-in-the-middle 7.1.1.8
-- A digitally signed message with a certified key is the most common solution to guarantee message integrity and authentication. Refer to [SAML Security (section 4)](http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) for additional information. This step will help counter the following attacks:
-    - Man-in-the-middle 6.4.2
-    - Forged Assertion 6.4.3
+[TLS 1.2](Transport_Layer_Protection_Cheat_Sheet.md) is the most common solution to guarantee message confidentiality and integrity. Refer to [SAML Security (section 4)](http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) for additional information. This step will help counter the following attacks:
+- Eavesdropping 7.1.1.1
+- Theft of User Authentication Information 7.1.1.2
+- Theft of the Bearer Token 7.1.1.3
+- Message Deletion 7.1.1.6
+- Message Modification 7.1.1.7
+- Man-in-the-middle 7.1.1.8
+
+A digitally signed message with a certified key is the most common solution to guarantee message integrity and authentication. Refer to [SAML Security (section 4)](http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) for additional information. This step will help counter the following attacks:
+- Man-in-the-middle 6.4.2
+- Forged Assertion 6.4.3
 
 # Validate Protocol Usage
 
 This is a common area for security gaps - see [Google SSO vulnerability](http://www.avantssar.eu/pdf/publications/saml-sso.pdf) for a real life example. Their SSO profile was vulnerable to a Man-in-the-middle attack from a malicious SP (Service Provider). 
 
-The SSO Web Browser Profile is most susceptible to attacks from trusted partners. This particular security flaw was exposed because the SAML Response did not contain all of the required data elements necessary for a secure message exchange. Following the [SAML Profile](http://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf) usage requirements for AuthnRequest (4.1.4.1) and Response (4.1.4.2) will help counter this attack. The [AVANTSSAR](http://www.avantssar.eu/) team suggested the following data elements should be required:
+The SSO Web Browser Profile is most susceptible to attacks from trusted partners. This particular security flaw was exposed because the SAML Response did not contain all of the required data elements necessary for a secure message exchange. Following the [SAML Profile](http://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf) usage requirements for AuthnRequest (4.1.4.1) and Response (4.1.4.2) will help counter this attack. 
+
+The [AVANTSSAR](http://www.avantssar.eu/) team suggested the following data elements should be required:
 
 - **AuthnRequest(ID, SP):** An `AuthnRequest` must contain and `ID` and `SP`. Where `ID` is a string uniquely identifying the request and an `SP` identifies the `Service Provider` that initiated the request. Furthermore, the request `ID` attribute must be returned in the response (`InResponseTo="<requestId>"`). `InResponseTo` helps guarantee authenticity of the response from the trusted IdP. This was one of the missing attributes that left Google's SSO vulnerable.
 - **Response(ID, SP, IdP, {AA} K -1/IdP):** A Response must contain all these elements. Where `ID` is a string uniquely identifying the response. `SP` identifies the recipient of the response. `IdP` identifies the identity provider authorizing the response. `{AA} K -1/IdP` is the assertion digitally signed with the private key of the `IdP`.
@@ -43,7 +46,9 @@ The following recommendations were proposed in response ([Secure SAML validation
 
 # Validate Protocol Processing Rules
 
-This is another common area for security gaps simply because of the vast number of steps to assert. Processing a SAML response is an expensive operation but all steps must be validated.
+This is another common area for security gaps simply because of the vast number of steps to assert. 
+
+Processing a SAML response is an expensive operation but all steps must be validated:
 
 - Validate AuthnRequest processing rules. Refer to [SAML Core](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) (3.4.1.4) for all AuthnRequest processing rules. This step will help counter the following attacks:
     - Man-in-the-middle (6.4.2)
@@ -60,7 +65,9 @@ This is another common area for security gaps simply because of the vast number 
 
 # Validate Security Countermeasures
 
-Revisit each security threat that exists within the [SAML Security](http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) document and assert you have applied the appropriate countermeasures for threats that may exist for your particular implementation. Additional countermeasures considererd should include:
+Revisit each security threat that exists within the [SAML Security](http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) document and assert you have applied the appropriate countermeasures for threats that may exist for your particular implementation. 
+
+Additional countermeasures considererd should include:
 
 - Prefer IP Filtering when appropriate. For example, this countermeasure could have prevented Google's initial security flaw if Google provided each trusted partner with a separate endpoint and setup an IP filter for each endpoint. This step will help counter the following attacks:
     - Stolen Assertion (6.4.1)
