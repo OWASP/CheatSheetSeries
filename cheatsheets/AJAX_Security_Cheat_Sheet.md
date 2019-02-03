@@ -57,7 +57,7 @@ This is the overall one that gets me out of trouble in case I missed something :
 
 ### Use CSRF Protection
 
-Take a look at the [Cross-Site Request Forgery (CSRF) Prevention](Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet.md) cheat sheet.
+Take a look at the [Cross-Site Request Forgery (CSRF) Prevention](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) cheat sheet.
 
 ### Protect against JSON Hijacking for Older Browsers
 

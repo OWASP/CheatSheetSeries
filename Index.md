@@ -34,7 +34,7 @@
 
 [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md).
 
-[Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Html](assets/Index_Html.png) 
+[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Html](assets/Index_Html.png) 
 
 [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md).
 
@@ -74,7 +74,7 @@
 
 [JAAS Cheat Sheet](cheatsheets/JAAS_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
 
-[JSON Web Token (JWT) Cheat Sheet for Java](cheatsheets/JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java.md). ![Javascript](assets/Index_Javascript.png) ![Java](assets/Index_Java.png) ![Json](assets/Index_Json.png) ![Sql](assets/Index_Sql.png) 
+[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md). ![Javascript](assets/Index_Javascript.png) ![Java](assets/Index_Java.png) ![Json](assets/Index_Json.png) ![Sql](assets/Index_Sql.png) 
 
 # K
 
@@ -118,7 +118,7 @@
 
 [SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md).
 
-[Securing Cascading Style Sheets (CSS) Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_(CSS)_Cheat_Sheet.md).
+[Securing Cascading Style Sheets Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md).
 
 [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md).
 

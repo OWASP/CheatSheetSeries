@@ -4,7 +4,8 @@
       "anchors"
    ],
    "structure": {
-      "readme": "Preface.md"
+      "readme": "Preface.md",
+      "summary": "TOC.md"
    },
    "title": "OWASP Cheat Sheet Series",
    "language": "en",

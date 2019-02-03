@@ -23,7 +23,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 - Validate URLs passed to `XMLHttpRequest.open`. Current browsers allow these URLs to be cross domain; this behavior can lead to code injection by a remote attacker. Pay extra attention to absolute URLs.
 - Ensure that URLs responding with `Access-Control-Allow-Origin: *` do not include any sensitive content or information that might aid attacker in further attacks. Use the `Access-Control-Allow-Origin` header only on chosen URLs that need to be accessed cross-domain. Don't use the header for the whole domain.
 - Allow only selected, trusted domains in the `Access-Control-Allow-Origin` header. Prefer whitelisting domains over blacklisting or allowing any domain (do not use `*` wildcard nor blindly return the `Origin` header content without any checks).
-- Keep in mind that CORS does not prevent the requested data from going to an unauthenticated location. It's still important for the server to perform usual [CSRF](Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet.md) prevention.
+- Keep in mind that CORS does not prevent the requested data from going to an unauthenticated location. It's still important for the server to perform usual [CSRF](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) prevention.
 - While the RFC recommends a pre-flight request with the `OPTIONS` verb, current implementations might not perform this request, so it's important that "ordinary" (`GET` and `POST`) requests perform any access control necessary.
 - Discard requests received over plain HTTP with HTTPS origins to prevent mixed content bugs.
 - Don't rely only on the Origin header for Access Control checks. Browser always sends this header in CORS requests, but may be spoofed outside the browser. Application-level protocols should be used to protect sensitive data.
@@ -218,7 +218,7 @@ public class EndpointConfigurator extends ServerEndpointConfig.Configurator {
 
 When using websocket as communication channel, it's important to use an authentication method allowing the user to receive an access *Token* that is not automatically sent by the browser and then must be expliclty sent by the client code during each exchange.
 
-[JSON Web Token](https://jwt.io/introduction/) is a good candidate because it allow to transport access ticket information in a stateless and not alterable way. Moreover, it define a validity timeframe. You can find additional information about JWT token hardening on this [cheat sheet](JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java.md).
+[JSON Web Token](https://jwt.io/introduction/) is a good candidate because it allow to transport access ticket information in a stateless and not alterable way. Moreover, it define a validity timeframe. You can find additional information about JWT token hardening on this [cheat sheet](JSON_Web_Token_Cheat_Sheet_for_Java.md).
 
 [JSON Validation Schema](http://json-schema.org/) are used to define and validate the expected content in input and ouput messages.
 
@@ -392,7 +392,7 @@ public class AuthenticationMessageHandler implements MessageHandler.Whole<Authen
 }
 ```
 
-**Utility class to manage JWT token** - Handle the issuing and the validation of the access token. Simple JWT token has been used for the example (focus was made here on the global WS endpoint implementation) here without extra hardening (see this [cheat sheet](JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java.md) to apply extra hardening on the JWT token)
+**Utility class to manage JWT token** - Handle the issuing and the validation of the access token. Simple JWT token has been used for the example (focus was made here on the global WS endpoint implementation) here without extra hardening (see this [cheat sheet](JSON_Web_Token_Cheat_Sheet_for_Java.md) to apply extra hardening on the JWT token)
 
 ``` java
 import com.auth0.jwt.JWT;

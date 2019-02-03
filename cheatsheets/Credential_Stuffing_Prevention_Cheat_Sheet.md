@@ -16,7 +16,7 @@ True multi-factor authentication is the best defense against Credential Stuffing
 
 ## Defense Option 2: Multi-Step Login Process
 
-*Most of the automated account validation we've seen is using single step validation and checking for a success conditions. By forcing the client to render the response and include that in the next request (and including [Synchronizer (CSRF) Tokens](Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet.md)), we are just eliminating the basic attempts. It's not comprehensive.*
+*Most of the automated account validation we've seen is using single step validation and checking for a success conditions. By forcing the client to render the response and include that in the next request (and including [Synchronizer (CSRF) Tokens](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)), we are just eliminating the basic attempts. It's not comprehensive.*
 
 ## Defense Option 3: IP blacklists
 

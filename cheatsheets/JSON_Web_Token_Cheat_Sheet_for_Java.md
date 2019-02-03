@@ -616,14 +616,14 @@ It's occur when a application store the token in a way allowing this one to be:
 
 1.  Store the token using the browser *sessionStorage* container.
 2.  Add it as a *Bearer* with JavaScript when calling services.
-3.  Add [fingerprint](JSON_Web_Token_(JWT)_Cheat_Sheet_for_Java.md#token-sidejacking) information to the token.
+3.  Add [fingerprint](JSON_Web_Token_Cheat_Sheet_for_Java.md#token-sidejacking) information to the token.
 
 By storing the token in browser *sessionStorage* container it expose the token to be steal in case of XSS issue. However, fingerprint added to the token prevent reuse of the stolen token by the attacker on his machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#csp) to harden the execution context.
 
 *Note:*
 
 - The remaining case is when a attacker use the user browsing context as a proxy to use the target application through the legitimate user but the Content Security Policy can prevent communication with non expected domains.
-- It's also possible to implements the authentication service in a way that the token is issued within a hardened cookie, but in this case, a protection against [Cross-Site Request Forgery](Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet.md) attack must be implemented.
+- It's also possible to implements the authentication service in a way that the token is issued within a hardened cookie, but in this case, a protection against [Cross-Site Request Forgery](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) attack must be implemented.
 
 ### Implementation example
 
