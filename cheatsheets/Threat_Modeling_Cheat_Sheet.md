@@ -253,7 +253,7 @@ The idea behind addressing the impact earlier in PASTA approach is that the audi
 Application security risk assessments are not enough because they are very binary and leverage a control framework basis for denoting risks. It is recommended to contextually look at threats, impacts, probability, effectiveness of countermeasures that may be present. 
 
 ```text
-R= (T * V * P * I) / Countermeasures
+R = (T * V * P * I) / Countermeasures
 ```
 
 For more details [about PASTA](https://www.owasp.org/images/a/aa/AppSecEU2012_PASTA.pdf).
