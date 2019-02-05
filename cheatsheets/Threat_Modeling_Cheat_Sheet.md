@@ -262,10 +262,10 @@ For more details [about PASTA](https://www.owasp.org/images/a/aa/AppSecEU2012_PA
 
 Using risk matrix rank risks from most severe to least severe based on Means, Motive & Opportunity. Below is sample risk matrix table, depending on your risk approach you can define deferent risk ranking matrix:
 
-- Risk Value: 1 to 12 \[Risk Level: **Notice**\]
-- Risk Value: 13 to 18 \[Risk Level: **Low**\]
-- Risk Value: 19 to 36 \[Risk Level: **Meduim**\]
-- Risk Value: 37 to 54 \[Risk Level: **High**\]
+- Risk Value: 01 to 12 &rarr; Risk Level: **Notice**
+- Risk Value: 13 to 18 &rarr; Risk Level: **Low**
+- Risk Value: 19 to 36 &rarr; Risk Level: **Medium**
+- Risk Value: 37 to 54 &rarr; Risk Level: **High**
 
 # Determine countermeasures and mitigation.
 
