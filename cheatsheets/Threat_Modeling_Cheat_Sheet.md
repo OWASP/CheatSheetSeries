@@ -51,9 +51,9 @@ If you are not performing threat modelling during the development (in the design
 
 ## Create design documents
 
-There are many ways to generate design documents; the 4+1 view model is one of the matured approaches to build your design document. 
+There are many ways to generate design documents; the **4+1** view model is one of the matured approaches to build your design document. 
 
-Reference to **4+1 view model of architecture** [here](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model).
+Reference to **4+1** view model of architecture [here](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model).
 
 Please note that, the **4+1** is comprehensive, you may use any other design model during this phase.
 
