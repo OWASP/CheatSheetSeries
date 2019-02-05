@@ -271,14 +271,10 @@ Marketing Technology Security
 This refers to all aspects of reducing the risk from marketing javascript. Controls include
 
 1. Contractual controls for risk reduction; the contracts with any MarTech company should include a requirement to show evidence of code security and code integrity monitoring.
-
 2. Contractual controls for risk transference: the contracts with any MarTech company could include a penalty for serving malicious javascript
-
 3. Technical controls for malicious javascript execution prevention; Virtual Iframes,
-
-4. Technical controls for malicious javascript identification; Subresource Integrity
-
-5. Technical controls including client side javascript malicious behavior in penetration testing requirements
+4. Technical controls for malicious javascript identification; [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).
+5. Technical controls including client side javascript malicious behavior in penetration testing requirements.
 
 # MarSecOps
 
@@ -288,9 +284,9 @@ This refers to the operational requirements to maintain some of the technical co
 
 The most complete and preventive controls for any site containing non-trivial marketing tags are -
 
-1. A data layer that calls the marketing server or tag manager APIs , so that only your code executes on your page (inversion of control)
+1. A data layer that calls the marketing server or tag manager APIs , so that only your code executes on your page (inversion of control).
 
-2. Subresource Integrity
+2. [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).
 
 3. Virtual frame Containment.
 
