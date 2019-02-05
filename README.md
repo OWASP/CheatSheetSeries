@@ -97,6 +97,7 @@ drwxr-xr-x 1 Feb  3 11:05 gitbook
 
 * Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).
 * Use this [sheet](https://gist.github.com/molomby/9bc092e4a125f529ae362de7e46e8176) for Superscript and Subscript characters.
+* Use this [sheet](https://meta.askubuntu.com/a/7383) for Arrows (left, right, top, down) chatacters.
 * Store all assets in the **assets** folder and use the following syntax:
     * `![ALTERNATE_NAME](../assets/ASSET_NAME.png)` for the insertion of an image.
     * `[ALTERNATE_NAME](../assets/ASSET_NAME.EXT)` for the insertion of other kinds of media (pdf, zip...).
