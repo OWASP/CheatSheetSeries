@@ -267,6 +267,9 @@ This technique is better known than the triple submit cookie mitigation. In firs
 
 This approach has two main problems. One that it would mandate all requests to have a header value that would force pre-flight despite the real use case and the other that this technique is relying on a feature that is not designed for security, to mitigate a security vulnerability. When a bug was discovered in the Chrome API, browser architects even considered to removing this pre-flighting behavior. Because this header was not designed as a security control, architects can re-design it to better cater its primary purpose. In the future, there’s a possibility that new content-type header types can be included (to better support various use-cases), which can put systems relying on this header for CSRF mitigation in trouble. For more information, see [Common CSRF Prevention Misconceptions](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/).
 
+[This](https://blog.appsecco.com/exploiting-csrf-on-json-endpoints-with-flash-and-redirects-681d4ad6b31b) article by Riyaz Walikar also talks about how this type of content-type header validation can be vulnerable to FLASH based re-direct attacks (as discussed in section 5.7, use of custom request headers)
+
+
 # CSRF Mitigation Myths
 
 The following shows techniques presumed to be CSRF mitigations but none of them fully/actually mitigates a CSRF vulnerability.
