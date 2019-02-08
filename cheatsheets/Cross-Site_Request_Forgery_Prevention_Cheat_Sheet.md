@@ -269,7 +269,6 @@ This approach has two main problems. One that it would mandate all requests to h
 
 [This](https://blog.appsecco.com/exploiting-csrf-on-json-endpoints-with-flash-and-redirects-681d4ad6b31b) article by Riyaz Walikar also talks about how this type of content-type header validation can be vulnerable to FLASH based re-direct attacks (as discussed in section 5.7, use of custom request headers)
 
-
 # CSRF Mitigation Myths
 
 The following shows techniques presumed to be CSRF mitigations but none of them fully/actually mitigates a CSRF vulnerability.
