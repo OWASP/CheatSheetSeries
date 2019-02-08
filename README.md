@@ -1,11 +1,11 @@
 ![StatusTrackingBadge](https://img.shields.io/badge/Current_task-01-yellowgreen.svg)
-![CSMigrationCounterBadge](https://img.shields.io/badge/CheatSheets_remaining_to_migrate-13-orange.svg)
+![CSMigrationCounterBadge](https://img.shields.io/badge/CheatSheets_remaining_to_migrate-12-orange.svg)
 ![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
 [![LinterCheckStatusForReleasedCS](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 
 # Welcome to OWASP Cheat Sheet Series V2
 
-This repository will contains all the cheat sheets of the project and will represent the V2 of the [OWASP Cheat Sheet Series](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series) project.
+This repository contains all the cheat sheets of the project and represent the V2 of the [OWASP Cheat Sheet Series](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series) project.
 
 # Migration process
 
