@@ -64,7 +64,7 @@ However, to propose the possibility the consult, in a full offline mode, the col
 Use the commands below to generate the site:
 
 ```bash
-# Your python version must be >= 3.5.3
+# Your python version must be >= 3.5
 $ python --version
 Python 3.5.3
 # Dependencies:
