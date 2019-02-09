@@ -4,6 +4,12 @@ node_js:
 before_script:
   - npm install -g markdownlint-cli
   - npm install -g markdown-link-check
+  - npm install -g gitbook-cli
   - chmod +x scripts/Apply_Linter_Check.sh
+  - chmod +x scripts/Generate_Site.sh
 script:
+  - echo "Apply linter check..."
   - cd scripts; bash Apply_Linter_Check.sh
+  - echo "Try to generate the offline website..."
+  - cd scripts; bash Generate_Site.sh
+  - ls -l generated/site/
