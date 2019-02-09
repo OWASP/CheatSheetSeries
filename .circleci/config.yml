@@ -15,12 +15,10 @@ jobs:
     - run: 'chmod +x scripts/Apply_Linter_Check.sh'
     - run: 'chmod +x scripts/Generate_Site.sh'
     - run: 'sed -i "s/python/python3\.5/g" scripts/Generate_Site.sh'
-    - run: 'cd scripts'
-    - run: 'bash Generate_Site.sh'
-    - run: 'cd ..'
+    - run: 'cd scripts;bash Generate_Site.sh;cd ..'
     - run: 'ls -l generated/site/'
-    - run: 'cd generated'
-    - run: 'zip -r ../site.zip site'
+    - run: 'cd generated;zip -r ../site.zip site'
+    - run: 'ls -l'
     - run: 'zip -T site.zip'
     - store_artifacts:
         path: ./site.zip
