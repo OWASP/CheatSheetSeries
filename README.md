@@ -168,10 +168,6 @@ Like the @thoughtworks tech radar: https://www.thoughtworks.com/radar
 * An Index from that will classify every cheat sheets by [OWASP Proactive Controls sections](https://www.owasp.org/index.php/OWASP_Proactive_Controls).
 * An Index from that will classify every cheat sheets by [OWASP Application Security Verification Standard Project sections](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project).
 
-# License
-
-[![LICENSE](https://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/)
-
 # How to setup my contributor environment?
 
 Follow these steps:
@@ -223,3 +219,7 @@ Follow these steps:
       - Modify the target cheat sheet in case of a update/refactoring.
     3. Submit your [Pull Request](https://help.github.com/articles/creating-a-pull-request/).
     4. Verify that the CI job [applied on your Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) do not fail!
+
+# License
+
+[![LICENSE](https://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/)
