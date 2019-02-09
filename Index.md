@@ -1,4 +1,4 @@
-**49** cheat sheets available.
+**50** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -139,3 +139,5 @@
 # U
 
 [Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Csharp](assets/Index_Csharp.png) ![Ruby](assets/Index_Ruby.png) ![Php](assets/Index_Php.png) 
+
+[User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md).
