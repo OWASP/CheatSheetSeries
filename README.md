@@ -1,4 +1,4 @@
-![CSMigrationCounterBadge](https://img.shields.io/badge/CheatSheets_remaining_to_migrate-8-orange.svg)
+![CSMigrationCounterBadge](https://img.shields.io/badge/CheatSheets_remaining_to_migrate-7-orange.svg)
 ![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
 [![LinterCheckStatusForReleasedCS](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 
