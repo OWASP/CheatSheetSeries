@@ -1,8 +1,8 @@
-**47** cheat sheets available.
+**49** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
-[A](Index.md#a) [B](Index.md#b) [C](Index.md#c) [D](Index.md#d) [E](Index.md#e) [F](Index.md#f) [H](Index.md#h) [I](Index.md#i) [J](Index.md#j) [K](Index.md#k) [L](Index.md#l) [M](Index.md#m) [O](Index.md#o) [P](Index.md#p) [Q](Index.md#q) [R](Index.md#r) [S](Index.md#s) [T](Index.md#t) 
+[A](Index.md#a) [B](Index.md#b) [C](Index.md#c) [D](Index.md#d) [E](Index.md#e) [F](Index.md#f) [H](Index.md#h) [I](Index.md#i) [J](Index.md#j) [K](Index.md#k) [L](Index.md#l) [M](Index.md#m) [O](Index.md#o) [P](Index.md#p) [Q](Index.md#q) [R](Index.md#r) [S](Index.md#s) [T](Index.md#t) [U](Index.md#u) 
 
 # A
 
@@ -133,3 +133,9 @@
 [TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md).
 
 [Transaction Authorization Cheat Sheet](cheatsheets/Transaction_Authorization_Cheat_Sheet.md).
+
+[Transport Layer Protection Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md). ![Bash](assets/Index_Bash.png) 
+
+# U
+
+[Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Csharp](assets/Index_Csharp.png) ![Ruby](assets/Index_Ruby.png) ![Php](assets/Index_Php.png) 
