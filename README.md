@@ -78,7 +78,7 @@ However, to propose the possibility the consult, in a full offline mode, the col
 * **book.json**: Gitbook configuration file.
 * **Preface.md**: Project preface description applied on the generated site.
 
-## Night build
+## Automated night build
 
 This [link](https://circleci.com/api/v1.1/project/github/OWASP/CheatSheetSeries/latest/artifacts) provide the **url** where to download a night build of the offline website:
 
@@ -93,7 +93,7 @@ This [link](https://circleci.com/api/v1.1/project/github/OWASP/CheatSheetSeries/
 
 The attribute **url** must be used to download the ZIP archive.
 
-## Manual generation
+## Manual build
 
 Use the commands below to generate the site:
 
