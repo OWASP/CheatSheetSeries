@@ -9,17 +9,17 @@ This repository contains all the cheat sheets of the project and represent the V
 
 # Table of Contents
 
-- [Migration process](#migration-process)
 - [Cheat Sheets index](#cheat-sheets-index)
-- [Project leaders](#project-leaders)
-- [Folders](#folders)
-- [Offline website](#offline-website)
-- [Conversion rules](#conversion-rules)
+- [Migration process](#migration-process)
 - [Editor & validation policy](#editor--validation-policy)
-- [Migration tasks list](#migration-tasks-list)
-- [License](#license)
+- [Conversion rules](#conversion-rules)
 - [How to setup my contributor environment?](#how-to-setup-my-contributor-environment)
 - [How to contribute?](#how-to-contribute)
+- [Offline website](#offline-website)
+- [Project leaders](#project-leaders)
+- [Folders](#folders)
+- [Migration tasks list](#migration-tasks-list)
+- [License](#license)
 
 # Migration process
 
