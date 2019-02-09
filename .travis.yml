@@ -2,22 +2,19 @@ language: node_js
 node_js:
   - "node"
 before_script:
-  - sudo apt-get update
   - sudo apt-get install python3.5
   - npm install -g markdownlint-cli
   - npm install -g markdown-link-check
   - npm install -g gitbook-cli
   - chmod +x scripts/Apply_Linter_Check.sh
   - chmod +x scripts/Generate_Site.sh
-  - python --version
-  - python3 --version  
   - python3.5 --version 
 script:
   - cd scripts
   - echo "Apply linter check..."
   - bash Apply_Linter_Check.sh
   - echo "Try to generate the offline website..."
-  - sed -i 's/python/python3/g' Generate_Site.sh
+  - sed -i 's/python/python3\.5/g' Generate_Site.sh
   - cat Generate_Site.sh
   - bash Generate_Site.sh
   - ls -l ../generated/site/
