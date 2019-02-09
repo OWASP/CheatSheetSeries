@@ -185,9 +185,9 @@ Under no circumstances either SSLv2 or SSLv3 should be enabled as a protocol sel
 
 ### Rule - Prefer Ephemeral Key Exchanges
 
-Ephemeral key exchanges are based on Diffie-Hellman and use per-session, temporary keys during the initial SSL/TLS handshake. They provide perfect forward secrecy (PFS), which means a compromise of the server's long term signing key does not compromise the confidentiality of past session (see this rule **Rule - Only Support Strong Cryptographic Ciphers**). When the server uses an ephemeral key, the server will sign the temporary key with its long term key (the long term key is the customary key available in its certificate).
+Ephemeral key exchanges are based on Diffie-Hellman and use per-session, temporary keys during the initial SSL/TLS handshake. They provide perfect forward secrecy (PFS), which means a compromise of the server's long term signing key does not compromise the confidentiality of past session (see this [Rule - Only Support Strong Cryptographic Ciphers](Transport_Layer_Protection_Cheat_Sheet.md#rule---only-support-strong-cryptographic-ciphers)). When the server uses an ephemeral key, the server will sign the temporary key with its long term key (the long term key is the customary key available in its certificate).
 
-Use cryptographic parameters (like [DH-parameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters)) that use a secure length that match to the supported keylength of your certificate (superior or equals to 2048 bits or equivalent Elliptic Curves). As some middleware had some issues with this, upgrade to the latest version. Note: There are some legacy browsers or old Java versions that are not capable to cope with DH-Params superior ro 1024 bits, please read this rule **Rule - Only Support Strong Cryptographic Ciphers** how this can be solved.
+Use cryptographic parameters (like [DH-parameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters)) that use a secure length that match to the supported keylength of your certificate (superior or equals to 2048 bits or equivalent Elliptic Curves). As some middleware had some issues with this, upgrade to the latest version. Note: There are some legacy browsers or old Java versions that are not capable to cope with DH-Params superior ro 1024 bits, please read this [Rule - Only Support Strong Cryptographic Ciphers](Transport_Layer_Protection_Cheat_Sheet.md#rule---only-support-strong-cryptographic-ciphers) to know how this can be solved.
 
 Do NOT use standardized [DH-parameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters) like they are defined by RFCs [2409](https://tools.ietf.org/html/rfc2409), [3526](https://tools.ietf.org/html/rfc3526), or [5114](https://tools.ietf.org/html/rfc5114). 
 
@@ -238,7 +238,8 @@ Each protocol (TLSv1.0, TLSv1.1, TLSv1.2, etc) provides cipher suites. As of TLS
     - listing it manually with your encryption software, e.g. `openssl ciphers -v <cipher-string>` (the result may differ by version), e.g.:
 
 ```text
-openssl ciphers -v "EDH+aRSA+AESGCM:EDH+aRSA+AES:EECDH+aRSA+AESGCM:EECDH+aRSA+AES:-SHA:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:RSA+AESGCM:RSA+AES+SHA256
+openssl ciphers -v "EDH+aRSA+AESGCM:EDH+aRSA+AES:EECDH+aRSA+AESGCM:EECDH+aRSA+AES:-SHA:ECDHE-RSA-AES256-SHA
+:ECDHE-RSA-AES128-SHA:RSA+AESGCM:RSA+AES+SHA256
 :RSA+AES+SHA:DES-CBC3-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA"
 #add optionally ':!aNULL:!eNULL:!LOW:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA' 
 #to protect older Versions of OpenSSL
