@@ -10,6 +10,7 @@ before_script:
   - python --version
   - python3 --version  
 script:
+  - ls -l
   - echo "Apply linter check..."
   - cd scripts; bash Apply_Linter_Check.sh
   - echo "Try to generate the offline website..."
