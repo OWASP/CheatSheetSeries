@@ -15,11 +15,11 @@ This repository contains all the cheat sheets of the project and represent the V
 - [Folders](#folders)
 - [Offline website](#offline-website)
 - [Conversion rules](#conversion-rules)
-- [Editor & validation policy](#editor---validation-policy)
+- [Editor & validation policy](#editor--validation-policy)
 - [Migration tasks list](#migration-tasks-list)
 - [License](#license)
-- [How to setup my contributor environment?](#how-to-setup-my-contributor-environment-)
-- [How to contribute?](#how-to-contribute-)
+- [How to setup my contributor environment?](#how-to-setup-my-contributor-environment)
+- [How to contribute?](#how-to-contribute)
 
 # Migration process
 
