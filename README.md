@@ -173,23 +173,24 @@ Follow these steps:
 
 ![PluginWarningUI](assets/README_PluginWarningUI.png)
 
-2. Ensure that the markdown file you have created/modified do not have any deadlinks. You can verify that by using this [plugin](https://www.npmjs.com/package/markdown-link-check):
+2. Ensure that the markdown file you have created/modified do not have any deadlinks. You can verify that by using this [plugin](https://www.npmjs.com/package/markdown-link-check), if you cannot use this plugin then, at least, verify that all the links are valid before to push:
     1. Install [NodeJS](https://nodejs.org/en/download/) to install NPM.
     2. Install the validation plugin via the command `npm install -g markdown-link-check`
-    3. Use this commmand (from the repo root folder) on your markdown file to verify the presence of any deadlinks: 
-    
-`markdown-link-check -c .markdownlinkcheck.json [MD_FILE]`
+    3. Use this commmand (from the repository root folder) on your markdown file to verify the presence of any deadlinks: 
+
+```bash
+$ markdown-link-check -c .markdownlinkcheck.json [MD_FILE]
+```
 
 See the example below:
 
 ```bash
 $ markdown-link-check -c .markdownlinkcheck.json cheatsheets/Transaction_Authorization_Cheat_Sheet.md
-
 FILE: cheatsheets/Transaction_Authorization_Cheat_Sheet.md
 [✓] https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm
 [✓] https://en.wikipedia.org/wiki/Chip_Authentication_Program
 [✓] http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf
-
+...
 # If the program do not say to you that you have deadlinks so it's OK
 # The identified deadlinks are showed using a red cross instead of a green tick before the link.
 ```
