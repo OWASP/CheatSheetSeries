@@ -7,6 +7,20 @@
 
 This repository contains all the cheat sheets of the project and represent the V2 of the [OWASP Cheat Sheet Series](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series) project.
 
+# Table of Contents
+
+- [Migration process](#migration-process)
+- [Cheat Sheets index](#cheat-sheets-index)
+- [Project leaders](#project-leaders)
+- [Folders](#folders)
+- [Offline website](#offline-website)
+- [Conversion rules](#conversion-rules)
+- [Editor & validation policy](#editor---validation-policy)
+- [Migration tasks list](#migration-tasks-list)
+- [License](#license)
+- [How to setup my contributor environment?](#how-to-setup-my-contributor-environment-)
+- [How to contribute?](#how-to-contribute-)
+
 # Migration process
 
 A mass conversion from Mediawiki to GitHub flavored Markdown format has been performed using this [tool](https://github.com/philipashlock/mediawiki-to-markdown) based on [PANDOC](https://pandoc.org/MANUAL.html) on **26th of december 2018** on all OWASP wiki pages flagged as [Cheatsheets](https://www.owasp.org/index.php/Category:Cheatsheets).
