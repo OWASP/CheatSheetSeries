@@ -12,6 +12,7 @@ before_script:
   - chmod +x scripts/Generate_Site.sh
   - python --version
   - python3 --version  
+  - python3.5 --version 
 script:
   - cd scripts
   - echo "Apply linter check..."
