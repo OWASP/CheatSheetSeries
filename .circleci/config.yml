@@ -2,13 +2,13 @@ version: 2
 jobs:
   build-offline-website:
     docker:
-      - image: 'circleci/python:3.6.4'
+      - image: 'circleci/node:10-stretch'
     working_directory: ~/repo
     environment:
       TERM: dumb
     steps:
     - checkout
-    - run: 'sudo apt-get install -y npm zip'
+    - run: 'sudo apt-get install -y python3.5 zip'
     - run: 'npm install -g markdownlint-cli'
     - run: 'npm install -g markdown-link-check'
     - run: 'npm install -g gitbook-cli'
