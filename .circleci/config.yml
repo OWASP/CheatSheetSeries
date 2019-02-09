@@ -26,7 +26,7 @@ workflows:
   version: 2
   git-push-build:
     jobs:
-      - build  
+      - build-offline-website
   scheduled-night-build:
     triggers:
       - schedule:
