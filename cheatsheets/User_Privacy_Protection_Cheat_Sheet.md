@@ -29,7 +29,7 @@ If it is impractical to force HSTS on all users, web developers should at least 
 For more details regarding HSTS, please visit:
 
 1.  [HTTP Strict Transport Security in Wikipedia](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security).
-2.  [IETF Draft for HSTS](https://tools.ietf.org/html/draft-ietf-websec-strict-transport-sec-11).
+2.  [IETF for HSTS RFC](https://tools.ietf.org/html/rfc6797).
 3.  [OWASP Appsec Tutorial Series - Episode 4: Strict Transport Security](http://www.youtube.com/watch?v=zEV3HOuM_Vw).
 
 ## Digital Certificate Pinning
@@ -45,7 +45,7 @@ Some advantages for pinning are:
 For details regarding certificate pinning, please refer to the following:
 
 1. [OWASP Certificate Pinning Cheat Sheet](Pinning_Cheat_Sheet.md).
-2. [Public Key Pinning Extension for HTTP draft-ietf-websec-key-pinning-02](https://www.ietf.org/id/draft-ietf-websec-key-pinning-02.txt).
+2. [Public Key Pinning Extension for HTTP RFC](https://tools.ietf.org/html/rfc7469).
 3. [Securing the SSL channel against man-in-the-middle attacks: Future technologies - HTTP Strict Transport Security and and Pinning of Certs, by Tobias Gondrom](https://www.owasp.org/images/4/4b/OWASP_defending-MITMA_APAC2012.pdf).
 
 ## Panic Modes
