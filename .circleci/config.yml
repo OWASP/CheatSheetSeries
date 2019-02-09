@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build-offline-website:
+    docker:
+      - image: 'circleci/node:7.10'
+    working_directory: ~/repo
+    environment:
+      TERM: dumb
+    steps:
+    - checkout
+    - run: 'sudo apt-get install -y python3.5 zip'
+    - run: 'npm install -g markdownlint-cli'
+    - run: 'npm install -g markdown-link-check'
+    - run: 'npm install -g gitbook-cli'
+    - run: 'chmod +x scripts/Apply_Linter_Check.sh'
+    - run: 'chmod +x scripts/Generate_Site.sh'
+    - run: 'cd scripts;bash Generate_Site.sh;cd ..'
+    - run: 'ls -l generated/site/'
+    - run: 'cd generated;zip -r ../site.zip site'
+    - run: 'ls -l'
+    - run: 'zip -T site.zip'
+    - store_artifacts:
+        path: ./site.zip
+        destination: OfflineWebsite-NightBuild.zip
+workflows:
+  version: 2
+  scheduled-night-build:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-offline-website
