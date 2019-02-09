@@ -8,7 +8,7 @@ jobs:
       TERM: dumb
     steps:
     - checkout
-    - run: 'sudo apt-get install -y nodejs npm zip'
+    - run: 'sudo apt-get install -y npm zip'
     - run: 'npm install -g markdownlint-cli'
     - run: 'npm install -g markdown-link-check'
     - run: 'npm install -g gitbook-cli'
