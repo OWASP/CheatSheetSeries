@@ -10,11 +10,10 @@ before_script:
   - python --version
   - python3 --version  
 script:
+  - cd scripts
   - echo "Apply linter check..."
-  - cd scripts; bash Apply_Linter_Check.sh
+  - bash Apply_Linter_Check.sh
   - echo "Try to generate the offline website..."
-  - pwd
-  - ls -l
-  - sed -i 's/python/python3/g' scripts/Generate_Site.sh
-  - cd scripts; bash Generate_Site.sh
-  - ls -l generated/site/
+  - sed -i 's/python/python3/g' Generate_Site.sh
+  - bash Generate_Site.sh
+  - ls -l ../generated/site/
