@@ -7,13 +7,12 @@ before_script:
   - npm install -g gitbook-cli
   - chmod +x scripts/Apply_Linter_Check.sh
   - chmod +x scripts/Generate_Site.sh
+  - python --version
+  - python3 --version  
 script:
-  - python --version
-  - python3 --version
-  - alias python=python3
-  - python --version
   - echo "Apply linter check..."
   - cd scripts; bash Apply_Linter_Check.sh
   - echo "Try to generate the offline website..."
+  - sed -i 's/python/python3/g' scripts/Generate_Site.sh
   - cd scripts; bash Generate_Site.sh
   - ls -l generated/site/
