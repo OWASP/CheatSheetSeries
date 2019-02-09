@@ -8,12 +8,15 @@ jobs:
       TERM: dumb
     steps:
     - checkout
-    - run: 'sudo apt-get install -y python3.5 zip'
+    - run: 'sudo apt-get install -y python3 zip'
+    - run: 'python --version'
+    - run: 'python3 --version'
     - run: 'npm install -g markdownlint-cli'
     - run: 'npm install -g markdown-link-check'
     - run: 'npm install -g gitbook-cli'
     - run: 'chmod +x scripts/Apply_Linter_Check.sh'
     - run: 'chmod +x scripts/Generate_Site.sh'
+    - run: 'sed -i 's/python/python3/g' scripts/Generate_Site.sh'
     - run: 'cd scripts;bash Generate_Site.sh;cd ..'
     - run: 'ls -l generated/site/'
     - run: 'cd generated;zip -r ../site.zip site'
