@@ -112,7 +112,7 @@ drwxr-xr-x 1 Feb  3 11:05 gitbook
 * Use this [sheet](https://gist.github.com/molomby/9bc092e4a125f529ae362de7e46e8176) for Superscript and Subscript characters.
 * Use this [sheet](https://meta.askubuntu.com/a/7383) for Arrows (left, right, top, down) characters.
 * Store all assets in the **assets** folder and use the following syntax:
-    * `![ALTERNATE_NAME](../assets/ASSET_NAME.png)` for the insertion of an image.
+    * `![ALTERNATE_NAME](../assets/ASSET_NAME.png)` for the insertion of an image. Use `PNG` format for the images (this [software](https://www.gimp.org/downloads/) can be used to handle format conversion).
     * `[ALTERNATE_NAME](../assets/ASSET_NAME.EXT)` for the insertion of other kinds of media (pdf, zip...).
 * Use ATX style (`#` syntax) for section head. 
 * Use `**bold**` syntax for **bold** text.
