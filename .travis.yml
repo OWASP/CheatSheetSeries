@@ -8,6 +8,7 @@ before_script:
   - chmod +x scripts/Apply_Linter_Check.sh
   - chmod +x scripts/Generate_Site.sh
 script:
+  - python --version
   - echo "Apply linter check..."
   - cd scripts; bash Apply_Linter_Check.sh
   - echo "Try to generate the offline website..."
