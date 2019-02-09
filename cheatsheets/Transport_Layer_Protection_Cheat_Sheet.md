@@ -371,7 +371,7 @@ It is important to provide TLS for server-to-server communication in addition to
 
 # Tools
 
-## local/offline
+## Local/Offline
 
 - [O-Saft - OWASP SSL advanced forensic tool](https://www.owasp.org/index.php/O-Saft)
 - [testssl.sh - Testing any TLS/SSL encryption](https://testssl.sh)
