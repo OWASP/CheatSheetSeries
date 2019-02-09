@@ -158,6 +158,42 @@ Like the @thoughtworks tech radar: https://www.thoughtworks.com/radar
 
 [![LICENSE](https://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/)
 
+# How to setup my contributor environment?
+
+Follow these steps:
+
+1. Install [Visual Studio Code](https://code.visualstudio.com/) (named `VSCode` from here), it is cross platform and free.
+2. Install this [plugin](https://github.com/DavidAnson/vscode-markdownlint#install) from VSCode.
+3. Open the file [Project.code-workspace](Project.code-workspace) from VSCode via the menu `File > Open Workspace...`.
+4. You are ready to contribute :+1:
+
+:alarm_clock: Before to push my update to my fork, what I need to verify?
+
+1. Ensure that the markdown file you have created/modified do not have any warnings/errors raised by the linter, you can see it in this bottom bar when the markdown file is opened in VSCode: 
+
+![PluginWarningUI](assets/README_PluginWarningUI.png)
+
+2. Ensure that the markdown file you have created/modified do not have any deadlinks. You can verify that by using this [plugin](https://www.npmjs.com/package/markdown-link-check):
+    1. Install [NodeJS](https://nodejs.org/en/download/) to install NPM.
+    2. Install the validation plugin via the command `npm install -g markdown-link-check`
+    3. Use this commmand (from the repo root folder) on your markdown file to verify the presence of any deadlinks: 
+    
+`markdown-link-check -c .markdownlinkcheck.json [MD_FILE]`
+
+See the example below:
+
+```bash
+$ markdown-link-check -c .markdownlinkcheck.json cheatsheets/Transaction_Authorization_Cheat_Sheet.md
+
+FILE: cheatsheets/Transaction_Authorization_Cheat_Sheet.md
+[✓] https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm
+[✓] https://en.wikipedia.org/wiki/Chip_Authentication_Program
+[✓] http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf
+
+# If the program do not say to you that you have deadlinks so it's OK
+# The identified deadlinks are showed using a red cross instead of a green tick before the link.
+```
+
 # How to contribute?
 
 Follow these steps:
