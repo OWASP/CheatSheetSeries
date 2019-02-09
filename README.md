@@ -63,6 +63,11 @@ This [Index](Index.md) reference all migrated and released cheat sheets.
 **.github**:
 * Contains materials used to configure different behaviors of GitHub.
 
+**.circleci** / **.travis.yml** (file):
+* Contains the definition of the integration jobs used to control the integrity and consistency of the whole project:
+    * *TravisCI* is used to perform build and check actions at each Push or on each Pull Request.
+    * *CircleCI* is used to perform regular scheduled build and check actions (night build).
+
 # Offline website
 
 Unfortunately, a PDF file generation is not possible because the content is cut in some cheat sheets like for example the abuse case one.
