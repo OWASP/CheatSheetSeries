@@ -2,13 +2,13 @@ version: 2
 jobs:
   build-offline-website:
     docker:
-      - image: 'circleci/node:7.10'
+      - image: 'circleci/python:3.6.4'
     working_directory: ~/repo
     environment:
       TERM: dumb
     steps:
     - checkout
-    - run: 'sudo apt-get install -y python3 zip'
+    - run: 'sudo apt-get install -y nodejs zip'
     - run: 'python --version'
     - run: 'python3 --version'
     - run: 'npm install -g markdownlint-cli'
