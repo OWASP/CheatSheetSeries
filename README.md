@@ -173,7 +173,7 @@ The file **.markdownlinkcheck.json** define the configuration used to validate u
 * [ ] **Task 05:** Create the index page of the repository based on this README file to provide all the information about the repository and how to contribute.
 * [ ] **Task 06:** Migrate the project [Trello board](https://trello.com/b/w020m3jQ) content to Issues in this repository
     * Create labels for: Request from OPC, Internal task...
-* [ ] **Task 07:** Create all the materials to generate a PDF file of all the CS, automate it via a CircleCI job.
+* [x] **Task 07:** Create all the materials to generate a offline website of all the CS, automate it via a CircleCI job.
 * [x] **Task 08:** Create a template for the pull request in order to add a checklist like the one created by the MSTG.
 * [x] **Task 09:** Add a CI job to [validate automatically the Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) when they are submitted.
 * [ ] **Task 10:** :triangular_flag_on_post: Classify the CS collections in order to address the following important [problem](https://twitter.com/Kerberosmansour/status/1084063530251440128) raised by the community:
