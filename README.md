@@ -66,8 +66,8 @@ This [Index](Index.md) reference all migrated and released cheat sheets.
 
 **.circleci** / **.travis.yml** (file):
 * Contains the definition of the integration jobs used to control the integrity and consistency of the whole project:
-    * *TravisCI* is used to perform build and check actions at each Push or on each Pull Request.
-    * *CircleCI* is used to perform regular scheduled build and check actions (night build).
+    * **[TravisCI](https://travis-ci.org/OWASP/CheatSheetSeries)** is used to perform build and check actions at each Push or on each Pull Request.
+    * **[CircleCI](https://circleci.com/gh/OWASP/CheatSheetSeries)** is used to perform regular scheduled build and check actions (night build).
 
 # Offline website
 
