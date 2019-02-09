@@ -24,6 +24,9 @@ jobs:
         destination: OfflineWebsite-NightBuild.zip
 workflows:
   version: 2
+  git-push-build:
+    jobs:
+      - build  
   scheduled-night-build:
     triggers:
       - schedule:
