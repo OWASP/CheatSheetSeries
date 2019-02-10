@@ -1,8 +1,8 @@
-**51** cheat sheets available.
+**52** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
-[A](Index.md#a) [B](Index.md#b) [C](Index.md#c) [D](Index.md#d) [E](Index.md#e) [F](Index.md#f) [H](Index.md#h) [I](Index.md#i) [J](Index.md#j) [K](Index.md#k) [L](Index.md#l) [M](Index.md#m) [O](Index.md#o) [P](Index.md#p) [Q](Index.md#q) [R](Index.md#r) [S](Index.md#s) [T](Index.md#t) [U](Index.md#u) [V](Index.md#v) 
+[A](Index.md#a) [B](Index.md#b) [C](Index.md#c) [D](Index.md#d) [E](Index.md#e) [F](Index.md#f) [H](Index.md#h) [I](Index.md#i) [J](Index.md#j) [K](Index.md#k) [L](Index.md#l) [M](Index.md#m) [O](Index.md#o) [P](Index.md#p) [Q](Index.md#q) [R](Index.md#r) [S](Index.md#s) [T](Index.md#t) [U](Index.md#u) [V](Index.md#v) [X](Index.md#x) 
 
 # A
 
@@ -145,3 +145,7 @@
 # V
 
 [Virtual Patching Cheat Sheet](cheatsheets/Virtual_Patching_Cheat_Sheet.md). ![Html](assets/Index_Html.png) 
+
+# X
+
+[XSS (Cross Site Scripting) Prevention Cheat Sheet](cheatsheets/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet.md). ![Javascript](assets/Index_Javascript.png) ![Java](assets/Index_Java.png) ![Csharp](assets/Index_Csharp.png) ![Html](assets/Index_Html.png) ![Ruby](assets/Index_Ruby.png) 
