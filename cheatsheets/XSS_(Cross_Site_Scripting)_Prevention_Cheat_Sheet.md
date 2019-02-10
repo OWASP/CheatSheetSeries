@@ -72,7 +72,9 @@ In a tag name:
 Directly in CSS:
 
 ```html
-<style>...NEVER PUT UNTRUSTED DATA HERE...</style>     
+<style>
+...NEVER PUT UNTRUSTED DATA HERE...
+</style>     
 ```
 
 Most importantly, never accept actual JavaScript code from an untrusted source and then run it. For example, a parameter named "callback" that contains a JavaScript code snippet. No amount of escaping can fix that.
@@ -382,6 +384,8 @@ This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/He
 | String    | Javascript Variable                      | `<script>var currentValue='UNTRUSTED DATA ';</script> <script>someFunction('UNTRUSTED DATA ');</script>` | Ensure JavaScript variables are quoted, JavaScript Hex Encoding, JavaScript Unicode Encoding, Avoid backslash encoding (`\"` or `\'` or `\\`).                                                 |
 | HTML      | HTML Body                                | `<div>UNTRUSTED HTML</div>`                                                                             | HTML Validation (JSoup, AntiSamy, HTML Sanitizer...).                                                                                                                                          |
 | String    | DOM XSS                                  | `<script>document.write("UNTRUSTED INPUT: " + document.location.hash );<script/>`                        | [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)                                                                                                                |
+
+
 The following snippets of HTML demonstrate how to safely render untrusted data in a variety of different contexts.
 
 ***Safe HTML Attributes include:*** `align, alink, alt, bgcolor, border, cellpadding, cellspacing, class, color, cols, colspan, coords, dir, face, height, hspace, ismap, lang, marginheight, marginwidth, multiple, nohref, noresize, noshade, nowrap, ref, rel, rev, rows, rowspan, scrolling, shape, span, summary, tabindex, title, usemap, valign, value, vlink, vspace, width`.
