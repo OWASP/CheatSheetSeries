@@ -407,7 +407,7 @@ The purpose of output encoding (as it relates to Cross Site Scripting) is to con
 
 The following article describes how to exploit different kinds of XSS Vulnerabilities that this article was created to help you avoid:
 
-- OWASP: [XSS Filter Evasion Cheat Sheet](XSS_Filter_Evasion_Cheat_Sheet.md) - Based on - RSnake's: "XSS Cheat Sheet".
+- OWASP: [XSS Filter Evasion Cheat Sheet](XSS_Filter_Evasion_Cheat_Sheet.md) - Based on - [RSnake's: "XSS Cheat Sheet"](https://www.in-secure.org/misc/xss/xss.html).
 
 **Description of XSS Vulnerabilities**
 
