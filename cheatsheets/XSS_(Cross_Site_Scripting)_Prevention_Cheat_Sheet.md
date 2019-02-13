@@ -372,6 +372,16 @@ Many web application frameworks provide automatic contextual escaping functional
 
 This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) enables the Cross-site scripting (XSS) filter built into some modern web browsers. This header is usually enabled by default anyway, so the role of this header is to re-enable the filter for this particular website if it was disabled by the user.
 
+## Bonus Rule \#5: Properly use modern JS frameworks like Angular (2+) or ReactJS
+
+Modern javascript frameworks have pretty good XSS protection built in. It is important how to use them properly to benefit from it.
+
+When using ReactJS *do not use `dangerouslySetInnerHTML`*. If you really, really really have to use `dangerouslySetInnerHTML` remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.
+
+For Angular (2+) remember to build Angular templates with `-prod` parameter (`ng build --prod`) in order to avoid template injection.
+
+And also remember to update your framework to the newest version, with all possible bug fixes, as soon as possible. 
+
 # XSS Prevention Rules Summary
 
 | Data Type | Context                                  | Code Sample                                                                                                        | Defense                                                                                                                                                                                        |
