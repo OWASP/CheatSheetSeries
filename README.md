@@ -21,6 +21,7 @@ This repository contains all the cheat sheets of the project and represent the V
 - [Folders](#folders)
 - [Migration tasks list](#migration-tasks-list)
 - [License](#license)
+- [Code of conduct](CODE_OF_CONDUCT.md)
 
 # Migration process
 
