@@ -1,4 +1,4 @@
-**55** cheat sheets available.
+**56** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -157,3 +157,5 @@
 # X
 
 [XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Csharp](assets/Index_Csharp.png) ![Cpp](assets/Index_Cpp.png) ![Php](assets/Index_Php.png) 
+
+[XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Xml](assets/Index_Xml.png) ![Bash](assets/Index_Bash.png) 
