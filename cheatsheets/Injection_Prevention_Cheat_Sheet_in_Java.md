@@ -395,7 +395,7 @@ Configuration of a logging policy to roll on 10 files of 5MB each, and encode/li
             <PatternLayout>
                 <!-- Encode any CRLF chars in the message and limit its 
                      maximum size to 500 characters -->
-                <Pattern>%d{ISO8601} %-5p - %encode{%.-500m}{CRLF}%n</Pattern>
+                <Pattern>%d{ISO8601} %-5p - %encode{ %.-500m }{CRLF}%n</Pattern>
             </PatternLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="5MB"/>

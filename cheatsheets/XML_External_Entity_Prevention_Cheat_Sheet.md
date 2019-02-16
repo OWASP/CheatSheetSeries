@@ -1,6 +1,6 @@
-cd sc   # Introduction
+# Introduction
 
-*XML eXternal Entity injection* (XXE), which is now part of the [OWASP Top 10](https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)), is a type of attack against an application that parses XML input.
+*XML eXternal Entity injection* (XXE), which is now part of the [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) via the point **A4**, is a type of attack against an application that parses XML input.
 
 XXE issue is referenced under the ID [611](https://cwe.mitre.org/data/definitions/611.html) in the [Common Weakness Enumeration](https://cwe.mitre.org/index.html) referential.
 
@@ -8,7 +8,7 @@ This attack occurs when untrusted XML input containing a **reference to an exter
 
 This attack may lead to the disclosure of confidential data, denial of service, [Server Side Request Forgery](https://www.owasp.org/index.php/Server_Side_Request_Forgery) (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.
 
-For more information on XXE, please visit [XML External Entity (XXE) Processing](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing).
+For more information on XXE, please visit [XML External Entity (XXE)](https://en.wikipedia.org/wiki/XML_external_entity_attack).
 
 # General Guidance
 
