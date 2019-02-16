@@ -1,6 +1,6 @@
 # Introduction
 
-The goal of this `CSS` (Not [XSS](XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet.md), but [Cascading Style Sheet](https://www.w3schools.com/css/css_intro.asp)) Cheat Sheet is to inform Programmers, Testers, Security Analysts, Front-End Developers and anyone who is interested in Web Application Security to use these recommendations or requirements in order to achieve better security when authoring `Cascading Style Sheets`.
+The goal of this `CSS` (Not [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), but [Cascading Style Sheet](https://www.w3schools.com/css/css_intro.asp)) Cheat Sheet is to inform Programmers, Testers, Security Analysts, Front-End Developers and anyone who is interested in Web Application Security to use these recommendations or requirements in order to achieve better security when authoring `Cascading Style Sheets`.
 
 Let's demonstrate this risk with an example:
 

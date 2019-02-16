@@ -38,7 +38,7 @@ Take a look at the [JSON page](http://www.json.org/) for links.
 
 Just like building HTML or SQL you will cause XML injection bugs, so stay way from this or at least use an encoding library or safe JSON or XML library to make attributes and element data safe.
 
-- [XSS (Cross Site Scripting) Prevention](XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet.md)
+- [XSS (Cross Site Scripting) Prevention](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 - [SQL Injection Prevention](SQL_Injection_Prevention_Cheat_Sheet.md)
 
 ### Never transmit secrets to the client

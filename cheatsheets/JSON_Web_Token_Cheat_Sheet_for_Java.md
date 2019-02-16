@@ -610,7 +610,7 @@ It's occur when a application store the token in a way allowing this one to be:
 
 - Automatically sent by the browser (*Cookie* storage).
 - Retrieved even if the browser is restarted (Use of browser *localStorage* container).
-- Retrieved in case of [XSS](XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet.md) issue (Cookie accessible to JavaScript code or Token stored in browser local/session storage).
+- Retrieved in case of [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) issue (Cookie accessible to JavaScript code or Token stored in browser local/session storage).
 
 ### How to prevent
 

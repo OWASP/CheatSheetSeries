@@ -8,7 +8,7 @@ Input validation is performed to ensure only properly formed data is entering th
 
 Data from all potentially untrusted sources should be subject to input validation, including not only Internet-facing web clients but also backend feeds over extranets, from [suppliers, partners, vendors or regulators](https://badcyber.com/several-polish-banks-hacked-information-stolen-by-unknown-attackers/), each of which may be compromised on their own and start sending malformed data.
 
-Input Validation should not be used as the *primary* method of preventing [XSS](XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet.md), [SQL Injection](SQL_Injection_Prevention_Cheat_Sheet.md) and other attacks which are covered in respective [cheat sheets](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series) but can significantly contribute to reducing their impact if implemented properly.
+Input Validation should not be used as the *primary* method of preventing [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), [SQL Injection](SQL_Injection_Prevention_Cheat_Sheet.md) and other attacks which are covered in respective [cheat sheets](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series) but can significantly contribute to reducing their impact if implemented properly.
 
 # Input validation strategies
 
@@ -118,7 +118,7 @@ Be aware that any JavaScript input validation performed on the client can be byp
 
 # Validating Rich User Content
 
-It is very difficult to validate rich content submitted by a user. For more information, please see the XSS cheatsheet on [Sanitizing HTML Markup with a Library Designed for the Job](XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet.md).
+It is very difficult to validate rich content submitted by a user. For more information, please see the XSS cheatsheet on [Sanitizing HTML Markup with a Library Designed for the Job](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
 # Preventing XSS and Content Security Policy
 
@@ -126,7 +126,7 @@ All user data controlled must be encoded when returned in the html page to preve
 
 The type of encoding is specific to the context of the page where the user controlled data is inserted. For example, HTML entity encoding is appropriate for data placed into the HTML body. However, user data placed into a script would need JavaScript specific output encoding.
 
-Detailed information on XSS prevention here: [OWASP XSS Prevention Cheat Sheet](XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet.md)
+Detailed information on XSS prevention here: [OWASP XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 
 # File Upload Validation
 

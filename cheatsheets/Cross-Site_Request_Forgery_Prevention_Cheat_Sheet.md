@@ -14,7 +14,7 @@ If you have seen OWASP [old CSRF prevention cheat sheets](https://www.owasp.org/
 
 [Cross-Site Scripting](https://www.owasp.org/index.php/Cross-Site_Scripting) is not necessary for CSRF to work. However, any cross-site scripting vulnerability can be used to defeat all CSRF mitigation techniques available in the market today (except mitigation techniques that involve user interaction and described later in this cheatsheet). This is because an XSS payload can simply read any page on the site using an XMLHttpRequest (direct DOM access can be done, if on same page) and obtain the generated token from the response, and include that token with a forged request.  This technique is exactly how the [MySpace (Samy) worm](https://en.wikipedia.org/wiki/Samy_(computer_worm)) defeated MySpace's anti-CSRF defenses in 2005, which enabled the worm to propagate.
 
-It is imperative that no XSS vulnerabilities are present to ensure that CSRF defenses can't be circumvented. Please see the OWASP [XSS Prevention Cheat Sheet](XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.
+It is imperative that no XSS vulnerabilities are present to ensure that CSRF defenses can't be circumvented. Please see the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.
 
 # Resources that need to be protected from CSRF vulnerability
 
