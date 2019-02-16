@@ -95,7 +95,7 @@ A REST request or response body should match the intended content type in the he
 ## Validate request content types
 
 - Reject requests containing unexpected or missing content type headers with HTTP response status `406 Unacceptable` or `415 Unsupported Media Type`.
-- For XML content types ensure appropriate XML parser hardening, see the [XXE cheat sheet](XML_External_Entity_(XXE)_Prevention_Cheat_Sheet.md).
+- For XML content types ensure appropriate XML parser hardening, see the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md).
 - Avoid accidentally exposing unintended content types by explicitly defining content types e.g. [Jersey](https://jersey.github.io/) (Java) `@consumes("application/json"); @produces("application/json")`. This avoids [XXE-attack](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing) vectors for example.
 
 ## Send safe response content types
