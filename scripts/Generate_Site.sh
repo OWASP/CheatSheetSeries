@@ -28,6 +28,11 @@ echo "Step 4/5: Generate the site."
 cd $WORK
 gitbook install --log=error
 gitbook build . $WORK/$GENERATED_SITE --log=info
+if [[ $? != 0 ]]
+then
+    echo "Error detected during the generation of the site, generation failed!"
+    exit 1
+fi
 echo "Step 5/5: Cleanup."
 rm -rf cheatsheets
 rm -rf node_modules
