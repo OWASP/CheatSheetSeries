@@ -1,4 +1,4 @@
-# Introduction
+cd sc   # Introduction
 
 *XML eXternal Entity injection* (XXE), which is now part of the [OWASP Top 10](https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)), is a type of attack against an application that parses XML input.
 
@@ -395,9 +395,7 @@ The following example shows how it is made safe:
 ``` csharp
  static void LoadXML()
  {
-   string xml = "<?xml version=\"1.0\" ?><!DOCTYPE doc
-    [<!ENTITY win SYSTEM \"file:///C:/Users/user/Documents/testdata2.txt\">]
-    ><doc>&win;</doc>";
+   string xml = "<?xml version='1.0' ?><!DOCTYPE doc [<!ENTITY win SYSTEM 'file:///C:/Users/user/Documents/testdata2.txt'>]><doc>&win;</doc>";
 
    XmlDocument xmlDoc = new XmlDocument();
    // Setting this to NULL disables DTDs - Its NOT null by default.
