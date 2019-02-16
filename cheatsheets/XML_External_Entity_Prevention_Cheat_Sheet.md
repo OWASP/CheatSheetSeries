@@ -395,7 +395,7 @@ The following example shows how it is made safe:
 ``` csharp
  static void LoadXML()
  {
-   string xxePayload = "<!DOCTYPE doc [<!ENTITY win SYSTEM 'file:///C:/Users/user/Documents/testdata2.txt'>]>" 
+   string xxePayload = "<!DOCTYPE doc [<!ENTITY win SYSTEM 'file:///C:/Users/testdata2.txt'>]>" 
                      + "<doc>&win;</doc>";
    string xml = "<?xml version='1.0' ?>" + xxePayload;
 
