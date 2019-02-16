@@ -10,6 +10,7 @@ This repository contains all the cheat sheets of the project and represent the V
 # Table of Contents
 
 - [Cheat Sheets index](#cheat-sheets-index)
+- [Special thanks](#special-thanks)
 - [Migration process](#migration-process)
 - [Editor & validation policy](#editor--validation-policy)
 - [Conversion rules](#conversion-rules)
@@ -239,6 +240,13 @@ Follow these steps:
       - Modify the target cheat sheet in case of a update/refactoring.
     3. Submit your [Pull Request](https://help.github.com/articles/creating-a-pull-request/).
     4. Verify that the CI job [applied on your Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) do not fail!
+
+# Special thanks
+
+A special thanks you to the following peoples for the help provided during the migration:
+
+- [ThunderSon](https://github.com/ThunderSon): Deeply help about updating the OWASP wiki links for all the migrated cheat sheets.
+- [mackowski](https://github.com/mackowski): Deeply help about updating the OWASP wiki links for all the migrated cheat sheets.
 
 # License
 
