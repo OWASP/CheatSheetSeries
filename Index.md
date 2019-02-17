@@ -1,4 +1,4 @@
-**56** cheat sheets available.
+**57** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -65,6 +65,8 @@
 [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md).
 
 # I
+
+[Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
 
 [Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md). ![Java](assets/Index_Java.png) ![Xml](assets/Index_Xml.png) 
 
