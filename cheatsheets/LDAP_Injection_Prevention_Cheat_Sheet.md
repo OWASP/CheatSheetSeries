@@ -62,7 +62,7 @@ When building LDAP queries in application code, you MUST escape any untrusted da
 
 ### Safe Java Escaping Example
 
-- [Prevent LDAP injection](https://wiki.sei.cmu.edu/confluence/display/java/IDS54-J.+Prevent+LDAP+injection).
+- [Prevent LDAP injection](https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534).
 - [Legacy OWASP ESAPI for Java DefaultEncoder which includes encodeForLDAP(String) and encodeForDN(String)](https://github.com/ESAPI/esapi-java-legacy/blob/develop/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java).
 
 ### Safe C Sharp .NET TBA Example
