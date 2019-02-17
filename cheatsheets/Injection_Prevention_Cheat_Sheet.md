@@ -185,7 +185,8 @@ Each DN points to exactly 1 entry, which can be thought of sort of like a row in
 Example:
 
 ```text
-(&(ou=Physics)(| (manager=cn=Freeman Dyson,ou=Physics,dc=Caltech,dc=edu) (manager=cn=Albert Einstein,ou=Physics,dc=Princeton,dc=edu) )) 
+(&(ou=Physics)(| (manager=cn=Freeman Dyson,ou=Physics,dc=Caltech,dc=edu)
+(manager=cn=Albert Einstein,ou=Physics,dc=Princeton,dc=edu) )) 
 ```
 
 When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource. 
