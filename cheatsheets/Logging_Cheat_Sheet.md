@@ -298,7 +298,6 @@ Legal, regulatory and contractual obligations may impact on these periods.
 - Other [Build Visibility In, Richard Bejtlich, TaoSecurity blog](http://taosecurity.blogspot.co.uk/2009/08/build-visibility-in.html).
 - Other [Common Event Format (CEF), Arcsight](http://www.arcsight.com/solutions/solutions-cef/).
 - Other [Log Event Extended Format (**LEEF**), IBM](https://www.ibm.com/developerworks/community/wikis/form/anonymous/api/wiki/9989d3d7-02c1-444e-92be-576b33d2f2be/page/3dc63f46-4a33-4e0b-98bf-4e55b74e556b/attachment/a19b9122-5940-4c89-ba3e-4b4fc25e2328/media/QRadar_LEEF_Format_Guide.pdf).
-- Other [Application Security Logging, Colin Watson, Web Security Usability and Design Blog](http://www.clerkendweller.com/2010/8/17/Application-Security-Logging).
 - Other [Common Log File System (CLFS), Microsoft](http://msdn.microsoft.com/en-us/library/windows/desktop/bb986747(v=vs.85).aspx).
 - Other [Building Secure Applications: Consistent Logging, Rohit Sethi & Nish Bhalla, Symantec Connect](http://www.symantec.com/connect/articles/building-secure-applications-consistent-logging).
 

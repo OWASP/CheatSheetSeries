@@ -72,7 +72,6 @@ For secure random number generation, refer to NIST SP 800-90A. CTR-DRBG、HASH-D
 
 References:
 - http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-22r1a.pdf
-- http://csrc.nist.gov/groups/ST/toolkit/rng/documents/sts-2.1.2.zip
 
 #### Rule - Use Authenticated Encryption of data
 

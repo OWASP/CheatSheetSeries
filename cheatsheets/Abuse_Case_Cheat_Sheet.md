@@ -64,8 +64,6 @@ that lead to proper protection of these critical business use cases.
 
 [Synopsys source](https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements)
 
-[Another definition of Abuse Case by Cigital](https://cigital.com/papers/download/misuse-bp.pdf)
-
 ## How to define the list of Abuse Cases?
 
 There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).

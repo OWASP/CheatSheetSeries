@@ -177,7 +177,7 @@ public void handle(Callback[] callbacks) {
 # Related Articles
 
 - [JAAS in Action](https://jaasbook.wordpress.com/2009/09/27/intro/), Michael Coté, posted on September 27, 2009, URL as 5/14/2012.
-- Pistoia Marco, Nagaratnam Nataraj, Koved Larry, Nadalin Anthony from book ["Enterprise Java Security" - Addison-Wesley, 2004](https://www.amazon.com/Enterprise-Java%C2%BF-Security-Building-Applications/dp/0321118898).
+- Pistoia Marco, Nagaratnam Nataraj, Koved Larry, Nadalin Anthony from book ["Enterprise Java Security" - Addison-Wesley, 2004](https://www.oreilly.com/library/view/enterprise-javatm-security/0321118898/).
 
 # Disclosure
 
