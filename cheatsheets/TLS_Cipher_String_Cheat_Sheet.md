@@ -62,6 +62,7 @@ IANA, OpenSSL and other crypto libraries use slightly different names for the sa
 
 This table lists the names used by IANA and by openssl in brackets `[]`. Additional you can find the unambiguously hex values defined by IANA. Mozilla offers a larger *[cipher names correspondence table](https://wiki.mozilla.org/Security/Server_Side_TLS#Cipher_names_correspondence_table)*.
 
+<!-- markdownlint-disable MD033 -->
 | Cipher name:<br>IANA, [OpenSSL] | Cipher HEX value | Advanced+<br>(A+) | Advanced<br>(A) | Broad  Compatibility<br>(B) | Widest Compatibility<br>(C) | Legacy<br>(C-) |
 | ---  | :---:  | :---:  | :---:  | :---:  | :---:  | :---:  |
 | `TLS_DHE_RSA_WITH_AES_256_GCM_SHA384`,<br>[`DHE-RSA-AES256-GCM-SHA384`] | 0x009f | 1 | 1 | 1 | 1 | 1 |
@@ -83,6 +84,7 @@ This table lists the names used by IANA and by openssl in brackets `[]`. Additio
 | `TLS_RSA_WITH_3DES_EDE_CBC_SHA`,<br>[`DES-CBC3-SHA`] | 0x000a |  |  |  |  | 17 |
 | `TLS_DHE_RSA_WITH_AES_256_CBC_SHA`,<br>[`DHE-RSA-AES256-SHA`] | 0x0039 |  |  | 11 | 17 | 18 |
 | `TLS_DHE_RSA_WITH_AES_128_CBC_SHA`,<br>[`DHE-RSA-AES128-SHA`] | 0x0033 |  |  | 12 | 18 | 19 |
+<!-- markdownlint-enable MD033 -->
 
 ![CipherTable01](../assets/TLS_Cipher_String_Cheat_Sheet_CipherTable01.png)
 
@@ -96,6 +98,7 @@ Other option: *Delete this two ciphers from your list*.
 
 ### OpenSSL
 
+<!-- markdownlint-disable MD033 -->
 | Cipher-String | OpenSSL syntax |
 | --- | --- |
 | Advanced+<br>(A+) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256` |
@@ -103,6 +106,7 @@ Other option: *Delete this two ciphers from your list*.
 | Broad Compatibility<br>(B) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
 | Widest Compatibility<br>(C) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
 | Legacy<br>(C-) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
+<!-- markdownlint-enable MD033 -->
 
 ![CipherTable02](../assets/TLS_Cipher_String_Cheat_Sheet_CipherTable02.png)
 
