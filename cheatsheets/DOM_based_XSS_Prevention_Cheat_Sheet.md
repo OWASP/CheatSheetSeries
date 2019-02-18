@@ -543,7 +543,7 @@ Finally there is the problem that certain methods in JavaScript which are usuall
 
 One example of an attribute which is thought to be safe is `innerText`. 
 
-Some papers or guides advocate its use as an alternative to `innerHTML` to mitigate against XSS in `innerHTML`. However, depending on the tag which `innerText` is applied, code can be executed. Also note, `innerText` is non standard and is not supported in FireFox
+Some papers or guides advocate its use as an alternative to `innerHTML` to mitigate against XSS in `innerHTML`. However, depending on the tag which `innerText` is applied, code can be executed.  
 
 ```html
 <script>
@@ -551,6 +551,9 @@ Some papers or guides advocate its use as an alternative to `innerHTML` to mitig
  tag.innerText = "<%=untrustedData%>";  //executes code
 </script>
 ```
+
+The `innerText` feature was originally introduced by Internet Explorer, and was formally specified in the HTML standard in 2016 after being adopted by all major browser vendors.
+
 
 # Authors and Contributing Editors
 
