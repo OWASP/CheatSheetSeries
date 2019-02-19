@@ -86,8 +86,6 @@ This table lists the names used by IANA and by openssl in brackets `[]`. Additio
 | `TLS_DHE_RSA_WITH_AES_128_CBC_SHA`,<br>[`DHE-RSA-AES128-SHA`] | 0x0033 |  |  | 12 | 18 | 19 |
 <!-- markdownlint-enable MD033 -->
 
-![CipherTable01](../assets/TLS_Cipher_String_Cheat_Sheet_CipherTable01.png)
-
 **Remarks:**
 
 Elder versions of Internet-Explorer and Java do **NOT** support Diffie-Hellman parameters superior to 1024 bit. So the ciphers `TLS_DHE_RSA_WITH_AES_256_CBC_SHA` and `TLS_DHE_RSA_WITH_AES_128_CBC_SHA` were moved to the end to prevent possible incompatibility issues. 
@@ -107,8 +105,6 @@ Other option: *Delete this two ciphers from your list*.
 | Widest Compatibility<br>(C) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
 | Legacy<br>(C-) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
 <!-- markdownlint-enable MD033 -->
-
-![CipherTable02](../assets/TLS_Cipher_String_Cheat_Sheet_CipherTable02.png)
 
 # How to use this Cipher Strings?
 
