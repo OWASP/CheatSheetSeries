@@ -1,78 +1,44 @@
----
-title: PHP Configuration Cheat Sheet
-permalink: /PHP_Configuration_Cheat_Sheet/
----
+# Introduction
 
-Introduction
-============
+This page is meant to help those configuring PHP and the web server it is running on to be very secure.
 
-This page is meant to help those configuring PHP and the web server it is running on to be very secure. Below you will find information on the proper settings for the php.ini file and instructions on configuring Apache, Nginx, and Caddy web servers.
+Below you will find information on the proper settings for the `php.ini` file and instructions on configuring Apache, Nginx, and Caddy web servers.
 
 For general PHP codebase security please refer to the two following great guides:
 - [Paragonie's 2018 PHP Security Guide](https://paragonie.com/blog/2017/12/2018-guide-building-secure-php-software)
 - [Awesome PHP Security](https://github.com/guardrailsio/awesome-php-security)
 
-------------------------------------------------------------------------
+# Web Server Configuration
 
-Web Server Configuration
-========================
+## Apache 
 
-Apache
-------
-- The world's most commonly used HTTP Server
-- Link to config details coming soon
+[suPHP](http://suphp.org/) makes every php script run as its file owner. This way you are allowed to upload and modify files in your folders without needing to `chmod 777` any folder, which is very bad security practice and will let to your files be compromised easily. Install and configure it on your web server. 
 
-NGINX
-------
-- High performance web server
-- Link to config details coming soon
+## NGINX
 
-[Caddy](https://caddyserver.com)
-------
-- Modern, secure by default, open source HTTP Server.
+TODO
 
-[ModSecurity](https://github.com/SpiderLabs/ModSecurity)
-------
-- Web Application Firewall for Apache and Nginx.
+## CADDY
 
-PHP Configuration and Deployment
-================================
+TODO
 
+# PHP Configuration and Deployment
 
-php.ini
--------
+## Suhosin
 
-Some of following settings need to be adapted to your system, in particular `session.save_path`, `session.cookie_path` (e.g. /var/www/mysite), and `session.cookie_domain` (e.g. ExampleSite.com). ALSO you should be runninng PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the [PHP Manual](http://www.php.net/manual/ini.core.php) for a complete reference on every value in the php.ini configuration file.
+Consider using [Suhosin](http://www.hardened-php.net/suhosin/index.html) if you want to patch many custom security flaws in various parts of PHP. 
 
-You can find a copy of the following values in a ready-to-go php.ini file at: https://github.com/danehrlich1/very-secure-php-ini
+## php.ini
 
-#### PHP session handling
-- Session settings are some of the MOST important values to concentrate on in configuring
+Some of following settings need to be adapted to your system, in particular `session.save_path`, `session.cookie_path` (e.g. `/var/www/mysite`), and `session.cookie_domain` (e.g. `ExampleSite.com`). 
 
-```
- session.save_path         = /path/PHP-session/
- session.name              = myPHPSESSID
- session.auto_start        = Off
- session.use_trans_sid     = 0
- session.cookie_domain     = full.qualified.domain.name
- #session.cookie_path      = /application/path/
- session.use_strict_mode   = 1
- session.use_cookies       = 1
- session.use_only_cookies  = 1
- session.cookie_lifetime   = 864000 # 4 hours 
- session.cookie_secure     = 1
- session.cookie_httponly   = 1
- session.cookie_samesite   = Strict
- session.cache_expire      = 30 
- session.sid_length        = 256
- session.sid_bits_per_character   = 6 # PHP 7.2+
- session.hash_function   = 1 # PHP 7.0-7.1
- session.hash_bits_per_character = 6 # PHP 7.0-7.1
- ```
- 
-#### PHP error handlling
+You should also be runninng PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the [PHP Manual](http://www.php.net/manual/ini.core.php) for a complete reference on every value in the php.ini configuration file.
 
-```
+You can find a copy of the following values in a ready-to-go php.ini file [here](https://github.com/danehrlich1/very-secure-php-ini).
+
+#### PHP error handling
+
+```text
 expose_php              = Off
 error_reporting         = E_ALL
 display_errors          = Off
@@ -82,8 +48,11 @@ error_log               = /valid_path/PHP-logs/php_error.log
 ignore_repeated_errors  = Off
 ```
 
+Keep in mind that you need to have `display_errors` to `Off` on a production server and it's a good idea to frequently notice the logs. 
+
 #### PHP general settings
-```
+
+```text
 doc_root                = /path/DocumentRoot/PHP-scripts/
 open_basedir            = /path/DocumentRoot/PHP-scripts/
 include_path            = /path/PHP-pear/
@@ -95,55 +64,77 @@ variables_order         = "GPCS"
 allow_webdav_methods    = Off
 session.gc_maxlifetime  = 600
 ```
-Allow_url_\* prevents LFIs to be easily escalated to RFIs.
+
+`allow_url_*` prevents [LFI](https://www.acunetix.com/blog/articles/local-file-inclusion-lfi/)s to be easily escalated to [RFI](https://www.acunetix.com/blog/articles/remote-file-inclusion-rfi/)s.
 
 #### PHP file upload handling
-```
+
+```text
 file_uploads            = On
 upload_tmp_dir          = /path/PHP-uploads/
-upload_max_filesize     = 25M
-max_file_uploads        = 5
+upload_max_filesize     = 2M
+max_file_uploads        = 2
 ```
-If your application is not using file uploads, and say the only data the user will enter / upload is forms that do not require any document attachments, file_uploads should be turned off.
+
+If your application is not using file uploads, and say the only data the user will enter / upload is forms that do not require any document attachments, `file_uploads` should be turned `Off`.
 
 #### PHP executable handling
-```
+
+```text
 enable_dl               = Off
 disable_functions       = system, exec, shell_exec, passthru, phpinfo, show_source, popen, proc_open
 disable_functions       = fopen_with_path, dbmopen, dbase_open, putenv, move_uploaded_file
 disable_functions       = chdir, mkdir, rmdir, chmod, rename
 disable_functions       = filepro, filepro_rowcount, filepro_retrieve, posix_mkfifo
-# see also: [http://ir.php.net/features.safe-mode](http://ir.php.net/features.safe-mode)
+# see also: http://ir.php.net/features.safe-mode
 disable_classes         = 
 ```
+
 These are dangerous PHP functions. You should disable all that you don't use.
 
+#### PHP session handling
 
-#### some more security paranoid checks
-```
+Session settings are some of the MOST important values to concentrate on in configuring. It is a good practice to change `session.name` to something new. 
+
+```text
+ session.save_path                = /path/PHP-session/
+ session.name                     = myPHPSESSID
+ session.auto_start               = Off
+ session.use_trans_sid            = 0
+ session.cookie_domain            = full.qualified.domain.name
+ #session.cookie_path             = /application/path/
+ session.use_strict_mode          = 1
+ session.use_cookies              = 1
+ session.use_only_cookies         = 1
+ session.cookie_lifetime          = 864000 # 4 hours 
+ session.cookie_secure            = 1
+ session.cookie_httponly          = 1
+ session.cookie_samesite          = Strict
+ session.cache_expire             = 30 
+ session.sid_length               = 256
+ session.sid_bits_per_character   = 6 # PHP 7.2+
+ session.hash_function            = 1 # PHP 7.0-7.1
+ session.hash_bits_per_character  = 6 # PHP 7.0-7.1
+ ```
+
+#### Some more security paranoid checks
+
+```text
 session.referer_check   = /application/path
 memory_limit            = 50M
 post_max_size           = 20M
-max_execution_time       = 60
+max_execution_time      = 60
 report_memleaks         = On
 track_errors            = Off
 html_errors             = Off
 ```
 
-Related Cheat Sheets
-====================
+# Authors and Primary Editors
 
--
+Achim Hoffmann - Achim@owasp.org 
 
-Authors and Primary Editors
-===========================
+Tony Hsu HsiangChih 
 
---[DanE](/User:Dan_Ehrlich\ "wikilink") [email](mailto:dan.ehrlich@owasp.org)
+Abbas Naderi - abbas.naderi@owasp.org
 
---[AbiusX](/User:Abbas_Naderi\ "wikilink") [email](mailto:abbas.naderi@owasp.org)
-
-
-Other Cheatsheets
-=================
-
-[Category:Cheatsheets](/Category:Cheatsheets "wikilink")
+Dan Ehrlich - dan.ehrlich@owasp.org

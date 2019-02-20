@@ -1,4 +1,4 @@
-**57** cheat sheets available.
+**58** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -101,6 +101,8 @@
 # P
 
 [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Php](assets/Index_Php.png) ![Bash](assets/Index_Bash.png) 
+
+[PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md).
 
 [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md).
 
