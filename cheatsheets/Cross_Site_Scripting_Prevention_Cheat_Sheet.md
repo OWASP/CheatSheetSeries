@@ -339,7 +339,7 @@ The `SanitizeHelper` module provides a set of methods for scrubbing text of unde
 ```
 
 **Other libraries that provide HTML Sanitization include:**
-
+- [HTML sanitizer](https://github.com/google/closure-library/tree/master/closure/goog/html/sanitizer) from [Google Closure Library](https://developers.google.com/closure/library/)
 - [PHP HTML Purifier](http://htmlpurifier.org/).
 - [JavaScript/Node.js Bleach](https://github.com/ecto/bleach).
 - [Python Bleach](https://pypi.python.org/pypi/bleach).
@@ -443,3 +443,7 @@ Jeff Williams - jeff.williams@contrastsecurity.com
 Jim Manico - jim@owasp.org
 
 Neil Mattatall - neil@owasp.org
+
+# Contributors
+
+Jakub Maćkowski - jakub.mackowski@owasp.org
