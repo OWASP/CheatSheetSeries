@@ -443,7 +443,3 @@ Jeff Williams - jeff.williams@contrastsecurity.com
 Jim Manico - jim@owasp.org
 
 Neil Mattatall - neil@owasp.org
-
-# Contributors
-
-Jakub Maćkowski - jakub.mackowski@owasp.org
