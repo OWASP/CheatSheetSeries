@@ -160,7 +160,7 @@ If the Origin header is present, verify that its value matches the target origin
 
 If the Origin header is not present, verify the hostname in the Referer header matches the target origin. This method of CSRF mitigation is also commonly used with unauthenticated requests, such as requests made prior to establishing a session state, which is required to keep track of a synchronization token.
 
-In both cases, make sure the target origin check is strong. For example, if your site is `site.com` make sure `site.com.attacker.com` does not pass your origin check (i.e., match through the trailing/after the origin to make sure you are matching against the entire origin).
+In both cases, make sure the target origin check is strong. For example, if your site is `site.com` make sure `site.com.attacker.com` does not pass your origin check (i.e., match through the trailing / after the origin to make sure you are matching against the entire origin).
 
 If neither of these headers are present, you can either accept or block the request. We recommend **blocking**. Alternatively, you might want to log all such instances, monitor their use cases/behavior, and then start blocking requests only after you get enough confidence.
 
