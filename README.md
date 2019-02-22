@@ -172,8 +172,8 @@ The file **.markdownlinkcheck.json** define the configuration used to validate u
 * [x] **Task 02:** :triangular_flag_on_post: Update each OWASP WIKI page associated to a CS in order to indicate the redirection to the GitHub location in order **to do not break cross-reference** to CS.
 * [x] **Task 03:** Create [a Python script to auto-generate an markdown index page of all CS](scripts/Update_CheatSheets_Index.py) like this [page](https://www.owasp.org/index.php/Category:Cheatsheets).
 * [x] **Task 04:** Create [a markdown template file for the new CS](templates/New_CheatSheet.md).
-* [ ] **Task 05:** Create the index page of the repository based on this README file to provide all the information about the repository and how to contribute.
-* [ ] **Task 06:** Migrate the project [Trello board](https://trello.com/b/w020m3jQ) content to Issues in this repository
+* [x] **Task 05:** Create the index page of the repository based on this README file to provide all the information about the repository and how to contribute.
+* [x] **Task 06:** Migrate the project [Trello board](https://trello.com/b/w020m3jQ) content to Issues in this repository
     * Create labels for: Request from OPC, Internal task...
 * [x] **Task 07:** Create all the materials to generate a offline website of all the CS, automate it via a CircleCI job.
 * [x] **Task 08:** Create a template for the pull request in order to add a checklist like the one created by the MSTG.
