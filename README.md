@@ -3,6 +3,8 @@
 [![PushAndPullRequestIntegrityCheck](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 [![OfflineWebsiteNightBuild](https://circleci.com/gh/OWASP/CheatSheetSeries.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries)
 
+![LogoOffical](https://github.com/OWASP/owasp-swag/raw/master/projects/cheat-sheet-series/owasp-1.png)
+
 # Welcome to OWASP Cheat Sheet Series V2
 
 This repository contains all the cheat sheets of the project and represent the V2 of the [OWASP Cheat Sheet Series](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series) project.
@@ -17,6 +19,7 @@ This repository contains all the cheat sheets of the project and represent the V
 - [How to contribute?](#how-to-contribute)
 - [Offline website](#offline-website)
 - [Project leaders](#project-leaders)
+- [Project logo](#project-logo)
 - [Folders](#folders)
 - [License](#license)
 - [Code of conduct](CODE_OF_CONDUCT.md)
@@ -29,6 +32,10 @@ This [Index](Index.md) reference all released cheat sheets.
 
 * [Jim Manico](https://github.com/jmanico).
 * [Dominique Righetto](https://github.com/righettod).
+
+# Project logo
+
+Project's official logo files are hosted [here](https://github.com/OWASP/owasp-swag/tree/master/projects/cheat-sheet-series).
 
 # Folders
 
