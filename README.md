@@ -1,4 +1,4 @@
-![CSMigrationCounterBadge](https://img.shields.io/badge/CheatSheets_remaining_to_migrate-FINISHED-green.svg)
+![CSCounterBadge](https://img.shields.io/badge/Cheat_sheets_available-58-orange.svg)
 ![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
 [![PushAndPullRequestIntegrityCheck](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 [![OfflineWebsiteNightBuild](https://circleci.com/gh/OWASP/CheatSheetSeries.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries)
@@ -11,7 +11,6 @@ This repository contains all the cheat sheets of the project and represent the V
 
 - [Cheat Sheets index](#cheat-sheets-index)
 - [Special thanks](#special-thanks)
-- [Migration process](#migration-process)
 - [Editor & validation policy](#editor--validation-policy)
 - [Conversion rules](#conversion-rules)
 - [How to setup my contributor environment?](#how-to-setup-my-contributor-environment)
@@ -19,21 +18,12 @@ This repository contains all the cheat sheets of the project and represent the V
 - [Offline website](#offline-website)
 - [Project leaders](#project-leaders)
 - [Folders](#folders)
-- [Migration tasks list](#migration-tasks-list)
 - [License](#license)
 - [Code of conduct](CODE_OF_CONDUCT.md)
 
-# Migration process
-
-A mass conversion from Mediawiki to GitHub flavored Markdown format has been performed using this [tool](https://github.com/philipashlock/mediawiki-to-markdown) based on [PANDOC](https://pandoc.org/MANUAL.html) on **26th of december 2018** on all OWASP wiki pages flagged as [Cheatsheets](https://www.owasp.org/index.php/Category:Cheatsheets).
-
-:warning: **Cheat Sheets content is now frozen from this date**:
-* No modification will be performed anymore on the wiki content.
-* Any modification will be made on this repository using the contribution issue templates defined in this repository.
-
 # Cheat Sheets index
 
-This [Index](Index.md) reference all migrated and released cheat sheets.
+This [Index](Index.md) reference all released cheat sheets.
 
 # Project leaders
 
@@ -42,15 +32,12 @@ This [Index](Index.md) reference all migrated and released cheat sheets.
 
 # Folders
 
-**cheatsheets_to_convert**: 
-* Contains the cheat sheets markdown files converted with PANDOC and for which a convertion work is needed in order to be cleanly converted to Github markdown.
-
 **cheatsheets_excluded**:
-* Contains the cheat sheets markdown files converted with PANDOC and for which a discution must be made in order to decide if we include them into the V2 of the project due to the content has not been updated since a long time or is not relevant anymore.
+* Contains the cheat sheets markdown files converted with PANDOC and for which a discussion must be made in order to decide if we include them into the V2 of the project due to the content has not been updated since a long time or is not relevant anymore. See this [open discussion](https://github.com/OWASP/CheatSheetSeries/issues/13).
 
 **cheatsheets**: 
 * Contains the final cheat sheets files. 
-* Any `.md` file present at the root of this folder is considered as `converted` and the associated cheat sheet is considered released.
+* Any `.md` file present into this folder is considered released.
 
 **assets**: 
 * Contains the assets used by the cheat sheets (images, pdf, zip...).
@@ -161,34 +148,6 @@ The file **.markdownlint.json** define the central validation policy applied at 
 Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md).
 
 The file **.markdownlinkcheck.json** define the configuration used to validate using this [tool](https://github.com/tcort/markdown-link-check), at TravisCI level, all web and relatives links used in cheat sheets.
-
-# Migration tasks list
-
-:construction: All the tasks below represents the work that must be performed before that the V2 will be considered as Go Live! (**CS** = **C**heat **S**heet).
-
-:triangular_flag_on_post: = Critical task.
-
-* [x] **Task 01:** :triangular_flag_on_post: Migrate all the CS files of the folder **cheatsheets_to_convert**.
-* [x] **Task 02:** :triangular_flag_on_post: Update each OWASP WIKI page associated to a CS in order to indicate the redirection to the GitHub location in order **to do not break cross-reference** to CS.
-* [x] **Task 03:** Create [a Python script to auto-generate an markdown index page of all CS](scripts/Update_CheatSheets_Index.py) like this [page](https://www.owasp.org/index.php/Category:Cheatsheets).
-* [x] **Task 04:** Create [a markdown template file for the new CS](templates/New_CheatSheet.md).
-* [x] **Task 05:** Create the index page of the repository based on this README file to provide all the information about the repository and how to contribute.
-* [x] **Task 06:** Migrate the project [Trello board](https://trello.com/b/w020m3jQ) content to Issues in this repository
-    * Create labels for: Request from OPC, Internal task...
-* [x] **Task 07:** Create all the materials to generate a offline website of all the CS, automate it via a CircleCI job.
-* [x] **Task 08:** Create a template for the pull request in order to add a checklist like the one created by the MSTG.
-* [x] **Task 09:** Add a CI job to [validate automatically the Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) when they are submitted.
-* [ ] **Task 10:** :triangular_flag_on_post: Classify the CS collections in order to address the following important [problem](https://twitter.com/Kerberosmansour/status/1084063530251440128) raised by the community:
-
-```text
-Too many best practices:
-It would be nice to have them structured so people drill down to Exactly what they want.
-Like the @thoughtworks tech radar: https://www.thoughtworks.com/radar
-```
-
-**Idea:** In addition to the [alphabetical index](Index.md), the following indexes will be created: 
-* An Index from that will classify every cheat sheets by [OWASP Proactive Controls sections](https://www.owasp.org/index.php/OWASP_Proactive_Controls).
-* An Index from that will classify every cheat sheets by [OWASP Application Security Verification Standard Project sections](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project).
 
 # How to setup my contributor environment?
 
