@@ -168,7 +168,7 @@ Here is a non-exhaustive selection of security related REST API **status codes**
 | 200         | OK                     |  Response to a successful REST API action. The HTTP method can be GET, POST, PUT, PATCH or DELETE.                                                                                                                  |
 | 201         | Created                |  The request has been fulfilled and resource created. A URI for the created resource is returned in the Location header.                                                                                            |
 | 202         | Accepted               | The request has been accepted for processing, but processing is not yet complete.                                                                                                                                     |
-| 301         | Move Permanently       | Permanent redirection.                                                                                                                                                                                                |
+| 301         | Moved Permanently       | Permanent redirection.                                                                                                                                                                                                |
 | 304         | Not Modified           | Caching related response that returned when the client has the same copy of the resource as the server.                                                                                                                  |
 | 307         | Temporary Redirect     | Temporary redirection of resource.                                                                                                                                                                                   |
 | 400         | Bad Request            | The request is malformed, such as message body format error.                                                                                                                                                          |
@@ -197,3 +197,5 @@ Johan Peeters - yo@johanpeeters.com
 Jan Wolff - jan.wolff@owasp.org
 
 Rocco Gränitz - rocco.graenitz@owasp.org
+
+Manh Pham - manhpt2811@gmail.com
