@@ -98,7 +98,7 @@ This index is based on the version 4.x of the ASVS.
 
 # Not addressed topic
 
-Section with `None` content can spot a topic that should be addressed by the Cheat Sheet Series project.
+Section with **None** content can spot a topic that should be addressed by the Cheat Sheet Series project.
 
 Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/issues/new?assignees=&labels=ACK_WAITING%2C+NEW_CS&template=new_cheatsheet_proposal.md&title=New+cheat+sheet+proposal) if you need that a dedicated cheat sheet be created to provide information about the target ASVS section.
 
