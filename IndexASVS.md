@@ -1,4 +1,4 @@
-**Table of contents**
+# Table of contents
 
 <!-- Generated with "https://ecotrust-canada.github.io/markdown-toc/" -->
 
