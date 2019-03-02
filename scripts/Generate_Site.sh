@@ -22,8 +22,11 @@ mv TOC.md $WORK/cheatsheets/.
 cp -r ../cheatsheets $WORK/cheatsheets/cheatsheets
 cp -r ../assets $WORK/cheatsheets/assets
 cp ../Index.md $WORK/cheatsheets/cheatsheets/Index.md
+cp ../IndexASVS.md $WORK/cheatsheets/cheatsheets/IndexASVS.md
 sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/Index.md
+sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/IndexASVS.md
 sed -i 's/cheatsheets\///g' $WORK/cheatsheets/cheatsheets/Index.md
+sed -i 's/cheatsheets\///g' $WORK/cheatsheets/cheatsheets/IndexASVS.md
 echo "Step 4/5: Generate the site."
 cd $WORK
 gitbook install --log=error
