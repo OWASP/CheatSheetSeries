@@ -3,7 +3,7 @@
 [![PushAndPullRequestIntegrityCheck](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 [![OfflineWebsiteNightBuild](https://circleci.com/gh/OWASP/CheatSheetSeries.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries)
 
-![LogoOffical](https://github.com/OWASP/owasp-swag/raw/master/projects/cheat-sheet-series/owasp-1.png)
+![LogoOfficial](https://github.com/OWASP/owasp-swag/raw/master/projects/cheat-sheet-series/owasp-1.png)
 
 # Welcome to OWASP Cheat Sheet Series V2
 
@@ -140,7 +140,7 @@ drwxr-xr-x 1 Feb  3 11:05 gitbook
 * Same remark about the cheat sheet file name, only the following syntax is allowed: `[a-zA-Z_]+`.
 * No HTML code is allowed, only markdown syntax is allowed!
 * Use this [site](https://www.tablesgenerator.com/markdown_tables) for generation of tables.
-* Use a single new line between a section head and the begining of its content.
+* Use a single new line between a section head and the beginning of its content.
 
 # Editor & validation policy
 
