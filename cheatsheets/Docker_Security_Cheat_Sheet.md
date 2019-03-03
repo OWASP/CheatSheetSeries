@@ -25,7 +25,63 @@ If you really, **really** have to do this you should secure it. Check how to do 
   - "/var/run/docker.sock:/var/run/docker.sock"
 ```
 
-## RULE \#2 - Set filesystem and volumes to read-only 
+## RULE \#2 - Set a user 
+
+Configuring container, to use unprivileged user, is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways:
+
+1. During runtime using `-u` option of `docker run` command e.g.:
+```
+docker run -u 4000 alpine
+```
+1. During build time. Simple add user in Dockerfile and use it. For example:
+```
+FROM alpine
+RUN groupadd -r myuser && useradd -r -g myuser myuser
+<HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.>
+USER myuser
+```
+1. Enable user namespace support (`--userns-remap=default`) in [Docker deamon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
+
+More informatrion about this topic can be found in [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/)
+
+## RULE \#3 - Limit capabilities (Grant only specific capabilities, needed by a container)
+
+[Linux kernel capabilities](http://man7.org/linux/man-pages/man7/capabilities.7.html) are set of privileges that can be used by privileged. Docker, by default, runs with only a  subset of capabilities. 
+You can change it and drop some capabilities (using `--cap-drop`) to harden your docker containers, or add some capabilities (using `--cap-add`) if needed. 
+Remember not to run containers with the *--privileged* flag - this will add ALL Linux kernel capabilities to the container. 
+
+The most secure setup is to drop all capabilities `--cap-drop all` and than add only required ones. For example:
+
+```
+docker run --cap-drop all --cap-add CHOWN alpine
+```
+
+**And remeber: Do not run containers with the *--privileged* flag!!!**
+
+## RULE \#4 - Add –no-new-privileges flag
+
+Always run your docker images with `--security-opt=no-new-privileges` in order to prevent escalate privileges using `setuid` or `setgid` binaries.
+
+## RULE \#5 - Disable inter-container communication (--icc=false)
+
+By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using `docker0` bridged network). 
+This can be disabled by running docker deamon with `--icc=false` flag. 
+If icc is disabled (icc=false) it is required to tell which containers can communicate using --link=CONTAINER_NAME_or_ID:ALIAS option. 
+See more in [Docker documentation - container communication](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)
+
+## RULE \#6 - Use Linux Security Module (seccomp, AppArmor, or SELinux)
+
+**First of all do not disable default security profile!** 
+
+Consider using security profile like [seccomp](https://docs.docker.com/engine/security/seccomp/) or [AppArmor](https://docs.docker.com/engine/security/apparmor/). 
+
+## RULE \#7 - Limit resources (memory, CPU, file descriptors, processes, restarts)
+
+The best way to avoid DoS attacks is limiting resources. You can limit [memory](https://docs.docker.com/config/containers/resource_constraints/#memory), [CPU](https://docs.docker.com/config/containers/resource_constraints/#cpu), maximum number of restarts (`--restart=on-failure:<number_of_restarts>`), maximum number of file descriptors (`--ulimit nofile=<number>`) and maximum number of processes (`--ulimit nproc=<number>`).
+
+[Check documentation for more details about ulimits](https://docs.docker.com/engine/reference/commandline/run/#set-ulimits-in-container---ulimit)
+
+## RULE \#8 - Set filesystem and volumes to read-only 
 
 **Run containers with a read-only filesystem** using `--read-only` flag. For example:
 ```
@@ -46,7 +102,7 @@ services:
 
 ```
 
-**Mount volumes as a read-only**
+In addition if volume is mounted only for reading **mount them as a read-only**
 It can be done by appending `:ro` to the `-v` like this:
 ```
 docker run -v volume-name:/path/in/container:ro alpine
@@ -56,66 +112,9 @@ Or by using `--mount` option:
 $ docker run --mount source=volume-name,destination=/path/in/container,readonly alpine
 ```
 
-## RULE \#3 - Set a USER 
+## RULE \#9 - Use static analysis tools
 
-Configuring container, to use unprivileged user, is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways:
-
-1. During runtime using `-u` option of `docker run` command e.g.:
-```
-docker run --read-only -u 4000 alpine
-```
-1. During build time. Simple add user in Dockerfile and use it. For example:
-```
-FROM alpine
-RUN groupadd -r myuser && useradd -r -g myuser myuser
-<HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.>
-USER myuser
-```
-1. Enable user namespace support (`--userns-remap=default`) in [Docker deamon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
-
-More informatrion about this topic can be found in [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/)
-
-## RULE \#4 - Limit capabilities (Grant only specific capabilities, needed by a container)
-
-[Linux kernel capabilities](http://man7.org/linux/man-pages/man7/capabilities.7.html) are set of privileges that can be used by privileged. Docker, by default, runs with only a  subset of capabilities. 
-You can change it and drop some capabilities (using `--cap-drop`) to harden your docker containers, or add some capabilities (using `--cap-add`) if needed. 
-Remember not to run containers with the *--privileged* flag - this will add ALL Linux kernel capabilities to the container. 
-
-The most secure setup is to drop all capabilities `--cap-drop all` and than add only required ones. For example:
-
-```
-docker run --cap-drop all --cap-add CHOWN alpine
-```
-
-**And remeber: Do not run containers with the *--privileged* flag!!!**
-
-## RULE \#5 - Disable inter-container communication (--icc=false)
-
-## RULE \#6 - Use security profiles (seccomp, AppArmor, or SELinux)
-
-todo:
-
-Do not disable security profile!!! https://docs.docker.com/engine/security/seccomp/
-
-## RULE \#7 - Limit resources (memory, CPU, file descriptors, processes, restarts)
-
-## RULE \#8 - Add –no-new-privileges flag
-
-# Bonus Rules
-
-## BONUS RULE \#1 - Use IDS like Falco 
-
-## BONUS RULE \#2 - Protect your provate Docker registy 
-
-## BONUS RULE \#3 - Delete sensible data 
-
-## BONUS RULE \#4 - secrets management 
-
-## BONUS RULE \#5 - sandbox like gVisor 
-
-## BONUS RULE \#6 - tools
-
-## BONUS RULE \#7 - distroless images
+Scan images using open source tools like [anchore](https://anchore.com/) or [Clair](https://github.com/coreos/clair) to detect containers with known vulnerabilities. 
 
 # Authors and Primary Editors
 
