@@ -36,7 +36,7 @@ Configuring container, to use unprivileged user, is the best way to prevent priv
 docker run -u 4000 alpine
 ```
 
-1. During build time. Simple add user in Dockerfile and use it. For example:
+2. During build time. Simple add user in Dockerfile and use it. For example:
 
 ```
 FROM alpine
@@ -45,7 +45,7 @@ RUN groupadd -r myuser && useradd -r -g myuser myuser
 USER myuser
 ```
 
-1. Enable user namespace support (`--userns-remap=default`) in [Docker deamon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
+3. Enable user namespace support (`--userns-remap=default`) in [Docker deamon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
 
 More informatrion about this topic can be found in [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/)
 
