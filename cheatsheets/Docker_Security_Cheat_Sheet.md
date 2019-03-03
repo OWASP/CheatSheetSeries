@@ -20,6 +20,7 @@ Docker socket */var/run/docker.sock* is the UNIX socket that Docker is listening
 If you really, **really** have to do this you should secure it. Check how to do this [following Docker official documentation](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option.)
 
 **Do not expose */var/run/docker.sock* to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar you should change it. Remeber that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in docker-compose file is somethink like this:
+
 ```
     volumes:
   - "/var/run/docker.sock:/var/run/docker.sock"
@@ -30,16 +31,20 @@ If you really, **really** have to do this you should secure it. Check how to do 
 Configuring container, to use unprivileged user, is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways:
 
 1. During runtime using `-u` option of `docker run` command e.g.:
+
 ```
 docker run -u 4000 alpine
 ```
+
 1. During build time. Simple add user in Dockerfile and use it. For example:
+
 ```
 FROM alpine
 RUN groupadd -r myuser && useradd -r -g myuser myuser
 <HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.>
 USER myuser
 ```
+
 1. Enable user namespace support (`--userns-remap=default`) in [Docker deamon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
 
 More informatrion about this topic can be found in [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/)
@@ -84,15 +89,19 @@ The best way to avoid DoS attacks is limiting resources. You can limit [memory](
 ## RULE \#8 - Set filesystem and volumes to read-only 
 
 **Run containers with a read-only filesystem** using `--read-only` flag. For example:
+
 ```
 docker run --read-only alpine sh -c 'echo "whatever" > /tmp'
 ```
+
 If application inside container have to save something temporarily combine `--read-only` flag with `--tmpfs` like this:
+
 ```
 docker run --read-only --tmpfs /tmp alpine sh -c 'echo "whatever" > /tmp/file'
 ```
 
 Equivalent in docker-compose file will be:
+
 ```
 version: "3"
 services:
@@ -104,10 +113,13 @@ services:
 
 In addition if volume is mounted only for reading **mount them as a read-only**
 It can be done by appending `:ro` to the `-v` like this:
+
 ```
 docker run -v volume-name:/path/in/container:ro alpine
 ```
+
 Or by using `--mount` option:
+
 ```
 $ docker run --mount source=volume-name,destination=/path/in/container,readonly alpine
 ```
