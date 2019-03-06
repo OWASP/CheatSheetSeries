@@ -136,6 +136,10 @@ To detect containers with known vulnerabilities - scan images using static analy
   - [Qualys](https://www.qualys.com/apps/container-security/)
   - [AquaSec](https://www.aquasec.com/products/open-source-projects/)
 
+# Related Projects
+
+[OWASP Docker Top 10](https://github.com/OWASP/Docker-Security)
+
 # Authors and Primary Editors
 
 Jakub Maćkowski - jakub.mackowski@owasp.org
