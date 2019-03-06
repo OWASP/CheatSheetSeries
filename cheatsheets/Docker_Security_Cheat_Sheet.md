@@ -69,7 +69,7 @@ Always run your docker images with `--security-opt=no-new-privileges` in order t
 
 ## RULE \#5 - Disable inter-container communication (--icc=false)
 
-By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using (`docker0` bridged network)[https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers]). 
+By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using `docker0` bridged (network)[https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers]). 
 This can be disabled by running docker deamon with `--icc=false` flag. 
 If icc is disabled (icc=false) it is required to tell which containers can communicate using --link=CONTAINER_NAME_or_ID:ALIAS option. 
 See more in [Docker documentation - container communication](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)
@@ -125,7 +125,16 @@ $ docker run --mount source=volume-name,destination=/path/in/container,readonly 
 
 ## RULE \#9 - Use static analysis tools
 
-Scan images using open source tools like [anchore](https://anchore.com/) or [Clair](https://github.com/coreos/clair) to detect containers with known vulnerabilities. 
+To detect containers with known vulnerabilities - scan images using static analysis tools. 
+
+- Free and open source tools:
+ - [anchore](https://anchore.com/)
+ - [Clair](https://github.com/coreos/clair)
+- Commercial tools:
+ - [Snyk](https://snyk.io/)
+ - [JFrog XRay](https://jfrog.com/xray/)
+ - [Qualys](https://www.qualys.com/apps/container-security/)
+ - [AquaSec](https://www.aquasec.com/products/open-source-projects/)
 
 # Authors and Primary Editors
 
