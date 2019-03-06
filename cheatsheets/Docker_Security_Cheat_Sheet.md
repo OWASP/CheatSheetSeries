@@ -69,7 +69,7 @@ Always run your docker images with `--security-opt=no-new-privileges` in order t
 
 ## RULE \#5 - Disable inter-container communication (--icc=false)
 
-By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using `docker0` bridged (network)[https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers]). 
+By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using [`docker0` bridged network](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)).
 This can be disabled by running docker deamon with `--icc=false` flag. 
 If icc is disabled (icc=false) it is required to tell which containers can communicate using --link=CONTAINER_NAME_or_ID:ALIAS option. 
 See more in [Docker documentation - container communication](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)
