@@ -10,20 +10,20 @@ The aim of this cheat sheet is to provide an easy to use list of common security
 
 To prevent from known, container escapes vulnerabilities, which typically ends in escalating to root/administrator privileges, patching Docker Engine and Docker Machine is crucial.
 
-In addition containers (unlike in a virtual machines) share kernel with the host, therefore kernel exploit runned inside the container will directly hit host kernel. For example kernel privilege escalation exploit runned inside well insulated container will result in root access in a host.
+In addition containers (unlike in a virtual machines) share kernel with the host, therefore kernel exploit runned inside the container will directly hit host kernel. For example kernel privilege escalation exploit ([like Dirty COW](https://github.com/scumjr/dirtycow-vdso)) runned inside well insulated container will result in root access in a host.
 
 ## RULE \#1 - Do not expose the Docker deamon socket (even to the containers)
 
 Docker socket */var/run/docker.sock* is the UNIX socket that Docker is listening to. This is primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving a unrestricted root access to your host. 
 
 **Do not enable *tcp* Docker deamon socket.**  If you are running docker daemon with `-H tcp://0.0.0.0:XXX` or similar you are exposing un-encrypted and un-authenticated direct access to the Docker daemon. 
-If you really, **really** have to do this you should secure it. Check how to do this [following Docker official documentation](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option.)
+If you really, **really** have to do this you should secure it. Check how to do this [following Docker official documentation](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option).
 
-**Do not expose */var/run/docker.sock* to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar you should change it. Remeber that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in docker-compose file is somethink like this:
+**Do not expose */var/run/docker.sock* to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in docker-compose file is somethink like this:
 
 ```
-    volumes:
-  - "/var/run/docker.sock:/var/run/docker.sock"
+volumes:
+- "/var/run/docker.sock:/var/run/docker.sock"
 ```
 
 ## RULE \#2 - Set a user 
@@ -53,15 +53,15 @@ More informatrion about this topic can be found in [Docker official documentatio
 
 [Linux kernel capabilities](http://man7.org/linux/man-pages/man7/capabilities.7.html) are set of privileges that can be used by privileged. Docker, by default, runs with only a  subset of capabilities. 
 You can change it and drop some capabilities (using `--cap-drop`) to harden your docker containers, or add some capabilities (using `--cap-add`) if needed. 
-Remember not to run containers with the *--privileged* flag - this will add ALL Linux kernel capabilities to the container. 
+Remember not to run containers with the `--privileged` flag - this will add ALL Linux kernel capabilities to the container. 
 
-The most secure setup is to drop all capabilities `--cap-drop all` and than add only required ones. For example:
+The most secure setup is to drop all capabilities `--cap-drop all` and then add only required ones. For example:
 
 ```
 docker run --cap-drop all --cap-add CHOWN alpine
 ```
 
-**And remeber: Do not run containers with the *--privileged* flag!!!**
+**And remember: Do not run containers with the *--privileged* flag!!!**
 
 ## RULE \#4 - Add –no-new-privileges flag
 
@@ -69,7 +69,7 @@ Always run your docker images with `--security-opt=no-new-privileges` in order t
 
 ## RULE \#5 - Disable inter-container communication (--icc=false)
 
-By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using `docker0` bridged network). 
+By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using (`docker0` bridged network)[https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers]). 
 This can be disabled by running docker deamon with `--icc=false` flag. 
 If icc is disabled (icc=false) it is required to tell which containers can communicate using --link=CONTAINER_NAME_or_ID:ALIAS option. 
 See more in [Docker documentation - container communication](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)
@@ -108,7 +108,6 @@ services:
   alpine:
     image: alpine
     read_only: true
-
 ```
 
 In addition if volume is mounted only for reading **mount them as a read-only**
