@@ -106,7 +106,7 @@ Session settings are some of the MOST important values to concentrate on in conf
  session.use_strict_mode          = 1
  session.use_cookies              = 1
  session.use_only_cookies         = 1
- session.cookie_lifetime          = 864000 # 4 hours 
+ session.cookie_lifetime          = 14400 # 4 hours 
  session.cookie_secure            = 1
  session.cookie_httponly          = 1
  session.cookie_samesite          = Strict
