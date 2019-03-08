@@ -1,4 +1,4 @@
-![CSCounterBadge](https://img.shields.io/badge/Cheat_sheets_available-58-orange.svg)
+![CSCounterBadge](https://img.shields.io/badge/Cheat_sheets_available-59-orange.svg)
 ![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
 [![PushAndPullRequestIntegrityCheck](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 [![OfflineWebsiteNightBuild](https://circleci.com/gh/OWASP/CheatSheetSeries.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries)
