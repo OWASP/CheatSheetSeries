@@ -364,7 +364,7 @@ From PHP version 7.2, [Argon2 is supported](https://wiki.php.net/rfc/argon2_pass
 
 Like for the Java proposal, the Argon2 implementation provided by [phc-winner-argon2](https://github.com/P-H-C/phc-winner-argon2) project has been used and for the same reasons.
 
-## Remark about self compilation of binaires for PHP and Argon2
+## Remark about self compilation of binaries for PHP and Argon2
 
 Like for Java proposal, focus is made here on non-installing binaries from untrusted sources (non official linux repositories - PHC Github repository for Argon2 is considered as trusted because sources are provided and a security code review can be applied).
 
