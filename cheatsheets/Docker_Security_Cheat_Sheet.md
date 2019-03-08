@@ -127,14 +127,13 @@ $ docker run --mount source=volume-name,destination=/path/in/container,readonly 
 
 To detect containers with known vulnerabilities - scan images using static analysis tools. 
 
-- Free and open source tools:
-  - [anchore](https://anchore.com/)
+- Free
   - [Clair](https://github.com/coreos/clair)
-- Commercial tools:
-  - [Snyk](https://snyk.io/)
-  - [JFrog XRay](https://jfrog.com/xray/)
+- Commercial
+  - [Snyk](https://snyk.io/) **(open source and free option available)**
+  - [anchore](https://anchore.com/opensource/) **(open source and free option available)**
+  - [JFrog XRay](https://jfrog.com/xray/) 
   - [Qualys](https://www.qualys.com/apps/container-security/)
-  - [AquaSec](https://www.aquasec.com/products/open-source-projects/)
 
 # Related Projects
 
