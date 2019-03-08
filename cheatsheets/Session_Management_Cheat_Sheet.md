@@ -64,7 +64,7 @@ The meaning and business or application logic associated to the session ID must 
 
 The stored information can include the client IP address, User-Agent, e-mail, username, user ID, role, privilege level, access rights, language preferences, account ID, current state, last login, session timeouts, and other internal session details. If the session objects and properties contain sensitive information, such as credit card numbers, it is required to duly encrypt and protect the session management repository.
 
-It is recommended to create cryptographically strong session IDs through the usage of cryptographic hash functions such as SHA1 (160 bits).
+It is recommended to create cryptographically strong session IDs through the usage of cryptographic hash functions such as SHA256.
 
 # Session Management Implementation
 
