@@ -107,6 +107,12 @@ Though OpenSSL performs the X509 checks, you must fail the connection and tear d
 
 Download: [OpenSSL sample program](../assets/Pinning_Cheat_Sheet_Certificate_OpenSSLSample.zip).
 
+## Electron
+
+[electron-ssl-pinning](https://github.com/dialogs/electron-ssl-pinning), an open-source SSL pinning library for [Electron](https://electronjs.org) based applications. It provides an easy-to-use API for implementing pinning and also provides tool for fetching configuration based on needed hosts.
+
+Otherwise, you can validate certificates by yourself using [ses.setCertificateVerifyProc(proc)](https://electronjs.org/docs/api/session#sessetcertificateverifyprocproc).
+
 # References
 
 - OWASP [Injection Theory](https://www.owasp.org/index.php/Injection_Theory)
