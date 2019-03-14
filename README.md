@@ -32,6 +32,20 @@ The following indexes are provided:
 * This [index](IndexASVS.md) reference all released cheat sheets using the [OWASP ASVS](https://www.owasp.org/index.phpCategory:OWASP_Application_Security_Verification_Standard_Project) project as reading source.
     * This index is manually managed in order to allow contribution along custom content.
 
+You can also search into this repository using a keywords via this URL:
+
+```text
+https://github.com/OWASP/CheatSheetSeries/search?q=[KEYWORDS]
+```
+
+Example:
+
+```text
+https://github.com/OWASP/CheatSheetSeries/search?q=csrf
+```
+
+More information about the GitHub search feature can be found [here](https://help.github.com/en/articles/about-searching-on-github).
+
 # Project leaders
 
 * [Jim Manico](https://github.com/jmanico).
