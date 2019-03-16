@@ -124,7 +124,7 @@ private SecureRandom secureRandom = new SecureRandom();
 
 //Generate a random string that will constitute the fingerprint for this user
 byte[] randomFgp = new byte[50];
-this.secureRandom.nextBytes(randomFgp);
+secureRandom.nextBytes(randomFgp);
 String userFingerprint = DatatypeConverter.printHexBinary(randomFgp);
 
 //Add the fingerprint in a hardened cookie - Add cookie manually because 
@@ -416,7 +416,7 @@ public class TokenCipher {
 
 #### Creation / Validation of the token
 
-Use of the token ciphering during the creation and the validation of the token.
+Use the token ciphering handler during the creation and the validation of the token.
 
 Load keys (ciphering key was generated and stored using [Google Tink](https://github.com/google/tink/blob/master/docs/JAVA-HOWTO.md#generating-new-keysets)) and setup cipher.
 
@@ -426,8 +426,7 @@ private transient byte[] keyHMAC = Files.readAllBytes(Paths.get("src", "main", "
 private transient KeysetHandle keyCiphering = CleartextKeysetHandle.read(JsonKeysetReader.withFile(
 Paths.get("src", "main", "conf", "key-ciphering.json").toFile()));
 
-//Load issuer ID from configuration text file
-private transient String issuerID = Files.readAllLines(Paths.get("issuer-id.txt")).get(0);
+...
 
 //Init token ciphering handler
 TokenCipher tokenCipher = new TokenCipher();
@@ -436,74 +435,20 @@ TokenCipher tokenCipher = new TokenCipher();
 Token creation.
 
 ``` java
- //Generate a random string that will constitute the fingerprint for this user
- byte[] randomFgp = new byte[50];
- this.secureRandom.nextBytes(randomFgp);
- String userFingerprint = DatatypeConverter.printHexBinary(randomFgp);
-
- //Add the fingerprint in a hardened cookie - Add cookie manually because SameSite attribute 
- //is not supported by javax.servlet.http.Cookie class
- String fingerprintCookie = "__Secure-Fgp=" + userFingerprint + "; SameSite=Strict; HttpOnly; Secure";
- response.addHeader("Set-Cookie", fingerprintCookie);
-
- //Compute a SHA256 hash of the fingerprint in order to store the fingerprint hash (instead of the raw value)
- //in the token
- //to prevent an XSS to be able to read the fingerprint and set the expected cookie itself
- MessageDigest digest = MessageDigest.getInstance("SHA-256");
- byte[] userFingerprintDigest = digest.digest(userFingerprint.getBytes("utf-8"));
- String userFingerprintHash = DatatypeConverter.printHexBinary(userFingerprintDigest);
-
- //Create the token with a validity of 15 minutes and client context (fingerprint) information
- Calendar c = Calendar.getInstance();
- Date now = c.getTime();
- c.add(Calendar.MINUTE, 15);
- Date expirationDate = c.getTime();
- Map<String, Object> headerClaims = new HashMap<>();
- headerClaims.put("typ", "JWT");
- String token = JWT.create().withSubject(login)
-     .withExpiresAt(expirationDate)
-     .withIssuer(this.issuerID)
-     .withIssuedAt(now)
-     .withNotBefore(now)
-     .withClaim("userFingerprint", userFingerprintHash)
-     .withHeader(headerClaims)
-     .sign(Algorithm.HMAC256(this.keyHMAC));
-//Cipher the token
+//Generate the JWT token using the JWT API...
+//Cipher the token (String JSON representation)
 String cipheredToken = tokenCipher.cipherToken(token, this.keyCiphering);
+//Send the ciphered token encoded in HEX to the client in HTTP response...
 ```
 
 Token validation.
 
 ``` java
+//Retrieve the ciphered token encoded in HEX from the HTTP request...
 //Decipher the token
-String token = tokenCipher.decipherToken(cipheredToken, keyCiphering);
-
-//Retrieve the user fingerprint from the dedicated cookie
-String userFingerprint = null;
-if (request.getCookies() != null && request.getCookies().length > 0) {
- List<Cookie> cookies = Arrays.stream(request.getCookies()).collect(Collectors.toList());
- Optional<Cookie> cookie = cookies.stream().filter(c -> "__Secure-Fgp".equals(c.getName())).findFirst();
- if (cookie.isPresent()) {
-   userFingerprint = cookie.get().getValue();
- }
-}
-
-//Compute a SHA256 hash of the received fingerprint in cookie in order to compare it to the 
-//fingerprint hash stored in the token
-MessageDigest digest = MessageDigest.getInstance("SHA-256");
-byte[] userFingerprintDigest = digest.digest(userFingerprint.getBytes("utf-8"));
-String userFingerprintHash = DatatypeConverter.printHexBinary(userFingerprintDigest);
-
-//Decipher the token
-String token = this.tokenCipher.decipherToken(cipheredToken, this.keyCiphering);
-//Create a verification context for the token
-JWTVerifier verifier = JWT.require(Algorithm.HMAC256(this.keyHMAC))
-   .withIssuer(this.issuerID)
-   .withClaim("userFingerprint", userFingerprintHash)
-   .build();
-
-//Verify the token, if the verification fail then a exception is throwed
-DecodedJWT decodedToken = verifier.verify(token);
+String token = tokenCipher.decipherToken(cipheredToken, this.keyCiphering);
+//Verify the token using the JWT API...
+//Verify access...
 ```
 
 ## Token storage on client side
