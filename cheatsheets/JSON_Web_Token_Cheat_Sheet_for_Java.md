@@ -51,7 +51,9 @@ HMACSHA256( base64UrlEncode(header) + "." + base64UrlEncode(payload), KEY )
 
 This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT) with Java.
 
-The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens. You can find the Java project [here](https://github.com/righettod/poc-jwt), it uses the official [JWT library](https://jwt.io/#libraries).
+The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens. 
+
+You can find the Java project [here](https://github.com/righettod/poc-jwt), it uses the official [JWT library](https://jwt.io/#libraries).
 
 In the rest of the article, the term **token** refer to the **JSON Web Tokens** (JWT).
 
@@ -315,9 +317,21 @@ A way to protect, is to cipher the token using for example a symetric algorithm.
 
 It's also important to protect the ciphered data against attack like [Padding Oracle](https://www.owasp.org/index.php/Testing_for_Padding_Oracle_(OTG-CRYPST-002)) or any other attack using cryptanalysis.
 
-In order to achieve all these goals, the algorithm *AES-GCM* can be used in conjunction with *Additional Authentication Data (AAD)* feature.
+In order to achieve all these goals, the algorithm *AES-[GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)* is used, this one provide *Authenticated Encryption with Associated Data*.
 
-A database can be used to store the *NONCE* and the *AAD* associated to a token.
+More details from [here](https://github.com/google/tink/blob/master/docs/PRIMITIVES.md#deterministic-authenticated-encryption-with-associated-data):
+
+```text
+AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric authenticated encryption. 
+
+Implementations of this primitive are secure against adaptive chosen ciphertext attacks. 
+
+When encrypting a plaintext one can optionally provide associated data that should be authenticated but not encrypted. 
+That is, the encryption with associated data ensures authenticity (ie. who the sender is) and 
+integrity (ie. data has not been tampered with) of that data, but not its secrecy.
+
+See RFC5116: https://tools.ietf.org/html/rfc5116
+```
 
 **Note:**
 
@@ -327,187 +341,73 @@ Here ciphering is added mainly to hide internal information but it's very import
 
 #### Token ciphering
 
-Database structure.
-
-``` sql
-create table if not exists nonce(jwt_token_digest varchar(255) primary key, 
-gcm_nonce varchar(255) not null unique, gcm_aad varchar(255) not null unique);
-
-create index if not exists idx_nonce on nonce(gcm_nonce);
-```
-
-Code in charge of managing the ciphering.
+Code in charge of managing the ciphering. [Google Tink](https://github.com/google/tink) dedicated crypto library is used to handle ciphering operations in order to use built-in best practices provided by this library.
 
 ``` java
 /**
-* Handle ciphering and deciphering of the token using AES-GCM.
-* Use a DB in order to link a GCM NONCE to a ciphered message and ensure 
-* that a NONCE is never reused
-* and also allow use of several application nodes in load balancing.
-*/
+ * Handle ciphering and deciphering of the token using AES-GCM.
+ *
+ * @see "https://github.com/google/tink/blob/master/docs/JAVA-HOWTO.md"
+ */
 public class TokenCipher {
 
-   /** AES-GCM parameters */
-   private static final int GCM_NONCE_LENGTH = 12; // in bytes
+    /**
+     * Constructor - Register AEAD configuration
+     *
+     * @throws Exception If any issue occur during AEAD configuration registration
+     */
+    public TokenCipher() throws Exception {
+        AeadConfig.register();
+    }
 
-   /** AES-GCM parameters */
-   private static final int GCM_TAG_LENGTH = 16; // in bytes
+    /**
+     * Cipher a JWT
+     *
+     * @param jwt          Token to cipher
+     * @param keysetHandle Pointer to the keyset handle
+     * @return The ciphered version of the token encoded in HEX
+     * @throws Exception If any issue occur during token ciphering operation
+     */
+    public String cipherToken(String jwt, KeysetHandle keysetHandle) throws Exception {
+        //Verify parameters
+        if (jwt == null || jwt.isEmpty() || keysetHandle == null) {
+            throw new IllegalArgumentException("Both parameters must be specified !");
+        }
 
-   /**Secure random generator */
-   private final SecureRandom secRandom = new SecureRandom();
+        //Get the primitive
+        Aead aead = AeadFactory.getPrimitive(keysetHandle);
 
-   /** DB Connection */
-   @Resource("jdbc/storeDS")
-   private DataSource storeDS;
+        //Cipher the token
+        byte[] cipheredToken = aead.encrypt(jwt.getBytes(), null);
 
-   /**
-    * Cipher a JWT
-    * @param jwt Token to cipher
-    * @param key Ciphering key
-    * @return The ciphered version of the token encoded in HEX
-    * @throws Exception If any issue occur during token ciphering operation
-    */
-   public String cipherToken(String jwt, byte[] key) throws Exception {
-       //Verify parameters
-       if(jwt == null || jwt.isEmpty() || key == null || key.length == 0){
-           throw new IllegalArgumentException("Both parameters must be specified !");
-       }
+        return DatatypeConverter.printHexBinary(cipheredToken);
+    }
 
-       //Generate a NONCE
-       //NOTE: As in the DB, the column to store the NONCE is flagged UNIQUE then the 
-       //insert will fail
-       //if the NONCE already exists, normally as we use the Java Secure Random implementation
-       //it will never happen.
-       final byte[] nonce = new byte[GCM_NONCE_LENGTH];
-       secRandom.nextBytes(nonce);
+    /**
+     * Decipher a JWT
+     *
+     * @param jwtInHex     Token to decipher encoded in HEX
+     * @param keysetHandle Pointer to the keyset handle
+     * @return The token in clear text
+     * @throws Exception If any issue occur during token deciphering operation
+     */
+    public String decipherToken(String jwtInHex, KeysetHandle keysetHandle) throws Exception {
+        //Verify parameters
+        if (jwtInHex == null || jwtInHex.isEmpty() || keysetHandle == null) {
+            throw new IllegalArgumentException("Both parameters must be specified !");
+        }
 
-       //Prepare ciphering key from bytes provided
-       SecretKey aesKey = new SecretKeySpec(key, 0, key.length, "AES");
+        //Decode the ciphered token
+        byte[] cipheredToken = DatatypeConverter.parseHexBinary(jwtInHex);
 
-       //Setup Cipher
-       Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding", "SunJCE");
-       GCMParameterSpec spec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, nonce);
-       cipher.init(Cipher.ENCRYPT_MODE, aesKey, spec);
+        //Get the primitive
+        Aead aead = AeadFactory.getPrimitive(keysetHandle);
 
-       //Add "Additional Authentication Data" (AAD) in order to operate in AEAD mode
-       //Generate it
-       byte[] aad = new byte[32];
-       secRandom.nextBytes(aad);
-       cipher.updateAAD(aad);
+        //Decipher the token
+        byte[] decipheredToken = aead.decrypt(cipheredToken, null);
 
-       //Cipher the token
-       byte[] cipheredToken = cipher.doFinal(jwt.getBytes("utf-8"));
-
-       //Compute a SHA256 of the ciphered token
-       MessageDigest digest = MessageDigest.getInstance("SHA-256");
-       byte[] cipheredTokenDigest = digest.digest(cipheredToken);
-
-       //Store GCM NONCE and GCM AAD
-       this.storeNonceAndAAD(DatatypeConverter.printHexBinary(nonce), 
-       DatatypeConverter.printHexBinary(aad),
-       DatatypeConverter.printHexBinary(cipheredTokenDigest));
-
-       return DatatypeConverter.printHexBinary(cipheredToken);
-   }
-
-   /**
-    * Decipher a JWT
-    * @param jwtInHex Token to decipher encoded in HEX
-    * @param key Ciphering key
-    * @return The token in clear text
-    * @throws Exception If any issue occur during token deciphering operation
-    */
-   public String decipherToken(String jwtInHex, byte[] key) throws Exception{
-       //Verify parameters
-       if(jwtInHex == null || jwtInHex.isEmpty() || key == null || key.length == 0){
-           throw new IllegalArgumentException("Both parameters must be specified !");
-       }
-
-       //Decode the ciphered token
-       byte[] cipheredToken = DatatypeConverter.parseHexBinary(jwtInHex);
-
-       //Compute a SHA256 of the ciphered token
-       MessageDigest digest = MessageDigest.getInstance("SHA-256");
-       byte[] cipheredTokenDigest = digest.digest(cipheredToken);
-
-       //Read the GCM NONCE and GCM AAD associated from the DB
-       Map<String,String> gcmInfos = this.readNonceAndAAD(
-                               DatatypeConverter.printHexBinary(cipheredTokenDigest));
-       if(gcmInfos == null){
-           throw new Exception("Cannot found a NONCE and AAD associated to the token provided !");
-       }
-       byte[] nonce = DatatypeConverter.parseHexBinary(gcmInfos.get("NONCE"));
-       byte[] aad = DatatypeConverter.parseHexBinary(gcmInfos.get("AAD"));
-
-       //Prepare ciphering key from bytes provided
-       SecretKey aesKey = new SecretKeySpec(key, 0, key.length, "AES");
-
-       //Setup Cipher
-       Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding", "SunJCE");
-       GCMParameterSpec spec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, nonce);
-       cipher.init(Cipher.DECRYPT_MODE, aesKey, spec);
-
-       //Add "Additional Authentication Data" (AAD) in order to operate in AEAD mode
-       cipher.updateAAD(aad);
-
-       //Decipher the token
-       byte[] decipheredToken = cipher.doFinal(cipheredToken);
-
-       return new String(decipheredToken);
-   }
-
-
-   /**
-    * Store GCM NONCE and GCM AAD in the DB
-    * @param nonceInHex Nonce encoded in HEX
-    * @param aadInHex AAD encoded in HEX
-    * @param jwtTokenDigestInHex SHA256 of the JWT ciphered token encoded in HEX
-    * @throws Exception If any issue occur during communication with DB
-    */
-   private void storeNonceAndAAD(String nonceInHex, String aadInHex, String jwtTokenDigestInHex) 
-   throws Exception {
-       try (Connection con = this.storeDS.getConnection()) {
-           String query = "insert into nonce(jwt_token_digest, gcm_nonce, gcm_aad) values(?, ?, ?)";
-           int insertedRecordCount;
-           try (PreparedStatement pStatement = con.prepareStatement(query)) {
-               pStatement.setString(1, jwtTokenDigestInHex);
-               pStatement.setString(2, nonceInHex);
-               pStatement.setString(3, aadInHex);
-               insertedRecordCount = pStatement.executeUpdate();
-           }
-           if (insertedRecordCount != 1) {
-               throw new IllegalStateException("Number of inserted record is invalid, 1 expected but is "
-                + insertedRecordCount);
-           }
-       }
-   }
-
-   /**
-    * Read GCM NONCE and GCM AAD from the DB
-    * @param jwtTokenDigestInHex SHA256 of the JWT ciphered token encoded in HEX 
-                                 for which we must read the NONCE and AAD
-    * @return A dict containing the NONCE and AAD if they exists for the specified token
-    * @throws Exception If any issue occur during communication with DB
-    */
-   private  Map<String,String> readNonceAndAAD(String jwtTokenDigestInHex) throws Exception{
-       Map<String,String> gcmInfos = null;
-       try (Connection con = this.storeDS.getConnection()) {
-           String query = "select gcm_nonce, gcm_aad from nonce where jwt_token_digest = ?";
-           try (PreparedStatement pStatement = con.prepareStatement(query)) {
-               pStatement.setString(1, jwtTokenDigestInHex);
-               try (ResultSet rSet = pStatement.executeQuery()) {
-                   while (rSet.next()) {
-                       gcmInfos = new HashMap<>(2);
-                       gcmInfos.put("NONCE", rSet.getString(1));
-                       gcmInfos.put("AAD", rSet.getString(2));
-                   }
-               }
-           }
-       }
-
-       return gcmInfos;
-   }
-
+        return new String(decipheredToken);
+    }
 }
 ```
 
@@ -515,12 +415,13 @@ public class TokenCipher {
 
 Use of the token ciphering during the creation and the validation of the token.
 
-Load keys and setup cipher.
+Load keys (ciphering key was generated and stored using [Google Tink](https://github.com/google/tink/blob/master/docs/JAVA-HOWTO.md#generating-new-keysets)) and setup cipher.
 
 ``` java
-//Load keys from configuration text files in order to avoid to store keys as String in JVM memory
-private transient byte[] keyHMAC = Files.readAllBytes(Paths.get("key-hmac.txt"));
-private transient byte[] keyCiphering = Files.readAllBytes(Paths.get("key-ciphering.txt"));
+//Load keys from configuration text/json files in order to avoid to store keys as String in JVM memory
+private transient byte[] keyHMAC = Files.readAllBytes(Paths.get("src", "main", "conf", "key-hmac.txt"));
+private transient KeysetHandle keyCiphering = CleartextKeysetHandle.read(JsonKeysetReader.withFile(
+Paths.get("src", "main", "conf", "key-ciphering.json").toFile()));
 
 //Load issuer ID from configuration text file
 private transient String issuerID = Files.readAllLines(Paths.get("issuer-id.txt")).get(0);
