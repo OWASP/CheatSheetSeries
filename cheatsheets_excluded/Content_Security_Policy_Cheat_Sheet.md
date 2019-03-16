@@ -1,203 +1,199 @@
----
-title: Content Security Policy Cheat Sheet
-permalink: /Content_Security_Policy_Cheat_Sheet/
----
+# Introduction
 
-Content Security Policy (CSP) is an important standard by the W3C that is aimed to prevent a broad range of content injection attacks such as cross-site scripting (XSS).
+This article brings forth a way to integrate the `defense in depth` concept to the client-side of web applications. By injecting the Content-Security-Policy (CSP) headers from the server, the browser is aware and capable of protecting the user from dynamic calls that will load content into the page currently being visited.
 
-Introduction
-============
+## Context
 
-Content Security Policy (CSP) is an effective "defense in depth" technique to be used against content injection attacks. It is a declarative policy that informs the user agent what are valid sources to load from.
+The increase in XSS and clickjacking vulnerabilities demands a more `defense in depth` security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.
 
-Since, it was introduced in Firefox version 4 by Mozilla, it has been adopted as a standard, and grown in adoption and capabilities.
+## Avoid CSP
 
-This document is meant to provide guidance on how to utilize CSP under a variety of situations to address a variety of concerns.
+If you are a developer of any of the applications mentioned below, CSP will barely provide or improve their security:
+- Single page applications with no cookies or authentication.
+- Applications that are already vulnerable to XSS vulnerabilities and chose not to remediate them. CSP is not the first line of defense.
 
-References
-==========
+# Policy Delivery
 
-Specifications of the CSP standard can be found the following locations:
+CSP can be delivered to the user agent in different techniques.
+1. `Content-Security-Policy` HTTP response header field. This is the most preferred technique.
+1. `<meta>` HTML element with `http-equiv` attribute set to `Content-Security-Policy`. These elements need to be placed as early as possible in the documents.
+1. `Content-Security-Policy-Report-Only` HTTP response header field. This header is used when the developer is unsure of the CSP behavior and wants to monitor it, instead of enforcing it.
 
--   Latest Revision - <https://w3c.github.io/webappsec/specs/content-security-policy/>
--   Latest Version (CSP2) - <http://www.w3.org/TR/CSP2/>
--   CSP 1.0 - <http://www.w3.org/TR/2012/CR-CSP-20121115/>
-
-CSP Basics
-==========
-
-CSP consists of a series of directives. CSP has also evolved over two major revisions. Most browsers support 1.0, and adoption of CSP2 has been incremental.
-
-HTTP Headers
-------------
+## HTTP Headers
 
 The following are headers for CSP.
 
--   **Content-Security-Policy** : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+
--   **Content-Security-Policy-Report-Only** : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking ("fail open") and a report is sent to the URL designated by the **report-uri** directive. This is often used as a precursor to utilizing CSP in blocking mode ("fail closed")
--   **DO NOT** use X-Content-Security-Policy or X-WebKit-CSP. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.
+- `Content-Security-Policy` : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+
+- `Content-Security-Policy-Report-Only` : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking ("fail open") and a report is sent to the URL designated by the `report-uri` directive. This is often used as a precursor to utilizing CSP in blocking mode ("fail closed")
+- `DO NOT` use X-Content-Security-Policy or X-WebKit-CSP. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.
 
-Directives
-----------
+# CSP Directives
 
-The following is a listing of directives, and a brief description.
+Multiple types of directives exist that allow the developer to granularly control the flow of the policies.
 
-### CSP 1.0 Spec
+## Fetch Directives
 
--   **connect-src** (d) - restricts which URLs the protected resource can load using script interfaces. (e.g. send() method of an XMLHttpRequest object)
--   **font-src** (d) - restricts from where the protected resource can load fonts
--   **img-src** (d) - restricts from where the protected resource can load images
--   **media-src** (d) - restricts from where the protected resource can load video, audio, and associated text tracks
--   **object-src** (d) - restricts from where the protected resource can load plugins
--   **script-src** (d) - restricts which scripts the protected resource can execute. Additional restrictions against, inline scripts, and eval. Additional directives in CSP2 for hash and nonce support
--   **style-src** (d) - restricts which styles the user may applies to the protected resource. Additional restrictions against inline and eval.
--   **default-src** - Covers any directive with *(d)*
--   **frame-src** - restricts from where the protected resource can embed frames. Note, deprecated in CSP2
--   **report-uri** - specifies a URL to which the user agent sends reports about policy violation
--   **sandbox** - specifies an HTML sandbox policy that the user agent applies to the protected resource. Optional in 1.0
+Fetch directives tell the browser the locations to trust and load resources from.
 
-### New in CSP2
+- `default-src` is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of `default-src`.
+- `child-src` allows the developer to control nested browsing contexts and worker execution contexts.
+  - `frame-src` specifies the URLs which can be loaded into nested browsing contexts (*e.g.* `<iframe>`).
+  - `worker-src` specifies the URLs which can be loaded as worker, sharedworker, or serviceworker. Fallback's on `script-src` too.
+- `connect-src` provides control over fetch requests, XHR, eventsource, beacon and websockets connections.
+- `font-src` specifies which URLs to load fonts from.
 
--   **form-action** - retricts which URLs can be used as the action of HTML form elements
--   **frame-ancestors** - indicates whether the user agent should allow embedding the resource using a frame, iframe, object, embed or applet element, or equivalent functionality in non-HTML resources
--   **plugin-types** - restricts the set of plugins that can be invoked by the protected resource by limiting the types of resources that can be embedded
--   **base-uri** - restricts the URLs that can be used to specify the document base URL
--   **child-src** (d) - governs the creation of nested browsing contexts as well as Worker execution contexts
+- `img-src` specifies the URLs that images can be loaded from.
+- `manifest-src` specifies the URLs that application manifests may be loaded from.
+- `media-src` specifies the URLs from which video, audio and text track resources can be loaded from.
+- `prefetch-src` specifies the URLs from which resources can be prefetched from.
+- `object-src` specifies the URLs from which plugins can be loaded from.
+- `script-src` specifies the locations from which a script can be executed from. It is a fallback directive for other script-like directives.
+  - `script-src-elem` controls the location from which execution of script requests and blocks can occur.
+  - `script-src-attr` controls the execution of event handlers.
+- `style-src` controls from where styles get applied to a document. This includes `<link>` elements, `@import` rules, and requests originating from a `Link` HTTP response header field.
+  - `style-src-elem` controls styles except for inline attributes.
+  - `style-src-attr` controls styles attributes.
 
-CSP Sample Policies
-===================
+## Document Directives
 
-Basic CSP Policy
-----------------
+Document directives instruct the browser about the properties of the document to which the policies will apply to. 
+
+- `base-uri` specifies the possible URLs that the `<base>` element can use.
+- `plugin-types` limits the types of resources that can be loaded into the document (*e.g.* application/pdf). 3 rules apply to the affected elements, `<embed>` and `<object>`:
+  - The element needs to explicitly declare its type.
+  - The element's type needs to match the declared type.
+  - The element's resource need to meatch the declared type.
+- `sandbox` restricts a page's actions such as submitting forms.
+  - Only applies when used with the request header `Content-Security-Policy`.
+  - Not specifying a value for the directive activates all of the sandbox restrictions. `Content-Security-Policy: sandbox;`
+  - [Sandbox syntax](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/sandbox#Syntax)
+
+## Navigation Directives
+
+Navigation directives instruct the browser about the locations that the document can navigate to.
+
+- `navigate-to` restricts the URLs which a document can navigate to by any mean.
+- `form-action` restricts the URLs which the forms can submit to.
+- `frame-ancestors` restricts the URLs that can embed the requested resource inside of  `<frame>`, `<iframe>`, `<object>`, `<embed>`, or `<applet>` elements.
+  - If this directive is specified in a `<meta>` tag, the directive is ignored.
+  - This directive doesn't fallback to `default-src` directive.
+  - `X-Frame-Options` is rendered obsolete by this directive and is ignored by the user agents.
+
+## Reporting Directives
+
+Reporting directives deliver violation of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
+
+- `report-to` which is a groupname defined in the header in a json formatted header value. Does not have proper browser support yet.
+  - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to#Examples)
+- `report-uri` directive will be getting deprected by `report-to`, which is a URI that the reports are sent to.
+  - Goes by the format of: `Content-Security-Policy: report-uri https://example.com/csp-reports`
+
+In order to ensure backward compatibility, use the 2 directives in conjonction. Whenever a browser supports `report-to`, it will ignore `report-uri`. Otherwise, `report-uri` will be used.
+
+## Special Directive Sources
+
+| Value           | Description                                                     |
+|-----------------|-----------------------------------------------------------------|
+| 'none'          | No URLs match.                                                  |
+| 'self'          | Refers to the origin site with the same scheme and port number. |
+| 'unsafe-inline' | Allows the usage of inline scripts or styles.                   |
+| 'unsafe-eval'   | Allows the usage of eval in scripts.                            |
+
+In case where the developer needs to use inline scripts, it's recommended to use `sha256` for the script or a `nonce` randomly generated on every page request. 
+
+For more details on hashes and nonces, check out [Scott Helme's Guide](https://scotthelme.co.uk/csp-cheat-sheet/#hashes).
+
+# CSP Sample Policies
+
+## Basic CSP Policy
 
 This policy will only allow resources from the originating domain for all the default level directives, and will not allow inline scripts/styles to execute. If your application and function with these restrictions, it drastically reduces your attack surface having this policy in place, and will work with most modern browsers.
 
 The most basic policy assumes:
 
--   all resources are hosted by the same domain of the document
--   there are no inlines or evals for scripts and style resources
+-   All resources are hosted by the same domain of the document.
+-   There are no inlines or evals for scripts and style resources.
 
-` Content-Security-Policy: default-src 'self' `
+> `Content-Security-Policy: default-src 'self';`
 
 To tighten further, one can do the following:
 
-`Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';`
+> `Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';`
 
-This policy allows images, scripts, AJAX, and CSS from the same origin, and does not allow any other resources to load (eg. object, frame, media, etc). (see <http://content-security-policy.com/>)
+This policy allows images, scripts, AJAX, and CSS from the same origin, and does not allow any other resources to load (eg. object, frame, media, etc).
 
-Mixed Content Policy
---------------------
+## Mixed Content Policy
 
-In order to prevent mixed content (resources being loaded over http, from a document loaded over https), one can use the value "https:" as a directive value.
+- In order to prevent mixed content (resources being loaded over http, from a document loaded over https), one can use the following directive to block mixed content.
 
-For instance:
+  - `Content-Security-Policy: block-all-mixed-content;`
 
-`Content-Security-Policy: default-src https:; connect-src https:; font-src https: data:; frame-src https:; `
-`img-src https: data:; media-src https:;  object-src https:; script-src 'unsafe-inline' 'unsafe-eval' https:; `
-`style-src 'unsafe-inline' https:;`
+- On the other hand, if the developer is migrating from HTTP to HTTPS, the following directive will ensure that all requests will be sent over HTTPS with no fallback to HTTP:
 
-This is what was used at Twitter, Oct 2014. The policy prevents mixed content, allows for scheme "data:" in font-src and img-src, allows for unsafe-inline and unsafe-eval for script-src, and unsafe-inline for style-src. (see: <https://twittercommunity.com/t/blocking-mixed-content-with-content-security-policy/26375>)
+  - `Content-Security-Policy: upgrade-insecure-requests;`
 
-Mixed Content has two categories: Active and Passive. Passive content consists of "resources which cannot directly interact with or modify other resources on a page: images, fonts, audio, and video for example", whereas active content is "content which can in some way directly manipulate the resource with which a user is interacting." (http://www.w3.org/TR/2014/WD-mixed-content-20140722)
+If the `upgrade-insecure-requests` is set, the `block-all-mixed-content` is rendered meaningless and should be removed.
 
-`Content-Security-Policy: img-src https: data:; font-src https: data:; media-src https:;`
+## Preventing ClickJacking
 
-This is an example to block only passive mixed content.
+- To prevent all framing of your content use:
+  - `Content-Security-Policy: frame-ancestors 'none';`
+- To allow for your site only, use:
+  - `Content-Security-Policy: frame-ancestors 'self';`
+- To allow for trusted domain , do the following:
+  - `Content-Security-Policy: frame-ancestors trusted.com;`
 
-`Content-Security-Policy: script-src https:; style-src https:; object-src https:; connect-src https:; frame-src https:; `
+## Loading Files from CDN
 
-This is an example to block only active mixed content.
+The below CSP allows loading from the same origin and loading images and scripts from the CDN:
 
-Preventing Clickjacking
------------------------
+`Content-Security-Policy: default-src 'self'; image-src cdn.example.com; script-src cdn.example.com;`
 
-The established way of preventing clickjacking involves the use of the header `X-Frame-Options` (see: [Clickjacking_Defense_Cheat_Sheet](/Clickjacking_Defense_Cheat_Sheet "wikilink")). However, CSP 2.0 has a new directive `frame-ancestors`.
-
-To prevent all framing of your content use:
-
-`Content-Security-Policy: frame-ancestors 'none'`
-
-To allow for your site only, use:
-
-`Content-Security-Policy: frame-ancestors 'self'`
-
-To allow for trusted domain (my-trusty-site.com), do the following:
-
-`Content-Security-Policy: frame-ancestors my-trusty-site.com `
-
-A word about support. Not supported in all browsers yet, Chrome 40+ and FF 35+ support, but will also default to X-Frame-Options if it exists. Spec says, CSP should take precedence. <https://w3c.github.io/webappsec/specs/content-security-policy/#frame-ancestors-and-frame-options>
-
-Also, keep in mind the following (from the [CSP Spec](https://w3c.github.io/webappsec/specs/content-security-policy/#frame-ancestors-and-frame-options)):
-
-`The frame-ancestors directive MUST be ignored when monitoring a policy, and when a contained in a policy defined via a meta element.`
-
-In otherwords, this will not work when CSP is in a <meta> tag, and will not work when using Content-Security-Policy-Report-Only.
-
-When a report is generated, the blocked-uri will only have a value if it is the same origin as the page.
-
-Refactoring inline code
-=======================
+# Refactoring inline code
 
 By default CSP disables any unsigned JavaScript code placed inline in the HTML source, such as this:
 
+```js
 <script>
 var foo = "314"
 
 <script>
+```
+
 The inline code can be enabled by **specifying its SHA256 hash** in the CSP header:
 
-`    Content-Security-Policy: script-src 'sha256-gPMJwWBMWDx0Cm7ZygJKZIU2vZpiYvzUQjl5Rh37hKs='`
+> `Content-Security-Policy: script-src 'sha256-gPMJwWBMWDx0Cm7ZygJKZIU2vZpiYvzUQjl5Rh37hKs=';`
 
 This particular script's hash can be calculated using the following command:
 
-`   echo -n 'var foo = "314"' \| openssl sha256 -binary \| openssl base64`
+> `echo -n 'var foo = "314"' | openssl sha256 -binary | openssl base64`
 
 Some browsers (e.g. Chrome) will also display the hash of the script in JavaScript console warning when blocking an unsigned script.
 
-The inline code can be also simply moved to a separate JavaScript file:
+The inline code can be also simply moved to a separate JavaScript file and the code in the page becomes:
 
-<script>
-var foo = "314"
-
-<script>
-becomes:
-
+```js
 <script src="app.js">
 </script>
-with \`app.js\` containing the \`var foo = "314"\` code.
+```
 
-The inline code restriction also applies to **inline event handlers**, so that the following construct will be blocked under CSP:
+with `app.js` containing the `var foo = "314"` code.
 
-`   `<button id="button1" onclick="doSomething()">
+The inline code restriction also applies to `inline event handlers`, so that the following construct will be blocked under CSP:
 
-This should be replaced by \`addEventListener' calls:
+> `<button id="button1" onclick="doSomething()">`
 
-`   document.getElementById("button1").addEventListener('click', doSomething);`
+This should be replaced by `addEventListener` calls:
 
-Variable assignment in inline scripts. Rather than do this:
+> `document.getElementById("button1").addEventListener('click', doSomething);`
 
-<script>
-var foo = "314";
+# References
 
-<script>
-Leverage HTML5's custom data attributes by setting the value as follows:
+- [CSP Level 3 W3C](https://www.w3.org/TR/CSP3/)
+- [CSP Reference](https://content-security-policy.com/)
+- [CSP with Google](https://csp.withgoogle.com/docs/)
+- [CSP CheatSheet by Scott Helme](https://scotthelme.co.uk/csp-cheat-sheet/)
 
-`<body data-foo="314”>`
-`   ...`
+# Authors and Primary Editors
 
-</body>
-And access the value by doing:
-
-`  var itemID = document.body.getAttribute("data-foo”);`
-
-Authors and Primary Editors
-===========================
-
--   Neil Mattatall - neil\[at\]owasp.org
--   Denis Mello - ddtaxe
--   Boris Chen
-
-Other Cheatsheets
-=================
-
-[Category:Cheatsheets](/Category:Cheatsheets "wikilink")
+- Elie Saad
