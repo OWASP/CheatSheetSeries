@@ -322,11 +322,14 @@ In order to achieve all these goals, the algorithm *AES-[GCM](https://en.wikiped
 More details from [here](https://github.com/google/tink/blob/master/docs/PRIMITIVES.md#deterministic-authenticated-encryption-with-associated-data):
 
 ```text
-AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric authenticated encryption. 
+AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric 
+authenticated encryption. 
 
 Implementations of this primitive are secure against adaptive chosen ciphertext attacks. 
 
-When encrypting a plaintext one can optionally provide associated data that should be authenticated but not encrypted. 
+When encrypting a plaintext one can optionally provide associated data that should be authenticated 
+but not encrypted. 
+
 That is, the encryption with associated data ensures authenticity (ie. who the sender is) and 
 integrity (ie. data has not been tampered with) of that data, but not its secrecy.
 
@@ -466,7 +469,7 @@ Token creation.
      .withHeader(headerClaims)
      .sign(Algorithm.HMAC256(this.keyHMAC));
 //Cipher the token
-String cipheredToken = tokenCipher.cipherToken(token, keyCiphering);
+String cipheredToken = tokenCipher.cipherToken(token, this.keyCiphering);
 ```
 
 Token validation.
@@ -651,7 +654,7 @@ secrets.parallelStream().forEach(s -> {
 
 ### Use dedicated tools
 
-You can also used:
+You can also use:
 - [JohnTheRipper](https://github.com/hashcat/hashcat/issues/1057#issuecomment-279651700) to perform the password dictionary attack.
 - [Hashcat](https://hashcat.net/hashcat/).
 
