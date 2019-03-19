@@ -12,7 +12,7 @@ We have not included any `ChaCha20-Poly1305` ciphers, yet. One reason is that we
 
 Finally we have compiled the oldest versions of different client agents that are still compatible with a cipher string. We provide this information according to the ciphers and protocols supported by browsers, libraries, bots on the basis of *[ssllabs's list of user agent capabilities](https://www.ssllabs.com/ssltest/clients.html)* and tests on our own. 
 
-We have checked this thoroughly, but please accept that all data is provided without any warranty of any kind (Please contact the authors if you find any errors or if you can provide additional data).
+We have checked this thoroughly, but please accept that all data is provided without any warranty of any kind. The list of the oldest supported clients assumes that the server supports all ciphers by the scenario (Please contact the authors if you find any errors or if you can provide additional data).
 
 The recommended cipher strings are based on different scenarios:
 
@@ -146,7 +146,7 @@ openssl ciphers -V "DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RS
 0xC0,0x27 - ECDHE-RSA-AES128-SHA256     TLSv1.2 Kx=ECDH   Au=RSA  Enc=AES(128)    Mac=SHA256
 ```
 
-**CAUTION:** You must **not** use a legacy version of OpenSSL to use this cipher string!
+**CAUTION:** You must **not** use legacy versions of OpenSSL if you use this cipher string! We strongly recommend to verify if it works!
 
 # Related Articles
 
