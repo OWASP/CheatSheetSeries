@@ -39,9 +39,9 @@ The recommended cipher strings are based on different scenarios:
 * Protocols: `TLSv1.2`, `TLSv1.1`, `TLSv1` (and newer or better).
 * Oldest known clients that are compatible: Android 2.3.7/4.0.4, Baidu Jan 2015, BingPreview Dec 2013, Chrome 27/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 10.0.12 ESR/Win 7, Firefox 21/Win 7+Fedora 19, Googlebot Oct 2013, IE 7/Vista, IE 10/WinPhone 8.0, Java 7u25, OpenSSL 0.9.8y, Opera 12.15/Win 7, Safari 5/iOS 5.1.1, Safari 5.1.9/OS X 10.6.8, Yahoo Slurp Oct 2013, YandexBot May 2014
 
-**OWASP Cipher String 'C-'** (Legacy, widest compatibility to real old browsers and legacy libraries and other application protocols like SMTP):
+**OWASP Cipher String 'D'** (Legacy, widest compatibility to real old browsers and legacy libraries and other application protocols like SMTP):
 
-* Take care, use this cipher string only if you are forced to support non PFS [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) for real old clients with very old libraries or old libraries for other protocols besides https.
+* Take care, use this cipher string only if you are forced to support non [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) for real old clients with very old libraries or old libraries for other protocols besides https.
 * Be aware of the existing risks and of new vulnerabilities that may appear more likely.
 * Be aware of the existing risks (e.g. ciphers without PFS, ciphers with 3DES) and of new vulnerabilities that may appear the most likely
 * **No not use** WEAK ciphers based on `3DES` e.g. (`TLS_RSA_WITH_3DES_EDE_CBC_SHA`, `DES-CBC3-SHA`) 
@@ -58,7 +58,7 @@ IANA, OpenSSL and other crypto libraries use slightly different names for the sa
 This table lists the names used by IANA and by openssl in brackets `[]`. Additional you can find the unambiguously hex values defined by IANA. Mozilla offers a larger *[cipher names correspondence table](https://wiki.mozilla.org/Security/Server_Side_TLS#Cipher_names_correspondence_table)*.
 
 <!-- markdownlint-disable MD033 -->
-| Cipher name:<br>IANA, [OpenSSL] | Cipher HEX value | Advanced<br>(A) | Broad  Compatibility<br>(B) | Widest Compatibility<br>(C) | Legacy<br>(C-) |
+| Cipher name:<br>IANA, [OpenSSL] | Cipher HEX value | Advanced<br>(A) | Broad  Compatibility<br>(B) | Widest Compatibility<br>(C) | Legacy<br>(D) |
 | ---  | :---:  | :---:  | :---:  | :---:  | :---:  |
 | `TLS_DHE_RSA_WITH_AES_256_GCM_SHA384`,<br>[`DHE-RSA-AES256-GCM-SHA384`] | 0x009f | 1 | 1 | 1 | 1 |
 | `TLS_DHE_RSA_WITH_AES_128_GCM_SHA256`,<br>[`DHE-RSA-AES128-GCM-SHA256`] | 0x009e | 2 | 2 | 2 | 2 |
@@ -96,7 +96,7 @@ Other option: *Delete this two ciphers from your list*.
 | Advanced<br>(A) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256` |
 | Broad Compatibility<br>(B) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256` |
 | Widest Compatibility<br>(C) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
-| Legacy<br>(C-) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
+| Legacy<br>(D) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
 <!-- markdownlint-enable MD033 -->
 
 # How to use this Cipher Strings?
@@ -113,7 +113,7 @@ We recommend to use one of the cipher strings described above.
 
 ```text
 SSLProtocol +TLSv1.2                  # for Cipher-String 'A', 'B'
-#SSLProtocol +TLSv1.2 +TLSv1.1 +TLSv1 # for Cipher-String 'C', 'C-'
+#SSLProtocol +TLSv1.2 +TLSv1.1 +TLSv1 # for Cipher-String 'C', 'D'
 SSLCompression off
 SSLHonorCipherOrder on
 SSLCipherSuite 'DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384
