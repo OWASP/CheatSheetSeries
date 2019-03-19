@@ -11,8 +11,8 @@ The general practices and required minimum key length depending on the scenario 
 - Key exchange: `Diffie–Hellman key exchange with minimum 2048 bits`
 - Message Integrity: `HMAC-SHA2`
 - Message Hash: `SHA2 256 bits`
-- Assymetric encryption: `RSA 2048 bits`
-- Symmetric-key algorithm: `AES 128 bits`
+- Asymmetric encryption: `RSA 2048 bits`
+- Symmetric encryption: `AES 128 bits`
 - Password Hashing: `Argon2, PBKDF2, Scrypt, Bcrypt`
 
 # Providing Cryptographic Functionality
