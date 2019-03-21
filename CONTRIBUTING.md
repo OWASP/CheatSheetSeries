@@ -1,5 +1,7 @@
 # How to contribute?
 
+**Note:** Regarding fixing of typo in existing cheat sheet, you can directly create a Pull Request.
+
 Follow these steps:
 
 1. Create an new [Issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using either:
