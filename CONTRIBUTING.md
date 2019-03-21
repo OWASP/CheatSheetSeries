@@ -1,6 +1,6 @@
 # How to contribute?
 
-**Note:** Regarding fixing of typo in existing cheat sheet, you can directly create a Pull Request.
+**Note:** Regarding fixing of typo in existing cheat sheet, you can directly create a Pull Request otherwise follow the process below.
 
 Follow these steps:
 
