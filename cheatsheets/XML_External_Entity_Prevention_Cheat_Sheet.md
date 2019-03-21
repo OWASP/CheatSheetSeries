@@ -266,6 +266,31 @@ builder.setFeature("http://xml.org/sax/features/external-parameter-entities", fa
 Document doc = builder.build(new File(fileName));
 ```
 
+## No-op EntityResolver
+
+For APIs that take an `EntityResolver`, you can neutralize an XML parser's ability to resolve entities by [supplying a no-op implementation](https://wiki.sei.cmu.edu/confluence/display/java/IDS17-J.+Prevent+XML+External+Entity+Attacks):
+
+```java
+public final class NoOpEntityResolver implements EntityResolver {
+    public InputSource resolveEntity(String publicId, String systemId) {
+        return new InputSource(new StringReader(""));
+    }
+}
+
+// ...
+
+xmlReader.setEntityResolver(new NoOpEntityResolver());
+documentBuilder.setEntityResolver(new NoOpEntityResolver());
+```
+
+or more simply:
+
+```java
+EntityResolver noop = (publicId, systemId) -> new InputSource(new StringReader(""));
+xmlReader.setEntityResolver(noop);
+documentBuilder.setEntityResolver(noop);
+```
+
 ## JAXB Unmarshaller
 
 Since a `javax.xml.bind.Unmarshaller` parses XML and does not support any flags for disabling XXE, it’s imperative to parse the untrusted XML through a configurable secure parser first, generate a source object as a result, and pass the source object to the Unmarshaller. For example:
