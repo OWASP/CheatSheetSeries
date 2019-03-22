@@ -2,11 +2,11 @@
 
 This article brings forth a way to integrate the `defense in depth` concept to the client-side of web applications. By injecting the Content-Security-Policy (CSP) headers from the server, the browser is aware and capable of protecting the user from dynamic calls that will load content into the page currently being visited.
 
-## Context
+# Context
 
 The increase in XSS and clickjacking vulnerabilities demands a more `defense in depth` security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.
 
-## Avoid CSP
+# Avoid CSP
 
 If you are a developer of any of the applications mentioned below, CSP will barely provide or improve their security:
 - Single page applications with no cookies or authentication.
@@ -37,6 +37,7 @@ Fetch directives tell the browser the locations to trust and load resources from
 
 - `default-src` is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of `default-src`.
 - `child-src` allows the developer to control nested browsing contexts and worker execution contexts.
+  - According to [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Fetch_directives), the below 2 directives should be used to regulate nested browsing context and workers as `child-src` will be deprecated in the coming versions.
   - `frame-src` specifies the URLs which can be loaded into nested browsing contexts (*e.g.* `<iframe>`).
   - `worker-src` specifies the URLs which can be loaded as worker, sharedworker, or serviceworker. Fallback's on `script-src` too.
 - `connect-src` provides control over fetch requests, XHR, eventsource, beacon and websockets connections.
@@ -62,7 +63,7 @@ Document directives instruct the browser about the properties of the document to
 - `plugin-types` limits the types of resources that can be loaded into the document (*e.g.* application/pdf). 3 rules apply to the affected elements, `<embed>` and `<object>`:
   - The element needs to explicitly declare its type.
   - The element's type needs to match the declared type.
-  - The element's resource need to meatch the declared type.
+  - The element's resource need to match the declared type.
 - `sandbox` restricts a page's actions such as submitting forms.
   - Only applies when used with the request header `Content-Security-Policy`.
   - Not specifying a value for the directive activates all of the sandbox restrictions. `Content-Security-Policy: sandbox;`
@@ -107,7 +108,7 @@ For more details on hashes and nonces, check out [Scott Helme's Guide](https://s
 
 ## Basic CSP Policy
 
-This policy will only allow resources from the originating domain for all the default level directives, and will not allow inline scripts/styles to execute. If your application and function with these restrictions, it drastically reduces your attack surface having this policy in place, and will work with most modern browsers.
+This policy will only allow resources from the originating domain for all the default level directives and will not allow inline scripts/styles to execute. If your application functions with these restrictions, it drastically reduces your attack surface, and works with most modern browsers.
 
 The most basic policy assumes:
 
@@ -124,7 +125,7 @@ This policy allows images, scripts, AJAX, and CSS from the same origin, and does
 
 ## Mixed Content Policy
 
-- In order to prevent mixed content (resources being loaded over http, from a document loaded over https), one can use the following directive to block mixed content.
+- In order to prevent mixed content (resources being loaded over http, from a document loaded over https), one can use the [block-all-mixed-content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/block-all-mixed-content) directive to block mixed content.
 
   - `Content-Security-Policy: block-all-mixed-content;`
 
@@ -132,7 +133,7 @@ This policy allows images, scripts, AJAX, and CSS from the same origin, and does
 
   - `Content-Security-Policy: upgrade-insecure-requests;`
 
-If the `upgrade-insecure-requests` is set, the `block-all-mixed-content` is rendered meaningless and should be removed.
+If the [upgrade-insecure-requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests) is set, the `block-all-mixed-content` is rendered meaningless and should be removed.
 
 ## Preventing ClickJacking
 
@@ -153,10 +154,9 @@ The below CSP allows loading from the same origin and loading images and scripts
 
 By default CSP disables any unsigned JavaScript code placed inline in the HTML source, such as this:
 
-```js
+```javascript
 <script>
 var foo = "314"
-
 <script>
 ```
 
@@ -172,7 +172,7 @@ Some browsers (e.g. Chrome) will also display the hash of the script in JavaScri
 
 The inline code can be also simply moved to a separate JavaScript file and the code in the page becomes:
 
-```js
+```javascript
 <script src="app.js">
 </script>
 ```
@@ -190,7 +190,8 @@ This should be replaced by `addEventListener` calls:
 # References
 
 - [CSP Level 3 W3C](https://www.w3.org/TR/CSP3/)
-- [CSP Reference](https://content-security-policy.com/)
+- [Content-Security-Policy](https://content-security-policy.com/)
+- [MDN CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
 - [CSP with Google](https://csp.withgoogle.com/docs/)
 - [CSP CheatSheet by Scott Helme](https://scotthelme.co.uk/csp-cheat-sheet/)
 
