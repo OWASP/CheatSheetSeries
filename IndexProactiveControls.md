@@ -17,6 +17,8 @@
 
 # Objective
 
+This index have for objective to indicate to help an [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) user to clearly identify which cheat sheets are useful for each section during his usage of the OWASP Proactive Controls.
+
 # Not addressed topic
 
 # 1. Define Security Requirements
