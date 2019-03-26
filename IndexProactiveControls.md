@@ -2,7 +2,6 @@
 
 <!-- Table of contents generated with markdown-toc https://ecotrust-canada.github.io/markdown-toc/ -->
 
-- [Table of contents](#table-of-contents)
 - [Objective](#objective)
 - [Not addressed topic](#not-addressed-topic)
 - [1. Define Security Requirements](#1-define-security-requirements)
@@ -21,12 +20,21 @@
 # Not addressed topic
 
 # 1. Define Security Requirements
+
 # 2. Leverage Security Frameworks and Libraries
+
 # 3. Secure Database Access
+
 # 4. Encode and Escape Data
+
 # 5. Validate All Inputs
+
 # 6. Implement Digital Identity
+
 # 7. Enforce Access Controls
+
 # 8. Protect Data Everywhere
+
 # 9. Implement Security Logging and Monitoring
+
 # 10. Handle All Errors and Exceptions
