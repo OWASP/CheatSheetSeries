@@ -24,17 +24,21 @@ This index have for objective to indicate to help an [OWASP Proactive Controls](
 # Not adressed CS
 
 [AJAX Security Cheat Sheet](cheatsheets/AJAX_Security_Cheat_Sheet.md)
+
 [Cross-Site_Request_Forgery_Prevention_Cheat_Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) - Enforce Access Controls? 
 
 # 1. Define Security Requirements
 
 [Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
+
 [Attack Surface Analysis Cheat Sheet](cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md)
 
 # 2. Leverage Security Frameworks and Libraries
 
 [C-Based Toolchain Hardening](cheatsheets/C-Based_Toolchain_Hardening.md)
+
 [C-Based Toolchain Hardening Cheat Sheet](cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md)
+
 [Clickjacking Defense Cheat Sheet](cheatsheets/Clickjacking_Defense_Cheat_Sheet.md)
 
 # 3. Secure Database Access
@@ -50,12 +54,15 @@ This index have for objective to indicate to help an [OWASP Proactive Controls](
 # 6. Implement Digital Identity
 
 [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
+
 [Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
 
 # 7. Enforce Access Controls
 
 [Access Control Cheat Sheet](cheatsheets/Access_Control_Cheat_Sheet.md)
+
 [Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md)
+
 [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
 
 # 8. Protect Data Everywhere
