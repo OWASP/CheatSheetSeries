@@ -208,11 +208,11 @@ There are a couple of drawbacks associated with the assumptions made here. The p
 
 *b)   If an attacker is in the middle, they can usually force a request to the same domain over HTTP. If an application is hosted at `https://secure.example.com`, even if the cookies are set with the secure flag, a man in the middle can force connections to `http://secure.example.com` and set (overwrite) any arbitrary cookies (even though the secure flag prevents the attacker from reading those cookies). Even if the HSTS header is set on the server and the browser visiting the site supports HSTS (this would prevent a man in the middle from forcing plaintext HTTP requests) unless the HSTS header is set in a way that includes all subdomains, a man in the middle can simply force a request to a separate subdomain and overwrite cookies similar to 1. In other words, as long as `http://hellokitty.marketing.example.com` doesn't force https, then an attacker can overwrite cookies on any `example.com` subdomain.*"
 
-Scenarios a and b are possible only if the CSRF token is not tied to the session. When the CSRF token is independent of the session, an attacker can overwrite the token in the parent domain cookie with XSS in child domain. 
-
 So, unless you are sure that your subdomains are fully secured and only accept HTTPS connections (we believe it’s difficult to guarantee at large enterprises), you should not rely on the Double Submit Cookie technique as a primary mitigation for CSRF.
 
-A variant of double submit cookie that can mitigate both the risks mentioned above is including the token in an encrypted cookie - often within the authentication cookie - and then at the server side matching it (after decrypting authentication cookie) with the token in hidden form field or parameter/header for ajax calls. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.
+Scenarios a and b mentioned above are possible only if the CSRF token is not derived/tied to the session in which case an attacker can overwrite the token in the parent domain cookie with XSS in child domain. A variant of how this can be mitigated by linking token and session/auth cookie is explained below.
+
+Including the token in an encrypted cookie - often within the authentication cookie - and then at the server side matching it (after decrypting authentication cookie) with the token in hidden form field or parameter/header for ajax calls mitigates both the issues mentioned above. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.
 
 ## Samesite Cookie Attribute
 
