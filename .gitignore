@@ -5,5 +5,3 @@ TOC.md
 node_modules/
 site/
 generated/
-/.vs/slnx.sqlite
-/.vs/ProjectSettings.json
