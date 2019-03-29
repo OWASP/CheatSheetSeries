@@ -27,11 +27,37 @@ This index have for objective to indicate to help an [OWASP Proactive Controls](
 
 [Cross-Site_Request_Forgery_Prevention_Cheat_Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) - Enforce Access Controls? 
 
+[Docker Security Cheat Sheet](cheatsheets/Docker_Security_Cheat_Sheet.md) -  Leverage Security Frameworks and Libraries?
+
+[Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
+
+[Denial of Service Cheat Sheet](cheatsheets/Denial_of_Service_Cheat_Sheet.md)
+
+[HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md)
+
+[Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
+
+[User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md) - Protect Data Everywhere?
+
+[Vulnerability Disclosure Cheat Sheet](cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md)
+
+[Virtual Patching Cheat Sheet](cheatsheets/Virtual_Patching_Cheat_Sheet.md)
+
+[Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md)
+
+[XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md)
+
+[XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
+
+
+
 # 1. Define Security Requirements
 
 [Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
 
 [Attack Surface Analysis Cheat Sheet](cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md)
+
+[Threat Modeling Cheat Sheet](cheatsheets/Threat_Modeling_Cheat_Sheet.md)
 
 # 2. Leverage Security Frameworks and Libraries
 
@@ -41,21 +67,39 @@ This index have for objective to indicate to help an [OWASP Proactive Controls](
 
 [Clickjacking Defense Cheat Sheet](cheatsheets/Clickjacking_Defense_Cheat_Sheet.md)
 
+[DotNet Security Cheat Sheet](cheatsheets/DotNet_Security_Cheat_Sheet.md)
+
 # 3. Secure Database Access
 
 # 4. Encode and Escape Data
 
 [Cross Site Scripting Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 
+[DOM based XSS Prevention Cheat Sheet](cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md)
+
+[Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
+
+[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md)
+
 # 5. Validate All Inputs
 
-[Bean Validation Cheat Sheet](/cheatsheets/Bean_Validation_Cheat_Sheet.md)
+[Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md)
+
+[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
+
+[Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
+
+[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md)
+
+[Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
 
 # 6. Implement Digital Identity
 
 [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
 
 [Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
+
+[Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
 
 # 7. Enforce Access Controls
 
@@ -65,10 +109,22 @@ This index have for objective to indicate to help an [OWASP Proactive Controls](
 
 [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
 
+[Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
+
+[Transaction Authorization Cheat Sheet](cheatsheets/Transaction_Authorization_Cheat_Sheet.md)
+
 # 8. Protect Data Everywhere
 
 [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
 
+[TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md)
+
+[Transport Layer Protection Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md)
+
+[HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
+
 # 9. Implement Security Logging and Monitoring
 
 # 10. Handle All Errors and Exceptions
+
+[Error Handling Cheat Sheet](cheatsheets/Error_Handling_Cheat_Sheet.md)
