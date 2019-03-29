@@ -321,7 +321,7 @@ This information is based on the [MySQL Escape character information](https://de
 
 #### SQL Server Escaping
 
-We have not implemented the SQL Server escaping routine yet, but the following has good pointers and links to articles describing how to prevent SQL injection attacks on SQL server, see [here](https://blogs.msdn.microsoft.com/raulga/2007/01/04/dynamic-sql-sql-injection/).
+We have not implemented the SQL Server escaping routine yet, but the following has good pointers and links to articles describing how to prevent SQL injection attacks on SQL server, see [here](https://aka.ms/sql-injection).
 
 #### DB2 Escaping
 
