@@ -64,6 +64,7 @@ However, we have created an official core technical review team in order to:
 Decision of the core technical review team have the same weight than the projet leaders, so, if a reviewer reject a PR (*rejection must be technically documented and explained*) then project leaders will apply the global decision.
 
 Members:
+* [ThunderSon](https://github.com/ThunderSon).
 * [Jakub Maćkowski](https://github.com/mackowski).
 * [Dominique Righetto](https://github.com/righettod).
 * [Jim Manico](https://github.com/jmanico).
