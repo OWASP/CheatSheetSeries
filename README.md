@@ -19,6 +19,7 @@ This repository contains all the cheat sheets of the project and represent the V
 - [How to contribute?](#how-to-contribute)
 - [Offline website](#offline-website)
 - [Project leaders](#project-leaders)
+- [Core technical review team](#core-technical-review-team)
 - [Project logo](#project-logo)
 - [Folders](#folders)
 - [License](#license)
@@ -48,8 +49,24 @@ More information about the GitHub search feature can be found [here](https://hel
 
 # Project leaders
 
-* [Jim Manico](https://github.com/jmanico).
 * [Dominique Righetto](https://github.com/righettod).
+* [Jim Manico](https://github.com/jmanico).
+
+# Core technical review team
+
+**Any GitHub member is free to add a comment on any Proposal (issue) or PR.**
+
+However, we have created an official core technical review team in order to:
+* Review all PR/Proposal in a consistent/regular way using [GitHub's review feature](https://help.github.com/en/articles/reviewing-proposed-changes-in-a-pull-request).
+* Extend the field of technologies known by the review team.
+* Allow several technical opinions on a Proposal/PR, all exchanges are public because we use the GitHub comment feature.
+
+Decision of the core technical review team have the same weight than a projet leaders, so, if a reviewer reject a PR (*rejection must be technically documented and explained*) then project leaders will apply the global decision.
+
+Members:
+* [Jakub Maćkowski](https://github.com/mackowski).
+* [Dominique Righetto](https://github.com/righettod).
+* [Jim Manico](https://github.com/jmanico).
 
 # Project logo
 
