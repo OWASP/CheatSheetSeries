@@ -61,7 +61,7 @@ However, we have created an official core technical review team in order to:
 * Extend the field of technologies known by the review team.
 * Allow several technical opinions on a Proposal/PR, all exchanges are public because we use the GitHub comment feature.
 
-Decision of the core technical review team have the same weight than a projet leaders, so, if a reviewer reject a PR (*rejection must be technically documented and explained*) then project leaders will apply the global decision.
+Decision of the core technical review team have the same weight than the projet leaders, so, if a reviewer reject a PR (*rejection must be technically documented and explained*) then project leaders will apply the global decision.
 
 Members:
 * [Jakub Maćkowski](https://github.com/mackowski).
