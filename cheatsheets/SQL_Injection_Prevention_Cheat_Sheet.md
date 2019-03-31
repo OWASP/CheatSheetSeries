@@ -21,7 +21,7 @@ This article provides a set of simple techniques for preventing SQL Injection vu
 **Additional Defenses:**
 
 - **Also: Enforcing Least Privilege**
-- **Also: Performing White List Input Validation as a Secondary Defense**
+- **Also: Performing Whitelist Input Validation as a Secondary Defense**
 
 **Unsafe Example:**
 
