@@ -65,9 +65,11 @@ Set of automated unit or integration or functionnal or security tests exists for
 ### Approach
 
 **Step 1:**
+
 Update the version of the dependency in the project.
 
 **Step 2:**
+
 Run the tests, 2 output path possibles:
 * All test succeeds, the update can be considered as validated.
 * One or several tests failed, several output path possible:
@@ -154,8 +156,7 @@ As we know the vulnerable dependency, we know where it is used in the applicatio
 
 So, we can identify any call to this dependency but we still miss information about which kind of patching we must perform...
 
-To obtain these informations, we use the CVE description to know which kind of vulnerability affect the dependency:
-* The `description` give the answer: SQL injection, Remote Code Execution, Cross-Site Scripting, Cross-Site Request Forgery...
+To obtain these informations, we use the CVE content to know which kind of vulnerability affect the dependency. The `description` property give the answer: SQL injection, Remote Code Execution, Cross-Site Scripting, Cross-Site Request Forgery...
 
 Now, we know which kind of patching we must perform (it's become similar to [Case 2](#case-2) with the protection code) and where to add it.
 
@@ -173,6 +174,8 @@ XML external entity (XXE) vulnerability in XmlMapper in the Data format extensio
 Based on these information, we determine that the patching will be to add a [pre-validation of any XML data](XML_External_Entity_Prevention_Cheat_Sheet.md) passed to the Jakson API to prevent [XML external entity (XXE)](https://www.acunetix.com/blog/articles/xml-external-entity-xxe-vulnerabilities/) vulnerability.
 
 **Step 3:**
+
+If possible, create a unit test trying to trigger the vulnerability via your application in order to ensure that the patch is effective and have a way to continuously ensure that the patch is in place during the evolution of the project.
 
 If you have a set of automated unit or integration or functionnal or security tests that exists for the application then run them to verify that the patch do not impact the stability of the application.
 
