@@ -146,7 +146,7 @@ The following code example uses a `SqlCommand`, .NET’s implementation of the s
  End Try
 ```
 
-## Defense Option 3: White List Input Validation
+## Defense Option 3: Whitelist Input Validation
 
 Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters. 
 
