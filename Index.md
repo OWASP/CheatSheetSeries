@@ -1,4 +1,4 @@
-**59** cheat sheets available.
+**60** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -31,6 +31,8 @@
 [Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md).
 
 [Clickjacking Defense Cheat Sheet](cheatsheets/Clickjacking_Defense_Cheat_Sheet.md). ![Javascript](assets/Index_Javascript.png) ![Html](assets/Index_Html.png) 
+
+[Content Security Policy Cheat Sheet](cheatsheets/Content_Security_Policy_Cheat_Sheet.md). ![Javascript](assets/Index_Javascript.png) 
 
 [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md).
 

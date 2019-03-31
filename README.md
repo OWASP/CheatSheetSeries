@@ -1,4 +1,4 @@
-![CSCounterBadge](https://img.shields.io/badge/Cheat_sheets_available-59-orange.svg)
+![CSCounterBadge](https://img.shields.io/badge/Cheat_sheets_available-60-orange.svg)
 ![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
 [![PushAndPullRequestIntegrityCheck](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 [![OfflineWebsiteNightBuild](https://circleci.com/gh/OWASP/CheatSheetSeries.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries)
@@ -77,6 +77,10 @@ Project's official logo files are hosted [here](https://github.com/OWASP/owasp-s
 
 **cheatsheets_excluded**:
 * Contains the cheat sheets markdown files converted with PANDOC and for which a discussion must be made in order to decide if we include them into the V2 of the project due to the content has not been updated since a long time or is not relevant anymore. See this [open discussion](https://github.com/OWASP/CheatSheetSeries/issues/13). 
+
+**cheatsheets_draft**: 
+* Contains the cheat sheets files under work by core commiters of the project to facilitate incremental exchanges about the content (PR usage not possible for core commiters).
+* Any `.md` file present into this folder is considered **draft** and under heavy work (don't use them for production).
 
 **cheatsheets**: 
 * Contains the final cheat sheets files. 
