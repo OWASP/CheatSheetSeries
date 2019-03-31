@@ -15,7 +15,7 @@ This article provides a set of simple techniques for preventing SQL Injection vu
 
 - **Option 1: Use of Prepared Statements (with Parameterized Queries)**
 - **Option 2: Use of Stored Procedures**
-- **Option 3: White List Input Validation**
+- **Option 3: Whitelist Input Validation**
 - **Option 4: Escaping All User Supplied Input**
 
 **Additional Defenses:**
@@ -383,7 +383,7 @@ PDO is the universal option. If you're connecting to a database other than MySQL
 Beyond adopting one of the four primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:
 
 - **Least Privilege**
-- **White List Input Validation**
+- **Whitelist Input Validation**
 
 ## Least Privilege
 
@@ -413,7 +413,7 @@ You can use SQL views to further increase the granularity of access by limiting 
 
 The designer could use views to compensate for this limitation; revoke all access to the table (from all DB users except the owner/admin) and create a view that outputs the hash of the password field and not the field itself. Any SQL injection attack that succeeds in stealing DB information will be restricted to stealing the hash of the passwords (could even be a keyed hash), since no DB user for any of the web applications has access to the table itself.
 
-## White List Input Validation
+## Whitelist Input Validation
 
 In addition to being a primary defense when nothing else is possible (e.g., when a bind variable isn't legal), input validation can also be a secondary defense used to detect unauthorized input before it is passed to the SQL query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md). Proceed with caution here. Validated data is not necessarily safe to insert into SQL queries via string building.
 
