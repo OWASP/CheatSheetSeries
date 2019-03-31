@@ -180,7 +180,7 @@ public String someMethod(boolean sortOrder) {
 
 Any time user input can be converted to a non-String, like a date, numeric, boolean, enumerated type, etc. before it is appended to a query, or used to select a value to append to the query, this ensures it is safe to do so.
 
-Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong white list input validation is described in the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong whitelist input validation is described in the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
 ## Defense Option 4: Escaping All User-Supplied Input
 
