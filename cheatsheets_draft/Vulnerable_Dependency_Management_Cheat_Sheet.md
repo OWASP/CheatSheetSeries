@@ -18,7 +18,7 @@ Due to this context, it's important for a project to ensure that all the third-p
 
 It's highly recommanded to perform automated analysis of the dependencies from the day one of the project. Indeed, if this task is added at the middle or end of the project it can imply a amount of work to handle all the issues identified that will not be possible to handle by the developmement team since a long time.
 
-**Note:** In the rest of the cheat sheet, when we refer to *development team* then we assume that the team contain an member with application security skills or can ask help to someone in the company having these kind of skills.
+**Note:** In the rest of the cheat sheet, when we refer to *development team* then we assume that the team contain an member with application security skills or can ask help to someone in the company having these kind of skills to analyse the vulnerability impacting the dependency.
 
 # Remark about the detection
 
@@ -178,6 +178,26 @@ Based on these information, we determine that the patching will be to add a [pre
 If possible, create a unit test trying to trigger the vulnerability via your application in order to ensure that the patch is effective and have a way to continuously ensure that the patch is in place during the evolution of the project.
 
 If you have a set of automated unit or integration or functionnal or security tests that exists for the application then run them to verify that the patch do not impact the stability of the application.
+
+## Case 4
+
+### Context
+
+The vulnerable dependency in found via the discovery of a full disclosure post on Internet, provider not aware of the vulnerability.
+
+### Ideal condition of application of the approach
+
+Provider collaborate with you after being notified of the vulnerability.
+
+### Approach
+
+**Step 1:**
+
+Inform the provider about the vulnerability by sharing the post with him.
+
+**Step 2:**
+
+Using the information of the full disclosure post, if th provider collaborate then apply the [Case 2](#case-2) otherwise apply the [Case 3](#case-3) but replace CVE information by the information of the full disclosure post.
 
 # Tools
 

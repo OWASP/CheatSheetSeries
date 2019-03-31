@@ -76,7 +76,7 @@ Project's official logo files are hosted [here](https://github.com/OWASP/owasp-s
 # Folders
 
 **cheatsheets_excluded**:
-* Contains the cheat sheets markdown files converted with PANDOC and for which a discussion must be made in order to decide if we include them into the V2 of the project due to the content has not been updated since a long time or is not relevant anymore. See this [open discussion](https://github.com/OWASP/CheatSheetSeries/issues/13). 
+* Contains the cheat sheets markdown files converted with PANDOC and for which a discussion must be made in order to decide if we include them into the V2 of the project due to the content has not been updated since a long time or is not relevant anymore. See this [discussion](https://github.com/OWASP/CheatSheetSeries/issues/13). 
 
 **cheatsheets_draft**: 
 * Contains the cheat sheets files under work by core commiters of the project to facilitate incremental exchanges about the content (PR usage not possible for core commiters).
