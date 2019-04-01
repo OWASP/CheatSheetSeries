@@ -1,7 +1,5 @@
 # Table of contents
 
-<!-- Table of contents generated with markdown-toc https://ecotrust-canada.github.io/markdown-toc/ -->
-
 - [Objective](#objective)
 - [Not addressed topic](#not-addressed-topic)
 - [1. Define Security Requirements](#1-define-security-requirements)
@@ -17,7 +15,7 @@
 
 # Objective
 
-This index have for objective to indicate to help an [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) user to clearly identify which cheat sheets are useful for each section during his usage of the OWASP Proactive Controls.
+This CheatSheet (CS) will serve an [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) user to clearly identify which cheat sheets are useful for each section during their usage of the OWASP Proactive Controls.
 
 This index is based on the version 2018 V3.0 of the OWASP Proactive Controls.
 
@@ -43,6 +41,8 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 
 [DotNet Security Cheat Sheet](cheatsheets/DotNet_Security_Cheat_Sheet.md)
 
+[PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
+
 # 3. Secure Database Access
 
 [Query Parameterization Cheat Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md)
@@ -65,15 +65,23 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 
 [Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md)
 
+[Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
+
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
 
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
 
 [Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md)
 
+[Mass Assignment Cheat Sheet](cheatsheets/Mass_Assignment_Cheat_Sheet.md)
+
 [OS Command Injection Defense Cheat Sheet](cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md)
 
+[Protect FileUpload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md)
+
 [Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
+
+[XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
 
 # 6. Implement Digital Identity
 
@@ -100,6 +108,8 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 [Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md)
 
 [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
+
+[Cross-Site_Request_Forgery_Prevention_Cheat_Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
 
 [Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
 
