@@ -3,7 +3,7 @@
 <!-- Table of contents generated with markdown-toc https://ecotrust-canada.github.io/markdown-toc/ -->
 
 - [Objective](#objective)
-- [Not adressed CS](#not-adressed-cs)
+- [Not addressed topic](#not-addressed-topic)
 - [1. Define Security Requirements](#1-define-security-requirements)
 - [2. Leverage Security Frameworks and Libraries](#2-leverage-security-frameworks-and-libraries)
 - [3. Secure Database Access](#3-secure-database-access)
@@ -19,49 +19,11 @@
 
 This index have for objective to indicate to help an [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) user to clearly identify which cheat sheets are useful for each section during his usage of the OWASP Proactive Controls.
 
-# Not adressed CS
+This index is based on the version 2018 V3.0 of the OWASP Proactive Controls.
 
-[AJAX Security Cheat Sheet](cheatsheets/AJAX_Security_Cheat_Sheet.md)
+# Not addressed topic
 
-[Cross-Site_Request_Forgery_Prevention_Cheat_Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) - Enforce Access Controls? 
-
-[Docker Security Cheat Sheet](cheatsheets/Docker_Security_Cheat_Sheet.md) -  Leverage Security Frameworks and Libraries?
-
-[Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
-
-[Denial of Service Cheat Sheet](cheatsheets/Denial_of_Service_Cheat_Sheet.md)
-
-[HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md)
-
-[Mass Assignment Cheat Sheet](cheatsheets/Mass_Assignment_Cheat_Sheet.md)
-
-[PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md) -  Leverage Security Frameworks and Libraries?
-
-[Protect FileUpload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md) - Validate All Inputs?
-
-[REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md)
-
-[REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md) - All?
-
-[Ruby on Rails Cheatsheet](cheatsheets/Ruby_on_Rails_Cheatsheet.md) - All?
-
-[Securing Cascading Style Sheets Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md)
-
-[Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
-
-[User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md) - Protect Data Everywhere?
-
-[Vulnerability Disclosure Cheat Sheet](cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md)
-
-[Virtual Patching Cheat Sheet](cheatsheets/Virtual_Patching_Cheat_Sheet.md)
-
-[Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md)
-
-[XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md)
-
-[XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
-
-
+Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/issues/new?assignees=&labels=ACK_WAITING%2C+NEW_CS&template=new_cheatsheet_proposal.md&title=New+cheat+sheet+proposal) if you need that a dedicated cheat sheet be created to provide information about the target Proactive Controls section.
 
 # 1. Define Security Requirements
 
