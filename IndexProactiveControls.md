@@ -51,6 +51,8 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 
 # 4. Encode and Escape Data
 
+[AJAX Security Cheat Sheet (Client Side)](cheatsheets/AJAX_Security_Cheat_Sheet.md#client-side-javascript)
+
 [Cross Site Scripting Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 
 [DOM based XSS Prevention Cheat Sheet](cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md)
@@ -128,6 +130,8 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
 
 [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md)
+
+[User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md)
 
 # 9. Implement Security Logging and Monitoring
 
