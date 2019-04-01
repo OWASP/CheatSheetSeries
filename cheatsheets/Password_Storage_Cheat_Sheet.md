@@ -312,7 +312,7 @@ PARALLELISM=4
 
 ## Input password size
 
-In order to prevent any DOS attack using a very big password, it's recommanded to define a higher size limit for the password choosen by the user.
+In order to prevent any DOS attack using a very big password, it's recommended to define a higher size limit for the password choosen by the user.
 
 A limit of **1000 characters** is sufficient to let the user choose a very big password without impacting the system.
 
