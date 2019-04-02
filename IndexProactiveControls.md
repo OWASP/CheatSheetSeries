@@ -39,13 +39,23 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 
 [Clickjacking Defense Cheat Sheet](cheatsheets/Clickjacking_Defense_Cheat_Sheet.md)
 
-[DotNet Security Cheat Sheet](cheatsheets/DotNet_Security_Cheat_Sheet.md)
+[DotNet Security Cheat Sheet (A3 Cross Site Scripting)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a3-cross-site-scripting)
 
 [PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
 
+[Ruby on Rails Cheatsheet (Tools)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#tools)
+
+[Ruby on Rails Cheatsheet (XSS)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#cross-site-scripting-xss)
+
 # 3. Secure Database Access
 
+[DotNet Security Cheat Sheet (Data Access)](cheatsheets/DotNet_Security_Cheat_Sheet.md#data-access)
+
+[DotNet Security Cheat Sheet (A1 SQL Injection)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a1-sql-injection)
+
 [Query Parameterization Cheat Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md)
+
+[Ruby on Rails Cheatsheet (SQL Injection)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#sql-injection)
 
 [SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
 
@@ -69,6 +79,12 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 
 [Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
 
+[DotNet Security Cheat Sheet (HTTP Validation and Encoding)](cheatsheets/DotNet_Security_Cheat_Sheet.md#http-validation-and-encoding)
+
+[DotNet Security Cheat Sheet (A8 Cross site request forgery)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a8-cross-site-request-forgery)
+
+[DotNet Security Cheat Sheet (A10 Unvalidated redirects and forwards)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a10-unvalidated-redirects-and-forwards)
+
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
 
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
@@ -81,6 +97,12 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 
 [Protect FileUpload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md)
 
+[REST Security Cheat Sheet (Input Validation)](cheatsheets/REST_Security_Cheat_Sheet.md#input-validation)
+
+[Ruby on Rails Cheatsheet (Command Injection)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#command-injection)
+
+[Ruby on Rails Cheatsheet (Mass Assignment and Strong Parameters)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#mass-assignment-and-strong-parameters)
+
 [Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
 
 [XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
@@ -91,6 +113,10 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 
 [Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
 
+[DotNet Security Cheat Sheet (Forms authentication)](cheatsheets/DotNet_Security_Cheat_Sheet.md#forms-authentication)
+
+[DotNet Security Cheat Sheet (A2 Weak Account management)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a2-weak-account-management)
+
 [Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
 
 [JAAS Cheat Sheet](cheatsheets/JAAS_Cheat_Sheet.md)
@@ -98,6 +124,12 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 [JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md)
 
 [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
+
+[REST Security Cheat Sheet (JWT)](cheatsheets/REST_Security_Cheat_Sheet.md#jwt)
+
+[Ruby on Rails Cheatsheet (Sessions)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#sessions)
+
+[Ruby on Rails Cheatsheet (Authentication)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#authentication)
 
 [SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md)
 
@@ -113,6 +145,16 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 
 [Cross-Site_Request_Forgery_Prevention_Cheat_Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
 
+[DotNet Security Cheat Sheet (A4 Insecure Direct object references)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a4-insecure-direct-object-references)
+
+[DotNet Security Cheat Sheet (A7 Missing function level access control)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a7-missing-function-level-access-control)
+
+[REST Security Cheat Sheet (Access Control)](cheatsheets/REST_Security_Cheat_Sheet.md#access-control)
+
+[Ruby on Rails Cheatsheet (Insecure Direct Object Reference or Forceful Browsing)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#insecure-direct-object-reference-or-forceful-browsing)
+
+[Ruby on Rails Cheatsheet (CSRF)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#csrf-cross-site-request-forgery)
+
 [Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
 
 [Transaction Authorization Cheat Sheet](cheatsheets/Transaction_Authorization_Cheat_Sheet.md)
@@ -120,6 +162,10 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 # 8. Protect Data Everywhere
 
 [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
+
+[DotNet Security Cheat Sheet (Encryption)](cheatsheets/DotNet_Security_Cheat_Sheet.md#encryption)
+
+[DotNet Security Cheat Sheet (A6 Sensitive data exposure)](cheatsheets/DotNet_Security_Cheat_Sheet.md#a6-sensitive-data-exposure)
 
 [TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md)
 
@@ -131,12 +177,20 @@ Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/iss
 
 [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md)
 
+[REST Security Cheat Sheet (HTTPS)](cheatsheets/REST_Security_Cheat_Sheet.md#https)
+
+[Ruby on Rails Cheatsheet (Encryption)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#encryption)
+
 [User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md)
 
 # 9. Implement Security Logging and Monitoring
 
+[REST Security Cheat Sheet (Audit Logs)](cheatsheets/REST_Security_Cheat_Sheet.md#audit-logs)
+
 [Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
 
 # 10. Handle All Errors and Exceptions
+
+[REST Security Cheat Sheet (Error Handling)](cheatsheets/REST_Security_Cheat_Sheet.md#error-handling)
 
 [Error Handling Cheat Sheet](cheatsheets/Error_Handling_Cheat_Sheet.md)
