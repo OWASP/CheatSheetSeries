@@ -105,6 +105,8 @@ spec:
           ...
 ```
 
+As an Kubernetes cluster administrator you can for it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
+
 ## RULE \#4 - Add –no-new-privileges flag
 
 Always run your docker images with `--security-opt=no-new-privileges` in order to prevent escalate privileges using `setuid` or `setgid` binaries.
@@ -126,6 +128,7 @@ spec:
           allowPrivilegeEscalation: false
           ...
 ```
+
 As an Kubernetes cluster administrator you can for it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
 
 ## RULE \#5 - Disable inter-container communication (--icc=false)
@@ -178,7 +181,6 @@ services:
     read_only: true
 ```
 
-
 Equivalent in kubernetes in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) will be:
 
 ```
@@ -196,8 +198,6 @@ spec:
           readOnlyRootFilesystem: true
           ...
 ```
-
-
 
 In addition if volume is mounted only for reading **mount them as a read-only**
 It can be done by appending `:ro` to the `-v` like this:
