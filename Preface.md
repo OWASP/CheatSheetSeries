@@ -5,8 +5,14 @@ The **OWASP Cheat Sheet Series** was created to provide a concise collection of 
 We hope that this project provides you with excellent security guidance in an easy to read format.
 
 Project leaders:
-- [Jim Manico](https://www.owasp.org/index.php/User:Jmanico).
 - [Dominique Righetto](https://www.owasp.org/index.php/User:Dominique_RIGHETTO).
+- [Jim Manico](https://www.owasp.org/index.php/User:Jmanico).
+
+Core technical review team:
+- [Elie Saad](https://github.com/ThunderSon).
+- [Jakub Maćkowski](https://github.com/mackowski).
+- [Dominique Righetto](https://github.com/righettod).
+- [Jim Manico](https://github.com/jmanico).
 
 Project links:
 - [Homepage](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series).
