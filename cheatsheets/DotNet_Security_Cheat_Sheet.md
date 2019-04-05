@@ -12,7 +12,7 @@ The .NET Framework is kept up-to-date by Microsoft with the Windows Update servi
 
 Individual frameworks can be kept up to date using [NuGet](http://nuget.codeplex.com/wikipage?title=Getting%20Started&referringTitle=Home). As Visual Studio prompts for updates, build it into your lifecycle.
 
-Remember that third party libraries have to be updated separately and not all of them use Nuget. ELMAH for instance, requires a separate update effort.
+Remember that third-party libraries have to be updated separately and not all of them use NuGet. ELMAH for instance, requires a separate update effort.
 
 # .NET Framework Guidance
 
@@ -210,7 +210,7 @@ HttpContext.Current.Response.Headers.Remove("Server");
 
 # ASP NET MVC Guidance
 
-ASP.NET MVC (Model-View-Controller) is a contemporary web application framework that uses more standardized HTTP communication than the Web Forms postback model. 
+ASP.NET MVC (Model–View–Controller) is a contemporary web application framework that uses more standardized HTTP communication than the Web Forms postback model. 
 
 The OWASP Top 10 lists the most prevalent and dangerous threats to web security in the world today and is reviewed every 3 years. 
 
@@ -414,9 +414,9 @@ DO: Ensure headers are not disclosing information about your application. See [H
 </system.webServer>    
 ```
 
-## A7 Missing function level access control
+## A7 Missing function-level access control
 
-DO: Authorize users on all externally facing endpoints. The .Net framework has many ways to authorize a user, use them at method level:
+DO: Authorize users on all externally facing endpoints. The .NET framework has many ways to authorize a user, use them at method level:
 
 ```csharp
 [Authorize(Roles = "Admin")]
@@ -433,9 +433,9 @@ public class UserController
 
 You can also check roles in code using identity features in .net: `System.Web.Security.Roles.IsUserInRole(userName, roleName)`
 
-# A8 Cross site request forgery
+# A8 Cross-site request forgery
 
-DO: Send the anti-forgery token with every Post/Put request:
+DO: Send the anti-forgery token with every POST/PUT request:
 
 ```csharp
 using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", 
