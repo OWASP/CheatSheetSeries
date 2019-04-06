@@ -87,9 +87,9 @@ This the procedure:
 4. Switch on this new branch (normally it's the already the case):
     > `git checkout feature_request_[ID]`
 5. Do the expected work.
-6. Push your branch:
+6. Push the new branch:
     > `git push origin feature_request_[ID]`   
-7. When you are ready for the review, create a pull request by visiting this link:
+7. When the work is ready for the review, create a pull request by visiting this link:
     > `https://github.com/OWASP/CheatSheetSeries/pull/new/feature_request_[ID]`
 8. Implements the modification requested by the reviewers and when the core technical review team is OK then the PR is merged.
 9. Once merged, delete the branch using this [GitHub feature](https://help.github.com/en/articles/creating-and-deleting-branches-within-your-repository#deleting-a-branch).
