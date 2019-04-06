@@ -94,6 +94,8 @@ This the procedure:
 8. Implements the modification requested by the reviewers and when the core technical review team is OK then the PR is merged.
 9. Once merged, delete the branch using this [GitHub feature](https://help.github.com/en/articles/creating-and-deleting-branches-within-your-repository#deleting-a-branch).
 
+See project current [branches](https://github.com/OWASP/CheatSheetSeries/branches).
+
 # Project logo
 
 Project's official logo files are hosted [here](https://github.com/OWASP/owasp-swag/tree/master/projects/cheat-sheet-series).
