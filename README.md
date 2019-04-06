@@ -20,6 +20,7 @@ This repository contains all the cheat sheets of the project and represent the V
 - [Offline website](#offline-website)
 - [Project leaders](#project-leaders)
 - [Core technical review team](#core-technical-review-team)
+- [PR usage for core commiters](#pr-usage-for-core-commiters)
 - [Project logo](#project-logo)
 - [Folders](#folders)
 - [License](#license)
@@ -58,7 +59,7 @@ More information about the GitHub search feature can be found [here](https://hel
 
 **Any GitHub member is free to add a comment on any Proposal (issue) or PR.**
 
-However, we have created an official core technical review team in order to:
+However, we have created an official core technical review team (core commiters) in order to:
 * Review all PR/Proposal in a consistent/regular way using [GitHub's review feature](https://help.github.com/en/articles/reviewing-proposed-changes-in-a-pull-request).
 * Extend the field of technologies known by the review team.
 * Allow several technical opinions on a Proposal/PR, all exchanges are public because we use the GitHub comment feature.
@@ -71,6 +72,28 @@ Members:
 * [Dominique Righetto](https://github.com/righettod).
 * [Jim Manico](https://github.com/jmanico).
 
+# PR usage for core commiters
+
+For the following kind of modification, the PR system will be used by the core commiters in order to allow peer review using the GitHub PR review system:
+* Adding of new cheat sheet.
+* Deep modification of an existing cheat sheet.
+
+This the procedure:
+1. Clone the project.
+2. Move on the `master` branch: 
+    > `git checkout master`
+3. Create a branch named `feature_request_[ID]` where **[ID]** is the number of the linked issue opened prior to the PR to follow the contribution process:
+    > `git checkout -b feature_request_[ID]`
+4. Switch on this new branch (normally it's the already the case):
+    > `git checkout feature_request_[ID]`
+5. Do the expected work.
+6. Push your branch:
+    > `git push origin feature_request_[ID]`   
+7. When you are ready for the review, create a pull request by visiting this link:
+    > `https://github.com/OWASP/CheatSheetSeries/pull/new/feature_request_[ID]`
+8. Implements the modification requested by the reviewers and when the core technical review team is OK then the PR is merged.
+9. Once merged, delete the branch using this [GitHub feature](https://help.github.com/en/articles/creating-and-deleting-branches-within-your-repository#deleting-a-branch).
+
 # Project logo
 
 Project's official logo files are hosted [here](https://github.com/OWASP/owasp-swag/tree/master/projects/cheat-sheet-series).
@@ -79,10 +102,6 @@ Project's official logo files are hosted [here](https://github.com/OWASP/owasp-s
 
 **cheatsheets_excluded**:
 * Contains the cheat sheets markdown files converted with PANDOC and for which a discussion must be made in order to decide if we include them into the V2 of the project due to the content has not been updated since a long time or is not relevant anymore. See this [discussion](https://github.com/OWASP/CheatSheetSeries/issues/13). 
-
-**cheatsheets_draft**: 
-* Contains the cheat sheets files under work by core commiters of the project to facilitate incremental exchanges about the content (PR usage not possible for core commiters).
-* Any `.md` file present into this folder is considered **draft** and under heavy work (don't use them for production).
 
 **cheatsheets**: 
 * Contains the final cheat sheets files. 
