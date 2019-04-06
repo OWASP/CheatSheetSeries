@@ -49,6 +49,26 @@ USER myuser
 
 More informatrion about this topic can be found in [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/)
 
+In kubernetes this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `runAsNonRoot` field e.g.:
+
+```
+kind: ...
+apiVersion: ...
+metadata:
+  name: ...
+spec:
+  ...
+  containers:
+  - name: ...
+    image: ....
+    securityContext:
+          ...
+          runAsNonRoot: true
+          ...
+```
+
+As an Kubernetes cluster administrator you can for it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
+
 ## RULE \#3 - Limit capabilities (Grant only specific capabilities, needed by a container)
 
 [Linux kernel capabilities](http://man7.org/linux/man-pages/man7/capabilities.7.html) are set of privileges that can be used by privileged. Docker, by default, runs with only a  subset of capabilities. 
@@ -63,9 +83,53 @@ docker run --cap-drop all --cap-add CHOWN alpine
 
 **And remember: Do not run containers with the *--privileged* flag!!!**
 
+In kubernetes this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `capabilities` field e.g.:
+
+```
+kind: ...
+apiVersion: ...
+metadata:
+  name: ...
+spec:
+  ...
+  containers:
+  - name: ...
+    image: ....
+    securityContext:
+          ...
+          capabilities:
+            drop:
+              - all
+            add:
+              - CHOWN
+          ...
+```
+
+As an Kubernetes cluster administrator you can for it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
+
 ## RULE \#4 - Add –no-new-privileges flag
 
 Always run your docker images with `--security-opt=no-new-privileges` in order to prevent escalate privileges using `setuid` or `setgid` binaries.
+
+In kubernetes this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `allowPrivilegeEscalation` field e.g.:
+
+```
+kind: ...
+apiVersion: ...
+metadata:
+  name: ...
+spec:
+  ...
+  containers:
+  - name: ...
+    image: ....
+    securityContext:
+          ...
+          allowPrivilegeEscalation: false
+          ...
+```
+
+As an Kubernetes cluster administrator you can for it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
 
 ## RULE \#5 - Disable inter-container communication (--icc=false)
 
@@ -74,17 +138,24 @@ This can be disabled by running docker deamon with `--icc=false` flag.
 If icc is disabled (icc=false) it is required to tell which containers can communicate using --link=CONTAINER_NAME_or_ID:ALIAS option. 
 See more in [Docker documentation - container communication](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)
 
+In Kubernetes [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) can be used for it.
+
 ## RULE \#6 - Use Linux Security Module (seccomp, AppArmor, or SELinux)
 
 **First of all do not disable default security profile!** 
 
 Consider using security profile like [seccomp](https://docs.docker.com/engine/security/seccomp/) or [AppArmor](https://docs.docker.com/engine/security/apparmor/). 
 
+Instructions how to do this inside Kubernetes can be found in [Security Context documentation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) and in [Kubernetes API documentation](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#securitycontext-v1-core)
+
 ## RULE \#7 - Limit resources (memory, CPU, file descriptors, processes, restarts)
 
 The best way to avoid DoS attacks is limiting resources. You can limit [memory](https://docs.docker.com/config/containers/resource_constraints/#memory), [CPU](https://docs.docker.com/config/containers/resource_constraints/#cpu), maximum number of restarts (`--restart=on-failure:<number_of_restarts>`), maximum number of file descriptors (`--ulimit nofile=<number>`) and maximum number of processes (`--ulimit nproc=<number>`).
 
 [Check documentation for more details about ulimits](https://docs.docker.com/engine/reference/commandline/run/#set-ulimits-in-container---ulimit)
+
+You can also do this inside Kubernetes: [Assign Memory Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/), [Assign CPU Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/) and [Assign Extended Resources to a Container
+](https://kubernetes.io/docs/tasks/configure-pod-container/extended-resource/)
 
 ## RULE \#8 - Set filesystem and volumes to read-only 
 
@@ -108,6 +179,24 @@ services:
   alpine:
     image: alpine
     read_only: true
+```
+
+Equivalent in kubernetes in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) will be:
+
+```
+kind: ...
+apiVersion: ...
+metadata:
+  name: ...
+spec:
+  ...
+  containers:
+  - name: ...
+    image: ....
+    securityContext:
+          ...
+          readOnlyRootFilesystem: true
+          ...
 ```
 
 In addition if volume is mounted only for reading **mount them as a read-only**
@@ -134,6 +223,11 @@ To detect containers with known vulnerabilities - scan images using static analy
   - [anchore](https://anchore.com/opensource/) **(open source and free option available)**
   - [JFrog XRay](https://jfrog.com/xray/) 
   - [Qualys](https://www.qualys.com/apps/container-security/)
+
+To detect missconfigurations in Kubernetes:
+ - [kubeaudit](https://github.com/Shopify/kubeaudit)
+ - [kubesec.io](https://kubesec.io/)
+ - [kube-bench](https://github.com/aquasecurity/kube-bench)
 
 # Related Projects
 
