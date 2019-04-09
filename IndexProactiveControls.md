@@ -15,13 +15,9 @@
 
 # Objective
 
-This CheatSheet (CS) will serve an [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) user to clearly identify which cheat sheets are useful for each section during their usage of the OWASP Proactive Controls.
+This cheatsheet will help users of the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) identify which cheatsheets map to each proactive controls item.
 
-This index is based on the version 2018 V3.0 of the OWASP Proactive Controls.
-
-# Not addressed topic
-
-Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/issues/new?assignees=&labels=ACK_WAITING%2C+NEW_CS&template=new_cheatsheet_proposal.md&title=New+cheat+sheet+proposal) if you need that a dedicated cheat sheet be created to provide information about the target Proactive Controls section.
+This index is based the OWASP Proactive Controls version 3.0 (2018).
 
 # 1. Define Security Requirements
 
