@@ -14,7 +14,7 @@ The use of `.innerText` will prevent most XSS problems as it will automatically 
 
 ### Canonicalize data to consumer (read: encode before use)
 
-When using data to build HTML, script, CSS, XML, JSON, etc. make sure you take into account how that data must be presented in a literal sense to keep it's logical meaning. 
+When using data to build HTML, script, CSS, XML, JSON, etc. make sure you take into account how that data must be presented in a literal sense to keep its logical meaning. 
 
 Data should be properly encoded before used in this manner to prevent injection style issues, and to make sure the logical meaning is preserved.
 
