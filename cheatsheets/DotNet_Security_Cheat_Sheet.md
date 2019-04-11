@@ -16,7 +16,7 @@ Remember that third-party libraries have to be updated separately and not all of
 
 # .NET Framework Guidance
 
-The .NET Framework is the set of APIs that support an advanced type system, data, graphics, network, file handling and most of the rest of what is needed to write enterprise apps in the Microsoft ecosystem. It is a nearly ubiquitous library that is strong named and versioned at the assembly level.
+The .NET Framework is the set of APIs that support an advanced type system, data, graphics, network, file handling and most of the rest of what is needed to write enterprise apps in the Microsoft ecosystem. It is a nearly ubiquitous library that is strongly named and versioned at the assembly level.
 
 ## Data Access
 
