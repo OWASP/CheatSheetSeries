@@ -6,13 +6,13 @@ The cheat sheet is not tools oriented but it contains a *tools* section providin
 
 **Note:** 
 
-Proposal mentioned in this cheat sheet are not silver-bullet (recipes that work in all situations) but should be used a foundation and adapted to your context.
+Proposal mentioned in this cheat sheet are not silver-bullet (recipes that work in all situations) but should be used as a foundation and adapted to your context.
 
 # Context
 
-Most of the project use third-party dependencies to delegate handling of differents kind of operations like generation of document in a specific format, HTTP communications, data parsing of a specific format...
+Most of the projects use third-party dependencies to delegate handling of differents kind of operations like generation of document in a specific format, HTTP communications, data parsing of a specific format...
 
-It's a good approach because it allow the development team to focus on the real application code supporting the expected business feature. The downside is that when one of the dependencies used is impacted by a security issue then it impact also the security posture of the application itself.
+It's a good approach because it allows the development team to focus on the real application code supporting the expected business feature. The downside is that when one of the dependencies used is impacted by a security issue then it impact also the security posture of the application itself.
 
 This aspect is referenced in the:
 * [OWASP TOP 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_2017_Project) under the point *[A9 - Using Components with Known Vulnerabilities](https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities)*.
@@ -20,7 +20,7 @@ This aspect is referenced in the:
 
 Due to this context, it's important for a project to ensure that all the third-party dependencies used do not suffer for any security issue **OR** if they contains security issues then the developmment team is aware of that and mitigation measures are in place.
 
-It's highly recommanded to perform automated analysis of the dependencies from the day one of the project. Indeed, if this task is added at the middle or end of the project, it can imply a amount of work to handle all the issues identified that will not be possible to handle by the developmement team since a long time.
+It's highly recommanded to perform automated analysis of the dependencies from the day one of the project. Indeed, if this task is added at the middle or end of the project, it can imply a huge amount of work to handle all the issues identified that will not be possible to handle by the development team for a long time.
 
 **Note:** 
 
@@ -50,7 +50,7 @@ Conclusion, it's important to ensure, during the selection process of a vulnerab
 
 # Remark about the security issue handling decision
 
-When a securit issue is detected, it's also possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the [Chief Risk Officer](https://en.wikipedia.org/wiki/Chief_risk_officer) (fallback possible to [Chief Information Security Officer](https://en.wikipedia.org/wiki/Chief_information_security_officer)) of the company based on technical feedback from the development team that have analysed the issue (see the *[Cases](#-cases)* section) as well as the CVE's [CVSS](https://www.first.org/cvss/user-guide) score indicators.
+When a security issue is detected, it's possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the [Chief Risk Officer](https://en.wikipedia.org/wiki/Chief_risk_officer) (fallback possible to [Chief Information Security Officer](https://en.wikipedia.org/wiki/Chief_information_security_officer)) of the company based on technical feedback from the development team that have analysed the issue (see the *[Cases](#-cases)* section) as well as the CVE's [CVSS](https://www.first.org/cvss/user-guide) score indicators.
 
 # Cases
 
@@ -145,7 +145,10 @@ Provider inform the team that he cannot fix the issue so no patched version will
 
 The only information given to the development team is the [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures).
 
-**Note:** This case is really complex and time consuming and is generally used as last resort.
+**Notes:** 
+
+* This case is really complex and time consuming and is generally used as last resort.
+* If the impacted dependency is an open source library then we, development team, can create patch and create [pull request](https://help.github.com/en/articles/about-pull-requests) - that way we can protect our company/application very quickly but also helps others.
 
 ### Ideal condition of application of the approach
 
@@ -194,7 +197,9 @@ If you have a set of automated unit or integration or functionnal or security te
 
 ### Context
 
-The vulnerable dependency in found via the discovery of a full disclosure post on Internet, provider not aware of the vulnerability.
+The vulnerable dependency is found during one of the following situation in which the provider is not aware of the vulnerability:
+* Via the discovery of a full disclosure post on Internet.
+* During penetration testing: For example I can use component 'X' that was never pentested - I hire pentester to test my application - pentester can find bug in my application that is inside dependency 'X'.
 
 ### Ideal condition of application of the approach
 
@@ -208,7 +213,7 @@ Inform the provider about the vulnerability by sharing the post with him.
 
 **Step 2:**
 
-Using the information of the full disclosure post, if the provider collaborate then apply the [Case 2](#case-2) otherwise apply the [Case 3](#case-3) but replace CVE information by the information of the full disclosure post.
+Using the information from the full disclosure post or the pentester's exploitation feedback, if the provider collaborate then apply the [Case 2](#case-2) otherwise apply the [Case 3](#case-3) but replace CVE information by the information from the full disclosure post/pentester's exploitation feedback.
 
 # Tools
 
@@ -227,6 +232,10 @@ This section list several tools that can used to analyse the dependencies used b
         * [Full support](https://snyk.io/docs/full-list/) for many languages and package manager. 
     * [JFrog XRay](https://jfrog.com/xray/):
         * [Full support](https://jfrog.com/integration/) for many languages and package manager. 
+    * [Renovate](https://renovatebot.com) (allow to detect old dependencies):
+        * [Full support](https://renovatebot.com/docs/) for many languages and package manager. 
+    * [Requires.io](https://requires.io/) (allow to detect old dependencies - open source and free option available):
+        * [Full support](https://requires.io/features/): Python only.         
 
 # Authors and Primary Editors
 
