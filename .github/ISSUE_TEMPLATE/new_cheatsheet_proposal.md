@@ -2,7 +2,7 @@
 name: new_cheatsheet_proposal
 about: Used to allow a proposal to add a new cheat sheet to the project
 title: New cheat sheet proposal
-labels: ACK_WAITING, NEW_CS
+labels: ACK_WAITING, NEW_CS, HELP_WANTED
 assignees: ''
 
 ---
