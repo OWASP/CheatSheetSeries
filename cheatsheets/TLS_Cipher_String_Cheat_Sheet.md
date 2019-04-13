@@ -20,7 +20,7 @@ The recommended cipher strings are based on different scenarios:
 
 * Recommended if you control the server and the clients (e.g. by approvement), make sure to check the compatibility before using it.
 * Includes solely the strongest [Perfect Forward Secrecy (PFS)](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers.
-* Protocols: `TLSv1.2` (and newer or better).
+* Protocols: `TLSv1.3`, `TLSv1.2` (and newer or better).
 * Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 32/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7 + MS14-066, Java8b132, OpenSSL 1.0.1e, Safari 9/iOS 9, Yahoo Slurp Jun 2014, YandexBot Sep 2014.
 
 **OWASP Cipher String 'B'** (Broad compatibility to browsers, check the compatibility to other protocols before using it, e.g. IMAPS):
@@ -36,7 +36,7 @@ The recommended cipher strings are based on different scenarios:
 * Includes solely [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers.
 * Be aware of additional risks and of new vulnerabilities that may appear are more likely than above.
 * Plan to phase out SHA-1 and TLSv1, TLSv1.1 for https in middle-term.
-* Protocols: `TLSv1.2`, `TLSv1.1`, `TLSv1` (and newer or better).
+* Protocols: `TLSv1.3`, `TLSv1.2`, `TLSv1.1`, `TLSv1` (and newer or better).
 * Oldest known clients that are compatible: Android 2.3.7/4.0.4, Baidu Jan 2015, BingPreview Dec 2013, Chrome 27/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 10.0.12 ESR/Win 7, Firefox 21/Win 7+Fedora 19, Googlebot Oct 2013, IE 7/Vista, IE 10/WinPhone 8.0, Java 7u25, OpenSSL 0.9.8y, Opera 12.15/Win 7, Safari 5/iOS 5.1.1, Safari 5.1.9/OS X 10.6.8, Yahoo Slurp Oct 2013, YandexBot May 2014
 
 **OWASP Cipher String 'D'** (Legacy, widest compatibility to real old browsers and legacy libraries and other application protocols like SMTP):
@@ -47,7 +47,7 @@ The recommended cipher strings are based on different scenarios:
 * **Never use** even more INSECURE or elder ciphers based on `RC2`, `RC4`, `DES`, `MD4`, `MD5`, `EXP`, `EXP1024`, `AH`, `ADH`, `aNULL`, `eNULL`, `SEED` nor `IDEA`.
 * [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers are preferred, except all [DHE](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange) ciphers that use SHA-1 (to prevent possible incompatibility issues caused by the length of the [DHparameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters)).
 * Plan to move to 'A' for https or at least 'B' otherwise in middle-term.
-* Protocols: `TLSv1.2`, `TLSv1.1`, `TLSv1` (and newer or better).
+* Protocols: `TLSv1.3`, `TLSv1.2`, `TLSv1.1`, `TLSv1` (and newer or better).
 
 ## Table of the ciphers (and their priority from high (1) to low (e.g. 18))
 
@@ -58,24 +58,27 @@ This table lists the names used by IANA and by openssl in brackets `[]`. Additio
 <!-- markdownlint-disable MD033 -->
 | Cipher name:<br>IANA, [OpenSSL] | Cipher HEX value | Advanced<br>(A) | Broad Compatibility<br>(B) | Widest Compatibility<br>(C) | Legacy<br>(D) |
 | --- | :---: | :---: | :---: | :---: | :---: |
-| `TLS_DHE_RSA_WITH_AES_256_GCM_SHA384`,<br>[`DHE-RSA-AES256-GCM-SHA384`] | 0x009f | 1 | 1 | 1 | 1 |
-| `TLS_DHE_RSA_WITH_AES_128_GCM_SHA256`,<br>[`DHE-RSA-AES128-GCM-SHA256`] | 0x009e | 2 | 2 | 2 | 2 |
-| `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`,<br>[`ECDHE-RSA-AES256-GCM-SHA384`] | 0xc030 | 3 | 3 | 3 | 3 |
-| `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`,<br>[`ECDHE-RSA-AES128-GCM-SHA256`] | 0xc02f | 4 | 4 | 4 | 4 |
-| `TLS_DHE_RSA_WITH_AES_256_CBC_SHA256`,<br>[`DHE-RSA-AES256-SHA256`] | 0x006b |  | 5 | 5 | 5 |
-| `TLS_DHE_RSA_WITH_AES_128_CBC_SHA256`,<br>[`DHE-RSA-AES128-SHA256`] | 0x0067 |  | 6 | 6 | 6 |
-| `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384`,<br>[`ECDHE-RSA-AES256-SHA384`] | 0xc028 |  | 7 | 7 | 7 |
-| `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256`,<br>[`ECDHE-RSA-AES128-SHA256`] | 0xc027 |  | 8 | 8 | 8 |
-| `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA`,<br>[`ECDHE-RSA-AES256-SHA`] | 0xc014 |  |  | 9 | 9 |
-| `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`,<br>[`ECDHE-RSA-AES128-SHA`] | 0xc013 |  |  | 10 | 10 |
-| `TLS_RSA_WITH_AES_256_GCM_SHA384`,<br>[`AES256-GCM-SHA384`] | 0x009d |  |  |  | 11 |
-| `TLS_RSA_WITH_AES_128_GCM_SHA256`,<br>[`AES128-GCM-SHA256`] | 0x009c |  |  |  | 12 |
-| `TLS_RSA_WITH_AES_256_CBC_SHA256`,<br>[`AES256-SHA256`] | 0x003d |  |  |  | 13 |
-| `TLS_RSA_WITH_AES_128_CBC_SHA256`,<br>[`AES128-SHA256`] | 0x003c |  |  |  | 14 |
-| `TLS_RSA_WITH_AES_256_CBC_SHA`,<br>[`AES256-SHA`] | 0x0035 |  |  |  | 15 |
-| `TLS_RSA_WITH_AES_128_CBC_SHA`,<br>[`AES128-SHA`] | 0x002f |  |  |  | 16 |
-| `TLS_DHE_RSA_WITH_AES_256_CBC_SHA`,<br>[`DHE-RSA-AES256-SHA`] | 0x0039 |  |  | 11 | 17 |
-| `TLS_DHE_RSA_WITH_AES_128_CBC_SHA`,<br>[`DHE-RSA-AES128-SHA`] | 0x0033 |  |  | 12 | 18 |
+| `TLS_AES_256_GCM_SHA384` *(TLSv1.3)*,<br>[`TLS_AES_256_GCM_SHA384`] | 0x1302 | 1 | 1 | 1 | 1 |
+| `TLS_CHACHA20_POLY1305_SHA256` *(TLSv1.3)*,<br>[`TLS_CHACHA20_POLY1305_SHA256`] | 0x1303 | 2 | 2 | 2 | 2 |
+| `TLS_AES_128_GCM_SHA256` *(TLSv1.3)*,<br>[`TLS_AES_128_GCM_SHA256`] | 0x1301 | 3 | 3 | 3 | 3 |
+| `TLS_DHE_RSA_WITH_AES_256_GCM_SHA384`,<br>[`DHE-RSA-AES256-GCM-SHA384`] | 0x009f | 4 | 4 | 4 | 4 |
+| `TLS_DHE_RSA_WITH_AES_128_GCM_SHA256`,<br>[`DHE-RSA-AES128-GCM-SHA256`] | 0x009e | 5 | 5 | 5 | 5 |
+| `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`,<br>[`ECDHE-RSA-AES256-GCM-SHA384`] | 0xc030 | 6 | 6 | 6 | 6 |
+| `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`,<br>[`ECDHE-RSA-AES128-GCM-SHA256`] | 0xc02f | 7 | 7 | 7 | 7 |
+| `TLS_DHE_RSA_WITH_AES_256_CBC_SHA256`,<br>[`DHE-RSA-AES256-SHA256`] | 0x006b |  | 8 | 8 | 8 |
+| `TLS_DHE_RSA_WITH_AES_128_CBC_SHA256`,<br>[`DHE-RSA-AES128-SHA256`] | 0x0067 |  | 9 | 9 | 9 |
+| `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384`,<br>[`ECDHE-RSA-AES256-SHA384`] | 0xc028 |  | 10 | 10 | 10 |
+| `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256`,<br>[`ECDHE-RSA-AES128-SHA256`] | 0xc027 |  | 11 | 11 | 11 |
+| `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA`,<br>[`ECDHE-RSA-AES256-SHA`] | 0xc014 |  |  | 12 | 12 |
+| `TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`,<br>[`ECDHE-RSA-AES128-SHA`] | 0xc013 |  |  | 13 | 13 |
+| `TLS_RSA_WITH_AES_256_GCM_SHA384`,<br>[`AES256-GCM-SHA384`] | 0x009d |  |  |  | 14 |
+| `TLS_RSA_WITH_AES_128_GCM_SHA256`,<br>[`AES128-GCM-SHA256`] | 0x009c |  |  |  | 15 |
+| `TLS_RSA_WITH_AES_256_CBC_SHA256`,<br>[`AES256-SHA256`] | 0x003d |  |  |  | 16 |
+| `TLS_RSA_WITH_AES_128_CBC_SHA256`,<br>[`AES128-SHA256`] | 0x003c |  |  |  | 17 |
+| `TLS_RSA_WITH_AES_256_CBC_SHA`,<br>[`AES256-SHA`] | 0x0035 |  |  |  | 18 |
+| `TLS_RSA_WITH_AES_128_CBC_SHA`,<br>[`AES128-SHA`] | 0x002f |  |  |  | 19 |
+| `TLS_DHE_RSA_WITH_AES_256_CBC_SHA`,<br>[`DHE-RSA-AES256-SHA`] | 0x0039 |  |  | 14 | 20 |
+| `TLS_DHE_RSA_WITH_AES_128_CBC_SHA`,<br>[`DHE-RSA-AES128-SHA`] | 0x0033 |  |  | 15 | 21 |
 <!-- markdownlint-enable MD033 -->
 
 **Remarks:**
@@ -91,10 +94,10 @@ Other option: *Delete this two ciphers from your list*.
 <!-- markdownlint-disable MD033 -->
 | Cipher-String | OpenSSL syntax |
 | --- | --- |
-| Advanced<br>(A) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256` |
-| Broad Compatibility<br>(B) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256` |
-| Widest Compatibility<br>(C) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
-| Legacy<br>(D) | `DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
+| Advanced<br>(A) | `TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256` |
+| Broad Compatibility<br>(B) | `TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256` |
+| Widest Compatibility<br>(C) | `TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
+| Legacy<br>(D) | `TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
 <!-- markdownlint-enable MD033 -->
 
 # How to use this Cipher Strings?
