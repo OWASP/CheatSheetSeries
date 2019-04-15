@@ -2,7 +2,7 @@
 
 The objective of the cheat sheet is to provide a proposal of approach regarding the handling of vulnerable third-party dependencies when they are detected, and this, depending on different situation.
 
-The cheat sheet is not tools oriented but it contains a *tools* section providing pointer to software (free and commercial) that can be used to detect vulerable dependencies, if possible, in a cross-technology way because it's now rare that a project use a single technology. 
+The cheat sheet is not tools oriented but it contains a *tools* section providing pointer to software (free and commercial) that can be used to detect vulnerable dependencies, if possible, in a cross-technology way because it's now rare that a project use a single technology. 
 
 **Note:** 
 
