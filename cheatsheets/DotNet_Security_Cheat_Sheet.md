@@ -282,6 +282,23 @@ else
     //Matching the pattern
     ...
  ```
+ 
+### LDAP injection
+
+Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash "\" escape character. Active Directory requires that the following characters be escaped:
+
+| Character | Value |
+|-----------|:-----:|
+|omma	|,|
+|Backslash character|\|
+|Pound sign (hash sign)|#|
+|Plus sign|+|
+|Less than symbol|<|
+|Greater than symbol|>|
+|Semicolon|;|
+|Double quote (quotation mark)|"|
+|Equal sign|=|
+|Leading or trailing spaces| | 
 
 ## A2 Broken Authentication
 
