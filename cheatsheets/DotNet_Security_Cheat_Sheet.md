@@ -362,6 +362,7 @@ DO: Have a strong TLS policy (see [SSL Best Practises](http://www.ssllabs.com/pr
 
 DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs) , [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/) or disable via `web.config`:
 
+e.g Web.config
 ```xml
 <system.web>
     <httpRuntime enableVersionHeader="false"/>
@@ -381,6 +382,26 @@ DO: Ensure headers are not disclosing information about your application. See [H
     </httpProtocol>
 </system.webServer>    
 ```
+e.g Startup.cs
+``` csharp
+app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
+app.UseXContentTypeOptions();
+app.UseReferrerPolicy(opts => opts.NoReferrer());
+app.UseXXssProtection(options => options.EnabledWithBlockMode());
+app.UseXfo(options => options.Deny());
+
+app.UseCsp(opts => opts
+ .BlockAllMixedContent()
+ .StyleSources(s => s.Self())
+ .StyleSources(s => s.UnsafeInline())
+ .FontSources(s => s.Self())
+ .FormActions(s => s.Self())
+ .FrameAncestors(s => s.Self())
+ .ImageSources(s => s.Self())
+ .ScriptSources(s => s.Self())
+ );
+```
+For more information about headers can be found [here](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#xpcdp).
 
 ## A4 XML External Entities (XXE)
 
