@@ -432,15 +432,15 @@ The following table lists all supported .NET XML parsers and their default safet
 | ...in versions 4.5.2+ | Yes              |
 | XslCompiledTransform  | Yes              |
 
-## LINQ to XML
+### LINQ to XML
 
 Both the `XElement` and `XDocument` objects in the `System.Xml.Linq` library are safe from XXE injection by default. `XElement` parses only the elements within the XML file, so DTDs are ignored altogether. `XDocument` has DTDs [disabled by default](https://github.com/dotnet/docs/blob/master/docs/visual-basic/programming-guide/concepts/linq/linq-to-xml-security.md), and is only unsafe if constructed with a different unsafe XML parser.
 
-## XmlDictionaryReader
+### XmlDictionaryReader
 
 `System.Xml.XmlDictionaryReader` is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that "CData elements not valid at top level of an XML document". It becomes unsafe if constructed with a different unsafe XML parser.
 
-## XmlDocument
+### XmlDocument
 
 Prior to .NET Framework version 4.5.2, `System.Xml.XmlDocument` is **unsafe** by default. The `XmlDocument` object has an `XmlResolver` object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this `XmlResolver` is set to null by default.
 
@@ -464,11 +464,11 @@ The following example shows how it is made safe:
 
 `XmlDocument` can become unsafe if you create your own nonnull `XmlResolver` with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the [referenced MSDN article](https://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
 
-## XmlNodeReader
+### XmlNodeReader
 
 `System.Xml.XmlNodeReader` objects are safe by default and will ignore DTDs even when constructed with an unsafe parser or wrapped in another unsafe parser.
 
-## XmlReader
+### XmlReader
 
 `System.Xml.XmlReader` objects are safe by default.
 
@@ -478,11 +478,11 @@ Additionally, in .NET versions 4.5.2 and later, the `XmlReaderSettings` belongin
 
 Therefore, `XmlReader` objects will only become unsafe in version 4.5.2 and up if both the `DtdProcessing` property is set to Parse and the `XmlReaderSetting`'s `XmlResolver` is set to a nonnull XmlResolver with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the [referenced MSDN article](https://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
 
-## XmlTextReader
+### XmlTextReader
 
 `System.Xml.XmlTextReader` is **unsafe** by default in .NET Framework versions prior to 4.5.2. Here is how to make it safe in various .NET versions:
 
-### Prior to .NET 4.0
+#### Prior to .NET 4.0
 
 In .NET Framework versions prior to 4.0, DTD parsing behavior for `XmlReader` objects like `XmlTextReader` are controlled by the Boolean `ProhibitDtd` property found in the `System.Xml.XmlReaderSettings` and `System.Xml.XmlTextReader` classes.
 
@@ -494,7 +494,7 @@ XmlTextReader reader = new XmlTextReader(stream);
 reader.ProhibitDtd = true;  
 ```
 
-### .NET 4.0 - .NET 4.5.2
+#### .NET 4.0 - .NET 4.5.2
 
 In .NET Framework version 4.0, DTD parsing behavior has been changed. The `ProhibitDtd` property has been deprecated in favor of the new `DtdProcessing` property.
 
@@ -516,7 +516,7 @@ Alternatively, you can set the `DtdProcessing` property to `Ignore`, which will 
 
 In .NET Framework versions 4.5.2 and up, `XmlTextReader`'s internal `XmlResolver` is set to null by default, making the `XmlTextReader` ignore DTDs by default. The `XmlTextReader` can become unsafe if if you create your own nonnull `XmlResolver` with default or unsafe settings.
 
-## XPathNavigator
+### XPathNavigator
 
 `System.Xml.XPath.XPathNavigator` is **unsafe** by default in .NET Framework versions prior to 4.5.2.
 
@@ -533,7 +533,7 @@ XPathNavigator nav = doc.CreateNavigator();
 string xml = nav.InnerXml.ToString();
 ```
 
-## XslCompiledTransform
+### XslCompiledTransform
 
 `System.Xml.Xsl.XslCompiledTransform` (an XML transformer) is safe by default as long as the parser it’s given is safe.
 
@@ -761,6 +761,17 @@ DO: Enable a [Content Security Policy](https://developers.google.com/web/fundame
 
 
 ## A8 Insecure Deserialization
+DO NOT: Accept Serialized Objects from Untrusted Sources
+
+DO: Prevent Deserialization of Domain Objects
+
+DO: The Serialization Process Needs to Be Encrypted So That Hostile Object Creation and Data Tampering Cannot Run
+
+DO: Run the Deserialization Code with Limited Access Permissions
+If a desterilized hostile object tries to initiate a system processes or access a resource within the server or the host’s OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
+
+DO: Validate User Input
+Malicious users are able to use objects like cookies to insert malicious information to change user roles. In some cases, hackers are able to elevate their privileges to administrator rights by using a pre-existing or cached password hash from a previous session.
 
 ## A9 Using Components with Known Vulnerabilities
 
@@ -770,8 +781,95 @@ DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to da
 
 DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dependency_Check) against your application as part of your build process and act on any high level vulnerabilities. 
 
+### WhiteBox Review
+
+Search the source code for the following terms:
+
+1.  `TypeNameHandling`
+2.  `JavaScriptTypeResolver`
+
+Look for any serializers where the type is set by a user controlled variable.
+
+### BlackBox Review
+
+Search for the following base64 encoded content that starts with:
+
+```
+AAEAAAD/////
+```
+
+Search for content with the following text:
+
+1. `TypeObject`
+2.  `$type:`
+
+### General Precautions
+
+Don't allow the datastream to define the type of object that the stream will be deserialized to. You can prevent this by for example using the `DataContractSerializer` or `XmlSerializer` if at all possible.
+
+Where `JSON.Net` is being used make sure the `TypeNameHandling` is only set to `None`.
+
+```csharp
+TypeNameHandling = TypeNameHandling.None
+```
+
+If `JavaScriptSerializer` is to be used then do not use it with a `JavaScriptTypeResolver`.
+
+If you must deserialise data streams that define their own type, then restrict the types that are allowed to be deserialized. One should be aware that this is still risky as many native .Net types potentially dangerous in themselves. e.g.
+
+```csharp
+System.IO.FileInfo
+```    
+
+`FileInfo` objects that reference files actually on the server can when deserialized, change the properties of those files e.g. to read-only, creating a potential denial of service attack.
+
+Even if you have limited the types that can be deserialised remember that some types have properties that are risky. `System.ComponentModel.DataAnnotations.ValidationException`, for example has a property `Value` of type `Object`. if this type is the type allowed for deserialization then an attacker can set the `Value` property to any object type they choose.
+
+Attackers should be prevented from steering the type that will be instantiated. If this is possible then even `DataContractSerializer` or `XmlSerializer` can be subverted e.g.
+
+```csharp
+// Action below is dangerous if the attacker can change the data in the database
+var typename = GetTransactionTypeFromDatabase();  
+
+var serializer = new DataContractJsonSerializer(Type.GetType(typename));
+
+var obj = serializer.ReadObject(ms);
+```    
+
+Execution can occur within certain .Net types during deserialization. Creating a control such as the one shown below is ineffective.
+
+```csharp
+var suspectObject = myBinaryFormatter.Deserialize(untrustedData);
+
+//Check below is too late! Execution may have already occurred.
+if (suspectObject is SomeDangerousObjectType) 
+{
+    //generate warnings and dispose of suspectObject
+}
+```    
+
+For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of white list control useing a custom `SerializationBinder`.
+
+Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. **A deserializer can only instantiate types that it knows about**. 
+
+Try to keep any code that might create potential gagdets separate from any code that has internet connectivity. As an example `System.Windows.Data.ObjectDataProvider` used in WPF applications is a known gadget that allows arbitrary method invocation. It would be risky to have this a reference to this assembly in a REST service project that deserializes untrusted data.
+
+### Known .NET RCE Gadgets
+
+- `System.Configuration.Install.AssemblyInstaller`
+- `System.Activities.Presentation.WorkflowDesigner`
+- `System.Windows.ResourceDictionary`
+- `System.Windows.Data.ObjectDataProvider`
+- `System.Windows.Forms.BindingSource`
+- `Microsoft.Exchange.Management.SystemManager.WinForms.ExchangeSettingsProvider`
+- `System.Data.DataViewManager, System.Xml.XmlDocument/XmlDataDocument`
+- `System.Management.Automation.PSObject`
+
+More information can be found here: [Deserialization Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Deserialization_Cheat_Sheet.md)
 ## A10 Insufficient Logging & Monitoring
 
+# OWASP 2013
+Below is vulnerability not discussed in OWASP 2017
 
 ## A10 Unvalidated redirects and forwards
 
