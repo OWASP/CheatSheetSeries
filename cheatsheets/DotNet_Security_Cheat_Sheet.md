@@ -253,6 +253,7 @@ DO: Practise Least Privilege - Connect to the database using an account with a m
 DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
 
 e.g
+
 ``` csharp
 System.Diagnostics.Process process = new System.Diagnostics.Process();
 System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -332,9 +333,11 @@ services.Configure<IdentityOptions>(options =>
 	options.User.RequireUniqueEmail = true;
 });
 ```
+
 DO: Set a cookie policy
 
 e.g 
+
 ``` csharp
 //startup.cs
 services.ConfigureApplicationCookie(options =>
@@ -344,6 +347,7 @@ services.ConfigureApplicationCookie(options =>
 	options.SlidingExpiration = true;
 });
 ```
+
 ## A3 Sensitive Data Exposure
 
 DO NOT: Store encrypted passwords.
@@ -363,6 +367,7 @@ DO: Have a strong TLS policy (see [SSL Best Practises](http://www.ssllabs.com/pr
 DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs) , [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/), disable via `web.config` or [startup.cs](https://medium.com/bugbountywriteup/security-headers-1c770105940b):
 
 e.g Web.config
+
 ```xml
 <system.web>
     <httpRuntime enableVersionHeader="false"/>
@@ -382,7 +387,9 @@ e.g Web.config
     </httpProtocol>
 </system.webServer>    
 ```
+
 e.g Startup.cs
+
 ``` csharp
 app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
 app.UseXContentTypeOptions();
@@ -401,6 +408,7 @@ app.UseCsp(opts => opts
  .ScriptSources(s => s.Self())
  );
 ```
+
 For more information about headers can be found [here](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#xpcdp).
 
 ## A4 XML External Entities (XXE)
@@ -634,6 +642,7 @@ public ActionResult Edit(int id)
   return View("Edit", new UserViewModel(user);
 }
 ```
+
 ## A6 Security Misconfiguration
 
 ### Debug and Stack Trace
@@ -649,6 +658,7 @@ DO NOT: Use default passwords
 DO: (When using TLS) Redirect a request made over Http to https:
 
 e.g Global.asax.cs
+
 ```csharp
 protected void Application_BeginRequest()
 {
@@ -663,6 +673,7 @@ protected void Application_BeginRequest()
     #endif
 }
 ```
+
 e.g Startup.cs in the Configure()
 
 ``` csharp
@@ -758,7 +769,6 @@ DO: Enable a [Content Security Policy](https://developers.google.com/web/fundame
                 value="default-src 'none'; style-src 'self'; img-src 'self'; 
                 font-src 'self'; script-src 'self'" />
 ```
-
 
 ## A8 Insecure Deserialization
 DO NOT: Accept Serialized Objects from Untrusted Sources
