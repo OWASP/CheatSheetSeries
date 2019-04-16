@@ -250,7 +250,7 @@ DO: Practise Least Privilege - Connect to the database using an account with a m
 
 ### [OS Injection](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md)
 
-DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions. Input validation prevents improperly formed data from entering an information system.
+DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
 
 ``` csharp
 System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -261,7 +261,7 @@ process.StartInfo = startInfo;
 process.Start();
 ```
 
-DO: Use "whitelist" [validation](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Input_Validation_Cheat_Sheet.md) on all user supplied input. 
+DO: Use "whitelist" [validation](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Input_Validation_Cheat_Sheet.md) on all user supplied input. Input validation prevents improperly formed data from entering an information system.
 ## A2 Broken Authentication
 
 ## A3 Sensitive Data Exposure
