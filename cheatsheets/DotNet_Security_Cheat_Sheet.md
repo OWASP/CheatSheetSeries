@@ -254,15 +254,10 @@ DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotn
 
 ``` csharp
 System.Diagnostics.Process process = new System.Diagnostics.Process();
-
 System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-
 startInfo.FileName = "validatedCommand";
-
 startInfo.Arguments = "validatedArg1 validatedArg2 validatedArg3";
-
 process.StartInfo = startInfo;
-
 process.Start();
 ```
 
