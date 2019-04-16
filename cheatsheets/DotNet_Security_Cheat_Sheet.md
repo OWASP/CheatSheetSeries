@@ -646,8 +646,9 @@ Ensure debug and trace are off in production. This can be enforced using web.con
 
 DO NOT: Use default passwords
 
-DO: (When using TLS) Redirect a request made over Http to https: In `Global.asax.cs`:
+DO: (When using TLS) Redirect a request made over Http to https:
 
+e.g Global.asax.cs
 ```csharp
 protected void Application_BeginRequest()
 {
@@ -662,7 +663,11 @@ protected void Application_BeginRequest()
     #endif
 }
 ```
+e.g Startup.cs in the Configure()
 
+``` csharp
+  app.UseHttpsRedirection();
+```
 ### Cross-site request forgery
 
 DO: Send the anti-forgery token with every POST/PUT request:
