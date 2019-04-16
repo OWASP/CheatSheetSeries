@@ -869,6 +869,26 @@ DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dep
 
 ## A10 Insufficient Logging & Monitoring
 
+DO: Ensure all login, access control failures and server-side input validation failures can be logged with sufficient user context to identify suspicious or malicious accounts, and are held for sufficient time to allow delayed forensic analysis.
+
+DO: Ensure logs are generated in a format that can be easily consumed by a centralized log management solution.
+
+DO: Ensure high-value transactions have an audit trail with integrity controls to prevent tampering or deletion, such as append-only database tables.
+
+DO: Establish effective monitoring and alerting so suspicious activities are detected and responded to in a timely fashion.
+
+DO: Establish or adopt an incident response and recovery plan, such as NIST 800-61 rev 2.
+
+### Logging
+.NET Core introduced a generic logging interface, [ILogger](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger)
+
+### Monitoring
+Monitoring allow us to validate the performance and health of a running system through key performance indicators.
+
+In .NET a great option to add monitoring capabilities is [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-asp-net-core). 
+
+More information about Logging and Monitoring can be found [here](https://microsoft.github.io/code-with-engineering-playbook/Engineering/DevOpsLoggingDetailsCSharp.html).
+
 # OWASP 2013
 Below is vulnerability not discussed in OWASP 2017
 
