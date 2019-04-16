@@ -882,6 +882,20 @@ DO: Establish or adopt an incident response and recovery plan, such as NIST 800-
 ### Logging
 .NET Core introduced a generic logging interface, [ILogger](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger)
 
+e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (like mvc controllers). 
+
+``` csharp
+public class MyController
+{
+    ILogger logger;
+    public MyController(ILogger<MyController> logger)
+    {
+        this.logger = logger;
+        this.logger.LogDebug($"New {nameof(MyController)} created");
+    }
+}
+```
+
 Logging levels for ILogger are listed below, in order of high to low importance:
 
 |Level |Description          |Example       |
