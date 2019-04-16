@@ -416,7 +416,7 @@ It originally provided more recent and more detailed information than the older 
 The following table lists all supported .NET XML parsers and their default safety levels:
 
 | XML Parser            | Safe by default? |
-|-----------------------|------------------|
+|-----------------------|:----------------:|
 | LINQ to XML           | Yes              |
 | XmlDictionaryReader   | Yes              |
 | XmlDocument           |                  |
