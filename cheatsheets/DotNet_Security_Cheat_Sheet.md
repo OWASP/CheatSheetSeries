@@ -304,7 +304,6 @@ NB: The space character must be escaped only if it is the leading or trailing ch
 
 ## A2 Broken Authentication
 
-### .Net Core
 DO: Use [ASP.net Core Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&).
 ASP.net Core Identity framework is well configured by default, where it uses secure password hashes and an individual salt. Identity uses the PBKDF2 hashing function for passwords, and they generate a random salt per user.
 
@@ -333,7 +332,18 @@ services.Configure<IdentityOptions>(options =>
 	options.User.RequireUniqueEmail = true;
 });
 ```
+DO: Set a cookie policy
 
+e.g 
+``` csharp
+//startup.cs
+services.ConfigureApplicationCookie(options =>
+{
+	options.Cookie.HttpOnly = true;
+	options.Cookie.Expiration = TimeSpan.FromHours(1)
+	options.SlidingExpiration = true;
+});
+```
 ## A3 Sensitive Data Exposure
 
 DO NOT: Store encrypted passwords.
