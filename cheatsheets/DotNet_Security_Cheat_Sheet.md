@@ -304,7 +304,38 @@ NB: The space character must be escaped only if it is the leading or trailing ch
 
 ## A2 Broken Authentication
 
+### .Net Core
+DO: Using [ASP.net Core Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&).
+ASP.net Core Identity framework, out of the box you are going to have secure password hashes and an individual salt used. Identity uses the PBKDF2 hashing function for passwords, and they generate a random salt per user.
+
+DO: Set password policy
+
+e.g ASP.net Core Identity 
+
+``` csharp
+//startup.cs
+services.Configure<IdentityOptions>(options =>
+{
+	// Password settings
+	options.Password.RequireDigit = true;
+	options.Password.RequiredLength = 8;
+	options.Password.RequireNonAlphanumeric = false;
+	options.Password.RequireUppercase = true;
+	options.Password.RequireLowercase = false;
+	options.Password.RequiredUniqueChars = 6;
+ 
+ 
+	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+	options.Lockout.MaxFailedAccessAttempts = 10;
+ 
+	options.SignIn.RequireConfirmedEmail = true;
+	
+	options.User.RequireUniqueEmail = true;
+});
+```
+
 ## A3 Sensitive Data Exposure
+
 DO NOT: Store encrypted passwords.
 
 DO: Use a strong hash to store password credentials. Use Argon2, PBKDF2, BCrypt or SCrypt with at least 8000 iterations and a strong key.
@@ -414,9 +445,9 @@ DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to da
 
 DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dependency_Check) against your application as part of your build process and act on any high level vulnerabilities. 
 
-## A10 Insufficient Logging&Monitoring
+## A10 Insufficient Logging & Monitoring
 
-## A1 
+
 
 ## A2 Weak Account management
 
