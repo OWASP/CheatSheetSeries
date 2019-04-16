@@ -646,6 +646,7 @@ public ActionResult Edit(int id)
 ## A6 Security Misconfiguration
 
 ### Debug and Stack Trace
+
 Ensure debug and trace are off in production. This can be enforced using web.config transforms:
 
 ```xml
@@ -679,6 +680,7 @@ e.g Startup.cs in the Configure()
 ``` csharp
   app.UseHttpsRedirection();
 ```
+
 ### Cross-site request forgery
 
 DO: Send the anti-forgery token with every POST/PUT request:
@@ -771,6 +773,7 @@ DO: Enable a [Content Security Policy](https://developers.google.com/web/fundame
 ```
 
 ## A8 Insecure Deserialization
+
 DO NOT: Accept Serialized Objects from Untrusted Sources
 
 DO: Prevent Deserialization of Domain Objects
@@ -890,6 +893,7 @@ DO: Establish effective monitoring and alerting so suspicious activities are det
 DO: Establish or adopt an incident response and recovery plan, such as NIST 800-61 rev 2.
 
 ### Logging
+
 .NET Core introduced a generic logging interface, [ILogger](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger)
 
 e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (like mvc controllers). 
@@ -918,6 +922,7 @@ Logging levels for ILogger are listed below, in order of high to low importance:
 |Trace|	Track important for development purposes, might contain sensitive information	|Using connection string: server=dbserver;UserID=sa;password=mysecret|
 
 ### Monitoring
+
 Monitoring allow us to validate the performance and health of a running system through key performance indicators.
 
 In .NET a great option to add monitoring capabilities is [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-asp-net-core). 
@@ -925,6 +930,7 @@ In .NET a great option to add monitoring capabilities is [Application Insights](
 More information about Logging and Monitoring can be found [here](https://microsoft.github.io/code-with-engineering-playbook/Engineering/DevOpsLoggingDetailsCSharp.html).
 
 # OWASP 2013
+
 Below is vulnerability not discussed in OWASP 2017
 
 ## A10 Unvalidated redirects and forwards
