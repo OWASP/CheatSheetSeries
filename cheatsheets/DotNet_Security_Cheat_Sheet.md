@@ -18,7 +18,7 @@ Remember that third-party libraries have to be updated separately and not all of
 
 Receive security notifications by selecting the "Watch" button at the following repositories:
 
-- [.NET Core Security Announcements](https://github.com/dotnet/announcements) 
+- [.NET Core Security Announcements](https://github.com/dotnet/announcements/issues?q=is%3Aopen+is%3Aissue+label%3ASecurity) 
 - [ASP.NET Core & Entity Framework Core Security Announcements](https://github.com/aspnet/Announcements/issues?q=is%3Aopen+is%3Aissue+label%3ASecurity) 
 
 # .NET Framework Guidance
