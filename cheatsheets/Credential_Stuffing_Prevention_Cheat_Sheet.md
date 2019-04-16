@@ -8,17 +8,26 @@ This is a subset of the brute force attack category: large numbers of spilled cr
 
 It should be noted that defense mechanisms are intended to be used in a layered approach. In most cases, a single defense option would be inadequate to stop most Credential Stuffing attacks.
 
+--- TODO: update about how it can be combined 
+
 In many cases, brute force protections will overlap with credential stuffing defenses.
 
 ## Defense Option 1: Multi-Factor Authentication
 
 True multi-factor authentication is the best defense against Credential Stuffing attacks, but can have significant deployment and usability impacts, and so is frequently not a feasible option. If this defense is not feasible for your application, consider adopting as many of these other defenses as you can.
 
-## Defense Option 2: Multi-Step Login Process
+--- TODO: update about 2nd factor as e-mail and how it can be combined with for example Device Fingerprinting or login success ratio or cookie etc
+
+## Defence Option 2: Use a CAPTCHA
+
+--- TODO:
+--- TODO: this can be usability drop so it can be combined with for example Device Fingerprinting or login success ratio or cookie etc
+
+## Defense Option 3: Multi-Step Login Process
 
 *Most of the automated account validation we've seen is using single step validation and checking for a success conditions. By forcing the client to render the response and include that in the next request (and including [Synchronizer (CSRF) Tokens](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)), we are just eliminating the basic attempts. It's not comprehensive.*
 
-## Defense Option 3: IP blacklists
+## Defense Option 4: IP blacklists
 
 Because the attacker requests will likely originate from a few (or one) IP, addresses attempting to log into multiple accounts can be blocked or sandboxed.
 
@@ -26,7 +35,7 @@ Further, login monitoring with IP tracking could be used to eliminate (most) fal
 
 Making the IP bans temporary, say 15 minutes, would reduce the negative impact to the customer and business services (who would have to fix false positives) significantly.
 
-## Defense Option 4: Device Fingerprinting
+## Defense Option 5: Device Fingerprinting
 
 By running some simple JavaScript device information collections, you can learn certain things about the device(s) used to log into each account. If a `Windows(OS)/English(Language)/Chrome(Browser)` device logged in the last 5 times, and we have a new geolocation source with `Linux/FireFox/Spanish`, then we can be pretty certain that the user is not the original one (other options include time zones, last login times, user agents, plugins version, flash, etc).
 
@@ -36,9 +45,27 @@ How you deal with mismatches is also a major consideration. If you are performin
 
 Using simple fingerprinting, with maybe 2 or 3 variables would require that less stringent actions be taken, due to it's higher likelihood of a false positive. In this case, maybe the source IP is blocked if it attempts more than 3 user IDs.
 
-## Defense Option 5: Disallow Email Addresses as User IDs
+## Defense Option 6: Disallow Email Addresses as User IDs
 
 In many cases, credential reuse is an issue because user IDs are the same on multiple sites. In most cases, they are the email address of the user, for usability. This is an obvious problem when considering Credential Stuffing. One possible approach is to avoid use of email addresses as userids. Not using email addresses as userids also helps prevent spearfishing attacks against such users, because the email associated with the user account is far less obvious.
+
+# Secondary Defenses
+--- TODO: slowing down the attacker/ increasing costs of attack
+
+##  Require JavaScript 
+--- TODO:
+
+## Block/track headless browsers
+--- TODO:
+
+## Pwned Passwords / Increase password complexity
+--- TODO:
+
+## Temp. blocking account automatically when suspect an attack
+--- TODO:
+
+## Information about sessions/logins and notifying about unusual security events 
+--- TODO: important! informations should be helpful. If there are too many of them or are not understand it can brom more bad than good
 
 # References
 
