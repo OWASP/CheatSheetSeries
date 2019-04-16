@@ -405,6 +405,144 @@ For more information about headers can be found [here](https://www.owasp.org/ind
 
 ## A4 XML External Entities (XXE)
 
+The following information for XXE injection in .NET is directly from this [web application of unit tests by Dean Fleming](https://github.com/deanf1/dotnet-security-unit-tests).
+
+This web application covers all currently supported .NET XML parsers, and has test cases for each demonstrating when they are safe from XXE injection and when they are not.
+
+Previously, this information was based on [James Jardine's excellent .NET XXE article](https://www.jardinesoftware.net/2016/05/26/xxe-and-net/).
+
+It originally provided more recent and more detailed information than the older article from [Microsoft on how to prevent XXE and XML Denial of Service in .NET](http://msdn.microsoft.com/en-us/magazine/ee335713.aspx), however, it has some inaccuracies that the web application covers.
+
+The following table lists all supported .NET XML parsers and their default safety levels:
+
+| XML Parser            | Safe by default? |
+|-----------------------|------------------|
+| LINQ to XML           | Yes              |
+| XmlDictionaryReader   | Yes              |
+| XmlDocument           |                  |
+| ...prior to 4.5.2     | No               |
+| ...in versions 4.5.2+ | Yes              |
+| XmlNodeReader         | Yes              |
+| XmlReader             | Yes              |
+| XmlTextReader         |                  |
+| ...prior to 4.5.2     | No               |
+| ...in versions 4.5.2+ | Yes              |
+| XPathNavigator        |                  |
+| ...prior to 4.5.2     | No               |
+| ...in versions 4.5.2+ | Yes              |
+| XslCompiledTransform  | Yes              |
+
+## LINQ to XML
+
+Both the `XElement` and `XDocument` objects in the `System.Xml.Linq` library are safe from XXE injection by default. `XElement` parses only the elements within the XML file, so DTDs are ignored altogether. `XDocument` has DTDs [disabled by default](https://github.com/dotnet/docs/blob/master/docs/visual-basic/programming-guide/concepts/linq/linq-to-xml-security.md), and is only unsafe if constructed with a different unsafe XML parser.
+
+## XmlDictionaryReader
+
+`System.Xml.XmlDictionaryReader` is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that "CData elements not valid at top level of an XML document". It becomes unsafe if constructed with a different unsafe XML parser.
+
+## XmlDocument
+
+Prior to .NET Framework version 4.5.2, `System.Xml.XmlDocument` is **unsafe** by default. The `XmlDocument` object has an `XmlResolver` object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this `XmlResolver` is set to null by default.
+
+The following example shows how it is made safe:
+
+``` csharp
+ static void LoadXML()
+ {
+   string xxePayload = "<!DOCTYPE doc [<!ENTITY win SYSTEM 'file:///C:/Users/testdata2.txt'>]>" 
+                     + "<doc>&win;</doc>";
+   string xml = "<?xml version='1.0' ?>" + xxePayload;
+
+   XmlDocument xmlDoc = new XmlDocument();
+   // Setting this to NULL disables DTDs - Its NOT null by default.
+   xmlDoc.XmlResolver = null;   
+   xmlDoc.LoadXml(xml);
+   Console.WriteLine(xmlDoc.InnerText);
+   Console.ReadLine();
+ }
+```
+
+`XmlDocument` can become unsafe if you create your own nonnull `XmlResolver` with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the [referenced MSDN article](https://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
+
+## XmlNodeReader
+
+`System.Xml.XmlNodeReader` objects are safe by default and will ignore DTDs even when constructed with an unsafe parser or wrapped in another unsafe parser.
+
+## XmlReader
+
+`System.Xml.XmlReader` objects are safe by default.
+
+They are set by default to have their ProhibitDtd property set to false in .NET Framework versions 4.0 and earlier, or their `DtdProcessing` property set to Prohibit in .NET versions 4.0 and later.
+
+Additionally, in .NET versions 4.5.2 and later, the `XmlReaderSettings` belonging to the `XmlReader` has its `XmlResolver` set to null by default, which provides an additional layer of safety.
+
+Therefore, `XmlReader` objects will only become unsafe in version 4.5.2 and up if both the `DtdProcessing` property is set to Parse and the `XmlReaderSetting`'s `XmlResolver` is set to a nonnull XmlResolver with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the [referenced MSDN article](https://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
+
+## XmlTextReader
+
+`System.Xml.XmlTextReader` is **unsafe** by default in .NET Framework versions prior to 4.5.2. Here is how to make it safe in various .NET versions:
+
+### Prior to .NET 4.0
+
+In .NET Framework versions prior to 4.0, DTD parsing behavior for `XmlReader` objects like `XmlTextReader` are controlled by the Boolean `ProhibitDtd` property found in the `System.Xml.XmlReaderSettings` and `System.Xml.XmlTextReader` classes.
+
+Set these values to true to disable inline DTDs completely.
+
+``` csharp
+XmlTextReader reader = new XmlTextReader(stream);
+// NEEDED because the default is FALSE!!
+reader.ProhibitDtd = true;  
+```
+
+### .NET 4.0 - .NET 4.5.2
+
+In .NET Framework version 4.0, DTD parsing behavior has been changed. The `ProhibitDtd` property has been deprecated in favor of the new `DtdProcessing` property.
+
+However, they didn't change the default settings so `XmlTextReader` is still vulnerable to XXE by default.
+
+Setting `DtdProcessing` to `Prohibit` causes the runtime to throw an exception if a `<!DOCTYPE>` element is present in the XML.
+
+To set this value yourself, it looks like this:
+
+``` csharp
+XmlTextReader reader = new XmlTextReader(stream);
+// NEEDED because the default is Parse!!
+reader.DtdProcessing = DtdProcessing.Prohibit;  
+```
+
+Alternatively, you can set the `DtdProcessing` property to `Ignore`, which will not throw an exception on encountering a `<!DOCTYPE>` element but will simply skip over it and not process it. Finally, you can set `DtdProcessing` to `Parse` if you do want to allow and process inline DTDs.
+
+### .NET 4.5.2 and later
+
+In .NET Framework versions 4.5.2 and up, `XmlTextReader`'s internal `XmlResolver` is set to null by default, making the `XmlTextReader` ignore DTDs by default. The `XmlTextReader` can become unsafe if if you create your own nonnull `XmlResolver` with default or unsafe settings.
+
+## XPathNavigator
+
+`System.Xml.XPath.XPathNavigator` is **unsafe** by default in .NET Framework versions prior to 4.5.2.
+
+This is due to the fact that it implements `IXPathNavigable` objects like `XmlDocument`, which are also unsafe by default in versions prior to 4.5.2.
+
+You can make `XPathNavigator` safe by giving it a safe parser like `XmlReader` (which is safe by default) in the `XPathDocument`'s constructor.
+
+Here is an example:
+
+``` csharp
+XmlReader reader = XmlReader.Create("example.xml");
+XPathDocument doc = new XPathDocument(reader);
+XPathNavigator nav = doc.CreateNavigator();
+string xml = nav.InnerXml.ToString();
+```
+
+## XslCompiledTransform
+
+`System.Xml.Xsl.XslCompiledTransform` (an XML transformer) is safe by default as long as the parser it’s given is safe.
+
+It is safe by default because the default parser of the `Transform()` methods is an `XmlReader`, which is safe by default (per above).
+
+[The source code for this method is here.](http://www.dotnetframework.org/default.aspx/4@0/4@0/DEVDIV_TFS/Dev10/Releases/RTMRel/ndp/fx/src/Xml/System/Xml/Xslt/XslCompiledTransform@cs/1305376/XslCompiledTransform@cs)
+
+Some of the `Transform()` methods accept an `XmlReader` or `IXPathNavigable` (e.g., `XmlDocument`) as an input, and if you pass in an unsafe XML Parser then the `Transform` will also be unsafe.
+
 ## A5 Broken Access Control
 
 ## A6 Security Misconfiguration
