@@ -319,14 +319,14 @@ services.Configure<IdentityOptions>(options =>
 	// Password settings
 	options.Password.RequireDigit = true;
 	options.Password.RequiredLength = 8;
-	options.Password.RequireNonAlphanumeric = false;
+	options.Password.RequireNonAlphanumeric = true;
 	options.Password.RequireUppercase = true;
-	options.Password.RequireLowercase = false;
+	options.Password.RequireLowercase = true;
 	options.Password.RequiredUniqueChars = 6;
  
  
 	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-	options.Lockout.MaxFailedAccessAttempts = 10;
+	options.Lockout.MaxFailedAccessAttempts = 3;
  
 	options.SignIn.RequireConfirmedEmail = true;
 	
