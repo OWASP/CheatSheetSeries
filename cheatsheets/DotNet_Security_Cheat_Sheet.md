@@ -635,6 +635,8 @@ public ActionResult Edit(int id)
 }
 ```
 ## A6 Security Misconfiguration
+
+### Debug and Stack Trace
 Ensure debug and trace are off in production. This can be enforced using web.config transforms:
 
 ```xml
@@ -661,57 +663,7 @@ protected void Application_BeginRequest()
 }
 ```
 
-## A7 Cross-Site Scripting (XSS)
-
-DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists
-
-You get encoding of all HTML content with MVC3, to properly encode all content whether HTML, javascript, CSS, LDAP etc use the Microsoft AntiXSS library:
-
-`Install-Package AntiXSS`
-
-Then set in config:
-
-```xml
-<system.web>
-<httpRuntime targetFramework="4.5" 
-enableVersionHeader="false" 
-encoderType="Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary" 
-maxRequestLength="4096" />
-```
-
-DO NOT: Use the `[AllowHTML]` attribute or helper class `@Html.Raw` unless you really know that the content you are writing to the browser is safe and has been escaped properly.
-
-DO: Enable a [Content Security Policy](https://developers.google.com/web/fundamentals/security/csp/), this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):
-
-```xml
-<system.webServer>
-    <httpProtocol>
-        <customHeaders>
-            <add name="Content-Security-Policy" 
-                value="default-src 'none'; style-src 'self'; img-src 'self'; 
-                font-src 'self'; script-src 'self'" />
-```
-
-
-## A8 Insecure Deserialization
-
-## A9 Using Components with Known Vulnerabilities
-
-DO: Keep the .Net framework updated with the latest patches
-
-DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to date, many will contain their own vulnerabilities.
-
-DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dependency_Check) against your application as part of your build process and act on any high level vulnerabilities. 
-
-## A10 Insufficient Logging & Monitoring
-
-
-
-## A4 
-
-## A7 
-
-# A8 Cross-site request forgery
+### Cross-site request forgery
 
 DO: Send the anti-forgery token with every POST/PUT request:
 
@@ -771,6 +723,49 @@ After .NET Core 2.0 it is possible to automatically generate and verify the anti
 
 And then add the `[AutoValidateAntiforgeryToken]` attribute to the action result.
 
+## A7 Cross-Site Scripting (XSS)
+
+DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists
+
+You get encoding of all HTML content with MVC3, to properly encode all content whether HTML, javascript, CSS, LDAP etc use the Microsoft AntiXSS library:
+
+`Install-Package AntiXSS`
+
+Then set in config:
+
+```xml
+<system.web>
+<httpRuntime targetFramework="4.5" 
+enableVersionHeader="false" 
+encoderType="Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary" 
+maxRequestLength="4096" />
+```
+
+DO NOT: Use the `[AllowHTML]` attribute or helper class `@Html.Raw` unless you really know that the content you are writing to the browser is safe and has been escaped properly.
+
+DO: Enable a [Content Security Policy](https://developers.google.com/web/fundamentals/security/csp/), this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):
+
+```xml
+<system.webServer>
+    <httpProtocol>
+        <customHeaders>
+            <add name="Content-Security-Policy" 
+                value="default-src 'none'; style-src 'self'; img-src 'self'; 
+                font-src 'self'; script-src 'self'" />
+```
+
+
+## A8 Insecure Deserialization
+
+## A9 Using Components with Known Vulnerabilities
+
+DO: Keep the .Net framework updated with the latest patches
+
+DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to date, many will contain their own vulnerabilities.
+
+DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dependency_Check) against your application as part of your build process and act on any high level vulnerabilities. 
+
+## A10 Insufficient Logging & Monitoring
 
 
 ## A10 Unvalidated redirects and forwards
