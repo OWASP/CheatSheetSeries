@@ -360,7 +360,7 @@ DO NOT: [Allow SSL, this is now obsolete](https://github.com/ssllabs/research/wi
 
 DO: Have a strong TLS policy (see [SSL Best Practises](http://www.ssllabs.com/projects/best-practises/)), use TLS 1.2 wherever possible. Then check the configuration using [SSL Test](https://www.ssllabs.com/ssltest/) or [TestSSL](https://testssl.sh/).
 
-DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs) , [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/) or disable via `web.config`:
+DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs) , [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/), disable via `web.config` or [startup.cs](https://medium.com/bugbountywriteup/security-headers-1c770105940b):
 
 e.g Web.config
 ```xml
