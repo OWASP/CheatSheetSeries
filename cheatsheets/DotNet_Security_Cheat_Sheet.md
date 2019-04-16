@@ -545,6 +545,95 @@ Some of the `Transform()` methods accept an `XmlReader` or `IXPathNavigable` (e.
 
 ## A5 Broken Access Control
 
+### Weak Account management
+
+Ensure cookies are sent via httpOnly:
+
+```csharp
+CookieHttpOnly = true,
+```
+
+Reduce the time period a session can be stolen in by reducing session timeout and removing sliding expiration:
+
+```csharp
+ExpireTimeSpan = TimeSpan.FromMinutes(60),
+SlidingExpiration = false
+```
+
+See [here](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/App_Start/Startup.Auth.cs) for full startup code snippet
+
+Ensure cookie is sent over https in the production environment. This should be enforced in the config transforms:
+
+```xml
+<httpCookies requireSSL="true" xdt:Transform="SetAttributes(requireSSL)"/>
+<authentication>
+    <forms requireSSL="true" xdt:Transform="SetAttributes(requireSSL)"/>
+</authentication>
+```
+
+Protect LogOn, Registration and password reset methods against brute force attacks by throttling requests (see code below), consider also using ReCaptcha.
+
+```csharp
+[HttpPost]
+[AllowAnonymous]
+[ValidateAntiForgeryToken]
+[AllowXRequestsEveryXSecondsAttribute(Name = "LogOn", 
+Message = "You have performed this action more than {x} times in the last {n} seconds.", 
+Requests = 3, Seconds = 60)]
+public async Task<ActionResult> LogOn(LogOnViewModel model, string returnUrl)
+```
+
+DO NOT: Roll your own authentication or session management, use the one provided by .Net
+
+DO NOT: Tell someone if the account exists on LogOn, Registration or Password reset. Say something like 'Either the username or password was incorrect', or 'If this account exists then a reset token will be sent to the registered email address'. This protects against account enumeration. 
+
+The feedback to the user should be identical whether or not the account exists, both in terms of content and behaviour: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
+
+### Missing function-level access control
+
+DO: Authorize users on all externally facing endpoints. The .NET framework has many ways to authorize a user, use them at method level:
+
+```csharp
+[Authorize(Roles = "Admin")]
+[HttpGet]
+public ActionResult Index(int page = 1)
+```
+
+or better yet, at controller level:
+
+```csharp
+[Authorize]
+public class UserController
+```
+
+You can also check roles in code using identity features in .net: `System.Web.Security.Roles.IsUserInRole(userName, roleName)`
+
+### Insecure Direct object references
+
+When you have a resource (object) which can be accessed by a reference (in the sample below this is the `id`) then you need to ensure that the user is intended to be there
+
+```csharp
+// Insecure
+public ActionResult Edit(int id)
+{
+  var user = _context.Users.FirstOrDefault(e => e.Id == id);
+  return View("Details", new UserViewModel(user);
+}
+
+// Secure
+public ActionResult Edit(int id)
+{
+  var user = _context.Users.FirstOrDefault(e => e.Id == id);
+  // Establish user has right to edit the details
+  if (user.Id != _userIdentity.GetUserId())
+  {
+        HandleErrorInfo error = new HandleErrorInfo(
+            new Exception("INFO: You do not have permission to edit these details"));
+        return View("Error", error);
+  }
+  return View("Edit", new UserViewModel(user);
+}
+```
 ## A6 Security Misconfiguration
 Ensure debug and trace are off in production. This can be enforced using web.config transforms:
 
@@ -618,95 +707,9 @@ DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dep
 
 
 
-## A2 Weak Account management
+## A4 
 
-Ensure cookies are sent via httpOnly:
-
-```csharp
-CookieHttpOnly = true,
-```
-
-Reduce the time period a session can be stolen in by reducing session timeout and removing sliding expiration:
-
-```csharp
-ExpireTimeSpan = TimeSpan.FromMinutes(60),
-SlidingExpiration = false
-```
-
-See [here](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/App_Start/Startup.Auth.cs) for full startup code snippet
-
-Ensure cookie is sent over https in the production environment. This should be enforced in the config transforms:
-
-```xml
-<httpCookies requireSSL="true" xdt:Transform="SetAttributes(requireSSL)"/>
-<authentication>
-    <forms requireSSL="true" xdt:Transform="SetAttributes(requireSSL)"/>
-</authentication>
-```
-
-Protect LogOn, Registration and password reset methods against brute force attacks by throttling requests (see code below), consider also using ReCaptcha.
-
-```csharp
-[HttpPost]
-[AllowAnonymous]
-[ValidateAntiForgeryToken]
-[AllowXRequestsEveryXSecondsAttribute(Name = "LogOn", 
-Message = "You have performed this action more than {x} times in the last {n} seconds.", 
-Requests = 3, Seconds = 60)]
-public async Task<ActionResult> LogOn(LogOnViewModel model, string returnUrl)
-```
-
-DO NOT: Roll your own authentication or session management, use the one provided by .Net
-
-DO NOT: Tell someone if the account exists on LogOn, Registration or Password reset. Say something like 'Either the username or password was incorrect', or 'If this account exists then a reset token will be sent to the registered email address'. This protects against account enumeration. 
-
-The feedback to the user should be identical whether or not the account exists, both in terms of content and behaviour: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
-
-## A4 Insecure Direct object references
-
-When you have a resource (object) which can be accessed by a reference (in the sample below this is the `id`) then you need to ensure that the user is intended to be there
-
-```csharp
-// Insecure
-public ActionResult Edit(int id)
-{
-  var user = _context.Users.FirstOrDefault(e => e.Id == id);
-  return View("Details", new UserViewModel(user);
-}
-
-// Secure
-public ActionResult Edit(int id)
-{
-  var user = _context.Users.FirstOrDefault(e => e.Id == id);
-  // Establish user has right to edit the details
-  if (user.Id != _userIdentity.GetUserId())
-  {
-        HandleErrorInfo error = new HandleErrorInfo(
-            new Exception("INFO: You do not have permission to edit these details"));
-        return View("Error", error);
-  }
-  return View("Edit", new UserViewModel(user);
-}
-```
-
-## A7 Missing function-level access control
-
-DO: Authorize users on all externally facing endpoints. The .NET framework has many ways to authorize a user, use them at method level:
-
-```csharp
-[Authorize(Roles = "Admin")]
-[HttpGet]
-public ActionResult Index(int page = 1)
-```
-
-or better yet, at controller level:
-
-```csharp
-[Authorize]
-public class UserController
-```
-
-You can also check roles in code using identity features in .net: `System.Web.Security.Roles.IsUserInRole(userName, roleName)`
+## A7 
 
 # A8 Cross-site request forgery
 
