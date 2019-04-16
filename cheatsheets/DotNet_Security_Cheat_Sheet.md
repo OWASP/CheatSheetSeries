@@ -252,6 +252,7 @@ DO: Practise Least Privilege - Connect to the database using an account with a m
 
 DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
 
+e.g
 ``` csharp
 System.Diagnostics.Process process = new System.Diagnostics.Process();
 System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -263,6 +264,24 @@ process.Start();
 
 DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
+e.g Validating user input matches an IP address
+
+``` csharp
+//User input
+string address = "127.0.0.1";
+//Match pattern for IP address    
+string Pattern = @"^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$";    
+//Regular Expression object    
+Regex check = new Regex(Pattern);    
+ 
+//check to make sure an ip address was provided    
+if (string.IsNullOrEmpty(address))    
+    //returns false if IP is not provided    
+    ...    
+else    
+    //Matching the pattern
+    ...
+ ```
 
 ## A2 Broken Authentication
 
