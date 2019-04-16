@@ -261,7 +261,9 @@ process.StartInfo = startInfo;
 process.Start();
 ```
 
-DO: Use "whitelist" [validation](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Input_Validation_Cheat_Sheet.md) on all user supplied input. Input validation prevents improperly formed data from entering an information system.
+DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+
+
 ## A2 Broken Authentication
 
 ## A3 Sensitive Data Exposure
