@@ -264,7 +264,7 @@ process.Start();
 
 DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-e.g Validating user input matches an IP address
+e.g Validating user input an IP address using Regex
 
 ``` csharp
 //User input
