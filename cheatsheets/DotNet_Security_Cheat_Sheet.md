@@ -771,15 +771,7 @@ DO: Run the Deserialization Code with Limited Access Permissions
 If a desterilized hostile object tries to initiate a system processes or access a resource within the server or the host’s OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
 
 DO: Validate User Input
-Malicious users are able to use objects like cookies to insert malicious information to change user roles. In some cases, hackers are able to elevate their privileges to administrator rights by using a pre-existing or cached password hash from a previous session.
-
-## A9 Using Components with Known Vulnerabilities
-
-DO: Keep the .Net framework updated with the latest patches
-
-DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to date, many will contain their own vulnerabilities.
-
-DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dependency_Check) against your application as part of your build process and act on any high level vulnerabilities. 
+Malicious users are able to use objects like cookies to insert malicious information to change user roles. In some cases, hackers are able to elevate their privileges to administrator rights by using a pre-existing or cached password hash from a previous session. 
 
 ### WhiteBox Review
 
@@ -866,6 +858,15 @@ Try to keep any code that might create potential gagdets separate from any code 
 - `System.Management.Automation.PSObject`
 
 More information can be found here: [Deserialization Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Deserialization_Cheat_Sheet.md)
+
+## A9 Using Components with Known Vulnerabilities
+
+DO: Keep the .Net framework updated with the latest patches
+
+DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to date, many will contain their own vulnerabilities.
+
+DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dependency_Check) against your application as part of your build process and act on any high level vulnerabilities.
+
 ## A10 Insufficient Logging & Monitoring
 
 # OWASP 2013
