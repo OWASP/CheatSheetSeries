@@ -212,11 +212,13 @@ HttpContext.Current.Response.Headers.Remove("Server");
 
 ASP.NET MVC (Model–View–Controller) is a contemporary web application framework that uses more standardized HTTP communication than the Web Forms postback model. 
 
-The OWASP Top 10 lists the most prevalent and dangerous threats to web security in the world today and is reviewed every 3 years. 
+The OWASP Top 10 2017 lists the most prevalent and dangerous threats to web security in the world today and is reviewed every 3 years. 
 
 This section is based on this. Your approach to securing your web application should be to start at the top threat A1 below and work down, this will ensure that any time spent on security will be spent most effectively spent and cover the top threats first and lesser threats afterwards. After covering the top 10 it is generally advisable to assess for other threats or get a professionally completed Penetration Test.
 
-## A1 SQL Injection
+## A1 Injection
+
+### SQL Injection
 
 DO: Using an object relational mapper (ORM) or stored procedures is the most effective way of countering the SQL Injection vulnerability.
 
@@ -245,6 +247,44 @@ EXEC strQry // SQL Injection vulnerability!
 ```
 
 DO: Practise Least Privilege - Connect to the database using an account with a minimum set of permissions required to do it's job i.e. not the sa account
+
+### [OS Injection](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md)
+
+DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
+
+``` csharp
+System.Diagnostics.Process process = new System.Diagnostics.Process();
+
+System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+
+startInfo.FileName = "validatedCommand";
+
+startInfo.Arguments = "validatedArg1 validatedArg2 validatedArg3";
+
+process.StartInfo = startInfo;
+
+process.Start();
+```
+
+## A2 Broken Authentication
+
+## A3 Sensitive Data Exposure
+
+## A4 XML External Entities (XXE)
+
+## A5 Broken Access Control
+
+## A6 Security Misconfiguration
+
+## A7 Cross-Site Scripting (XSS)
+
+## A8 Insecure Deserialization
+
+## A9 Using Components with Known Vulnerabilities
+
+## A10 Insufficient Logging&Monitoring
+
+## A1 
 
 ## A2 Weak Account management
 
