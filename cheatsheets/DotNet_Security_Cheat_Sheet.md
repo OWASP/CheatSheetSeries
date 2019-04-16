@@ -287,9 +287,9 @@ else
 
 Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash "\" escape character. Active Directory requires that the following characters be escaped:
 
-| Character | Value |
+| Character | Escape character |
 |-----------|:-----:|
-|omma	|,|
+|Comma	|,|
 |Backslash character|\|
 |Pound sign (hash sign)|#|
 |Plus sign|+|
@@ -299,6 +299,8 @@ Almost any characters can be used in Distinguished Names. However, some must be 
 |Double quote (quotation mark)|"|
 |Equal sign|=|
 |Leading or trailing spaces| | 
+
+NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.
 
 ## A2 Broken Authentication
 
