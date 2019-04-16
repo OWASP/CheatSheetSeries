@@ -264,7 +264,7 @@ process.Start();
 
 DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-e.g Validating user input an IP address using Regex
+e.g Validating user input using Regex (IP Address)
 
 ``` csharp
 //User input
@@ -305,18 +305,114 @@ NB: The space character must be escaped only if it is the leading or trailing ch
 ## A2 Broken Authentication
 
 ## A3 Sensitive Data Exposure
+DO NOT: Store encrypted passwords.
+
+DO: Use a strong hash to store password credentials. Use Argon2, PBKDF2, BCrypt or SCrypt with at least 8000 iterations and a strong key.
+
+DO: Enforce passwords with a minimum complexity that will survive a dictionary attack i.e. longer passwords that use the full character set (numbers, symbols and letters) to increase the entropy.
+
+DO: Use a strong encryption routine such as AES-512 where personally identifiable data needs to be restored to it's original format. Do not encrypt passwords. Protect encryption keys more than any other asset. Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly.
+
+DO: Use TLS 1.2 for your entire site. Get a free certificate [LetsEncrypt.org](https://letsencrypt.org/).
+
+DO NOT: [Allow SSL, this is now obsolete](https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices#22-use-secure-protocols).
+
+DO: Have a strong TLS policy (see [SSL Best Practises](http://www.ssllabs.com/projects/best-practises/)), use TLS 1.2 wherever possible. Then check the configuration using [SSL Test](https://www.ssllabs.com/ssltest/) or [TestSSL](https://testssl.sh/).
+
+DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs) , [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/) or disable via `web.config`:
+
+```xml
+<system.web>
+    <httpRuntime enableVersionHeader="false"/>
+</system.web>
+<system.webServer>
+    <security>
+        <requestFiltering removeServerHeader="true" />
+    </security>
+    <httpProtocol>
+        <customHeaders>
+            <add name="X-Content-Type-Options" value="nosniff" />
+            <add name="X-Frame-Options" value="DENY" />
+            <add name="X-Permitted-Cross-Domain-Policies" value="master-only"/>
+            <add name="X-XSS-Protection" value="1; mode=block"/>
+            <remove name="X-Powered-By"/>
+        </customHeaders>
+    </httpProtocol>
+</system.webServer>    
+```
 
 ## A4 XML External Entities (XXE)
 
 ## A5 Broken Access Control
 
 ## A6 Security Misconfiguration
+Ensure debug and trace are off in production. This can be enforced using web.config transforms:
+
+```xml
+<compilation xdt:Transform="RemoveAttributes(debug)" />
+<trace enabled="false" xdt:Transform="Replace"/>
+```
+
+DO NOT: Use default passwords
+
+DO: (When using TLS) Redirect a request made over Http to https: In `Global.asax.cs`:
+
+```csharp
+protected void Application_BeginRequest()
+{
+    #if !DEBUG
+    // SECURE: Ensure any request is returned over SSL/TLS in production
+    if (!Request.IsLocal && !Context.Request.IsSecureConnection) {
+        var redirect = Context.Request.Url.ToString()
+                        .ToLower(CultureInfo.CurrentCulture)
+                        .Replace("http:", "https:");
+        Response.Redirect(redirect);
+    }
+    #endif
+}
+```
 
 ## A7 Cross-Site Scripting (XSS)
+
+DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists
+
+You get encoding of all HTML content with MVC3, to properly encode all content whether HTML, javascript, CSS, LDAP etc use the Microsoft AntiXSS library:
+
+`Install-Package AntiXSS`
+
+Then set in config:
+
+```xml
+<system.web>
+<httpRuntime targetFramework="4.5" 
+enableVersionHeader="false" 
+encoderType="Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary" 
+maxRequestLength="4096" />
+```
+
+DO NOT: Use the `[AllowHTML]` attribute or helper class `@Html.Raw` unless you really know that the content you are writing to the browser is safe and has been escaped properly.
+
+DO: Enable a [Content Security Policy](https://developers.google.com/web/fundamentals/security/csp/), this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):
+
+```xml
+<system.webServer>
+    <httpProtocol>
+        <customHeaders>
+            <add name="Content-Security-Policy" 
+                value="default-src 'none'; style-src 'self'; img-src 'self'; 
+                font-src 'self'; script-src 'self'" />
+```
+
 
 ## A8 Insecure Deserialization
 
 ## A9 Using Components with Known Vulnerabilities
+
+DO: Keep the .Net framework updated with the latest patches
+
+DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to date, many will contain their own vulnerabilities.
+
+DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dependency_Check) against your application as part of your build process and act on any high level vulnerabilities. 
 
 ## A10 Insufficient Logging&Monitoring
 
@@ -366,37 +462,6 @@ DO NOT: Tell someone if the account exists on LogOn, Registration or Password re
 
 The feedback to the user should be identical whether or not the account exists, both in terms of content and behaviour: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
 
-## A3 Cross Site Scripting
-
-DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists
-
-You get encoding of all HTML content with MVC3, to properly encode all content whether HTML, javascript, CSS, LDAP etc use the Microsoft AntiXSS library:
-
-`Install-Package AntiXSS`
-
-Then set in config:
-
-```xml
-<system.web>
-<httpRuntime targetFramework="4.5" 
-enableVersionHeader="false" 
-encoderType="Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary" 
-maxRequestLength="4096" />
-```
-
-DO NOT: Use the `[AllowHTML]` attribute or helper class `@Html.Raw` unless you really know that the content you are writing to the browser is safe and has been escaped properly.
-
-DO: Enable a [Content Security Policy](https://developers.google.com/web/fundamentals/security/csp/), this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):
-
-```xml
-<system.webServer>
-    <httpProtocol>
-        <customHeaders>
-            <add name="Content-Security-Policy" 
-                value="default-src 'none'; style-src 'self'; img-src 'self'; 
-                font-src 'self'; script-src 'self'" />
-```
-
 ## A4 Insecure Direct object references
 
 When you have a resource (object) which can be accessed by a reference (in the sample below this is the `id`) then you need to ensure that the user is intended to be there
@@ -422,72 +487,6 @@ public ActionResult Edit(int id)
   }
   return View("Edit", new UserViewModel(user);
 }
-```
-
-## A5 Security Misconfiguration
-
-Ensure debug and trace are off in production. This can be enforced using web.config transforms:
-
-```xml
-<compilation xdt:Transform="RemoveAttributes(debug)" />
-<trace enabled="false" xdt:Transform="Replace"/>
-```
-
-DO NOT: Use default passwords
-
-DO: (When using TLS) Redirect a request made over Http to https: In `Global.asax.cs`:
-
-```csharp
-protected void Application_BeginRequest()
-{
-    #if !DEBUG
-    // SECURE: Ensure any request is returned over SSL/TLS in production
-    if (!Request.IsLocal && !Context.Request.IsSecureConnection) {
-        var redirect = Context.Request.Url.ToString()
-                        .ToLower(CultureInfo.CurrentCulture)
-                        .Replace("http:", "https:");
-        Response.Redirect(redirect);
-    }
-    #endif
-}
-```
-
-## A6 Sensitive data exposure
-
-DO NOT: Store encrypted passwords.
-
-DO: Use a strong hash to store password credentials. Use Argon2, PBKDF2, BCrypt or SCrypt with at least 8000 iterations and a strong key.
-
-DO: Enforce passwords with a minimum complexity that will survive a dictionary attack i.e. longer passwords that use the full character set (numbers, symbols and letters) to increase the entropy.
-
-DO: Use a strong encryption routine such as AES-512 where personally identifiable data needs to be restored to it's original format. Do not encrypt passwords. Protect encryption keys more than any other asset. Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly.
-
-DO: Use TLS 1.2 for your entire site. Get a free certificate [LetsEncrypt.org](https://letsencrypt.org/).
-
-DO NOT: [Allow SSL, this is now obsolete](https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices#22-use-secure-protocols).
-
-DO: Have a strong TLS policy (see [SSL Best Practises](http://www.ssllabs.com/projects/best-practises/)), use TLS 1.2 wherever possible. Then check the configuration using [SSL Test](https://www.ssllabs.com/ssltest/) or [TestSSL](https://testssl.sh/).
-
-DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs) , [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/) or disable via `web.config`:
-
-```xml
-<system.web>
-    <httpRuntime enableVersionHeader="false"/>
-</system.web>
-<system.webServer>
-    <security>
-        <requestFiltering removeServerHeader="true" />
-    </security>
-    <httpProtocol>
-        <customHeaders>
-            <add name="X-Content-Type-Options" value="nosniff" />
-            <add name="X-Frame-Options" value="DENY" />
-            <add name="X-Permitted-Cross-Domain-Policies" value="master-only"/>
-            <add name="X-XSS-Protection" value="1; mode=block"/>
-            <remove name="X-Powered-By"/>
-        </customHeaders>
-    </httpProtocol>
-</system.webServer>    
 ```
 
 ## A7 Missing function-level access control
@@ -569,13 +568,7 @@ After .NET Core 2.0 it is possible to automatically generate and verify the anti
 
 And then add the `[AutoValidateAntiforgeryToken]` attribute to the action result.
 
-## A9 Using components with known vulnerabilities
 
-DO: Keep the .Net framework updated with the latest patches
-
-DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to date, many will contain their own vulnerabilities.
-
-DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dependency_Check) against your application as part of your build process and act on any high level vulnerabilities. 
 
 ## A10 Unvalidated redirects and forwards
 
