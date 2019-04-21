@@ -126,7 +126,7 @@ Project's official logo files are hosted [here](https://github.com/OWASP/owasp-s
 **.circleci** / **.travis.yml** (file):
 * Contains the definition of the integration jobs used to control the integrity and consistency of the whole project:
     * **[TravisCI](https://travis-ci.org/OWASP/CheatSheetSeries)** is used to perform compliance check actions at each Push/Pull Request. **It must be/stay the fastest possible** (currently inferior to 2 minutes) in order to provide a rapid compliance feedback about the Push/Pull Request.
-    * **[CircleCI](https://circleci.com/gh/OWASP/CheatSheetSeries)** is used to perform operations taking *longer time* like build, publish and deploy actions.
+    * **[CircleCI](https://circleci.com/gh/OWASP/CheatSheetSeries)** is used to perform operations taking longer time like build, publish and deploy actions.
 
 # Offline website
 
