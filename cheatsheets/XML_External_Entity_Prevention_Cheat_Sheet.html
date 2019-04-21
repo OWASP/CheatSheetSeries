@@ -1,0 +1,1453 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>XML External Entity Prevention  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="XML_Security_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Web_Service_Security_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >XML External Entity Prevention </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p><em>XML eXternal Entity injection</em> (XXE), which is now part of the <a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project" target="_blank">OWASP Top 10</a> via the point <strong>A4</strong>, is a type of attack against an application that parses XML input.</p>
+<p>XXE issue is referenced under the ID <a href="https://cwe.mitre.org/data/definitions/611.html" target="_blank">611</a> in the <a href="https://cwe.mitre.org/index.html" target="_blank">Common Weakness Enumeration</a> referential.</p>
+<p>This attack occurs when untrusted XML input containing a <strong>reference to an external entity is processed by a weakly configured XML parser</strong>.</p>
+<p>This attack may lead to the disclosure of confidential data, denial of service, <a href="https://www.owasp.org/index.php/Server_Side_Request_Forgery" target="_blank">Server Side Request Forgery</a> (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.</p>
+<p>For more information on XXE, please visit <a href="https://en.wikipedia.org/wiki/XML_external_entity_attack" target="_blank">XML External Entity (XXE)</a>.</p>
+<h1 id="general-guidance"><a name="general-guidance" class="plugin-anchor" href="#general-guidance"><i class="fa fa-link" aria-hidden="true"></i></a>General Guidance</h1>
+<p>The safest way to prevent XXE is always to disable DTDs (External Entities) completely. Depending on the parser, the method should be similar to the following:</p>
+<pre><code class="lang-java">factory.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>, <span class="hljs-keyword">true</span>);
+</code></pre>
+<p>Disabling <a href="https://www.w3schools.com/xml/xml_dtd.asp" target="_blank">DTD</a>s also makes the parser secure against denial of services (DOS) attacks such as <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack" target="_blank">Billion Laughs</a>. If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that&#x2019;s specific to each parser.</p>
+<p>Detailed XXE Prevention guidance for a number of languages and commonly used XML parsers in those languages is provided below.</p>
+<h1 id="cc"><a name="cc" class="plugin-anchor" href="#cc"><i class="fa fa-link" aria-hidden="true"></i></a>C/C++</h1>
+<h2 id="libxml2"><a name="libxml2" class="plugin-anchor" href="#libxml2"><i class="fa fa-link" aria-hidden="true"></i></a>libxml2</h2>
+<p>The Enum <a href="http://xmlsoft.org/html/libxml-parser.html#xmlParserOption" target="_blank">xmlParserOption</a> should not have the following options defined:</p>
+<ul>
+<li><code>XML_PARSE_NOENT</code>: Expands entities and substitutes them with replacement text</li>
+<li><code>XML_PARSE_DTDLOAD</code>: Load the external DTD</li>
+</ul>
+<p>Note:</p>
+<p>Per: According to <a href="https://mail.gnome.org/archives/xml/2012-October/msg00045.html" target="_blank">this post</a>, starting with libxml2 version 2.9, XXE has been disabled by default as committed by the following <a href="https://gitlab.gnome.org/GNOME/libxml2/commit/4629ee02ac649c27f9c0cf98ba017c6b5526070f" target="_blank">patch</a>.</p>
+<p>Search for the usage of the following APIs to ensure there is no <code>XML_PARSE_NOENT</code> and <code>XML_PARSE_DTDLOAD</code> defined in the parameters:</p>
+<ul>
+<li><code>xmlCtxtReadDoc</code></li>
+<li><code>xmlCtxtReadFd</code></li>
+<li><code>xmlCtxtReadFile</code></li>
+<li><code>xmlCtxtReadIO</code></li>
+<li><code>xmlCtxtReadMemory</code></li>
+<li><code>xmlCtxtUseOptions</code></li>
+<li><code>xmlParseInNodeContext</code></li>
+<li><code>xmlReadDoc</code></li>
+<li><code>xmlReadFd</code></li>
+<li><code>xmlReadFile</code></li>
+<li><code>xmlReadIO</code></li>
+<li><code>xmlReadMemory</code></li>
+</ul>
+<h2 id="libxerces-c"><a name="libxerces-c" class="plugin-anchor" href="#libxerces-c"><i class="fa fa-link" aria-hidden="true"></i></a>libxerces-c</h2>
+<p>Use of <code>XercesDOMParser</code> do this to prevent XXE:</p>
+<pre><code class="lang-cpp">XercesDOMParser *parser = <span class="hljs-keyword">new</span> XercesDOMParser;
+parser-&gt;setCreateEntityReferenceNodes(<span class="hljs-literal">false</span>);
+</code></pre>
+<p>Use of SAXParser, do this to prevent XXE:</p>
+<pre><code class="lang-cpp">SAXParser* parser = <span class="hljs-keyword">new</span> SAXParser;
+parser-&gt;setDisableDefaultEntityResolution(<span class="hljs-literal">true</span>);
+</code></pre>
+<p>Use of SAX2XMLReader, do this to prevent XXE:</p>
+<pre><code class="lang-cpp">SAX2XMLReader* reader = XMLReaderFactory::createXMLReader();
+parser-&gt;setFeature(XMLUni::fgXercesDisableDefaultEntityResolution, <span class="hljs-literal">true</span>);
+</code></pre>
+<h1 id="java"><a name="java" class="plugin-anchor" href="#java"><i class="fa fa-link" aria-hidden="true"></i></a>Java</h1>
+<p>Java applications using XML libraries are particularly vulnerable to XXE because the default settings for most Java XML parsers is to have XXE enabled. To use these parsers safely, you have to explicitly disable XXE in the parser you use. The following describes how to disable XXE in the most commonly used XML parsers for Java.</p>
+<h2 id="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j"><a name="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j" class="plugin-anchor" href="#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j"><i class="fa fa-link" aria-hidden="true"></i></a>JAXP DocumentBuilderFactory, SAXParserFactory and DOM4J</h2>
+<p><code>DocumentBuilderFactory,</code> <code>SAXParserFactory</code> and <code>DOM4J</code> <code>XML</code> Parsers can be configured using the same techniques to protect them against XXE.</p>
+<p>Only the <code>DocumentBuilderFactory</code> example is presented here. The JAXP <code>DocumentBuilderFactory</code> <a href="https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,%20boolean" target="_blank">setFeature</a>) method allows a developer to control which implementation-specific XML processor features are enabled or disabled.</p>
+<p>The features can either be set on the factory or the underlying <code>XMLReader</code> <a href="https://docs.oracle.com/javase/7/docs/api/org/xml/sax/XMLReader.html#setFeature%28java.lang.String,%20boolean%29" target="_blank">setFeature</a> method.</p>
+<p>Each XML processor implementation has its own features that govern how DTDs and external entities are processed.</p>
+<p>For a syntax highlighted example code snippet using <code>SAXParserFactory</code>, look <a href="https://gist.github.com/asudhakar02/45e2e6fd8bcdfb4bc3b2" target="_blank">here</a>.</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;
+<span class="hljs-keyword">import</span> javax.xml.parsers.ParserConfigurationException; <span class="hljs-comment">// catching unsupported features</span>
+
+...
+
+DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+String FEATURE = <span class="hljs-keyword">null</span>;
+<span class="hljs-keyword">try</span> {
+    <span class="hljs-comment">// This is the PRIMARY defense. If DTDs (doctypes) are disallowed, almost all </span>
+    <span class="hljs-comment">// XML entity attacks are prevented</span>
+    <span class="hljs-comment">// Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl</span>
+    FEATURE = <span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>;
+    dbf.setFeature(FEATURE, <span class="hljs-keyword">true</span>);
+
+    <span class="hljs-comment">// If you can&apos;t completely disable DTDs, then at least do the following:</span>
+    <span class="hljs-comment">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities</span>
+    <span class="hljs-comment">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities</span>
+    <span class="hljs-comment">// JDK7+ - http://xml.org/sax/features/external-general-entities</span>
+    FEATURE = <span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>;
+    dbf.setFeature(FEATURE, <span class="hljs-keyword">false</span>);
+
+    <span class="hljs-comment">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-parameter-entities</span>
+    <span class="hljs-comment">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities</span>
+    <span class="hljs-comment">// JDK7+ - http://xml.org/sax/features/external-parameter-entities</span>
+    FEATURE = <span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>;
+    dbf.setFeature(FEATURE, <span class="hljs-keyword">false</span>);
+
+    <span class="hljs-comment">// Disable external DTDs as well</span>
+    FEATURE = <span class="hljs-string">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>;
+    dbf.setFeature(FEATURE, <span class="hljs-keyword">false</span>);
+
+    <span class="hljs-comment">// and these as well, per Timothy Morgan&apos;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</span>
+    dbf.setXIncludeAware(<span class="hljs-keyword">false</span>);
+    dbf.setExpandEntityReferences(<span class="hljs-keyword">false</span>);
+
+    <span class="hljs-comment">// And, per Timothy Morgan: &quot;If for some reason support for inline DOCTYPEs are a requirement, then</span>
+    <span class="hljs-comment">// ensure the entity settings are disabled (as shown above) and beware that SSRF attacks</span>
+    <span class="hljs-comment">// (http://cwe.mitre.org/data/definitions/918.html) and denial</span>
+    <span class="hljs-comment">// of service attacks (such as billion laughs or decompression bombs via &quot;jar:&quot;) are a risk.&quot;</span>
+
+    <span class="hljs-comment">// remaining parser logic</span>
+    ...
+} <span class="hljs-keyword">catch</span> (ParserConfigurationException e) {
+    <span class="hljs-comment">// This should catch a failed setFeature feature</span>
+    logger.info(<span class="hljs-string">&quot;ParserConfigurationException was thrown. The feature &apos;&quot;</span> + FEATURE 
+    + <span class="hljs-string">&quot;&apos; is probably not supported by your XML processor.&quot;</span>);
+    ...
+} <span class="hljs-keyword">catch</span> (SAXException e) {
+    <span class="hljs-comment">// On Apache, this should be thrown when disallowing DOCTYPE</span>
+    logger.warning(<span class="hljs-string">&quot;A DOCTYPE was passed into the XML document&quot;</span>);
+    ...
+} <span class="hljs-keyword">catch</span> (IOException e) {
+    <span class="hljs-comment">// XXE that points to a file that doesn&apos;t exist</span>
+    logger.error(<span class="hljs-string">&quot;IOException occurred, XXE may still possible: &quot;</span> + e.getMessage());
+    ...
+}
+
+<span class="hljs-comment">// Load XML file or stream using a XXE agnostic configured parser...</span>
+DocumentBuilder safebuilder = dbf.newDocumentBuilder();
+</code></pre>
+<p><a href="http://xerces.apache.org/xerces-j/" target="_blank">Xerces 1</a> <a href="http://xerces.apache.org/xerces-j/features.html" target="_blank">Features</a>:</p>
+<ul>
+<li>Do not include external entities by setting <a href="http://xerces.apache.org/xerces-j/features.html#external-general-entities" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Do not include parameter entities by setting <a href="http://xerces.apache.org/xerces-j/features.html#external-parameter-entities" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Do not include external DTDs by setting <a href="http://xerces.apache.org/xerces-j/features.html#load-external-dtd" target="_blank">this feature</a> to <code>false</code>.</li>
+</ul>
+<p><a href="http://xerces.apache.org/xerces2-j/" target="_blank">Xerces 2</a> <a href="http://xerces.apache.org/xerces2-j/features.html" target="_blank">Features</a>:</p>
+<ul>
+<li>Disallow an inline DTD by setting <a href="http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl" target="_blank">this feature</a> to <code>true</code>.</li>
+<li>Do not include external entities by setting <a href="http://xerces.apache.org/xerces2-j/features.html#external-general-entities" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Do not include parameter entities by setting <a href="http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Do not include external DTDs by setting <a href="http://xerces.apache.org/xerces-j/features.html#load-external-dtd" target="_blank">this feature</a> to <code>false</code>.</li>
+</ul>
+<p><strong>Note:</strong> The above defenses require Java 7 update 67, Java 8 update 20, or above, because the above countermeasures for <code>DocumentBuilderFactory</code> and SAXParserFactory are broken in earlier Java versions, per: <a href="http://www.cvedetails.com/cve/CVE-2014-6517/" target="_blank">CVE-2014-6517</a>.</p>
+<h2 id="xmlinputfactory-a-stax-parser"><a name="xmlinputfactory-a-stax-parser" class="plugin-anchor" href="#xmlinputfactory-a-stax-parser"><i class="fa fa-link" aria-hidden="true"></i></a>XMLInputFactory (a StAX parser)</h2>
+<p><a href="http://en.wikipedia.org/wiki/StAX" target="_blank">StAX</a> parsers such as <a href="http://docs.oracle.com/javase/7/docs/api/javax/xml/stream/XMLInputFactory.html" target="_blank"><code>XMLInputFactory</code></a> allow various properties and features to be set.</p>
+<p>To protect a Java <code>XMLInputFactory</code> from XXE, do this:</p>
+<pre><code class="lang-java"><span class="hljs-comment">// This disables DTDs entirely for that factory</span>
+xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, <span class="hljs-keyword">false</span>); 
+<span class="hljs-comment">// disable external entities</span>
+xmlInputFactory.setProperty(<span class="hljs-string">&quot;javax.xml.stream.isSupportingExternalEntities&quot;</span>, <span class="hljs-keyword">false</span>);
+</code></pre>
+<h2 id="transformerfactory"><a name="transformerfactory" class="plugin-anchor" href="#transformerfactory"><i class="fa fa-link" aria-hidden="true"></i></a>TransformerFactory</h2>
+<p>To protect a <code>javax.xml.transform.TransformerFactory</code> from XXE, do this:</p>
+<pre><code class="lang-java">TransformerFactory tf = TransformerFactory.newInstance();
+tf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
+tf.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, <span class="hljs-string">&quot;&quot;</span>);
+</code></pre>
+<h2 id="validator"><a name="validator" class="plugin-anchor" href="#validator"><i class="fa fa-link" aria-hidden="true"></i></a>Validator</h2>
+<p>To protect a <code>javax.xml.validation.Validator</code> from XXE, do this:</p>
+<pre><code class="lang-java">SchemaFactory factory = SchemaFactory.newInstance(<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>);
+Schema schema = factory.newSchema();
+Validator validator = schema.newValidator();
+validator.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
+validator.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, <span class="hljs-string">&quot;&quot;</span>);
+</code></pre>
+<h2 id="schemafactory"><a name="schemafactory" class="plugin-anchor" href="#schemafactory"><i class="fa fa-link" aria-hidden="true"></i></a>SchemaFactory</h2>
+<p>To protect a <code>javax.xml.validation.SchemaFactory</code> from XXE, do this:</p>
+<pre><code class="lang-java">SchemaFactory factory = SchemaFactory.newInstance(<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>);
+factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
+factory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, <span class="hljs-string">&quot;&quot;</span>);
+Schema schema = factory.newSchema(Source);
+</code></pre>
+<h2 id="saxtransformerfactory"><a name="saxtransformerfactory" class="plugin-anchor" href="#saxtransformerfactory"><i class="fa fa-link" aria-hidden="true"></i></a>SAXTransformerFactory</h2>
+<p>To protect a <code>javax.xml.transform.sax.SAXTransformerFactory</code> from XXE, do this:</p>
+<pre><code class="lang-java">SAXTransformerFactory sf = SAXTransformerFactory.newInstance();
+sf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
+sf.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, <span class="hljs-string">&quot;&quot;</span>);
+sf.newXMLFilter(Source);
+</code></pre>
+<p><strong>Note: Use of the following <code>XMLConstants</code> requires JAXP 1.5, which was added to Java in 7u40 and Java 8:</strong></p>
+<ul>
+<li><code>javax.xml.XMLConstants.ACCESS_EXTERNAL_DTD</code></li>
+<li><code>javax.xml.XMLConstants.ACCESS_EXTERNAL_SCHEMA</code></li>
+<li><code>javax.xml.XMLConstants.ACCESS_EXTERNAL_STYLESHEET</code></li>
+</ul>
+<h2 id="xmlreader"><a name="xmlreader" class="plugin-anchor" href="#xmlreader"><i class="fa fa-link" aria-hidden="true"></i></a>XMLReader</h2>
+<p>To protect a Java <code>org.xml.sax.XMLReader</code> from XXE, do this:</p>
+<pre><code class="lang-java">XMLReader reader = XMLReaderFactory.createXMLReader();
+reader.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>, <span class="hljs-keyword">true</span>);
+<span class="hljs-comment">// This may not be strictly required as DTDs shouldn&apos;t be allowed at all, per previous line.</span>
+reader.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>, <span class="hljs-keyword">false</span>); 
+reader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
+reader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
+</code></pre>
+<h2 id="saxreader"><a name="saxreader" class="plugin-anchor" href="#saxreader"><i class="fa fa-link" aria-hidden="true"></i></a>SAXReader</h2>
+<p>To protect a Java <code>org.dom4j.io.SAXReader</code> from XXE, do this:</p>
+<pre><code class="lang-java">saxReader.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>, <span class="hljs-keyword">true</span>);
+saxReader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
+saxReader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
+</code></pre>
+<p>Based on testing, if you are missing one of these, you can still be vulnerable to an XXE attack.</p>
+<h2 id="saxbuilder"><a name="saxbuilder" class="plugin-anchor" href="#saxbuilder"><i class="fa fa-link" aria-hidden="true"></i></a>SAXBuilder</h2>
+<p>To protect a Java <code>org.jdom2.input.SAXBuilder</code> from XXE, do this:</p>
+<pre><code class="lang-java">SAXBuilder builder = <span class="hljs-keyword">new</span> SAXBuilder();
+builder.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>,<span class="hljs-keyword">true</span>);
+builder.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
+builder.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
+Document doc = builder.build(<span class="hljs-keyword">new</span> File(fileName));
+</code></pre>
+<h2 id="jaxb-unmarshaller"><a name="jaxb-unmarshaller" class="plugin-anchor" href="#jaxb-unmarshaller"><i class="fa fa-link" aria-hidden="true"></i></a>JAXB Unmarshaller</h2>
+<p>Since a <code>javax.xml.bind.Unmarshaller</code> parses XML and does not support any flags for disabling XXE, it&#x2019;s imperative to parse the untrusted XML through a configurable secure parser first, generate a source object as a result, and pass the source object to the Unmarshaller. For example:</p>
+<pre><code class="lang-java"><span class="hljs-comment">//Disable XXE</span>
+SAXParserFactory spf = SAXParserFactory.newInstance();
+spf.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
+spf.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
+spf.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>, <span class="hljs-keyword">false</span>);
+
+<span class="hljs-comment">//Do unmarshall operation</span>
+Source xmlSource = <span class="hljs-keyword">new</span> SAXSource(spf.newSAXParser().getXMLReader(), 
+                                <span class="hljs-keyword">new</span> InputSource(<span class="hljs-keyword">new</span> StringReader(xml)));
+JAXBContext jc = JAXBContext.newInstance(Object.class);
+Unmarshaller um = jc.createUnmarshaller();
+um.unmarshal(xmlSource);
+</code></pre>
+<h2 id="xpathexpression"><a name="xpathexpression" class="plugin-anchor" href="#xpathexpression"><i class="fa fa-link" aria-hidden="true"></i></a>XPathExpression</h2>
+<p>A <code>javax.xml.xpath.XPathExpression</code> is similar to an Unmarshaller where it can&#x2019;t be configured securely by itself, so the untrusted data must be parsed through another securable XML parser first.</p>
+<p>For example:</p>
+<pre><code class="lang-java">DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
+df.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
+df.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, <span class="hljs-string">&quot;&quot;</span>);
+DocumentBuilder builder = df.newDocumentBuilder();
+String result = <span class="hljs-keyword">new</span> XPathExpression().evaluate( builder.parse(
+                            <span class="hljs-keyword">new</span> ByteArrayInputStream(xml.getBytes())) );
+</code></pre>
+<h2 id="javabeansxmldecoder"><a name="javabeansxmldecoder" class="plugin-anchor" href="#javabeansxmldecoder"><i class="fa fa-link" aria-hidden="true"></i></a>java.beans.XMLDecoder</h2>
+<p>The <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/XMLDecoder.html#readObject--" target="_blank">readObject()</a> method in this class is fundamentally unsafe.</p>
+<p>Not only is the XML it parses subject to XXE, but the method can be used to construct any Java object, and <a href="http://stackoverflow.com/questions/14307442/is-it-safe-to-use-xmldecoder-to-read-document-files" target="_blank">execute arbitrary code as described here</a>.</p>
+<p>And there is no way to make use of this class safe except to trust or properly validate the input being passed into it.</p>
+<p>As such, we&apos;d strongly recommend completely avoiding the use of this class and replacing it with a safe or properly configured XML parser as described elsewhere in this cheat sheet.</p>
+<h2 id="other-xml-parsers"><a name="other-xml-parsers" class="plugin-anchor" href="#other-xml-parsers"><i class="fa fa-link" aria-hidden="true"></i></a>Other XML Parsers</h2>
+<p>There are many 3rd party libraries that parse XML either directly or through their use of other libraries. Please test and verify their XML parser is secure against XXE by default. If the parser is not secure by default, look for flags supported by the parser to disable all possible external resource inclusions like the examples given above. If there&#x2019;s no control exposed to the outside, make sure the untrusted content is passed through a secure parser first and then passed to insecure 3rd party parser similar to how the Unmarshaller is secured.</p>
+<h3 id="spring-framework-mvcoxm-xxe-vulnerabilities"><a name="spring-framework-mvcoxm-xxe-vulnerabilities" class="plugin-anchor" href="#spring-framework-mvcoxm-xxe-vulnerabilities"><i class="fa fa-link" aria-hidden="true"></i></a>Spring Framework MVC/OXM XXE Vulnerabilities</h3>
+<p>For example, some XXE vulnerabilities were found in <a href="https://pivotal.io/security/cve-2013-4152" target="_blank">Spring OXM</a> and <a href="https://pivotal.io/security/cve-2013-7315" target="_blank">Spring MVC</a>. The following versions of the Spring Framework are vulnerable to XXE:</p>
+<ul>
+<li><strong>3.0.0</strong> to <strong>3.2.3</strong> (Spring OXM &amp; Spring MVC)</li>
+<li><strong>4.0.0.M1</strong> (Spring OXM)</li>
+<li><strong>4.0.0.M1-4.0.0.M2</strong> (Spring MVC)</li>
+</ul>
+<p>There were other issues as well that were fixed later, so to fully address these issues, Spring recommends you upgrade to Spring Framework 3.2.8+ or 4.0.2+.</p>
+<p>For Spring OXM, this is referring to the use of org.springframework.oxm.jaxb.Jaxb2Marshaller. Note that the CVE for Spring OXM specifically indicates that 2 XML parsing situations are up to the developer to get right, and 2 are the responsibility of Spring and were fixed to address this CVE. </p>
+<p>Here&apos;s what they say: </p>
+<p>Two situations developers must handle:</p>
+<ul>
+<li>For a <code>DOMSource</code>, the XML has already been parsed by user code and that code is responsible for protecting against XXE.</li>
+<li>For a <code>StAXSource</code>, the XMLStreamReader has already been created by user code and that code is responsible for protecting against XXE.</li>
+</ul>
+<p>The issue Spring fixed:</p>
+<p>For SAXSource and StreamSource instances, Spring processed external entities by default thereby creating this vulnerability.</p>
+<p>Here&apos;s an example of using a StreamSource that was vulnerable, but is now safe, if you are using a fixed version of Spring OXM or Spring MVC:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> org.springframework.oxm.Jaxb2Marshaller;
+<span class="hljs-keyword">import</span> org.springframework.oxm.jaxb.Jaxb2Marshaller;
+
+Jaxb2Marshaller marshaller = <span class="hljs-keyword">new</span> Jaxb2Marshaller();
+<span class="hljs-comment">// Must cast return Object to whatever type you are unmarshalling</span>
+marshaller.unmarshal(<span class="hljs-keyword">new</span> StreamSource(<span class="hljs-keyword">new</span> StringReader(some_string_containing_XML));
+</code></pre>
+<p>So, per the <a href="https://pivotal.io/security/cve-2013-4152" target="_blank">Spring OXM CVE writeup</a>, the above is now safe. But if you were to use a DOMSource or StAXSource instead, it would be up to you to configure those sources to be safe from XXE.</p>
+<h1 id="net"><a name="net" class="plugin-anchor" href="#net"><i class="fa fa-link" aria-hidden="true"></i></a>.NET</h1>
+<p>The following information for XXE injection in .NET is directly from this <a href="https://github.com/deanf1/dotnet-security-unit-tests" target="_blank">web application of unit tests by Dean Fleming</a>.</p>
+<p>This web application covers all currently supported .NET XML parsers, and has test cases for each demonstrating when they are safe from XXE injection and when they are not.</p>
+<p>Previously, this information was based on <a href="https://www.jardinesoftware.net/2016/05/26/xxe-and-net/" target="_blank">James Jardine&apos;s excellent .NET XXE article</a>.</p>
+<p>It originally provided more recent and more detailed information than the older article from <a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx" target="_blank">Microsoft on how to prevent XXE and XML Denial of Service in .NET</a>, however, it has some inaccuracies that the web application covers.</p>
+<p>The following table lists all supported .NET XML parsers and their default safety levels:</p>
+<table>
+<thead>
+<tr>
+<th>XML Parser</th>
+<th>Safe by default?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LINQ to XML</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>XmlDictionaryReader</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>XmlDocument</td>
+<td></td>
+</tr>
+<tr>
+<td>...prior to 4.5.2</td>
+<td>No</td>
+</tr>
+<tr>
+<td>...in versions 4.5.2+</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>XmlNodeReader</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>XmlReader</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>XmlTextReader</td>
+<td></td>
+</tr>
+<tr>
+<td>...prior to 4.5.2</td>
+<td>No</td>
+</tr>
+<tr>
+<td>...in versions 4.5.2+</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>XPathNavigator</td>
+<td></td>
+</tr>
+<tr>
+<td>...prior to 4.5.2</td>
+<td>No</td>
+</tr>
+<tr>
+<td>...in versions 4.5.2+</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>XslCompiledTransform</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="linq-to-xml"><a name="linq-to-xml" class="plugin-anchor" href="#linq-to-xml"><i class="fa fa-link" aria-hidden="true"></i></a>LINQ to XML</h2>
+<p>Both the <code>XElement</code> and <code>XDocument</code> objects in the <code>System.Xml.Linq</code> library are safe from XXE injection by default. <code>XElement</code> parses only the elements within the XML file, so DTDs are ignored altogether. <code>XDocument</code> has DTDs <a href="https://github.com/dotnet/docs/blob/master/docs/visual-basic/programming-guide/concepts/linq/linq-to-xml-security.md" target="_blank">disabled by default</a>, and is only unsafe if constructed with a different unsafe XML parser.</p>
+<h2 id="xmldictionaryreader"><a name="xmldictionaryreader" class="plugin-anchor" href="#xmldictionaryreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlDictionaryReader</h2>
+<p><code>System.Xml.XmlDictionaryReader</code> is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that &quot;CData elements not valid at top level of an XML document&quot;. It becomes unsafe if constructed with a different unsafe XML parser.</p>
+<h2 id="xmldocument"><a name="xmldocument" class="plugin-anchor" href="#xmldocument"><i class="fa fa-link" aria-hidden="true"></i></a>XmlDocument</h2>
+<p>Prior to .NET Framework version 4.5.2, <code>System.Xml.XmlDocument</code> is <strong>unsafe</strong> by default. The <code>XmlDocument</code> object has an <code>XmlResolver</code> object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this <code>XmlResolver</code> is set to null by default.</p>
+<p>The following example shows how it is made safe:</p>
+<pre><code class="lang-csharp"> <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">LoadXML</span>(<span class="hljs-params"></span>)
+ </span>{
+   <span class="hljs-keyword">string</span> xxePayload = <span class="hljs-string">&quot;&lt;!DOCTYPE doc [&lt;!ENTITY win SYSTEM &apos;file:///C:/Users/testdata2.txt&apos;&gt;]&gt;&quot;</span> 
+                     + <span class="hljs-string">&quot;&lt;doc&gt;&amp;win;&lt;/doc&gt;&quot;</span>;
+   <span class="hljs-keyword">string</span> xml = <span class="hljs-string">&quot;&lt;?xml version=&apos;1.0&apos; ?&gt;&quot;</span> + xxePayload;
+
+   XmlDocument xmlDoc = <span class="hljs-keyword">new</span> XmlDocument();
+   <span class="hljs-comment">// Setting this to NULL disables DTDs - Its NOT null by default.</span>
+   xmlDoc.XmlResolver = <span class="hljs-keyword">null</span>;   
+   xmlDoc.LoadXml(xml);
+   Console.WriteLine(xmlDoc.InnerText);
+   Console.ReadLine();
+ }
+</code></pre>
+<p><code>XmlDocument</code> can become unsafe if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx" target="_blank">referenced MSDN article</a>.</p>
+<h2 id="xmlnodereader"><a name="xmlnodereader" class="plugin-anchor" href="#xmlnodereader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlNodeReader</h2>
+<p><code>System.Xml.XmlNodeReader</code> objects are safe by default and will ignore DTDs even when constructed with an unsafe parser or wrapped in another unsafe parser.</p>
+<h2 id="xmlreader"><a name="xmlreader" class="plugin-anchor" href="#xmlreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlReader</h2>
+<p><code>System.Xml.XmlReader</code> objects are safe by default.</p>
+<p>They are set by default to have their ProhibitDtd property set to false in .NET Framework versions 4.0 and earlier, or their <code>DtdProcessing</code> property set to Prohibit in .NET versions 4.0 and later.</p>
+<p>Additionally, in .NET versions 4.5.2 and later, the <code>XmlReaderSettings</code> belonging to the <code>XmlReader</code> has its <code>XmlResolver</code> set to null by default, which provides an additional layer of safety.</p>
+<p>Therefore, <code>XmlReader</code> objects will only become unsafe in version 4.5.2 and up if both the <code>DtdProcessing</code> property is set to Parse and the <code>XmlReaderSetting</code>&apos;s <code>XmlResolver</code> is set to a nonnull XmlResolver with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx" target="_blank">referenced MSDN article</a>.</p>
+<h2 id="xmltextreader"><a name="xmltextreader" class="plugin-anchor" href="#xmltextreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlTextReader</h2>
+<p><code>System.Xml.XmlTextReader</code> is <strong>unsafe</strong> by default in .NET Framework versions prior to 4.5.2. Here is how to make it safe in various .NET versions:</p>
+<h3 id="prior-to-net-40"><a name="prior-to-net-40" class="plugin-anchor" href="#prior-to-net-40"><i class="fa fa-link" aria-hidden="true"></i></a>Prior to .NET 4.0</h3>
+<p>In .NET Framework versions prior to 4.0, DTD parsing behavior for <code>XmlReader</code> objects like <code>XmlTextReader</code> are controlled by the Boolean <code>ProhibitDtd</code> property found in the <code>System.Xml.XmlReaderSettings</code> and <code>System.Xml.XmlTextReader</code> classes.</p>
+<p>Set these values to true to disable inline DTDs completely.</p>
+<pre><code class="lang-csharp">XmlTextReader reader = <span class="hljs-keyword">new</span> XmlTextReader(stream);
+<span class="hljs-comment">// NEEDED because the default is FALSE!!</span>
+reader.ProhibitDtd = <span class="hljs-keyword">true</span>;
+</code></pre>
+<h3 id="net-40---net-452"><a name="net-40---net-452" class="plugin-anchor" href="#net-40---net-452"><i class="fa fa-link" aria-hidden="true"></i></a>.NET 4.0 - .NET 4.5.2</h3>
+<p>In .NET Framework version 4.0, DTD parsing behavior has been changed. The <code>ProhibitDtd</code> property has been deprecated in favor of the new <code>DtdProcessing</code> property.</p>
+<p>However, they didn&apos;t change the default settings so <code>XmlTextReader</code> is still vulnerable to XXE by default.</p>
+<p>Setting <code>DtdProcessing</code> to <code>Prohibit</code> causes the runtime to throw an exception if a <code>&lt;!DOCTYPE&gt;</code> element is present in the XML.</p>
+<p>To set this value yourself, it looks like this:</p>
+<pre><code class="lang-csharp">XmlTextReader reader = <span class="hljs-keyword">new</span> XmlTextReader(stream);
+<span class="hljs-comment">// NEEDED because the default is Parse!!</span>
+reader.DtdProcessing = DtdProcessing.Prohibit;
+</code></pre>
+<p>Alternatively, you can set the <code>DtdProcessing</code> property to <code>Ignore</code>, which will not throw an exception on encountering a <code>&lt;!DOCTYPE&gt;</code> element but will simply skip over it and not process it. Finally, you can set <code>DtdProcessing</code> to <code>Parse</code> if you do want to allow and process inline DTDs.</p>
+<h3 id="net-452-and-later"><a name="net-452-and-later" class="plugin-anchor" href="#net-452-and-later"><i class="fa fa-link" aria-hidden="true"></i></a>.NET 4.5.2 and later</h3>
+<p>In .NET Framework versions 4.5.2 and up, <code>XmlTextReader</code>&apos;s internal <code>XmlResolver</code> is set to null by default, making the <code>XmlTextReader</code> ignore DTDs by default. The <code>XmlTextReader</code> can become unsafe if if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings.</p>
+<h2 id="xpathnavigator"><a name="xpathnavigator" class="plugin-anchor" href="#xpathnavigator"><i class="fa fa-link" aria-hidden="true"></i></a>XPathNavigator</h2>
+<p><code>System.Xml.XPath.XPathNavigator</code> is <strong>unsafe</strong> by default in .NET Framework versions prior to 4.5.2.</p>
+<p>This is due to the fact that it implements <code>IXPathNavigable</code> objects like <code>XmlDocument</code>, which are also unsafe by default in versions prior to 4.5.2.</p>
+<p>You can make <code>XPathNavigator</code> safe by giving it a safe parser like <code>XmlReader</code> (which is safe by default) in the <code>XPathDocument</code>&apos;s constructor.</p>
+<p>Here is an example:</p>
+<pre><code class="lang-csharp">XmlReader reader = XmlReader.Create(<span class="hljs-string">&quot;example.xml&quot;</span>);
+XPathDocument doc = <span class="hljs-keyword">new</span> XPathDocument(reader);
+XPathNavigator nav = doc.CreateNavigator();
+<span class="hljs-keyword">string</span> xml = nav.InnerXml.ToString();
+</code></pre>
+<h2 id="xslcompiledtransform"><a name="xslcompiledtransform" class="plugin-anchor" href="#xslcompiledtransform"><i class="fa fa-link" aria-hidden="true"></i></a>XslCompiledTransform</h2>
+<p><code>System.Xml.Xsl.XslCompiledTransform</code> (an XML transformer) is safe by default as long as the parser it&#x2019;s given is safe.</p>
+<p>It is safe by default because the default parser of the <code>Transform()</code> methods is an <code>XmlReader</code>, which is safe by default (per above).</p>
+<p><a href="http://www.dotnetframework.org/default.aspx/4@0/4@0/DEVDIV_TFS/Dev10/Releases/RTMRel/ndp/fx/src/Xml/System/Xml/Xslt/XslCompiledTransform@cs/1305376/XslCompiledTransform@cs" target="_blank">The source code for this method is here.</a></p>
+<p>Some of the <code>Transform()</code> methods accept an <code>XmlReader</code> or <code>IXPathNavigable</code> (e.g., <code>XmlDocument</code>) as an input, and if you pass in an unsafe XML Parser then the <code>Transform</code> will also be unsafe.</p>
+<h1 id="ios"><a name="ios" class="plugin-anchor" href="#ios"><i class="fa fa-link" aria-hidden="true"></i></a>iOS</h1>
+<h2 id="libxml2"><a name="libxml2" class="plugin-anchor" href="#libxml2"><i class="fa fa-link" aria-hidden="true"></i></a>libxml2</h2>
+<p>iOS includes the C/C++ libxml2 library described above, so that guidance applies if you are using libxml2 directly.</p>
+<p>However, the version of libxml2 provided up through iOS6 is prior to version 2.9 of libxml2 (which protects against XXE by default).</p>
+<h2 id="nsxmldocument"><a name="nsxmldocument" class="plugin-anchor" href="#nsxmldocument"><i class="fa fa-link" aria-hidden="true"></i></a>NSXMLDocument</h2>
+<p>iOS also provides an <code>NSXMLDocument</code> type, which is built on top of libxml2.</p>
+<p>However, <code>NSXMLDocument</code> provides some additional protections against XXE that aren&apos;t available in libxml2 directly.</p>
+<p>Per the &apos;NSXMLDocument External Entity Restriction API&apos; section of this <a href="https://developer.apple.com/library/ios/#releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html" target="_blank">page</a>:</p>
+<ul>
+<li>iOS4 and earlier: All external entities are loaded by default.</li>
+<li>iOS5 and later: Only entities that don&apos;t require network access are loaded. (which is safer)</li>
+</ul>
+<p>However, to completely disable XXE in an <code>NSXMLDocument</code> in any version of iOS you simply specify <code>NSXMLNodeLoadExternalEntitiesNever</code> when creating the <code>NSXMLDocument</code>.</p>
+<h1 id="php"><a name="php" class="plugin-anchor" href="#php"><i class="fa fa-link" aria-hidden="true"></i></a>PHP</h1>
+<p>Per <a href="http://php.net/manual/en/function.libxml-disable-entity-loader.php" target="_blank">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</p>
+<pre><code class="lang-php">libxml_disable_entity_loader(<span class="hljs-keyword">true</span>);
+</code></pre>
+<p>A description of how to abuse this in PHP is presented in a good <a href="https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/" target="_blank">SensePost article</a> describing a cool PHP based XXE vulnerability that was fixed in Facebook.</p>
+<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<ul>
+<li><a href="https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/" target="_blank">XXE by InfoSecInstitute</a></li>
+<li><a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE" target="_blank">OWASP Top 10-2017 A4: XML External Entities (XXE)</a>)</li>
+<li><a href="https://vsecurity.com//download/papers/XMLDTDEntityAttacks.pdf" target="_blank">Timothy Morgan&apos;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</a></li>
+<li><a href="https://find-sec-bugs.github.io/bugs.htm#XXE_SAXPARSER" target="_blank">FindSecBugs XXE Detection</a></li>
+<li><a href="https://github.com/ssexxe/XXEBugFind" target="_blank">XXEbugFind Tool</a></li>
+<li><a href="https://www.owasp.org/index.php/Testing_for_XML_Injection_(OTG-INPVAL-008" target="_blank">Testing for XML Injection (OTG-INPVAL-008)</a>)</li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Dave Wichers - dave.wichers@owasp.org</p>
+<p>Xiaoran Wang - xiaoran@attacker-domain.com</p>
+<p>James Jardine - james@jardinesoftware.com</p>
+<p>Tony Hsu (Hsiang-Chih)</p>
+<p>Dean Fleming</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Web_Service_Security_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Web Service Security ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="XML_Security_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: XML Security ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"XML External Entity Prevention ","level":"1.61","depth":1,"next":{"title":"XML Security ","level":"1.62","depth":1,"path":"cheatsheets/XML_Security_Cheat_Sheet.md","ref":"cheatsheets/XML_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Web Service Security ","level":"1.60","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.460Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

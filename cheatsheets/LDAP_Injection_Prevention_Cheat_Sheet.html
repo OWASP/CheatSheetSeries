@@ -1,0 +1,1099 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>LDAP Injection Prevention  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Logging_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Key_Management_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >LDAP Injection Prevention </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>This cheatsheet is focused on providing clear, simple, actionable guidance for preventing LDAP Injection flaws in your applications.</p>
+<p>LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it&#x2019;s possible to modify LDAP statements through techniques similar to <a href="https://www.owasp.org/index.php/SQL_Injection" target="_blank">SQL Injection</a>. </p>
+<p>LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. </p>
+<p>For more information on LDAP Injection attacks, visit <a href="https://www.owasp.org/index.php/LDAP_injection" target="_blank">LDAP injection</a>.</p>
+<p><a href="https://www.owasp.org/index.php/LDAP_injection" target="_blank">LDAP injection</a> attacks are common due to two factors:</p>
+<ol>
+<li>The lack of safer, parameterized LDAP query interfaces</li>
+<li>The widespread use of LDAP to authenticate users to systems.</li>
+</ol>
+<p>Primary Defenses:</p>
+<ul>
+<li>Escape all variables using the right LDAP encoding function</li>
+</ul>
+<p>Additional Defenses:</p>
+<ul>
+<li>Use a framework (like <a href="https://archive.codeplex.com/?p=linqtoad" target="_blank">LINQtoAD</a>) that escapes automatically.</li>
+</ul>
+<h1 id="primary-defenses"><a name="primary-defenses" class="plugin-anchor" href="#primary-defenses"><i class="fa fa-link" aria-hidden="true"></i></a>Primary Defenses</h1>
+<h2 id="defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function"><a name="defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function" class="plugin-anchor" href="#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 1: Escape all variables using the right LDAP encoding function</h2>
+<p>The main way LDAP stores names is based on DN (distinguished name). You can think of this like a unique identifier. These are sometimes used to access resources, like a username.</p>
+<p>A DN might look like this</p>
+<p><code>cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu</code></p>
+<p>or</p>
+<p><code>uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com</code></p>
+<p>There are certain characters that are considered special characters in a DN. </p>
+<p>The <a href="https://ldapwiki.com/wiki/DN%20Escape%20Values" target="_blank">exhaustive list</a> is the following: <code>\ # + &lt; &gt; , ; &quot; =</code> and leading or trailing spaces.</p>
+<p>Some &quot;special&quot; characters that are allowed in Distinguished Names and do not need to be escaped include: </p>
+<pre><code class="lang-text">* ( ) . &amp; - _ [ ] ` ~ | @ $ % ^ ? : { } ! &apos;
+</code></pre>
+<p>Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users will certain attributes, you may do so with search filters. </p>
+<p>In a search filter, you can use standard boolean logic to get a list of users matching an arbitrary constraint. Search filters are written in Polish notation AKA prefix notation.</p>
+<p>Example:</p>
+<pre><code class="lang-text">(&amp;(ou=Physics)(|
+(manager=cn=Freeman Dyson,ou=Physics,dc=Caltech,dc=edu)
+(manager=cn=Albert Einstein,ou=Physics,dc=Princeton,dc=edu)
+))
+</code></pre>
+<p>When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource.</p>
+<h3 id="safe-java-escaping-example"><a name="safe-java-escaping-example" class="plugin-anchor" href="#safe-java-escaping-example"><i class="fa fa-link" aria-hidden="true"></i></a>Safe Java Escaping Example</h3>
+<ul>
+<li><a href="https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534" target="_blank">Prevent LDAP injection</a>.</li>
+<li><a href="https://github.com/ESAPI/esapi-java-legacy/blob/develop/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java" target="_blank">Legacy OWASP ESAPI for Java DefaultEncoder which includes encodeForLDAP(String) and encodeForDN(String)</a>.</li>
+</ul>
+<h3 id="safe-c-sharp-net-tba-example"><a name="safe-c-sharp-net-tba-example" class="plugin-anchor" href="#safe-c-sharp-net-tba-example"><i class="fa fa-link" aria-hidden="true"></i></a>Safe C Sharp .NET TBA Example</h3>
+<p><a href="https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/" target="_blank">.NET AntiXSS</a> (now the Encoder class) has LDAP encoding functions including <code>Encoder.LdapFilterEncode(string)</code>, <code>Encoder.LdapDistinguishedNameEncode(string)</code> and <code>Encoder.LdapDistinguishedNameEncode(string, bool, bool)</code>. </p>
+<p><code>Encoder.LdapFilterEncode</code> encodes input according to <a href="https://tools.ietf.org/search/rfc4515" target="_blank">RFC4515</a> where unsafe values are converted to <code>\XX</code> where <code>XX</code> is the representation of the unsafe character.</p>
+<p><code>Encoder.LdapDistinguishedNameEncode</code> encodes input according to <a href="https://tools.ietf.org/html/rfc2253" target="_blank">RFC2253</a> where unsafe characters are converted to <code>#XX</code> where <code>XX</code> is the representation of the unsafe character and the comma, plus, quote, slash, less than and great than signs are escaped using slash notation (<code>\X</code>). In addition to this a space or octothorpe (<code>#</code>) at the beginning of the input string is <code>\</code> escaped as is a space at the end of a string.</p>
+<p><code>LdapDistinguishedNameEncode(string, bool, bool)</code> is also provided so you may turn off the initial or final character escaping rules, for example if you are concatenating the escaped distinguished name fragment into the midst of a complete distinguished name.</p>
+<h2 id="defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection"><a name="defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection" class="plugin-anchor" href="#defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection</h2>
+<p>Safe NET Example</p>
+<p><a href="https://linqtoad.codeplex.com" target="_blank">LINQ to Active Directory</a> provides automatic LDAP encoding when building LDAP queries.</p>
+<h2 id="defense-option-3-additional-defenses"><a name="defense-option-3-additional-defenses" class="plugin-anchor" href="#defense-option-3-additional-defenses"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 3: Additional Defenses</h2>
+<p>Beyond adopting one of the two primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:</p>
+<ul>
+<li><strong>Least Privilege</strong></li>
+<li><strong>White List Input Validation</strong></li>
+</ul>
+<h3 id="least-privilege"><a name="least-privilege" class="plugin-anchor" href="#least-privilege"><i class="fa fa-link" aria-hidden="true"></i></a>Least Privilege</h3>
+<p>To minimize the potential damage of a successful LDAP injection attack, you should minimize the privileges assigned to the LDAP binding account in your environment.</p>
+<h3 id="white-list-input-validation"><a name="white-list-input-validation" class="plugin-anchor" href="#white-list-input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>White List Input Validation</h3>
+<p>Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
+<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h1>
+<ul>
+<li>OWASP article on <a href="https://www.owasp.org/index.php/LDAP_injection" target="_blank">LDAP Injection</a> Vulnerabilities.</li>
+<li>OWASP article on <a href="https://www.owasp.org/index.php/Preventing_LDAP_Injection_in_Java" target="_blank">Preventing LDAP Injection in Java</a>.</li>
+<li><a href="https://www.owasp.org/index.php/OWASP_Testing_Project" target="_blank">OWASP Testing Guide</a> article on how to <a href="https://www.owasp.org/index.php/Testing_for_LDAP_Injection_(OTG-INPVAL-006" target="_blank">Test for LDAP Injection</a>) Vulnerabilities.</li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Ben Weintraub - Ben@bluetalon.com</p>
+<p>Jim Manico - jim@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Key_Management_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Key Management ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Logging_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Logging ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"LDAP Injection Prevention ","level":"1.35","depth":1,"next":{"title":"Logging ","level":"1.36","depth":1,"path":"cheatsheets/Logging_Cheat_Sheet.md","ref":"cheatsheets/Logging_Cheat_Sheet.md","articles":[]},"previous":{"title":"Key Management ","level":"1.34","depth":1,"path":"cheatsheets/Key_Management_Cheat_Sheet.md","ref":"cheatsheets/Key_Management_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.380Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

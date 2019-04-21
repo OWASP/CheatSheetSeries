@@ -1,0 +1,1511 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Authorization Testing Automation · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Bean_Validation_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Authentication_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Authorization Testing Automation</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>Authorizations definition and implementation is one of the important protection measure of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to go live, the most signicant number of issues related to authorization came in the maintenance lifetime of the application.</p>
+<p>This situation is often explained by the fact that features are added/modified and no review of the authorizations was performed on the application before the publishing of the new release, for cost or time issue reason.</p>
+<h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
+<p>In order to try to address this situation, it&apos;s can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations definition.</p>
+<p>An authorization is often composed by 2 elements (also named dimensions): The <strong>Feature</strong> and the <strong>Logical Role</strong> that can access it (sometime a third dimension named <strong>Data</strong> is added in order to define a access that include a filtering at business data level).</p>
+<p>The representation of the different combinations of these 2 dimensions is often named an <strong>Authorization matrix</strong> and is often formalized in an Microsoft Excel file.</p>
+<p>During a test of an authorization, a <strong>Logical Role</strong> is also called a <strong>Point Of View</strong>.</p>
+<h1 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h1>
+<p>This article describe a proposition of implementation in order to automate the tests of an <em>authorization matrix</em>.</p>
+<p>This article use the assumption that 2 dimensions are used to represents an authorization for the technical proposition decribed and take as example a application exposing REST services.</p>
+<p>The objective is to provide starting ideas/hints in order to create a tailored way of testing of the authorization matrix for the target application.</p>
+<h1 id="proposition"><a name="proposition" class="plugin-anchor" href="#proposition"><i class="fa fa-link" aria-hidden="true"></i></a>Proposition</h1>
+<p>In order to achieve the full automation of the evaluation of the <em>authorization matrix</em>, the folowing actions has been performed:</p>
+<ol>
+<li><p>Formalize the authorization matrix in a pivot format file allowing:</p>
+<ol>
+<li>The processing by a program in a easy way.</li>
+<li>To be read and updated by a human for the follow-up of the authorization combinations.</li>
+<li>Hierarchy in the information in order to easily materialize the different combinations.</li>
+<li>The maximum possible of independence from the technology and design used to implements the application exposing the features.</li>
+</ol>
+</li>
+<li><p>Create a set of integration tests that fully use the authorization matrix pivot file as input source in order to evaluate the different combinations with:</p>
+<ol>
+<li>The minimum possible of maintenance when the authorization matrix pivot file is updated.</li>
+<li>A clear indication, in case of failed test, of the source authorization combination that do not respect the authorization matrix.</li>
+</ol>
+</li>
+</ol>
+<h2 id="authorization-matrix-pivot-file"><a name="authorization-matrix-pivot-file" class="plugin-anchor" href="#authorization-matrix-pivot-file"><i class="fa fa-link" aria-hidden="true"></i></a>Authorization matrix pivot file</h2>
+<p>The XML format has been used to formalize the authorization matrix.</p>
+<p>The XML structure contains 3 main sections:</p>
+<ul>
+<li>Node <strong>roles</strong>: This node describe the possible logical roles used in the system, is used to provide a list and the explanation of the different roles (authorization level).</li>
+<li>Node <strong>services</strong>: This node list and describe the available services exposed by the system and the associated logical role(s) that can call them.</li>
+<li>Node <strong>services-testing</strong>: This node provide a test payload for each service if the service use input data other than coming from url or path.</li>
+</ul>
+<p>This is an example of the XML used to represents the authorization:</p>
+<p><em>Placeholders (values between {}) are used to mark location where test value must be placed by the integration tests if needed</em></p>
+<pre><code class="lang-xml">  <span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span><span class="hljs-meta">?&gt;</span></span>
+  <span class="hljs-comment">&lt;!--
+      This file materialize the authorization matrix for the different 
+      services exposed by the system.
+
+      It will be used by the tests as a input sources for the different tests cases:
+      1) Evaluate legitimate access and is correct implementation
+      2) Identify not legitimate access (authorization definition issue 
+      on service implementation)
+
+      The &quot;name&quot; attribute is used for identify uniquely a SERVICE or a ROLE.
+  --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">authorization-matrix</span>&gt;</span>
+
+      <span class="hljs-comment">&lt;!-- Describe the possible logical roles used in the system, is used here to 
+      provide a list+explanation
+      of the different roles (authorization level) --&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">roles</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ANONYMOUS&quot;</span> 
+          <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;Indicate that no authorization is needed&quot;</span>/&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;BASIC&quot;</span> 
+          <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;Role affected to a standard user (lowest access right just above anonymous)&quot;</span>/&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span> 
+          <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;Role affected to a administrator user (highest access right)&quot;</span>/&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">roles</span>&gt;</span>
+
+      <span class="hljs-comment">&lt;!-- List and describe the available services exposed by the system and the associated 
+      logical role(s) that can call them --&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">services</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ReadSingleMessage&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/{messageId}&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;GET&quot;</span> 
+          <span class="hljs-attr">http-response-code-for-access-allowed</span>=<span class="hljs-string">&quot;200&quot;</span> <span class="hljs-attr">http-response-code-for-access-denied</span>=<span class="hljs-string">&quot;403&quot;</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ANONYMOUS&quot;</span>/&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;BASIC&quot;</span>/&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span>/&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ReadAllMessages&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;GET&quot;</span> 
+          <span class="hljs-attr">http-response-code-for-access-allowed</span>=<span class="hljs-string">&quot;200&quot;</span> <span class="hljs-attr">http-response-code-for-access-denied</span>=<span class="hljs-string">&quot;403&quot;</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ANONYMOUS&quot;</span>/&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;BASIC&quot;</span>/&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span>/&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;CreateMessage&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;PUT&quot;</span> 
+          <span class="hljs-attr">http-response-code-for-access-allowed</span>=<span class="hljs-string">&quot;200&quot;</span> <span class="hljs-attr">http-response-code-for-access-denied</span>=<span class="hljs-string">&quot;403&quot;</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;BASIC&quot;</span>/&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span>/&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;DeleteMessage&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/{messageId}&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;DELETE&quot;</span> 
+          <span class="hljs-attr">http-response-code-for-access-allowed</span>=<span class="hljs-string">&quot;200&quot;</span> <span class="hljs-attr">http-response-code-for-access-denied</span>=<span class="hljs-string">&quot;403&quot;</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span>/&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">services</span>&gt;</span>
+
+      <span class="hljs-comment">&lt;!-- Provide a test payload for each service if needed --&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">services-testing</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ReadSingleMessage&quot;</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">payload</span>/&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ReadAllMessages&quot;</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">payload</span>/&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;CreateMessage&quot;</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">payload</span> <span class="hljs-attr">content-type</span>=<span class="hljs-string">&quot;application/json&quot;</span>&gt;</span>
+                  {&quot;content&quot;:&quot;test&quot;}
+              <span class="hljs-tag">&lt;/<span class="hljs-name">payload</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;DeleteMessage&quot;</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">payload</span>/&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">services-testing</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;/<span class="hljs-name">authorization-matrix</span>&gt;</span>
+</code></pre>
+<h2 id="integration-tests"><a name="integration-tests" class="plugin-anchor" href="#integration-tests"><i class="fa fa-link" aria-hidden="true"></i></a>Integration tests</h2>
+<p>Integration tests are implemented using a maximum of factorized code and one test case by <strong>Point Of View (POV)</strong> has been created in order to group the verifications by profile of access level (logical role) and faciliate the rendering/identification of the errors.</p>
+<p>Parsing, object mapping and access to the authorization matrix information has been implemented using XML marshalling/unmarshalling built-in features provided by the technology used to implements the tests (JAXB here) in order to limit the code to the one in charge of performing the tests.</p>
+<p>This the implementation of the integration tests case class:</p>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> org.owasp.pocauthztesting.enumeration.SecurityRole;
+  <span class="hljs-keyword">import</span> org.owasp.pocauthztesting.service.AuthService;
+  <span class="hljs-keyword">import</span> org.owasp.pocauthztesting.vo.AuthorizationMatrix;
+  <span class="hljs-keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;
+  <span class="hljs-keyword">import</span> org.apache.http.client.methods.HttpDelete;
+  <span class="hljs-keyword">import</span> org.apache.http.client.methods.HttpGet;
+  <span class="hljs-keyword">import</span> org.apache.http.client.methods.HttpPut;
+  <span class="hljs-keyword">import</span> org.apache.http.client.methods.HttpRequestBase;
+  <span class="hljs-keyword">import</span> org.apache.http.entity.StringEntity;
+  <span class="hljs-keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;
+  <span class="hljs-keyword">import</span> org.apache.http.impl.client.HttpClients;
+  <span class="hljs-keyword">import</span> org.junit.Assert;
+  <span class="hljs-keyword">import</span> org.junit.BeforeClass;
+  <span class="hljs-keyword">import</span> org.junit.Test;
+  <span class="hljs-keyword">import</span> org.xml.sax.InputSource;
+  <span class="hljs-keyword">import</span> javax.xml.bind.JAXBContext;
+  <span class="hljs-keyword">import</span> javax.xml.parsers.SAXParserFactory;
+  <span class="hljs-keyword">import</span> javax.xml.transform.Source;
+  <span class="hljs-keyword">import</span> javax.xml.transform.sax.SAXSource;
+  <span class="hljs-keyword">import</span> java.io.File;
+  <span class="hljs-keyword">import</span> java.io.FileInputStream;
+  <span class="hljs-keyword">import</span> java.util.ArrayList;
+  <span class="hljs-keyword">import</span> java.util.List;
+  <span class="hljs-keyword">import</span> java.util.Optional;
+
+  <span class="hljs-comment">/**
+   * Integration Test cases in charge of validate the correct implementation of the authorization matrix.
+   * Create on test case by logical role that will test access on all services exposed by the system.
+   * Implements here focus on readability
+   */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthorizationMatrixIT</span> </span>{
+
+      <span class="hljs-comment">/**
+       * Object representation of the authorization matrix
+       */</span>
+      <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> AuthorizationMatrix AUTHZ_MATRIX;
+
+      <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String BASE_URL = <span class="hljs-string">&quot;http://localhost:8080&quot;</span>;
+
+
+      <span class="hljs-comment">/**
+       * Load the authorization matrix in objects tree
+       *
+       * <span class="hljs-doctag">@throws</span> Exception If any error occurs
+       */</span>
+      <span class="hljs-meta">@BeforeClass</span>
+      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">globalInit</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+          <span class="hljs-keyword">try</span> (FileInputStream fis = <span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-keyword">new</span> File(<span class="hljs-string">&quot;authorization-matrix.xml&quot;</span>))) { 
+              SAXParserFactory spf = SAXParserFactory.newInstance();
+              spf.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
+              spf.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
+              spf.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>, <span class="hljs-keyword">false</span>);
+              Source xmlSource = <span class="hljs-keyword">new</span> SAXSource(spf.newSAXParser().getXMLReader(), <span class="hljs-keyword">new</span> InputSource(fis));
+              JAXBContext jc = JAXBContext.newInstance(AuthorizationMatrix.class);
+              AUTHZ_MATRIX = (AuthorizationMatrix) jc.createUnmarshaller().unmarshal(xmlSource);
+          }
+      }
+
+      <span class="hljs-comment">/**
+       * Test access to the services from a anonymous user.
+       *
+       * <span class="hljs-doctag">@throws</span> Exception
+       */</span>
+      <span class="hljs-meta">@Test</span>
+      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testAccessUsingAnonymousUserPointOfView</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+          <span class="hljs-comment">//Run the tests - No access token here</span>
+          List&lt;String&gt; errors = executeTestWithPointOfView(SecurityRole.ANONYMOUS, <span class="hljs-keyword">null</span>);
+          <span class="hljs-comment">//Verify the test results</span>
+          Assert.assertEquals(<span class="hljs-string">&quot;Access issues detected using the ANONYMOUS USER point of view:\n&quot;</span> + formatErrorsList(errors), <span class="hljs-number">0</span>, errors.size());
+      }
+
+      <span class="hljs-comment">/**
+       * Test access to the services from a basic user.
+       *
+       * <span class="hljs-doctag">@throws</span> Exception
+       */</span>
+      <span class="hljs-meta">@Test</span>
+      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testAccessUsingBasicUserPointOfView</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+          <span class="hljs-comment">//Get access token representing the authorization for the associated point of view</span>
+          String accessToken = generateTestCaseAccessToken(<span class="hljs-string">&quot;basic&quot;</span>, SecurityRole.BASIC);
+          <span class="hljs-comment">//Run the tests</span>
+          List&lt;String&gt; errors = executeTestWithPointOfView(SecurityRole.BASIC, accessToken);
+          <span class="hljs-comment">//Verify the test results</span>
+          Assert.assertEquals(<span class="hljs-string">&quot;Access issues detected using the BASIC USER point of view:\n &quot;</span> + formatErrorsList(errors), <span class="hljs-number">0</span>, errors.size());
+      }
+
+      <span class="hljs-comment">/**
+       * Test access to the services from a administrator user.
+       *
+       * <span class="hljs-doctag">@throws</span> Exception
+       */</span>
+      <span class="hljs-meta">@Test</span>
+      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testAccessUsingAdministratorUserPointOfView</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+          <span class="hljs-comment">//Get access token representing the authorization for the associated point of view</span>
+          String accessToken = generateTestCaseAccessToken(<span class="hljs-string">&quot;admin&quot;</span>, SecurityRole.ADMIN);
+          <span class="hljs-comment">//Run the tests</span>
+          List&lt;String&gt; errors = executeTestWithPointOfView(SecurityRole.ADMIN, accessToken);
+          <span class="hljs-comment">//Verify the test results</span>
+          Assert.assertEquals(<span class="hljs-string">&quot;Access issues detected using the ADMIN USER point of view:\n&quot;</span> + formatErrorsList(errors), <span class="hljs-number">0</span>, errors.size());
+      }
+
+      <span class="hljs-comment">/**
+       * Evaluate the access to all service using the point of view (POV) specified.
+       *
+       * <span class="hljs-doctag">@param</span> pointOfView Point of view to use
+       * <span class="hljs-doctag">@param</span> accessToken Access token that is linked to the point of view in terms of authorization.
+       * <span class="hljs-doctag">@return</span> List of errors detected
+       * <span class="hljs-doctag">@throws</span> Exception If any error occurs
+       */</span>
+      <span class="hljs-function"><span class="hljs-keyword">private</span> List&lt;String&gt; <span class="hljs-title">executeTestWithPointOfView</span><span class="hljs-params">(SecurityRole pointOfView, String accessToken)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+          List&lt;String&gt; errors = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+          String errorMessageTplForUnexpectedReturnCode = <span class="hljs-string">&quot;The service &apos;%s&apos; when called with POV &apos;%s&apos; return a response code %s that is not the expected one in allowed or denied case.&quot;</span>;
+          String errorMessageTplForIncorrectReturnCode = <span class="hljs-string">&quot;The service &apos;%s&apos; when called with POV &apos;%s&apos; return a response code %s that is not the expected one (%s expected).&quot;</span>;
+          String fatalErrorMessageTpl = <span class="hljs-string">&quot;The service &apos;%s&apos; when called with POV %s meet the error: %s&quot;</span>;
+
+          <span class="hljs-comment">//Get the list of services to call</span>
+          List&lt;AuthorizationMatrix.Services.Service&gt; services = AUTHZ_MATRIX.getServices().getService();
+
+          <span class="hljs-comment">//Get the list of services test payload to use</span>
+          List&lt;AuthorizationMatrix.ServicesTesting.Service&gt; servicesTestPayload = AUTHZ_MATRIX.getServicesTesting().getService();
+
+          <span class="hljs-comment">//Call all services sequentially (no special focus on performance here)</span>
+          services.forEach(service -&gt; {
+              <span class="hljs-comment">//Get the service test payload for the current service</span>
+              String payload = <span class="hljs-keyword">null</span>;
+              String payloadContentType = <span class="hljs-keyword">null</span>;
+              Optional&lt;AuthorizationMatrix.ServicesTesting.Service&gt; serviceTesting = servicesTestPayload.stream().filter(srvPld -&gt; srvPld.getName().equals(service.getName())).findFirst();
+              <span class="hljs-keyword">if</span> (serviceTesting.isPresent()) {
+                  payload = serviceTesting.get().getPayload().getValue();
+                  payloadContentType = serviceTesting.get().getPayload().getContentType();
+              }
+              <span class="hljs-comment">//Call the service and verify if the response is consistent</span>
+              <span class="hljs-keyword">try</span> {
+                  <span class="hljs-comment">//Call the service</span>
+                  <span class="hljs-keyword">int</span> serviceResponseCode = callService(service.getUri(), payload, payloadContentType, service.getHttpMethod(), accessToken);
+                  <span class="hljs-comment">//Check if the role represented by the specified point of view is defined for the current service</span>
+                  Optional&lt;AuthorizationMatrix.Services.Service.Role&gt; role = service.getRole().stream().filter(r -&gt; r.getName().equals(pointOfView.name())).findFirst();
+                  <span class="hljs-keyword">boolean</span> accessIsGrantedInAuthorizationMatrix = role.isPresent();
+                  <span class="hljs-comment">//Verify behavior consistency according to the response code returned and the authorization configured in the matrix</span>
+                  <span class="hljs-keyword">if</span> (serviceResponseCode == service.getHttpResponseCodeForAccessAllowed()) {
+                      <span class="hljs-comment">//Roles is not in the list of role allowed to access to the service so it&apos;s an error</span>
+                      <span class="hljs-keyword">if</span> (!accessIsGrantedInAuthorizationMatrix) {
+                          errors.add(String.format(errorMessageTplForIncorrectReturnCode, service.getName(), pointOfView.name(), serviceResponseCode,
+                           service.getHttpResponseCodeForAccessDenied()));
+                      }
+                  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (serviceResponseCode == service.getHttpResponseCodeForAccessDenied()) {
+                      <span class="hljs-comment">//Roles is in the list of role allowed to access to the service so it&apos;s an error</span>
+                      <span class="hljs-keyword">if</span> (accessIsGrantedInAuthorizationMatrix) {
+                          errors.add(String.format(errorMessageTplForIncorrectReturnCode, service.getName(), pointOfView.name(), serviceResponseCode,
+                           service.getHttpResponseCodeForAccessAllowed()));
+                      }
+                  } <span class="hljs-keyword">else</span> {
+                      errors.add(String.format(errorMessageTplForUnexpectedReturnCode, service.getName(), pointOfView.name(), serviceResponseCode));
+                  }
+              } <span class="hljs-keyword">catch</span> (Exception e) {
+                  errors.add(String.format(fatalErrorMessageTpl, service.getName(), pointOfView.name(), e.getMessage()));
+              }
+
+
+          });
+
+          <span class="hljs-keyword">return</span> errors;
+      }
+
+      <span class="hljs-comment">/**
+       * Call a service with a specific payload and return the HTTP response code received.
+       * Delegate this step in order to made the test cases more easy to maintain.
+       *
+       * <span class="hljs-doctag">@param</span> uri                URI of the target service
+       * <span class="hljs-doctag">@param</span> payloadContentType Content type of the payload to send
+       * <span class="hljs-doctag">@param</span> payload            Payload to send
+       * <span class="hljs-doctag">@param</span> httpMethod         HTTP method to use
+       * <span class="hljs-doctag">@param</span> accessToken        Access token to specify to represent the identity of the caller
+       * <span class="hljs-doctag">@return</span> The HTTP response code received
+       * <span class="hljs-doctag">@throws</span> Exception If any error occurs
+       */</span>
+      <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">callService</span><span class="hljs-params">(String uri, String payload, String payloadContentType, String httpMethod, String accessToken)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+          <span class="hljs-keyword">int</span> rc;
+
+          <span class="hljs-comment">//Build the request - Use Apache HTTP Client in order to be more flexible in the combination</span>
+          HttpRequestBase request;
+          String url = (BASE_URL + uri).replaceAll(<span class="hljs-string">&quot;\\{messageId\\}&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>);
+          <span class="hljs-keyword">switch</span> (httpMethod) {
+              <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;GET&quot;</span>:
+                  request = <span class="hljs-keyword">new</span> HttpGet(url);
+                  <span class="hljs-keyword">break</span>;
+              <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;DELETE&quot;</span>:
+                  request = <span class="hljs-keyword">new</span> HttpDelete(url);
+                  <span class="hljs-keyword">break</span>;
+              <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;PUT&quot;</span>:
+                  request = <span class="hljs-keyword">new</span> HttpPut(url);
+                  <span class="hljs-keyword">if</span> (payload != <span class="hljs-keyword">null</span>) {
+                      request.setHeader(<span class="hljs-string">&quot;Content-Type&quot;</span>, payloadContentType);
+                      ((HttpPut) request).setEntity(<span class="hljs-keyword">new</span> StringEntity(payload.trim()));
+                  }
+                  <span class="hljs-keyword">break</span>;
+              <span class="hljs-keyword">default</span>:
+                  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnsupportedOperationException(httpMethod + <span class="hljs-string">&quot; not supported !&quot;</span>);
+          }
+          request.setHeader(<span class="hljs-string">&quot;Authorization&quot;</span>, (accessToken != <span class="hljs-keyword">null</span>) ? accessToken : <span class="hljs-string">&quot;&quot;</span>);
+
+
+          <span class="hljs-comment">//Send the request and get the HTTP response code</span>
+          <span class="hljs-keyword">try</span> (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+              <span class="hljs-keyword">try</span> (CloseableHttpResponse httpResponse = httpClient.execute(request)) {
+                  <span class="hljs-comment">//Don&apos;t care here about the response content...</span>
+                  rc = httpResponse.getStatusLine().getStatusCode();
+              }
+          }
+
+          <span class="hljs-keyword">return</span> rc;
+      }
+
+      <span class="hljs-comment">/**
+       * Generate a JWT token the user and role specified.
+       *
+       * <span class="hljs-doctag">@param</span> login User login
+       * <span class="hljs-doctag">@param</span> role  Authorization logical role
+       * <span class="hljs-doctag">@return</span> The JWT token
+       * <span class="hljs-doctag">@throws</span> Exception If any error occurs during the creation
+       */</span>
+      <span class="hljs-function"><span class="hljs-keyword">private</span> String <span class="hljs-title">generateTestCaseAccessToken</span><span class="hljs-params">(String login, SecurityRole role)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+          <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> AuthService().issueAccessToken(login, role);
+      }
+
+
+      <span class="hljs-comment">/**
+       * Format a list of errors to a printable string
+       *
+       * <span class="hljs-doctag">@param</span> errors Error list
+       * <span class="hljs-doctag">@return</span> Printable string
+       */</span>
+      <span class="hljs-function"><span class="hljs-keyword">private</span> String <span class="hljs-title">formatErrorsList</span><span class="hljs-params">(List&lt;String&gt; errors)</span> </span>{
+          StringBuilder buffer = <span class="hljs-keyword">new</span> StringBuilder();
+          errors.forEach(e -&gt; buffer.append(e).append(<span class="hljs-string">&quot;\n&quot;</span>));
+          <span class="hljs-keyword">return</span> buffer.toString();
+      }
+  }
+</code></pre>
+<p>In case of detection of a authorization issue(s) the output is the following:</p>
+<pre><code>testAccessUsingAnonymousUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  
+Time elapsed: 1.009 s  ### FAILURE
+java.lang.AssertionError:
+Access issues detected using the ANONYMOUS USER point of view:
+    The service &apos;DeleteMessage&apos; when called with POV &apos;ANONYMOUS&apos; return 
+    a response code 200 that is not the expected one (403 expected).
+
+    The service &apos;CreateMessage&apos; when called with POV &apos;ANONYMOUS&apos; return 
+    a response code 200 that is not the expected one (403 expected).
+
+testAccessUsingBasicUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  
+Time elapsed: 0.05 s  ### FAILURE!
+java.lang.AssertionError:
+Access issues detected using the BASIC USER point of view:
+    The service &apos;DeleteMessage&apos; when called with POV &apos;BASIC&apos; return 
+    a response code 200 that is not the expected one (403 expected).
+</code></pre><h1 id="rendering-of-the-authorization-matrix-for-audit--review"><a name="rendering-of-the-authorization-matrix-for-audit--review" class="plugin-anchor" href="#rendering-of-the-authorization-matrix-for-audit--review"><i class="fa fa-link" aria-hidden="true"></i></a>Rendering of the authorization matrix for audit / review</h1>
+<p>Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discution about the authorization matrix in order to spot potential inconsistencies.</p>
+<p>The Following XSL stylesheet can be used:</p>
+<pre><code class="lang-xslt">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; version=&quot;1.0&quot;&gt;
+  &lt;xsl:template match=&quot;/&quot;&gt;
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;title&gt;Authorization Matrix&lt;/title&gt;
+        &lt;link rel=&quot;stylesheet&quot; 
+        href=&quot;https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css&quot; 
+        integrity=&quot;sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ&quot; 
+        crossorigin=&quot;anonymous&quot; /&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;h3&gt;Roles&lt;/h3&gt;
+        &lt;ul&gt;
+          &lt;xsl:for-each select=&quot;authorization-matrix/roles/role&quot;&gt;
+            &lt;xsl:choose&gt;
+              &lt;xsl:when test=&quot;@name = &apos;ADMIN&apos;&quot;&gt;
+                &lt;div class=&quot;alert alert-warning&quot; role=&quot;alert&quot;&gt;
+                  &lt;strong&gt;
+                    &lt;xsl:value-of select=&quot;@name&quot; /&gt;
+                  &lt;/strong&gt;
+                  :
+                  &lt;xsl:value-of select=&quot;@description&quot; /&gt;
+                &lt;/div&gt;
+              &lt;/xsl:when&gt;
+              &lt;xsl:when test=&quot;@name = &apos;BASIC&apos;&quot;&gt;
+                &lt;div class=&quot;alert alert-info&quot; role=&quot;alert&quot;&gt;
+                  &lt;strong&gt;
+                    &lt;xsl:value-of select=&quot;@name&quot; /&gt;
+                  &lt;/strong&gt;
+                  :
+                  &lt;xsl:value-of select=&quot;@description&quot; /&gt;
+                &lt;/div&gt;
+              &lt;/xsl:when&gt;
+              &lt;xsl:otherwise&gt;
+                &lt;div class=&quot;alert alert-danger&quot; role=&quot;alert&quot;&gt;
+                  &lt;strong&gt;
+                    &lt;xsl:value-of select=&quot;@name&quot; /&gt;
+                  &lt;/strong&gt;
+                  :
+                  &lt;xsl:value-of select=&quot;@description&quot; /&gt;
+                &lt;/div&gt;
+              &lt;/xsl:otherwise&gt;
+            &lt;/xsl:choose&gt;
+          &lt;/xsl:for-each&gt;
+        &lt;/ul&gt;
+        &lt;h3&gt;Authorizations&lt;/h3&gt;
+        &lt;table class=&quot;table table-hover table-sm&quot;&gt;
+          &lt;thead class=&quot;thead-inverse&quot;&gt;
+            &lt;tr&gt;
+              &lt;th&gt;Service&lt;/th&gt;
+              &lt;th&gt;URI&lt;/th&gt;
+              &lt;th&gt;Method&lt;/th&gt;
+              &lt;th&gt;Role&lt;/th&gt;
+            &lt;/tr&gt;
+          &lt;/thead&gt;
+          &lt;tbody&gt;
+            &lt;xsl:for-each select=&quot;authorization-matrix/services/service&quot;&gt;
+              &lt;xsl:variable name=&quot;service-name&quot; select=&quot;@name&quot; /&gt;
+              &lt;xsl:variable name=&quot;service-uri&quot; select=&quot;@uri&quot; /&gt;
+              &lt;xsl:variable name=&quot;service-method&quot; select=&quot;@http-method&quot; /&gt;
+              &lt;xsl:for-each select=&quot;role&quot;&gt;
+                &lt;tr&gt;
+                  &lt;td scope=&quot;row&quot;&gt;
+                    &lt;xsl:value-of select=&quot;$service-name&quot; /&gt;
+                  &lt;/td&gt;
+                  &lt;td&gt;
+                    &lt;xsl:value-of select=&quot;$service-uri&quot; /&gt;
+                  &lt;/td&gt;
+                  &lt;td&gt;
+                    &lt;xsl:value-of select=&quot;$service-method&quot; /&gt;
+                  &lt;/td&gt;
+                  &lt;td&gt;
+                    &lt;xsl:variable name=&quot;service-role-name&quot; select=&quot;@name&quot; /&gt;
+                    &lt;xsl:choose&gt;
+                      &lt;xsl:when test=&quot;@name = &apos;ADMIN&apos;&quot;&gt;
+                        &lt;div class=&quot;alert alert-warning&quot; role=&quot;alert&quot;&gt;
+                          &lt;xsl:value-of select=&quot;@name&quot; /&gt;
+                        &lt;/div&gt;
+                      &lt;/xsl:when&gt;
+                      &lt;xsl:when test=&quot;@name = &apos;BASIC&apos;&quot;&gt;
+                        &lt;div class=&quot;alert alert-info&quot; role=&quot;alert&quot;&gt;
+                          &lt;xsl:value-of select=&quot;@name&quot; /&gt;
+                        &lt;/div&gt;
+                      &lt;/xsl:when&gt;
+                      &lt;xsl:otherwise&gt;
+                        &lt;div class=&quot;alert alert-danger&quot; role=&quot;alert&quot;&gt;
+                          &lt;xsl:value-of select=&quot;@name&quot; /&gt;
+                        &lt;/div&gt;
+                      &lt;/xsl:otherwise&gt;
+                    &lt;/xsl:choose&gt;
+                  &lt;/td&gt;
+                &lt;/tr&gt;
+              &lt;/xsl:for-each&gt;
+            &lt;/xsl:for-each&gt;
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</code></pre>
+<p>Example of the rendering:</p>
+<p><img src="../assets/Authorization_Testing_Automation_AutomationRendering.png" alt="RenderingExample"></p>
+<h1 id="sources-of-the-prototype"><a name="sources-of-the-prototype" class="plugin-anchor" href="#sources-of-the-prototype"><i class="fa fa-link" aria-hidden="true"></i></a>Sources of the prototype</h1>
+<p><a href="https://github.com/righettod/poc-authz-testing" target="_blank">Github repository</a></p>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Dominique Righetto - dominique.righetto@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Authentication_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Authentication ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Bean_Validation_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Bean Validation ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Authorization Testing Automation","level":"1.9","depth":1,"next":{"title":"Bean Validation ","level":"1.10","depth":1,"path":"cheatsheets/Bean_Validation_Cheat_Sheet.md","ref":"cheatsheets/Bean_Validation_Cheat_Sheet.md","articles":[]},"previous":{"title":"Authentication ","level":"1.8","depth":1,"path":"cheatsheets/Authentication_Cheat_Sheet.md","ref":"cheatsheets/Authentication_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authorization_Testing_Automation.md","mtime":"2019-03-08T09:06:17.302Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

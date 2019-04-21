@@ -82,7 +82,10 @@ If your application is not using file uploads, and say the only data the user wi
 
 ```text
 enable_dl               = Off
-disable_functions       = system, exec, shell_exec, passthru, phpinfo, show_source, highlight_file, popen, proc_open, fopen_with_path, dbmopen, dbase_open, putenv, move_uploaded_file, chdir, mkdir, rmdir, chmod, rename, filepro, filepro_rowcount, filepro_retrieve, posix_mkfifo
+disable_functions       = system, exec, shell_exec, passthru, phpinfo, show_source, popen, proc_open
+disable_functions       = fopen_with_path, dbmopen, dbase_open, putenv, move_uploaded_file
+disable_functions       = chdir, mkdir, rmdir, chmod, rename
+disable_functions       = filepro, filepro_rowcount, filepro_retrieve, posix_mkfifo
 # see also: http://ir.php.net/features.safe-mode
 disable_classes         = 
 ```

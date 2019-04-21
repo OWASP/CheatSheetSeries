@@ -1,0 +1,1352 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>TLS Cipher String  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Third_Party_Javascript_Management_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Session_Management_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >TLS Cipher String </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>This article is focused on providing clear and simple examples for the cipher string. They are based on different scenarios where you use the Transport Layer Security (TLS) protocol.</p>
+<h1 id="recommendations-for-a-cipher-string"><a name="recommendations-for-a-cipher-string" class="plugin-anchor" href="#recommendations-for-a-cipher-string"><i class="fa fa-link" aria-hidden="true"></i></a>Recommendations for a cipher string</h1>
+<h2 id="scenarios"><a name="scenarios" class="plugin-anchor" href="#scenarios"><i class="fa fa-link" aria-hidden="true"></i></a>Scenarios</h2>
+<p>The cipher strings are based on the recommendation to setup your policy to get a whitelist for your ciphers as described in the <em><a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)</a></em>. The latest and strongest ciphers are solely available with TLSv1.2, older protocols don&apos;t support them. Please find enclosed all supported protocols by the scenario.</p>
+<p>We have not included any <code>ChaCha20-Poly1305</code> ciphers, yet. One reason is that we haven&apos;t found various assessments yet, the other is that implementations of new ciphers may be more buggy.</p>
+<p>Finally we have compiled the oldest versions of different client agents that are still compatible with a cipher string. We provide this information according to the ciphers and protocols supported by browsers, libraries, bots on the basis of <em><a href="https://www.ssllabs.com/ssltest/clients.html" target="_blank">ssllabs&apos;s list of user agent capabilities</a></em> and tests on our own. </p>
+<p>We have checked this thoroughly, but please accept that all data is provided without any warranty of any kind (Please contact the authors if you find any errors or if you can provide additional data).</p>
+<p>The recommended cipher strings are based on different scenarios:</p>
+<p><strong>OWASP Cipher String &apos;A+&apos;</strong> (Advanced+, limited compatibility, e.g. to more recent browser versions):</p>
+<ul>
+<li>Recommended if you control the server and the clients (e.g. by approvement) and if you check the compatibility before using it</li>
+<li>Includes solely the strongest <a href="https://scotthelme.co.uk/perfect-forward-secrecy/" target="_blank">Perfect Forward Secrecy (PFS)</a> ciphers.</li>
+<li>Protocols: <code>TLSv1.2</code> (and newer or better).</li>
+<li>Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 32/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7 + MS14-066, Java8b132, OpenSSL 1.0.1e, Safari 9/iOS 9, Yahoo Slurp Jun 2014, YandexBot Sep 2014.</li>
+</ul>
+<p><strong>OWASP Cipher String &apos;A&apos;</strong> (Advanced, wider compatibility, e.g. to most newer browser versions):</p>
+<ul>
+<li>Recommended if you control the server and the clients (e.g. by approvement) if the &apos;A+&apos; string does not work, make sure to check the compatibility before using it</li>
+<li>Includes solely the strongest and stronger <a href="https://scotthelme.co.uk/perfect-forward-secrecy/" target="_blank">PFS</a> ciphers</li>
+<li>Protocols: <code>TLSv1.2</code> (and newer or better).</li>
+<li>Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 30/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7, IE 11/WinPhone 8.1, Java8b132, OpenSSL 1.0.1e, Opera 17/Win 7, Safari 5/iOS 5.1.1, Safari 7/OS X 10.9, Yahoo Slurp Jun 2014, YandexBot Sep 2014</li>
+</ul>
+<p><strong>OWASP Cipher String &apos;B&apos;</strong> (Broad compatibility to browsers, check the compatibility to other protocols before using it, e.g. IMAPS):</p>
+<ul>
+<li>Recommended if you solely control the server, the clients use their browsers and if you check the compatibility before using it for other protocols than https.</li>
+<li>Includes solely <a href="https://scotthelme.co.uk/perfect-forward-secrecy/" target="_blank">PFS</a> ciphers.</li>
+<li>Be aware of additional risks and of new vulnerabilities that may appear are more likely than above.</li>
+<li>Plan to phase out SHA-1 and TLSv1, TLSv1.1 for https in middle-term.</li>
+<li>Protocols: <code>TLSv1.2</code>, <code>TLSv1.1</code>, <code>TLSv1</code> (and newer or better).</li>
+<li>Oldest known clients that are compatible: Android 2.3.7/4.0.4, Baidu Jan 2015, BingPreview Dec 2013, Chrome 27/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 10.0.12 ESR/Win 7, Firefox 21/Win 7+Fedora 19, Googlebot Oct 2013, IE 7/Vista, IE 10/WinPhone 8.0, Java 7u25, OpenSSL 0.9.8y, Opera 12.15/Win 7, Safari 5/iOS 5.1.1, Safari 5.1.9/OS X 10.6.8, Yahoo Slurp Oct 2013, YandexBot May 2014</li>
+</ul>
+<p><strong>OWASP Cipher String &apos;C&apos;</strong> (Widest Compatibility, compatibility to most legacy browsers, legacy libraries (still patched) and other application protocols besides https, e.g. IMAPS):</p>
+<ul>
+<li>You may use this if you solely control the server, your clients use elder browsers and other elder libraries or if you use other protocols than https.</li>
+<li>Be aware of the existing risks and of new vulnerabilities that may appear more likely.</li>
+<li><a href="https://scotthelme.co.uk/perfect-forward-secrecy/" target="_blank">PFS</a> ciphers are preferred, except all <a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" target="_blank">DHE</a> ciphers that use SHA-1 (to prevent possible incompatibility issues caused by the length of the <a href="https://wiki.openssl.org/index.php/Diffie-Hellman_parameters" target="_blank">DHparameter</a>).</li>
+<li>Plan to move to &apos;A&apos; for https or at least &apos;B&apos; otherwise in middle-term.</li>
+<li>Protocols: <code>TLSv1.2</code>, <code>TLSv1.1</code>, <code>TLSv1</code> (and newer or better).</li>
+</ul>
+<p><strong>OWASP Cipher String &apos;C-&apos;</strong> (Legacy, widest compatibility to real old browsers and legacy libraries and other application protocols like SMTP):</p>
+<ul>
+<li>Take care, use this cipher string only if you are forced to support <code>3DES</code> (<code>TLS_RSA_WITH_3DES_EDE_CBC_SHA</code>, <code>DES-CBC3-SHA</code>) for real old clients with very old libraries or old libraries for other protocols besides https</li>
+<li>Be aware of the existing risks (e.g. ciphers without PFS, ciphers with 3DES) and of new vulnerabilities that may appear the most likely</li>
+<li><strong>Never use</strong> even more INSECURE or elder ciphers based on <code>RC2</code>, <code>RC4</code>, <code>DES</code>, <code>MD4</code>, <code>MD5</code>, <code>EXP</code>, <code>EXP1024</code>, <code>AH</code>, <code>ADH</code>, <code>aNULL</code>, <code>eNULL</code>, <code>SEED</code> nor <code>IDEA</code>.</li>
+<li><a href="https://scotthelme.co.uk/perfect-forward-secrecy/" target="_blank">PFS</a> ciphers are preferred, except all <a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" target="_blank">DHE</a> ciphers that use SHA-1 (to prevent possible incompatibility issues caused by the length of the <a href="https://wiki.openssl.org/index.php/Diffie-Hellman_parameters" target="_blank">DHparameter</a>)</li>
+<li>Plan to move at least to &apos;C&apos; in a short-term</li>
+<li>Protocols: <code>TLSv1.2</code>, <code>TLSv1.1</code>, <code>TLSv1</code> (and newer or better)</li>
+</ul>
+<h2 id="table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-19"><a name="table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-19" class="plugin-anchor" href="#table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-19"><i class="fa fa-link" aria-hidden="true"></i></a>Table of the ciphers (and their priority from high (1) to low (e.g. 19))</h2>
+<p>IANA, OpenSSL and other crypto libraries use slightly different names for the same ciphers. </p>
+<p>This table lists the names used by IANA and by openssl in brackets <code>[]</code>. Additional you can find the unambiguously hex values defined by IANA. Mozilla offers a larger <em><a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Cipher_names_correspondence_table" target="_blank">cipher names correspondence table</a></em>.</p>
+<!-- markdownlint-disable MD033 -->
+<table>
+<thead>
+<tr>
+<th>Cipher name:<br>IANA, [OpenSSL]</th>
+<th style="text-align:center">Cipher HEX value</th>
+<th style="text-align:center">Advanced+<br>(A+)</th>
+<th style="text-align:center">Advanced<br>(A)</th>
+<th style="text-align:center">Broad  Compatibility<br>(B)</th>
+<th style="text-align:center">Widest Compatibility<br>(C)</th>
+<th style="text-align:center">Legacy<br>(C-)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TLS_DHE_RSA_WITH_AES_256_GCM_SHA384</code>,<br>[<code>DHE-RSA-AES256-GCM-SHA384</code>]</td>
+<td style="text-align:center">0x009f</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td><code>TLS_DHE_RSA_WITH_AES_128_GCM_SHA256</code>,<br>[<code>DHE-RSA-AES128-GCM-SHA256</code>]</td>
+<td style="text-align:center">0x009e</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td><code>TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</code>,<br>[<code>ECDHE-RSA-AES256-GCM-SHA384</code>]</td>
+<td style="text-align:center">0xc030</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td><code>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</code>,<br>[<code>ECDHE-RSA-AES128-GCM-SHA256</code>]</td>
+<td style="text-align:center">0xc02f</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td><code>TLS_DHE_RSA_WITH_AES_256_CBC_SHA256</code>,<br>[<code>DHE-RSA-AES256-SHA256</code>]</td>
+<td style="text-align:center">0x006b</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td><code>TLS_DHE_RSA_WITH_AES_128_CBC_SHA256</code>,<br>[<code>DHE-RSA-AES128-SHA256</code>]</td>
+<td style="text-align:center">0x0067</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td><code>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384</code>,<br>[<code>ECDHE-RSA-AES256-SHA384</code>]</td>
+<td style="text-align:center">0xc028</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">7</td>
+</tr>
+<tr>
+<td><code>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</code>,<br>[<code>ECDHE-RSA-AES128-SHA256</code>]</td>
+<td style="text-align:center">0xc027</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">8</td>
+</tr>
+<tr>
+<td><code>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</code>,<br>[<code>ECDHE-RSA-AES256-SHA</code>]</td>
+<td style="text-align:center">0xc014</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">9</td>
+</tr>
+<tr>
+<td><code>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</code>,<br>[<code>ECDHE-RSA-AES128-SHA</code>]</td>
+<td style="text-align:center">0xc013</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">10</td>
+</tr>
+<tr>
+<td><code>TLS_RSA_WITH_AES_256_GCM_SHA384</code>,<br>[<code>AES256-GCM-SHA384</code>]</td>
+<td style="text-align:center">0x009d</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">11</td>
+</tr>
+<tr>
+<td><code>TLS_RSA_WITH_AES_128_GCM_SHA256</code>,<br>[<code>AES128-GCM-SHA256</code>]</td>
+<td style="text-align:center">0x009c</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">12</td>
+</tr>
+<tr>
+<td><code>TLS_RSA_WITH_AES_256_CBC_SHA256</code>,<br>[<code>AES256-SHA256</code>]</td>
+<td style="text-align:center">0x003d</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">13</td>
+<td style="text-align:center">13</td>
+</tr>
+<tr>
+<td><code>TLS_RSA_WITH_AES_128_CBC_SHA256</code>,<br>[<code>AES128-SHA256</code>]</td>
+<td style="text-align:center">0x003c</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">14</td>
+<td style="text-align:center">14</td>
+</tr>
+<tr>
+<td><code>TLS_RSA_WITH_AES_256_CBC_SHA</code>,<br>[<code>AES256-SHA</code>]</td>
+<td style="text-align:center">0x0035</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">15</td>
+</tr>
+<tr>
+<td><code>TLS_RSA_WITH_AES_128_CBC_SHA</code>,<br>[<code>AES128-SHA</code>]</td>
+<td style="text-align:center">0x002f</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">16</td>
+<td style="text-align:center">16</td>
+</tr>
+<tr>
+<td><code>TLS_RSA_WITH_3DES_EDE_CBC_SHA</code>,<br>[<code>DES-CBC3-SHA</code>]</td>
+<td style="text-align:center">0x000a</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">17</td>
+</tr>
+<tr>
+<td><code>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</code>,<br>[<code>DHE-RSA-AES256-SHA</code>]</td>
+<td style="text-align:center">0x0039</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">17</td>
+<td style="text-align:center">18</td>
+</tr>
+<tr>
+<td><code>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</code>,<br>[<code>DHE-RSA-AES128-SHA</code>]</td>
+<td style="text-align:center">0x0033</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">18</td>
+<td style="text-align:center">19</td>
+</tr>
+</tbody>
+</table>
+<!-- markdownlint-enable MD033 -->
+<p><strong>Remarks:</strong></p>
+<p>Elder versions of Internet-Explorer and Java do <strong>NOT</strong> support Diffie-Hellman parameters superior to 1024 bit. So the ciphers <code>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</code> and <code>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</code> were moved to the end to prevent possible incompatibility issues. </p>
+<p>Other option: <em>Delete this two ciphers from your list</em>.</p>
+<h2 id="examples-for-cipher-strings"><a name="examples-for-cipher-strings" class="plugin-anchor" href="#examples-for-cipher-strings"><i class="fa fa-link" aria-hidden="true"></i></a>Examples for cipher strings</h2>
+<h3 id="openssl"><a name="openssl" class="plugin-anchor" href="#openssl"><i class="fa fa-link" aria-hidden="true"></i></a>OpenSSL</h3>
+<!-- markdownlint-disable MD033 -->
+<table>
+<thead>
+<tr>
+<th>Cipher-String</th>
+<th>OpenSSL syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Advanced+<br>(A+)</td>
+<td><code>DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256</code></td>
+</tr>
+<tr>
+<td>Advanced<br>(A)</td>
+<td><code>DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256</code></td>
+</tr>
+<tr>
+<td>Broad Compatibility<br>(B)</td>
+<td><code>DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA</code></td>
+</tr>
+<tr>
+<td>Widest Compatibility<br>(C)</td>
+<td><code>DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA</code></td>
+</tr>
+<tr>
+<td>Legacy<br>(C-)</td>
+<td><code>DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA</code></td>
+</tr>
+</tbody>
+</table>
+<!-- markdownlint-enable MD033 -->
+<h1 id="how-to-use-this-cipher-strings"><a name="how-to-use-this-cipher-strings" class="plugin-anchor" href="#how-to-use-this-cipher-strings"><i class="fa fa-link" aria-hidden="true"></i></a>How to use this Cipher Strings?</h1>
+<p>Inform yourself how to securely configure the settings for the services or hardware that you do use, e.g. <em><a href="https://bettercrypto.org" target="_blank">BetterCrypto.org: Applied Crypto Hardening (DRAFT)</a></em>, <em><a href="https://wiki.mozilla.org/Security/Server_Side_TLS" target="_blank">Mozilla: Security/Server Side TLS</a></em>. </p>
+<p>We recommend to use one of the cipher strings described above.</p>
+<h1 id="example-configs"><a name="example-configs" class="plugin-anchor" href="#example-configs"><i class="fa fa-link" aria-hidden="true"></i></a>Example configs</h1>
+<h2 id="apache"><a name="apache" class="plugin-anchor" href="#apache"><i class="fa fa-link" aria-hidden="true"></i></a>Apache</h2>
+<p><strong>Cipher String &apos;A&apos;:</strong></p>
+<pre><code class="lang-text">SSLProtocol +TLSv1.2                  # for Cipher-String &apos;A+&apos;, &apos;A&apos;
+#SSLProtocol +TLSv1.2 +TLSv1.1 +TLSv1 # for Cipher-String &apos;B&apos;, &apos;C&apos;, &apos;C-&apos;
+SSLCompression off
+SSLHonorCipherOrder on
+SSLCipherSuite &apos;DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384
+:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256
+:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256&apos;
+#add optionally &apos;:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA:!3DES&apos;
+</code></pre>
+<p><strong>Remarks:</strong></p>
+<ul>
+<li>The cipher string is compiled as a whitelist of individual ciphers to get a better compatibility even with old versions of OpenSSL.</li>
+<li>Monitor the performance of your server, e.g. the TLS handshake with DHE hinders the CPU about 2.4 times more than ECDHE, cf. <em><a href="http://vincent.bernat.im/en/blog/2011-ssl-perfect-forward-secrecy.html#some-benchmarks" target="_blank">Vincent Bernat, 2011</a></em>, <em><a href="http://nmav.gnutls.org/2011/12/price-to-pay-for-perfect-forward.html" target="_blank">nmav&apos;s Blog, 2011</a></em>.</li>
+<li>Verify your cipher string using your crypto library, e.g. openssl using cipher string &apos;A&apos;:</li>
+</ul>
+<pre><code class="lang-text">openssl ciphers -V &quot;DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384
+:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384
+:ECDHE-RSA-AES128-SHA256&quot;
+#add optionally &apos;:!aNULL:!eNULL:!LOW:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA&apos; to protect 
+#older Versions of OpenSSL
+#use openssl ciphers -v &quot;...&quot; for openssl &lt; 1.0.1:
+
+0x00,0x9F - DHE-RSA-AES256-GCM-SHA384   TLSv1.2 Kx=DH     Au=RSA  Enc=AESGCM(256) Mac=AEAD
+0x00,0x9E - DHE-RSA-AES128-GCM-SHA256   TLSv1.2 Kx=DH     Au=RSA  Enc=AESGCM(128) Mac=AEAD
+0xC0,0x30 - ECDHE-RSA-AES256-GCM-SHA384 TLSv1.2 Kx=ECDH   Au=RSA  Enc=AESGCM(256) Mac=AEAD
+0xC0,0x2F - ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 Kx=ECDH   Au=RSA  Enc=AESGCM(128) Mac=AEAD
+0x00,0x6B - DHE-RSA-AES256-SHA256       TLSv1.2 Kx=DH     Au=RSA  Enc=AES(256)    Mac=SHA256
+0x00,0x67 - DHE-RSA-AES128-SHA256       TLSv1.2 Kx=DH     Au=RSA  Enc=AES(128)    Mac=SHA256
+0xC0,0x28 - ECDHE-RSA-AES256-SHA384     TLSv1.2 Kx=ECDH   Au=RSA  Enc=AES(256)    Mac=SHA384
+0xC0,0x27 - ECDHE-RSA-AES128-SHA256     TLSv1.2 Kx=ECDH   Au=RSA  Enc=AES(128)    Mac=SHA256
+</code></pre>
+<p><strong>CAUTION:</strong> You need a newer version of OpenSSL to use this cipher string!</p>
+<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h1>
+<ul>
+<li><a href="Transport_Layer_Protection_Cheat_Sheet.html">OWASP: Transport Layer Protection Cheat Sheet</a>.</li>
+<li><a href="https://bettercrypto.org" target="_blank">BetterCrypto.org: Applied Crypto Hardening (DRAFT)</a>.</li>
+<li><a href="https://wiki.mozilla.org/Security/Server_Side_TLS" target="_blank">Mozilla: Security/Server Side TLS</a>.</li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Torsten Gigler - torsten.gigler@owasp.org</p>
+<p>Achim Hoffmann - achim@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Session_Management_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Session Management ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Third Party Javascript Management ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"TLS Cipher String ","level":"1.51","depth":1,"next":{"title":"Third Party Javascript Management ","level":"1.52","depth":1,"path":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","ref":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"Session Management ","level":"1.50","depth":1,"path":"cheatsheets/Session_Management_Cheat_Sheet.md","ref":"cheatsheets/Session_Management_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/TLS_Cipher_String_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.597Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

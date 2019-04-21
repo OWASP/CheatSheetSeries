@@ -1,7 +1,0 @@
-# Audit result files
-*.out
-# Website generation stuff
-TOC.md
-node_modules/
-site/
-generated/

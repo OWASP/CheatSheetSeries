@@ -1,0 +1,1205 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Virtual Patching  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Vulnerability_Disclosure_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="User_Privacy_Protection_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Virtual Patching </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>The goal with this cheat Sheet is to present a concise virtual patching framework that organizations can follow to maximize the timely implementation of mitigation protections.</p>
+<h1 id="definition-virtual-patching"><a name="definition-virtual-patching" class="plugin-anchor" href="#definition-virtual-patching"><i class="fa fa-link" aria-hidden="true"></i></a>Definition: Virtual Patching</h1>
+<p><strong>A security policy enforcement layer which prevents and reports the exploitation attempt of a known vulnerability.</strong></p>
+<p>The virtual patch works when the security enforcement layer analyzes transactions and intercepts attacks in transit, so malicious traffic never reaches the web application. The resulting impact of virtual patching is that, while the actual source code of the application itself has not been modified, the exploitation attempt does not succeed.</p>
+<h1 id="why-not-just-fix-the-code"><a name="why-not-just-fix-the-code" class="plugin-anchor" href="#why-not-just-fix-the-code"><i class="fa fa-link" aria-hidden="true"></i></a>Why Not Just Fix the Code?</h1>
+<p>From a purely technical perspective, the number one remediation strategy would be for an organization to correct the identified vulnerability within the source code of the web application. This concept is universally agreed upon by both web application security experts and system owners. Unfortunately, in real world business situations, there arise many scenarios where updating the source code of a web application is not easy such as:</p>
+<ul>
+<li><strong>Lack of resources</strong> - Devs are already allocated to other projects.</li>
+<li><strong>3rd Party Software</strong> - Code can not be modified by the user.</li>
+<li><strong>Outsourced App Dev</strong> - Changes would require a new project.</li>
+</ul>
+<p>The important point is this - <strong>Code level fixes and Virtual Patching are NOT mutually exclusive</strong>. They are processes that are executed by different team (OWASP Builders/Devs vs. OWASP Defenders/OpSec) and can be run in tandem.</p>
+<h1 id="value-of-virtual-patching"><a name="value-of-virtual-patching" class="plugin-anchor" href="#value-of-virtual-patching"><i class="fa fa-link" aria-hidden="true"></i></a>Value of Virtual Patching</h1>
+<p>The two main goals of Virtual Patching are:</p>
+<ul>
+<li><strong>Minimize Time-to-Fix</strong> - Fixing application source code takes time. The main purpose of a virtual patch is to implement a mitigation for the identified vulnerability as soon as possible. The urgency of this response may be different: for example if the vulnerability was identified in-house through code reviews or penetration testing vs. finding a vulnerability as part of live incident response.</li>
+<li><strong>Attack Surface Reduction</strong> - Focus on minimizing the attack vector. In some cases, such as missing positive security input validation, it is possible to achieve 100% attack surface reduction. In other cases, such with missing output encoding for XSS flaws, you may only be able to limit the exposures. Keep in mind - 50% reduction in 10 minutes is better than 100% reduction in 48 hrs.</li>
+</ul>
+<h1 id="virtual-patching-tools"><a name="virtual-patching-tools" class="plugin-anchor" href="#virtual-patching-tools"><i class="fa fa-link" aria-hidden="true"></i></a>Virtual Patching Tools</h1>
+<p>Notice that the definition above did not list any specific tool as there are a number of different options that may be used for virtual patching efforts such as:</p>
+<ul>
+<li>Intermediary devices such as a WAF or IPS appliance</li>
+<li>Web server plugin such as ModSecurity</li>
+<li>Application layer filter such as ESAPI WAF</li>
+</ul>
+<p>For example purposes, we will show virtual patching examples using the open source <a href="http://www.modsecurity.org" target="_blank">ModSecurity WAF tool</a>.</p>
+<h1 id="a-virtual-patching-methodology"><a name="a-virtual-patching-methodology" class="plugin-anchor" href="#a-virtual-patching-methodology"><i class="fa fa-link" aria-hidden="true"></i></a>A Virtual Patching Methodology</h1>
+<p>Virtual Patching, like most other security processes, is not something that should be approached haphazardly. Instead, a consistent, repeatable process should be followed that will provide the best chances of success. The following virtual patching workflow mimics the industry accepted practice for conducting IT Incident Response and consists of the following phases:</p>
+<ol>
+<li>Preparation.</li>
+<li>Identification.</li>
+<li>Analysis.</li>
+<li>Virtual Patch Creation.</li>
+<li>Implementation/Testing.</li>
+<li>Recovery/Follow Up.</li>
+</ol>
+<h1 id="example-public-vulnerability"><a name="example-public-vulnerability" class="plugin-anchor" href="#example-public-vulnerability"><i class="fa fa-link" aria-hidden="true"></i></a>Example Public Vulnerability</h1>
+<p>Let&apos;s take the following <a href="https://packetstormsecurity.com/files/119217/WordPress-Shopping-Cart-8.1.14-Shell-Upload-SQL-Injection.html" target="_blank">SQL Injection vulnerability</a> as our example for the remainder of this article:</p>
+<pre><code class="lang-text">WordPress Shopping Cart Plugin for WordPress 
+/wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php 
+reqID Parameter prone to SQL Injection.
+</code></pre>
+<p><strong>Description</strong>: </p>
+<p>WordPress Shopping Cart Plugin for WordPress contains a flaw that may allow an attacker to carry out an SQL injection attack. </p>
+<p>The issue is due to the <code>/wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php</code> script not properly sanitizing user-supplied input to the <code>reqID</code> parameter. </p>
+<p>This may allow an attacker to inject or manipulate SQL queries in the back-end database, allowing for the manipulation or disclosure of arbitrary data.</p>
+<h1 id="preparation-phase"><a name="preparation-phase" class="plugin-anchor" href="#preparation-phase"><i class="fa fa-link" aria-hidden="true"></i></a>Preparation Phase</h1>
+<p>The importance of properly utilizing the preparation phase with regards to virtual patching cannot be overstated. You need to do a number of things to setup the virtual patching processes and framework <strong>prior</strong> to actually having to deal with an identified vulnerability, or worse yet, react to a live web application intrusion. The point is that during a live compromise is not the ideal time to be proposing installation of a web application firewall and the concept of a virtual patch. Tension is high during real incidents and time is of the essence, so lay the foundation of virtual patching when the waters are calm and get everything in place and ready to go when an incident does occur.</p>
+<p>Here are a few critical items that should be addressed during the preparation phase:</p>
+<ul>
+<li><strong>Public/Vendor Vulnerability Monitoring</strong> - Ensure that you are signed up for all vendor alert mail-lists for commercial software that you are using. This will ensure that you will be notified in the event that the vendor releases vulnerability information and patching data.</li>
+<li><strong>Virtual Patching Pre-Authorization</strong> &#x2013; Virtual Patches need to be implemented quickly so the normal governance processes and authorizations steps for standard software patches need to be expedited. Since virtual patches are not actually modifying source code, they do not require the same amount of regression testing as normal software patches. Categorizing virtual patches in the same group as Anti-Virus updates or Network IDS signatures helps to speed up the authorization process and minimize extended testing phases.</li>
+<li><strong>Deploy Virtual Patching Tool In Advance</strong> - As time is critical during incident response, it would be a poor time to have to get approvals to install new software. For instance, you can install ModSecurity WAF in embedded mode on your Apache servers, or an Apache reverse proxy server. The advantage with this deployment is that you can create fixes for non-Apache back-end servers. Even if you do not use ModSecurity under normal circumstances, it is best to have it &#x201C;on deck&#x201D; ready to be enabled if need be.</li>
+<li><strong>Increase HTTP Audit Logging</strong> &#x2013; The standard Common Log Format (CLF) utilized by most web servers does not provide adequate data for conducting proper incident response. You need to have access to the following HTTP data:<ul>
+<li>Request URI (including QUERY_STRING)</li>
+<li>Full Request Headers (including Cookies)</li>
+<li>Full Request Body (POST payload)</li>
+<li>Full Response Headers</li>
+<li>Full Response Body</li>
+</ul>
+</li>
+</ul>
+<h1 id="identification-phase"><a name="identification-phase" class="plugin-anchor" href="#identification-phase"><i class="fa fa-link" aria-hidden="true"></i></a>Identification Phase</h1>
+<p>The Identification Phase occurs when an organization becomes aware of a vulnerability within their web application. There are generally two different methods of identifying vulnerabilities: <code>Proactive</code> and <code>Reactive</code>.</p>
+<h2 id="proactive-identification"><a name="proactive-identification" class="plugin-anchor" href="#proactive-identification"><i class="fa fa-link" aria-hidden="true"></i></a>Proactive Identification</h2>
+<p>This occurs when an organization takes it upon themselves to assess their web security posture and conducts the following tasks:</p>
+<ul>
+<li><strong>Dynamic Application Assessments</strong> - Whitehat attackers conduct penetration tests or automated web assessment tools are run against the live web application to identify flaws.</li>
+<li><strong>Source code reviews</strong> - Whitehat attackers use manual/automated means to analyze the source code of the web application to identify flaws.</li>
+</ul>
+<p>Due to the fact that custom coded web applications are unique, these proactive identification tasks are extremely important as you are not able to rely upon 3rd party vulnerability notifications.</p>
+<h2 id="reactive-identification"><a name="reactive-identification" class="plugin-anchor" href="#reactive-identification"><i class="fa fa-link" aria-hidden="true"></i></a>Reactive Identification</h2>
+<p>There are three main reactive methods for identifying vulnerabilities:</p>
+<ul>
+<li><strong>Vendor contact (e.g. pre-warning)</strong> - Occurs when a vendor discloses a vulnerability for commercial web application software that you are using. Example is Microsoft&apos;s <a href="https://www.microsoft.com/en-us/msrc/mapp" target="_blank">Active Protections Program (MAPP)</a></li>
+<li><strong>Public disclosure</strong> - Public vulnerability disclosure for commercial/open source web application software that you are using. The threat level for public disclosure is increased as more people know about the vulnerability.</li>
+<li><strong>Security incident</strong> &#x2013; This is the most urgent situation as the attack is active. In these situations, remediation must be immediate.</li>
+</ul>
+<h1 id="analysis-phase"><a name="analysis-phase" class="plugin-anchor" href="#analysis-phase"><i class="fa fa-link" aria-hidden="true"></i></a>Analysis Phase</h1>
+<p>Here are the recommended steps to start the analysis phase:</p>
+<ol>
+<li><strong>Determine Virtual Patching Applicability</strong> - Virtual patching is ideally suited for injection-type flaws but may not provide an adequate level of attack surface reduction for other attack types or categories. Thorough analysis of the underlying flaw should be conducted to determine if the virtual patching tool has adequate detection logic capabilities.</li>
+<li><strong>Utilize Bug Tracking/Ticketing System</strong> - Enter the vulnerability information into a bug tracking system for tracking purposes and metrics. Recommend you use ticketing systems you already use such as Jira or you may use a specialized tool such as <a href="https://threadfix.it/" target="_blank">ThreadFix</a>.</li>
+<li><strong>Verify the name of the vulnerability</strong> - This means that you need to have the proper public vulnerability identifier (such as CVE name/number) specified by the vulnerability announcement, vulnerability scan, etc. If the vulnerability is identified proactively rather than through public announcements, then you should assign your own unique identifier to each vulnerability.</li>
+<li><strong>Designate the impact level</strong> - It is always important to understand the level of criticality involved with a web vulnerability. Information leakages may not be treated in the same manner as an SQL Injection issue.</li>
+<li><strong>Specify which versions of software are impacted</strong> - You need to identify what versions of software are listed so that you can determine if the version(s) you have installed are affected.</li>
+<li><strong>List what configuration is required to trigger the problem</strong> - Some vulnerabilities may only manifest themselves under certain configuration settings.</li>
+<li><strong>List Proof of Concept (PoC) exploit code or payloads used during attacks/testing</strong> - Many vulnerability announcements have accompanying exploit code that shows how to demonstrate the vulnerability. If this data is available, make sure to download it for analysis. This will be useful later on when both developing and testing the virtual patch.</li>
+</ol>
+<h1 id="virtual-patch-creation-phase"><a name="virtual-patch-creation-phase" class="plugin-anchor" href="#virtual-patch-creation-phase"><i class="fa fa-link" aria-hidden="true"></i></a>Virtual Patch Creation Phase</h1>
+<p>The process of creating an accurate virtual patch is bound by two main tenants:</p>
+<ol>
+<li><strong>No false positives</strong> - Do not ever block legitimate traffic under any circumstances.</li>
+<li><strong>No false negatives</strong> - Do not ever miss attacks, even when the attacker intentionally tries to evade detection.</li>
+</ol>
+<p>Care should be taken to attempt to minimize either of these two rules. It may not be possible to adhere 100% to each of these goals but remember that virtual patching is about <strong>Risk Reduction</strong>. It should be understood by business owners that while you are gaining the advantage of shortening the Time-to-Fix metric, you may not be implementing a complete fix for the flaw.</p>
+<h2 id="manual-virtual-patch-creation"><a name="manual-virtual-patch-creation" class="plugin-anchor" href="#manual-virtual-patch-creation"><i class="fa fa-link" aria-hidden="true"></i></a>Manual Virtual Patch Creation</h2>
+<h3 id="positive-security-whitelist-virtual-patches-recommended-solution"><a name="positive-security-whitelist-virtual-patches-recommended-solution" class="plugin-anchor" href="#positive-security-whitelist-virtual-patches-recommended-solution"><i class="fa fa-link" aria-hidden="true"></i></a>Positive Security (Whitelist) Virtual Patches (<strong>Recommended Solution</strong>)</h3>
+<p>Positive security model (whitelist) is a comprehensive security mechanism that provides an independent input validation envelope to an application. The model specifies the characteristics of valid input (character set, length, etc&#x2026;) and denies anything that does not conform. By defining rules for every parameter in every page in the application the application is protected by an additional security envelop independent from its code.</p>
+<h4 id="example-whitelist-modsecurity-virtual-patch"><a name="example-whitelist-modsecurity-virtual-patch" class="plugin-anchor" href="#example-whitelist-modsecurity-virtual-patch"><i class="fa fa-link" aria-hidden="true"></i></a>Example Whitelist ModSecurity Virtual Patch</h4>
+<p>In order to create a whitelist virtual patch, you must be able to verify what the normal, expected input values are. If you have implemented proper audit logging as part of the Preparation Phase, then you should be able to review audit logs to identify the format of expected input types. In this case, the <code>reqID</code> parameter is supposed to only hold integer characters so we can use this virtual patch:</p>
+<pre><code class="lang-text">#
+# Verify we only receive 1 parameter called &quot;reqID&quot;
+#
+SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php&quot; &quot;chain,id:1,phase:2,t:none,t:Utf8toUnicode,t:urlDecodeUni,t:normalizePathWin,t:lowercase,block,msg:&apos;Input Validation Error for \&apos;reqID\&apos; parameter - Duplicate Parameters Names Seen.&apos;,logdata:&apos;%{matched_var}&apos;&quot;
+  SecRule &amp;ARGS:/reqID/ &quot;!@eq 1&quot;
+
+#
+# Verify reqID&apos;s payload only contains integers
+#
+SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php&quot; &quot;chain,id:2,phase:2,t:none,t:Utf8toUnicode,t:urlDecodeUni,t:normalizePathWin,t:lowercase,block,msg:&apos;Input Validation Error for \&apos;reqID\&apos; parameter.&apos;,logdata:&apos;%{args.reqid}&apos;&quot;
+  SecRule ARGS:/reqID/ &quot;!@rx ^[0-9]+$&quot;
+</code></pre>
+<p>This virtual patch will inspect the <code>reqID</code> parameter value on the specified page and prevent any characters other than integers as input.</p>
+<ul>
+<li><strong>Note</strong> - You should make sure to assign rule IDs properly and track them in the bug tracking system.</li>
+<li><strong>Caution</strong>: There are numerous evasion vectors when creating virtual patches. Please consult the <a href="https://www.owasp.org/index.php/Virtual_Patching_Best_Practices" target="_blank">OWASP Best Practices: Virtual Patching document</a> for a more thorough discussion on countering evasion methods.</li>
+</ul>
+<h3 id="negative-security-blacklist-virtual-patches"><a name="negative-security-blacklist-virtual-patches" class="plugin-anchor" href="#negative-security-blacklist-virtual-patches"><i class="fa fa-link" aria-hidden="true"></i></a>Negative Security (Blacklist) Virtual Patches</h3>
+<p>A negative security model (blacklist) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.</p>
+<h4 id="example-blacklist-modsecurity-virtual-patch"><a name="example-blacklist-modsecurity-virtual-patch" class="plugin-anchor" href="#example-blacklist-modsecurity-virtual-patch"><i class="fa fa-link" aria-hidden="true"></i></a>Example Blacklist ModSecurity Virtual Patch</h4>
+<p>Here is the example <a href="https://packetstormsecurity.com/files/119217/WordPress-Shopping-Cart-8.1.14-Shell-Upload-SQL-Injection.html" target="_blank">PoC code</a> that was supplied by the public advisory:</p>
+<pre><code class="lang-text">http://localhost/wordpress/wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php?reqID=1&apos; or 1=&apos;1
+</code></pre>
+<p>Looking at the payload, we can see that the attacker is inserting a single quote character and then adding additional SQL query logic to the end. Based on this data, we could disallow the single quote character like this:</p>
+<pre><code class="lang-text">SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php&quot; &quot;chain,id:1,phase:2,t:none,t:Utf8toUnicode,t:urlDecodeUni,t:normalizePathWin,t:lowercase,block,msg:&apos;Input Validation Error for \&apos;reqID\&apos; parameter.&apos;,logdata:&apos;%{args.reqid}&apos;&quot;
+  SecRule ARGS:/reqID/ &quot;@pm &apos;&quot;
+</code></pre>
+<h3 id="which-method-is-better-for-virtual-patching-&#x2013;-positive-or-negative-security"><a name="which-method-is-better-for-virtual-patching-&#x2013;-positive-or-negative-security" class="plugin-anchor" href="#which-method-is-better-for-virtual-patching-&#x2013;-positive-or-negative-security"><i class="fa fa-link" aria-hidden="true"></i></a>Which Method is Better for Virtual Patching &#x2013; Positive or Negative Security?</h3>
+<p>A virtual patch may employ either a positive or negative security model. Which one you decide to use depends on the situation and a few different considerations. For example, negative security rules can usually be implemented more quickly, however the possible evasions are more likely.</p>
+<p>Positive security rules, only the other hand, provides better protection however it is often a manual process and thus is not scalable and difficult to maintain for large/dynamic sites. While manual positive security rules for an entire site may not be feasible, a positive security model can be selectively employed when a vulnerability alert identifies a specific location with a problem.</p>
+<h3 id="beware-of-exploit-specific-virtual-patches"><a name="beware-of-exploit-specific-virtual-patches" class="plugin-anchor" href="#beware-of-exploit-specific-virtual-patches"><i class="fa fa-link" aria-hidden="true"></i></a>Beware of Exploit-Specific Virtual Patches</h3>
+<p>You want to resist the urge to take the easy road and quickly create an <strong>exploit-specific virtual patch</strong>. </p>
+<p>For instance, if an authorized penetration test identified an XSS vulnerability on a page and used the following attack payload in the report:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
+  alert(<span class="hljs-string">&apos;XSS Test&apos;</span>)
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>It would not be wise to implement a virtual patch that simply blocks that exact payload. While it may provide some immediate protection, its long term value is significantly decreased.</p>
+<h2 id="automated-virtual-patch-creation"><a name="automated-virtual-patch-creation" class="plugin-anchor" href="#automated-virtual-patch-creation"><i class="fa fa-link" aria-hidden="true"></i></a>Automated Virtual Patch Creation</h2>
+<p>Manual patch creation may become unfeasible as the number of vulnerabilities grow and automated means may become necessary. If the vulnerabilities were identified using automated tools and an XML report is available, it is possible to leverage automated processes to auto-convert this vulnerability data into virtual patches for protection systems. </p>
+<p>Three examples include:</p>
+<ul>
+<li><strong>OWASP ModSecurity Core Rule Set (CRS) Scripts</strong> - The OWASP CRS includes scripts to auto-convert XML output from tools such as [OWASP ZAP into ModSecurity Virtual Patches]. Reference <a href="http://blog.spiderlabs.com/2012/03/modsecurity-advanced-topic-of-the-week-automated-virtual-patching-using-owasp-zed-attack-proxy.html" target="_blank">here</a>.</li>
+<li><strong>ThreadFix Virtual Patching</strong> - ThreadFix also includes automated processes of converting imported vulnerability XML data into virtual patches for security tools such as ModSecurity. Reference <a href="https://github.com/denimgroup/threadfix/wiki/Waf-Types#mod_security" target="_blank">here</a>.</li>
+<li><strong>Direct Importing to WAF Device</strong> - Many commercial WAF products have the capability to import DAST tool XML report data and automatically adjust their protection profiles.</li>
+</ul>
+<h1 id="implementationtesting-phase"><a name="implementationtesting-phase" class="plugin-anchor" href="#implementationtesting-phase"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation/Testing Phase</h1>
+<p>In order to accurately test out the newly created virtual patches, it may be necessary to use an application other than a web browser. Some useful tools are:</p>
+<ul>
+<li>Web browser.</li>
+<li>Command line web clients such as Curl and Wget.</li>
+<li>Local Proxy Servers such as <a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project" target="_blank">OWASP ZAP</a>.</li>
+<li><a href="http://www.jwall.org/web/audit/viewer.jsp" target="_blank">ModSecurity AuditViewer</a> &#x2013; which allows you to load a ModSecurity audit log file, manipulate it and then re-inject the data back into any web server.</li>
+</ul>
+<h2 id="testing-steps"><a name="testing-steps" class="plugin-anchor" href="#testing-steps"><i class="fa fa-link" aria-hidden="true"></i></a>Testing Steps</h2>
+<ul>
+<li>Implement virtual patches initially in a &quot;Log Only&quot; configuration to ensure that you do not block any normal user traffic (false positives).</li>
+<li>If the vulnerability was identified by a specific tool or assessment team - request a retest.</li>
+<li>If retesting fails due to evasions, then you must go back to the Analysis phase to identify how to better fix the issue.</li>
+</ul>
+<h1 id="recoveryfollow-up-phase"><a name="recoveryfollow-up-phase" class="plugin-anchor" href="#recoveryfollow-up-phase"><i class="fa fa-link" aria-hidden="true"></i></a>Recovery/Follow-Up Phase</h1>
+<ul>
+<li><strong>Update Data in Ticket System</strong> - Although you may need to expedite the implementation of virtual patches, you should still track them in your normal Patch Management processes. This means that you should create proper change request tickets, etc&#x2026; so that their existence and functionality is documented. Updating the ticket system also helps to identify &quot;time-to-fix&quot; metrics for different vulnerability types. Make sure to properly log the virtual patch rule ID values.</li>
+<li><strong>Periodic Re-assessments</strong> - You should also have periodic re-assessments to verify if/when you can remove previous virtual patches if the web application code has been updated with the real source code fix. I have found that many people opt to keep virtual patches in place due to better identification/logging vs. application or db capabilities.</li>
+<li><strong>Running Virtual Patch Alert Reports</strong> - Run reports to identify if/when any of your virtual patches have triggered. This will show value for virtual patching in relation to windows of exposure for source code time-to-fix.</li>
+</ul>
+<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<ul>
+<li><a href="https://www.owasp.org/index.php/Virtual_Patching_Best_Practices" target="_blank">OWASP Virtual Patching Best Practices</a>.</li>
+<li><a href="https://www.owasp.org/index.php/Category:OWASP_Securing_WebGoat_using_ModSecurity_Project" target="_blank">OWASP Securing WebGoat with ModSecurity</a>.</li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Ryan Barnett - ryan.barnett@owasp.org</p>
+<p>Josh Zlatin - jamuse@gmail.com</p>
+<p>Christian Folini - christian.folini@netnea.com</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="User_Privacy_Protection_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: User Privacy Protection ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Vulnerability Disclosure ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Virtual Patching ","level":"1.58","depth":1,"next":{"title":"Vulnerability Disclosure ","level":"1.59","depth":1,"path":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","ref":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","articles":[]},"previous":{"title":"User Privacy Protection ","level":"1.57","depth":1,"path":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","ref":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Virtual_Patching_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.658Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

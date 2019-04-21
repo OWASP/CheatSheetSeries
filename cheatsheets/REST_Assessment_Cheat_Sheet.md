@@ -7,7 +7,7 @@ RESTful web services (often called simply REST) are a light weight variant of We
 # Key relevant properties of RESTful web services
 
 - Use of HTTP methods (`GET`, `POST`, `PUT` and `DELETE`) as the primary verb for the requested operation.
-- Non-standard parameters specifications:
+- None standard parameters specifications:
     - As part of the URL.
     - In headers.
 - Structured parameters and responses using JSON or XML in a parameter values, request body or response body. Those are required to communicate machine useful information.

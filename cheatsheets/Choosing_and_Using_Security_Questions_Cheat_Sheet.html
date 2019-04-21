@@ -1,0 +1,1110 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Choosing and Using Security Questions  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Clickjacking_Defense_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Choosing and Using Security Questions </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>This cheat sheet provides some best practice for developers to follow when choosing and using security questions to implement a &quot;forgot password&quot; web application feature.</p>
+<h1 id="the-problem"><a name="the-problem" class="plugin-anchor" href="#the-problem"><i class="fa fa-link" aria-hidden="true"></i></a>The Problem</h1>
+<p>There is no industry standard either for providing guidance to users or developers when using or implementing a Forgot Password feature. The result is that developers generally pick a set of dubious questions and implement them insecurely. They do so, not only at the risk to their users, but also--because of potential liability issues--at the risk to their organization. Ideally, passwords would be dead, or at least less important in the sense that they make up only one of several multi-factor authentication mechanisms, but the truth is that we probably are stuck with passwords just like we are stuck with Cobol. So with that in mind, what can we do to make the Forgot Password solution as palatable as possible?</p>
+<h1 id="choosing-security-questions-andor-identity-data"><a name="choosing-security-questions-andor-identity-data" class="plugin-anchor" href="#choosing-security-questions-andor-identity-data"><i class="fa fa-link" aria-hidden="true"></i></a>Choosing Security Questions and/or Identity Data</h1>
+<p>Most of us can instantly spot a bad &quot;security question&quot; when we see one. You know the ones we mean. Ones like &quot;What is your favorite color?&quot; are obviously bad. But as the <a href="http://goodsecurityquestions.com/" target="_blank">Good Security Questions</a> web site rightly points out, &quot;there really are NO GOOD security questions; only fair or bad questions&quot;.</p>
+<p>The reason that most organizations allow users to reset their own forgotten passwords is not because of security, but rather to reduce their own costs by reducing their volume of calls to their help desks. It&apos;s the classic convenience vs. security trade-off, and in this case, convenience (both to the organization in terms of reduced costs and to the user in terms of simpler, self-service) almost always wins out.</p>
+<p>So given that the business aspect of lower cost generally wins out, what can we do to at least raise the bar a bit?</p>
+<p>Here are some suggestions. Note that we intentionally avoid recommending specific security questions. To do so likely would be counterproductive because many developers would simply use those questions without much thinking and adversaries would immediately start harvesting that data from various social networks.</p>
+<h2 id="desired-characteristics"><a name="desired-characteristics" class="plugin-anchor" href="#desired-characteristics"><i class="fa fa-link" aria-hidden="true"></i></a>Desired Characteristics</h2>
+<p>Any security questions or identity information presented to users to reset forgotten passwords should ideally have the following four characteristics:</p>
+<ol>
+<li><strong>Memorable</strong>: If users can&apos;t remember their answers to their security questions, you have achieved nothing.</li>
+<li><strong>Consistent</strong>: The user&apos;s answers should not change over time. For instance, asking &quot;What is the name of your significant other?&quot; may have a different answer 5 years from now.</li>
+<li><strong>Nearly universal</strong>: The security questions should apply to as wide an audience as possible.</li>
+<li><strong>Safe</strong>: The answers to security questions should not be something that is easily guessed, or research (e.g., something that is matter of public record).</li>
+</ol>
+<h2 id="steps"><a name="steps" class="plugin-anchor" href="#steps"><i class="fa fa-link" aria-hidden="true"></i></a>Steps</h2>
+<h3 id="step-1-decide-on-identity-data-vs-canned-questions-vs-user-created-questions"><a name="step-1-decide-on-identity-data-vs-canned-questions-vs-user-created-questions" class="plugin-anchor" href="#step-1-decide-on-identity-data-vs-canned-questions-vs-user-created-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Step 1) Decide on Identity Data vs Canned Questions vs. User-Created Questions</h3>
+<p>Generally, a single HTML form should be used to collect all of the inputs to be used for later password resets.</p>
+<p>If your organization has a business relationship with users, you probably have collected some sort of additional information from your users when they registered with your web site. Such information includes, but is not limited to:</p>
+<ul>
+<li>email address</li>
+<li>last name</li>
+<li>date of birth</li>
+<li>account number</li>
+<li>customer number</li>
+<li>last 4 of social security number</li>
+<li>zip code for address on file</li>
+<li>street number for address on file</li>
+</ul>
+<p>For enhanced security, you may wish to consider asking the user for their email address first and then send an email that takes them to a private page that requests the other 2 (or more) identity factors. That way the email itself isn&#x2019;t that useful because they still have to answer a bunch of &#x2018;secret&#x2019; questions after they get to the landing page.</p>
+<p>On the other hand, if you host a web site that targets the general public, such as social networking sites, free email sites, news sites, photo sharing sites, etc., then you likely to not have this identity information and will need to use some sort of the ubiquitous &quot;security questions&quot;. However, also be sure that you collect some means to send the password reset information to some out-of-band side-channel, such as a (different) email address, an SMS texting number, etc.</p>
+<p>Believe it or not, there is a certain merit to allow your users to select from a set of several &quot;canned&quot; questions. We generally ask users to fill out the security questions as part of completing their initial user profile and often that is the very time that the user is in a hurry; they just wish to register and get about using your site. If we ask users to create their own question(s) instead, they then generally do so under some amount of duress, and thus may be more likely to come up with extremely poor questions.</p>
+<p>However, there is also some strong rationale to requiring users to create their own question(s), or at least one such question. The prevailing legal opinion seems to be if we provide some sort of reasonable guidance to users in creating their own questions and then insist on them doing so, at least some of the potential liabilities are transferred from our organizations to the users. In such cases, if user accounts get hacked because of their weak security questions (e.g., &quot;What is my favorite ice cream flavor?&quot;, etc.) then the thought is that they only have themselves to blame and thus our organizations are less likely to get sued.</p>
+<p>Since OWASP recommends in the <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> that multiple security questions should be posed to the user and successfully answered before allowing a password reset, a good practice might be to require the user to select 1 or 2 questions from a set of canned questions as well as to create (a different) one of their own and then require they answer one of their selected canned questions as well as their own question.</p>
+<h3 id="step-2-review-any-canned-questions-with-your-legal-department-or-privacy-officer"><a name="step-2-review-any-canned-questions-with-your-legal-department-or-privacy-officer" class="plugin-anchor" href="#step-2-review-any-canned-questions-with-your-legal-department-or-privacy-officer"><i class="fa fa-link" aria-hidden="true"></i></a>Step 2) Review Any Canned Questions with Your Legal Department or Privacy Officer</h3>
+<p>While most developers would generally first review any potential questions with whatever relevant business unit, it may not occur to them to review the questions with their legal department or chief privacy officer. However, this is advisable because their may be applicable laws or regulatory / compliance issues to which the questions must adhere. For example, in the telecommunications industry, the FCC&apos;s Customer Proprietary Network Information (CPNI) regulations prohibit asking customers security questions that involve &quot;personal information&quot;, so questions such as &quot;In what city were you born?&quot; are generally not allowed.</p>
+<h3 id="step-3-insist-on-a-minimal-length-for-the-answers"><a name="step-3-insist-on-a-minimal-length-for-the-answers" class="plugin-anchor" href="#step-3-insist-on-a-minimal-length-for-the-answers"><i class="fa fa-link" aria-hidden="true"></i></a>Step 3) Insist on a Minimal Length for the Answers</h3>
+<p>Even if you pose decent security questions, because users generally dislike putting a whole lot of forethought into answering the questions, they often will just answer with something short. Answering with a short expletive is not uncommon, nor is answering with something like &quot;xxx&quot; or &quot;1234&quot;. If you tell the user that they <em>should</em> answer with a phrase or sentence and tell them that there is some minimal length to an acceptable answer (say 10 or 12 characters), you generally will get answers that are somewhat more resistant to guessing.</p>
+<h3 id="step-4-consider-how-to-securely-store-the-questions-and-answers"><a name="step-4-consider-how-to-securely-store-the-questions-and-answers" class="plugin-anchor" href="#step-4-consider-how-to-securely-store-the-questions-and-answers"><i class="fa fa-link" aria-hidden="true"></i></a>Step 4) Consider How To Securely Store the Questions and Answers</h3>
+<p>There are two aspects to this...storing the questions and storing the answers. Obviously, the questions must be presented to the user, so the options there are store them as plaintext or as reversible ciphertext. The answers technically do not need to be ever viewed by any human so they could be stored using a secure cryptographic hash (although in principle, I am aware of some help desks that utilize the both the questions and answers for password reset and they insist on being able to <em>read</em> the answers rather than having to type them in; YMMV). Either way, we would always recommend at least encrypting the answers rather than storing them as plaintext. This is especially true for answers to the &quot;create your own question&quot; type as users will sometimes pose a question that potentially has a sensitive answer (e.g., &quot;What is my bank account # that I share with my wife?&quot;).</p>
+<p>So the main question is whether or not you should store the questions as plaintext or reversible ciphertext. Admittedly, we are a bit biased, but for the &quot;create your own question&quot; types at least, we recommend that such questions be encrypted. This is because if they are encrypted, it makes it much less likely that your company will be sued if you have some bored, rogue DBAs pursuing the DB where the security questions and answers are stored in an attempt to amuse themselves and stumble upon something sensitive or perhaps embarrassing.</p>
+<p>In addition, if you explain to your customers that you are encrypting their questions and hashing their answers, they might feel safer about asking some questions that while potentially embarrassing, might be a bit more secure. (Use your imagination. Do we need to spell it out for you? Really???)</p>
+<h3 id="step-5-periodically-have-your-users-review-their-questions"><a name="step-5-periodically-have-your-users-review-their-questions" class="plugin-anchor" href="#step-5-periodically-have-your-users-review-their-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Step 5) Periodically Have Your Users Review their Questions</h3>
+<p>Many companies often ask their users to update their user profiles to make sure contact information such as email addresses, street address, etc. is still up-to-date. Use that opportunity to have your users review their security questions. (Hopefully, at that time, they will be in a bit less of a rush, and may use the opportunity to select better questions.) If you had chosen to encrypt rather than hash their answers, you can also display their corresponding security answers at that time.</p>
+<p>If you keep statistics on how many times the respective questions has been posed to someone as part of a Forgot Password flow (recommended), it would be advisable to also display that information. (For instance, if against your advice, they created a question such as &quot;What is my favorite hobby?&quot; and see that it had been presented 113 times and they think they might have only reset their password 5 times, it would probably be advisable to change that security question and probably their password as well.)</p>
+<h3 id="step-6-authenticate-requests-to-change-questions"><a name="step-6-authenticate-requests-to-change-questions" class="plugin-anchor" href="#step-6-authenticate-requests-to-change-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Step 6) Authenticate Requests to Change Questions</h3>
+<p>Many web sites properly authenticate change password requests simply by requesting the current password along with the desired new password. If the user cannot provide the correct current password, the request to change the password is ignored. The same authentication control should be in place when changing security questions. The user should be required to provide the correct password along with their new security questions &amp; answers. If the user cannot provide the correct password, then the request to change the security questions should be ignored. This control prevents both Cross-Site Request Forgery attacks, as well as changes made by attackers who have taken control over a users workstation or authenticated application session.</p>
+<h1 id="using-security-questions"><a name="using-security-questions" class="plugin-anchor" href="#using-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Using Security Questions</h1>
+<p>Requiring users to answer security questions is most frequently done under two quite different scenarios:</p>
+<ul>
+<li>As a means for users to reset forgotten passwords. (See <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a>.)</li>
+<li>As an additional means of corroborating evidence used for authentication.</li>
+</ul>
+<p>If at anytime you intend for your users to answer security questions for both of these scenarios, it is <em>strongly</em> recommended that you use two different sets of questions / answers.</p>
+<p>It should noted that using a security question / answer in addition to using passwords does <strong><em>not</em></strong> give you multi-factor authentication because both of these fall under the category of &quot;what you know&quot;. Hence they are two of the <em>same</em> factor, which is not multi-factor. Furthermore, it should be noted that while passwords are a very weak form of authentication, answering security questions are generally is a much weaker form. This is because when we have users create passwords, we generally test the candidate password against some password complexity rules (e.g., minimal length &gt; 10 characters; must have at least one alphabetic, one numeric, and one special character; etc.); we usually do no such thing for security answers (except for perhaps some minimal length requirement). Thus good passwords generally will have much more entropy than answers to security questions, often by several orders of magnitude.</p>
+<h2 id="security-questions-used-to-reset-forgotten-passwords"><a name="security-questions-used-to-reset-forgotten-passwords" class="plugin-anchor" href="#security-questions-used-to-reset-forgotten-passwords"><i class="fa fa-link" aria-hidden="true"></i></a>Security Questions Used To Reset Forgotten Passwords</h2>
+<p>The <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> already details pretty much everything that you need to know as a developer when <em>collecting</em> answers to security questions. However, it provides no guidance about how to assist the user in selecting security questions (if chosen from a list of candidate questions) or writing their own security questions / answers. Indeed, the <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> makes the assumption that one can actually use additional <em>identity</em> data as the security questions / answers. However, often this is not the case as the user has never (or won&apos;t) volunteer it or is it prohibited for compliance reasons with certain regulations (e.g., as in the case of telecommunications companies and <a href="https://en.wikipedia.org/wiki/Customer_proprietary_network_information" target="_blank">CPNI</a> data).</p>
+<p>Therefore, at least some development teams will be faced with collecting more generic security questions and answers from their users. If you must do this as a developer, it is good practice to:</p>
+<ul>
+<li>briefly describe the importance of selecting a good security question / answer.</li>
+<li>provide some guidance, along with some examples, of what constitutes bad vs. fair security questions.</li>
+</ul>
+<p>You may wish to refer your users to the <a href="http://goodsecurityquestions.com/" target="_blank">Good Security Questions</a> web site for the latter.</p>
+<p>Furthermore, since adversaries will try the &quot;forgot password&quot; reset flow to reset a user&apos;s password (especially if they have compromised the side-channel, such as user&apos;s email account or their mobile device where they receive SMS text messages), is a good practice to minimize unintended and unauthorized information disclosure of the security questions. This may mean that you require the user to answer one security question before displaying any subsequent questions to be answered. In this manner, it does not allow an adversary an opportunity to research all the questions at once. Note however that this is contrary to the advice given on the <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> and it may also be perceived as not being user-friendly by your sponsoring business unit, so again YMMV.</p>
+<p>Lastly, you should consider whether or not you should treat the security questions that a user will type in as a &quot;password&quot; type or simply as regular &quot;text&quot; input. The former can prevent shoulder-surfing attacks, but also cause more typos, so there is a trade-off. Perhaps the best advice is to give the user a choice; hide the text by treating it as &quot;password&quot; input type by default, but all the user to check a box that would display their security answers as clear text when checked.</p>
+<h2 id="security-questions-as-an-additional-means-of-authenticating"><a name="security-questions-as-an-additional-means-of-authenticating" class="plugin-anchor" href="#security-questions-as-an-additional-means-of-authenticating"><i class="fa fa-link" aria-hidden="true"></i></a>Security Questions As An Additional Means Of Authenticating</h2>
+<p>First, it bears repeating again...if passwords are considered weak authentication, then using security questions are even less robust. Furthermore, they are no substitute for true multi-factor authentication, or stronger forms of authentication such as authentication using one-time passwords or involving side-channel communications. In a word, very little is gained by using security questions in this context. But, if you must...keep these things in mind:</p>
+<ul>
+<li>Display the security question(s) on a separate page only <em>after</em> your users have successfully authenticated with their usernames / passwords (rather than only after they have entered their username). In this manner, you at least do not allow an adversary to view and research the security questions unless they also know the user&apos;s current password.</li>
+<li>If you also use security questions to reset a user&apos;s password, then you should use a <em>different</em> set of security questions for an additional means of authenticating.</li>
+<li>Security questions used for actual authentication purposes should regularly expire much like passwords. Periodically make the user choose new security questions and answers.</li>
+<li>If you use answers to security questions as a <em>subsequent</em> authentication mechanism (say to enter a more sensitive area of your web site), make sure that you keep the session idle time out very low...say less than 5 minutes or so, or that you also require the user to first re-authenticate with their password and then immediately after answer the security question(s).</li>
+</ul>
+<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h1>
+<ul>
+<li><a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a></li>
+<li><a href="http://goodsecurityquestions.com/" target="_blank">Good Security Questions web site</a></li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Kevin Wall - kevin.w.wall@gmail com</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: C-Based Toolchain Hardening ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Clickjacking_Defense_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Clickjacking Defense ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Choosing and Using Security Questions ","level":"1.13","depth":1,"next":{"title":"Clickjacking Defense ","level":"1.14","depth":1,"path":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","ref":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","articles":[]},"previous":{"title":"C-Based Toolchain Hardening ","level":"1.12","depth":1,"path":"cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md","ref":"cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.317Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

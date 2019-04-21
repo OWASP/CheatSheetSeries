@@ -1,0 +1,1090 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>C-Based Toolchain Hardening  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="C-Based_Toolchain_Hardening.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >C-Based Toolchain Hardening </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p><strong>C-Based Toolchain Hardening Cheat Sheet</strong> is a brief treatment of project settings that will help you deliver reliable and secure code when using C, C++ and Objective C languages in a number of development environments. A more in-depth treatment of this topic can be found <a href="C-Based_Toolchain_Hardening.html">here</a>. This cheatsheet will guide you through the steps you should take to create executables with firmer defensive postures and increased integration with the available platform security. Effectively configuring the toolchain also means your project will enjoy a number of benefits during development, including enhanced warnings and static analysis, and self-debugging code.</p>
+<p>There are four areas to be examined when hardening the toolchain: configuration, integration, static analysis, and platform security. Nearly all areas are overlooked or neglected when setting up a project. The neglect appears to be pandemic, and it applies to nearly all projects including Auto-configured projects, Makefile-based, Eclipse-based, and Xcode-based. It&apos;s important to address the gaps at configuration and build time because it&apos;s difficult to impossible to <a href="http://sourceware.org/ml/binutils/2012-03/msg00309.html" target="_blank">add hardening on a distributed executable after the fact</a> on some platforms.</p>
+<p>For those who would like a deeper treatment of the subject matter, please visit <a href="C-Based_Toolchain_Hardening.html">C-Based Toolchain Hardening</a>.</p>
+<h1 id="actionable-items"><a name="actionable-items" class="plugin-anchor" href="#actionable-items"><i class="fa fa-link" aria-hidden="true"></i></a>Actionable Items</h1>
+<p>The C-Based Toolchain Hardening Cheat Sheet calls for the following actionable items:</p>
+<ul>
+<li>Provide debug, release, and test configurations</li>
+<li>Provide an assert with useful behavior</li>
+<li>Configure code to take advantage of configurations</li>
+<li>Properly integrate third party libraries</li>
+<li>Use the compiler&apos;s built-in static analysis capabilities</li>
+<li>Integrate with platform security measures</li>
+</ul>
+<p>The remainder of this cheat sheet briefly explains the bulleted, actionable items. For a thorough treatment, please visit the <a href="C-Based_Toolchain_Hardening.html">full article</a>.</p>
+<h1 id="build-configurations"><a name="build-configurations" class="plugin-anchor" href="#build-configurations"><i class="fa fa-link" aria-hidden="true"></i></a>Build Configurations</h1>
+<p>You should support three build configurations. First is <em>Debug</em>, second is <em>Release</em>, and third is <em>Test</em>. One size does <strong>not</strong> fit all, and each speaks to a different facet of the engineering process. You will use a debug build while developing, your continuous integration or build server will use test configurations, and you will ship release builds.</p>
+<p>1970&apos;s K&amp;R code and one size fits all flags are from a bygone era. Processes have evolved and matured to meet the challenges of a modern landscape, including threats. Because tools like Autconfig and Automake <a href="https://lists.gnu.org/archive/html/automake/2012-12/msg00019.html" target="_blank">do not support the notion of build configurations</a>, you should prefer to work in an Integrated Develop Environments (IDE) or write your makefiles so the desired targets are supported. In addition, Autconfig and Automake often ignore user supplied flags (it depends on the folks writing the various scripts and templates), so you might find it easier to again write a makefile from scratch rather than retrofitting existing auto tool files.</p>
+<h2 id="debug-builds"><a name="debug-builds" class="plugin-anchor" href="#debug-builds"><i class="fa fa-link" aria-hidden="true"></i></a>Debug Builds</h2>
+<p>Debug is used during development, and the build assists you in finding problems in the code. During this phase, you develop your program and test integration with third party libraries you program depends upon. To help with debugging and diagnostics, you should define <code>DEBUG</code> and <code>_DEBUG</code> (if on a Windows platform) preprocessor macros and supply other &apos;debugging and diagnostic&apos; oriented flags to the compiler and linker. Additional preprocessor macros for selected libraries are offered in the <a href="C-Based_Toolchain_Hardening.html">full article</a>.</p>
+<p>You should use the following for GCC when building for debug: <code>-O0</code> (or <code>-O1</code>) and <code>-g3</code> <code>-ggdb</code>. No optimizations improve debuggability because optimizations often rearrange statements to improve instruction scheduling and remove unneeded code. You may need <code>-O1</code> to ensure some analysis is performed. <code>-g3</code> ensures maximum debug information is available, including symbolic constants and <code>#defines</code>.</p>
+<p>Asserts will help you write self debugging programs. The program will alert you to the point of first failure quickly and easily. Because asserts are so powerful, the code should be completely and full instrumented with asserts that: (1) validates and asserts all program state relevant to a function or a method; (2) validates and asserts all function parameters; and (3) validates and asserts all return values for functions or methods which return a value. Because of item (3), you should be very suspicious of void functions that cannot convey failures.</p>
+<p>Anywhere you have an <code>if</code> statement for validation, you should have an assert. Anywhere you have an assert, you should have an <code>if</code> statement. They go hand-in-hand. Posix states if <code>NDEBUG</code> is <strong>not</strong> defined, then <code>assert</code> <a href="http://pubs.opengroup.org/onlinepubs/009604499/functions/assert.html" target="_blank">&quot;shall write information about the particular call that failed on stderr and shall call abort&quot;</a>. Calling abort during development is useless behavior, so you must supply your own assert that <code>SIGTRAP</code>s. A Unix and Linux example of a <code>SIGTRAP</code> based assert is provided in the <a href="C-Based_Toolchain_Hardening.html">full article</a>.</p>
+<p>Unlike other debugging and diagnostic methods - such as breakpoints and <code>printf</code> - asserts stay in forever and become silent guardians. If you accidentally nudge something in an apparently unrelated code path, the assert will snap the debugger for you. The enduring coverage means debug code - with its additional diagnostics and instrumentation - is more highly valued than unadorned release code. If code is checked in that does not have the additional debugging and diagnostics, including full assertions, you should reject the check-in.</p>
+<h2 id="release-builds"><a name="release-builds" class="plugin-anchor" href="#release-builds"><i class="fa fa-link" aria-hidden="true"></i></a>Release Builds</h2>
+<p>Release builds are diametrically opposed to debug configurations. In a release configuration, the program will be built for use in production. Your program is expected to operate correctly, securely and efficiently. The time for debugging and diagnostics is over, and your program will define <code>NDEBUG</code> to remove the supplemental information and behavior.</p>
+<p>A release configuration should also use <code>-O2</code>/<code>-O3</code>/<code>-Os</code> and <code>-g1</code>/<code>-g2</code>. The optimizations will make it somewhat more difficult to make sense of a stack trace, but they should be few and far between. The <code>-g</code><em><code>N</code></em> flag ensures debugging information is available for post mortem analysis. While you generate debugging information for release builds, you should strip the information before shipping and check the symbols into you version control system along with the tagged build.</p>
+<p>Release builds should also consider the configuration pair of <code>-mfunction-return=thunk</code> and <code>-mindirect-branch=thunk</code>. These are the &quot;Reptoline&quot; fix which is an indirect branch used to thwart speculative execution CPU vulnerabilities such as Spectre and Meltdown. The CPU cannot tell what code to [speculatively] execute because it is an indirect (as opposed to a direct) branch. This is an extra layer of indirection, like calling a pointer through a pointer.</p>
+<p><code>NDEBUG</code> will also remove asserts from your program by defining them to <code>void</code> since its not acceptable to crash via <code>abort</code> in production. You should not depend upon assert for crash report generation because those reports could contain sensitive information and may end up on foreign systems, including for example, <a href="http://msdn.microsoft.com/en-us/library/windows/hardware/gg487440.aspx" target="_blank">Windows Error Reporting</a>. If you want a crash dump, you should generate it yourself in a controlled manner while ensuring no sensitive information is written or leaked.</p>
+<p>Release builds should also curtail logging. If you followed earlier guidance, you have properly instrumented code and can determine the point of first failure quickly and easily. Simply log the failure and and relevant parameters. Remove all <code>NSLog</code> and similar calls because sensitive information might be logged to a system logger. Worse, the data in the logs might be egressed by backup or sync. If your default configuration includes a logging level of ten or <em>maximum verbosity</em>, you probably lack stability and are trying to track problems in the field. That usually means your program or library is not ready for production.</p>
+<h2 id="test-builds"><a name="test-builds" class="plugin-anchor" href="#test-builds"><i class="fa fa-link" aria-hidden="true"></i></a>Test Builds</h2>
+<p>A Test build is closely related to a release build. In this build configuration, you want to be as close to production as possible, so you should be using <code>-O2</code>/<code>-O3</code>/<code>-Os</code> <code>-g1</code>/<code>-g2</code> and &quot;Reptoline&quot; configuration options. You will run your suite of <em>positive</em> and <em>negative</em> tests against the test build.</p>
+<p>You will also want to exercise all functions or methods provided by the program and not just the public interfaces, so everything should be made public. For example, all member functions public (C++ classes), all selectors (Objective C), all methods (Java), and all interfaces (library or shared object) should be made available for testing. As such, you should:</p>
+<ul>
+<li>Add <code>-Dprotected=public</code> <code>-Dprivate=public</code> to <code>CFLAGS</code> and <code>CXXFLAGS</code></li>
+<li>Change <code>__attribute__</code> <code>((visibility</code> <code>(&quot;hidden&quot;)))</code> to <code>__attribute__</code> <code>((visibility</code> <code>(&quot;default&quot;)))</code></li>
+</ul>
+<p>Many Object Oriented purist oppose testing private interfaces, but this is not about object oriented-ness. This (<em>q.v.</em>) is about building reliable and secure software.</p>
+<p>You should also concentrate on negative tests. Positive self tests are relatively useless except for functional and regression tests. Since this is your line of business or area of expertise, you should have the business logic correct when operating in a benign environment. A hostile or toxic environment is much more interesting, and that&apos;s where you want to know how your library or program will fail in the field when under attack.</p>
+<h1 id="library-integration"><a name="library-integration" class="plugin-anchor" href="#library-integration"><i class="fa fa-link" aria-hidden="true"></i></a>Library Integration</h1>
+<p>You must properly integrate and utilize libraries in your program. Proper integration includes acceptance testing, configuring for your build system, identifying libraries you <em>should</em> be using, and correctly using the libraries. A well integrated library can compliment your code, and a poorlly written library can detract from your program. Because a stable library with required functionality can be elusive and its tricky to integrate libraries, you should try to minimize dependencies and avoid thrid party libraries whenever possible.</p>
+<p>Acceptance testing a library is practically non-existent. The testing can be a simple code review or can include additional measures, such as negative self tests. If the library is defective or does not meet standards, you must fix it or reject the library. An example of lack of acceptance testing is <a href="http://www.agarri.fr/blog/index.html" target="_blank">Adobe&apos;s inclusion of a defective Sablotron library</a>, which resulted in <a href="http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2012-1525" target="_blank">CVE-2012-1525</a>. Another example is the 10&apos;s to 100&apos;s of millions of vulnerable embedded devices due to defects in <code>libupnp</code>. While its popular to lay blame on others, the bottom line is you chose the library so you are responsible for it.</p>
+<p>You must also ensure the library is integrated into your build process. For example, the OpenSSL library should be configured <strong>without</strong> SSLv2, SSLv3 and compression since they are defective. That means <code>config</code> should be executed with <code>-no-comp</code> <code>-no-sslv2</code> and <code>-no-sslv3</code>. As an additional example, using STLPort your debug configuration should also define <code>_STLP_DEBUG=1</code>, <code>_STLP_USE_DEBUG_LIB=1</code>, <code>_STLP_DEBUG_ALLOC=1</code>, <code>_STLP_DEBUG_UNINITIALIZED=1</code> because the library offers the additional diagnostics during development.</p>
+<p>Debug builds also present an opportunity to use additional libraries to help locate problems in the code. For example, you should be using a memory checker such as <em>Debug Malloc Library (Dmalloc)</em> during development. If you are not using Dmalloc, then ensure you have an equivalent checker, such as GCC 4.8&apos;s <code>-fsanitize=memory</code>. This is one area where one size clearly does not fit all.</p>
+<p>Using a library properly is always difficult, especially when there is no documentation. Review any hardening documents available for the library, and be sure to visit the library&apos;s documentation to ensure proper API usage. If required, you might have to review code or step library code under the debugger to ensure there are no bugs or undocumented features.</p>
+<h1 id="static-analysis"><a name="static-analysis" class="plugin-anchor" href="#static-analysis"><i class="fa fa-link" aria-hidden="true"></i></a>Static Analysis</h1>
+<p>Compiler writers do a fantastic job of generating object code from source code. The process creates a lot of additional information useful in analyzing code. Compilers use the analysis to offer programmers warnings to help detect problems in their code, but the catch is you have to ask for them. After you ask for them, you should take time to understand what the underlying issue is when a statement is flagged. For example, compilers will warn you when comparing a signed integer to an unsigned integer because <code>-1</code> <code>&gt;</code> <code>1</code> after C/C++ promotion. At other times, you will need to back off some warnings to help separate the wheat from the chaff. For example, interface programming is a popular C++ paradigm, so <code>-Wno-unused-parameter</code> will probably be helpful with C++ code.</p>
+<p>You should consider a clean compile as a security gate. If you find its painful to turn warnings on, then you have likely been overlooking some of the finer points in the details. In addition, you should strive for multiple compilers and platforms support since each has its own personality (and interpretation of the C/C++ standards). By the time your core modules clean compile under Clang, GCC, ICC, and Visual Studio on the Linux and Windows platforms, your code will have many stability obstacles removed.</p>
+<p>When compiling programs with GCC, you should use the following flags to help detect errors in your programs. The options should be added to <code>CFLAGS</code> for a program with C source files, and <code>CXXFLAGS</code> for a program with C++ source files. Objective C developers should add their warnings to <code>CFLAGS</code>: <code>-Wall</code> <code>-Wextra</code> <code>-Wconversion</code> <code>(or</code> <code>-Wsign-conversion),</code> <code>-Wcast-align,</code> <code>-Wformat=2</code> <code>-Wformat-security,</code> <code>-fno-common,</code> <code>-Wmissing-prototypes,</code> <code>-Wmissing-declarations,</code> <code>-Wstrict-prototypes,</code> <code>-Wstrict-overflow,</code> <code>and</code> <code>-Wtrampolines</code>. C++ presents additional opportunities under GCC, and the flags include <code>-Woverloaded-virtual,</code> <code>-Wreorder,</code> <code>-Wsign-promo,</code> <code>-Wnon-virtual-dtor</code> and possibly <code>-Weffc++</code>. Finally, Objective C should include <code>-Wstrict-selector-match</code> and <code>-Wundeclared-selector</code>.</p>
+<p>For a Microsoft platform, you should use: <code>/W4</code>, <code>/Wall</code>, and <code>/analyze</code>. If you don&apos;t use <code>/Wall</code>, Microsoft recomends using <code>/W4</code> and enabling C4191, C4242, C4263, C4264, C4265, C4266, C4302, C4826, C4905, C4906, and C4928. Finally, <code>/analyze</code> is Enterprise Code Analysis, which is freely available with the <a href="https://www.microsoft.com/en-us/download/details.aspx?id=21" target="_blank">Windows SDK for Windows Server 2008 and .NET Framework 3.5 SDK</a> (you don&apos;t need Visual Studio Enterprise edition).</p>
+<p>For additional details on the GCC and Windows options and flags, see <em><a href="http://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html" target="_blank">GCC Options to Request or Suppress Warnings</a></em>, <em><a href="http://blogs.msdn.com/b/vcblog/archive/2010/12/14/off-by-default-compiler-warnings-in-visual-c.aspx" target="_blank">&#x201C;Off By Default&#x201D; Compiler Warnings in Visual C++</a></em>, and <em><a href="http://msdn.microsoft.com/en-us/magazine/cc337897.aspx" target="_blank">Protecting Your Code with Visual C++ Defenses</a></em>.</p>
+<h1 id="platform-security"><a name="platform-security" class="plugin-anchor" href="#platform-security"><i class="fa fa-link" aria-hidden="true"></i></a>Platform Security</h1>
+<p>Integrating with platform security is essential to a defensive posture. Platform security will be your safety umbrella if someone discovers a bug with security implications - and you should always have it with you. For example, if your parser fails, then no-execute stacks and heaps can turn a 0-day into an annoying crash. Not integrating often leaves your users and customers vulnerable to malicious code. While you may not be familiar with some of the flags, you are probably familiar with the effects of omitting them. For example, Android&apos;s Gingerbreak overwrote the Global Offset Table (GOT) in the ELF headers, and could have been avoided with <code>-z,relro</code>.</p>
+<p>When integrating with platform security on a Linux host, you should use the following flags: <code>-fPIE</code> (compiler) and <code>-pie</code> (linker), -fstack-protector-all (or -fstack-protector), <code>-z,noexecstack</code>, <code>-z,now</code>, <code>-z,relro</code>. If available, you should also use <code>_FORTIFY_SOURCES=2</code> (or <code>_FORTIFY_SOURCES=1</code> on Android 4.2), <code>-fsanitize=address</code> and <code>-fsanitize=thread</code> (the last two should be used in debug configurations). <code>-z,nodlopen</code> and <code>-z,nodump</code> might help in reducing an attacker&apos;s ability to load and manipulate a shared object. On Gentoo and other systems with no-exec heaps, you should also use <code>-z,noexecheap</code>.</p>
+<p>Windows programs should include <code>/dynamicbase</code>, <code>/NXCOMPAT</code>, <code>/GS</code>, and <code>/SafeSEH</code> to ensure address space layout randomizations (ASLR), data execution prevention (DEP), use of stack cookies, and thwart exception handler overwrites.</p>
+<p>For additional details on the GCC and Windows options and flags, see <em><a href="http://gcc.gnu.org/onlinedocs/gcc/Option-Summary.html" target="_blank">GCC Options Summary</a></em> and <em><a href="http://msdn.microsoft.com/en-us/magazine/cc337897.aspx" target="_blank">Protecting Your Code with Visual C++ Defenses</a></em>.</p>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<ul>
+<li>Jeffrey Walton - jeffrey@owasp.org</li>
+<li>Jim Manico - jim@owasp.org</li>
+<li>Kevin Wall - kevin@owasp.org</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="C-Based_Toolchain_Hardening.html" class="navigation navigation-prev " aria-label="Previous page: C-Based Toolchain Hardening">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Choosing and Using Security Questions ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"C-Based Toolchain Hardening ","level":"1.12","depth":1,"next":{"title":"Choosing and Using Security Questions ","level":"1.13","depth":1,"path":"cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md","ref":"cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md","articles":[]},"previous":{"title":"C-Based Toolchain Hardening","level":"1.11","depth":1,"path":"cheatsheets/C-Based_Toolchain_Hardening.md","ref":"cheatsheets/C-Based_Toolchain_Hardening.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.502Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

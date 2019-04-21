@@ -1,0 +1,1158 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>SAML Security  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="SQL_Injection_Prevention_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Ruby_on_Rails_Cheatsheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >SAML Security </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>The <strong>S</strong>ecurity <strong>A</strong>ssertion <strong>M</strong>arkup <strong>L</strong>anguage (<a href="https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language" target="_blank">SAML</a>) is an open standard for exchanging authorization and authentication information. The <em>Web Browser SAML/SSO Profile with Redirect/POST bindings</em> is one of the most common SSO implementation. This cheatsheet will focus primarily on that profile.</p>
+<h1 id="validate-message-confidentiality-and-integrity"><a name="validate-message-confidentiality-and-integrity" class="plugin-anchor" href="#validate-message-confidentiality-and-integrity"><i class="fa fa-link" aria-hidden="true"></i></a>Validate Message Confidentiality and Integrity</h1>
+<p><a href="Transport_Layer_Protection_Cheat_Sheet.html">TLS 1.2</a> is the most common solution to guarantee message confidentiality and integrity. Refer to <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf" target="_blank">SAML Security (section 4)</a> for additional information. This step will help counter the following attacks:</p>
+<ul>
+<li>Eavesdropping 7.1.1.1</li>
+<li>Theft of User Authentication Information 7.1.1.2</li>
+<li>Theft of the Bearer Token 7.1.1.3</li>
+<li>Message Deletion 7.1.1.6</li>
+<li>Message Modification 7.1.1.7</li>
+<li>Man-in-the-middle 7.1.1.8</li>
+</ul>
+<p>A digitally signed message with a certified key is the most common solution to guarantee message integrity and authentication. Refer to <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf" target="_blank">SAML Security (section 4)</a> for additional information. This step will help counter the following attacks:</p>
+<ul>
+<li>Man-in-the-middle 6.4.2</li>
+<li>Forged Assertion 6.4.3</li>
+</ul>
+<h1 id="validate-protocol-usage"><a name="validate-protocol-usage" class="plugin-anchor" href="#validate-protocol-usage"><i class="fa fa-link" aria-hidden="true"></i></a>Validate Protocol Usage</h1>
+<p>This is a common area for security gaps - see <a href="http://www.avantssar.eu/pdf/publications/saml-sso.pdf" target="_blank">Google SSO vulnerability</a> for a real life example. Their SSO profile was vulnerable to a Man-in-the-middle attack from a malicious SP (Service Provider). </p>
+<p>The SSO Web Browser Profile is most susceptible to attacks from trusted partners. This particular security flaw was exposed because the SAML Response did not contain all of the required data elements necessary for a secure message exchange. Following the <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf" target="_blank">SAML Profile</a> usage requirements for AuthnRequest (4.1.4.1) and Response (4.1.4.2) will help counter this attack. </p>
+<p>The <a href="http://www.avantssar.eu/" target="_blank">AVANTSSAR</a> team suggested the following data elements should be required:</p>
+<ul>
+<li><strong>AuthnRequest(ID, SP):</strong> An <code>AuthnRequest</code> must contain and <code>ID</code> and <code>SP</code>. Where <code>ID</code> is a string uniquely identifying the request and an <code>SP</code> identifies the <code>Service Provider</code> that initiated the request. Furthermore, the request <code>ID</code> attribute must be returned in the response (<code>InResponseTo=&quot;&lt;requestId&gt;&quot;</code>). <code>InResponseTo</code> helps guarantee authenticity of the response from the trusted IdP. This was one of the missing attributes that left Google&apos;s SSO vulnerable.</li>
+<li><strong>Response(ID, SP, IdP, {AA} K -1/IdP):</strong> A Response must contain all these elements. Where <code>ID</code> is a string uniquely identifying the response. <code>SP</code> identifies the recipient of the response. <code>IdP</code> identifies the identity provider authorizing the response. <code>{AA} K -1/IdP</code> is the assertion digitally signed with the private key of the <code>IdP</code>.</li>
+<li><strong>AuthAssert(ID, C, IdP, SP):</strong> An authentication assertion must exist within the Response. It must contain an <code>ID</code>, a client <code>(C)</code>, an identity provider <code>(IdP)</code>, and a service provider <code>(SP)</code> identifier.</li>
+</ul>
+<p>Further vulnerabilities in SAML implementations were described in 2012 (<a href="https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf" target="_blank">On Breaking SAML: Be Whoever You Want to Be</a>). </p>
+<p>The following recommendations were proposed in response (<a href="http://arxiv.org/pdf/1401.7483v1.pdf" target="_blank">Secure SAML validation to prevent XML signature wrapping attacks</a>):</p>
+<ul>
+<li>Always perform schema validation on the XML document prior to using it for any security-&#xAD;related purposes:<ul>
+<li>Always use local, trusted copies of schemas for validation.</li>
+<li>Never allow automatic download of schemas from third party locations.</li>
+<li>If possible, inspect schemas and perform schema hardening, to disable possible wildcard &#xAD;type or relaxed processing statements.</li>
+</ul>
+</li>
+<li>Securely validate the digital signature:<ul>
+<li>If you expect only one signing key, use <code>StaticKeySelector</code>. Obtain the key directly from the identity provider, store it in local file and ignore any <code>KeyInfo</code> elements in the document.</li>
+<li>If you expect more than one signing key, use <code>X509KeySelector</code> (the JKS variant). Obtain these keys directly form the identity providers, store them in local JKS and ignore any <code>KeyInfo</code> elements in the document.</li>
+<li>If you expect a heterogenous signed documents (many certificates from many identity providers, multi&#xAD;level validation paths), implement full trust establishment model based on PKIX and trusted root certificates.</li>
+</ul>
+</li>
+<li>Avoid signature-wrapping attacks.<ul>
+<li>Never use <code>getElementsByTagName</code> to select security related elements in an XML document without prior validation.</li>
+<li>Always use absolute XPath expressions to select elements, unless a hardened schema is used for validation.</li>
+</ul>
+</li>
+</ul>
+<h1 id="validate-protocol-processing-rules"><a name="validate-protocol-processing-rules" class="plugin-anchor" href="#validate-protocol-processing-rules"><i class="fa fa-link" aria-hidden="true"></i></a>Validate Protocol Processing Rules</h1>
+<p>This is another common area for security gaps simply because of the vast number of steps to assert. </p>
+<p>Processing a SAML response is an expensive operation but all steps must be validated:</p>
+<ul>
+<li>Validate AuthnRequest processing rules. Refer to <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf" target="_blank">SAML Core</a> (3.4.1.4) for all AuthnRequest processing rules. This step will help counter the following attacks:<ul>
+<li>Man-in-the-middle (6.4.2)</li>
+</ul>
+</li>
+<li>Validate Response processing rules. Refer to <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf" target="_blank">SAML Profiles</a> (4.1.4.3) for all Response processing rules. This step will help counter the following attacks:<ul>
+<li>Stolen Assertion (6.4.1)</li>
+<li>Man-in-the-middle (6.4.2)</li>
+<li>Forged Assertion (6.4.3)</li>
+<li>Browser State Exposure (6.4.4)</li>
+</ul>
+</li>
+</ul>
+<h1 id="validate-binding-implementation"><a name="validate-binding-implementation" class="plugin-anchor" href="#validate-binding-implementation"><i class="fa fa-link" aria-hidden="true"></i></a>Validate Binding Implementation</h1>
+<ul>
+<li>For an HTTP Redirect Binding refer to <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-bindings-2.0-os.pdf" target="_blank">SAML Binding</a> (3.4). To view an encoding example, you may want to reference RequestUtil.java found within <a href="https://developers.google.com/google-apps/sso/saml_reference_implementation_web" target="_blank">Google&apos;s reference implementation</a>.</li>
+<li>For an HTTP POST Binding refer to <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-bindings-2.0-os.pdf" target="_blank">SAML Binding</a> (3.5). The caching considerations are also very important. If a SAML protocol message gets cached, it can subsequently be used as a Stolen Assertion (6.4.1) or Replay (6.4.5) attack.</li>
+</ul>
+<h1 id="validate-security-countermeasures"><a name="validate-security-countermeasures" class="plugin-anchor" href="#validate-security-countermeasures"><i class="fa fa-link" aria-hidden="true"></i></a>Validate Security Countermeasures</h1>
+<p>Revisit each security threat that exists within the <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf" target="_blank">SAML Security</a> document and assert you have applied the appropriate countermeasures for threats that may exist for your particular implementation. </p>
+<p>Additional countermeasures considererd should include:</p>
+<ul>
+<li>Prefer IP Filtering when appropriate. For example, this countermeasure could have prevented Google&apos;s initial security flaw if Google provided each trusted partner with a separate endpoint and setup an IP filter for each endpoint. This step will help counter the following attacks:<ul>
+<li>Stolen Assertion (6.4.1)</li>
+<li>Man-in-the-middle (6.4.2)</li>
+</ul>
+</li>
+<li>Prefer short lifetimes on the SAML Response. This step will help counter the following attacks:<ul>
+<li>Stolen Assertion (6.4.1)</li>
+<li>Browser State Exposure (6.4.4)</li>
+</ul>
+</li>
+<li>Prefer OneTimeUse on the SAML Response. This step will help counter the following attacks:<ul>
+<li>Browser State Exposure (6.4.4)</li>
+<li>Replay (6.4.5)</li>
+</ul>
+</li>
+</ul>
+<p>Need an architectural diagram? The <a href="http://www.oasis-open.org/committees/download.php/11511/sstc-saml-tech-overview-2.0-draft-03.pdf" target="_blank">SAML technical overview</a> contains the most complete diagrams. For the Web Browser SSO Profile with Redirect/POST bindings refer to the section 4.1.3. In fact, of all the SAML documentation, the technical overview is the most valuable from a high-level perspective.</p>
+<h1 id="first-and-last-mile-considerations"><a name="first-and-last-mile-considerations" class="plugin-anchor" href="#first-and-last-mile-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>First and Last Mile Considerations</h1>
+<p>The SAML protocol is rarely the vector of choice, though it&apos;s important to have cheatsheets to make sure that this is robust. The various endpoints are more targeted, so how the SAML token is generated and how it is consumed are both important in practice.</p>
+<h2 id="first-mile-considerations"><a name="first-mile-considerations" class="plugin-anchor" href="#first-mile-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>First Mile Considerations</h2>
+<ul>
+<li>Validate X.509 Certificate for algorithm compatibility, strength of encryption, export restrictions</li>
+<li>Validate Strong Authentication options for generating the SAML token</li>
+<li>IDP validation (which IDP mints the token)</li>
+<li>Use/Trust Root CAs whenever possible</li>
+<li>Synchronize to a common Internet timesource</li>
+<li>Define levels of assurance for identity verification</li>
+<li>Prefer asymmetric identifiers for identity assertions over personally identifiable information (e.g. SSNs, etc)</li>
+<li>Sign assertions whenever possible</li>
+</ul>
+<h2 id="last-mile-considerations"><a name="last-mile-considerations" class="plugin-anchor" href="#last-mile-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>Last Mile Considerations</h2>
+<ul>
+<li>Validating session state for user</li>
+<li>Level of granularity in setting authZ context when consuming SAML token (do you use groups, roles, attributes)</li>
+<li>Validate authorized IDP</li>
+<li>Validate IDP certificates for expiry against CRL/OCSP</li>
+<li>Validate NotBefore and NotOnorAfter</li>
+<li>Define criteria for SAML logout</li>
+<li>Exchange assertions only over secure transports</li>
+<li>Define criteria for session management</li>
+<li>Validate signature whenever possible</li>
+<li>Verify user identities obtained from SAML ticket assertions whenever possible.</li>
+</ul>
+<h1 id="input-validation"><a name="input-validation" class="plugin-anchor" href="#input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Input Validation</h1>
+<p>Just because SAML is a security protocol does not mean that input validation goes away.</p>
+<ul>
+<li>Ensure that all SAML providers/consumers do proper <a href="Input_Validation_Cheat_Sheet.html">input validation</a>.</li>
+</ul>
+<h1 id="cryptography"><a name="cryptography" class="plugin-anchor" href="#cryptography"><i class="fa fa-link" aria-hidden="true"></i></a>Cryptography</h1>
+<p>Solutions relying cryptographic algorithms need to follow the latest developments in cryptoanalysis.</p>
+<ul>
+<li>Ensure all SAML elements in the chain use <a href="Cryptographic_Storage_Cheat_Sheet.html#rule---use-strong-approved-authenticated-encryption">strong encryption</a></li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p><a href="http://bradbroulik.blogspot.dk/2010/01/bulletproof-sso-with-saml-20.html" target="_blank">Brad Broulik</a></p>
+<p><a href="https://ipsec.pl/" target="_blank">Pawe&#x142; Krawczyk</a></p>
+<p>Gunnar Peterson</p>
+<p>James McGovern</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Ruby_on_Rails_Cheatsheet.html" class="navigation navigation-prev " aria-label="Previous page: Ruby on Rails Cheatsheet">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: SQL Injection Prevention ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"SAML Security ","level":"1.47","depth":1,"next":{"title":"SQL Injection Prevention ","level":"1.48","depth":1,"path":"cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Ruby on Rails Cheatsheet","level":"1.46","depth":1,"path":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","ref":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/SAML_Security_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.553Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

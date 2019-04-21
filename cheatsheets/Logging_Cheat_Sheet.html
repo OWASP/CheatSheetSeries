@@ -1,0 +1,1292 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Logging  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Mass_Assignment_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="LDAP_Injection_Prevention_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Logging </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>This cheat sheet is focused on providing developers with concentrated guidance on building application logging mechanisms, especially related to security logging. </p>
+<p>Many systems enable network device, operating system, web server, mail server and database server logging, but often custom application event logging is missing, disabled or poorly configured. It provides much greater insight than infrastructure logging alone. Web application (e.g. web site or web service) logging is much more than having web server logs enabled (e.g. using Extended Log File Format).</p>
+<p>Application logging should be consistent within the application, consistent across an organization&apos;s application portfolio and use industry standards where relevant, so the logged event data can be consumed, correlated, analyzed and managed by a wide variety of systems.</p>
+<h1 id="purpose"><a name="purpose" class="plugin-anchor" href="#purpose"><i class="fa fa-link" aria-hidden="true"></i></a>Purpose</h1>
+<p>Application logging should be always be included for security events. Application logs are invaluable data for:</p>
+<ul>
+<li>Identifying security incidents</li>
+<li>Monitoring policy violations</li>
+<li>Establishing baselines</li>
+<li>Assisting non-repudiation controls</li>
+<li>Providing information about problems and unusual conditions</li>
+<li>Contributing additional application-specific data for incident investigation which is lacking in other log sources</li>
+<li>Helping defend against vulnerability identification and exploitation through attack detection</li>
+</ul>
+<p>Application logging might also be used to record other types of events too such as:</p>
+<ul>
+<li>Security events</li>
+<li>Business process monitoring e.g. sales process abandonment, transactions, connections</li>
+<li>Anti-automation monitoring</li>
+<li>Audit trails e.g. data addition, modification and deletion, data exports</li>
+<li>Performance monitoring e.g. data load time, page timeouts</li>
+<li>Compliance monitoring</li>
+<li>Data for subsequent requests for information e.g. data subject access, freedom of information, litigation, police and other regulatory investigations</li>
+<li>Legally sanctioned interception of data e.g application-layer wire-tapping</li>
+<li>Other business-specific requirements</li>
+</ul>
+<p>Process monitoring, audit and transaction logs/trails etc are usually collected for different purposes than security event logging, and this often means they should be kept separate. </p>
+<p>The types of events and details collected will tend to be different. </p>
+<p>For example a <a href="https://www.pcisecuritystandards.org/pci_security/" target="_blank">PCIDSS</a> audit log will contain a chronological record of activities to provide an independently verifiable trail that permits reconstruction, review and examination to determine the original sequence of attributable transactions. It is important not to log too much, or too little. </p>
+<p>Use knowledge of the intended purposes to guide what, when and how much. The remainder of this cheat sheet primarily discusses security event logging.</p>
+<h1 id="design-implementation-and-testing"><a name="design-implementation-and-testing" class="plugin-anchor" href="#design-implementation-and-testing"><i class="fa fa-link" aria-hidden="true"></i></a>Design, implementation and testing</h1>
+<h2 id="event-data-sources"><a name="event-data-sources" class="plugin-anchor" href="#event-data-sources"><i class="fa fa-link" aria-hidden="true"></i></a>Event data sources</h2>
+<p>The application itself has access to a wide range of information events that should be used to generate log entries. Thus, the primary event data source is the application code itself. </p>
+<p>The application has the most information about the user (e.g. identity, roles, permissions) and the context of the event (target, action, outcomes), and often this data is not available to either infrastructure devices, or even closely-related applications.</p>
+<p>Other sources of information about application usage that could also be considered are:</p>
+<ul>
+<li>Client software e.g. actions on desktop software and mobile devices in local logs or using messaging technologies, JavaScript exception handler via Ajax, web browser such as using Content Security Policy (CSP) reporting mechanism</li>
+<li>Embedded instrumentation code</li>
+<li>Network firewalls</li>
+<li>Network and host intrusion detection systems (NIDS and HIDS)</li>
+<li>Closely-related applications e.g. filters built into web server software, web server URL redirects/rewrites to scripted custom error pages and handlers</li>
+<li>Application firewalls e.g. filters, guards, XML gateways, database firewalls, web application firewalls (WAFs)</li>
+<li>Database applications e.g. automatic audit trails, trigger-based actions</li>
+<li>Reputation monitoring services e.g. uptime or malware monitoring</li>
+<li>Other applications e.g. fraud monitoring, CRM</li>
+<li>Operating system e.g. mobile platform</li>
+</ul>
+<p>The degree of confidence in the event information has to be considered when including event data from systems in a different trust zone. Data may be missing, modified, forged, replayed and could be malicious &#x2013; it must always be treated as untrusted data. </p>
+<p>Consider how the source can be verified, and how integrity and non-repudiation can be enforced.</p>
+<h2 id="where-to-record-event-data"><a name="where-to-record-event-data" class="plugin-anchor" href="#where-to-record-event-data"><i class="fa fa-link" aria-hidden="true"></i></a>Where to record event data</h2>
+<p>Applications commonly write event log data to the file system or a database (SQL or NoSQL). Applications installed on desktops and on mobile devices may use local storage and local databases, as well as sending data to remote storage. </p>
+<p>Your selected framework may limit the available choices. All types of applications may send event data to remote systems (instead of or as well as more local storage). </p>
+<p>This could be a centralized log collection and management system (e.g. SIEM or SEM) or another application elsewhere. Consider whether the application can simply send its event stream, unbuffered, to stdout, for management by the execution environment.</p>
+<ul>
+<li>When using the file system, it is preferable to use a separate partition than those used by the operating system, other application files and user generated content<ul>
+<li>For file-based logs, apply strict permissions concerning which users can access the directories, and the permissions of files within the directories</li>
+<li>In web applications, the logs should not be exposed in web-accessible locations, and if done so, should have restricted access and be configured with a plain text MIME type (not HTML)</li>
+</ul>
+</li>
+<li>When using a database, it is preferable to utilize a separate database account that is only used for writing log data and which has very restrictive database , table, function and command permissions</li>
+<li>Use standard formats over secure protocols to record and send event data, or log files, to other systems e.g. Common Log File System (CLFS) or Common Event Format (CEF) over syslog; standard formats facilitate integration with centralised logging services</li>
+</ul>
+<p>Consider separate files/tables for extended event information such as error stack traces or a record of HTTP request and response headers and bodies.</p>
+<h2 id="which-events-to-log"><a name="which-events-to-log" class="plugin-anchor" href="#which-events-to-log"><i class="fa fa-link" aria-hidden="true"></i></a>Which events to log</h2>
+<p>The level and content of security monitoring, alerting and reporting needs to be set during the requirements and design stage of projects, and should be proportionate to the information security risks. This can then be used to define what should be logged. </p>
+<p>There is no one size fits all solution, and a blind checklist approach can lead to unnecessary &quot;alarm fog&quot; that means real problems go undetected. </p>
+<p>Where possible, always log:</p>
+<ul>
+<li>Input validation failures e.g. protocol violations, unacceptable encodings, invalid parameter names and values</li>
+<li>Output validation failures e.g. database record set mismatch, invalid data encoding</li>
+<li>Authentication successes and failures</li>
+<li>Authorization (access control) failures</li>
+<li>Session management failures e.g. cookie session identification value modification</li>
+<li>Application errors and system events e.g. syntax and runtime errors, connectivity problems, performance issues, third party service error messages, file system errors, file upload virus detection, configuration changes</li>
+<li>Application and related systems start-ups and shut-downs, and logging initialization (starting, stopping or pausing)</li>
+<li>Use of higher-risk functionality e.g. network connections, addition or deletion of users, changes to privileges, assigning users to tokens, adding or deleting tokens, use of systems administrative privileges, access by application administrators,all actions by users with administrative privileges, access to payment cardholder data, use of data encrypting keys, key changes, creation and deletion of system-level objects, data import and export including screen-based reports, submission of user-generated content - especially file uploads</li>
+<li>Legal and other opt-ins e.g. permissions for mobile phone capabilities, terms of use, terms &amp; conditions, personal data usage consent, permission to receive marketing communications</li>
+</ul>
+<p>Optionally consider if the following events can be logged and whether it is desirable information:</p>
+<ul>
+<li>Sequencing failure</li>
+<li>Excessive use</li>
+<li>Data changes</li>
+<li>Fraud and other criminal activities</li>
+<li>Suspicious, unacceptable or unexpected behavior</li>
+<li>Modifications to configuration</li>
+<li>Application code file and/or memory changes</li>
+</ul>
+<h2 id="event-attributes"><a name="event-attributes" class="plugin-anchor" href="#event-attributes"><i class="fa fa-link" aria-hidden="true"></i></a>Event attributes</h2>
+<p>Each log entry needs to include sufficient information for the intended subsequent monitoring and analysis. It could be full content data, but is more likely to be an extract or just summary properties. </p>
+<p>The application logs must record &quot;when, where, who and what&quot; for each event. </p>
+<p>The properties for these will be different depending on the architecture, class of application and host system/device, but often include the following:</p>
+<ul>
+<li>When<ul>
+<li>Log date and time (international format)</li>
+<li>Event date and time - the event time stamp may be different to the time of logging e.g. server logging where the client application is hosted on remote device that is only periodically or intermittently online</li>
+<li>Interaction identifier <code>Note A</code></li>
+</ul>
+</li>
+<li>Where<ul>
+<li>Application identifier e.g. name and version</li>
+<li>Application address e.g. cluster/host name or server IPv4 or IPv6 address and port number, workstation identity, local device identifier</li>
+<li>Service e.g. name and protocol</li>
+<li>Geolocation</li>
+<li>Window/form/page e.g. entry point URL and HTTP method for a web application, dialogue box name</li>
+<li>Code location e.g. script name, module name</li>
+</ul>
+</li>
+<li>Who (human or machine user)<ul>
+<li>Source address e.g. user&apos;s device/machine identifier, user&apos;s IP address, cell/RF tower ID, mobile telephone number</li>
+<li>User identity (if authenticated or otherwise known) e.g. user database table primary key value, user name, license number</li>
+</ul>
+</li>
+<li>What<ul>
+<li>Type of event <code>Note B</code></li>
+<li>Severity of event <code>Note B</code> e.g. <code>{0=emergency, 1=alert, ..., 7=debug}, {fatal, error, warning, info, debug, trace}</code></li>
+<li>Security relevant event flag (if the logs contain non-security event data too)</li>
+<li>Description</li>
+</ul>
+</li>
+</ul>
+<p>Additionally consider recording:</p>
+<ul>
+<li>Secondary time source (e.g. GPS) event date and time</li>
+<li>Action - original intended purpose of the request e.g. Log in, Refresh session ID, Log out, Update profile</li>
+<li>Object e.g. the affected component or other object (user account, data resource, file) e.g. URL, Session ID, User account, File</li>
+<li>Result status - whether the ACTION aimed at the OBJECT was successful e.g. Success, Fail, Defer</li>
+<li>Reason - why the status above occurred e.g. User not authenticated in database check ..., Incorrect credentials</li>
+<li>HTTP Status Code (web applications only) - the status code returned to the user (often 200 or 301)</li>
+<li>Request HTTP headers or HTTP User Agent (web applications only)</li>
+<li>User type classification e.g. public, authenticated user, CMS user, search engine, authorized penetration tester, uptime monitor (see &quot;Data to exclude&quot; below)</li>
+<li>Analytical confidence in the event detection <code>Note B</code> e.g. low, medium, high or a numeric value</li>
+<li>Responses seen by the user and/or taken by the application e.g. status code, custom text messages, session termination, administrator alerts</li>
+<li>Extended details e.g. stack trace, system error messages, debug information, HTTP request body, HTTP response headers and body</li>
+<li>Internal classifications e.g. responsibility, compliance references</li>
+<li>External classifications e.g. NIST Security Content Automation Protocol (SCAP), Mitre Common Attack Pattern Enumeration and Classification (CAPEC)</li>
+</ul>
+<p>For more information on these, see the &quot;other&quot; related articles listed at the end, especially the comprehensive article by Anton Chuvakin and Gunnar Peterson.</p>
+<p><strong>Note A:</strong> The &quot;Interaction identifier&quot; is a method of linking all (relevant) events for a single user interaction (e.g. desktop application form submission, web page request, mobile app button click, web service call). The application knows all these events relate to the same interaction, and this should be recorded instead of losing the information and forcing subsequent correlation techniques to re-construct the separate events. For example a single SOAP request may have multiple input validation failures and they may span a small range of times. As another example, an output validation failure may occur much later than the input submission for a long-running &quot;saga request&quot; submitted by the application to a database server.</p>
+<p><strong>Note B:</strong> Each organisation should ensure it has a consistent, and documented, approach to classification of events (type, confidence, severity), the syntax of descriptions, and field lengths &amp; data types including the format used for dates/times.</p>
+<h2 id="data-to-exclude"><a name="data-to-exclude" class="plugin-anchor" href="#data-to-exclude"><i class="fa fa-link" aria-hidden="true"></i></a>Data to exclude</h2>
+<p>Never log data unless it is legally sanctioned. For example intercepting some communications, monitoring employees, and collecting some data without consent may all be illegal.</p>
+<p>Never exclude any events from &quot;known&quot; users such as other internal systems, &quot;trusted&quot; third parties, search engine robots, uptime/process and other remote monitoring systems, pen testers, auditors. However, you may want to include a classification flag for each of these in the recorded data.</p>
+<p>The following should not usually be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed or encrypted:</p>
+<ul>
+<li>Application source code</li>
+<li>Session identification values (consider replacing with a hashed value if needed to track session specific events)</li>
+<li>Access tokens</li>
+<li>Sensitive personal data and some forms of personally identifiable information (PII) e.g. health, government identifiers, vulnerable people</li>
+<li>Authentication passwords</li>
+<li>Database connection strings</li>
+<li>Encryption keys and other master secrets</li>
+<li>Bank account or payment card holder data</li>
+<li>Data of a higher security classification than the logging system is allowed to store</li>
+<li>Commercially-sensitive information</li>
+<li>Information it is illegal to collect in the relevant jurisdictions</li>
+<li>Information a user has opted out of collection, or not consented to e.g. use of do not track, or where consent to collect has expired</li>
+</ul>
+<p>Sometimes the following data can also exist, and whilst useful for subsequent investigation, it may also need to be treated in some special manner before the event is recorded:</p>
+<ul>
+<li>File paths</li>
+<li>Database connection strings</li>
+<li>Internal network names and addresses</li>
+<li>Non sensitive personal data (e.g. personal names, telephone numbers, email addresses)</li>
+</ul>
+<p>Consider using personal data de-identification techniques such as deletion, scrambling or pseudonymization of direct and indirect identifiers where the individual&apos;s identity is not required, or the risk is considered too great.</p>
+<p>In some systems, sanitization can be undertaken post log collection, and prior to log display.</p>
+<h2 id="customizable-logging"><a name="customizable-logging" class="plugin-anchor" href="#customizable-logging"><i class="fa fa-link" aria-hidden="true"></i></a>Customizable logging</h2>
+<p>It may be desirable to be able to alter the level of logging (type of events based on severity or threat level, amount of detail recorded). If this is implemented, ensure that:</p>
+<ul>
+<li>The default level must provide sufficient detail for business needs</li>
+<li>It should not be possible to completely inactivate application logging or logging of events that are necessary for compliance requirements</li>
+<li>Alterations to the level/extent of logging must be intrinsic to the application (e.g. undertaken automatically by the application based on an approved algorithm) or follow change management processes (e.g. changes to configuration data, modification of source code)</li>
+<li>The logging level must be verified periodically</li>
+</ul>
+<h2 id="event-collection"><a name="event-collection" class="plugin-anchor" href="#event-collection"><i class="fa fa-link" aria-hidden="true"></i></a>Event collection</h2>
+<p>If your development framework supports suitable logging mechanisms use, or build upon that. Otherwise, implement an application-wide log handler which can be called from other modules/components. </p>
+<p>Document the interface referencing the organisation-specific event classification and description syntax requirements. </p>
+<p>If possible create this log handler as a standard module that can is thoroughly tested, deployed in multiple application, and added to a list of approved &amp; recommended modules.</p>
+<ul>
+<li>Perform input validation on event data from other trust zones to ensure it is in the correct format (and consider alerting and not logging if there is an input validation failure)</li>
+<li>Perform sanitization on all event data to prevent log injection attacks e.g. carriage return (CR), line feed (LF) and delimiter characters (and optionally to remove sensitive data)</li>
+<li>Encode data correctly for the output (logged) format</li>
+<li>If writing to databases, read, understand and apply the SQL injection cheat sheet</li>
+<li>Ensure failures in the logging processes/systems do not prevent the application from otherwise running or allow information leakage</li>
+<li>Synchronize time across all servers and devices <code>Note C</code></li>
+</ul>
+<p><strong>Note C:</strong> This is not always possible where the application is running on a device under some other party&apos;s control (e.g. on an individual&apos;s mobile phone, on a remote customer&apos;s workstation which is on another corporate network). In these cases attempt to measure the time offset, or record a confidence level in the event time stamp.</p>
+<p>Where possible record data in a standard format, or at least ensure it can be exported/broadcast using an industry-standard format.</p>
+<p>In some cases, events may be relayed or collected together in intermediate points. In the latter some data may be aggregated or summarized before forwarding on to a central repository and analysis system.</p>
+<h2 id="verification"><a name="verification" class="plugin-anchor" href="#verification"><i class="fa fa-link" aria-hidden="true"></i></a>Verification</h2>
+<p>Logging functionality and systems must be included in code review, application testing and security verification processes:</p>
+<ul>
+<li>Ensure the logging is working correctly and as specified</li>
+<li>Check events are being classified consistently and the field names, types and lengths are correctly defined to an agreed standard</li>
+<li>Ensure logging is implemented and enabled during application security, fuzz, penetration and performance testing</li>
+<li>Test the mechanisms are not susceptible to injection attacks</li>
+<li>Ensure there are no unwanted side-effects when logging occurs</li>
+<li>Check the effect on the logging mechanisms when external network connectivity is lost (if this is usually required)</li>
+<li>Ensure logging cannot be used to deplete system resources, for example by filling up disk space or exceeding database transaction log space, leading to denial of service</li>
+<li>Test the effect on the application of logging failures such as simulated database connectivity loss, lack of file system space, missing write permissions to the file system, and runtime errors in the logging module itself</li>
+<li>Verify access controls on the event log data</li>
+<li>If log data is utilized in any action against users (e.g. blocking access, account lock-out), ensure this cannot be used to cause denial of service (DoS) of other users</li>
+</ul>
+<h1 id="deployment-and-operation"><a name="deployment-and-operation" class="plugin-anchor" href="#deployment-and-operation"><i class="fa fa-link" aria-hidden="true"></i></a>Deployment and operation</h1>
+<h2 id="release"><a name="release" class="plugin-anchor" href="#release"><i class="fa fa-link" aria-hidden="true"></i></a>Release</h2>
+<ul>
+<li>Provide security configuration information by adding details about the logging mechanisms to release documentation</li>
+<li>Brief the application/process owner about the application logging mechanisms</li>
+<li>Ensure the outputs of the monitoring (see below) are integrated with incident response processes</li>
+</ul>
+<h2 id="operation"><a name="operation" class="plugin-anchor" href="#operation"><i class="fa fa-link" aria-hidden="true"></i></a>Operation</h2>
+<p>Enable processes to detect whether logging has stopped, and to identify tampering or unauthorized access and deletion (see protection below).</p>
+<h2 id="protection"><a name="protection" class="plugin-anchor" href="#protection"><i class="fa fa-link" aria-hidden="true"></i></a>Protection</h2>
+<p>The logging mechanisms and collected event data must be protected from mis-use such as tampering in transit, and unauthorized access, modification and deletion once stored. Logs may contain personal and other sensitive information, or the data may contain information regarding the application&apos;s code and logic. </p>
+<p>In addition, the collected information in the logs may itself have business value (to competitors, gossip-mongers, journalists and activists) such as allowing the estimate of revenues, or providing performance information about employees. </p>
+<p>This data may be held on end devices, at intermediate points, in centralized repositories and in archives and backups. </p>
+<p>Consider whether parts of the data may need to be excluded, masked, sanitized, hashed or encrypted during examination or extraction.</p>
+<p>At rest:</p>
+<ul>
+<li>Build in tamper detection so you know if a record has been modified or deleted</li>
+<li>Store or copy log data to read-only media as soon as possible</li>
+<li>All access to the logs must be recorded and monitored (and may need prior approval)</li>
+<li>The privileges to read log data should be restricted and reviewed periodically</li>
+</ul>
+<p>In transit:</p>
+<ul>
+<li>If log data is sent over untrusted networks (e.g. for collection, for dispatch elsewhere, for analysis, for reporting), use a secure transmission protocol</li>
+<li>Consider whether the origin of the event data needs to be verified</li>
+<li>Perform due diligence checks (regulatory and security) before sending event data to third parties</li>
+</ul>
+<p>See <code>NIST SP 800-92</code> Guide to Computer Security Log Management for more guidance.</p>
+<h2 id="monitoring-of-events"><a name="monitoring-of-events" class="plugin-anchor" href="#monitoring-of-events"><i class="fa fa-link" aria-hidden="true"></i></a>Monitoring of events</h2>
+<p>The logged event data needs to be available to review and there are processes in place for appropriate monitoring, alerting and reporting:</p>
+<ul>
+<li>Incorporate the application logging into any existing log management systems/infrastructure e.g. centralized logging and analysis systems</li>
+<li>Ensure event information is available to appropriate teams</li>
+<li>Enable alerting and signal the responsible teams about more serious events immediately</li>
+<li>Share relevant event information with other detection systems, to related organizations and centralized intelligence gathering/sharing systems</li>
+</ul>
+<h2 id="disposal-of-logs"><a name="disposal-of-logs" class="plugin-anchor" href="#disposal-of-logs"><i class="fa fa-link" aria-hidden="true"></i></a>Disposal of logs</h2>
+<p>Log data, temporary debug logs, and backups/copies/extractions, must not be destroyed before the duration of the required data retention period, and must not be kept beyond this time. </p>
+<p>Legal, regulatory and contractual obligations may impact on these periods.</p>
+<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related articles</h1>
+<ul>
+<li>OWASP <a href="http://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API" target="_blank">ESAPI Documentation</a>.</li>
+<li>OWASP <a href="https://www.owasp.org/index.php/Category:OWASP_Logging_Project" target="_blank">Logging Project</a>.</li>
+<li>IETF <a href="http://tools.ietf.org/html/rfc5424" target="_blank">syslog protocol</a>.</li>
+<li>Mitre <a href="http://cee.mitre.org/" target="_blank">Common Event Expression (CEE)</a> (as of 2014 no longer actively developed).</li>
+<li>NIST <a href="http://csrc.nist.gov/publications/nistpubs/800-92/SP800-92.pdf" target="_blank">SP 800-92 Guide to Computer Security Log Management</a>.</li>
+<li>PCISSC <a href="https://www.pcisecuritystandards.org/security_standards/documents.php" target="_blank">PCI DSS v2.0 Requirement 10 and PA-DSS v2.0 Requirement 4</a>.</li>
+<li>W3C <a href="http://www.w3.org/TR/WD-logfile.html" target="_blank">Extended Log File Format</a>.</li>
+<li>Other <a href="http://taosecurity.blogspot.co.uk/2009/08/build-visibility-in.html" target="_blank">Build Visibility In, Richard Bejtlich, TaoSecurity blog</a>.</li>
+<li>Other <a href="http://www.arcsight.com/solutions/solutions-cef/" target="_blank">Common Event Format (CEF), Arcsight</a>.</li>
+<li>Other <a href="https://www.ibm.com/developerworks/community/wikis/form/anonymous/api/wiki/9989d3d7-02c1-444e-92be-576b33d2f2be/page/3dc63f46-4a33-4e0b-98bf-4e55b74e556b/attachment/a19b9122-5940-4c89-ba3e-4b4fc25e2328/media/QRadar_LEEF_Format_Guide.pdf" target="_blank">Log Event Extended Format (<strong>LEEF</strong>), IBM</a>.</li>
+<li>Other <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/bb986747(v=vs.85" target="_blank">Common Log File System (CLFS), Microsoft</a>.aspx).</li>
+<li>Other <a href="http://www.symantec.com/connect/articles/building-secure-applications-consistent-logging" target="_blank">Building Secure Applications: Consistent Logging, Rohit Sethi &amp; Nish Bhalla, Symantec Connect</a>.</li>
+</ul>
+<h1 id="authors-and-primary-contributors"><a name="authors-and-primary-contributors" class="plugin-anchor" href="#authors-and-primary-contributors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Contributors</h1>
+<p>Most of the information included is based on content in the articles referenced in the text and listed above, but the following people have provided their ideas, knowledge and practical experience:</p>
+<p>Colin Watson - colin.watson@owasp.org</p>
+<p>Eoin Keary - eoin.keary@owasp.org</p>
+<p>Alexis Fitzgerald - alexis.fitzgerald@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: LDAP Injection Prevention ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Mass_Assignment_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Mass Assignment ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Logging ","level":"1.36","depth":1,"next":{"title":"Mass Assignment ","level":"1.37","depth":1,"path":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","ref":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","articles":[]},"previous":{"title":"LDAP Injection Prevention ","level":"1.35","depth":1,"path":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Logging_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.395Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

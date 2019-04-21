@@ -1,0 +1,1270 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>REST Security  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Ruby_on_Rails_Cheatsheet.html" />
+    
+    
+    <link rel="prev" href="REST_Assessment_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >REST Security </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p><a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank">REST</a> (or <strong>RE</strong>presentational <strong>S</strong>tate <strong>T</strong>ransfer) is an architectural style first described in <a href="https://en.wikipedia.org/wiki/Roy_Fielding" target="_blank">Roy Fielding</a>&apos;s Ph.D. dissertation on <a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm" target="_blank">Architectural Styles and the Design of Network-based Software Architectures</a>. </p>
+<p>It evolved as Fielding wrote the HTTP/1.1 and URI specs and has been proven to be well-suited for developing distributed hypermedia applications. While REST is more widely applicable, it is most commonly used within the context of communicating with services via HTTP.</p>
+<p>The key abstraction of information in REST is a resource. A REST API resource is identified by a URI, usually a HTTP URL. REST components use connectors to perform actions on a resource by using a representation to capture the current or intended state of the resource and transferring that representation. </p>
+<p>The primary connector types are client and server, secondary connectors include cache, resolver and tunnel.</p>
+<p>REST APIs are stateless. Stateful APIs do not adhere to the REST architectural style. State in the REST acronym refers to the state of the resource which the API accesses, not the state of a session within which the API is called. While there may be good reasons for building a stateful API, it is important to realize that managing sessions is complex and difficult to do securely. </p>
+<p>Stateful services are out of scope of this Cheat Sheet: <em>Passing state from client to backend, while making the service technically stateless, is an anti-pattern that should also be avoided as it is prone to replay and impersonation attacks.</em></p>
+<p>In order to implement flows with REST APIs, resources are typically created, read, updated and deleted. For example, an ecommerce site may offer methods to create an empty shopping cart, to add items to the cart and to check out the cart. Each of these REST calls is stateless and the endpoint should check whether the caller is authorized to perform the requested operation.</p>
+<p>Another key feature of REST applications is the use of standard HTTP verbs and error codes in the pursuit or removing unnecessary variation among different services.</p>
+<p>Another key feature of REST applications is the use of <a href="https://en.wikipedia.org/wiki/HATEOAS" target="_blank">HATEOAS or Hypermedia As The Engine of Application State</a>. This provides REST applications a self-documenting nature making it easier for developers to interact with a REST service without a priori knowledge. </p>
+<h1 id="https"><a name="https" class="plugin-anchor" href="#https"><i class="fa fa-link" aria-hidden="true"></i></a>HTTPS</h1>
+<p>Secure REST services must only provide HTTPS endpoints. This protects authentication credentials in transit, for example passwords, API keys or JSON Web Tokens. It also allows clients to authenticate the service and guarantees integrity of the transmitted data.</p>
+<p>See the <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a> for additional information.</p>
+<p>Consider the use of mutually authenticated client-side certificates to provide additional protection for highly privileged web services.</p>
+<h1 id="access-control"><a name="access-control" class="plugin-anchor" href="#access-control"><i class="fa fa-link" aria-hidden="true"></i></a>Access Control</h1>
+<p>Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple micro services following the RESTful style.</p>
+<ul>
+<li>in order to minimise latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints</li>
+<li>user authentication should be centralised in a Identity Provider (IdP), which issues access tokens</li>
+</ul>
+<h1 id="jwt"><a name="jwt" class="plugin-anchor" href="#jwt"><i class="fa fa-link" aria-hidden="true"></i></a>JWT</h1>
+<p>There seems to be a convergence towards using <a href="https://tools.ietf.org/html/rfc7519" target="_blank">JSON Web Tokens</a> (JWT) as the format for security tokens. JWTs are JSON data structures containing a set of claims that can be used for access control decisions. A cryptographic signature or message authentication code (MAC) can be used to protect the integrity of the JWT.</p>
+<ul>
+<li>Ensure JWTs are integrity protected by either a signature or a MAC. Do not allow the unsecured JWTs: <code>{&quot;alg&quot;:&quot;none&quot;}</code>. <ul>
+<li>See <a href="https://tools.ietf.org/html/rfc7519#section-6.1" target="_blank">here</a></li>
+</ul>
+</li>
+<li>In general, signatures should be preferred over MACs for integrity protection of JWTs.</li>
+</ul>
+<p>If MACs are used for integrity protection, every service that is able to validate JWTs can also create new JWTs using the same key. This means that all services using the same key have to mutually trust each other. Another consequence of this is that a compromise of any service also compromises all other services sharing the same key. See <a href="https://tools.ietf.org/html/rfc7515#section-10.5" target="_blank">here</a> for additional information.</p>
+<p>The relying party or token consumer validates a JWT by verifying its integrity and claims contained.</p>
+<ul>
+<li>A relying party must verify the integrity of the JWT based on its own configuration or hard-coded logic. It must not rely on the information of the JWT header to select the verification algorithm. See <a href="https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html" target="_blank">here</a> and <a href="https://www.youtube.com/watch?v=bW5pS4e_MX8" target="_blank">here</a></li>
+</ul>
+<p>Some claims have been standardised and should be present in JWT used for access controls. At least the following of the standard claims should be verified:</p>
+<ul>
+<li><code>iss</code> or issuer - is this a trusted issuer? Is it the expected owner of the signing key?</li>
+<li><code>aud</code> or audience - is the relying party in the target audience for this JWT?</li>
+<li><code>exp</code> or expiration time - is the current time before the end of the validity period of this token?</li>
+<li><code>nbf</code> or not before time - is the current time after the start of the validity period of this token?</li>
+</ul>
+<h1 id="api-keys"><a name="api-keys" class="plugin-anchor" href="#api-keys"><i class="fa fa-link" aria-hidden="true"></i></a>API Keys</h1>
+<p>Public REST services without access control run the risk of being farmed leading to excessive bills for bandwidth or compute cycles. API keys can be used to mitigate this risk. They are also often used by organisation to monetize APIs; instead of blocking high-frequency calls, clients are given access in accordance to a purchased access plan.</p>
+<p>API keys can reduce the impact of denial-of-service attacks. However, when they are issued to third-party clients, they are relatively easy to compromise.</p>
+<ul>
+<li>Require API keys for every request to the protected endpoint.</li>
+<li>Return <code>429 Too Many Requests</code> HTTP response code if requests are coming in too quickly.</li>
+<li>Revoke the API key if the client violates the usage agreement.</li>
+<li>Do not rely exclusively on API keys to protect sensitive, critical or high-value resources.</li>
+</ul>
+<h1 id="restrict-http-methods"><a name="restrict-http-methods" class="plugin-anchor" href="#restrict-http-methods"><i class="fa fa-link" aria-hidden="true"></i></a>Restrict HTTP methods</h1>
+<ul>
+<li>Apply a whitelist of permitted HTTP Methods e.g. <code>GET</code>, <code>POST</code>, <code>PUT</code>.</li>
+<li>Reject all requests not matching the whitelist with HTTP response code <code>405 Method not allowed</code>.</li>
+<li>Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record</li>
+</ul>
+<p>In Java EE in particular, this can be difficult to implement properly. See <a href="http://www.aspectsecurity.com/research-presentations/bypassing-vbaac-with-http-verb-tampering" target="_blank">Bypassing Web Authentication and Authorization with HTTP Verb Tampering</a> for an explanation of this common misconfiguration.</p>
+<h1 id="input-validation"><a name="input-validation" class="plugin-anchor" href="#input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Input validation</h1>
+<ul>
+<li>Do not trust input parameters/objects.</li>
+<li>Validate input: length / range / format and type.</li>
+<li>Achieve an implicit input validation by using strong types like numbers, booleans, dates, times or fixed data ranges in API parameters.</li>
+<li>Constrain string inputs with regexps.</li>
+<li>Reject unexpected/illegal content.</li>
+<li>Make use of validation/sanitation libraries or frameworks in your specific language.</li>
+<li>Define an appropriate request size limit and reject requests exceeding the limit with HTTP response status 413 Request Entity Too Large.</li>
+<li>Consider logging input validation failures. Assume that someone who is performing hundreds of failed input validations per second is up to no good.</li>
+<li>Have a look at input validation cheat sheet for comprehensive explanation.</li>
+<li>Use a secure parser for parsing the incoming messages. If you are using XML, make sure to use a parser that is not vulnerable to <a href="https://www.owasp.org/index.php/XML_External_Entity_(XXE" target="_blank">XXE</a>_Processing) and similar attacks.</li>
+</ul>
+<h1 id="validate-content-types"><a name="validate-content-types" class="plugin-anchor" href="#validate-content-types"><i class="fa fa-link" aria-hidden="true"></i></a>Validate content types</h1>
+<p>A REST request or response body should match the intended content type in the header. Otherwise this could cause misinterpretation at the consumer/producer side and lead to code injection/execution.</p>
+<ul>
+<li>Document all supported content types in your API.</li>
+</ul>
+<h2 id="validate-request-content-types"><a name="validate-request-content-types" class="plugin-anchor" href="#validate-request-content-types"><i class="fa fa-link" aria-hidden="true"></i></a>Validate request content types</h2>
+<ul>
+<li>Reject requests containing unexpected or missing content type headers with HTTP response status <code>406 Unacceptable</code> or <code>415 Unsupported Media Type</code>.</li>
+<li>For XML content types ensure appropriate XML parser hardening, see the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a>.</li>
+<li>Avoid accidentally exposing unintended content types by explicitly defining content types e.g. <a href="https://jersey.github.io/" target="_blank">Jersey</a> (Java) <code>@consumes(&quot;application/json&quot;); @produces(&quot;application/json&quot;)</code>. This avoids <a href="https://www.owasp.org/index.php/XML_External_Entity_(XXE" target="_blank">XXE-attack</a>_Processing) vectors for example.</li>
+</ul>
+<h2 id="send-safe-response-content-types"><a name="send-safe-response-content-types" class="plugin-anchor" href="#send-safe-response-content-types"><i class="fa fa-link" aria-hidden="true"></i></a>Send safe response content types</h2>
+<p>It is common for REST services to allow multiple response types (e.g. <code>application/xml</code> or <code>application/json</code>, and the client specifies the preferred order of response types by the Accept header in the request.</p>
+<ul>
+<li><strong>Do NOT</strong> simply copy the <code>Accept</code> header to the <code>Content-type</code> header of the response.</li>
+<li>Reject the request (ideally with a <code>406 Not Acceptable</code> response) if the <code>Accept</code> header does not specifically contain one of the allowable types.</li>
+</ul>
+<p>Services including script code (e.g. JavaScript) in their responses must be especially careful to defend against header injection attack.</p>
+<ul>
+<li>Ensure sending intended content type headers in your response matching your body content e.g. <code>application/json</code> and not <code>application/javascript</code>.</li>
+</ul>
+<h1 id="management-endpoints"><a name="management-endpoints" class="plugin-anchor" href="#management-endpoints"><i class="fa fa-link" aria-hidden="true"></i></a>Management endpoints</h1>
+<ul>
+<li>Avoid exposing management endpoints via Internet.</li>
+<li>If management endpoints must be accessible via the Internet, make sure that users must use a strong authentication mechanism, e.g. multi-factor.</li>
+<li>Expose management endpoints via different HTTP ports or hosts preferably on a different NIC and restricted subnet.</li>
+<li>Restrict access to these endpoints by firewall rules  or use of access control lists.</li>
+</ul>
+<h1 id="error-handling"><a name="error-handling" class="plugin-anchor" href="#error-handling"><i class="fa fa-link" aria-hidden="true"></i></a>Error handling</h1>
+<ul>
+<li>Respond with generic error messages - avoid revealing details of the failure unnecessarily.</li>
+<li>Do not pass technical details (e.g. call stacks or other internal hints) to the client.</li>
+</ul>
+<h1 id="audit-logs"><a name="audit-logs" class="plugin-anchor" href="#audit-logs"><i class="fa fa-link" aria-hidden="true"></i></a>Audit logs</h1>
+<ul>
+<li>Write audit logs before and after security related events.</li>
+<li>Consider logging token validation errors in order to detect attacks.</li>
+<li>Take care of log injection attacks by sanitising log data beforehand.</li>
+</ul>
+<h1 id="security-headers"><a name="security-headers" class="plugin-anchor" href="#security-headers"><i class="fa fa-link" aria-hidden="true"></i></a>Security headers</h1>
+<p>To make sure the content of a given resources is interpreted correctly by the browser, the server should always send the <code>Content-Type</code> header with the correct content type, and preferably the <code>Content-Type</code> header should include a charset. The server should also send the <code>X-Content-Type-Options: nosniff</code> <a href="https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers" target="_blank">security header</a> to make sure the browser does not try to detect a different <code>Content-Type</code> than what is actually sent (can lead to XSS).</p>
+<p>Additionally the client should send the <code>X-Frame-Options: deny</code> <a href="https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers" target="_blank">security header</a> to protect against drag&apos;n drop clickjacking attacks in older browsers.</p>
+<h1 id="cors"><a name="cors" class="plugin-anchor" href="#cors"><i class="fa fa-link" aria-hidden="true"></i></a>CORS</h1>
+<p>Cross-Origin Resource Sharing (CORS) is a W3C standard to flexibly specify what cross-domain requests are permitted. By delivering appropriate CORS Headers your REST API signals to the browser which domains, AKA origins, are allowed to make JavaScript calls to the REST service.</p>
+<ul>
+<li>Disable CORS headers if cross-domain calls are not supported/expected.</li>
+<li>Be as specific as possible and as general as necessary when setting the origins of cross-domain calls.</li>
+</ul>
+<h1 id="sensitive-information-in-http-requests"><a name="sensitive-information-in-http-requests" class="plugin-anchor" href="#sensitive-information-in-http-requests"><i class="fa fa-link" aria-hidden="true"></i></a>Sensitive information in HTTP requests</h1>
+<p>RESTful web services should be careful to prevent leaking credentials. Passwords, security tokens, and API keys should not appear in the URL, as this can be captured in web server logs, which makes them intrinsically valuable.</p>
+<ul>
+<li>In <code>POST</code>/<code>PUT</code> requests sensitive data should be transferred in the request body or request headers.</li>
+<li>In <code>GET</code> requests sensitive data should be transferred in an HTTP Header.</li>
+</ul>
+<p><strong>OK:</strong></p>
+<p><code>https://example.com/resourceCollection/[ID]/action</code></p>
+<p><code>https://twitter.com/vanderaj/lists</code></p>
+<p><strong>NOT OK:</strong></p>
+<p><code>https://example.com/controller/123/action?apiKey=a53f435643de32</code> because API Key is into the URL.</p>
+<h1 id="http-return-code"><a name="http-return-code" class="plugin-anchor" href="#http-return-code"><i class="fa fa-link" aria-hidden="true"></i></a>HTTP Return Code</h1>
+<p>HTTP defines <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank">status code</a>. When designing REST API, don&apos;t just use <code>200</code> for success or <code>404</code> for error. Always use the semantically appropriate status code for the response. </p>
+<p>Here is a non-exhaustive selection of security related REST API <strong>status codes</strong>. Use it to ensure you return the correct code. </p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Message</th>
+<th>Decription</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+<td>Response to a successful REST API action. The HTTP method can be GET, POST, PUT, PATCH or DELETE.</td>
+</tr>
+<tr>
+<td>201</td>
+<td>Created</td>
+<td>The request has been fulfilled and resource created. A URI for the created resource is returned in the Location header.</td>
+</tr>
+<tr>
+<td>202</td>
+<td>Accepted</td>
+<td>The request has been accepted for processing, but processing is not yet complete.</td>
+</tr>
+<tr>
+<td>301</td>
+<td>Moved Permanently</td>
+<td>Permanent redirection.</td>
+</tr>
+<tr>
+<td>304</td>
+<td>Not Modified</td>
+<td>Caching related response that returned when the client has the same copy of the resource as the server.</td>
+</tr>
+<tr>
+<td>307</td>
+<td>Temporary Redirect</td>
+<td>Temporary redirection of resource.</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request</td>
+<td>The request is malformed, such as message body format error.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>Wrong or no authentication ID/password provided.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>It&apos;s used when the authentication succeeded but authenticated user doesn&apos;t have permission to the request resource.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>When a non-existent resource is requested.</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Acceptable</td>
+<td>The error for an unexpected HTTP method. For example, the REST API is expecting HTTP GET, but HTTP PUT is used.</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Unacceptable</td>
+<td>The client presented a content type in the Accept header which is not supported by the server API.</td>
+</tr>
+<tr>
+<td>413</td>
+<td>Payload too large</td>
+<td>Use it to signal that the request size exceeded the given limit e.g. regarding file uploads.</td>
+</tr>
+<tr>
+<td>415</td>
+<td>Unsupported Media Type</td>
+<td>The requested content type is not supported by the REST service.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests</td>
+<td>The error is used when there may be DOS attack detected or the request is rejected due to rate limiting.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>An unexpected condition prevented the server from fulfilling the request. Be aware that the response should not reveal internal  information that helps an attacker, e.g. detailed error messages or  stack traces.</td>
+</tr>
+<tr>
+<td>501</td>
+<td>Not Implemented</td>
+<td>The REST service does not implement the requested operation yet.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable</td>
+<td>The REST service is temporarily unable to process the request. Used to inform the client it should retry at a later time.</td>
+</tr>
+</tbody>
+</table>
+<p>Additional information about HTTP return code usage in REST API can be found <a href="https://www.restapitutorial.com/httpstatuscodes.html" target="_blank">here</a> and <a href="https://restfulapi.net/http-status-codes" target="_blank">here</a>.</p>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and primary editors</h1>
+<p>Erlend Oftedal - erlend.oftedal@owasp.org</p>
+<p>Andrew van der Stock - vanderaj@owasp.org</p>
+<p>Tony Hsu Hsiang Chih- Hsiang_chihi@yahoo.com</p>
+<p>Johan Peeters - yo@johanpeeters.com</p>
+<p>Jan Wolff - jan.wolff@owasp.org</p>
+<p>Rocco Gr&#xE4;nitz - rocco.graenitz@owasp.org</p>
+<p>Manh Pham - manhpt2811@gmail.com</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="REST_Assessment_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: REST Assessment ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Ruby_on_Rails_Cheatsheet.html" class="navigation navigation-next " aria-label="Next page: Ruby on Rails Cheatsheet">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"REST Security ","level":"1.45","depth":1,"next":{"title":"Ruby on Rails Cheatsheet","level":"1.46","depth":1,"path":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","ref":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","articles":[]},"previous":{"title":"REST Assessment ","level":"1.44","depth":1,"path":"cheatsheets/REST_Assessment_Cheat_Sheet.md","ref":"cheatsheets/REST_Assessment_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/REST_Security_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.575Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

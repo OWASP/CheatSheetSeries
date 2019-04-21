@@ -1,0 +1,1373 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Cross Site Scripting Prevention  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Cryptographic_Storage_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Cross Site Scripting Prevention </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>This article provides a simple positive model for preventing <a href="https://www.owasp.org/index.php/XSS" target="_blank">XSS</a> using output escaping/encoding properly. While there are a huge number of XSS attack vectors, following a few simple rules can completely defend against this serious attack.</p>
+<p>This article does not explore the technical or business impact of XSS. Suffice it to say that it can lead to an attacker gaining the ability to do anything a victim can do through their browser.</p>
+<p>Both <a href="https://www.owasp.org/index.php/XSS#Stored_and_Reflected_XSS_Attacks_" target="_blank">reflected and stored XSS</a> can be addressed by performing the appropriate validation and escaping on the server-side. <a href="https://www.owasp.org/index.php/DOM_Based_XSS" target="_blank">DOM Based XSS</a> can be addressed with a special subset of rules described in the <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a>.</p>
+<p>For a cheatsheet on the attack vectors related to XSS, please refer to the <a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank">XSS Filter Evasion Cheat Sheet</a>. More background on browser security and the various browsers can be found in the <a href="https://code.google.com/archive/p/browsersec/" target="_blank">Browser Security Handbook</a>.</p>
+<p>Before reading this cheatsheet, it is important to have a fundamental understanding of <a href="https://www.owasp.org/index.php/Injection_Theory" target="_blank">Injection Theory</a>.</p>
+<h2 id="a-positive-xss-prevention-model"><a name="a-positive-xss-prevention-model" class="plugin-anchor" href="#a-positive-xss-prevention-model"><i class="fa fa-link" aria-hidden="true"></i></a>A Positive XSS Prevention Model</h2>
+<p>This article treats an HTML page like a template, with slots where a developer is allowed to put untrusted data. These slots cover the vast majority of the common places where a developer might want to put untrusted data. Putting untrusted data in other places in the HTML is not allowed. This is a &quot;whitelist&quot; model, that denies everything that is not specifically allowed.</p>
+<p>Given the way browsers parse HTML, each of the different types of slots has slightly different security rules. When you put untrusted data into these slots, you need to take certain steps to make sure that the data does not break out of that slot into a context that allows code execution. In a way, this approach treats an HTML document like a parameterized database query - the data is kept in specific places and is isolated from code contexts with escaping.</p>
+<p>This document sets out the most common types of slots and the rules for putting untrusted data into them safely. Based on the various specifications, known XSS vectors, and a great deal of manual testing with all the popular browsers, we have determined that the rules proposed here are safe.</p>
+<p>The slots are defined and a few examples of each are provided. Developers <strong>SHOULD NOT</strong> put data into any other slots without a very careful analysis to ensure that what they are doing is safe. Browser parsing is extremely tricky and many innocuous looking characters can be significant in the right context.</p>
+<h2 id="why-cant-i-just-html-entity-encode-untrusted-data"><a name="why-cant-i-just-html-entity-encode-untrusted-data" class="plugin-anchor" href="#why-cant-i-just-html-entity-encode-untrusted-data"><i class="fa fa-link" aria-hidden="true"></i></a>Why Can&apos;t I Just HTML Entity Encode Untrusted Data?</h2>
+<p>HTML entity encoding is okay for untrusted data that you put in the body of the HTML document, such as inside a <code>&lt;div&gt;</code> tag. It even sort of works for untrusted data that goes into attributes, particularly if you&apos;re religious about using quotes around your attributes. But HTML entity encoding doesn&apos;t work if you&apos;re putting untrusted data inside a <code>&lt;script&gt;</code>
+tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or in a URL. So even if you use an HTML entity encoding method everywhere, you are still most likely vulnerable to XSS. <strong>You MUST use the escape syntax for the part of the HTML document you&apos;re putting untrusted data into.</strong> That&apos;s what the rules below are all about.</p>
+<h2 id="you-need-a-security-encoding-library"><a name="you-need-a-security-encoding-library" class="plugin-anchor" href="#you-need-a-security-encoding-library"><i class="fa fa-link" aria-hidden="true"></i></a>You Need a Security Encoding Library</h2>
+<p>Writing these encoders is not tremendously difficult, but there are quite a few hidden pitfalls. For example, you might be tempted to use some of the escaping shortcuts like <code>\&quot;</code> in JavaScript. However, these values are dangerous and may be misinterpreted by the nested parsers in the browser. You might also forget to escape the escape character, which attackers can use to neutralize your attempts to be safe. OWASP recommends using a security-focused encoding library to make sure these rules are properly implemented.</p>
+<p>Microsoft provides an encoding library named the <a href="https://archive.codeplex.com/?p=wpl" target="_blank">Microsoft Anti-Cross Site Scripting Library</a> for the .NET platform and ASP.NET Framework has built-in <a href="https://msdn.microsoft.com/en-us/library/ms972969.aspx#securitybarriers_topic6" target="_blank">ValidateRequest</a> function that provides <strong>limited</strong> sanitization.</p>
+<p>The <a href="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" target="_blank">OWASP Java Encoder Project</a> provides a high-performance encoding library for Java.</p>
+<h1 id="xss-prevention-rules"><a name="xss-prevention-rules" class="plugin-anchor" href="#xss-prevention-rules"><i class="fa fa-link" aria-hidden="true"></i></a>XSS Prevention Rules</h1>
+<p>The following rules are intended to prevent all XSS in your application. While these rules do not allow absolute freedom in putting untrusted data into an HTML document, they should cover the vast majority of common use cases. You do not have to allow <strong>all</strong> the rules in your organization. Many organizations may find that <strong>allowing only Rule #1 and Rule #2 are sufficient for their needs</strong>. Please add a note to the discussion page if there is an additional context that is often required and can be secured with escaping.</p>
+<p><strong>Do NOT</strong> simply escape the list of example characters provided in the various rules. It is NOT sufficient to escape only that list. Blacklist approaches are quite fragile. The whitelist rules here have been carefully designed to provide protection even against future vulnerabilities introduced by browser changes.</p>
+<h2 id="rule-0---never-insert-untrusted-data-except-in-allowed-locations"><a name="rule-0---never-insert-untrusted-data-except-in-allowed-locations" class="plugin-anchor" href="#rule-0---never-insert-untrusted-data-except-in-allowed-locations"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #0 - Never Insert Untrusted Data Except in Allowed Locations</h2>
+<p>The first rule is to <strong>deny all</strong> - don&apos;t put untrusted data into your HTML document unless it is within one of the slots defined in Rule #1 through Rule #5. The reason for Rule #0 is that there are so many strange contexts within HTML that the list of escaping rules gets very complicated. We can&apos;t think of any good reason to put untrusted data in these contexts. This includes &quot;nested contexts&quot; like a URL inside a javascript -- the encoding rules for those locations are tricky and dangerous. </p>
+<p>If you insist on putting untrusted data into nested contexts, please do a lot of cross-browser testing and let us know what you find out.</p>
+<p>Directly in a script:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="undefined">...NEVER PUT UNTRUSTED DATA HERE...</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>Inside an HTML comment:</p>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!--...NEVER PUT UNTRUSTED DATA HERE...--&gt;</span>
+</code></pre>
+<p>In an attribute name:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">...NEVER</span> <span class="hljs-attr">PUT</span> <span class="hljs-attr">UNTRUSTED</span> <span class="hljs-attr">DATA</span> <span class="hljs-attr">HERE...</span>=<span class="hljs-string">test</span> /&gt;</span>
+</code></pre>
+<p>In a tag name:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">NEVER</span> <span class="hljs-attr">PUT</span> <span class="hljs-attr">UNTRUSTED</span> <span class="hljs-attr">DATA</span> <span class="hljs-attr">HERE...</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/test&quot;</span> /&gt;</span>
+</code></pre>
+<p>Directly in CSS:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">
+..<span class="hljs-selector-class">.NEVER</span> <span class="hljs-selector-tag">PUT</span> <span class="hljs-selector-tag">UNTRUSTED</span> <span class="hljs-selector-tag">DATA</span> <span class="hljs-selector-tag">HERE</span>...
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+</code></pre>
+<p>Most importantly, never accept actual JavaScript code from an untrusted source and then run it. For example, a parameter named &quot;callback&quot; that contains a JavaScript code snippet. No amount of escaping can fix that.</p>
+<h2 id="rule-1---html-escape-before-inserting-untrusted-data-into-html-element-content"><a name="rule-1---html-escape-before-inserting-untrusted-data-into-html-element-content" class="plugin-anchor" href="#rule-1---html-escape-before-inserting-untrusted-data-into-html-element-content"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #1 - HTML Escape Before Inserting Untrusted Data into HTML Element Content</h2>
+<p>Rule #1 is for when you want to put untrusted data directly into the HTML body somewhere. This includes inside normal tags like <code>div</code>, <code>p</code>, <code>b</code>, <code>td</code>, etc. Most web frameworks have a method for HTML escaping for the characters detailed below. However, this is <strong>absolutely not sufficient for other HTML contexts.</strong> You need to implement the other rules detailed here as well.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<p>Escape the following characters with HTML entity encoding to prevent switching into any execution context, such as script, style, or event handlers. Using hex entities is recommended in the spec. In addition to the 5 characters significant in XML (<code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&quot;</code>, <code>&apos;</code>), the forward slash is included as it helps to end an HTML entity.</p>
+<pre><code class="lang-text"> &amp; --&gt; &amp;amp;
+ &lt; --&gt; &amp;lt;
+ &gt; --&gt; &amp;gt;
+ &quot; --&gt; &amp;quot;
+ &apos; --&gt; &amp;#x27;     
+ / --&gt; &amp;#x2F;     
+
+ &amp;apos; not recommended because its not in the HTML spec (See: section 24.4.1) &amp;apos; is in the XML and XHTML specs.
+
+ Forward slash is included as it helps end an HTML entity
+</code></pre>
+<h2 id="rule-2---attribute-escape-before-inserting-untrusted-data-into-html-common-attributes"><a name="rule-2---attribute-escape-before-inserting-untrusted-data-into-html-common-attributes" class="plugin-anchor" href="#rule-2---attribute-escape-before-inserting-untrusted-data-into-html-common-attributes"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #2 - Attribute Escape Before Inserting Untrusted Data into HTML Common Attributes</h2>
+<p>Rule #2 is for putting untrusted data into typical attribute values like <code>width</code>, <code>name</code>, <code>value</code>, etc. This should not be used for complex attributes like <code>href</code>, <code>src</code>, <code>style</code>, or any of the event handlers like onmouseover. It is extremely important that event handler attributes should follow Rule #3 for HTML JavaScript Data Values.</p>
+<p>Inside <strong>UNquoted</strong> attribute:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">attr</span>=<span class="hljs-string">...ESCAPE</span> <span class="hljs-attr">UNTRUSTED</span> <span class="hljs-attr">DATA</span> <span class="hljs-attr">BEFORE</span> <span class="hljs-attr">PUTTING</span> <span class="hljs-attr">HERE...</span>&gt;</span>content
+</code></pre>
+<p>Inside single quoted attribute:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">attr</span>=<span class="hljs-string">&apos;...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&apos;</span>&gt;</span>content
+</code></pre>
+<p>Inside double quoted attribute :</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">attr</span>=<span class="hljs-string">&quot;...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span>&gt;</span>content
+</code></pre>
+<p>Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the <code>&amp;#xHH;</code> format (or a named entity if available) to prevent switching out of the attribute. </p>
+<p>The reason this rule is so broad is that developers frequently leave attributes unquoted. Properly quoted attributes can only be escaped with the corresponding quote. </p>
+<p>Unquoted attributes can be broken out of with many characters, including <code>[space]</code> <code>%</code> <code>*</code> <code>+</code> <code>,</code> <code>-</code> <code>/</code> <code>;</code> <code>&lt;</code> <code>=</code> <code>&gt;</code> <code>^</code> and <code>|</code>. </p>
+<h2 id="rule-3---javascript-escape-before-inserting-untrusted-data-into-javascript-data-values"><a name="rule-3---javascript-escape-before-inserting-untrusted-data-into-javascript-data-values" class="plugin-anchor" href="#rule-3---javascript-escape-before-inserting-untrusted-data-into-javascript-data-values"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #3 - JavaScript Escape Before Inserting Untrusted Data into JavaScript Data Values</h2>
+<p>Rule #3 concerns dynamically generated JavaScript code - both script blocks and event-handler attributes. The only safe place to put untrusted data into this code is inside a quoted &quot;data value.&quot; Including untrusted data inside any other JavaScript context is quite dangerous, as it is extremely easy to switch into an execution context with characters including (but not limited to) semi-colon, equals, space, plus, and many more, so use with caution.</p>
+<p>Inside a quoted string:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">alert(<span class="hljs-string">&apos;...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&apos;</span>)</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>One side of a quoted expression:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">x=<span class="hljs-string">&apos;...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&apos;</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>Inside quoted event handler:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">onmouseover</span>=<span class="hljs-string">&quot;x=&apos;...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&apos;&quot;</span><span class="hljs-string">&lt;</span>/<span class="hljs-attr">div</span>&gt;</span>
+</code></pre>
+<p>Please note there are some JavaScript functions that can never safely use untrusted data as input - <strong>EVEN IF JAVASCRIPT ESCAPED!</strong></p>
+<p>For example:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-built_in">window</span>.setInterval(<span class="hljs-string">&apos;...EVEN IF YOU ESCAPE UNTRUSTED DATA YOU ARE XSSED HERE...&apos;</span>);
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>Except for alphanumeric characters, escape all characters less than 256 with the <code>\xHH</code> format to prevent switching out of the data value into the script context or into another attribute. <strong>DO NOT</strong> use any escaping shortcuts like <code>\&quot;</code> because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to <strong>escape-the-escape attacks</strong> where the attacker sends <code>\&quot;</code> and the vulnerable code turns that into <code>\\&quot;</code> which enables the quote.</p>
+<p>If an event handler is properly quoted, breaking out requires the corresponding quote. However, we have intentionally made this rule quite broad because event handler attributes are often left unquoted. Unquoted attributes can be broken out of with many characters including <code>[space]</code> <code>%</code> <code>*</code> <code>+</code> <code>,</code> <code>-</code> <code>/</code> <code>;</code> <code>&lt;</code> <code>=</code> <code>&gt;</code> <code>^</code> and <code>|</code>.</p>
+<p>Also, a <code>&lt;/script&gt;</code> closing tag will close a script block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note this is an aggressive escaping policy that over-encodes. If there is a guarantee that proper quoting is accomplished then a much smaller character set is needed. Please look at the <a href="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project#tab=Use_the_Java_Encoder_Project" target="_blank">OWASP Java Encoder</a> JavaScript escaping examples for examples of proper JavaScript use that requires minimal escaping.</p>
+<h3 id="rule-31---html-escape-json-values-in-an-html-context-and-read-the-data-with-jsonparse"><a name="rule-31---html-escape-json-values-in-an-html-context-and-read-the-data-with-jsonparse" class="plugin-anchor" href="#rule-31---html-escape-json-values-in-an-html-context-and-read-the-data-with-jsonparse"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #3.1 - HTML escape JSON values in an HTML context and read the data with JSON.parse</h3>
+<p>In a Web 2.0 world, the need for having data dynamically generated by an application in a javascript context is common. One strategy is to make an AJAX call to get the values, but this isn&apos;t always performant. Often, an initial block of JSON is loaded into the page to act as a single place to store multiple values. This data is tricky, though not impossible, to escape correctly without breaking the format and content of the values.</p>
+<p><strong>Ensure returned <code>Content-Type</code> header is application/json and not text/html.</strong> This shall instruct the browser not misunderstand the context and execute injected script</p>
+<p><strong>Bad HTTP response:</strong></p>
+<pre><code class="lang-text">HTTP/1.1 200
+Date: Wed, 06 Feb 2013 10:28:54 GMT
+Server: Microsoft-IIS/7.5....
+Content-Type: text/html; charset=utf-8 &lt;-- bad
+....
+Content-Length: 373
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+{&quot;Message&quot;:&quot;No HTTP resource was found that matches the request URI &apos;dev.net.ie/api/pay/.html?HouseNumber=9&amp;AddressLine
+=The+Gardens&lt;script&gt;alert(1)&lt;/script&gt;&amp;AddressLine2=foxlodge+woods&amp;TownName=Meath&apos;.&quot;,&quot;MessageDetail&quot;:&quot;No type was found
+that matches the controller named &apos;pay&apos;.&quot;}   &lt;-- this script will pop!!
+</code></pre>
+<p><strong>Good HTTP response:</strong></p>
+<pre><code class="lang-text">HTTP/1.1 200
+Date: Wed, 06 Feb 2013 10:28:54 GMT
+Server: Microsoft-IIS/7.5....
+Content-Type: application/json; charset=utf-8 &lt;--good
+.....
+</code></pre>
+<p>A common <strong>anti-pattern</strong> one would see:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-comment">// Do NOT do this without encoding the data with one of the techniques listed below.</span>
+<span class="hljs-keyword">var</span> initData = <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">%=</span> <span class="hljs-attr">data.to_json</span> %&gt;</span>; 
+</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h4 id="json-serialization"><a name="json-serialization" class="plugin-anchor" href="#json-serialization"><i class="fa fa-link" aria-hidden="true"></i></a>JSON serialization</h4>
+<p>A safe JSON serializer will allow developers to serialize JSON as string of literal JavaScript which can be embedded in an HTML in the contents of the <code>&lt;script&gt;</code> tag. HTML characters and JavaScript line terminators need be escaped. Consider the <a href="https://github.com/yahoo/serialize-javascript" target="_blank">Yahoo JavaScript Serializer</a> for this task.</p>
+<h4 id="html-entity-encoding"><a name="html-entity-encoding" class="plugin-anchor" href="#html-entity-encoding"><i class="fa fa-link" aria-hidden="true"></i></a>HTML entity encoding</h4>
+<p>This technique has the advantage that html entity escaping is widely supported and helps separate data from server side code without crossing any context boundaries. Consider placing the JSON block on the page as a normal element and then parsing the innerHTML to get the contents. The javascript that reads the span can live in an external file, thus making the implementation of <a href="https://content-security-policy.com/" target="_blank">CSP</a> enforcement easier.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;init_data&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;display: none&quot;</span>&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-name">%=</span> <span class="hljs-attr">html_escape</span>(<span class="hljs-attr">data.to_json</span>) %&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">// external js file</span>
+<span class="hljs-keyword">var</span> dataElement = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&apos;init_data&apos;</span>);
+<span class="hljs-comment">// decode and parse the content of the div</span>
+<span class="hljs-keyword">var</span> initData = <span class="hljs-built_in">JSON</span>.parse(dataElement.textContent);
+</code></pre>
+<p>An alternative to escaping and unescaping JSON directly in JavaScript, is to normalize JSON server-side by converting <code>&lt;</code> to <code>\u003c</code> before delivering it to the browser. </p>
+<h2 id="rule-4---css-escape-and-strictly-validate-before-inserting-untrusted-data-into-html-style-property-values"><a name="rule-4---css-escape-and-strictly-validate-before-inserting-untrusted-data-into-html-style-property-values" class="plugin-anchor" href="#rule-4---css-escape-and-strictly-validate-before-inserting-untrusted-data-into-html-style-property-values"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #4 - CSS Escape And Strictly Validate Before Inserting Untrusted Data into HTML Style Property Values</h2>
+<p>Rule #4 is for when you want to put untrusted data into a stylesheet or a style tag. CSS is surprisingly powerful, and can be used for numerous attacks. Therefore, it&apos;s important that you only use untrusted data in a property <strong>value</strong> and not into other places in style data. You should stay away from putting untrusted data into complex properties like <code>url</code>, <code>behavior</code>, and custom (<code>-moz-binding</code>). </p>
+<p>You should also not put untrusted data into IE&#x2019;s expression property value which allows JavaScript.</p>
+<p>Property value:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">
+<span class="hljs-selector-tag">selector</span> { <span class="hljs-attribute">property </span>: ...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...; }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+</code></pre>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css">
+<span class="hljs-selector-tag">selector</span> { <span class="hljs-attribute">property </span>: <span class="hljs-string">&quot;...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span>; }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+</code></pre>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;property : ...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span>&gt;</span>text<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+</code></pre>
+<p>Please note there are some CSS contexts that can never safely use untrusted data as input - <strong>EVEN IF PROPERLY CSS ESCAPED!</strong> You will have to ensure that URLs only start with <code>http</code> not <code>javascript</code> and that properties never start with &quot;expression&quot;.</p>
+<p>For example:</p>
+<pre><code class="lang-css">{ background-url : &quot;javascript:alert(1)&quot;; }  // and all other URLs
+{ text-size: &quot;expression(alert(&apos;XSS&apos;))&quot;; }   // only in IE
+</code></pre>
+<p>Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the \HH escaping format. <strong>DO NOT</strong> use any escaping shortcuts like <code>\&quot;</code> because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to <strong>escape-the-escape attacks</strong> where the attacker sends <code>\&quot;</code> and the vulnerable code turns that into <code>\\&quot;</code> which enables the quote.</p>
+<p>If attribute is quoted, breaking out requires the corresponding quote. All attributes should be quoted but your encoding should be strong enough to prevent XSS when untrusted data is placed in unquoted contexts. </p>
+<p>Unquoted attributes can be broken out of with many characters including <code>[space]</code> <code>%</code> <code>*</code> <code>+</code> <code>,</code> <code>-</code> <code>/</code> <code>;</code> <code>&lt;</code> <code>=</code> <code>&gt;</code> <code>^</code> and <code>|</code>. </p>
+<p>Also, the <code>&lt;/style&gt;</code> tag will close the style block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note that we recommend aggressive CSS encoding and validation to prevent XSS attacks for both quoted and unquoted attributes. </p>
+<h2 id="rule-5---url-escape-before-inserting-untrusted-data-into-html-url-parameter-values"><a name="rule-5---url-escape-before-inserting-untrusted-data-into-html-url-parameter-values" class="plugin-anchor" href="#rule-5---url-escape-before-inserting-untrusted-data-into-html-url-parameter-values"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #5 - URL Escape Before Inserting Untrusted Data into HTML URL Parameter Values</h2>
+<p>Rule #5 is for when you want to put untrusted data into HTTP GET parameter value.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;http://www.somesite.com?test=...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span>&gt;</span>link<span class="hljs-tag">&lt;/<span class="hljs-name">a</span> &gt;</span>
+</code></pre>
+<p>Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the <code>%HH</code> escaping format. Including untrusted data in data: URLs should not be allowed as there is no good way to disable attacks with escaping to prevent switching out of the URL. </p>
+<p>All attributes should be quoted. Unquoted attributes can be broken out of with many characters including <code>[space]</code> <code>%</code> <code>*</code> <code>+</code> <code>,</code> <code>-</code> <code>/</code> <code>;</code> <code>&lt;</code> <code>=</code> <code>&gt;</code> <code>^</code> and <code>|</code>. Note that entity encoding is useless in this context.</p>
+<p>WARNING: Do not encode complete or relative URL&apos;s with URL encoding! If untrusted input is meant to be placed into <code>href</code>, <code>src</code> or other URL-based attributes, it should be validated to make sure it does not point to an unexpected protocol, especially <code>javascript</code> links. URL&apos;s should then be encoded based on the context of display like any other piece of data. For example, user driven URL&apos;s in <code>HREF</code> links should be attribute encoded. </p>
+<p>For example: </p>
+<pre><code class="lang-java">String userURL = request.getParameter( &quot;userURL&quot; )
+boolean isValidURL = Validator.IsValidURL(userURL, 255); 
+if (isValidURL) {  
+    &lt;a href=&quot;&lt;%=encoder.encodeForHTMLAttribute(userURL)%&gt;&quot;&gt;link&lt;/a&gt;
+}
+</code></pre>
+<h2 id="rule-6---sanitize-html-markup-with-a-library-designed-for-the-job"><a name="rule-6---sanitize-html-markup-with-a-library-designed-for-the-job" class="plugin-anchor" href="#rule-6---sanitize-html-markup-with-a-library-designed-for-the-job"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #6 - Sanitize HTML Markup with a Library Designed for the Job</h2>
+<p>If your application handles markup -- untrusted input that is supposed to contain HTML -- it can be very difficult to validate. Encoding is also difficult, since it would break all the tags that are supposed to be in the input. Therefore, you need a library that can parse and clean HTML formatted text. There are several available at OWASP that are simple to use:</p>
+<p><strong><a href="https://github.com/mganss/HtmlSanitizer" target="_blank">HtmlSanitizer</a></strong></p>
+<p>An open-source .Net library. The HTML is cleaned with a white list approach. All allowed tags and attributes can be configured. The library is unit tested with the OWASP <a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank">XSS Filter Evasion Cheat Sheet</a></p>
+<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> sanitizer = <span class="hljs-keyword">new</span> HtmlSanitizer();
+sanitizer.AllowedAttributes.Add(<span class="hljs-string">&quot;class&quot;</span>);
+<span class="hljs-keyword">var</span> sanitized = sanitizer.Sanitize(html);
+</code></pre>
+<p><strong><a href="https://www.owasp.org/index.php/OWASP_Java_HTML_Sanitizer_Project" target="_blank">OWASP Java HTML Sanitizer</a></strong></p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> org.owasp.html.Sanitizers;
+<span class="hljs-keyword">import</span> org.owasp.html.PolicyFactory;
+PolicyFactory sanitizer = Sanitizers.FORMATTING.and(Sanitizers.BLOCKS);
+String cleanResults = sanitizer.sanitize(<span class="hljs-string">&quot;&lt;p&gt;Hello, &lt;b&gt;World!&lt;/b&gt;&quot;</span>);
+</code></pre>
+<p>For more information on OWASP Java HTML Sanitizer policy construction, see <a href="https://github.com/OWASP/java-html-sanitizer" target="_blank">here</a>.</p>
+<p><strong><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html" target="_blank">Ruby on Rails SanitizeHelper</a></strong></p>
+<p>The <code>SanitizeHelper</code> module provides a set of methods for scrubbing text of undesired HTML elements.</p>
+<pre><code class="lang-ruby">&lt;%= sanitize @comment.body, <span class="hljs-symbol">tags:</span> <span class="hljs-string">%w(strong em a)</span>, <span class="hljs-symbol">attributes:</span> <span class="hljs-string">%w(href)</span> %&gt;
+</code></pre>
+<p><strong>Other libraries that provide HTML Sanitization include:</strong></p>
+<ul>
+<li><a href="https://github.com/google/closure-library/tree/master/closure/goog/html/sanitizer" target="_blank">HTML sanitizer</a> from <a href="https://developers.google.com/closure/library/" target="_blank">Google Closure Library</a></li>
+<li><a href="http://htmlpurifier.org/" target="_blank">PHP HTML Purifier</a>.</li>
+<li><a href="https://github.com/ecto/bleach" target="_blank">JavaScript/Node.js Bleach</a>.</li>
+<li><a href="https://pypi.python.org/pypi/bleach" target="_blank">Python Bleach</a>.</li>
+</ul>
+<h2 id="rule-7---prevent-dom-based-xss"><a name="rule-7---prevent-dom-based-xss" class="plugin-anchor" href="#rule-7---prevent-dom-based-xss"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #7 - Prevent DOM-based XSS</h2>
+<p>For details on what DOM-based XSS is, and defenses against this type of XSS flaw, please see the OWASP article on <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a>.</p>
+<h2 id="bonus-rule-1-use-httponly-cookie-flag"><a name="bonus-rule-1-use-httponly-cookie-flag" class="plugin-anchor" href="#bonus-rule-1-use-httponly-cookie-flag"><i class="fa fa-link" aria-hidden="true"></i></a>Bonus Rule #1: Use HTTPOnly cookie flag</h2>
+<p>Preventing all XSS flaws in an application is hard, as you can see. To help mitigate the impact of an XSS flaw on your site, OWASP also recommends you set the HTTPOnly flag on your session cookie and any custom cookies you have that are not accessed by any Javascript you wrote. This cookie flag is typically on by default in .NET apps, but in other languages you have to set it manually. For more details on the HTTPOnly cookie flag, including what it does, and how to use it, see the OWASP article on <a href="https://www.owasp.org/index.php/HTTPOnly" target="_blank">HTTPOnly</a>.</p>
+<h2 id="bonus-rule-2-implement-content-security-policy"><a name="bonus-rule-2-implement-content-security-policy" class="plugin-anchor" href="#bonus-rule-2-implement-content-security-policy"><i class="fa fa-link" aria-hidden="true"></i></a>Bonus Rule #2: Implement Content Security Policy</h2>
+<p>There is another good complex solution to mitigate the impact of an XSS flaw called Content Security Policy. It&apos;s a browser side mechanism which allows you to create source whitelists for client side resources of your web application, e.g. JavaScript, CSS, images, etc. CSP via special HTTP header instructs the browser to only execute or render resources from those sources. </p>
+<p>For example this CSP:</p>
+<pre><code class="lang-text">Content-Security-Policy: default-src: &apos;self&apos;; script-src: &apos;self&apos; static.domain.tld
+</code></pre>
+<p>Will instruct web browser to load all resources only from the page&apos;s origin and JavaScript source code files additionaly from <code>static.domain.tld</code>. For more details on Content Security Policy, including what it does, and how to use it, see this article on <a href="https://content-security-policy.com" target="_blank">Content Security Policy</a>.</p>
+<h2 id="bonus-rule-3-use-an-auto-escaping-template-system"><a name="bonus-rule-3-use-an-auto-escaping-template-system" class="plugin-anchor" href="#bonus-rule-3-use-an-auto-escaping-template-system"><i class="fa fa-link" aria-hidden="true"></i></a>Bonus Rule #3: Use an Auto-Escaping Template System</h2>
+<p>Many web application frameworks provide automatic contextual escaping functionality such as <a href="https://docs.angularjs.org/api/ng/service/$sce" target="_blank">AngularJS strict contextual escaping</a> and <a href="https://golang.org/pkg/html/template/" target="_blank">Go Templates</a>. Use these technologies when you can.</p>
+<h2 id="bonus-rule-4-use-the-x-xss-protection-response-header"><a name="bonus-rule-4-use-the-x-xss-protection-response-header" class="plugin-anchor" href="#bonus-rule-4-use-the-x-xss-protection-response-header"><i class="fa fa-link" aria-hidden="true"></i></a>Bonus Rule #4: Use the X-XSS-Protection Response Header</h2>
+<p>This HTTP <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection" target="_blank">response header</a> enables the Cross-site scripting (XSS) filter built into some modern web browsers. This header is usually enabled by default anyway, so the role of this header is to re-enable the filter for this particular website if it was disabled by the user.</p>
+<h2 id="bonus-rule-5-properly-use-modern-js-frameworks-like-angular-2-or-reactjs"><a name="bonus-rule-5-properly-use-modern-js-frameworks-like-angular-2-or-reactjs" class="plugin-anchor" href="#bonus-rule-5-properly-use-modern-js-frameworks-like-angular-2-or-reactjs"><i class="fa fa-link" aria-hidden="true"></i></a>Bonus Rule #5: Properly use modern JS frameworks like Angular (2+) or ReactJS</h2>
+<p>Modern javascript frameworks have pretty good XSS protection built in. It is important how to use them properly to benefit from it.</p>
+<p>When using ReactJS <em>do not use <code>dangerouslySetInnerHTML</code></em>. If you really, really really have to use <code>dangerouslySetInnerHTML</code> remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.</p>
+<p>For Angular (2+) remember to build Angular templates with <code>-prod</code> parameter (<code>ng build --prod</code>) in order to avoid template injection.</p>
+<p>And also remember to update your framework to the newest version, with all possible bug fixes, as soon as possible. </p>
+<h1 id="xss-prevention-rules-summary"><a name="xss-prevention-rules-summary" class="plugin-anchor" href="#xss-prevention-rules-summary"><i class="fa fa-link" aria-hidden="true"></i></a>XSS Prevention Rules Summary</h1>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Context</th>
+<th>Code Sample</th>
+<th>Defense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td>HTML Body</td>
+<td><code>&lt;span&gt;UNTRUSTED DATA &lt;/span&gt;</code></td>
+<td>HTML Entity Encoding (rule #1).</td>
+</tr>
+<tr>
+<td>String</td>
+<td>Safe HTML Attributes</td>
+<td><code>&lt;input type=&quot;text&quot; name=&quot;fname&quot; value=&quot;UNTRUSTED DATA &quot;&gt;</code></td>
+<td>Aggressive HTML Entity Encoding (rule #2), Only place untrusted data into a whitelist of safe attributes (listed below), Strictly validate unsafe attributes such as background, id and name.</td>
+</tr>
+<tr>
+<td>String</td>
+<td>GET Parameter</td>
+<td><code>&lt;a href=&quot;/site/search?value=UNTRUSTED DATA &quot;&gt;clickme&lt;/a&gt;</code></td>
+<td>URL Encoding (rule #5).</td>
+</tr>
+<tr>
+<td>String</td>
+<td>Untrusted URL in a SRC or HREF attribute</td>
+<td><code>&lt;a href=&quot;UNTRUSTED URL &quot;&gt;clickme&lt;/a&gt; &lt;iframe src=&quot;UNTRUSTED URL &quot; /&gt;</code></td>
+<td>Canonicalize input, URL Validation, Safe URL verification, Whitelist http and https URL&apos;s only (Avoid the JavaScript Protocol to Open a new Window), Attribute encoder.</td>
+</tr>
+<tr>
+<td>String</td>
+<td>CSS Value</td>
+<td><code>html &lt;div style=&quot;width: UNTRUSTED DATA ;&quot;&gt;Selection&lt;/div&gt;</code></td>
+<td>Strict structural validation (rule #4), CSS Hex encoding, Good design of CSS Features.</td>
+</tr>
+<tr>
+<td>String</td>
+<td>Javascript Variable</td>
+<td><code>&lt;script&gt;var currentValue=&apos;UNTRUSTED DATA &apos;;&lt;/script&gt; &lt;script&gt;someFunction(&apos;UNTRUSTED DATA &apos;);&lt;/script&gt;</code></td>
+<td>Ensure JavaScript variables are quoted, JavaScript Hex Encoding, JavaScript Unicode Encoding, Avoid backslash encoding (<code>\&quot;</code> or <code>\&apos;</code> or <code>\\</code>).</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td>HTML Body</td>
+<td><code>&lt;div&gt;UNTRUSTED HTML&lt;/div&gt;</code></td>
+<td>HTML Validation (JSoup, AntiSamy, HTML Sanitizer...).</td>
+</tr>
+<tr>
+<td>String</td>
+<td>DOM XSS</td>
+<td><code>&lt;script&gt;document.write(&quot;UNTRUSTED INPUT: &quot; + document.location.hash );&lt;script/&gt;</code></td>
+<td><a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a></td>
+</tr>
+</tbody>
+</table>
+<p>The following snippets of HTML demonstrate how to safely render untrusted data in a variety of different contexts.</p>
+<p><strong>Safe HTML Attributes include:</strong> <code>align</code>, <code>alink</code>, <code>alt</code>, <code>bgcolor</code>, <code>border</code>, <code>cellpadding</code>, <code>cellspacing</code>, <code>class</code>, <code>color</code>, <code>cols</code>, <code>colspan</code>, <code>coords</code>, <code>dir</code>, <code>face</code>, <code>height</code>, <code>hspace</code>, <code>ismap</code>, <code>lang</code>, <code>marginheight</code>, <code>marginwidth</code>, <code>multiple</code>, <code>nohref</code>, <code>noresize</code>, <code>noshade</code>, <code>nowrap</code>, <code>ref</code>, <code>rel</code>, <code>rev</code>, <code>rows</code>, <code>rowspan</code>, <code>scrolling</code>, <code>shape</code>, <code>span</code>, <code>summary</code>, <code>tabindex</code>, <code>title</code>, <code>usemap</code>, <code>valign</code>, <code>value</code>, <code>vlink</code>, <code>vspace</code>, <code>width</code>.</p>
+<h1 id="output-encoding-rules-summary"><a name="output-encoding-rules-summary" class="plugin-anchor" href="#output-encoding-rules-summary"><i class="fa fa-link" aria-hidden="true"></i></a>Output Encoding Rules Summary</h1>
+<p>The purpose of output encoding (as it relates to Cross Site Scripting) is to convert untrusted input into a safe form where the input is displayed as <strong>data</strong> to the user without executing as <strong>code</strong> in the browser. The following charts details a list of critical output encoding methods needed to stop Cross Site Scripting.</p>
+<table>
+<thead>
+<tr>
+<th>Encoding Type</th>
+<th>Encoding Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTML Entity Encoding</td>
+<td>Convert <code>&amp;</code> to <code>&amp;amp;</code>, Convert <code>&lt;</code> to <code>&amp;lt;</code>, Convert <code>&gt;</code> to <code>&amp;gt;</code>, Convert <code>&quot;</code> to <code>&amp;quot;</code>, Convert <code>&apos;</code> to <code>&amp;#x27;</code>, Convert <code>/</code> to <code>&amp;#x2F;</code></td>
+</tr>
+<tr>
+<td>HTML Attribute Encoding</td>
+<td>Except for alphanumeric characters, escape all characters with the HTML  Entity <code>&amp;#xHH;</code> format, including spaces. (<strong>HH</strong> = Hex Value)</td>
+</tr>
+<tr>
+<td>URL Encoding</td>
+<td>Standard percent encoding, see <a href="http://www.w3schools.com/tags/ref_urlencode.asp" target="_blank">here</a>. URL encoding should only be used to encode parameter values, not the entire URL or path fragments of a URL.</td>
+</tr>
+<tr>
+<td>JavaScript Encoding</td>
+<td>Except for alphanumeric characters, escape all characters with the <code>\uXXXX</code> unicode escaping format (<strong>X</strong> = Integer).</td>
+</tr>
+<tr>
+<td>CSS Hex Encoding</td>
+<td>CSS escaping supports <code>\XX</code> and <code>\XXXXXX</code>. Using a two character escape can  cause problems if the next character continues the escape sequence.  There are two solutions (a) Add a space after the CSS escape (will be  ignored by the CSS parser) (b) use the full amount of CSS escaping  possible by zero padding the value.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h1>
+<p><strong>XSS Attack Cheat Sheet</strong></p>
+<p>The following article describes how to exploit different kinds of XSS Vulnerabilities that this article was created to help you avoid:</p>
+<ul>
+<li>OWASP: <a href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet" target="_blank">XSS Filter Evasion Cheat Sheet</a> - Based on - <a href="https://www.in-secure.org/misc/xss/xss.html" target="_blank">RSnake&apos;s: &quot;XSS Cheat Sheet&quot;</a>.</li>
+</ul>
+<p><strong>Description of XSS Vulnerabilities</strong></p>
+<ul>
+<li>OWASP article on <a href="https://www.owasp.org/index.php/XSS" target="_blank">XSS</a> Vulnerabilities.</li>
+</ul>
+<p><strong>Discussion on the Types of XSS Vulnerabilities</strong></p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting" target="_blank">Types of Cross-Site Scripting</a>.</li>
+</ul>
+<p><strong>How to Review Code for Cross-site scripting Vulnerabilities</strong></p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/:Category:OWASP_Code_Review_Project" target="_blank">OWASP Code Review Guide</a> article on <a href="https://www.owasp.org/index.php/Reviewing_Code_for_Cross-site_scripting" target="_blank">Reviewing Code for Cross-site scripting</a> Vulnerabilities.</li>
+</ul>
+<p><strong>How to Test for Cross-site scripting Vulnerabilities</strong></p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/:Category:OWASP_Testing_Project" target="_blank">OWASP Testing Guide</a> article on <a href="https://www.owasp.org/index.php/Testing_for_Cross_site_scripting" target="_blank">Testing for Cross site scripting</a> Vulnerabilities.</li>
+<li><a href="https://www.owasp.org/index.php/XSS_Experimental_Minimal_Encoding_Rules" target="_blank">XSS Experimental Minimal Encoding Rules</a></li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Jeff Williams - jeff.williams@contrastsecurity.com</p>
+<p>Jim Manico - jim@owasp.org</p>
+<p>Neil Mattatall - neil@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Cross-Site Request Forgery Prevention ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Cryptographic_Storage_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Cryptographic Storage ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Cross Site Scripting Prevention ","level":"1.17","depth":1,"next":{"title":"Cryptographic Storage ","level":"1.18","depth":1,"path":"cheatsheets/Cryptographic_Storage_Cheat_Sheet.md","ref":"cheatsheets/Cryptographic_Storage_Cheat_Sheet.md","articles":[]},"previous":{"title":"Cross-Site Request Forgery Prevention ","level":"1.16","depth":1,"path":"cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.590Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

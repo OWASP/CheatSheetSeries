@@ -1,0 +1,1168 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Query Parameterization  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="REST_Assessment_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Protect_FileUpload_Against_Malicious_File.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Query Parameterization </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p><a href="https://www.owasp.org/index.php/SQL_Injection" target="_blank">SQL Injection</a> is one of the most dangerous web vulnerabilities. So much so that it&apos;s the <a href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection" target="_blank">#1 item in the OWASP Top 10</a>. </p>
+<p>It represents a serious threat because SQL Injection allows evil attacker code to change the structure of a web application&apos;s SQL statement in a way that can steal data, modify data, or potentially facilitate command injection to the underlying OS. </p>
+<p>This cheat sheet is a derivative work of the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
+<h1 id="parameterized-query-examples"><a name="parameterized-query-examples" class="plugin-anchor" href="#parameterized-query-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Parameterized Query Examples</h1>
+<p>SQL Injection is best prevented through the use of <a href="SQL_Injection_Prevention_Cheat_Sheet.html"><em>parameterized queries</em></a>. The following chart demonstrates, with real-world code samples, how to build parameterized queries in most of the common web languages. The purpose of these code samples is to demonstrate to the web developer how to avoid SQL Injection when building database queries within a web application.</p>
+<h2 id="prepared-statement-examples"><a name="prepared-statement-examples" class="plugin-anchor" href="#prepared-statement-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Prepared Statement Examples</h2>
+<h3 id="using-java-built-in-feature"><a name="using-java-built-in-feature" class="plugin-anchor" href="#using-java-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using Java built-in feature</h3>
+<pre><code class="lang-java">String custname = request.getParameter(<span class="hljs-string">&quot;customerName&quot;</span>); 
+String query = <span class="hljs-string">&quot;SELECT account_balance FROM user_data WHERE user_name = ? &quot;</span>;  
+PreparedStatement pstmt = connection.prepareStatement( query );
+pstmt.setString( <span class="hljs-number">1</span>, custname); 
+ResultSet results = pstmt.executeQuery( );
+</code></pre>
+<h3 id="using-java-with-hibernate"><a name="using-java-with-hibernate" class="plugin-anchor" href="#using-java-with-hibernate"><i class="fa fa-link" aria-hidden="true"></i></a>Using Java with Hibernate</h3>
+<pre><code class="lang-java"><span class="hljs-comment">//HQL </span>
+<span class="hljs-meta">@Entity</span> <span class="hljs-comment">// declare as entity;</span>
+<span class="hljs-meta">@NamedQuery</span>(
+ name=<span class="hljs-string">&quot;findByDescription&quot;</span>,
+ query=<span class="hljs-string">&quot;FROM Inventory i WHERE i.productDescription = :productDescription&quot;</span>
+)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Inventory</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>{
+ <span class="hljs-meta">@Id</span>
+ <span class="hljs-keyword">private</span> <span class="hljs-keyword">long</span> id;
+ <span class="hljs-keyword">private</span> String productDescription;
+}
+
+<span class="hljs-comment">// use case </span>
+<span class="hljs-comment">// This should REALLY be validated too</span>
+String userSuppliedParameter = request.getParameter(<span class="hljs-string">&quot;Product-Description&quot;</span>); 
+<span class="hljs-comment">// perform input validation to detect attacks</span>
+List&lt;Inventory&gt; list =
+ session.getNamedQuery(<span class="hljs-string">&quot;findByDescription&quot;</span>)
+ .setParameter(<span class="hljs-string">&quot;productDescription&quot;</span>, userSuppliedParameter).list();
+
+<span class="hljs-comment">//Criteria API</span>
+<span class="hljs-comment">// This should REALLY be validated too</span>
+String userSuppliedParameter = request.getParameter(<span class="hljs-string">&quot;Product-Description&quot;</span>); 
+<span class="hljs-comment">// perform input validation to detect attacks</span>
+Inventory inv = (Inventory) session.createCriteria(Inventory.class).add
+(Restrictions.eq(<span class="hljs-string">&quot;productDescription&quot;</span>, userSuppliedParameter)).uniqueResult();
+</code></pre>
+<h3 id="using-net-built-in-feature"><a name="using-net-built-in-feature" class="plugin-anchor" href="#using-net-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using .NET built-in feature</h3>
+<pre><code class="lang-csharp">String query = <span class="hljs-string">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span>;
+<span class="hljs-keyword">try</span> {
+   OleDbCommand command = <span class="hljs-keyword">new</span> OleDbCommand(query, connection);
+   command.Parameters.Add(<span class="hljs-keyword">new</span> OleDbParameter(<span class="hljs-string">&quot;customerName&quot;</span>, CustomerName Name.Text));
+   OleDbDataReader reader = command.ExecuteReader();
+   <span class="hljs-comment">// &#x2026;</span>
+} <span class="hljs-keyword">catch</span> (OleDbException se) {
+   <span class="hljs-comment">// error handling</span>
+}
+</code></pre>
+<h3 id="using-asp-net-built-in-feature"><a name="using-asp-net-built-in-feature" class="plugin-anchor" href="#using-asp-net-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using ASP .NET built-in feature</h3>
+<pre><code class="lang-csharp"><span class="hljs-keyword">string</span> sql = <span class="hljs-string">&quot;SELECT * FROM Customers WHERE CustomerId = @CustomerId&quot;</span>;
+SqlCommand command = <span class="hljs-keyword">new</span> SqlCommand(sql);
+command.Parameters.Add(<span class="hljs-keyword">new</span> SqlParameter(<span class="hljs-string">&quot;@CustomerId&quot;</span>, System.Data.SqlDbType.Int));
+command.Parameters[<span class="hljs-string">&quot;@CustomerId&quot;</span>].Value = <span class="hljs-number">1</span>;
+</code></pre>
+<h3 id="using-ruby-with-activerecord"><a name="using-ruby-with-activerecord" class="plugin-anchor" href="#using-ruby-with-activerecord"><i class="fa fa-link" aria-hidden="true"></i></a>Using Ruby with ActiveRecord</h3>
+<pre><code class="lang-ruby"><span class="hljs-comment"># Create</span>
+Project.create!(<span class="hljs-symbol">:name</span> =&gt; <span class="hljs-string">&apos;owasp&apos;</span>)
+<span class="hljs-comment"># Read</span>
+Project.all(<span class="hljs-symbol">:conditions</span> =&gt; <span class="hljs-string">&quot;name = ?&quot;</span>, name)
+Project.all(<span class="hljs-symbol">:conditions</span> =&gt; { <span class="hljs-symbol">:name</span> =&gt; name })
+Project.where(<span class="hljs-string">&quot;name = :name&quot;</span>, <span class="hljs-symbol">:name</span> =&gt; name)
+<span class="hljs-comment"># Update</span>
+project.update_attributes(<span class="hljs-symbol">:name</span> =&gt; <span class="hljs-string">&apos;owasp&apos;</span>)
+<span class="hljs-comment"># Delete</span>
+Project.delete(<span class="hljs-symbol">:name</span> =&gt; <span class="hljs-string">&apos;name&apos;</span>)
+</code></pre>
+<h3 id="using-ruby-built-in-feature"><a name="using-ruby-built-in-feature" class="plugin-anchor" href="#using-ruby-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using Ruby built-in feature</h3>
+<pre><code class="lang-ruby">insert_new_user = db.prepare <span class="hljs-string">&quot;INSERT INTO users (name, age, gender) VALUES (?, ? ,?)&quot;</span>
+insert_new_user.execute <span class="hljs-string">&apos;aizatto&apos;</span>, <span class="hljs-string">&apos;20&apos;</span>, <span class="hljs-string">&apos;male&apos;</span>
+</code></pre>
+<h3 id="using-php-with-php-data-objects"><a name="using-php-with-php-data-objects" class="plugin-anchor" href="#using-php-with-php-data-objects"><i class="fa fa-link" aria-hidden="true"></i></a>Using PHP with PHP Data Objects</h3>
+<pre><code class="lang-php">$stmt = $dbh-&gt;prepare(<span class="hljs-string">&quot;INSERT INTO REGISTRY (name, value) VALUES (:name, :value)&quot;</span>);
+$stmt-&gt;bindParam(<span class="hljs-string">&apos;:name&apos;</span>, $name);
+$stmt-&gt;bindParam(<span class="hljs-string">&apos;:value&apos;</span>, $value);
+</code></pre>
+<h3 id="using-cold-fusion-built-in-feature"><a name="using-cold-fusion-built-in-feature" class="plugin-anchor" href="#using-cold-fusion-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using Cold Fusion built-in feature</h3>
+<pre><code class="lang-coldfusion">&lt;cfquery name = &quot;getFirst&quot; dataSource = &quot;cfsnippets&quot;&gt;
+    SELECT * FROM #strDatabasePrefix#_courses WHERE intCourseID =
+    &lt;cfqueryparam value = #intCourseID# CFSQLType = &quot;CF_SQL_INTEGER&quot;&gt;
+&lt;/cfquery&gt;
+</code></pre>
+<h3 id="using-perl-with-database-independent-interface"><a name="using-perl-with-database-independent-interface" class="plugin-anchor" href="#using-perl-with-database-independent-interface"><i class="fa fa-link" aria-hidden="true"></i></a>Using PERL with Database Independent Interface</h3>
+<pre><code class="lang-perl"><span class="hljs-keyword">my</span> $sql = <span class="hljs-string">&quot;INSERT INTO foo (bar, baz) VALUES ( ?, ? )&quot;</span>;
+<span class="hljs-keyword">my</span> $sth = $dbh-&gt;prepare( $sql );
+$sth-&gt;execute( $bar, $baz );
+</code></pre>
+<h2 id="stored-procedure-examples"><a name="stored-procedure-examples" class="plugin-anchor" href="#stored-procedure-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Stored Procedure Examples</h2>
+<p>The SQL you write in your web application isn&apos;t the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities. </p>
+<p>To ensure this dynamic SQL is secure, you can parameterize this dynamic SQL too using bind variables. </p>
+<p>Here are some examples of using bind variables in stored procedures in different databases.</p>
+<h3 id="oracle-using-plsql"><a name="oracle-using-plsql" class="plugin-anchor" href="#oracle-using-plsql"><i class="fa fa-link" aria-hidden="true"></i></a>Oracle using PL/SQL</h3>
+<h4 id="normal-stored-procedure"><a name="normal-stored-procedure" class="plugin-anchor" href="#normal-stored-procedure"><i class="fa fa-link" aria-hidden="true"></i></a>Normal Stored Procedure</h4>
+<p>No dynamic SQL being created. Parameters passed in to stored procedures are naturally bound to their location within the query without anything special being required:</p>
+<pre><code class="lang-sql">PROCEDURE SafeGetBalanceQuery(UserID varchar, Dept varchar) AS <span class="hljs-keyword">BEGIN</span> 
+   <span class="hljs-keyword">SELECT</span> balance <span class="hljs-keyword">FROM</span> accounts_table <span class="hljs-keyword">WHERE</span> user_ID = UserID <span class="hljs-keyword">AND</span> department = Dept;
+<span class="hljs-keyword">END</span>;
+</code></pre>
+<h4 id="stored-procedure-using-bind-variables-in-sql-run-with-execute"><a name="stored-procedure-using-bind-variables-in-sql-run-with-execute" class="plugin-anchor" href="#stored-procedure-using-bind-variables-in-sql-run-with-execute"><i class="fa fa-link" aria-hidden="true"></i></a>Stored Procedure Using Bind Variables in SQL Run with EXECUTE</h4>
+<p>Bind variables are used to tell the database that the inputs to this dynamic SQL are &apos;data&apos; and not possibly code: </p>
+<pre><code class="lang-sql">PROCEDURE AnotherSafeGetBalanceQuery(UserID varchar, Dept varchar) 
+          AS stmt VARCHAR(400); result NUMBER; 
+<span class="hljs-keyword">BEGIN</span>
+   stmt := <span class="hljs-string">&apos;SELECT balance FROM accounts_table WHERE user_ID = :1
+            AND department = :2&apos;</span>;
+   <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">IMMEDIATE</span> stmt <span class="hljs-keyword">INTO</span> <span class="hljs-keyword">result</span> <span class="hljs-keyword">USING</span> UserID, Dept;
+   RETURN result;
+<span class="hljs-keyword">END</span>;
+</code></pre>
+<h3 id="sql-server-using-transact-sql"><a name="sql-server-using-transact-sql" class="plugin-anchor" href="#sql-server-using-transact-sql"><i class="fa fa-link" aria-hidden="true"></i></a>SQL Server using Transact-SQL</h3>
+<h4 id="normal-stored-procedure"><a name="normal-stored-procedure" class="plugin-anchor" href="#normal-stored-procedure"><i class="fa fa-link" aria-hidden="true"></i></a>Normal Stored Procedure</h4>
+<p>No dynamic SQL being created. Parameters passed in to stored procedures are naturally bound to their location within the query without anything special being required:</p>
+<pre><code class="lang-sql">PROCEDURE SafeGetBalanceQuery(@UserID varchar(20), @Dept varchar(10)) AS <span class="hljs-keyword">BEGIN</span> 
+   <span class="hljs-keyword">SELECT</span> balance <span class="hljs-keyword">FROM</span> accounts_table <span class="hljs-keyword">WHERE</span> user_ID = @UserID <span class="hljs-keyword">AND</span> department = @Dept
+<span class="hljs-keyword">END</span>
+</code></pre>
+<h4 id="stored-procedure-using-bind-variables-in-sql-run-with-exec"><a name="stored-procedure-using-bind-variables-in-sql-run-with-exec" class="plugin-anchor" href="#stored-procedure-using-bind-variables-in-sql-run-with-exec"><i class="fa fa-link" aria-hidden="true"></i></a>Stored Procedure Using Bind Variables in SQL Run with EXEC</h4>
+<p>Bind variables are used to tell the database that the inputs to this dynamic SQL are &apos;data&apos; and not possibly code:</p>
+<pre><code class="lang-sql">PROCEDURE SafeGetBalanceQuery(@UserID varchar(20), @Dept varchar(10)) AS <span class="hljs-keyword">BEGIN</span>
+   <span class="hljs-keyword">DECLARE</span> @<span class="hljs-keyword">sql</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">200</span>)
+   <span class="hljs-keyword">SELECT</span> @<span class="hljs-keyword">sql</span> = <span class="hljs-string">&apos;SELECT balance FROM accounts_table WHERE &apos;</span>
+                 + <span class="hljs-string">&apos;user_ID = @UID AND department = @DPT&apos;</span>
+   EXEC sp_executesql @<span class="hljs-keyword">sql</span>, 
+                      <span class="hljs-string">&apos;@UID VARCHAR(20), @DPT VARCHAR(10)&apos;</span>,
+                      @UID=@UserID, @DPT=@Dept
+<span class="hljs-keyword">END</span>
+</code></pre>
+<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<ul>
+<li><a href="http://bobby-tables.com/" target="_blank">The Bobby Tables site (inspired by the XKCD webcomic) has numerous examples in different languages of parameterized Prepared Statements and Stored Procedures</a></li>
+<li>OWASP <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a></li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Jim Manico - jim@owasp.org</p>
+<p>Dave Wichers - dave.wichers@owasp.org</p>
+<p>Neil Matatal - neil@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Protect_FileUpload_Against_Malicious_File.html" class="navigation navigation-prev " aria-label="Previous page: Protect FileUpload Against Malicious File">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="REST_Assessment_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: REST Assessment ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Query Parameterization ","level":"1.43","depth":1,"next":{"title":"REST Assessment ","level":"1.44","depth":1,"path":"cheatsheets/REST_Assessment_Cheat_Sheet.md","ref":"cheatsheets/REST_Assessment_Cheat_Sheet.md","articles":[]},"previous":{"title":"Protect FileUpload Against Malicious File","level":"1.42","depth":1,"path":"cheatsheets/Protect_FileUpload_Against_Malicious_File.md","ref":"cheatsheets/Protect_FileUpload_Against_Malicious_File.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.419Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

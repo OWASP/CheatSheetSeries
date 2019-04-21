@@ -1,0 +1,1250 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Third Party Javascript Management  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Threat_Modeling_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="TLS_Cipher_String_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Third Party Javascript Management </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>Tags, aka marketing tags, analytics tags etc. are small bits of javascript on a web page. They can also be HTML image elements when javascript is disabled. The reason for them is to collect data on the web user actions and browsing context for use by the web page owner in marketing.</p>
+<p>Third party vendor javascript tags (hereinafter, <strong>tags</strong>) can be divided into two types: </p>
+<ul>
+<li>User interface tags.</li>
+<li>Analytic tags.</li>
+</ul>
+<p>User interface tags have to execute on the client because they change the DOM; displaying a dialog or image or changing text etc.</p>
+<p>Analytics tags send information back to a marketing information database; information like what user action was just taken, browser metadata, location information, page metadata etc. The rationale for analytics tags is to provide data from the user&apos;s browser DOM to the vendor for some form of marketing analysis. This data can be anything available in the DOM. The data is used for user navigation and clickstream analysis, identification of the user to determine further content to display etc., and various marketing analysis functions.</p>
+<p>The term <strong>host</strong> refers to the original site the user goes to, such as a shopping or news site, that contains or retrieves and executes third party javascript tag for marketing analysis of the user actions.</p>
+<h1 id="major-risks"><a name="major-risks" class="plugin-anchor" href="#major-risks"><i class="fa fa-link" aria-hidden="true"></i></a>Major risks</h1>
+<p>The single greatest risk is a compromise of the third party javascript server, and the injection of malicious javascript into the original tag javascript. This has happened in 2018 and likely earlier.</p>
+<p>The invocation of 3rd party JS code in a web application requires consideration for 3 risks in particular:</p>
+<ol>
+<li>The loss of control over changes to the client application,</li>
+<li>The execution of arbitrary code on client systems,</li>
+<li>The disclosure or leakage of sensitive information to 3rd parties.</li>
+</ol>
+<h2 id="risk-1-loss-of-control-over-changes-to-the-client-application"><a name="risk-1-loss-of-control-over-changes-to-the-client-application" class="plugin-anchor" href="#risk-1-loss-of-control-over-changes-to-the-client-application"><i class="fa fa-link" aria-hidden="true"></i></a>Risk 1: Loss of control over changes to the client application</h2>
+<p>This risk arises from the fact that there is usually no guaranty that the code hosted at the 3rd party will remain the same as seen from the developers and testers: new features may be pushed in the 3rd party code at any time, thus potentially breaking the interface or data-flows and exposing the availability of your application to its users/customers.</p>
+<p>Typical defenses include, but are not restricted to: in-house script mirroring (to prevent alterations by 3rd parties), sub-resource integrity (to enable browser-level interception) and secure transmission of the 3rd party code (to prevent modifications while in-transit). See below for more details.</p>
+<h2 id="risk-2-execution-of-arbitrary-code-on-client-systems"><a name="risk-2-execution-of-arbitrary-code-on-client-systems" class="plugin-anchor" href="#risk-2-execution-of-arbitrary-code-on-client-systems"><i class="fa fa-link" aria-hidden="true"></i></a>Risk 2: Execution of arbitrary code on client systems</h2>
+<p>This risk arises from the fact that 3rd party JavaScript code is rarely reviewed by the invoking party prior to its integration into a website/application. As the client reaches the hosting website/application, this 3rd party code gets executed, thus granting the 3rd party the exact same privileges that were granted to the user (similar to <a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS" target="_blank">XSS attacks</a>)).</p>
+<p>Any testing performed prior to entering production loses some of its validity, including <code>AST testing</code> (<a href="https://www.veracode.com/security/interactive-application-security-testing-iast" target="_blank">IAST</a>, <a href="https://www.veracode.com/sites/default/files/pdf/resources/whitepapers/what-is-rasp.pdf" target="_blank">RAST</a>, <a href="https://www.gartner.com/it-glossary/static-application-security-testing-sast" target="_blank">SAST</a>, <a href="https://www.gartner.com/it-glossary/dynamic-application-security-testing-dast" target="_blank">DAST</a>, etc.). </p>
+<p>While it is widely accepted that the probability of having rogue code intentionally injected by the 3rd party is low, there are still cases of malicious injections in 3rd party code after the organization&apos;s servers were compromised (ex: Yahoo, January 2014). </p>
+<p>This risk should therefore still be evaluated, in particular when the 3rd party does not show any documentation that it is enforcing better security measures than the invoking organization itself, or at least equivalent. Another example is that the domain hosting the 3rd party JavaScript code expires because the company maintaining it is bankrupt or the developers have abandoned the project. A malicious actor can then re-register the domain and publish malicious code.</p>
+<p>Typical defenses include, but are not restricted to: </p>
+<ul>
+<li>In-house script mirroring (to prevent alterations by 3rd parties), </li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity" target="_blank">Sub-resource integrity</a> (to enable browser-level interception), </li>
+<li>Secure transmission of the 3rd party code (to prevent modifications while in-transit) and various types of sandboxing. See below for more details.</li>
+<li>...</li>
+</ul>
+<h2 id="risk-3-disclosure-of-sensitive-information-to-3rd-parties"><a name="risk-3-disclosure-of-sensitive-information-to-3rd-parties" class="plugin-anchor" href="#risk-3-disclosure-of-sensitive-information-to-3rd-parties"><i class="fa fa-link" aria-hidden="true"></i></a>Risk 3: Disclosure of sensitive information to 3rd parties</h2>
+<p>When a 3rd party script is invoked in a website/application, the browser directly contacts the 3rd party servers. By default, the request includes all regular HTTP headers. In addition to the originating IP address of the browser, the 3rd party also obtains other data such as the referrer (in non-https requests) and any cookies previously set by the 3rd party, for example when visiting another organization&apos;s website that also invokes the 3rd party script.</p>
+<p>In many cases, this grants the 3rd party primary access to information on the organization&apos;s users / customers / clients. Additionally, if the 3rd party is sharing the script with other entities, it also collects secondary data from all the other entities, thus knowing who the organization&apos;s visitors are but also what other organizations they interact with.</p>
+<p>A typical case is the current situation with major news/press sites that invoke 3rd party code (typically for ad engines, statistics and JavaScript APIs): any user visiting any of these websites also informs the 3rd parties of the visit. In many cases, the 3rd party also gets to know what news articles each individual user is clicking specifically (leakage occurs through the HTTP referrer field) and thus can establish deeper personality profiles.</p>
+<p>Typical defenses include, but are not restricted to: in-house script mirroring (to prevent leakage of HTTP requests to 3rd parties). Users can reduce their profiling by random clicking links on leaking websites/applications (such as press/news websites) to reduce profiling. See below for more details.</p>
+<h1 id="3rd-party-javascript-deployment-architectures"><a name="3rd-party-javascript-deployment-architectures" class="plugin-anchor" href="#3rd-party-javascript-deployment-architectures"><i class="fa fa-link" aria-hidden="true"></i></a>3rd Party JavaScript Deployment Architectures</h1>
+<p>There are three basic deployment mechanisms for <strong>tags</strong>. These mechanisms can be combined with each other.</p>
+<h2 id="vendor-javascript-on-page"><a name="vendor-javascript-on-page" class="plugin-anchor" href="#vendor-javascript-on-page"><i class="fa fa-link" aria-hidden="true"></i></a>Vendor Javascript on page</h2>
+<p>This is where the vendor provides the host with the javascript and the host puts it on the host page. To be secure the host company must review the code for any vulnerabilities like <a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS" target="_blank">XSS attacks</a>) or malicious actions such as sending sensitive data from the DOM to a malicious site. This is often difficult because the javascript is commonly obfuscated.</p>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Some host, e.g. foobar.com, HTML code here --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+        ...
+        <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="actionscript"><span class="hljs-comment">/* 3rd party vendor javascript here */</span></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<h2 id="javascript-request-to-vendor"><a name="javascript-request-to-vendor" class="plugin-anchor" href="#javascript-request-to-vendor"><i class="fa fa-link" aria-hidden="true"></i></a>Javascript Request to Vendor</h2>
+<p>This is where one or a few lines of code on the host page each request a javascript file or URL directly from the vendor site. When the host page is being created, the developer includes the lines of code provided by the vendor that will request the vendor javascript. Each time the page is accessed the requests are made to the vendor site for the javascript, which then executes on the user browser.</p>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Some host, e.g. foobar.com, HTML code here --&gt;</span>`
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+        ...    
+        <span class="hljs-comment">&lt;!-- 3rd party vendor javascript --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://analytics.vendor.com/v1.1/script.js&quot;</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- /3rd party vendor javascript --&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<h2 id="indirect-request-to-vendor-through-tag-manager"><a name="indirect-request-to-vendor-through-tag-manager" class="plugin-anchor" href="#indirect-request-to-vendor-through-tag-manager"><i class="fa fa-link" aria-hidden="true"></i></a>Indirect request to Vendor through Tag Manager</h2>
+<p>This is where one or a few lines of code on the host page each request a javascript file or URL from a tag aggregator or <strong>tag manager</strong> site; not from the javascript vendor site. The tag aggregator or tag manager site returns whatever third party javascript files that the host company has configured to be returned. Each file or URL request to the tag manager site can return lots of other javascript files from multiple vendors.</p>
+<p>The actual content that is returned from the aggregator or manager (i.e. the specific javascript files as well as exactly what they do) can be dynamically changed by host site employees using a graphical user interface for development, hosted on the tag manager site that non-technical users can work with, such as the marketing part of the business. </p>
+<p>The changes can be either:</p>
+<ol>
+<li>Get a different javascript file from the 3rd party vendor for the same request.</li>
+<li>Change what DOM object data is read, and when, to send to the vendor.</li>
+</ol>
+<p>The tag manager developer user interface will generate code that does what the marketing functionality requires, basically determining what data to get from the browser DOM and when to get it. The tag manager always returns a <strong>container</strong> javascript file to the browser which is basically a set of javascript functions that are used by the code generated by the user interface to implement the required functionality. </p>
+<p>Similar to java frameworks that provide functions and global data to the developer, the container javascript executes on the browser and lets the business user use the tag manager developer user interface to specify high level functionality without needing to know javascript.</p>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Some host, e.g. foobar.com, HTML code here --&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+       ...    
+       <span class="hljs-comment">&lt;!-- Tag Manager --&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">w, d, s, l, i</span>)</span>{
+         w[l] = w[l] || [];
+         w[l].push({<span class="hljs-string">&apos;tm.start&apos;</span>:<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime(), event:<span class="hljs-string">&apos;tm.js&apos;</span>});
+         <span class="hljs-keyword">var</span> f = d.getElementsByTagName(s)[<span class="hljs-number">0</span>], 
+         j = d.createElement(s), 
+         dl = l != <span class="hljs-string">&apos;dataLayer&apos;</span> ? <span class="hljs-string">&apos;&amp;l=&apos;</span> + l : <span class="hljs-string">&apos;&apos;</span>;
+         j.async=<span class="hljs-literal">true</span>;
+         j.src=<span class="hljs-string">&apos;https://tagmanager.com/tm.js?id=&apos;</span> + i + dl;
+         f.parentNode.insertBefore(j, f);
+       })(<span class="hljs-built_in">window</span>, <span class="hljs-built_in">document</span>, <span class="hljs-string">&apos;script&apos;</span>, <span class="hljs-string">&apos;dataLayer&apos;</span>, <span class="hljs-string">&apos;TM-FOOBARID&apos;</span>);</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+       <span class="hljs-comment">&lt;!-- /Tag Manager --&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>`
+</code></pre>
+<h3 id="security-problems-with-requesting-tags"><a name="security-problems-with-requesting-tags" class="plugin-anchor" href="#security-problems-with-requesting-tags"><i class="fa fa-link" aria-hidden="true"></i></a>Security Problems with requesting Tags</h3>
+<p>The previously described mechanisms are difficult to make secure because you can only see the code if you proxy the requests or if you get access to the GUI and see what is configured. The javascript is generally obfuscated so even seeing it is usually not useful. It is also instantly deployable because each new page request from a browser executes the requests to the aggregator which gets the javascript from the third party vendor. So as soon as any javascript files are changed on the vendor, or modified on the aggregator, the next call for them from any browser will get the changed javascript. One way to manage this risk is with the <em>Subresource Integrity</em> standard described below.</p>
+<h2 id="server-direct-data-layer"><a name="server-direct-data-layer" class="plugin-anchor" href="#server-direct-data-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Server Direct Data Layer</h2>
+<p>The tag manager developer user interface can be used to create javascript that can get data from anywhere in the browser DOM and store it anywhere on the page. This can allow vulnerabilities because the interface can be used to generate code to get unvalidated data from the DOM (e.g. URL parameters) and store it in some page location that would execute javascript.</p>
+<p>The best way to make the generated code secure is to confine it to getting DOM data from a host defined data layer.</p>
+<p>The data layer is either:</p>
+<ol>
+<li>a DIV object with attribute values that have the marketing or user behavior data that the 3rd party wants</li>
+<li>a set of JSON objects with the same data. Each variable or attribute contains the value of some DOM element or the description of a user action. The data layer is the complete set of values that all vendors need for that page. The data layer is created by the host developers.</li>
+</ol>
+<p>When specific events happen that the business has defined, a javascript handler for that event sends values from the data layer directly to the tag manager server. The tag manager server then sends the data to whatever third party or parties is supposed to get it. The event handler code is created by the host developers using the tag manager developer user interface. The event handler code is loaded from the tag manager servers on every page load.</p>
+<p><strong>This is a secure technique</strong> because only your javascript executes on your users browser, and only the data you decide on is sent to the vendor.</p>
+<p>This requires cooperation between the host, the aggregator or tag manager and the vendors.</p>
+<p>The host developers have to work with the vendor in order to know what type of data the vendor needs to do their analysis. Then the host programmer determines what DOM element will have that data.</p>
+<p>The host developers have to work with the tag manager or aggregator to agree on the protocol to send the data to the aggregator: what URL, parameters, format etc.</p>
+<p>The tag manager or aggregator has to work with the vendor to agree on the protocol to send the data to the vendor: what URL, parameters, format etc. Does the vendor have an API?</p>
+<h1 id="security-defense-considerations"><a name="security-defense-considerations" class="plugin-anchor" href="#security-defense-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>Security Defense Considerations</h1>
+<h2 id="server-direct-data-layer"><a name="server-direct-data-layer" class="plugin-anchor" href="#server-direct-data-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Server Direct Data Layer</h2>
+<p>The server direct mechanism is a good security standard for third party javascript management, deployment and execution. A good practice for the host page is to create a data layer of DOM objects.</p>
+<p>The data layer can perform any validation of the values, especially values from DOM objects exposed to the user like URL parameters and input fields, if these are required for the marketing analysis.</p>
+<p>An example statement for a corporate standard document is &apos;The tag javascript can only access values in the host data layer. The tag javascript can never access a URL parameter.</p>
+<p>You the host page developer have to agree with the 3rd party vendors or the tag manager what attribute in the data layer will have what value so they can create the javascript to read that value.</p>
+<p>User interface tags cannot be made secure using the data layer architecture because their function (or one of their functions) is to change the user interface on the client, not to send data about the user actions.</p>
+<p>Analytics tags can be made secure using the data layer architecture because the only action needed is to send data from the data layer to the third party. Only first party code is executed; first to populate the data layer (generally on page load); then event handler javascript sends whatever data is needed from that page to the third party database or tag manager.</p>
+<p>This is also a very scaleable solution. Large ecommerce sites can easily have hundreds of thousands of URL and parameter combinations, with different sets of URLs and parameters being included in different marketing analysis campaigns. The marketing logic could have 30 or 40 different vendor tags on a single page. </p>
+<p>For example user actions in pages about specified cities, from specified locations on specified days should send data layer elements 1, 2 and 3. User actions in pages about other cities should send data layer elements 2 and 3 only. Since the event handler code to send data layer data on each page is controlled by the host developers or marketing technologists using the tag manager developer interface, the business logic about when and what data layer elements are sent to the tag manager server, can be changed and deployed in minutes. No interaction is needed with the third parties; they continue getting the data they expect but now it comes from different contexts that the host marketing technologists have chosen. </p>
+<p>Changing third party vendors just means changing the data dissemination rules at the tag manager server, no changes are needed in the host code. The data also goes directly only to the tag manager so the execution is fast. The event handler javascript does not have to connect to multiple third party sites.</p>
+<h2 id="indirect-requests"><a name="indirect-requests" class="plugin-anchor" href="#indirect-requests"><i class="fa fa-link" aria-hidden="true"></i></a>Indirect Requests</h2>
+<p>For indirect requests to tag manager/aggregator sites that offer the GUI to configure the javascript, they may also implement:</p>
+<ul>
+<li>Technical controls such as only allowing the javascript to access the data layer values, no other DOM element</li>
+<li>Restricting the tag types deployed on a host site, e.g. disabling of custom HTML tags and javascript code</li>
+</ul>
+<p>The host company should also verify the security practices of the tag manager site such as access controls to the tag configuration for the host company. It also can be two-factor authentication.</p>
+<p>Letting the marketing folks decide where to get the data they want can result in XSS because they may get it from a URL parameter and put it into a variable that is in a scriptable location on the page.</p>
+<h2 id="sandboxing-content"><a name="sandboxing-content" class="plugin-anchor" href="#sandboxing-content"><i class="fa fa-link" aria-hidden="true"></i></a>Sandboxing Content</h2>
+<p>Both of these tools be used by sites to sandbox/clean DOM data.</p>
+<ul>
+<li><a href="https://github.com/cure53/DOMPurify" target="_blank">DOMPurify</a> is a fast, tolerant XSS sanitizer for HTML, MathML and SVG. DOMPurify works with a secure default, but offers a lot of configurability and hooks.</li>
+<li><a href="https://github.com/hackvertor/MentalJS" target="_blank">MentalJS</a> is a JavaScript parser and sandbox. It whitelists JavaScript code by adding a &quot;$&quot; suffix to variables and accessors.</li>
+</ul>
+<h2 id="subresource-integrity"><a name="subresource-integrity" class="plugin-anchor" href="#subresource-integrity"><i class="fa fa-link" aria-hidden="true"></i></a>Subresource Integrity</h2>
+<p><a href="https://www.w3.org/TR/SRI/" target="_blank">Subresource Integrity</a> will ensure that only the code that has been reviewed is executed. The developer generates integrity metadata for the vendor javascript, and adds it to the script element like this:</p>
+<pre><code class="lang-javascript">&lt;script src=<span class="hljs-string">&quot;https://analytics.vendor.com/v1.1/script.js&quot;</span>
+   integrity=<span class="hljs-string">&quot;sha384-MBO5IDfYaE6c6Aao94oZrIOiC7CGiSNE64QUbHNPhzk8Xhm0djE6QqTpL0HzTUxk&quot;</span>
+   crossorigin=<span class="hljs-string">&quot;anonymous&quot;</span>&gt;
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span>
+</code></pre>
+<p>It is important to know that in order for SRI to work, the vendor host needs <a href="https://www.w3.org/TR/cors/" target="_blank">CORS</a> enabled. Also it is good idea to monitor vendor javascript for changes in regular way. Because sometimes you can get <strong>secure</strong> but <strong>not working</strong> 3rd party code when the vendor decides to update it.</p>
+<h2 id="keeping-javascript-libraries-updated"><a name="keeping-javascript-libraries-updated" class="plugin-anchor" href="#keeping-javascript-libraries-updated"><i class="fa fa-link" aria-hidden="true"></i></a>Keeping JavaScript libraries updated</h2>
+<p><a href="https://www.owasp.org/index.php/Top_10_2013-A9-Using_Components_with_Known_Vulnerabilities" target="_blank">OWASP Top 10 2013 A9</a> describes the problem of using components with known vulnerabilities. This includes JavaScript libraries. JavaScript libraries must be kept up to date, as previous version can have known vulnerabilities which can lead to the site typically being vulnerable to <a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS" target="_blank">Cross Site Scripting</a>). There are several tools out there that can help identify such libraries. One such tool is the free open source tool <a href="https://retirejs.github.io" target="_blank">RetireJS</a></p>
+<h2 id="sandboxing-with-iframe"><a name="sandboxing-with-iframe" class="plugin-anchor" href="#sandboxing-with-iframe"><i class="fa fa-link" aria-hidden="true"></i></a>Sandboxing with iframe</h2>
+<p>You can also put vendor javascript into an iframe from different domain (e.g. static data host). It will work as a &quot;jail&quot; and vendor javascript will not have direct access to the host page DOM and cookies. </p>
+<p>The host main page and sandbox iframe can communicate between each other via the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" target="_blank">postMessage mechanism</a>. </p>
+<p>Also, iframes can be secured with the iframe <a href="http://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/" target="_blank">sandbox attribute</a>. </p>
+<p>For high risk applications, consider the use of <a href="https://www.w3.org/TR/CSP2/" target="_blank">Content Security Policy (CSP)</a> in addition to iframe sandboxing. CSP makes hardening against XSS even stronger.</p>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Some host, e.g. somehost.com, HTML code here --&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+       ...    
+       <span class="hljs-comment">&lt;!-- Include iframe with 3rd party vendor javascript --&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> 
+       <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://somehost-static.net/analytics.html&quot;</span> 
+       <span class="hljs-attr">sandbox</span>=<span class="hljs-string">&quot;allow-same-origin allow-scripts&quot;</span>&gt;</span>
+       <span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+
+<span class="hljs-comment">&lt;!-- somehost-static.net/analytics.html --&gt;</span>
+ <span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+       ...
+       <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+       <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&quot;message&quot;</span>, receiveMessage, <span class="hljs-literal">false</span>);
+       <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">receiveMessage</span>(<span class="hljs-params">event</span>) </span>{
+         <span class="hljs-keyword">if</span> (event.origin !== <span class="hljs-string">&quot;https://somehost.com:443&quot;</span>) {
+           <span class="hljs-keyword">return</span>;
+         } <span class="hljs-keyword">else</span> {
+         <span class="hljs-comment">// Make some DOM here and initialize other </span>
+        <span class="hljs-comment">//data required for 3rd party code</span>
+         }
+       }
+       </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+       <span class="hljs-comment">&lt;!-- 3rd party vendor javascript --&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://analytics.vendor.com/v1.1/script.js&quot;</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+       <span class="hljs-comment">&lt;!-- /3rd party vendor javascript --&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+ <span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<h2 id="virtual-iframe-containment"><a name="virtual-iframe-containment" class="plugin-anchor" href="#virtual-iframe-containment"><i class="fa fa-link" aria-hidden="true"></i></a>Virtual iframe Containment</h2>
+<p>This technique creates iFrames that run asynchronously in relation to the main page. It also provides its own containment javascript that automates the dynamic implementation of the protected iFrames based on the marketing tag requirements.</p>
+<h2 id="vendor-agreements"><a name="vendor-agreements" class="plugin-anchor" href="#vendor-agreements"><i class="fa fa-link" aria-hidden="true"></i></a>Vendor Agreements</h2>
+<p>You can have the agreement or request for proposal with the 3rd parties require evidence that they have implemented secure coding and general corporate server access security. But in particular you need to determine the monitoring and control of their source code in order to prevent and detect malicious changes to that javascript.</p>
+<h1 id="martechsec"><a name="martechsec" class="plugin-anchor" href="#martechsec"><i class="fa fa-link" aria-hidden="true"></i></a>MarTechSec</h1>
+<p>Marketing Technology Security</p>
+<p>This refers to all aspects of reducing the risk from marketing javascript. Controls include</p>
+<ol>
+<li>Contractual controls for risk reduction; the contracts with any MarTech company should include a requirement to show evidence of code security and code integrity monitoring.</li>
+<li>Contractual controls for risk transference: the contracts with any MarTech company could include a penalty for serving malicious javascript</li>
+<li>Technical controls for malicious javascript execution prevention; Virtual Iframes,</li>
+<li>Technical controls for malicious javascript identification; <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity" target="_blank">Subresource Integrity</a>.</li>
+<li>Technical controls including client side javascript malicious behavior in penetration testing requirements.</li>
+</ol>
+<h1 id="marsecops"><a name="marsecops" class="plugin-anchor" href="#marsecops"><i class="fa fa-link" aria-hidden="true"></i></a>MarSecOps</h1>
+<p>Marketing Security Operations</p>
+<p>This refers to the operational requirements to maintain some of the technical controls. This involves possible cooperation and information exchange between the marketing team, the martech provider and the run or operations team to update the information in the page controls (SRI hash change, changes in pages with SRI), the policies in the Virtual iFrames, tag manager configuration, data layer changes etc.</p>
+<p>The most complete and preventive controls for any site containing non-trivial marketing tags are -</p>
+<ol>
+<li><p>A data layer that calls the marketing server or tag manager APIs , so that only your code executes on your page (inversion of control).</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity" target="_blank">Subresource Integrity</a>.</p>
+</li>
+<li><p>Virtual frame Containment.</p>
+</li>
+</ol>
+<p>The MarSecOps requirements to implement technical controls at the speed of change that marketing wants or without a significant number of dedicated resources, can make data layer and Subresource Integrity controls impractical.</p>
+<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<ul>
+<li><a href="https://randywestergren.com/widespread-xss-vulnerabilities-ad-network-code-affecting-top-tier-publishers-retailers/" target="_blank">Widespread XSS Vulnerabilities in Ad Network Code Affecting Top Tier Publishers, Retailers</a>.</li>
+<li><a href="https://www.riskiq.com/blog/labs/magecart-ticketmaster-breach/" target="_blank">Inside and Beyond Ticketmaster: The Many Breaches of Magecart</a>.</li>
+<li><a href="https://www.clearskysec.com/magecart/" target="_blank">Magecart &#x2013; a malicious infrastructure for stealing payment details from online shops</a>.</li>
+<li><a href="https://www.riskiq.com/blog/labs/magecart-keylogger-injection/" target="_blank">Compromised E-commerce Sites Lead to &#x201C;Magecart&#x201D;</a></li>
+<li><a href="https://www.zdnet.com/article/inbenta-blamed-for-ticketmaster-breach-says-other-sites-not-affected/" target="_blank">Inbenta, blamed for Ticketmaster breach, admits it was hacked</a>.</li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Jim Weiler - Jim.Weiler@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="TLS_Cipher_String_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: TLS Cipher String ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Threat_Modeling_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Threat Modeling ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Third Party Javascript Management ","level":"1.52","depth":1,"next":{"title":"Threat Modeling ","level":"1.53","depth":1,"path":"cheatsheets/Threat_Modeling_Cheat_Sheet.md","ref":"cheatsheets/Threat_Modeling_Cheat_Sheet.md","articles":[]},"previous":{"title":"TLS Cipher String ","level":"1.51","depth":1,"path":"cheatsheets/TLS_Cipher_String_Cheat_Sheet.md","ref":"cheatsheets/TLS_Cipher_String_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.677Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

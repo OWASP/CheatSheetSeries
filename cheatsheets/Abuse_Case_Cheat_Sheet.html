@@ -1,0 +1,1393 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Abuse Case  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Access_Control_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="AJAX_Security_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Abuse Case </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>Often when the security level of an application is mentioned in requirements, the following <em>expressions</em> are met:</p>
+<ul>
+<li><em>The application must be secure</em>.</li>
+<li><em>The application must defend against all attacks targeting this category of application</em>.</li>
+<li><em>The application must defend against attacks from the OWASP TOP 10</em></li>
+<li>...</li>
+</ul>
+<p>These security requirements are too generic, and thus useless for a development team...</p>
+<p>In order to build a secure application, from an pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context.</p>
+<h1 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h1>
+<p>The objective of this cheat sheet is to provide an explanation of about what an <strong>Abuse Case</strong> is, why abuse cases are important when considering the security of an application, and further finally, to provide a proposal for a pragmatic approach to builing  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).</p>
+<p><strong>Important note about this Cheat Sheet:</strong></p>
+<pre><code>The main objective is to provide a pragmatic approach in order to allow a company or a project team
+to start building and handling the list of abuse cases and then customize the elements
+proposed to its context/culture in order to, finally, build its own method.
+
+This cheat sheet can be seen as a getting-started tutorial.
+</code></pre><h1 id="context--approach"><a name="context--approach" class="plugin-anchor" href="#context--approach"><i class="fa fa-link" aria-hidden="true"></i></a>Context &amp; approach</h1>
+<h2 id="why-clearly-identify-the-attacks"><a name="why-clearly-identify-the-attacks" class="plugin-anchor" href="#why-clearly-identify-the-attacks"><i class="fa fa-link" aria-hidden="true"></i></a>Why clearly identify the attacks?</h2>
+<p>Clearly identifying the attacks against which the application must defend is essential in order to enable the following steps in a project or sprint:</p>
+<ul>
+<li>Evaluate the business risk for each of the identified attacks in order perform a selection according to the business risk and the project/sprint budget.</li>
+<li>Derive security requirements and add them into the project specification or sprint&apos;s user stories and acceptance criteria.</li>
+<li>Estimate the overhead of provision in the initial project/sprint charge that will be necessary to implement the countermeasures.</li>
+<li>About countermeasures: Allow the project team to define them, and to determine in which location they are appropriate (network, infrastructure, code...) to be located.</li>
+</ul>
+<h2 id="notion-of-abuse-case"><a name="notion-of-abuse-case" class="plugin-anchor" href="#notion-of-abuse-case"><i class="fa fa-link" aria-hidden="true"></i></a>Notion of Abuse Case</h2>
+<p>In order to help build the list of attacks, the notion of <strong>Abuse Cases</strong> is helpful.</p>
+<p>An <strong>Abuse Case</strong> can be defined as:</p>
+<pre><code>A way to use a feature that was not expected by the implementer,
+allowing an attacker to influence the feature or outcome of use of
+the feature based on the attacker action (or input).
+</code></pre><p>Synopsys define an <strong>Abuse Case</strong> like this:</p>
+<pre><code>Misuse and abuse cases describe how users misuse or exploit the weaknesses
+of controls in software features to attack an application.
+
+This can lead to tangible business impact when a direct attack against
+business functionalities, which may bring in revenue or provide
+positive user experience, are attacked.
+
+Abuse cases can also be an effective way to drive security requirements
+that lead to proper protection of these critical business use cases.
+</code></pre><p><a href="https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements" target="_blank">Synopsys source</a></p>
+<h2 id="how-to-define-the-list-of-abuse-cases"><a name="how-to-define-the-list-of-abuse-cases" class="plugin-anchor" href="#how-to-define-the-list-of-abuse-cases"><i class="fa fa-link" aria-hidden="true"></i></a>How to define the list of Abuse Cases?</h2>
+<p>There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).</p>
+<p>The project <a href="https://www.owasp.org/index.php/OWASP_SAMM_Project" target="_blank">OWASP Open SAMM</a> proposes the following approach in the <em>Activity A</em> of the Security Practice <em>Threat Assessment</em> for the Maturity level 2:</p>
+<pre><code>Further considering the threats to the organization, conduct a more formal analysis to determine
+potential misuse or abuse of functionality. Typically, this process begins with identification of
+normal usage scenarios, e.g. use-case diagrams if available.
+
+If a formal abuse-case technique isn&#x2019;t used, generate a set of abuse-cases for each scenario by
+starting with a statement of normal usage and brainstorming ways in which the statement might be
+negated, in whole or in part. The simplest way to get started is to insert the word &#x201C;no&#x201D; or &#x201C;not&#x201D; into
+the usage statement in as many ways as possible, typically around nouns and verbs. Each usage scenario
+should generate several possible abuse-case statements.
+
+Further elaborate the abuse-case statements to include any application-specific concerns based on the
+business function of the software. The ultimate goal is for the completed set of abuse statements to
+form a model for usage patterns that should be disallowed by the software. If desired, these abuse
+cases can be combined with existing threat models.
+
+After initial creation, abuse-case models should be updated for active projects during the design
+phase. For existing projects, new requirements should be analyzed for potential abuse, and existing
+projects should opportunistically build abuse-cases for established functionality where practical.
+</code></pre><p>Open SAMM source: <a href="https://www.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2" target="_blank">Threat Assessment Level 2 Actvity A</a></p>
+<p>Another way to achieve the building of the list can be the following (more bottom-up and collaboratively oriented):</p>
+<p>Make a workshop that includes people with the following profiles:</p>
+<ul>
+<li><strong>Business analyst</strong>: Will be the business key people that will describe each feature from a business point of view.</li>
+<li><strong>Risk analyst</strong>: Will be the company&apos;s risk personnel that will evaluate the business risk from a proposed attack (sometimes it is the <strong>Business analyst</strong> depending on the company).</li>
+<li><strong>Offsensives (Pentester or Application Security people with offensive mindset)</strong>: Will be the <em>attacker</em> that will propose all attacks that he can perform on the business feature(s) in question. If the company does not have a person with this profile then it is possible to request the service of an external specialist (Pentester or AppSec consultant from a security firm). If possible, include 2 offensives people (ex: 1 Pentester + 1 AppSec) in order to increase the number of possible attacks that will be identified and considered.</li>
+<li><strong>Technical leaders of the projects</strong>: Will be the project technical people and will allow technical exchange about attacks and countermeasures identified during the workshop.</li>
+<li><strong>Quality assurance analyst or functional tester</strong>: Personnel that may have a good sense of how the application/functionality is intended to work (positive testing), not work (negative testing), and what things cause it to fail (failure cases).</li>
+</ul>
+<p>During this workshop (duration will depend on the size of the feature list, but 4 hours is a good start) all business features that will be part of the project or the sprint will be processed. The output of the workshop will be a list of attacks (abuse cases) for all business features. All abuse cases will have a risk rating that allows for filtering and prioritization.</p>
+<p>It is important to take into account <strong>Technical</strong> and <strong>Business</strong> kind of abuse cases and mark them accordingly.</p>
+<p><em>Example:</em></p>
+<ul>
+<li>Technical flagged abuse case: Add Cross Site Scripting injection into a comment input field.</li>
+<li>Business flagged abuse case: Ability to modify arbitrary the price of an article in an online shop prior to pass an order causing the user to pay a lower amount for the wanted article.</li>
+</ul>
+<h2 id="when-to-define-the-list-of-abuse-cases"><a name="when-to-define-the-list-of-abuse-cases" class="plugin-anchor" href="#when-to-define-the-list-of-abuse-cases"><i class="fa fa-link" aria-hidden="true"></i></a>When to define the list of Abuse Cases?</h2>
+<p>On agile project, the definition workshop must be made after the meeting in which User Stories are includen in a Sprint.</p>
+<p>In waterfall projects, the definition workshop must be made when the business feature to implements are identified and known by the business.</p>
+<p>Whatever the mode of project used (agile or waterfall), the abuse cases selected to be addressed must become security requirements in each feature specification section (waterfall) or User Story acceptance criteria (agile) in order to allow additional cost/effort evaluation, identification and implementation of the countermeasures.</p>
+<p>Each abuse case must have a unique identifier in order to allow tracking throughout the whole project/sprint (details about this point will be given in the proposal section).</p>
+<p>An example of unique ID format can be <strong>ABUSE_CASE_001</strong>.</p>
+<p>The following figure provides an overview of the chaining of the different steps involved (from left to right):</p>
+<p><img src="../assets/Abuse_Case_Cheat_Sheet_Overview.png" alt="OverviewSchema"></p>
+<h1 id="proposal"><a name="proposal" class="plugin-anchor" href="#proposal"><i class="fa fa-link" aria-hidden="true"></i></a>Proposal</h1>
+<p>The proposal will focus on the output of the workshop explained in the previous section.</p>
+<h2 id="step-1-preparation-of-the-workshop"><a name="step-1-preparation-of-the-workshop" class="plugin-anchor" href="#step-1-preparation-of-the-workshop"><i class="fa fa-link" aria-hidden="true"></i></a>Step 1: Preparation of the workshop</h2>
+<p>First, even if it seems obvious, the key business people must be sure to know, understand and be able to explain the business features that will be processed during the workshop.</p>
+<p>Secondly, create a new Microsoft Excel file (you can also use Google Sheets or any other similar software) with the following sheets (or tabs):</p>
+<ul>
+<li><strong>FEATURES</strong><ul>
+<li>Will contain a table with the list of business features planned for the workshop.</li>
+</ul>
+</li>
+<li><strong>ABUSE CASES</strong><ul>
+<li>Will contain a table with all abuse cases identified during the workshop.</li>
+</ul>
+</li>
+<li><strong>COUNTERMEASURES</strong><ul>
+<li>Will contain a table with the list of possible countermeasures (light description) imagined for the abuse cases identified.</li>
+<li>This sheet is not mandatory, but it can be useful (for an abuse case to know), if a fix is easy to implement and then can impact the risk rating.</li>
+<li>Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks but also to build or identify defenses (it is not always the case for the Pentester profile because this person&#x2019;s focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).</li>
+</ul>
+</li>
+</ul>
+<p>This is the representation of each sheet along with an example of content that will be filled during the workshop:</p>
+<p><em>FEATURES</em> sheet:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Feature unique ID</th>
+<th style="text-align:center">Feature name</th>
+<th style="text-align:center">Feature short description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">FEATURE_001</td>
+<td style="text-align:center">DocumentUploadFeature</td>
+<td style="text-align:center">Allow user to upload document along a message</td>
+</tr>
+</tbody>
+</table>
+<p><em>COUNTERMEASURES</em> sheet:</p>
+<table>
+<thead>
+<tr>
+<th>Countermeasure unique ID</th>
+<th>Countermeasure short description</th>
+<th>Countermeasure help/hint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEFENSE_001</td>
+<td>Validate the uploaded file by loading it into a parser</td>
+<td>Use advice from the OWASP Cheat Sheet about file upload</td>
+</tr>
+</tbody>
+</table>
+<p><em>ABUSE CASES</em> sheet:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Abuse case unique ID</th>
+<th style="text-align:center">Feature ID impacted</th>
+<th style="text-align:center">Abuse case&apos;s attack description</th>
+<th style="text-align:center">Attack referential ID (if applicable)</th>
+<th style="text-align:center">CVSS V3 risk rating (score)</th>
+<th style="text-align:center">CVSS V3 string</th>
+<th style="text-align:center">Kind of abuse case</th>
+<th style="text-align:center">Countermeasure ID applicable</th>
+<th style="text-align:center">Handling decision (To Address or Risk Accepted)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ABUSE_CASE_001</td>
+<td style="text-align:center">FEATURE_001</td>
+<td style="text-align:center">Upload Office file with malicious macro in charge of dropping a malware</td>
+<td style="text-align:center">CAPEC-17</td>
+<td style="text-align:center">HIGH (7.7)</td>
+<td style="text-align:center">CVSS:3.0/AV:N/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:H</td>
+<td style="text-align:center">Technical</td>
+<td style="text-align:center">DEFENSE_001</td>
+<td style="text-align:center">To Address</td>
+</tr>
+</tbody>
+</table>
+<h2 id="step-2-during-the-workshop"><a name="step-2-during-the-workshop" class="plugin-anchor" href="#step-2-during-the-workshop"><i class="fa fa-link" aria-hidden="true"></i></a>Step 2: During the workshop</h2>
+<p>Use the spreadsheet to review all the features.</p>
+<p>For each feature, follow this flow:</p>
+<ol>
+<li>Key business people explain the current feature from a business point of view.</li>
+<li>Offensives propose and explain a set of attacks that they can perform against the feature.</li>
+<li><p>For each attack proposed:</p>
+<ol>
+<li>Appsec proposes a countermeasure and a preferred set up location (infrastructure, network, code, design...).</li>
+<li>Technical people give feedback about the feasibility of the proposed countermeasure.</li>
+<li>Offsensives use the CVSS v3 (or other standard) calculator to determine a risk rating. (ex: <a href="https://www.first.org/cvss/calculator/3.0" target="_blank">CVSS V3 calculator</a>)</li>
+<li>Risk key people accept/increase/decrease the rating to have final one that match the real business impact for the company.</li>
+</ol>
+</li>
+<li><p>Business, Risk and Technical key peoples find a consensus and filter the list of abuses for the current feature to keep the ones that must be addressed, and then flag them accordingly in the <em>ABUSE CASES</em> sheet (<strong>if risk is accepted then add a comment to explain why</strong>).</p>
+</li>
+<li>Pass to next feature...</li>
+</ol>
+<p>If the presence of offensives is not possible then you can use the following references to identify the applicable attacks on your features:</p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/OWASP_Automated_Threats_to_Web_Applications" target="_blank">OWASP Automated Threats to Web Applications</a></li>
+<li><a href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents" target="_blank">OWASP Testing Guide</a></li>
+<li><a href="https://github.com/OWASP/owasp-mstg" target="_blank">OWASP Mobile Testing Guide</a></li>
+<li><a href="https://capec.mitre.org/" target="_blank">Common Attack Pattern Enumeration and Classification (CAPEC)</a></li>
+</ul>
+<p>Important note on attacks and countermeasure knowledge base(s):</p>
+<pre><code>With the time and across projects, you will obtain your own dictionary of attacks and countermeasures
+that are applicable to the kind of application in your business domain.
+
+This dictionary will speed up the future workshops in a significant way.
+
+To promote the creation of this dictionary, you can, at the end of the project/sprint, gather the list
+of attacks and countermeasures identified in a central location (wiki, database, file...) that will be
+used during the next workshop in combination with input from offensives people.
+</code></pre><h2 id="step-3-after-the-workshop"><a name="step-3-after-the-workshop" class="plugin-anchor" href="#step-3-after-the-workshop"><i class="fa fa-link" aria-hidden="true"></i></a>Step 3: After the workshop</h2>
+<p>The spreadsheet contains (at this stage) the list of all abuse cases that must be handled and, potentially (depending on the capacity) corresponding countermeasures.</p>
+<p>Now, there are two remaining task:</p>
+<ol>
+<li>Key business people must update the specification of each feature (waterfall) or the User Story of each feature (agile) to include the associated abuse cases as Security Requirements (waterfall) or Acceptance Criteria (agile).</li>
+<li>Key technical people must evaluate the overhead in terms of charge/effort to take into account the countermeasure.</li>
+</ol>
+<h2 id="step-4-during-implementation---abuse-cases-handling-tracking"><a name="step-4-during-implementation---abuse-cases-handling-tracking" class="plugin-anchor" href="#step-4-during-implementation---abuse-cases-handling-tracking"><i class="fa fa-link" aria-hidden="true"></i></a>Step 4: During implementation - Abuse cases handling tracking</h2>
+<p>In order to track the handling of all the abuse cases, the following approach can be used:</p>
+<p>If one or several abuse cases are handled at:</p>
+<ul>
+<li><strong>Design, Infrastructure or Network level</strong><ul>
+<li>Make a note in the documentation or schema to indicate that <em>This design/network/infrastructure takes into account the abuse cases ABUSE_CASE_001, ABUSE_CASE_002, ABUSE_CASE_xxx</em>.</li>
+</ul>
+</li>
+<li><strong>Code level</strong><ul>
+<li>Put a special comment in the classes/scripts/modules to indicate that <em>This class/module/script takes into account the abuse cases ABUSE_CASE_001, ABUSE_CASE_002, ABUSE_CASE_xxx</em>.</li>
+<li>Dedicated annotation like <code>@AbuseCase(ids={&quot;ABUSE_CASE_001&quot;,&quot;ABUSE_CASE_002&quot;})</code> can be used to facilitate tracking and allow identification into integrated development environment.</li>
+</ul>
+</li>
+</ul>
+<p>Using this way, it becomes possible (via some minor scripting) to identify where the the abuse cases are addressed.</p>
+<h2 id="step-5-during-implementation---abuse-cases-handling-validation"><a name="step-5-during-implementation---abuse-cases-handling-validation" class="plugin-anchor" href="#step-5-during-implementation---abuse-cases-handling-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Step 5: During implementation - Abuse cases handling validation</h2>
+<p>As abuse cases are defined, it is possible to put in place automated or manual validations to ensure that:</p>
+<ul>
+<li>All the selected abuse cases are handled.</li>
+<li>An abuse case is correctly/completely handled.</li>
+</ul>
+<p>Validations can be of the following kinds:</p>
+<ul>
+<li>Automated (run regularly at commit, daily or weekly in the Continuous Integration Jobs of the project):<ul>
+<li>Custom audit rules in Static Application Security Testing (SAST) or Dynamic Application Security Testing (DAST) tools.</li>
+<li>Dedicated unit, integration or functional security oriented tests.</li>
+<li>...</li>
+</ul>
+</li>
+<li>Manual:<ul>
+<li>Security code review between project&apos;s peers during the design or implementation.</li>
+<li>Provide the list of all abuse cases addressed to pentesters so that they may validate the protection efficiency for each abuse case during an intrusion test against the application (the pentester will validate that the attacks identified are no longer effective and will also try to find other possible attacks).</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+<p>Adding automated tests also allow teams to track that countermeasures against the abuse cases are still effective/in place during a maintenance or bug fixing phase of a project (to prevent accidental removal/disabling). It is also useful when a <a href="https://continuousdelivery.com/" target="_blank">Continuous Delivery</a> approach is used, to ensure that all abuse cases protections are in place before opening access to the application.</p>
+<h1 id="example-of-derivation-of-abuse-cases-as-user-stories"><a name="example-of-derivation-of-abuse-cases-as-user-stories" class="plugin-anchor" href="#example-of-derivation-of-abuse-cases-as-user-stories"><i class="fa fa-link" aria-hidden="true"></i></a>Example of derivation of Abuse Cases as User Stories</h1>
+<p>The following section show an example of derivation of Abuse Cases as User Stories, here using the <a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project" target="_blank">OWASP TOP 10</a> as input source.</p>
+<p>Threat Oriented Personas:</p>
+<ul>
+<li>Malicious User</li>
+<li>Abusive User</li>
+<li>Unknowing User</li>
+</ul>
+<h2 id="a12017-injection"><a name="a12017-injection" class="plugin-anchor" href="#a12017-injection"><i class="fa fa-link" aria-hidden="true"></i></a>A1:2017-Injection</h2>
+<p><em>Epic:</em></p>
+<p>Almost any source of data can be an injection vector, environment variables, parameters, external and internal web services, and all types of users. <a href="https://www.owasp.org/index.php/Injection_Flaws" target="_blank">Injection</a> flaws occur when an attacker can send hostile data to an interpreter.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I will perform an injection attack (SQL, LDAP, XPath, or NoSQL queries, OS commands, XML parsers, SMTP headers, expression languages, and ORM queries) against input fields of the User or API interfaces</p>
+<h2 id="a22017-broken-authentication"><a name="a22017-broken-authentication" class="plugin-anchor" href="#a22017-broken-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>A2:2017-Broken Authentication</h2>
+<p><em>Epic:</em></p>
+<p>Attackers have access to hundreds of millions of valid username and password combinations for credential stuffing, default administrative account lists, automated brute force, and dictionary attack tools. Session management attacks are well understood, particularly in relation to unexpired session tokens.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I have access to hundreds of millions of valid username and password combinations for credential stuffing.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I have default administrative account lists, automated brute force, and dictionary attack tools I use against login areas of the application and support systems.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I manipulate session tokens using expired and fake tokens to gain access.</p>
+<h2 id="a32017-sensitive-data-exposure"><a name="a32017-sensitive-data-exposure" class="plugin-anchor" href="#a32017-sensitive-data-exposure"><i class="fa fa-link" aria-hidden="true"></i></a>A3:2017-Sensitive Data Exposure</h2>
+<p><em>Epic:</em></p>
+<p>Rather than directly attacking crypto, attackers steal keys, execute man-in-the-middle attacks, or steal clear text data off the server, while in transit, or from the user&#x2019;s client, e.g. browser. A manual attack is generally required. Previously retrieved password databases could be brute forced by Graphics Processing Units (GPUs).</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I steal keys that were exposed in the application to get unauthorized access to the application or system.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I execute man-in-the-middle attacks to get access to traffic and leverage it to obtain sensitive data and possibly get unauthorized access to the application.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I steal clear text data off the server, while in transit, or from the user&#x2019;s client, e.g. browser to get unauthorized access to the application or system.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I find and target old or weak cryptographic algorithms by capturing traffic and breaking the encryption.</p>
+<h2 id="a42017-xml-external-entities-xxe"><a name="a42017-xml-external-entities-xxe" class="plugin-anchor" href="#a42017-xml-external-entities-xxe"><i class="fa fa-link" aria-hidden="true"></i></a>A4:2017-XML External Entities (XXE)</h2>
+<p><em>Epic:</em></p>
+<p>Attackers can exploit vulnerable XML processors if they can upload XML or include hostile content in an XML document, exploiting vulnerable code, dependencies or integrations.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I exploit vulnerable areas of the application where the user or system can upload XML to extract data, execute a remote request from the server, scan internal systems, perform a denial-of-service attack, as well as execute other attacks.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I include hostile content in an XML document which is uploaded to the application or system to extract data, execute a remote request from the server, scan internal systems, perform a denial-of-service attack, as well as execute other attacks.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I include malicious XML code to exploit vulnerable code, dependencies or integrations to extract data, execute a remote request from the server, scan internal systems, perform a denial-of-service attack (e.g. Billion Laughs attack), as well as execute other attacks.</p>
+<h2 id="a52017-broken-access-control"><a name="a52017-broken-access-control" class="plugin-anchor" href="#a52017-broken-access-control"><i class="fa fa-link" aria-hidden="true"></i></a>A5:2017-Broken Access Control</h2>
+<p><em>Epic:</em></p>
+<p>Exploitation of access control is a core skill of attackers. Access control is detectable using manual means, or possibly through automation for the absence of access controls in certain frameworks.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I bypass access control checks by modifying the URL, internal application state, or the HTML page, or simply using a custom API attack tool.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I manipulate the primary key and change it to access another&apos;s users record, allowing viewing or editing someone else&apos;s account.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I manipulate sessions, access tokens, or other access controls in the application to act as a user without being logged in, or acting as an admin/privileged user when logged in as a user.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I leverage metadata manipulation, such as replaying or tampering with a JSON Web Token (JWT) access control token or a cookie or hidden field manipulated to elevate privileges or abusing JWT invalidation.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I exploit Cross-Origin Resource Sharing CORS misconfiguration allowing unauthorized API access.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I force browsing to authenticated pages as an unauthenticated user or to privileged pages as a standard user.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I access APIs with missing access controls for POST, PUT and DELETE.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I target default crypto keys in use, weak crypto keys generated or re-used, or keys where rotation missing is missing.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I find areas where the user agent (e.g. app, mail client) does not verify if the received server certificate is valid and perform attacks where I get unauthorized access to data.</p>
+<h2 id="a62017-security-misconfiguration"><a name="a62017-security-misconfiguration" class="plugin-anchor" href="#a62017-security-misconfiguration"><i class="fa fa-link" aria-hidden="true"></i></a>A6:2017-Security Misconfiguration</h2>
+<p><em>Epic:</em></p>
+<p>Attackers will often attempt to exploit unpatched flaws or access default accounts, unused pages, unprotected files and directories, etc to gain unauthorized access or knowledge of the system.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I find and exploit missing appropriate security hardening configurations on any part of the application stack, or improperly configured permissions on cloud services.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I find unnecessary features which are enabled or installed (e.g. unnecessary ports, services, pages, accounts, or privileges) and attack or exploit the weakness.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I use default accounts and their passwords to access systems, interfaces, or perform actions on components which I should not be able to.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I find areas of the application where error handling reveals stack traces or other overly informative error messages I can use for further exploitation.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I find areas where upgraded systems, latest security features are disabled or not configured securely.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I find security settings in the application servers, application frameworks (e.g. Struts, Spring, ASP.NET), libraries, databases, etc. not set to secure values.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I find the server does not send security headers or directives or they are not set to secure values.</p>
+<h2 id="a72017-cross-site-scripting-xss"><a name="a72017-cross-site-scripting-xss" class="plugin-anchor" href="#a72017-cross-site-scripting-xss"><i class="fa fa-link" aria-hidden="true"></i></a>A7:2017-Cross-Site Scripting (XSS)</h2>
+<p><em>Epic:</em></p>
+<p>XSS is the second most prevalent issue in the OWASP Top 10, and is found in around two-thirds of all applications.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I perform reflected XSS where the application or API includes unvalidated and unescaped user input as part of HTML output. My successful attack can allow the attacker to execution of arbitrary HTML and JavaScript in my victim&#x2019;s browser. Typically the victim will need to interact with some malicious link that points to an attacker-controlled page, such as malicious watering hole websites, advertisements, or similar.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I perform stored XSS where the application or API stores unsanitized user input that is viewed at a later time by another user or an administrator.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I perform DOM XSS where JavaScript frameworks, single-page applications, and APIs that dynamically include attacker-controllable data to a page is vulnerable to DOM XSS.</p>
+<h2 id="a82017-insecure-deserialization"><a name="a82017-insecure-deserialization" class="plugin-anchor" href="#a82017-insecure-deserialization"><i class="fa fa-link" aria-hidden="true"></i></a>A8:2017-Insecure Deserialization</h2>
+<p><em>Epic:</em></p>
+<p>Exploitation of deserialization is somewhat difficult, as off-the-shelf exploits rarely work without changes or tweaks to the underlying exploit code.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I find areas of the application and APIs where deserialization of hostile or tampered objects can be supplied. As a result, I can focus on an object and data structure related attacks where the attacker modifies application logic or achieves arbitrary remote code execution if there are classes available to the application that can change behavior during or after deserialization. Or I focus on data tampering attacks such as access-control-related attacks where existing data structures are used but the content is changed.</p>
+<h2 id="a92017-using-components-with-known-vulnerabilities"><a name="a92017-using-components-with-known-vulnerabilities" class="plugin-anchor" href="#a92017-using-components-with-known-vulnerabilities"><i class="fa fa-link" aria-hidden="true"></i></a>A9:2017-Using Components with Known Vulnerabilities</h2>
+<p><em>Epic:</em></p>
+<p>While it is easy to find already-written exploits for many known vulnerabilities, other vulnerabilities require concentrated effort to develop a custom exploit.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I find common open source or closed source packages with weaknesses and perform attacks against vulnerabilities and exploits which are disclosed</p>
+<h2 id="a102017-insufficient-logging--monitoring"><a name="a102017-insufficient-logging--monitoring" class="plugin-anchor" href="#a102017-insufficient-logging--monitoring"><i class="fa fa-link" aria-hidden="true"></i></a>A10:2017-Insufficient Logging &amp; Monitoring</h2>
+<p><em>Epic:</em></p>
+<p>Exploitation of insufficient logging and monitoring is the bedrock of nearly every major incident. Attackers rely on the lack of monitoring and timely response to achieve their goals without being detected. In 2016, identifying a breach took an <a href="https://www-01.ibm.com/common/ssi/cgi-bin/ssialias?htmlfid=SEL03130WWEN" target="_blank">average of 191 days</a> so plenty of time for damage to be inflicted.</p>
+<p><em>Abuse Case:</em></p>
+<p>As an attacker, I attack an organization and the logs, monitoring systems, and teams do not see or respond to my attacks.</p>
+<h1 id="sources-of-the-schemas"><a name="sources-of-the-schemas" class="plugin-anchor" href="#sources-of-the-schemas"><i class="fa fa-link" aria-hidden="true"></i></a>Sources of the schemas</h1>
+<p>All figures were created using <a href="https://www.draw.io/" target="_blank">https://www.draw.io/</a> site and exported (as PNG image) for integration into this article.</p>
+<p>All XML descriptor files for each schema are available below (using XML description, modification of the schema is possible using DRAW.IO site):</p>
+<p><a href="../assets/Abuse_Case_Cheat_Sheet_SchemaBundle.zip">Schemas descriptors archive</a></p>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>James Robinson - jrobinson@netskope.com</p>
+<p>Dominique Righetto - dominique.righetto@owasp.org</p>
+<p><a href="https://www.owasp.org/index.php/User:Rick.mitchell" target="_blank">Rick Mitchell</a></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="AJAX_Security_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: AJAX Security ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Access_Control_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Access Control ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Abuse Case ","level":"1.5","depth":1,"next":{"title":"Access Control ","level":"1.6","depth":1,"path":"cheatsheets/Access_Control_Cheat_Sheet.md","ref":"cheatsheets/Access_Control_Cheat_Sheet.md","articles":[]},"previous":{"title":"AJAX Security ","level":"1.4","depth":1,"path":"cheatsheets/AJAX_Security_Cheat_Sheet.md","ref":"cheatsheets/AJAX_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Abuse_Case_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.286Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

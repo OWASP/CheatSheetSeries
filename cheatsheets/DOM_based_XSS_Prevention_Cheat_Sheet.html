@@ -1,0 +1,1407 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>DOM based XSS Prevention  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Denial_of_Service_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Cryptographic_Storage_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >DOM based XSS Prevention </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>When looking at XSS (Cross-Site Scripting), there are three generally recognized forms of <a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS" target="_blank">XSS</a>):</p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS" target="_blank">Reflected or Stored</a>#Stored_and_Reflected_XSS_Attacks)</li>
+<li><a href="https://www.owasp.org/index.php/DOM_Based_XSS" target="_blank">DOM Based XSS</a>. </li>
+</ul>
+<p>The <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheatsheet</a> does an excellent job of addressing Reflected and Stored XSS. This cheatsheet addresses DOM (Document Object Model) based XSS and is an extension (and assumes comprehension of) the <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheatsheet</a>.</p>
+<p>In order to understand DOM based XSS, one needs to see the fundamental difference between Reflected and Stored XSS when compared to DOM based XSS. The primary difference is where the attack is injected into the application. </p>
+<p>Reflected and Stored XSS are server side injection issues while DOM based XSS is a client (browser) side injection issue. </p>
+<p>All of this code originates on the server, which means it is the application owner&apos;s responsibility to make it safe from XSS, regardless of the type of XSS flaw it is. Also, XSS attacks always <strong>execute</strong> in the browser. </p>
+<p>The difference between Reflected/Stored XSS is where the attack is added or injected into the application. With Reflected/Stored the attack is injected into the application during server-side processing of requests where untrusted input is dynamically added to HTML. For DOM XSS, the attack is injected into the application during runtime in the client directly.</p>
+<p>When a browser is rendering HTML and any other associated content like CSS, JavaScript, etc. it identifies various rendering contexts for the different kinds of input and follows different rules for each context. A rendering context is associated with the parsing of HTML tags and their attributes. </p>
+<ul>
+<li>The HTML parser of the rendering context dictates how data is presented and laid out on the page and can be further broken down into the standard contexts of HTML, HTML attribute, URL, and CSS. </li>
+<li>The JavaScript or VBScript parser of an execution context is associated with the parsing and execution of script code. Each parser has distinct and separate semantics in the way they can possibly execute script code which make creating consistent rules for mitigating vulnerabilities in various contexts difficult. The complication is compounded by the differing meanings and treatment of encoded values within each subcontext (HTML, HTML attribute, URL, and CSS) within the execution context.</li>
+</ul>
+<p>For the purposes of this article, we refer to the HTML, HTML attribute, URL, and CSS contexts as subcontexts because each of these contexts can be reached and set within a JavaScript execution context. </p>
+<p>In JavaScript code, the main context is JavaScript but with the right tags and context closing characters, an attacker can try to attack the other 4 contexts using equivalent JavaScript DOM methods.</p>
+<p>The following is an example vulnerability which occurs in the JavaScript context and HTML subcontext:</p>
+<pre><code class="lang-html"> <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+ <span class="hljs-keyword">var</span> x = <span class="hljs-string">&apos;&lt;%= taintedVar %&gt;&apos;</span>;
+ <span class="hljs-keyword">var</span> d = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&apos;div&apos;</span>);
+ d.innerHTML = x;
+ <span class="hljs-built_in">document</span>.body.appendChild(d);
+ </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>Let&#x2019;s look at the individual subcontexts of the execution context in turn.</p>
+<h1 id="rule-1---html-escape-then-javascript-escape-before-inserting-untrusted-data-into-html-subcontext-within-the-execution-context"><a name="rule-1---html-escape-then-javascript-escape-before-inserting-untrusted-data-into-html-subcontext-within-the-execution-context" class="plugin-anchor" href="#rule-1---html-escape-then-javascript-escape-before-inserting-untrusted-data-into-html-subcontext-within-the-execution-context"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #1 - HTML Escape then JavaScript Escape Before Inserting Untrusted Data into HTML Subcontext within the Execution Context</h1>
+<p>There are several methods and attributes which can be used to directly render HTML content within JavaScript. These methods constitute the HTML Subcontext within the Execution Context. If these methods are provided with untrusted input, then an XSS vulnerability could result. For example:</p>
+<h2 id="example-dangerous-html-methods"><a name="example-dangerous-html-methods" class="plugin-anchor" href="#example-dangerous-html-methods"><i class="fa fa-link" aria-hidden="true"></i></a>Example Dangerous HTML Methods</h2>
+<h3 id="attributes"><a name="attributes" class="plugin-anchor" href="#attributes"><i class="fa fa-link" aria-hidden="true"></i></a>Attributes</h3>
+<pre><code class="lang-javascript"> element.innerHTML = <span class="hljs-string">&quot;&lt;HTML&gt; Tags and markup&quot;</span>;
+ element.outerHTML = <span class="hljs-string">&quot;&lt;HTML&gt; Tags and markup&quot;</span>;
+</code></pre>
+<h3 id="methods"><a name="methods" class="plugin-anchor" href="#methods"><i class="fa fa-link" aria-hidden="true"></i></a>Methods</h3>
+<pre><code class="lang-javascript"> <span class="hljs-built_in">document</span>.write(<span class="hljs-string">&quot;&lt;HTML&gt; Tags and markup&quot;</span>);
+ <span class="hljs-built_in">document</span>.writeln(<span class="hljs-string">&quot;&lt;HTML&gt; Tags and markup&quot;</span>);
+</code></pre>
+<h2 id="guideline"><a name="guideline" class="plugin-anchor" href="#guideline"><i class="fa fa-link" aria-hidden="true"></i></a>Guideline</h2>
+<p>To make dynamic updates to HTML in the DOM safe, we recommend:</p>
+<ol>
+<li>HTML encoding, and then</li>
+<li>JavaScript encoding all untrusted input, as shown in these examples:</li>
+</ol>
+<pre><code class="lang-javascript"> element.innerHTML = <span class="hljs-string">&quot;&lt;%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%&gt;&quot;</span>;
+ element.outerHTML = <span class="hljs-string">&quot;&lt;%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%&gt;&quot;</span>;
+</code></pre>
+<pre><code class="lang-javascript"> <span class="hljs-built_in">document</span>.write(<span class="hljs-string">&quot;&lt;%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%&gt;&quot;</span>);
+ <span class="hljs-built_in">document</span>.writeln(<span class="hljs-string">&quot;&lt;%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%&gt;&quot;</span>);
+</code></pre>
+<p><strong>Note:</strong> The <code>Encoder.encodeForHTML()</code> and <code>Encoder.encodeForJS()</code> are just notional encoders. Various options for actual encoders are listed later in this document.</p>
+<h1 id="rule-2---javascript-escape-before-inserting-untrusted-data-into-html-attribute-subcontext-within-the-execution-context"><a name="rule-2---javascript-escape-before-inserting-untrusted-data-into-html-attribute-subcontext-within-the-execution-context" class="plugin-anchor" href="#rule-2---javascript-escape-before-inserting-untrusted-data-into-html-attribute-subcontext-within-the-execution-context"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #2 - JavaScript Escape Before Inserting Untrusted Data into HTML Attribute Subcontext within the Execution Context</h1>
+<p>The HTML attribute <em>subcontext</em> within the <em>execution</em> context is divergent from the standard encoding rules. This is because the rule to HTML attribute encode in an HTML attribute rendering context is necessary in order to mitigate attacks which try to exit out of an HTML attributes or try to add additional attributes which could lead to XSS. </p>
+<p>When you are in a DOM execution context you only need to JavaScript encode HTML attributes which do not execute code (attributes other than event handler, CSS, and URL attributes).</p>
+<p>For example, the general rule is to HTML Attribute encode untrusted data (data from the database, HTTP request, user, back-end system, etc.) placed in an HTML Attribute. This is the appropriate step to take when outputting data in a rendering context, however using HTML Attribute encoding in an execution context will break the application display of data.</p>
+<h2 id="safe-but-broken-example"><a name="safe-but-broken-example" class="plugin-anchor" href="#safe-but-broken-example"><i class="fa fa-link" aria-hidden="true"></i></a>SAFE but BROKEN example</h2>
+<pre><code class="lang-javascript"> <span class="hljs-keyword">var</span> x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&quot;input&quot;</span>);
+ x.setAttribute(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;company_name&quot;</span>);
+ <span class="hljs-comment">// In the following line of code, companyName represents untrusted user input</span>
+ <span class="hljs-comment">// The Encoder.encodeForHTMLAttr() is unnecessary and causes double-encoding</span>
+ x.setAttribute(<span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-string">&apos;&lt;%=Encoder.encodeForJS(Encoder.encodeForHTMLAttr(companyName))%&gt;&apos;</span>);
+ <span class="hljs-keyword">var</span> form1 = <span class="hljs-built_in">document</span>.forms[<span class="hljs-number">0</span>];
+ form1.appendChild(x);
+</code></pre>
+<p>The problem is that if companyName had the value &#x201C;Johnson &amp; Johnson&#x201D;. What would be displayed in the input text field would be &#x201C;Johnson &amp; Johnson&#x201D;. The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.</p>
+<h2 id="safe-and-functionally-correct-example"><a name="safe-and-functionally-correct-example" class="plugin-anchor" href="#safe-and-functionally-correct-example"><i class="fa fa-link" aria-hidden="true"></i></a>SAFE and FUNCTIONALLY CORRECT example</h2>
+<pre><code class="lang-javascript"> <span class="hljs-keyword">var</span> x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&quot;input&quot;</span>);
+ x.setAttribute(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;company_name&quot;</span>);
+ x.setAttribute(<span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-string">&apos;&lt;%=Encoder.encodeForJS(companyName)%&gt;&apos;</span>);
+ <span class="hljs-keyword">var</span> form1 = <span class="hljs-built_in">document</span>.forms[<span class="hljs-number">0</span>];
+ form1.appendChild(x);
+</code></pre>
+<p>It is important to note that when setting an HTML attribute which does not execute code, the value is set directly within the object attribute of the HTML element so there is no concerns with injecting up.</p>
+<h1 id="rule-3---be-careful-when-inserting-untrusted-data-into-the-event-handler-and-javascript-code-subcontexts-within-an-execution-context"><a name="rule-3---be-careful-when-inserting-untrusted-data-into-the-event-handler-and-javascript-code-subcontexts-within-an-execution-context" class="plugin-anchor" href="#rule-3---be-careful-when-inserting-untrusted-data-into-the-event-handler-and-javascript-code-subcontexts-within-an-execution-context"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #3 - Be Careful when Inserting Untrusted Data into the Event Handler and JavaScript code Subcontexts within an Execution Context</h1>
+<p>Putting dynamic data within JavaScript code is especially dangerous because JavaScript encoding has different semantics for JavaScript encoded data when compared to other encodings. In many cases, JavaScript encoding does not stop attacks within an execution context. For example, a JavaScript encoded string will execute even though it is JavaScript encoded.</p>
+<p>Therefore, the primary recommendation is to <strong>avoid including untrusted data in this context</strong>. If you must, the following examples describe some approaches that do and do not work.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&quot;a&quot;</span>);
+x.href=<span class="hljs-string">&quot;#&quot;</span>;
+<span class="hljs-comment">// In the line of code below, the encoded data on the right (the second argument to setAttribute)</span>
+<span class="hljs-comment">// is an example of untrusted data that was properly JavaScript encoded but still executes.</span>
+x.setAttribute(<span class="hljs-string">&quot;onclick&quot;</span>, <span class="hljs-string">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0032\u0032\u0029&quot;</span>);
+<span class="hljs-keyword">var</span> y = <span class="hljs-built_in">document</span>.createTextNode(<span class="hljs-string">&quot;Click To Test&quot;</span>);
+x.appendChild(y);
+<span class="hljs-built_in">document</span>.body.appendChild(x);
+</code></pre>
+<p>The <code>setAttribute(name_string,value_string)</code> method is dangerous because it implicitly coerces the <em>value_string</em> into the DOM attribute datatype of <em>name_string</em>.</p>
+<p>In the case above, the attribute name is an JavaScript event handler, so the attribute value is implicitly converted to JavaScript code and evaluated. In the case above, JavaScript encoding does not mitigate against DOM based XSS.</p>
+<p>Other JavaScript methods which take code as a string types will have a similar problem as outline above (<code>setTimeout</code>, <code>setInterval</code>, new Function, etc.). This is in stark contrast to JavaScript encoding in the event handler attribute of a HTML tag (HTML parser) where JavaScript encoding mitigates against XSS.</p>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Does NOT work  --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;bb&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0029&quot;</span>&gt;</span> Test Me<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+</code></pre>
+<p>An alternative to using <code>Element.setAttribute(...)</code> to set DOM attributes is to set the attribute directly. Directly setting event handler attributes will allow JavaScript encoding to mitigate against DOM based XSS. Please note, it is always dangerous design to put untrusted data directly into a command execution context.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;bb&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#&quot;</span>&gt;</span> Test Me<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">//The following does NOT work because the event handler is being set to a string.  </span>
+<span class="hljs-comment">//&quot;alert(7)&quot; is JavaScript encoded.</span>
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;bb&quot;</span>).onclick = <span class="hljs-string">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0029&quot;</span>;
+
+<span class="hljs-comment">//The following does NOT work because the event handler is being set to a string.</span>
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;bb&quot;</span>).onmouseover = <span class="hljs-string">&quot;testIt&quot;</span>;
+
+<span class="hljs-comment">//The following does NOT work because of the encoded &quot;(&quot; and &quot;)&quot;. </span>
+<span class="hljs-comment">//&quot;alert(77)&quot; is JavaScript encoded.</span>
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;bb&quot;</span>).onmouseover = \u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0037\u0029;
+
+<span class="hljs-comment">//The following does NOT work because of the encoded &quot;;&quot;. </span>
+<span class="hljs-comment">//&quot;testIt;testIt&quot; is JavaScript encoded.</span>
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;bb&quot;</span>).onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073
+                                            \u0074\u0049\u0074;
+
+<span class="hljs-comment">//The following DOES WORK because the encoded value is a valid variable name or function reference.  </span>
+<span class="hljs-comment">//&quot;testIt&quot; is JavaScript encoded</span>
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;bb&quot;</span>).onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testIt</span>(<span class="hljs-params"></span>) </span>{
+   alert(<span class="hljs-string">&quot;I was called.&quot;</span>);
+}
+</code></pre>
+<p>There are other places in JavaScript where JavaScript encoding is accepted as valid executable code.</p>
+<pre><code class="lang-javascript"> <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> \u0062=<span class="hljs-number">0</span>; \u0062 &lt; <span class="hljs-number">10</span>; \u0062++){
+     \u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074
+     .\u0077\u0072\u0069\u0074\u0065\u006c\u006e
+     (<span class="hljs-string">&quot;\u0048\u0065\u006c\u006c\u006f\u0020\u0057\u006f\u0072\u006c\u0064&quot;</span>);
+ }
+ \u0077\u0069\u006e\u0064\u006f\u0077
+ .\u0065\u0076\u0061\u006c
+ \u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074
+ .\u0077\u0072\u0069\u0074\u0065(<span class="hljs-number">111111111</span>);
+</code></pre>
+<p>or</p>
+<pre><code class="lang-javascript"> <span class="hljs-keyword">var</span> s = <span class="hljs-string">&quot;\u0065\u0076\u0061\u006c&quot;</span>;
+ <span class="hljs-keyword">var</span> t = <span class="hljs-string">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0031\u0029&quot;</span>;
+ <span class="hljs-built_in">window</span>[s](t);
+</code></pre>
+<p>Because JavaScript is based on an international standard (ECMAScript), JavaScript encoding enables the support of international characters in programming constructs and variables in addition to alternate string representations (string escapes).</p>
+<p>However the opposite is the case with HTML encoding. HTML tag elements are well defined and do not support alternate representations of the same tag. So HTML encoding cannot be used to allow the developer to have alternate representations of the <code>&lt;a&gt;</code> tag for example.</p>
+<h2 id="html-encodings-disarming-nature"><a name="html-encodings-disarming-nature" class="plugin-anchor" href="#html-encodings-disarming-nature"><i class="fa fa-link" aria-hidden="true"></i></a>HTML Encoding&#x2019;s Disarming Nature</h2>
+<p>In general, HTML encoding serves to castrate HTML tags which are placed in HTML and HTML attribute contexts. Working example (no HTML encoding):</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;...&quot;</span> &gt;</span>
+</code></pre>
+<p>Normally encoded example (Does Not Work &#x2013; DNW):</p>
+<pre><code class="lang-html">&amp;#x3c;a href=... &amp;#x3e;
+</code></pre>
+<p>HTML encoded example to highlight a fundamental difference with JavaScript encoded values (DNW):</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">&amp;#x61;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">...</span>&gt;</span>
+</code></pre>
+<p>If HTML encoding followed the same semantics as JavaScript encoding. The line above could have possibily worked to render a link. This difference makes JavaScript encoding a less viable weapon in our fight against XSS.</p>
+<h1 id="rule-4---javascript-escape-before-inserting-untrusted-data-into-the-css-attribute-subcontext-within-the-execution-context"><a name="rule-4---javascript-escape-before-inserting-untrusted-data-into-the-css-attribute-subcontext-within-the-execution-context" class="plugin-anchor" href="#rule-4---javascript-escape-before-inserting-untrusted-data-into-the-css-attribute-subcontext-within-the-execution-context"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #4 - JavaScript Escape Before Inserting Untrusted Data into the CSS Attribute Subcontext within the Execution Context</h1>
+<p>Normally executing JavaScript from a CSS context required either passing <code>javascript:attackCode()</code> to the CSS <code>url()</code> method or invoking the CSS <code>expression()</code> method passing JavaScript code to be directly executed. </p>
+<p>From my experience, calling the <code>expression()</code> function from an execution context (JavaScript) has been disabled. In order to mitigate against the CSS <code>url()</code> method, ensure that you are URL encoding the data passed to the CSS <code>url()</code> method.</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">document</span>.body.style.backgroundImage = <span class="hljs-string">&quot;url(&lt;%=Encoder.encodeForJS(Encoder.encodeForURL(companyName))%&gt;)&quot;</span>;
+</code></pre>
+<h1 id="rule-5---url-escape-then-javascript-escape-before-inserting-untrusted-data-into-url-attribute-subcontext-within-the-execution-context"><a name="rule-5---url-escape-then-javascript-escape-before-inserting-untrusted-data-into-url-attribute-subcontext-within-the-execution-context" class="plugin-anchor" href="#rule-5---url-escape-then-javascript-escape-before-inserting-untrusted-data-into-url-attribute-subcontext-within-the-execution-context"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #5 - URL Escape then JavaScript Escape Before Inserting Untrusted Data into URL Attribute Subcontext within the Execution Context</h1>
+<p>The logic which parses URLs in both execution and rendering contexts looks to be the same. Therefore there is little change in the encoding rules for URL attributes in an execution (DOM) context.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> x = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&quot;a&quot;</span>);
+x.setAttribute(<span class="hljs-string">&quot;href&quot;</span>, <span class="hljs-string">&apos;&lt;%=Encoder.encodeForJS(Encoder.encodeForURL(userRelativePath))%&gt;&apos;</span>);
+<span class="hljs-keyword">var</span> y = <span class="hljs-built_in">document</span>.createTextElement(<span class="hljs-string">&quot;Click Me To Test&quot;</span>);
+x.appendChild(y);
+<span class="hljs-built_in">document</span>.body.appendChild(x);
+</code></pre>
+<p>If you utilize fully qualified URLs then this will break the links as the colon in the protocol identifier (<code>http:</code> or <code>javascript:</code>) will be URL encoded preventing the <code>http</code> and <code>javascript</code> protocols from being invoked.</p>
+<h1 id="rule-6---populate-the-dom-using-safe-javascript-functions-or-properties"><a name="rule-6---populate-the-dom-using-safe-javascript-functions-or-properties" class="plugin-anchor" href="#rule-6---populate-the-dom-using-safe-javascript-functions-or-properties"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #6 - Populate the DOM using safe JavaScript functions or properties</h1>
+<p>The most fundamental safe way to populate the DOM with untrusted data is to use the safe assignment property <code>textContent</code>. </p>
+<p>Here is an example of safe usage.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
+element.textContent = untrustedData;  <span class="hljs-comment">//does not execute code</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h1 id="rule-7---fixing-dom-cross-site-scripting-vulnerabilities"><a name="rule-7---fixing-dom-cross-site-scripting-vulnerabilities" class="plugin-anchor" href="#rule-7---fixing-dom-cross-site-scripting-vulnerabilities"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #7 - Fixing DOM Cross-site Scripting Vulnerabilities</h1>
+<p>The best way to fix DOM based cross-site scripting is to use the right output method (sink). For example if you want to use user input to write in a <code>div tag</code> element don&#x2019;t use <code>innerHtml</code>, instead use <code>innerText</code> or <code>textContent</code>. This will solve the problem, and it is the right way to re-mediate DOM based XSS vulnerabilities.</p>
+<p><strong>It is always a bad idea to use a user-controlled input in dangerous sources such as eval. 99% of the time it is an indication of bad or lazy programming practice, so simply don&#x2019;t do it instead of trying to sanitize the input.</strong></p>
+<p>Finally, to fix the problem in our initial code, instead of trying to encode the output correctly which is a hassle and can easily go wrong we would simply use <code>element.textContent</code> to write it in a content like this:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>Current URL:<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;contentholder&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+...
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;contentholder&quot;</span>).textContent = <span class="hljs-built_in">document</span>.baseURI;
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>It does the same thing but this time it is not vulnerable to DOM based cross-site scripting vulnerabilities.</p>
+<h1 id="guidelines-for-developing-secure-applications-utilizing-javascript"><a name="guidelines-for-developing-secure-applications-utilizing-javascript" class="plugin-anchor" href="#guidelines-for-developing-secure-applications-utilizing-javascript"><i class="fa fa-link" aria-hidden="true"></i></a>Guidelines for Developing Secure Applications Utilizing JavaScript</h1>
+<p>DOM based XSS is extremely difficult to mitigate against because of its large attack surface and lack of standardization across browsers. </p>
+<p>The guidelines below are an attempt to provide guidelines for developers when developing Web based JavaScript applications (Web 2.0) such that they can avoid XSS.</p>
+<h2 id="guideline-1---untrusted-data-should-only-be-treated-as-displayable-text"><a name="guideline-1---untrusted-data-should-only-be-treated-as-displayable-text" class="plugin-anchor" href="#guideline-1---untrusted-data-should-only-be-treated-as-displayable-text"><i class="fa fa-link" aria-hidden="true"></i></a>GUIDELINE #1 - Untrusted data should only be treated as displayable text</h2>
+<p>Avoid treating untrusted data as code or markup within JavaScript code.</p>
+<h2 id="guideline-2---always-javascript-encode-and-delimit-untrusted-data-as-quoted-strings-when-entering-the-application-when-building-templated-javascript"><a name="guideline-2---always-javascript-encode-and-delimit-untrusted-data-as-quoted-strings-when-entering-the-application-when-building-templated-javascript" class="plugin-anchor" href="#guideline-2---always-javascript-encode-and-delimit-untrusted-data-as-quoted-strings-when-entering-the-application-when-building-templated-javascript"><i class="fa fa-link" aria-hidden="true"></i></a>GUIDELINE #2 - Always JavaScript encode and delimit untrusted data as quoted strings when entering the application when building templated Javascript</h2>
+<p>Always JavaScript encode and delimit untrusted data as quoted strings when entering the application as illustrated in the following example.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> x = <span class="hljs-string">&quot;&lt;%= Encode.forJavaScript(untrustedData) %&gt;&quot;</span>;
+</code></pre>
+<h2 id="guideline-3---use-documentcreateelement-elementsetattributevalue-elementappendchild-and-similar-to-build-dynamic-interfaces"><a name="guideline-3---use-documentcreateelement-elementsetattributevalue-elementappendchild-and-similar-to-build-dynamic-interfaces" class="plugin-anchor" href="#guideline-3---use-documentcreateelement-elementsetattributevalue-elementappendchild-and-similar-to-build-dynamic-interfaces"><i class="fa fa-link" aria-hidden="true"></i></a>GUIDELINE #3 - Use document.createElement(&quot;...&quot;), element.setAttribute(&quot;...&quot;,&quot;value&quot;), element.appendChild(...) and similar to build dynamic interfaces</h2>
+<p><code>document.createElement(&quot;...&quot;)</code>, <code>element.setAttribute(&quot;...&quot;,&quot;value&quot;)</code>, <code>element.appendChild(...)</code> and similar are save ways to build dynamic interfaces.</p>
+<p>Please note, <code>element.setAttribute</code> is only safe for a limited number of attributes. </p>
+<p>Dangerous attributes include any attribute that is a command execution context, such as <code>onclick</code> or <code>onblur</code>. </p>
+<p>Examples of safe attributes includes: <code>align</code>, <code>alink</code>, <code>alt</code>, <code>bgcolor</code>, <code>border</code>, <code>cellpadding</code>, <code>cellspacing</code>, <code>class</code>, <code>color</code>, <code>cols</code>, <code>colspan</code>, <code>coords</code>, <code>dir</code>, <code>face</code>, <code>height</code>, <code>hspace</code>, <code>ismap</code>, <code>lang</code>, <code>marginheight</code>, <code>marginwidth</code>, <code>multiple</code>, <code>nohref</code>, <code>noresize</code>, <code>noshade</code>, <code>nowrap</code>, <code>ref</code>, <code>rel</code>, <code>rev</code>, <code>rows</code>, <code>rowspan</code>, <code>scrolling</code>, <code>shape</code>, <code>span</code>, <code>summary</code>, <code>tabindex</code>, <code>title</code>, <code>usemap</code>, <code>valign</code>, <code>value</code>, <code>vlink</code>, <code>vspace</code>, <code>width</code>.</p>
+<h2 id="guideline-4---avoid-sending-untrusted-data-into-html-rendering-methods"><a name="guideline-4---avoid-sending-untrusted-data-into-html-rendering-methods" class="plugin-anchor" href="#guideline-4---avoid-sending-untrusted-data-into-html-rendering-methods"><i class="fa fa-link" aria-hidden="true"></i></a>GUIDELINE #4 - Avoid sending untrusted data into HTML rendering methods</h2>
+<p>Avoid populating the following methods with untrusted data.</p>
+<ol>
+<li><code>element.innerHTML = &quot;...&quot;;</code></li>
+<li><code>element.outerHTML = &quot;...&quot;;</code></li>
+<li><code>document.write(...);</code></li>
+<li><code>document.writeln(...);</code></li>
+</ol>
+<h2 id="guideline-5---avoid-the-numerous-methods-which-implicitly-eval-data-passed-to-it"><a name="guideline-5---avoid-the-numerous-methods-which-implicitly-eval-data-passed-to-it" class="plugin-anchor" href="#guideline-5---avoid-the-numerous-methods-which-implicitly-eval-data-passed-to-it"><i class="fa fa-link" aria-hidden="true"></i></a>GUIDELINE #5 - Avoid the numerous methods which implicitly eval() data passed to it</h2>
+<p>There are numerous methods which implicitly <code>eval()</code> data passed to it that must be avoided. </p>
+<p>Make sure that any untrusted data passed to these methods is:</p>
+<ol>
+<li>Delimited with string delimiters</li>
+<li>Enclosed within a closure or JavaScript encoded to N-levels based on usage</li>
+<li>Wrapped in a custom function. </li>
+</ol>
+<p>Ensure to follow step 3 above to make sure that the untrusted data is not sent to dangerous methods within the custom function or handle it by adding an extra layer of encoding.</p>
+<p><strong>Utilizing an Enclosure (as suggested by Gaz)</strong></p>
+<p>The example that follows illustrates using closures to avoid double JavaScript encoding.</p>
+<pre><code class="lang-javascript"> setTimeout((<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">param</span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+          customFunction(param);
+        }
+ })(<span class="hljs-string">&quot;&lt;%=Encoder.encodeForJS(untrustedData)%&gt;&quot;</span>), y);
+</code></pre>
+<p>The other alternative is using N-levels of encoding.</p>
+<p><strong>N-Levels of Encoding</strong></p>
+<p>If your code looked like the following, you would need to only double JavaScript encode input data.</p>
+<pre><code class="lang-javascript">setTimeout(<span class="hljs-string">&quot;customFunction(&apos;&lt;%=doubleJavaScriptEncodedData%&gt;&apos;, y)&quot;</span>);
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">customFunction</span> (<span class="hljs-params">firstName, lastName</span>)
+     <span class="hljs-title">alert</span>(<span class="hljs-params">&quot;Hello&quot; + firstName + &quot; &quot; + lastNam</span>);
+}
+</span></code></pre>
+<p>The <code>doubleJavaScriptEncodedData</code> has its first layer of JavaScript encoding reversed (upon execution) in the single quotes. </p>
+<p>Then the implicit <code>eval</code> of <code>setTimeout</code> reverses another layer of JavaScript encoding to pass the correct value to <code>customFunction</code> </p>
+<p>The reason why you only need to double JavaScript encode is that the <code>customFunction</code> function did not itself pass the input to another method which implicitly or explicitly called <code>eval</code> If <em>firstName</em> was passed to another JavaScript method which implicitly or explicitly called <code>eval()</code> then <code>&lt;%=doubleJavaScriptEncodedData%&gt;</code> above would need to be changed to <code>&lt;%=tripleJavaScriptEncodedData%&gt;</code>.</p>
+<p>An important implementation note is that if the JavaScript code tries to utilize the double or triple encoded data in string comparisons, the value may be interpreted as different values based on the number of <code>evals()</code> the data has passed through before being passed to the if comparison and the number of times the value was JavaScript encoded.</p>
+<p>If <strong>A</strong> is double JavaScript encoded then the following <strong>if</strong> check will return false.</p>
+<pre><code class="lang-javascript"> <span class="hljs-keyword">var</span> x = <span class="hljs-string">&quot;doubleJavaScriptEncodedA&quot;</span>;  <span class="hljs-comment">//\u005c\u0075\u0030\u0030\u0034\u0031</span>
+ <span class="hljs-keyword">if</span> (x == <span class="hljs-string">&quot;A&quot;</span>) {
+    alert(<span class="hljs-string">&quot;x is A&quot;</span>);
+ } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (x == <span class="hljs-string">&quot;\u0041&quot;</span>) {
+    alert(<span class="hljs-string">&quot;This is what pops&quot;</span>);
+ }
+</code></pre>
+<p>This brings up an interesting design point. Ideally, the correct way to apply encoding and avoid the problem stated above is to server-side encode for the output context where data is introduced into the application. </p>
+<p>Then client-side encode (using a JavaScript encoding library such as <a href="https://www.owasp.org/index.php/ESAPI_JavaScript_Readme" target="_blank">ESAPI4JS</a>) for the individual subcontext (DOM methods) which untrusted data is passed to. <a href="https://www.owasp.org/index.php/ESAPI_JavaScript_Readme" target="_blank">ESAPI4JS</a> and <a href="https://github.com/chrisisbeef/jquery-encoder/blob/master/src/jquery.jquery-encoder.js" target="_blank">jQuery Encoder</a> are two client side encoding libraries developed by Chris Schmidt.</p>
+<p>Here are some examples of how they are used:</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">//server-side encoding</span>
+<span class="hljs-keyword">var</span> input = <span class="hljs-string">&quot;&lt;%=Encoder.encodeForJS(untrustedData)%&gt;&quot;</span>;
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-comment">//HTML encoding is happening in JavaScript</span>
+<span class="hljs-built_in">document</span>.writeln(ESAPI4JS.encodeForHTML(input));
+</code></pre>
+<p>One option is utilize ECMAScript 5 immutable properties in the JavaScript library.
+Another option provided by Gaz (Gareth) was to use a specific code construct to limit mutability with anonymous closures.</p>
+<p>An example follows:</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">escapeHTML</span>(<span class="hljs-params">str</span>) </span>{
+     str = str + <span class="hljs-string">&quot;&apos;&apos;&quot;</span>;
+     <span class="hljs-keyword">var</span> out = <span class="hljs-string">&quot;&apos;&apos;&quot;</span>;
+     <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;str.length; i++) {
+         <span class="hljs-keyword">if</span>(str[i] === <span class="hljs-string">&apos;&lt;&apos;</span>) {
+             out += <span class="hljs-string">&apos;&amp;lt;&apos;</span>;
+         } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(str[i] === <span class="hljs-string">&apos;&gt;&apos;</span>) {
+             out += <span class="hljs-string">&apos;&amp;gt;&apos;</span>;
+         } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(str[i] === <span class="hljs-string">&quot;&apos;&quot;</span>) {
+             out += <span class="hljs-string">&apos;&amp;#39;&apos;</span>;
+         } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(str[i] === <span class="hljs-string">&apos;&quot;&apos;</span>) {
+             out += <span class="hljs-string">&apos;&amp;quot;&apos;</span>;
+         } <span class="hljs-keyword">else</span> {
+             out += str[i];
+         }
+     }
+     <span class="hljs-keyword">return</span> out;
+}
+</code></pre>
+<p>Chris Schmidt has put together another implementation of a JavaScript encoder <a href="http://yet-another-dev.blogspot.com/2011/02/client-side-contextual-encoding-for.html" target="_blank">here</a>.</p>
+<h2 id="guideline-6---limit-the-usage-of-untrusted-data-to-only-right-side-operations"><a name="guideline-6---limit-the-usage-of-untrusted-data-to-only-right-side-operations" class="plugin-anchor" href="#guideline-6---limit-the-usage-of-untrusted-data-to-only-right-side-operations"><i class="fa fa-link" aria-hidden="true"></i></a>GUIDELINE #6 - Limit the usage of untrusted data to only right side operations</h2>
+<p>Not only is it good design to limit the usage of untrusted data to right side operations, but also be aware of data which may be passed to the application which look like code (eg. <code>location</code>, <code>eval()</code>).</p>
+<p>If you want to change different object attributes based on user input then use a level of indirection.
+Instead of:</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">window</span>[userData] = <span class="hljs-string">&quot;moreUserData&quot;</span>;
+</code></pre>
+<p>Do the following instead:</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">if</span> (userData === <span class="hljs-string">&quot;location&quot;</span>) {
+   <span class="hljs-built_in">window</span>.location = <span class="hljs-string">&quot;static/path/or/properly/url/encoded/value&quot;</span>;
+}
+</code></pre>
+<h2 id="guideline-7---when-url-encoding-in-dom-be-aware-of-character-set-issues"><a name="guideline-7---when-url-encoding-in-dom-be-aware-of-character-set-issues" class="plugin-anchor" href="#guideline-7---when-url-encoding-in-dom-be-aware-of-character-set-issues"><i class="fa fa-link" aria-hidden="true"></i></a>GUIDELINE #7 - When URL encoding in DOM be aware of character set issues</h2>
+<p>When URL encoding in DOM be aware of character set issues as the character set in JavaScript DOM is not clearly defined (Mike Samuel).</p>
+<h2 id="guideline-8---limit-access-to-properties-objects-when-using-objectx-accessors"><a name="guideline-8---limit-access-to-properties-objects-when-using-objectx-accessors" class="plugin-anchor" href="#guideline-8---limit-access-to-properties-objects-when-using-objectx-accessors"><i class="fa fa-link" aria-hidden="true"></i></a>GUIDELINE #8 - Limit access to properties objects when using object[x] accessors</h2>
+<p>Limit access to properties objects when using <code>object[x]</code> accessors (Mike Samuel). In other words use a level of indirection between untrusted input and specified object properties. </p>
+<p>Here is an example of the problem when using map types:</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> myMapType = {};
+myMapType[<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">%=untrustedData%</span>&gt;</span>] = &quot;moreUntrustedData&quot;;
+</span></code></pre>
+<p>Although the developer writing the code above was trying to add additional keyed elements to the <code>myMapType</code> object. This could be used by an attacker to subvert internal and external attributes of the <code>myMapType</code> object.</p>
+<h2 id="guideline-9---run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox"><a name="guideline-9---run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox" class="plugin-anchor" href="#guideline-9---run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox"><i class="fa fa-link" aria-hidden="true"></i></a>GUIDELINE #9 - Run your JavaScript in a ECMAScript 5 canopy or sandbox</h2>
+<p>Run your JavaScript in a ECMAScript 5 <a href="https://github.com/jcoglan/canopy" target="_blank">canopy</a> or sandbox to make it harder for your JavaScript API to be compromised (Gareth Heyes and John Stevens).</p>
+<h2 id="guideline-10---dont-eval-json-to-convert-it-to-native-javascript-objects"><a name="guideline-10---dont-eval-json-to-convert-it-to-native-javascript-objects" class="plugin-anchor" href="#guideline-10---dont-eval-json-to-convert-it-to-native-javascript-objects"><i class="fa fa-link" aria-hidden="true"></i></a>GUIDELINE #10 - Don&#x2019;t eval() JSON to convert it to native JavaScript objects</h2>
+<p>Don&#x2019;t <code>eval()</code> JSON to convert it to native JavaScript objects. Instead use <code>JSON.toJSON()</code> and <code>JSON.parse()</code> (Chris Schmidt).</p>
+<h1 id="common-problems-associated-with-mitigating-dom-based-xss"><a name="common-problems-associated-with-mitigating-dom-based-xss" class="plugin-anchor" href="#common-problems-associated-with-mitigating-dom-based-xss"><i class="fa fa-link" aria-hidden="true"></i></a>Common Problems Associated with Mitigating DOM Based XSS</h1>
+<h2 id="complex-contexts"><a name="complex-contexts" class="plugin-anchor" href="#complex-contexts"><i class="fa fa-link" aria-hidden="true"></i></a>Complex Contexts</h2>
+<p>In many cases the context isn&#x2019;t always straightforward to discern.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;javascript:myFunction(&apos;&lt;%=untrustedData%&gt;&apos;, &apos;test&apos;);&quot;</span>&gt;</span>Click Me<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+ ...
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-built_in">Function</span> myFunction (url,name) {
+    <span class="hljs-built_in">window</span>.location = url;
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>In the above example, untrusted data started in the rendering URL context (<code>href</code> attribute of an <code>a</code> tag) then changed to a JavaScript execution context (<code>javascript:</code> protocol handler) which passed the untrusted data to an execution URL subcontext (<code>window.location</code> of <code>myFunction</code>). </p>
+<p>Because the data was introduced in JavaScript code and passed to a URL subcontext the appropriate server-side encoding would be the following:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;javascript:myFunction(&apos;&lt;%=Encoder.encodeForJS(Encoder.encodeForURL(untrustedData)) %&gt;&apos;, &apos;test&apos;);&quot;</span>&gt;</span>
+Click Me<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+ ...
+</code></pre>
+<p>Or if you were using ECMAScript 5 with an immutable JavaScript client-side encoding libraries you could do the following:</p>
+<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- server side URL encoding has been removed.  Now only JavaScript encoding on server side. --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;javascript:myFunction(&apos;&lt;%=Encoder.encodeForJS(untrustedData)%&gt;&apos;, &apos;test&apos;);&quot;</span>&gt;</span>Click Me<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+ ...
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-built_in">Function</span> myFunction (url,name) {
+    <span class="hljs-keyword">var</span> encodedURL = ESAPI4JS.encodeForURL(url);  <span class="hljs-comment">//URL encoding using client-side scripts</span>
+    <span class="hljs-built_in">window</span>.location = encodedURL;
+}
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h2 id="inconsistencies-of-encoding-libraries"><a name="inconsistencies-of-encoding-libraries" class="plugin-anchor" href="#inconsistencies-of-encoding-libraries"><i class="fa fa-link" aria-hidden="true"></i></a>Inconsistencies of Encoding Libraries</h2>
+<p>There are a number of open source encoding libraries out there:</p>
+<ol>
+<li>OWASP <a href="https://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API" target="_blank">ESAPI</a></li>
+<li>OWASP <a href="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" target="_blank">Java Encoder</a></li>
+<li>Apache Commons Text <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/StringEscapeUtils.html" target="_blank">StringEscapeUtils</a>, replace one from <a href="https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringEscapeUtils.html" target="_blank">Apache Commons Lang3</a></li>
+<li><a href="http://jtidy.sourceforge.net/" target="_blank">Jtidy</a></li>
+<li>Your company&#x2019;s custom implementation.</li>
+</ol>
+<p>Some work on a black list while others ignore important characters like &#x201C;&lt;&#x201D; and &#x201C;&gt;&#x201D;. </p>
+<p>Java Encoder is an active project providing supports for HTML, CSS and JavaScript encoding.</p>
+<p>ESAPI is one of the few which works on a whitelist and encodes all non-alphanumeric characters. It is important to use an encoding library that understands which characters can be used to exploit vulnerabilities in their respective contexts. Misconceptions abound related to the proper encoding that is required.</p>
+<h2 id="encoding-misconceptions"><a name="encoding-misconceptions" class="plugin-anchor" href="#encoding-misconceptions"><i class="fa fa-link" aria-hidden="true"></i></a>Encoding Misconceptions</h2>
+<p>Many security training curriculums and papers advocate the blind usage of HTML encoding to resolve XSS. </p>
+<p>This logically seems to be prudent advice as the JavaScript parser does not understand HTML encoding. </p>
+<p>However, if the pages returned from your web application utilize a content type of <code>text/xhtml</code> or the file type extension of <code>*.xhtml</code> then HTML encoding may not work to mitigate against XSS.</p>
+<p>For example:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="undefined">
+&amp;#x61;lert(1);
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>The HTML encoded value above is still executable. If that isn&#x2019;t enough to keep in mind, you have to remember that encodings are lost when you retrieve them using the value attribute of a DOM element.</p>
+<p>Let&#x2019;s look at the sample page and script:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;myForm&quot;</span> <span class="hljs-attr">...</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lName&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&lt;%=Encoder.encodeForHTML(last_name)%&gt;&quot;</span>&gt;</span>
+ ...
+<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">var</span> x = <span class="hljs-built_in">document</span>.myForm.lName.value;  <span class="hljs-comment">//when the value is retrieved the encoding is reversed</span>
+  <span class="hljs-built_in">document</span>.writeln(x);  <span class="hljs-comment">//any code passed into lName is now executable.</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>Finally there is the problem that certain methods in JavaScript which are usually safe can be unsafe in certain contexts.</p>
+<h2 id="usually-safe-methods"><a name="usually-safe-methods" class="plugin-anchor" href="#usually-safe-methods"><i class="fa fa-link" aria-hidden="true"></i></a>Usually Safe Methods</h2>
+<p>One example of an attribute which is thought to be safe is <code>innerText</code>. </p>
+<p>Some papers or guides advocate its use as an alternative to <code>innerHTML</code> to mitigate against XSS in <code>innerHTML</code>. However, depending on the tag which <code>innerText</code> is applied, code can be executed.  </p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+ <span class="hljs-keyword">var</span> tag = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&quot;script&quot;</span>);
+ tag.innerText = <span class="hljs-string">&quot;&lt;%=untrustedData%&gt;&quot;</span>;  <span class="hljs-comment">//executes code</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>The <code>innerText</code> feature was originally introduced by Internet Explorer, and was formally specified in the HTML standard in 2016 after being adopted by all major browser vendors.</p>
+<h1 id="authors-and-contributing-editors"><a name="authors-and-contributing-editors" class="plugin-anchor" href="#authors-and-contributing-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Contributing Editors</h1>
+<p>Jim Manico - jim@owasp.org</p>
+<p>Abraham Kang - abraham.kang@owasp.org</p>
+<p>Gareth (Gaz) Heyes</p>
+<p>Stefano Di Paola</p>
+<p>Achim Hoffmann - achim@owasp.org</p>
+<p>Robert (RSnake) Hansen</p>
+<p>Mario Heiderich</p>
+<p>John Steven</p>
+<p>Chris (Chris BEEF) Schmidt</p>
+<p>Mike Samuel</p>
+<p>Jeremy Long</p>
+<p>Dhiraj Mishra - mishra.dhiraj@owasp.org</p>
+<p>Eduardo (SirDarkCat) Alberto Vela Nava</p>
+<p>Jeff Williams - jeff.williams@owasp.org</p>
+<p>Erlend Oftedal</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Cryptographic_Storage_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Cryptographic Storage ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Denial_of_Service_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Denial of Service ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"DOM based XSS Prevention ","level":"1.19","depth":1,"next":{"title":"Denial of Service ","level":"1.20","depth":1,"path":"cheatsheets/Denial_of_Service_Cheat_Sheet.md","ref":"cheatsheets/Denial_of_Service_Cheat_Sheet.md","articles":[]},"previous":{"title":"Cryptographic Storage ","level":"1.18","depth":1,"path":"cheatsheets/Cryptographic_Storage_Cheat_Sheet.md","ref":"cheatsheets/Cryptographic_Storage_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.553Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

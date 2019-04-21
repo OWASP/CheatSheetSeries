@@ -1,0 +1,1193 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>JAAS  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="JSON_Web_Token_Cheat_Sheet_for_Java.html" />
+    
+    
+    <link rel="prev" href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >JAAS </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction---what-is-jaas-authentication"><a name="introduction---what-is-jaas-authentication" class="plugin-anchor" href="#introduction---what-is-jaas-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction - What is JAAS authentication?</h1>
+<p>The process of verifying the identity of a user or another system is authentication. </p>
+<p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/jaas/JAASRefGuide.html" target="_blank">JAAS</a>, as an authentication framework manages the authenticated user&#x2019;s identity and credentials from login to logout.</p>
+<p>The JAAS authentication lifecycle:</p>
+<ol>
+<li>Create <code>LoginContext</code>.</li>
+<li>Read the configuration file for one or more <code>LoginModules</code> to initialize.</li>
+<li>Call <code>LoginContext.initialize()</code> for each LoginModule to initialize.</li>
+<li>Call <code>LoginContext.login()</code> for each LoginModule.</li>
+<li>If login successful then call <code>LoginContext.commit()</code> else call <code>LoginContext.abort()</code></li>
+</ol>
+<h1 id="configuration-file"><a name="configuration-file" class="plugin-anchor" href="#configuration-file"><i class="fa fa-link" aria-hidden="true"></i></a>Configuration file</h1>
+<p>The JAAS configuration file contains a <code>LoginModule</code> stanza for each <code>LoginModule</code> available for logging on to the application.</p>
+<p>A stanza from a JAAS configuration file:</p>
+<pre><code class="lang-text">Branches
+{
+    USNavy.AppLoginModule required
+    debug=true
+    succeeded=true;
+}
+</code></pre>
+<p>Note the placement of the semicolons, terminating both <code>LoginModule</code> entries and stanzas. </p>
+<p>The word required indicates the <code>LoginContext</code>&#x2019;s <code>login()</code> method must be successful when logging in the user. The <code>LoginModule</code>-specific values <code>debug</code> and <code>succeeded</code> are passed to the <code>LoginModule</code>. </p>
+<p>They are defined by the <code>LoginModule</code> and their usage is managed inside the <code>LoginModule</code>. Note, Options are Configured using key-value pairing such as <code>debug=&quot;true&quot;</code> and the key and value should be separated by a <code>=</code> sign.</p>
+<h1 id="mainjava-the-client"><a name="mainjava-the-client" class="plugin-anchor" href="#mainjava-the-client"><i class="fa fa-link" aria-hidden="true"></i></a>Main.java (The client)</h1>
+<ul>
+<li>Execution syntax:</li>
+</ul>
+<pre><code class="lang-text">Java &#x2013;Djava.security.auth.login.config==packageName/packageName.config
+        packageName.Main Stanza1
+
+Where:
+    packageName is the directory containing the config file.
+    packageName.config specifies the config file in the Java package, packageName.
+    packageName.Main specifies Main.java in the Java package, packageName.
+    Stanza1 is the name of the stanza Main() should read from the config file.
+</code></pre>
+<ul>
+<li>When executed, the 1st command line argument is the stanza from the config file. The Stanza names the <code>LoginModule</code> to be used. The 2nd argument is the <code>CallbackHandler</code>.</li>
+<li>Create a new <code>LoginContext</code> with the arguments passed to <code>Main.java</code>.<ul>
+<li><code>loginContext = new LoginContext (args[0], new AppCallbackHandler());</code></li>
+</ul>
+</li>
+<li>Call the LoginContext.Login Module:<ul>
+<li><code>loginContext.login();</code></li>
+</ul>
+</li>
+<li>The value in succeeded Option is returned from <code>loginContext.login()</code>.</li>
+<li>If the login was successful, a subject was created.</li>
+</ul>
+<h1 id="loginmodulejava"><a name="loginmodulejava" class="plugin-anchor" href="#loginmodulejava"><i class="fa fa-link" aria-hidden="true"></i></a>LoginModule.java</h1>
+<p>A <code>LoginModule</code> must have the following authentication methods:</p>
+<ul>
+<li><code>initialize()</code></li>
+<li><code>login()</code></li>
+<li><code>commit()</code></li>
+<li><code>abort()</code></li>
+<li><code>logout()</code></li>
+</ul>
+<h2 id="initialize"><a name="initialize" class="plugin-anchor" href="#initialize"><i class="fa fa-link" aria-hidden="true"></i></a>initialize()</h2>
+<p>In <code>Main()</code>, after the <code>LoginContext</code> reads the correct stanza from the config file, the <code>LoginContext</code> instantiates the <code>LoginModule</code> specified in the stanza.</p>
+<ul>
+<li><code>initialize()</code> methods signature:<ul>
+<li><code>Public void initialize (Subject subject, CallbackHandler callbackHandler, Map sharedState, Map options)</code></li>
+</ul>
+</li>
+<li>The arguments above should be saved as follows:<ul>
+<li><code>this.subject = subject;</code></li>
+<li><code>this.callbackHandler = callbackHandler;</code></li>
+<li><code>this.sharedState = sharedState;</code></li>
+<li><code>this.options = options;</code></li>
+</ul>
+</li>
+<li>What the <code>initialize()</code> method does:<ul>
+<li>Builds a subject object of the <code>Subject</code> class contingent on a successful <code>login()</code>.</li>
+<li>Sets the <code>CallbackHandler</code> which interacts with the user to gather login information.</li>
+<li>If a <code>LoginContext</code> specifies 2 or more LoginModules, which is legal, they can share information via a <code>sharedState</code> map.</li>
+<li>Saves state information such as debug and succeeded in an options Map.</li>
+</ul>
+</li>
+</ul>
+<h2 id="login"><a name="login" class="plugin-anchor" href="#login"><i class="fa fa-link" aria-hidden="true"></i></a>login()</h2>
+<p>Captures user supplied login information. The code snippet below declares an array of two callback objects which, when passed to the <code>callbackHandler.handle</code> method in the <code>callbackHandler.java</code> program, will be loaded with a user name and password provided interactively by the user:</p>
+<pre><code class="lang-java">NameCallback nameCB = <span class="hljs-keyword">new</span> NameCallback(<span class="hljs-string">&quot;Username&quot;</span>);
+PasswordCallback passwordCB = <span class="hljs-keyword">new</span> PasswordCallback (<span class="hljs-string">&quot;Password&quot;</span>, <span class="hljs-keyword">false</span>);
+Callback[] callbacks = <span class="hljs-keyword">new</span> Callback[] { nameCB, passwordCB };
+callbackHandler.handle (callbacks);
+</code></pre>
+<ul>
+<li>Authenticates the user</li>
+<li>Retrieves the user supplied information from the callback objects:<ul>
+<li><code>String ID = nameCallback.getName ();</code></li>
+<li><code>char[] tempPW = passwordCallback.getPassword ();</code></li>
+</ul>
+</li>
+<li>Compare <code>name</code> and <code>tempPW</code> to values stored in a repository such as LDAP.</li>
+<li>Set the value of the variable succeeded and return to <code>Main()</code>.</li>
+</ul>
+<h2 id="commit"><a name="commit" class="plugin-anchor" href="#commit"><i class="fa fa-link" aria-hidden="true"></i></a>commit()</h2>
+<p>Once the users credentials are successfully verified during <code>login()</code>, the JAAS authentication framework associates the credentials, as needed, with the subject. </p>
+<p>There are two types of credentials, <strong>Public</strong> and <strong>Private</strong>:</p>
+<ul>
+<li>Public credentials include public keys. </li>
+<li>Private credentials include passwords and public keys. </li>
+</ul>
+<p>Principals (i.e. Identities the subject has other than their login name) such as employee number or membership ID in a user group are added to the subject. </p>
+<p>Below, is an example <code>commit()</code> method where first, for each group the authenticated user has membership in, the group name is added as a principal to the subject. The subject&#x2019;s username is then added to their public credentials.</p>
+<p>Code snippet setting then adding any principals and a public credentials to a subject:</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">commit</span><span class="hljs-params">()</span> </span>{
+    If (userAuthenticated) {
+        Set groups = UserService.findGroups (username);
+        <span class="hljs-keyword">for</span> (Iterator itr = groups.iterator (); itr.hasNext (); {
+            String groupName = (String) itr.next ();
+            UserGroupPrincipal group = <span class="hljs-keyword">new</span> UserGroupPrincipal (GroupName);
+            subject.getPrincipals ().add (group);
+        }
+        UsernameCredential cred = <span class="hljs-keyword">new</span> UsernameCredential (username);
+        subject.getPublicCredentials().add (cred);
+    }
+}
+</code></pre>
+<h2 id="abort"><a name="abort" class="plugin-anchor" href="#abort"><i class="fa fa-link" aria-hidden="true"></i></a>abort()</h2>
+<p>The <code>abort()</code> method is called when authentication doesn&#x2019;t succeed. Before the <code>abort()</code> method exits the <code>LoginModule</code>, care should be taken to reset state including the user name and password input fields.</p>
+<h2 id="logout"><a name="logout" class="plugin-anchor" href="#logout"><i class="fa fa-link" aria-hidden="true"></i></a>logout()</h2>
+<p>The release of the users principals and credentials when <code>LoginContext.logout</code> is called:</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">logout</span><span class="hljs-params">()</span> </span>{ 
+    <span class="hljs-keyword">if</span> (!subject.isReadOnly()) {
+        Set principals = subject.getPrincipals(UserGroupPrincipal.class);
+        subject.getPrincipals().removeAll(principals);
+        Set creds = subject.getPublicCredentials(UsernameCredential.class);
+        subject.getPublicCredentials().removeAll(creds);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+}
+</code></pre>
+<h1 id="callbackhandlerjava"><a name="callbackhandlerjava" class="plugin-anchor" href="#callbackhandlerjava"><i class="fa fa-link" aria-hidden="true"></i></a>CallbackHandler.java</h1>
+<p>The <code>callbackHandler</code> is in a source (<code>.java</code>) file separate from any single <code>LoginModule</code> so that it can service a multitude of LoginModules with differing callback objects:</p>
+<ul>
+<li>Creates instance of the <code>CallbackHandler</code> class and has only one method, <code>handle()</code>.</li>
+<li>A <code>CallbackHandler</code> servicing a LoginModule requiring username &amp; password to login:</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">handle</span><span class="hljs-params">(Callback[] callbacks)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; callbacks.length; i++) {
+        Callback callback = callbacks[i];
+        <span class="hljs-keyword">if</span> (callback <span class="hljs-keyword">instanceof</span> NameCallback) {
+            NameCallback nameCallBack = (NameCallback) callback;
+            nameCallBack.setName(username);
+    }  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (callback <span class="hljs-keyword">instanceof</span> PasswordCallback) {
+            PasswordCallback passwordCallBack = (PasswordCallback) callback;
+            passwordCallBack.setPassword(password.toCharArray());
+        }
+    }
+}
+</code></pre>
+<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h1>
+<ul>
+<li><a href="https://jaasbook.wordpress.com/2009/09/27/intro/" target="_blank">JAAS in Action</a>, Michael Cot&#xE9;, posted on September 27, 2009, URL as 5/14/2012.</li>
+<li>Pistoia Marco, Nagaratnam Nataraj, Koved Larry, Nadalin Anthony from book <a href="https://www.oreilly.com/library/view/enterprise-javatm-security/0321118898/" target="_blank">&quot;Enterprise Java Security&quot; - Addison-Wesley, 2004</a>.</li>
+</ul>
+<h1 id="disclosure"><a name="disclosure" class="plugin-anchor" href="#disclosure"><i class="fa fa-link" aria-hidden="true"></i></a>Disclosure</h1>
+<p>All of the code in the attached JAAS cheat sheet has been copied verbatim from this <a href="https://jaasbook.wordpress.com/2009/09/27/intro/" target="_blank">free source</a>.</p>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Dr. A.L. Gottlieb - AnthonyG@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Insecure Direct Object Reference Prevention ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html" class="navigation navigation-next " aria-label="Next page: JSON Web Token  for Java">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"JAAS ","level":"1.32","depth":1,"next":{"title":"JSON Web Token  for Java","level":"1.33","depth":1,"path":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","ref":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","articles":[]},"previous":{"title":"Insecure Direct Object Reference Prevention ","level":"1.31","depth":1,"path":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/JAAS_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.364Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

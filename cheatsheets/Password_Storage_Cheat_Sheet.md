@@ -51,18 +51,16 @@ Adaptive one-way functions compute a one-way (irreversible) transform. Each func
 
 Select:
 
-- **[Argon2](Password_Storage_Cheat_Sheet.md#ref7)** is the winner of the [password hashing competition](https://password-hashing.net/) and should **be considered as your first choice** for new applications;
+- **[Argon2](Password_Storage_Cheat_Sheet.md#ref7)** is the winner of the [password hashing competition](https://password-hashing.net/) and should be considered as your first choice for new applications;
 - **[PBKDF2](Password_Storage_Cheat_Sheet.md#ref4)** when FIPS certification or enterprise support on many platforms is required;
 - **[Scrypt](Password_Storage_Cheat_Sheet.md#ref5)** where resisting any/all hardware accelerated attacks is necessary but support isn’t.
-- **[Bcrypt](https://auth0.com/blog/hashing-in-action-understanding-bcrypt/)** where PBKDF2 or Scrypt support is not available.
+- **[Bcrypt](https://auth0.com/blog/hashing-in-action-understanding-bcrypt/)** where PBKDF2 or scrypt support is not available.
 
 Example `protect()` pseudo-code follows:
 
-```text
-return [salt] + pbkdf2([salt], [credential], c=[iteration_count]);
 ```
-
-In the example above, as PBKDF2 computation time depend on the target system, **iteration_count** must have a number implying that the computation time on the target system must take at least 1 second (like 1000.000 for example).
+return [salt] + pbkdf2([salt], [credential], c=10000);
+```
 
 Designers select one-way adaptive functions to implement `protect()` because these functions can be configured to cost (linearly or exponentially) more than a hash function to execute. Defenders adjust work factor to keep pace with threats’ increasing hardware capabilities. Those implementing adaptive one-way functions must tune work factors so as to impede attackers while providing acceptable user experience and scale.
 
@@ -72,7 +70,7 @@ Additionally, adaptive one-way functions do not effectively prevent reversal of 
 
 Since resources are normally considered limited, a common rule of thumb for tuning the work factor (or cost) is to make `protect()` run as slow as possible without affecting the users' experience and without increasing the need for extra hardware over budget. So, if the registration and authentication's cases accept `protect()` taking up to 1 second, you can tune the cost so that it takes 1 second to run on your hardware. This way, it shouldn't be so slow that your users become affected, but it should also affect the attackers' attempt as much as possible.
 
-While there is a minimum number of iterations recommended to ensure data safety, this value changes every year as technology improves and then require to be reviewed on a regular basis or after an hardware upgrade. 
+While there is a minimum number of iterations recommended to ensure data safety, this value changes every year as technology improves. An example of the iteration count chosen by a well known company is the 10,000 iterations Apple uses for its [iTunes passwords](https://github.com/SNBSniper/Programming/raw/master/iOS/iOS_Security_May12.pdf) (using PBKDF2). 
 
 However, it is critical to understand that a single work factor does not fit all designs, [experimentation is important](Password_Storage_Cheat_Sheet.md#ref6).
 
@@ -312,7 +310,7 @@ PARALLELISM=4
 
 ## Input password size
 
-In order to prevent any DOS attack using a very big password, it's recommended to define a higher size limit for the password choosen by the user.
+In order to prevent any DOS attack using a very big password, it's recommanded to define a higher size limit for the password choosen by the user.
 
 A limit of **1000 characters** is sufficient to let the user choose a very big password without impacting the system.
 
@@ -366,7 +364,7 @@ From PHP version 7.2, [Argon2 is supported](https://wiki.php.net/rfc/argon2_pass
 
 Like for the Java proposal, the Argon2 implementation provided by [phc-winner-argon2](https://github.com/P-H-C/phc-winner-argon2) project has been used and for the same reasons.
 
-## Remark about self compilation of binaries for PHP and Argon2
+## Remark about self compilation of binaires for PHP and Argon2
 
 Like for Java proposal, focus is made here on non-installing binaries from untrusted sources (non official linux repositories - PHC Github repository for Argon2 is considered as trusted because sources are provided and a security code review can be applied).
 

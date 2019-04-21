@@ -1,0 +1,1231 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Injection Prevention  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Injection_Prevention_Cheat_Sheet_in_Java.html" />
+    
+    
+    <link rel="prev" href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Injection Prevention </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>This article is focused on providing clear, simple, actionable guidance for preventing the entire category of Injection flaws in your applications. Injection attacks, especially <a href="https://www.owasp.org/index.php/SQL_Injection" target="_blank">SQL Injection</a>, are unfortunately very common.</p>
+<p>Application accessibility is a very important factor in protection and prevention of injection flaws. Only the minority of all applications within a company/enterprise are developed in house, where as most applications are from external sources. Open source applications give at least the opportunity to fix problems, but closed source applications need a different approach to injection flaws.</p>
+<p>Injection flaws occur when an application sends untrusted data to an interpreter. Injection flaws are very prevalent, particularly in legacy code, often found in SQL queries, LDAP queries, XPath queries, OS commands, program arguments, etc. Injection flaws are easy to discover when examining code, but more difficult via testing. Scanners and fuzzers can help attackers find them.</p>
+<p>Depending on the accessibility different actions must be taken in order to fix them. It is always the best way to fix the problem in source code itself, or even redesign some parts of the applications. But if the source code is not available or it is simply uneconomical to fix legacy software only virtual patching makes sense.</p>
+<h1 id="application-types"><a name="application-types" class="plugin-anchor" href="#application-types"><i class="fa fa-link" aria-hidden="true"></i></a>Application Types</h1>
+<p>Three classes of applications can usually be seen within a company. Those 3 types are needed to identify the actions which need to take place in order to prevent/fix injection flaws.</p>
+<h2 id="a1-new-application"><a name="a1-new-application" class="plugin-anchor" href="#a1-new-application"><i class="fa fa-link" aria-hidden="true"></i></a>A1: New Application</h2>
+<p>A new web application in the design phase, or in early stage development.</p>
+<h2 id="a2-productive-open-source-application"><a name="a2-productive-open-source-application" class="plugin-anchor" href="#a2-productive-open-source-application"><i class="fa fa-link" aria-hidden="true"></i></a>A2: Productive Open Source Application</h2>
+<p>An already productive application, which can be easily adapted. A Model-View-Controller (MVC) type application is just one example of having a easily accessible application architecture.</p>
+<h2 id="a3-productive-closed-source-application"><a name="a3-productive-closed-source-application" class="plugin-anchor" href="#a3-productive-closed-source-application"><i class="fa fa-link" aria-hidden="true"></i></a>A3: Productive Closed Source Application</h2>
+<p>A productive application which cannot or only with difficulty be modified.</p>
+<h1 id="forms-of-injection"><a name="forms-of-injection" class="plugin-anchor" href="#forms-of-injection"><i class="fa fa-link" aria-hidden="true"></i></a>Forms of Injection</h1>
+<p>There are several forms of injection targeting different technologies including SQL queries, LDAP queries, XPath queries and OS commands.</p>
+<h2 id="query-languages"><a name="query-languages" class="plugin-anchor" href="#query-languages"><i class="fa fa-link" aria-hidden="true"></i></a>Query languages</h2>
+<p>The most famous form of injection is SQL Injection where an attacker can modify existing database queries. For more information see the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
+<p>But also LDAP, SOAP, XPath and REST based queries can be susceptible to injection attacks allowing for data retrieval or control bypass.</p>
+<h3 id="sql-injection"><a name="sql-injection" class="plugin-anchor" href="#sql-injection"><i class="fa fa-link" aria-hidden="true"></i></a>SQL Injection</h3>
+<p>An SQL injection attack consists of insertion or &quot;injection&quot; of either a partial or complete SQL query via the data input or transmitted from the client (browser) to the web application. </p>
+<p>A successful SQL injection attack can read sensitive data from the database, modify database data (insert/update/delete), execute administration operations on the database (such as shutdown the DBMS), recover the content of a given file existing on the DBMS file system or write files into the file system, and, in some cases, issue commands to the operating system. SQL injection attacks are a type of injection attack, in which SQL commands are injected into data-plane input in order to affect the execution of predefined SQL commands.</p>
+<p>SQL Injection attacks can be divided into the following three classes:</p>
+<ul>
+<li><strong>Inband:</strong> data is extracted using the same channel that is used to inject the SQL code. This is the most straightforward kind of attack, in which the retrieved data is presented directly in the application web page.</li>
+<li><strong>Out-of-band:</strong> data is retrieved using a different channel (e.g., an email with the results of the query is generated and sent to the tester).</li>
+<li><strong>Inferential or Blind:</strong> there is no actual transfer of data, but the tester is able to reconstruct the information by sending particular requests and observing the resulting behavior of the DB Server.</li>
+</ul>
+<h4 id="how-to-test-for-the-issue"><a name="how-to-test-for-the-issue" class="plugin-anchor" href="#how-to-test-for-the-issue"><i class="fa fa-link" aria-hidden="true"></i></a>How to test for the issue?</h4>
+<p><strong>During code review</strong></p>
+<p>please check for any queries to the database are not done via prepared statements.</p>
+<p>If dynamic statements are being made please check if the data is sanitized before used as par of the statement.</p>
+<p>Auditors should always look for uses of sp_execute, execute or exec within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.</p>
+<p><strong>Automated Exploitation</strong></p>
+<p>Most of the situation and techniques below here can be performed in a automated way using some tools. In this article the tester can find information how to perform an automated auditing using <a href="https://www.owasp.org/index.php/Automated_Audit_using_SQLMap" target="_blank">SQLMap</a></p>
+<p>Equally Static Code Analysis Data flow rules can detect of unsanitized user controlled input can change the SQL query.</p>
+<p><strong>Stored Procedure Injection</strong></p>
+<p>When using dynamic SQL within a stored procedure, the application must properly sanitize the user input to eliminate the risk of code injection. If not sanitized, the user could enter malicious SQL that will be executed within the stored procedure.</p>
+<p><strong>Time delay Exploitation technique</strong></p>
+<p>The time delay exploitation technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. This technique consists in sending an injected query and in case the conditional is true, the tester can monitor the time taken to for the server to respond. If there is a delay, the tester can assume the result of the conditional query is true. This exploitation technique can be different from DBMS to DBMS (check DBMS specific section).</p>
+<pre><code class="lang-text">http://www.example.com/product.php?id=10 AND IF(version() like &#x2018;5%&#x2019;, sleep(10), &#x2018;false&#x2019;))--
+</code></pre>
+<p>In this example the tester if checking whether the MySql version is 5.x or not, making the server to delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn&#x2019;t need to wait for the response. Sometimes he can set a very high value (e.g. 100) and cancel the request after some seconds.</p>
+<p><strong>Out of band Exploitation technique</strong></p>
+<p>This technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester&#x2019;s server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section. </p>
+<h4 id="remediation"><a name="remediation" class="plugin-anchor" href="#remediation"><i class="fa fa-link" aria-hidden="true"></i></a>Remediation</h4>
+<p><strong>Defense Option 1: Prepared Statements (with Parameterized Queries)</strong></p>
+<p>Prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker. In the safe example below, if an attacker were to enter the userID of <code>tom&apos; or &apos;1&apos;=&apos;1</code>, the parameterized query would not be vulnerable and would instead look for a username which literally matched the entire string <code>tom&apos; or &apos;1&apos;=&apos;1</code>.</p>
+<p><strong>Defense Option 2: Stored Procedures</strong></p>
+<p>The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. </p>
+<p>Both of these techniques have the same effectiveness in preventing SQL injection so your organization should choose which approach makes the most sense for you. Stored procedures are not always safe from SQL injection. However, certain standard stored procedure programming constructs have the same effect as the use of parameterized queries when implemented safely* which is the norm for most stored procedure languages.</p>
+<p><em>Note:</em> &apos;Implemented safely&apos; means the stored procedure does not include any unsafe dynamic SQL generation.</p>
+<p><strong>Defense Option 3: White List Input Validation</strong></p>
+<p>Various parts of SQL queries aren&apos;t legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters. </p>
+<p>But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn&apos;t end up in the query. Please note, this is a symptom of poor design and a full re-write should be considered if time allows.</p>
+<p><strong>Defense Option 4: Escaping All User-Supplied Input</strong></p>
+<p>This technique should only be used as a last resort, when none of the above are feasible. Input validation is probably a better choice as this methodology is frail compared to other defenses and we cannot guarantee it will prevent all SQL Injection in all situations.</p>
+<p>This technique is to escape user input before putting it in a query. It&apos;s usually only recommended to retrofit legacy code when implementing input validation isn&apos;t cost effective. </p>
+<h4 id="example-code---java"><a name="example-code---java" class="plugin-anchor" href="#example-code---java"><i class="fa fa-link" aria-hidden="true"></i></a>Example code - Java</h4>
+<p><strong>Safe Java Prepared Statement Example</strong></p>
+<p>The following code example uses a <code>PreparedStatement</code>, Java&apos;s implementation of a parameterized query, to execute the same database query.</p>
+<pre><code class="lang-java"><span class="hljs-comment">// This should REALLY be validated too </span>
+String custname = request.getParameter(<span class="hljs-string">&quot;customerName&quot;</span>); 
+<span class="hljs-comment">// Perform input validation to detect attacks </span>
+String query = <span class="hljs-string">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span>;  
+PreparedStatement pstmt = connection.prepareStatement(query);
+pstmt.setString(<span class="hljs-number">1</span>, custname);
+ResultSet results = pstmt.executeQuery();
+</code></pre>
+<p>We have shown examples in Java, but practically all other languages, including Cold Fusion, and Classic ASP, support parameterized query interfaces. </p>
+<p><strong>Safe Java Stored Procedure Example</strong></p>
+<p>The following code example uses a <code>CallableStatement</code>, Java&apos;s implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure would have to be predefined in the database and implement the same functionality as the query defined above. </p>
+<pre><code class="lang-java"><span class="hljs-comment">// This should REALLY be validated</span>
+String custname = request.getParameter(<span class="hljs-string">&quot;customerName&quot;</span>);
+<span class="hljs-keyword">try</span> {     
+ CallableStatement cs = connection.prepareCall(<span class="hljs-string">&quot;{call sp_getAccountBalance(?)}&quot;</span>);
+ cs.setString(<span class="hljs-number">1</span>, custname);
+ ResultSet results = cs.executeQuery();
+ <span class="hljs-comment">// Result set handling...</span>
+} <span class="hljs-keyword">catch</span> (SQLException se) {
+ <span class="hljs-comment">// Logging and error handling...</span>
+}
+</code></pre>
+<h3 id="ldap-injection"><a name="ldap-injection" class="plugin-anchor" href="#ldap-injection"><i class="fa fa-link" aria-hidden="true"></i></a>LDAP Injection</h3>
+<p>LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it&#x2019;s possible to modify LDAP statements through techniques similar to <a href="https://www.owasp.org/index.php/SQL_Injection" target="_blank">SQL Injection</a>. LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. For more information on LDAP Injection attacks, visit <a href="https://www.owasp.org/index.php/LDAP_injection" target="_blank">LDAP injection</a>.</p>
+<p><a href="https://www.owasp.org/index.php/LDAP_injection" target="_blank">LDAP injection</a> attacks are common due to two factors:</p>
+<ol>
+<li>The lack of safer, parameterized LDAP query interfaces</li>
+<li>The widespread use of LDAP to authenticate users to systems.</li>
+</ol>
+<h4 id="how-to-test-for-the-issue"><a name="how-to-test-for-the-issue" class="plugin-anchor" href="#how-to-test-for-the-issue"><i class="fa fa-link" aria-hidden="true"></i></a>How to test for the issue?</h4>
+<p><strong>During code review</strong></p>
+<p>Please check for any queries to the LDAP escape special characters, see <a href="LDAP_Injection_Prevention_Cheat_Sheet.html#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function">here</a>.</p>
+<p><strong>Automated Exploitation</strong></p>
+<p>Scanner module of tool like OWASP <a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project" target="_blank">ZAP</a> have module to detect LDAP injection issue.</p>
+<h4 id="remediation"><a name="remediation" class="plugin-anchor" href="#remediation"><i class="fa fa-link" aria-hidden="true"></i></a>Remediation</h4>
+<p><strong>Escape all variables using the right LDAP encoding function</strong></p>
+<p>The main way LDAP stores names is based on DN (<a href="https://ldapwiki.com/wiki/Distinguished%20Names" target="_blank">distinguished name</a>). You can think of this like a unique identifier. These are sometimes used to access resources, like a username.</p>
+<p>A DN might look like this</p>
+<pre><code class="lang-text">cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu
+</code></pre>
+<p>or</p>
+<pre><code class="lang-text">uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com
+</code></pre>
+<p>There are certain characters that are considered special characters in a DN. The exhaustive list is the following: <code>\ # + &lt; &gt; , ; &quot; =</code> and leading or trailing spaces</p>
+<p>Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users will certain attributes, you may do so with search filters. In a search filter, you can use standard boolean logic to get a list of users matching an arbitrary constraint. Search filters are written in Polish notation AKA prefix notation.</p>
+<p>Example:</p>
+<pre><code class="lang-text">(&amp;(ou=Physics)(| (manager=cn=Freeman Dyson,ou=Physics,dc=Caltech,dc=edu)
+(manager=cn=Albert Einstein,ou=Physics,dc=Princeton,dc=edu) ))
+</code></pre>
+<p>When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource. </p>
+<h4 id="example-code---java"><a name="example-code---java" class="plugin-anchor" href="#example-code---java"><i class="fa fa-link" aria-hidden="true"></i></a>Example code - Java</h4>
+<p><strong>Safe Java for LDAP escaping Example</strong></p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">escapeDN</span> <span class="hljs-params">(String name)</span> </span>{
+ <span class="hljs-comment">//From RFC 2253 and the / character for JNDI</span>
+ <span class="hljs-keyword">final</span> <span class="hljs-keyword">char</span>[] META_CHARS = {<span class="hljs-string">&apos;+&apos;</span>, <span class="hljs-string">&apos;&quot;&apos;</span>, <span class="hljs-string">&apos;&lt;&apos;</span>, <span class="hljs-string">&apos;&gt;&apos;</span>, <span class="hljs-string">&apos;;&apos;</span>, <span class="hljs-string">&apos;/&apos;</span>};
+ String escapedStr = <span class="hljs-keyword">new</span> String(name);
+ <span class="hljs-comment">//Backslash is both a Java and an LDAP escape character, </span>
+ <span class="hljs-comment">//so escape it first      </span>
+ escapedStr = escapedStr.replaceAll(<span class="hljs-string">&quot;\\\\\\\\&quot;</span>,<span class="hljs-string">&quot;\\\\\\\\&quot;</span>);
+ <span class="hljs-comment">//Positional characters - see RFC 2253</span>
+ escapedStr = escapedStr.replaceAll(<span class="hljs-string">&quot;\^#&quot;</span>,<span class="hljs-string">&quot;\\\\\\\\#&quot;</span>);
+ escapedStr = escapedStr.replaceAll(<span class="hljs-string">&quot;\^ | $&quot;</span>,<span class="hljs-string">&quot;\\\\\\\\ &quot;</span>);
+ <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span> ; i &lt; META_CHARS.length ; i++) {
+        escapedStr = escapedStr.replaceAll(<span class="hljs-string">&quot;\\\\&quot;</span> + 
+                     META_CHARS[i],<span class="hljs-string">&quot;\\\\\\\\&quot;</span> + META_CHARS[i]);
+ }     
+ <span class="hljs-keyword">return</span> escapedStr; 
+}
+</code></pre>
+<p>Note, that the backslash character is a Java String literal and a regular expression escape character.</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">escapeSearchFilter</span> <span class="hljs-params">(String filter)</span> </span>{
+ <span class="hljs-comment">//From RFC 2254</span>
+ String escapedStr = <span class="hljs-keyword">new</span> String(filter);
+ escapedStr = escapedStr.replaceAll(<span class="hljs-string">&quot;\\\\\\\\&quot;</span>,<span class="hljs-string">&quot;\\\\\\\\5c&quot;</span>);
+ escapedStr = escapedStr.replaceAll(<span class="hljs-string">&quot;\\\\\*&quot;</span>,<span class="hljs-string">&quot;\\\\\\\\2a&quot;</span>);
+ escapedStr = escapedStr.replaceAll(<span class="hljs-string">&quot;\\\\(&quot;</span>,<span class="hljs-string">&quot;\\\\\\\\28&quot;</span>);
+ escapedStr = escapedStr.replaceAll(<span class="hljs-string">&quot;\\\\)&quot;</span>,<span class="hljs-string">&quot;\\\\\\\\29&quot;</span>);
+ escapedStr = escapedStr.replaceAll(<span class="hljs-string">&quot;\\\\&quot;</span> + 
+               Character.toString(<span class="hljs-string">&apos;\\u0000&apos;</span>), <span class="hljs-string">&quot;\\\\\\\\00&quot;</span>);
+ <span class="hljs-keyword">return</span> escapedStr;   
+}
+</code></pre>
+<h3 id="xpath-injection"><a name="xpath-injection" class="plugin-anchor" href="#xpath-injection"><i class="fa fa-link" aria-hidden="true"></i></a>XPath Injection</h3>
+<p>TODO</p>
+<h2 id="scripting-languages"><a name="scripting-languages" class="plugin-anchor" href="#scripting-languages"><i class="fa fa-link" aria-hidden="true"></i></a>Scripting languages</h2>
+<p>All scripting languages used in web applications have a form of an <code>eval</code> call which receives code at runtime and executes it. If code is crafted using unvalidated and unescaped user input code injection can occur which allows an attacker to subvert application logic and eventually to gain local access.</p>
+<p>Every time a scripting language is used, the actual implementation of the &apos;higher&apos; scripting language is done using a &apos;lower&apos; language like C. If the scripting language has a flaw in the data handling code &apos;<a href="http://projects.webappsec.org/w/page/13246949/Null%20Byte%20Injection" target="_blank">Null Byte Injection</a>&apos; attack vectors can be deployed to gain access to other areas in memory, which results in a successful attack.</p>
+<h2 id="operating-system-commands"><a name="operating-system-commands" class="plugin-anchor" href="#operating-system-commands"><i class="fa fa-link" aria-hidden="true"></i></a>Operating System Commands</h2>
+<p>OS command injection is a technique used via a web interface in order to execute OS commands on a web server. The user supplies operating system commands through a web interface in order to execute OS commands. </p>
+<p>Any web interface that is not properly sanitized is subject to this exploit. With the ability to execute OS commands, the user can upload malicious programs or even obtain passwords. OS command injection is preventable when security is emphasized during the design and development of applications. </p>
+<h3 id="how-to-test-for-the-issue"><a name="how-to-test-for-the-issue" class="plugin-anchor" href="#how-to-test-for-the-issue"><i class="fa fa-link" aria-hidden="true"></i></a>How to test for the issue?</h3>
+<p><strong>During code review</strong></p>
+<p>Check if any command execute methods are called and in unvalidated user input are taken as data for that command.</p>
+<p>Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. <code>%3B</code> is url encoded and decodes to semicolon. This is because the <code>;</code> is interpreted as a command separator. </p>
+<p>Example: <code>http://sensitive/something.php?dir=%3Bcat%20/etc/passwd</code></p>
+<p>If the application responds with the output of the <code>/etc/passwd</code> file then you know the attack has been successful. Many web application scanners can be used to test for this attack as they inject variations of command injections and test the response.</p>
+<p>Equally Static Code Analysis tools check the data flow of untrusted user input into a web application and check if the data is then entered into a dangerous method which executes the user input as a command. </p>
+<h3 id="remediation"><a name="remediation" class="plugin-anchor" href="#remediation"><i class="fa fa-link" aria-hidden="true"></i></a>Remediation</h3>
+<p>If it is considered unavoidable the call to a system command incorporated with user-supplied, the following two layers of defense should be used within software in order to prevent attacks</p>
+<ol>
+<li><strong>Parametrization</strong> - If available, use structured mechanisms that automatically enforce the separation between data and command. These mechanisms can help to provide the relevant quoting, encoding.</li>
+<li><strong>Input validation</strong> - the values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:<ul>
+<li>When it comes to the <strong>commands</strong> used, these must be validated against a whitelist of allowed commands.</li>
+<li>In regards to the <strong>arguments</strong> used for these commands, they should be validated using the following options:<ul>
+<li>Positive or &#x201C;whitelist&#x201D; input validation - where are the arguments allowed explicitly defined</li>
+<li>White list Regular Expression - where is explicitly defined a whitelist of good characters allowed and the maximum length of the string. Ensure that metacharacters like <code>&amp; | ; $ &gt; &lt; \</code> \ !` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><code>^[a-z0-9]{3,10}$</code></p>
+<h3 id="example-code---java"><a name="example-code---java" class="plugin-anchor" href="#example-code---java"><i class="fa fa-link" aria-hidden="true"></i></a>Example code - Java</h3>
+<p><strong>Incorrect Usage</strong></p>
+<pre><code class="lang-java">ProcessBuilder b = <span class="hljs-keyword">new</span> ProcessBuilder(<span class="hljs-string">&quot;C:\DoStuff.exe -arg1 -arg2&quot;</span>);
+</code></pre>
+<p>In this example, the command together with the arguments are passed as a one string, making easy to manipulate that expression and inject malicious strings.</p>
+<p><strong>Correct Usage</strong></p>
+<p>Here is an example that starts a process with a modified working directory. The command and each of the arguments are passed separately. This make it easy to validated each term and reduces the risk to insert malicious strings.</p>
+<pre><code class="lang-java">ProcessBuilder pb = <span class="hljs-keyword">new</span> ProcessBuilder(<span class="hljs-string">&quot;TrustedCmd&quot;</span>, <span class="hljs-string">&quot;TrustedArg1&quot;</span>, <span class="hljs-string">&quot;TrustedArg2&quot;</span>);
+Map&lt;String, String&gt; env = pb.environment();
+pb.directory(<span class="hljs-keyword">new</span> File(<span class="hljs-string">&quot;TrustedDir&quot;</span>));
+Process p = pb.start();
+</code></pre>
+<h2 id="network-protocols"><a name="network-protocols" class="plugin-anchor" href="#network-protocols"><i class="fa fa-link" aria-hidden="true"></i></a>Network Protocols</h2>
+<p>Web applications often communicate with network daemons (like SMTP, IMAP, FTP) where user input becomes part of the communication stream. Here it is possible to inject command sequences to abuse an established session.</p>
+<h1 id="injection-prevention-rules"><a name="injection-prevention-rules" class="plugin-anchor" href="#injection-prevention-rules"><i class="fa fa-link" aria-hidden="true"></i></a>Injection Prevention Rules</h1>
+<h2 id="rule-1-perform-proper-input-validation"><a name="rule-1-perform-proper-input-validation" class="plugin-anchor" href="#rule-1-perform-proper-input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Rule #1 (Perform proper input validation):</h2>
+<p>Perform proper input validation. Positive or &#x201C;whitelist&#x201D; input validation with appropriate canonicalization is also recommended, but <strong>is not a complete defense</strong> as many applications require special characters in their input.</p>
+<h2 id="rule-2-use-a-safe-api"><a name="rule-2-use-a-safe-api" class="plugin-anchor" href="#rule-2-use-a-safe-api"><i class="fa fa-link" aria-hidden="true"></i></a>Rule #2 (Use a safe API):</h2>
+<p>The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface. Be careful of APIs, such as stored procedures, that are parameterized, but can still introduce injection under the hood.</p>
+<h2 id="rule-3-contextually-escape-user-data"><a name="rule-3-contextually-escape-user-data" class="plugin-anchor" href="#rule-3-contextually-escape-user-data"><i class="fa fa-link" aria-hidden="true"></i></a>Rule #3 (Contextually escape user data):</h2>
+<p>If a parameterized API is not available, you should carefully escape special characters using the specific escape syntax for that interpreter.</p>
+<h1 id="other-injection-cheatsheets"><a name="other-injection-cheatsheets" class="plugin-anchor" href="#other-injection-cheatsheets"><i class="fa fa-link" aria-hidden="true"></i></a>Other Injection Cheatsheets</h1>
+<p><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a></p>
+<p><a href="OS_Command_Injection_Defense_Cheat_Sheet.html">OS Command Injection Defense Cheat Sheet</a></p>
+<p><a href="LDAP_Injection_Prevention_Cheat_Sheet.html">LDAP Injection Prevention Cheat Sheet</a></p>
+<p><a href="Injection_Prevention_Cheat_Sheet_in_Java.html">Injection Prevention Cheat Sheet in Java</a></p>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Jim Manico - jim@owasp.org</p>
+<p>Alexander Meisel - alexander.meisel@owasp.org</p>
+<p>Erlend Oftedal - erlend.oftedal@owasp.org</p>
+<p>Sherif Mansour - sherif.mansour@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: HTTP Strict Transport Security ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html" class="navigation navigation-next " aria-label="Next page: Injection Prevention  in Java">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Injection Prevention ","level":"1.28","depth":1,"next":{"title":"Injection Prevention  in Java","level":"1.29","depth":1,"path":"cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md","ref":"cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md","articles":[]},"previous":{"title":"HTTP Strict Transport Security ","level":"1.27","depth":1,"path":"cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md","ref":"cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.521Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

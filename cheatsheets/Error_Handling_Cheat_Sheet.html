@@ -1,0 +1,1349 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Error Handling  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Forgot_Password_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="DotNet_Security_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.24" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Error Handling </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>Error handling is a part of the overwall security of an application. Except in movies, an attack always begin by a <strong>Reconnaissance</strong> phase in which the attacker will try to gather as many technical information (often <em>name</em> and <em>version</em> properties) as possible about the target like for example the application server, the technologies, the frameworks, the libraries...</p>
+<p>So, if errors are not well handled then it can highly facilitate the work for an attacker into this initial phase that is very important for the rest of the whole attack.</p>
+<p>The following <a href="http://blog.cipher.com/the-6-primary-phases-of-penetration-testing" target="_blank">link</a> provide an example of description of the differents phases of an attack.</p>
+<h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
+<p>Issues at error handling level can reveal many information about the target and can be also used to identify injection point into the target&apos;s features.</p>
+<p>Below is an example of disclosure of technologies stack, here Struts2 and Tomcat version, via an exception rendered to the user:</p>
+<pre><code class="lang-text">HTTP Status 500 - For input string: &quot;null&quot;
+
+type Exception report
+
+message For input string: &quot;null&quot;
+
+description The server encountered an internal error that prevented it from fulfilling this request.
+
+exception
+
+java.lang.NumberFormatException: For input string: &quot;null&quot;
+    java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+    java.lang.Integer.parseInt(Integer.java:492)
+    java.lang.Integer.parseInt(Integer.java:527)
+    sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+    sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    java.lang.reflect.Method.invoke(Method.java:606)
+    com.opensymphony.xwork2.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:450)
+    com.opensymphony.xwork2.DefaultActionInvocation.invokeActionOnly(DefaultActionInvocation.java:289)
+    com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:252)
+    org.apache.struts2.interceptor.debugging.DebuggingInterceptor.intercept(DebuggingInterceptor.java:256)
+    com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:246)
+    ...
+
+note: The full stack trace of the root cause is available in the Apache Tomcat/7.0.56 logs.
+</code></pre>
+<p>Below is an example of disclosure of SQL query error, along the site installation path, that is useful to identify injection point:</p>
+<pre><code class="lang-text">Warning: odbc_fetch_array() expects parameter 1 to be resource, boolean given 
+in D:\app\index_new.php on line 188
+</code></pre>
+<p>The <a href="https://www.owasp.org/index.php/Testing_Information_Gathering" target="_blank">OWASP Testing Guide</a> provide differents technics to obtains technical informations from an application.</p>
+<h1 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h1>
+<p>The article show how to configure a global error handler at configuration level when possible otherwise at code level, in differents technologies, in order to ensure that if an unexpected error occur then a generic response is returned by the application but the error is traced on server side for investigation.</p>
+<p>The following schema show the target approach:</p>
+<p><img src="../assets/Error_Handling_Cheat_Sheet_Overview.png" alt="Overview"></p>
+<p>As most of the recent application topology are <em>API based</em>, we assume in this article that the backend expose only a REST API and do not contains any user interface content.</p>
+<p>About the error logging operation itself, the <a href="Logging_Cheat_Sheet.html">logging cheat sheet</a> should be used, this article will focus on the error handling part.</p>
+<h1 id="proposition"><a name="proposition" class="plugin-anchor" href="#proposition"><i class="fa fa-link" aria-hidden="true"></i></a>Proposition</h1>
+<p>For each technology, a setup will be proposed with configuration and code snippet.</p>
+<h2 id="java-classic-web-application"><a name="java-classic-web-application" class="plugin-anchor" href="#java-classic-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>Java classic web application</h2>
+<p>For this kind of application, a global error handler can be configured at <strong>web.xml</strong> deployment descriptor level.</p>
+<p>We propose here a configuration that can be used from Servlet specification <em>version 2.5</em> and above.</p>
+<p>With this configuration, any unexpected error will cause a redirection to the page <strong>error.jsp</strong> in which the error will be traced and a generic response will be returned.</p>
+<p>Configuration of the redirection into the <strong>web.xml</strong> file:</p>
+<pre><code class="lang-xml"><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span><span class="hljs-meta">?&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">web-app</span> <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="hljs-attr">ns</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee&quot;</span> 
+<span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;</span> 
+<span class="hljs-attr">version</span>=<span class="hljs-string">&quot;3.0&quot;</span>&gt;</span>
+...
+    <span class="hljs-tag">&lt;<span class="hljs-name">error-page</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">exception-type</span>&gt;</span>java.lang.Exception<span class="hljs-tag">&lt;/<span class="hljs-name">exception-type</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">location</span>&gt;</span>/error.jsp<span class="hljs-tag">&lt;/<span class="hljs-name">location</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">error-page</span>&gt;</span>
+...
+<span class="hljs-tag">&lt;/<span class="hljs-name">web-app</span>&gt;</span>
+</code></pre>
+<p>Content of the <strong>error.jsp</strong> file:</p>
+<pre><code class="lang-java">&lt;%@ page language=<span class="hljs-string">&quot;java&quot;</span> isErrorPage=<span class="hljs-string">&quot;true&quot;</span> contentType=<span class="hljs-string">&quot;application/json; charset=UTF-8&quot;</span> 
+    pageEncoding=<span class="hljs-string">&quot;UTF-8&quot;</span>%&gt;
+&lt;%
+String errorMessage = exception.getMessage();
+<span class="hljs-comment">//Log the exception via the content of the implicit variable named &quot;exception&quot;</span>
+<span class="hljs-comment">//...</span>
+<span class="hljs-comment">//We build a generic response with a JSON format because we are in a REST API app context</span>
+<span class="hljs-comment">//We also add an HTTP response header to indicate to the client app that the response is an error</span>
+response.setHeader(<span class="hljs-string">&quot;X-ERROR&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);
+response.setStatus(<span class="hljs-number">200</span>);
+%&gt;
+{<span class="hljs-string">&quot;message&quot;</span>:<span class="hljs-string">&quot;An error occur, please retry&quot;</span>}
+</code></pre>
+<h2 id="java-springmvcspringboot-web-application"><a name="java-springmvcspringboot-web-application" class="plugin-anchor" href="#java-springmvcspringboot-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>Java SpringMVC/SpringBoot web application</h2>
+<p>With <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html" target="_blank">SpringMVC</a> or <a href="http://spring.io/projects/spring-boot" target="_blank">SpringBoot</a>, you can define a global error handler by simply implementing this kind of class into your project.</p>
+<p>We indicate to the handler, via the annotation <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html" target="_blank">@ExceptionHandler</a>, to act when any exception extending the class <em>java.lang.Exception</em> is throwed by the application.</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> net.minidev.json.JSONObject;
+<span class="hljs-keyword">import</span> org.springframework.http.HttpHeaders;
+<span class="hljs-keyword">import</span> org.springframework.http.HttpStatus;
+<span class="hljs-keyword">import</span> org.springframework.http.MediaType;
+<span class="hljs-keyword">import</span> org.springframework.http.ResponseEntity;
+<span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.ControllerAdvice;
+<span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.ExceptionHandler;
+<span class="hljs-keyword">import</span> org.springframework.web.context.request.WebRequest;
+
+<span class="hljs-comment">/**
+ * Global error handler in charge of returning a generic response in case of unexpected error situation.
+ */</span>
+<span class="hljs-meta">@ControllerAdvice</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RestResponseEntityExceptionHandler</span> </span>{
+
+    <span class="hljs-meta">@ExceptionHandler</span>(value = {Exception.class})
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ResponseEntity&lt;Object&gt; <span class="hljs-title">handleGlobalError</span><span class="hljs-params">(RuntimeException exception, WebRequest request)</span> </span>{
+        <span class="hljs-comment">//Log the exception via the content of the parameter named &quot;exception&quot;</span>
+        <span class="hljs-comment">//...</span>
+        <span class="hljs-comment">//We build a generic response with a JSON format because we are in a REST API app context</span>
+        <span class="hljs-comment">//We also add an HTTP response header to indicate to the client app that the response is an error</span>
+        HttpHeaders responseHeaders = <span class="hljs-keyword">new</span> HttpHeaders();
+        responseHeaders.setContentType(MediaType.APPLICATION_JSON);
+        responseHeaders.set(<span class="hljs-string">&quot;X-ERROR&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);
+        JSONObject responseBody = <span class="hljs-keyword">new</span> JSONObject();
+        responseBody.put(<span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-string">&quot;An error occur, please retry&quot;</span>);
+        ResponseEntity&lt;JSONObject&gt; response = <span class="hljs-keyword">new</span> ResponseEntity&lt;&gt;(responseBody, responseHeaders, 
+                                                                   HttpStatus.OK);
+        <span class="hljs-keyword">return</span> (ResponseEntity) response;
+    }
+}
+</code></pre>
+<p>References:</p>
+<ul>
+<li><a href="http://www.baeldung.com/exception-handling-for-rest-with-spring" target="_blank">Exception handling with Spring</a></li>
+<li><a href="https://www.toptal.com/java/spring-boot-rest-api-error-handling" target="_blank">Exception handling with SpringBoot</a></li>
+</ul>
+<h2 id="asp-net-core-web-application"><a name="asp-net-core-web-application" class="plugin-anchor" href="#asp-net-core-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>ASP NET Core web application</h2>
+<p>With <a href="https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.2" target="_blank">ASP.NET Core</a>, you can define a global error handler by indicating that the exception handler is a dedicated API Controller.</p>
+<p>Content of the API Controller dedicated to the error handling:</p>
+<pre><code class="lang-csharp"><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Authorization;
+<span class="hljs-keyword">using</span> Microsoft.AspNetCore.Diagnostics;
+<span class="hljs-keyword">using</span> Microsoft.AspNetCore.Mvc;
+<span class="hljs-keyword">using</span> System;
+<span class="hljs-keyword">using</span> System.Collections.Generic;
+<span class="hljs-keyword">using</span> System.Net;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyProject.Controllers</span>
+{
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> API Controller used to intercept and handle all unexpected exception</span>
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+    [Route(<span class="hljs-string">&quot;api/[controller]&quot;</span>)]
+    [ApiController]
+    [AllowAnonymous]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ErrorController</span> : <span class="hljs-title">ControllerBase</span>
+    {
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Action that will be invoked for any call to this Controller in order to handle the current error</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;returns&gt;</span>A generic error formatted as JSON because we are in a REST API app context<span class="hljs-doctag">&lt;/returns&gt;</span></span>
+        [HttpGet]
+        [HttpPost]
+        [HttpHead]
+        [HttpDelete]
+        [HttpPut]
+        [HttpOptions]
+        [HttpPatch]
+        <span class="hljs-function"><span class="hljs-keyword">public</span> JsonResult <span class="hljs-title">Handle</span>(<span class="hljs-params"></span>)
+        </span>{
+            <span class="hljs-comment">//Get the exception that has implied the call to this controller</span>
+            Exception exception = HttpContext.Features.Get&lt;IExceptionHandlerFeature&gt;()?.Error;
+            <span class="hljs-comment">//Log the exception via the content of the variable named &quot;exception&quot; if it is not NULL</span>
+            <span class="hljs-comment">//...</span>
+            <span class="hljs-comment">//We build a generic response with a JSON format because we are in a REST API app context</span>
+            <span class="hljs-comment">//We also add an HTTP response header to indicate to the client app that the response </span>
+            <span class="hljs-comment">//is an error</span>
+            <span class="hljs-keyword">var</span> responseBody = <span class="hljs-keyword">new</span> Dictionary&lt;String, String&gt;{ {
+                <span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-string">&quot;An error occur, please retry&quot;</span>
+            } };
+            JsonResult response = <span class="hljs-keyword">new</span> JsonResult(responseBody);
+            response.StatusCode = (<span class="hljs-keyword">int</span>)HttpStatusCode.OK;
+            Request.HttpContext.Response.Headers.Remove(<span class="hljs-string">&quot;X-ERROR&quot;</span>);
+            Request.HttpContext.Response.Headers.Add(<span class="hljs-string">&quot;X-ERROR&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);
+            <span class="hljs-keyword">return</span> response;
+        }
+    }
+}
+</code></pre>
+<p>Definition in the application <strong>Startup.cs</strong> file of the mapping of the exception handler to the dedicated error handling API controller:</p>
+<pre><code class="lang-csharp"><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Builder;
+<span class="hljs-keyword">using</span> Microsoft.AspNetCore.Hosting;
+<span class="hljs-keyword">using</span> Microsoft.AspNetCore.Mvc;
+<span class="hljs-keyword">using</span> Microsoft.Extensions.Configuration;
+<span class="hljs-keyword">using</span> Microsoft.Extensions.DependencyInjection;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyProject</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span>
+    {
+...
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IHostingEnvironment env</span>)
+        </span>{
+            <span class="hljs-comment">//First we configure the error handler middleware!</span>
+            <span class="hljs-comment">//We enable the global error handler in others environments than DEV </span>
+            <span class="hljs-comment">//because debug page are useful during implementation</span>
+            <span class="hljs-keyword">if</span> (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            <span class="hljs-keyword">else</span>
+            {
+                <span class="hljs-comment">//Our global handler is defined on &quot;/api/error&quot; URL so we indicate to the </span>
+                <span class="hljs-comment">//exception handler to call this API controller</span>
+                <span class="hljs-comment">//on any unexpected exception raised by the application</span>
+                app.UseExceptionHandler(<span class="hljs-string">&quot;/api/error&quot;</span>);
+            }
+
+            <span class="hljs-comment">//We configure others middlewares, remember that the declaration order is important...</span>
+            app.UseMvc();
+            <span class="hljs-comment">//...</span>
+        }
+    }
+}
+</code></pre>
+<p>References:</p>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-2.1" target="_blank">Exception handling with ASP.Net Core</a></li>
+</ul>
+<h2 id="asp-net-web-api-web-application"><a name="asp-net-web-api-web-application" class="plugin-anchor" href="#asp-net-web-api-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>ASP NET Web API web application</h2>
+<p>With <a href="https://www.asp.net/web-api" target="_blank">ASP.NET Web API</a> (from the standard .NET framework and not from the .NET Core framework), you can define and register handlers in order to trace and handle any error that occurs in the application.</p>
+<p>Definition of the handler for the tracing of the error details:</p>
+<pre><code class="lang-csharp"><span class="hljs-keyword">using</span> System;
+<span class="hljs-keyword">using</span> System.Web.Http.ExceptionHandling;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyProject.Security</span>
+{
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Global logger used to trace any error that occurs at application wide level</span>
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">GlobalErrorLogger</span> : <span class="hljs-title">ExceptionLogger</span>
+    {
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Method in charge of the management of the error from a tracing point of view</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;param name=&quot;context&quot;&gt;</span>Context containing the error details<span class="hljs-doctag">&lt;/param&gt;</span></span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Log</span>(<span class="hljs-params">ExceptionLoggerContext context</span>)
+        </span>{
+            <span class="hljs-comment">//Get the exception</span>
+            Exception exception = context.Exception;
+            <span class="hljs-comment">//Log the exception via the content of the variable named &quot;exception&quot; if it is not NULL</span>
+            <span class="hljs-comment">//...</span>
+        }
+    }
+}
+</code></pre>
+<p>Definition of the handler for the management of the error in order to return a generic response:</p>
+<pre><code class="lang-csharp"><span class="hljs-keyword">using</span> Newtonsoft.Json;
+<span class="hljs-keyword">using</span> System;
+<span class="hljs-keyword">using</span> System.Collections.Generic;
+<span class="hljs-keyword">using</span> System.Net;
+<span class="hljs-keyword">using</span> System.Net.Http;
+<span class="hljs-keyword">using</span> System.Text;
+<span class="hljs-keyword">using</span> System.Threading;
+<span class="hljs-keyword">using</span> System.Threading.Tasks;
+<span class="hljs-keyword">using</span> System.Web.Http;
+<span class="hljs-keyword">using</span> System.Web.Http.ExceptionHandling;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyProject.Security</span>
+{
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Global handler used to handle any error that occurs at application wide level</span>
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">GlobalErrorHandler</span> : <span class="hljs-title">ExceptionHandler</span>
+    {
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Method in charge of handle the generic response send in case of error</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;param name=&quot;context&quot;&gt;</span>Error context<span class="hljs-doctag">&lt;/param&gt;</span></span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Handle</span>(<span class="hljs-params">ExceptionHandlerContext context</span>)
+        </span>{
+            context.Result = <span class="hljs-keyword">new</span> GenericResult();
+        }
+
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Class used to represent the generic response send</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">class</span> <span class="hljs-title">GenericResult</span> : <span class="hljs-title">IHttpActionResult</span>
+        {
+            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+            <span class="hljs-comment"><span class="hljs-doctag">///</span> Method in charge of creating the generic response</span>
+            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;param name=&quot;cancellationToken&quot;&gt;</span>Object to cancel the task<span class="hljs-doctag">&lt;/param&gt;</span></span>
+            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;returns&gt;</span>A task in charge of sending the generic response<span class="hljs-doctag">&lt;/returns&gt;</span></span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Task&lt;HttpResponseMessage&gt; <span class="hljs-title">ExecuteAsync</span>(<span class="hljs-params">CancellationToken cancellationToken</span>)
+            </span>{
+                <span class="hljs-comment">//We build a generic response with a JSON format because we are in a REST API app context</span>
+                <span class="hljs-comment">//We also add an HTTP response header to indicate to the client app that the response </span>
+                <span class="hljs-comment">//is an error</span>
+                <span class="hljs-keyword">var</span> responseBody = <span class="hljs-keyword">new</span> Dictionary&lt;String, String&gt;{ {
+                    <span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-string">&quot;An error occur, please retry&quot;</span>
+                } };
+                HttpResponseMessage response = <span class="hljs-keyword">new</span> HttpResponseMessage(HttpStatusCode.OK);
+                response.Headers.Add(<span class="hljs-string">&quot;X-ERROR&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);
+                response.Content = <span class="hljs-keyword">new</span> StringContent(JsonConvert.SerializeObject(responseBody), 
+                                                     Encoding.UTF8, <span class="hljs-string">&quot;application/json&quot;</span>);
+                <span class="hljs-keyword">return</span> Task.FromResult(response);
+            }
+        }
+    }
+}
+</code></pre>
+<p>Registration of the both handlers in the application <strong>WebApiConfig.cs</strong> file:</p>
+<pre><code class="lang-csharp"><span class="hljs-keyword">using</span> MyProject.Security;
+<span class="hljs-keyword">using</span> System.Web.Http;
+<span class="hljs-keyword">using</span> System.Web.Http.ExceptionHandling;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyProject</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WebApiConfig</span>
+    {
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Register</span>(<span class="hljs-params">HttpConfiguration config</span>)
+        </span>{
+            <span class="hljs-comment">//Register global error logging and handling handlers in first</span>
+            config.Services.Replace(<span class="hljs-keyword">typeof</span>(IExceptionLogger), <span class="hljs-keyword">new</span> GlobalErrorLogger());
+            config.Services.Replace(<span class="hljs-keyword">typeof</span>(IExceptionHandler), <span class="hljs-keyword">new</span> GlobalErrorHandler());
+            <span class="hljs-comment">//Rest of the configuration</span>
+            <span class="hljs-comment">//...</span>
+        }
+    }
+}
+</code></pre>
+<p>References:</p>
+<ul>
+<li><a href="https://exceptionnotfound.net/the-asp-net-web-api-exception-handling-pipeline-a-guided-tour/" target="_blank">Exception handling with ASP.Net Web API</a></li>
+</ul>
+<h1 id="sources-of-the-prototype"><a name="sources-of-the-prototype" class="plugin-anchor" href="#sources-of-the-prototype"><i class="fa fa-link" aria-hidden="true"></i></a>Sources of the prototype</h1>
+<p>The source code of all the sandbox projects created to find the right setup to use is stored into this <a href="https://github.com/righettod/poc-error-handling" target="_blank">GitHub repository</a>.</p>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Dominique Righetto - dominique.righetto@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="DotNet_Security_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: DotNet Security ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Forgot_Password_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Forgot Password ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Error Handling ","level":"1.24","depth":1,"next":{"title":"Forgot Password ","level":"1.25","depth":1,"path":"cheatsheets/Forgot_Password_Cheat_Sheet.md","ref":"cheatsheets/Forgot_Password_Cheat_Sheet.md","articles":[]},"previous":{"title":"DotNet Security ","level":"1.23","depth":1,"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","ref":"cheatsheets/DotNet_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","mtime":"2019-03-08T09:06:17.476Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-08T09:06:38.941Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
