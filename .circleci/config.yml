@@ -21,9 +21,9 @@ jobs:
     - run: 'cd generated;zip -r ../site.zip site'
     - run: 'zip -T site.zip'
     - persist_to_workspace:    
-        root: generated/site
+        root: generated
         path: 
-          - index.html
+          - site
     - store_artifacts:
         path: ./site.zip
         destination: OfflineWebsite-NightBuild.zip
