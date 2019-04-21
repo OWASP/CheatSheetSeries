@@ -47,6 +47,8 @@ jobs:
     - run: 'rm -rf site'
     - run: 'rm OfflineWebsite-NightBuild.zip'
     - run: 'ls -l'
+    - run: 'git config --global user.email "OWASP-CheatSheetSeries@circleci.com"'
+    - run: 'git config --global user.name "CircleCI-CheatSheetSeries"'
     - run: 'git add --all .'
     - run: 'git commit -a -m "Deploy the generated website via CircleCI pipeline."'
     - run: 'git push'
