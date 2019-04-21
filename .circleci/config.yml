@@ -51,12 +51,15 @@ jobs:
     - run: 'mv site/* .'
     - run: 'upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md'
     - run: 'rm -rf site'
-    - run: 'rm OfflineWebsite-Build.zip'
+    - run: 'echo "OfflineWebsite-Build.zip" > .gitignore'
     - run: 'git config --global user.email "OWASP-CheatSheetSeries@circleci.com"'
     - run: 'git config --global user.name "CircleCI-CheatSheetSeries"'
     - run: 'git add --all .'
     - run: 'git commit -a -m "Deploy the generated website via CircleCI pipeline."'
     - run: 'git push'
+    - store_artifacts:
+        path: ./OfflineWebsite-Build.zip    
+        destination: OfflineWebsite-Build.zip      
 workflows:
   version: 2
   build-publish-deploy:
