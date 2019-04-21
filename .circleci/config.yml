@@ -23,7 +23,7 @@ jobs:
     - persist_to_workspace:    
         root: generated
         path: 
-          - site
+          - site/*
     - store_artifacts:
         path: ./site.zip
         destination: OfflineWebsite-NightBuild.zip
@@ -37,7 +37,6 @@ jobs:
     - checkout
     - run: 'git checkout gh-pages'
     - run: 'git branch'
-    - run: 'ls -l'
     - attach_workspace:
         at: generated      
     - run: 'ls -l'    
@@ -53,6 +52,7 @@ jobs:
     - run: 'cp -vr generated/site/gitbook .'
     - run: 'cp -v generated/site/index.html .'
     - run: 'cp -v generated/site/search_index.json .'
+    - run: 'echo "generated/" > .gitignore'
     - run: 'ls -l'
 workflows:
   version: 2
