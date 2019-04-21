@@ -31,21 +31,19 @@ jobs:
       TERM: dumb
     steps:
     - checkout
-    - run: 'sudo apt-get install -y curl wget zip unzip jq'
+    - run: 'sudo apt-get install -y curl jq unzip wget zip'
     - run: 'git checkout gh-pages'
     - run: 'git branch'
     - run: 'tgt=`curl -s https://circleci.com/api/v1.1/project/github/OWASP/CheatSheetSeries/latest/artifacts | jq -r .[0].url` ; wget $tgt'
     - run: 'zip -T OfflineWebsite-NightBuild.zip'
     - run: 'unzip OfflineWebsite-NightBuild.zip'    
-    - run: 'ls -l'  
     - run: 'rm -rf assets 1>/dev/null 2>&1'
     - run: 'rm -rf cheatsheets 1>/dev/null 2>&1'
     - run: 'rm -rf gitbook 1>/dev/null 2>&1'
     - run: 'rm index.html 1>/dev/null 2>&1'
     - run: 'rm search_index.json 1>/dev/null 2>&1'
-    - run: 'ls -l'    
     - run: 'mv site/* .'
-    - run: 'ls -l site'  
+    - run: 'upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd ." > README.md; cat README.md'
     - run: 'rm -rf site'
     - run: 'rm OfflineWebsite-NightBuild.zip'
     - run: 'ls -l'
