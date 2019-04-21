@@ -23,7 +23,7 @@ jobs:
     - persist_to_workspace:    
         root: generated
         path: 
-          - site
+          - site/
     - store_artifacts:
         path: ./site.zip
         destination: OfflineWebsite-NightBuild.zip
@@ -35,21 +35,23 @@ jobs:
       TERM: dumb
     steps:
     - checkout
-    - attach_workspace:
-        at: /tmp/workspace    
-    - run: 'ls -l /tmp/workspace'
     - run: 'git checkout gh-pages'
+    - run: 'git branch'
+    - run: 'ls -l'
+    - attach_workspace:
+        at: generated      
+    - run: 'ls -l'    
     - run: 'rm -rf assets 1>/dev/null 2>&1'
     - run: 'rm -rf cheatsheets 1>/dev/null 2>&1'
     - run: 'rm -rf gitbook 1>/dev/null 2>&1'
     - run: 'rm index.html 1>/dev/null 2>&1'
     - run: 'rm search_index.json 1>/dev/null 2>&1'
-    - run: 'cp -vr /tmp/workspace/site/assets .'
-    - run: 'cp -vr /tmp/workspace/site/cheatsheets .'
-    - run: 'cp -vr /tmp/workspace/site/gitbook .'
-    - run: 'cp -v /tmp/workspace/site/index.html .'
-    - run: 'cp -v /tmp/workspace/site/search_index.json .'
-    - run: 'ls -l .'
+    - run: 'cp -vr generated/site/assets .'
+    - run: 'cp -vr generated/site/cheatsheets .'
+    - run: 'cp -vr generated/site/gitbook .'
+    - run: 'cp -v generated/site/index.html .'
+    - run: 'cp -v generated/site/search_index.json .'
+    - run: 'ls -l'
 workflows:
   version: 2
   scheduled-night-deploy:
