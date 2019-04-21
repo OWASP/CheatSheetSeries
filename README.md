@@ -139,18 +139,7 @@ However, to propose the possibility the consult, in a full offline mode, the col
 
 ## Automated build
 
-This [link](https://circleci.com/api/v1.1/project/github/OWASP/CheatSheetSeries/latest/artifacts) provide the **url** where to download a build of the offline website:
-
-```json
-[ {
-  "path" : "OfflineWebsite-Build.zip",
-  "pretty_path" : "OfflineWebsite-Build.zip",
-  "node_index" : 0,
-  "url" : "https://14-162723104-gh.circle-artifacts.com/0/OfflineWebsite-Build.zip"
-} ]
-```
-
-The attribute **url** must be used to download the ZIP archive.
+This [link](https://owasp.github.io/CheatSheetSeries/bundle.zip) allow you to download a build (zip archive) of the offline website.
 
 ## Manual build
 

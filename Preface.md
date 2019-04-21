@@ -4,6 +4,8 @@ The **OWASP Cheat Sheet Series** was created to provide a concise collection of 
 
 We hope that this project provides you with excellent security guidance in an easy to read format.
 
+You can download this site [here](bundle.zip).
+
 Project leaders:
 - [Dominique Righetto](https://www.owasp.org/index.php/User:Dominique_RIGHETTO).
 - [Jim Manico](https://www.owasp.org/index.php/User:Jmanico).
