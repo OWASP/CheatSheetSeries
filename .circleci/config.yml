@@ -41,11 +41,13 @@ jobs:
     - attach_workspace:
         at: generated      
     - run: 'ls -l'    
+    - run: 'ls -rtl generated'  
     - run: 'rm -rf assets 1>/dev/null 2>&1'
     - run: 'rm -rf cheatsheets 1>/dev/null 2>&1'
     - run: 'rm -rf gitbook 1>/dev/null 2>&1'
     - run: 'rm index.html 1>/dev/null 2>&1'
     - run: 'rm search_index.json 1>/dev/null 2>&1'
+    - run: 'ls -l'    
     - run: 'cp -vr generated/site/assets .'
     - run: 'cp -vr generated/site/cheatsheets .'
     - run: 'cp -vr generated/site/gitbook .'
