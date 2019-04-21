@@ -20,10 +20,6 @@ jobs:
     - run: 'ls -l generated/site/'
     - run: 'cd generated;zip -r ../site.zip site'
     - run: 'zip -T site.zip'
-    - persist_to_workspace:    
-        root: generated
-        path: 
-          - site
     - store_artifacts:
         path: ./site.zip
         destination: OfflineWebsite-NightBuild.zip
@@ -35,23 +31,23 @@ jobs:
       TERM: dumb
     steps:
     - checkout
+    - run: 'sudo apt-get install -y curl wget zip unzip jq'
     - run: 'git checkout gh-pages'
     - run: 'git branch'
-    - attach_workspace:
-        at: /tmp/workspace      
-    - run: 'ls -l'    
-    - run: 'ls -rtl /tmp/workspace'  
+    - run: 'tgt=`curl -s https://circleci.com/api/v1.1/project/github/OWASP/CheatSheetSeries/latest/artifacts | jq -r .[0].url` ; wget $tgt'
+    - run: 'zip -T OfflineWebsite-NightBuild.zip'
+    - run: 'unzip OfflineWebsite-NightBuild.zip'    
+    - run: 'ls -l'  
     - run: 'rm -rf assets 1>/dev/null 2>&1'
     - run: 'rm -rf cheatsheets 1>/dev/null 2>&1'
     - run: 'rm -rf gitbook 1>/dev/null 2>&1'
     - run: 'rm index.html 1>/dev/null 2>&1'
     - run: 'rm search_index.json 1>/dev/null 2>&1'
     - run: 'ls -l'    
-    - run: 'cp -vr /tmp/workspace/site/assets .'
-    - run: 'cp -vr /tmp/workspace/site/cheatsheets .'
-    - run: 'cp -vr /tmp/workspace/site/gitbook .'
-    - run: 'cp -v /tmp/workspace/site/index.html .'
-    - run: 'cp -v /tmp/workspace/site/search_index.json .'
+    - run: 'mv site/* .'
+    - run: 'ls -l site'  
+    - run: 'rm -rf site'
+    - run: 'rm OfflineWebsite-NightBuild.zip'
     - run: 'ls -l'
 workflows:
   version: 2
