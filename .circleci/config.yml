@@ -21,7 +21,7 @@ jobs:
     - run: 'cd generated;zip -r ../site.zip site'
     - run: 'zip -T site.zip'
     - persist_to_workspace:    
-        root: ~/repo/generated
+        root: generated
         path: 
           - site
     - store_artifacts:
