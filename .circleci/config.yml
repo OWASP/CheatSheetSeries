@@ -20,11 +20,50 @@ jobs:
     - run: 'ls -l generated/site/'
     - run: 'cd generated;zip -r ../site.zip site'
     - run: 'zip -T site.zip'
+    - persist_to_workspace:    
+        root: ~/repo/generated
+        path: 
+          - site
     - store_artifacts:
         path: ./site.zip
         destination: OfflineWebsite-NightBuild.zip
+  deploy-offline-website:
+    docker:
+      - image: 'circleci/node:10-stretch'
+    working_directory: ~/repo
+    environment:
+      TERM: dumb
+    steps:
+    - checkout
+    - attach_workspace:
+        at: /tmp/workspace    
+    - run: 'ls -l /tmp/workspace'
+    - run: 'git checkout gh-pages'
+    - run: 'rm -rf assets 1>/dev/null 2>&1'
+    - run: 'rm -rf cheatsheets 1>/dev/null 2>&1'
+    - run: 'rm -rf gitbook 1>/dev/null 2>&1'
+    - run: 'rm index.html 1>/dev/null 2>&1'
+    - run: 'rm search_index.json 1>/dev/null 2>&1'
+    - run: 'cp -vr /tmp/workspace/site/assets .'
+    - run: 'cp -vr /tmp/workspace/site/cheatsheets .'
+    - run: 'cp -vr /tmp/workspace/site/gitbook .'
+    - run: 'cp -v /tmp/workspace/site/index.html .'
+    - run: 'cp -v /tmp/workspace/site/search_index.json .'
+    - run: 'ls -l .'
 workflows:
   version: 2
+  scheduled-night-deploy:
+    jobs:
+      - build-offline-website:
+          filters:
+            branches:
+              only:
+                - master      
+      - deploy-offline-website:
+          filters:
+            branches:
+              only:
+                - master      
   scheduled-night-build:
     triggers:
       - schedule:
