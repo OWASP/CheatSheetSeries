@@ -46,6 +46,9 @@ jobs:
     - run: 'upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md'
     - run: 'rm -rf site'
     - run: 'rm OfflineWebsite-NightBuild.zip'
+    - run: 'ls -rtl assets'
+    - run: 'ls -rtl cheatsheets'
+    - run: 'ls -rtl gitbook'
     - run: 'ls -rtl'
     - run: 'git config --global user.email "OWASP-CheatSheetSeries@circleci.com"'
     - run: 'git config --global user.name "CircleCI-CheatSheetSeries"'
@@ -54,7 +57,7 @@ jobs:
     - run: 'git push'
 workflows:
   version: 2
-  scheduled-night-deploy:
+  build-release-deploy:
     jobs:
       - build-offline-website:
           filters:
