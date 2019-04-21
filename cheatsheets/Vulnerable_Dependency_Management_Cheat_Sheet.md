@@ -232,7 +232,7 @@ It's important to ensure, during the selection process of a vulnerable dependenc
     * To manage the vulnerable dependencies in a transversal way in an organization the [OWASP Dependency Track](https://dependencytrack.org/) project can be used.
 * Commercial
     * [Snyk](https://snyk.io/) (open source and free option available):
-        * [Full support](https://snyk.io/docs/full-list/) for many languages and package manager. 
+        * [Full support](https://snyk.io/docs/) for many languages and package manager. 
     * [JFrog XRay](https://jfrog.com/xray/):
         * [Full support](https://jfrog.com/integration/) for many languages and package manager. 
     * [Renovate](https://renovatebot.com) (allow to detect old dependencies):
