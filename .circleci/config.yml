@@ -7,6 +7,9 @@ jobs:
     environment:
       TERM: dumb
     steps:
+    - add_ssh_keys:
+        fingerprints:
+          - "b3:87:ac:df:0d:3a:8f:fd:e1:0a:ab:e4:27:c0:83:87"        
     - checkout
     - run: 'sudo apt-get install -y python3.5'
     - run: 'sudo npm install -g markdownlint-cli'
@@ -30,6 +33,9 @@ jobs:
     environment:
       TERM: dumb
     steps:
+    - add_ssh_keys:
+        fingerprints:
+          - "95:d7:48:7d:1f:8c:4c:5d:59:fe:7e:4f:b7:9a:a5:b2"    
     - checkout
     - run: 'sudo apt-get install -y curl jq unzip wget zip'
     - run: 'git checkout gh-pages'
@@ -57,7 +63,7 @@ jobs:
     - run: 'git push'
 workflows:
   version: 2
-  build-release-deploy:
+  build-publish-artefact-deploy:
     jobs:
       - build-offline-website:
           filters:
