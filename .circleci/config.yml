@@ -46,7 +46,7 @@ jobs:
     - run: 'upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md'
     - run: 'rm -rf site'
     - run: 'rm OfflineWebsite-NightBuild.zip'
-    - run: 'ls -l'
+    - run: 'ls -rtl'
     - run: 'git config --global user.email "OWASP-CheatSheetSeries@circleci.com"'
     - run: 'git config --global user.name "CircleCI-CheatSheetSeries"'
     - run: 'git add --all .'
