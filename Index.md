@@ -1,4 +1,4 @@
-**60** cheat sheets available.
+**61** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -157,6 +157,8 @@
 [Virtual Patching Cheat Sheet](cheatsheets/Virtual_Patching_Cheat_Sheet.md). ![Html](assets/Index_Html.png) 
 
 [Vulnerability Disclosure Cheat Sheet](cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md).
+
+[Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
 
 # W
 

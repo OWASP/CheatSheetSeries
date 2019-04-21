@@ -41,6 +41,8 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://www.ow
 
 [Ruby on Rails Cheatsheet (XSS)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#cross-site-scripting-xss)
 
+[Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md)
+
 # 3. Secure Database Access
 
 [DotNet Security Cheat Sheet (Data Access)](cheatsheets/DotNet_Security_Cheat_Sheet.md#data-access)

@@ -492,6 +492,8 @@ None.
 
 [Docker Security Cheat Sheet](cheatsheets/Docker_Security_Cheat_Sheet.md).
 
+[Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md).
+
 ## V14.3 Unintended Security Disclosure Requirements
 
 [Error Handling Cheat Sheet](cheatsheets/Error_Handling_Cheat_Sheet.md).
