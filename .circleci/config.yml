@@ -1,9 +1,12 @@
-version: 2
-jobs:
-  build-offline-website:
+version: 2.1
+executors:
+  my-executor:
     docker:
       - image: 'circleci/node:10-stretch'
     working_directory: ~/repo
+jobs:
+  build-offline-website:
+    executor: my-executor
     environment:
       TERM: dumb
     steps:
@@ -21,15 +24,14 @@ jobs:
     - run: 'cd scripts;bash Apply_Linter_Check.sh'
     - run: 'cd scripts;bash Generate_Site.sh'
     - run: 'ls -l generated/site/'
-    - run: 'cd generated;zip -r ../site.zip site'
-    - run: 'zip -T site.zip'
-    - store_artifacts:
-        path: ./site.zip
-        destination: bundle.zip
+    - run: 'cd generated;zip -r ../bundle.zip site'
+    - run: 'zip -T bundle.zip'
+    - persist_to_workspace:
+      root: ~/repo
+      paths:
+        - bundle.zip
   deploy-offline-website:
-    docker:
-      - image: 'circleci/node:10-stretch'
-    working_directory: ~/repo
+    executor: my-executor
     environment:
       TERM: dumb
     steps:
@@ -37,10 +39,12 @@ jobs:
         fingerprints:
           - "95:d7:48:7d:1f:8c:4c:5d:59:fe:7e:4f:b7:9a:a5:b2"    
     - checkout
-    - run: 'sudo apt-get install -y curl jq unzip wget zip'
+    - attach_workspace:
+      at: /tmp/workspace
+    - run: 'sudo apt-get install -y unzip zip'
     - run: 'git checkout gh-pages'
     - run: 'git branch'
-    - run: 'tgt=`curl -s https://circleci.com/api/v1.1/project/github/OWASP/CheatSheetSeries/latest/artifacts | jq -r .[0].url` ; wget $tgt'
+    - run: 'cp /tmp/workspace/bundle.zip .'
     - run: 'zip -T bundle.zip'
     - run: 'unzip bundle.zip'    
     - run: 'rm -rf assets 1>/dev/null 2>&1'
