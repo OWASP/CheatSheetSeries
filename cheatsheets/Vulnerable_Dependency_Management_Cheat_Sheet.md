@@ -2,7 +2,7 @@
 
 The objective of the cheat sheet is to provide a proposal of approach regarding the handling of vulnerable third-party dependencies when they are detected, and this, depending on different situation.
 
-The cheat sheet is not tools oriented but it contains a [tools](#Tools) section informing the read about free and commercial solutions that can be used to detect vulnerable dependencies, depending on the level of support on the technologies at hand
+The cheat sheet is not tools oriented but it contains a [tools](#Tools) section informing the reader about free and commercial solutions that can be used to detect vulnerable dependencies, depending on the level of support on the technologies at hand
 
 **Note:** 
 
@@ -106,7 +106,7 @@ If a workaround is provided, it should be applied and validated on the testing e
 
 If the provider has given the team a list of the impacted functions, protective code must wrap the calls to these functions to ensure that the input and the output data is safe. 
 
-Moreover, security devices, such as the Web Application Firewall (WAF), can handle such issues by protecting the internal applications through parameter validation and by generating detection rules for those specific libraries. Yet, in this CS, the focus is set on the application level in order to patch the vulnerability as close as possible to the source.
+Moreover, security devices, such as the Web Application Firewall (WAF), can handle such issues by protecting the internal applications through parameter validation and by generating detection rules for those specific libraries. Yet, in this cheat sheet, the focus is set on the application level in order to patch the vulnerability as close as possible to the source.
 
 *Example using java code in which the impacted function suffers from a [Remote Code Execution](https://www.netsparker.com/blog/web-security/remote-code-evaluation-execution/) issue:*
 
@@ -167,7 +167,7 @@ In all cases, here, we need to handle the vulnerability right now.
 
 As we know the vulnerable dependency, we know where it is used in the application (if it's a transitive dependency then we can identify the first level dependency using it using the [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) built-in feature or the dependency management system used (Maven, Gradle, Nuget, NPM, etc.). Note that IDE is also used to identify the calls to the dependency.
 
-Identifying calls to this dependency is but the first step. The team still lacks information on what kind of patching needs to be performed.
+Identifying calls to this dependency is fine but it is the first step. The team still lacks information on what kind of patching needs to be performed.
 
 To obtain these informations, the team uses the CVE content to know which kind of vulnerability affects the dependency. The `description` property provides the answer: SQL injection, Remote Code Execution, Cross-Site Scripting, Cross-Site Request Forgery, etc.
 
@@ -243,3 +243,5 @@ It's important to ensure, during the selection process of a vulnerable dependenc
 # Authors and Primary Editors
 
 Dominique Righetto - dominique.righetto@owasp.org
+Elie Saad - eliesaad7@gmail.com
+Jakub Maćkowski - jakub.mackowski@owasp.org
