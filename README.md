@@ -1,7 +1,7 @@
 ![CSCounterBadge](https://img.shields.io/badge/Cheat_sheets_available-61-orange.svg)
 ![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
 [![PushAndPullRequestIntegrityCheck](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
-[![OfflineWebsiteNightBuild](https://circleci.com/gh/OWASP/CheatSheetSeries.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries)
+[![OfflineWebsiteBuild](https://circleci.com/gh/OWASP/CheatSheetSeries.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries)
 
 ![LogoOfficial](https://github.com/OWASP/owasp-swag/raw/master/projects/cheat-sheet-series/owasp-1.png)
 
@@ -137,16 +137,16 @@ However, to propose the possibility the consult, in a full offline mode, the col
 * **book.json**: Gitbook configuration file.
 * **Preface.md**: Project preface description applied on the generated site.
 
-## Automated night build
+## Automated build
 
-This [link](https://circleci.com/api/v1.1/project/github/OWASP/CheatSheetSeries/latest/artifacts) provide the **url** where to download a night build of the offline website:
+This [link](https://circleci.com/api/v1.1/project/github/OWASP/CheatSheetSeries/latest/artifacts) provide the **url** where to download a build of the offline website:
 
 ```json
 [ {
-  "path" : "OfflineWebsite-NightBuild.zip",
-  "pretty_path" : "OfflineWebsite-NightBuild.zip",
+  "path" : "OfflineWebsite-Build.zip",
+  "pretty_path" : "OfflineWebsite-Build.zip",
   "node_index" : 0,
-  "url" : "https://14-162723104-gh.circle-artifacts.com/0/OfflineWebsite-NightBuild.zip"
+  "url" : "https://14-162723104-gh.circle-artifacts.com/0/OfflineWebsite-Build.zip"
 } ]
 ```
 
