@@ -63,6 +63,8 @@ workflows:
               only:
                 - master      
       - deploy-offline-website:
+          requires:
+            - build-offline-website
           filters:
             branches:
               only:
