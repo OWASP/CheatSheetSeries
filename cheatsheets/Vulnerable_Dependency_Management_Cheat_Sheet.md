@@ -243,5 +243,7 @@ It's important to ensure, during the selection process of a vulnerable dependenc
 # Authors and Primary Editors
 
 Dominique Righetto - dominique.righetto@owasp.org
+
 Elie Saad - eliesaad7@gmail.com
+
 Jakub Maćkowski - jakub.mackowski@owasp.org
