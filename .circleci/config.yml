@@ -43,10 +43,13 @@ jobs:
     - run: 'rm index.html 1>/dev/null 2>&1'
     - run: 'rm search_index.json 1>/dev/null 2>&1'
     - run: 'mv site/* .'
-    - run: 'upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd ." > README.md; cat README.md'
+    - run: 'upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md'
     - run: 'rm -rf site'
     - run: 'rm OfflineWebsite-NightBuild.zip'
     - run: 'ls -l'
+    - run: 'git add --all .'
+    - run: 'git commit -a -m "Deploy the generated website via CircleCI pipeline."'
+    - run: 'git push'
 workflows:
   version: 2
   scheduled-night-deploy:
