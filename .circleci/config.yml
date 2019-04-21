@@ -20,6 +20,7 @@ jobs:
     - run: 'ls -l generated/site/'
     - run: 'cd generated;zip -r ../site.zip site'
     - run: 'zip -T site.zip'
+    - run: 'ls -l ~/repo/generated'
     - persist_to_workspace:    
         root: generated
         path: 
