@@ -1,0 +1,1253 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Vulnerable Dependency Management  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Web_Service_Security_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Vulnerability_Disclosure_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
+            
+                <a href="IndexProactiveControls.html">
+            
+                    
+                    Index Proactive Controls
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
+            
+                <a href="Content_Security_Policy_Cheat_Sheet.html">
+            
+                    
+                    Content Security Policy 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.62" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
+            
+                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
+            
+                    
+                    Vulnerable Dependency Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.63" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.64" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.65" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Vulnerable Dependency Management </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>The objective of the cheat sheet is to provide a proposal of approach regarding the handling of vulnerable third-party dependencies when they are detected, and this, depending on different situation.</p>
+<p>The cheat sheet is not tools oriented but it contains a <a href="#Tools">tools</a> section informing the reader about free and commercial solutions that can be used to detect vulnerable dependencies, depending on the level of support on the technologies at hand</p>
+<p><strong>Note:</strong> </p>
+<p>Proposals mentioned in this cheat sheet are not silver-bullet (recipes that work in all situations) yet can be used as a foundation and adapted to your context.</p>
+<h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
+<p>Most of the projects use third-party dependencies to delegate handling of different kind of operations, <em>e.g.</em> generation of document in a specific format, HTTP communications, data parsing of a specific format, etc.</p>
+<p>It&apos;s a good approach because it allows the development team to focus on the real application code supporting the expected business feature. The dependency brings forth an expected downside where the security posture of the real application is now resting on it.</p>
+<p>This aspect is referenced in the following projects:</p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_2017_Project" target="_blank">OWASP TOP 10</a> under the point <em><a href="https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities" target="_blank">A9 - Using Components with Known Vulnerabilities</a></em>.</li>
+<li><a href="https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project" target="_blank">OWASP Application Security Verification Standard Project</a> under the section <em>V14.2 Dependency</em>.</li>
+</ul>
+<p>Based on this context, it&apos;s important for a project to ensure that all the third-party dependencies implemented are clean of any security issue, and if they happen to contain any security issues, the developmment team needs to be aware of it and apply the required mitigation measures to secure the affected application.</p>
+<p>It&apos;s highly recommended to perform automated analysis of the dependencies from the birth of the project. Indeed, if this task is added at the middle or end of the project, it can imply a huge amount of work to handle all the issues identified and that will in turn impose a huge burden on the development team and might to blocking the advancement of the project at hand.</p>
+<p><strong>Note:</strong> </p>
+<p>In the rest of the cheat sheet, when we refer to <em>development team</em> then we assume that the team contains a member with the required application security skills or can refer to someone in the company having these kind of skills to analyse the vulnerability impacting the dependency.</p>
+<h1 id="remark-about-the-detection"><a name="remark-about-the-detection" class="plugin-anchor" href="#remark-about-the-detection"><i class="fa fa-link" aria-hidden="true"></i></a>Remark about the detection</h1>
+<p>It&apos;s important to keep in mind the different ways in which a security issue is handled after its discovery. </p>
+<h2 id="1-responsible-disclosure"><a name="1-responsible-disclosure" class="plugin-anchor" href="#1-responsible-disclosure"><i class="fa fa-link" aria-hidden="true"></i></a>1. <a href="https://en.wikipedia.org/wiki/Responsible_disclosure" target="_blank">Responsible disclosure</a>*</h2>
+<p>A researcher discovers a vulnerability in a component, and after collaboration with the component provider, they issue a <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a> (sometimes a specific vulnerability identifier to the provider is created but generally a CVE identifier is preferred) associated to the issue allowing the public referencing of the issue as well as the available fixation/mitigation. </p>
+<p>If in case the provider doesn&apos;t properly cooperate with the researcher, the following results are expected:</p>
+<ul>
+<li>CVE gets accepted by the vendor yet the provider <a href="https://www.excellium-services.com/cert-xlm-advisory/cve-2019-7161/" target="_blank">refuses to fix the issue</a>.</li>
+<li>Most of the time, if the researcher doesn&apos;t receive back a response in 30 days, they go ahead and do a <a href="#2.-full-disclosure">full disclosure</a> of the vulnerability.</li>
+</ul>
+<p>Here, the vulnerability is always referenced in the <a href="https://nvd.nist.gov/vuln/data-feeds" target="_blank">CVE global database</a> used, generally, by the detection tools as one of the several input sources used.</p>
+<h2 id="2-full-disclosurefulldisclosure"><a name="2-full-disclosurefulldisclosure" class="plugin-anchor" href="#2-full-disclosurefulldisclosure"><i class="fa fa-link" aria-hidden="true"></i></a>2. <a href="https://en.wikipedia.org/wiki/Full_disclosure_(computer_security" target="_blank">Full disclosure</a>#Full_disclosure)*</h2>
+<p>The researcher decides to release all the information including exploitation code/method on services like <a href="https://seclists.org/fulldisclosure/" target="_blank">Full Disclosure mailing list</a>, <a href="https://www.exploit-db.com" target="_blank">Exploit-DB</a>.</p>
+<p>Here a CVE is not always created then the vulnerability is not always in the CVE global database causing the detection tools to be potentially blind about unless the tools use other input sources.</p>
+<h1 id="remark-about-the-security-issue-handling-decision"><a name="remark-about-the-security-issue-handling-decision" class="plugin-anchor" href="#remark-about-the-security-issue-handling-decision"><i class="fa fa-link" aria-hidden="true"></i></a>Remark about the security issue handling decision</h1>
+<p>When a security issue is detected, it&apos;s possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the <a href="https://en.wikipedia.org/wiki/Chief_risk_officer" target="_blank">Chief Risk Officer</a> (fallback possible to <a href="https://en.wikipedia.org/wiki/Chief_information_security_officer" target="_blank">Chief Information Security Officer</a>) of the company based on technical feedback from the development team that have analysed the issue (see the <em><a href="#cases">Cases</a></em> section) as well as the CVE&apos;s <a href="https://www.first.org/cvss/user-guide" target="_blank">CVSS</a> score indicators.</p>
+<h1 id="cases"><a name="cases" class="plugin-anchor" href="#cases"><i class="fa fa-link" aria-hidden="true"></i></a>Cases</h1>
+<p>When a security issue is detected, the development team can meet one of the situations (named <em>Case</em> in the rest of the cheat sheet) presented in the sub sections below.</p>
+<p>If the vulnerably impact a <a href="https://en.wikipedia.org/wiki/Transitive_dependency" target="_blank">transitive dependency</a> then the action will be taken on the direct dependency of the project because acting on a transitive dependency often impact the stability of the application. </p>
+<p>Acting on a on a transitive dependency require the developmement team to fully understand the complete relation/communication/usage from the project first level dependency until the dependency impacted by the security vulnerability, this task is very time consuming.</p>
+<h2 id="case-1"><a name="case-1" class="plugin-anchor" href="#case-1"><i class="fa fa-link" aria-hidden="true"></i></a>Case 1</h2>
+<h3 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h3>
+<p>Patched version of the component has been released by the provider.</p>
+<h3 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h3>
+<p>Set of automated unit or integration or functionnal or security tests exist for the features of the application using the impacted dependency allowing to validate that the feature is operational.</p>
+<h3 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h3>
+<p><strong>Step 1:</strong></p>
+<p>Update the version of the dependency in the project on a testing environment.</p>
+<p><strong>Step 2:</strong></p>
+<p>Prior to running the tests, 2 output paths are possible:</p>
+<ul>
+<li>All tests succeed, and thus the update can be pushed to production.</li>
+<li>One or several tests failed, several output paths are possible:<ul>
+<li>Failure is due to change in some function calls (<em>e.g.</em> signature, argument, package, etc.). The development team must update their code to fit the new library. Once that is done, re-run the tests.</li>
+<li>Technical incompatibility of the released dependency (<em>e.g.</em> require a more recent runtime version) which leads to the following actions:<ol>
+<li>Raise the issue to the provider.</li>
+<li>Apply <a href="#case-2">Case 2</a> while waiting for the provider&apos;s feedback.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="case-2"><a name="case-2" class="plugin-anchor" href="#case-2"><i class="fa fa-link" aria-hidden="true"></i></a>Case 2</h2>
+<h3 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h3>
+<p>Provider informs the team that it will take a while to fix the issue and, so, a patched version will not be available before months.</p>
+<h3 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h3>
+<p>Provider can share any of the below with the development team:</p>
+<ul>
+<li>The exploitation code.</li>
+<li>The list of impacted functions by the vulnerability.</li>
+<li>A workaround to prevent the exploitation of the issue.</li>
+</ul>
+<h3 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h3>
+<p><strong>Step 1:</strong></p>
+<p>If a workaround is provided, it should be applied and validated on the testing environment, and thereafter deployed to production.</p>
+<p>If the provider has given the team a list of the impacted functions, protective code must wrap the calls to these functions to ensure that the input and the output data is safe. </p>
+<p>Moreover, security devices, such as the Web Application Firewall (WAF), can handle such issues by protecting the internal applications through parameter validation and by generating detection rules for those specific libraries. Yet, in this cheat sheet, the focus is set on the application level in order to patch the vulnerability as close as possible to the source.</p>
+<p><em>Example using java code in which the impacted function suffers from a <a href="https://www.netsparker.com/blog/web-security/remote-code-evaluation-execution/" target="_blank">Remote Code Execution</a> issue:</em></p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">callFunctionWithRCEIssue</span><span class="hljs-params">(String externalInput)</span></span>{
+    <span class="hljs-comment">//Apply input validation on the external input using regex</span>
+    <span class="hljs-keyword">if</span>(Pattern.matches(<span class="hljs-string">&quot;[a-zA-Z0-9]{1,50}&quot;</span>, externalInput)){
+        <span class="hljs-comment">//Call the flawed function using safe input</span>
+        functionWithRCEIssue(externalInput);
+    }<span class="hljs-keyword">else</span>{
+        <span class="hljs-comment">//Log the detection of exploitation</span>
+        SecurityLogger.warn(<span class="hljs-string">&quot;Exploitation of the RCE issue XXXXX detected !&quot;</span>);
+        <span class="hljs-comment">//Raise an exception leading to a generic error send to the client...</span>
+    }
+}
+</code></pre>
+<p>If the provider has provided nothing about the vulnerability, <a href="#-case-3">Case 3</a> can be applied skipping the <em>step 2</em> of this case. We assume here that, at least, the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a> has been provided.</p>
+<p><strong>Step 2:</strong></p>
+<p>If the provider has provided the team with the exploitation code, and the team made a security wrapper around the vulnerable library/code, execute the exploitation code in order to ensure that the library is now secure and doesn&apos;t affect the application.</p>
+<p>If you have a set of automated unit or integration or functionnal or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.</p>
+<p>Add a comment in the project <em>README</em> explaining that the issue (specify the related <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a>) is handled during the waiting time of a patched version because the detection tool will continue to raise an alert on this dependency. </p>
+<p><strong>Note:</strong> You can add the dependency to the ignore list but the ignore scope for this dependency must only cover the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a> related to the vulnerability because a dependency can be impacted by several vulnerabilities having each one its own <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a>.</p>
+<h2 id="case-3"><a name="case-3" class="plugin-anchor" href="#case-3"><i class="fa fa-link" aria-hidden="true"></i></a>Case 3</h2>
+<h3 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h3>
+<p>Provider inform the team that he cannot fix the issue, so no patched version will be released at all (applies also if provider does not want to fix the issue or does not answer at all).</p>
+<p>In this case the only information given to the development team is the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a>.</p>
+<p><strong>Notes:</strong> </p>
+<ul>
+<li>This case is really complex and time consuming and is generally used as last resort.</li>
+<li>If the impacted dependency is an open source library then we, the development team, can create a patch and create <a href="https://help.github.com/en/articles/about-pull-requests" target="_blank">pull request</a> - that way we can protect our company/application from the source as well as helping others secure their applications.</li>
+</ul>
+<h3 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h3>
+<p>Nothing specific because here we are in a <em>patch yourself</em> condition.</p>
+<h3 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h3>
+<p><strong>Step 1:</strong></p>
+<p>If we are in this case due to one of the following conditions, it&apos;s a good idea to start a parallel study to find another component better maintained or if it&apos;s a commercial component with support <strong>then put pressure</strong> on the provider with the help of your <a href="https://en.wikipedia.org/wiki/Chief_risk_officer" target="_blank">Chief Risk Officer</a> (fallback possible to <a href="https://en.wikipedia.org/wiki/Chief_information_security_officer" target="_blank">Chief Information Security Officer</a>):</p>
+<ul>
+<li>Provider does not want to fix the issue.</li>
+<li>Provider does not answer at all.</li>
+</ul>
+<p>In all cases, here, we need to handle the vulnerability right now.</p>
+<p><strong>Step 2:</strong></p>
+<p>As we know the vulnerable dependency, we know where it is used in the application (if it&apos;s a transitive dependency then we can identify the first level dependency using it using the <a href="https://en.wikipedia.org/wiki/Integrated_development_environment" target="_blank">IDE</a> built-in feature or the dependency management system used (Maven, Gradle, Nuget, NPM, etc.). Note that IDE is also used to identify the calls to the dependency.</p>
+<p>Identifying calls to this dependency is fine but it is the first step. The team still lacks information on what kind of patching needs to be performed.</p>
+<p>To obtain these informations, the team uses the CVE content to know which kind of vulnerability affects the dependency. The <code>description</code> property provides the answer: SQL injection, Remote Code Execution, Cross-Site Scripting, Cross-Site Request Forgery, etc.</p>
+<p>After identifying the above 2 points, the team is aware of the type of patching that needs to be taken (<a href="#case-2">Case 2</a> with the protective code) and where to add it.</p>
+<p><em>Example:</em></p>
+<p>The team has an application using the Jackson API in a version exposed to the <a href="https://nvd.nist.gov/vuln/detail/CVE-2016-3720" target="_blank">CVE-2016-3720</a>.</p>
+<p>The description of the CVE is as follows:</p>
+<pre><code class="lang-text">XML external entity (XXE) vulnerability in XmlMapper in the Data format extension for Jackson 
+(aka jackson-dataformat-xml) allows attackers to have unspecified impact via unknown vectors.
+</code></pre>
+<p>Based on these information, the team determines that the necessary patching will be to add a <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">pre-validation of any XML data</a> passed to the Jakson API to prevent <a href="https://www.acunetix.com/blog/articles/xml-external-entity-xxe-vulnerabilities/" target="_blank">XML external entity (XXE)</a> vulnerability.</p>
+<p><strong>Step 3:</strong></p>
+<p>If possible, create a unit test that mimics the vulnerability in order to ensure that the patch is effective and have a way to continuously ensure that the patch is in place during the evolution of the project.</p>
+<p>If you have a set of automated unit or integration or functionnal or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.</p>
+<h2 id="case-4"><a name="case-4" class="plugin-anchor" href="#case-4"><i class="fa fa-link" aria-hidden="true"></i></a>Case 4</h2>
+<h3 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h3>
+<p>The vulnerable dependency is found during one of the following situation in which the provider is not aware of the vulnerability:</p>
+<ul>
+<li>Via the discovery of a full disclosure post on the Internet.</li>
+<li>During a penetration test.</li>
+</ul>
+<h3 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h3>
+<p>Provider collaborates with you after being notified of the vulnerability.</p>
+<h3 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h3>
+<p><strong>Step 1:</strong></p>
+<p>Inform the provider about the vulnerability by sharing the post with them.</p>
+<p><strong>Step 2:</strong></p>
+<p>Using the information from the full disclosure post or the pentester&apos;s exploitation feedback, if the provider collaborates then apply <a href="#case-2">Case 2</a>, otherwise apply <a href="#case-3">Case 3</a>, and instead of analyzing the CVE information, the team needs to analyze the information from the full disclosure post/pentester&apos;s exploitation feedback.</p>
+<h1 id="tools"><a name="tools" class="plugin-anchor" href="#tools"><i class="fa fa-link" aria-hidden="true"></i></a>Tools</h1>
+<p>This section lists several tools that can used to analyse the dependencies used by a project in order to detect the vulnerabilities.</p>
+<p>It&apos;s important to ensure, during the selection process of a vulnerable dependency detection tool, that this one:</p>
+<ul>
+<li>Uses several reliable input sources in order to handle both vulnerability disclosure ways.</li>
+<li><p>Support for flagging an issue raised on a component as a <a href="https://www.whitehatsec.com/glossary/content/false-positive" target="_blank">false-positive</a>.</p>
+</li>
+<li><p>Free</p>
+<ul>
+<li><a href="https://www.owasp.org/index.php/OWASP_Dependency_Check" target="_blank">OWASP Dependency Check</a>: <ul>
+<li>Full support: Java, .Net.</li>
+<li>Experimental support: Python, Ruby, PHP (composer), NodeJS, C, C++.</li>
+</ul>
+</li>
+<li><a href="https://docs.npmjs.com/cli/audit" target="_blank">NPM Audit</a><ul>
+<li>Full support: NodeJS, Javascript.</li>
+<li>HTML report available via this <a href="https://www.npmjs.com/package/npm-audit-html" target="_blank">module</a>.</li>
+</ul>
+</li>
+<li>To manage the vulnerable dependencies in a transversal way in an organization the <a href="https://dependencytrack.org/" target="_blank">OWASP Dependency Track</a> project can be used.</li>
+</ul>
+</li>
+<li>Commercial<ul>
+<li><a href="https://snyk.io/" target="_blank">Snyk</a> (open source and free option available):<ul>
+<li><a href="https://snyk.io/docs/" target="_blank">Full support</a> for many languages and package manager. </li>
+</ul>
+</li>
+<li><a href="https://jfrog.com/xray/" target="_blank">JFrog XRay</a>:<ul>
+<li><a href="https://jfrog.com/integration/" target="_blank">Full support</a> for many languages and package manager. </li>
+</ul>
+</li>
+<li><a href="https://renovatebot.com" target="_blank">Renovate</a> (allow to detect old dependencies):<ul>
+<li><a href="https://renovatebot.com/docs/" target="_blank">Full support</a> for many languages and package manager. </li>
+</ul>
+</li>
+<li><a href="https://requires.io/" target="_blank">Requires.io</a> (allow to detect old dependencies - open source and free option available):<ul>
+<li><a href="https://requires.io/features/" target="_blank">Full support</a>: Python only.         </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<p>Dominique Righetto - dominique.righetto@owasp.org</p>
+<p>Elie Saad - eliesaad7@gmail.com</p>
+<p>Jakub Ma&#x107;kowski - jakub.mackowski@owasp.org</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Vulnerability Disclosure ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Web_Service_Security_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Web Service Security ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Vulnerable Dependency Management ","level":"1.62","depth":1,"next":{"title":"Web Service Security ","level":"1.63","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Vulnerability Disclosure ","level":"1.61","depth":1,"path":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","ref":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md","mtime":"2019-04-21T09:39:34.987Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-04-21T09:39:51.788Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

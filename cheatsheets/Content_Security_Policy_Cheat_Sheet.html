@@ -1,0 +1,1282 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Content Security Policy  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Credential_Stuffing_Prevention_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Clickjacking_Defense_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
+            
+                <a href="IndexProactiveControls.html">
+            
+                    
+                    Index Proactive Controls
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
+            
+                <a href="Content_Security_Policy_Cheat_Sheet.html">
+            
+                    
+                    Content Security Policy 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
+            
+                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
+            
+                    
+                    Vulnerable Dependency Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.63" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.64" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.65" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Content Security Policy </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>This article brings forth a way to integrate the <code>defense in depth</code> concept to the client-side of web applications. By injecting the Content-Security-Policy (CSP) headers from the server, the browser is aware and capable of protecting the user from dynamic calls that will load content into the page currently being visited.</p>
+<h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
+<p>The increase in XSS and clickjacking vulnerabilities demands a more <code>defense in depth</code> security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.</p>
+<h1 id="avoid-csp"><a name="avoid-csp" class="plugin-anchor" href="#avoid-csp"><i class="fa fa-link" aria-hidden="true"></i></a>Avoid CSP</h1>
+<p>If you are a developer of any of the applications mentioned below, CSP will barely provide or improve their security:</p>
+<ul>
+<li>Single page applications with no cookies or authentication.</li>
+<li>Applications that are already vulnerable to XSS vulnerabilities and chose not to remediate them. CSP is not the first line of defense.</li>
+</ul>
+<h1 id="policy-delivery"><a name="policy-delivery" class="plugin-anchor" href="#policy-delivery"><i class="fa fa-link" aria-hidden="true"></i></a>Policy Delivery</h1>
+<p>CSP can be delivered to the user agent in different techniques.</p>
+<ol>
+<li><code>Content-Security-Policy</code> HTTP response header field. This is the most preferred technique.</li>
+<li><code>&lt;meta&gt;</code> HTML element with <code>http-equiv</code> attribute set to <code>Content-Security-Policy</code>. These elements need to be placed as early as possible in the documents.</li>
+<li><code>Content-Security-Policy-Report-Only</code> HTTP response header field. This header is used when the developer is unsure of the CSP behavior and wants to monitor it, instead of enforcing it.</li>
+</ol>
+<h2 id="http-headers"><a name="http-headers" class="plugin-anchor" href="#http-headers"><i class="fa fa-link" aria-hidden="true"></i></a>HTTP Headers</h2>
+<p>The following are headers for CSP.</p>
+<ul>
+<li><code>Content-Security-Policy</code> : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+</li>
+<li><code>Content-Security-Policy-Report-Only</code> : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking (&quot;fail open&quot;) and a report is sent to the URL designated by the <code>report-uri</code> directive. This is often used as a precursor to utilizing CSP in blocking mode (&quot;fail closed&quot;)</li>
+<li><code>DO NOT</code> use X-Content-Security-Policy or X-WebKit-CSP. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.</li>
+</ul>
+<h1 id="csp-directives"><a name="csp-directives" class="plugin-anchor" href="#csp-directives"><i class="fa fa-link" aria-hidden="true"></i></a>CSP Directives</h1>
+<p>Multiple types of directives exist that allow the developer to granularly control the flow of the policies.</p>
+<h2 id="fetch-directives"><a name="fetch-directives" class="plugin-anchor" href="#fetch-directives"><i class="fa fa-link" aria-hidden="true"></i></a>Fetch Directives</h2>
+<p>Fetch directives tell the browser the locations to trust and load resources from.</p>
+<ul>
+<li><code>default-src</code> is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of <code>default-src</code>.</li>
+<li><code>child-src</code> allows the developer to control nested browsing contexts and worker execution contexts.<ul>
+<li>According to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Fetch_directives" target="_blank">MDN</a>, the below 2 directives should be used to regulate nested browsing context and workers as <code>child-src</code> will be deprecated in the coming versions.</li>
+<li><code>frame-src</code> specifies the URLs which can be loaded into nested browsing contexts (<em>e.g.</em> <code>&lt;iframe&gt;</code>).</li>
+<li><code>worker-src</code> specifies the URLs which can be loaded as worker, sharedworker, or serviceworker. Fallback&apos;s on <code>script-src</code> too.</li>
+</ul>
+</li>
+<li><code>connect-src</code> provides control over fetch requests, XHR, eventsource, beacon and websockets connections.</li>
+<li><p><code>font-src</code> specifies which URLs to load fonts from.</p>
+</li>
+<li><p><code>img-src</code> specifies the URLs that images can be loaded from.</p>
+</li>
+<li><code>manifest-src</code> specifies the URLs that application manifests may be loaded from.</li>
+<li><code>media-src</code> specifies the URLs from which video, audio and text track resources can be loaded from.</li>
+<li><code>prefetch-src</code> specifies the URLs from which resources can be prefetched from.</li>
+<li><code>object-src</code> specifies the URLs from which plugins can be loaded from.</li>
+<li><code>script-src</code> specifies the locations from which a script can be executed from. It is a fallback directive for other script-like directives.<ul>
+<li><code>script-src-elem</code> controls the location from which execution of script requests and blocks can occur.</li>
+<li><code>script-src-attr</code> controls the execution of event handlers.</li>
+</ul>
+</li>
+<li><code>style-src</code> controls from where styles get applied to a document. This includes <code>&lt;link&gt;</code> elements, <code>@import</code> rules, and requests originating from a <code>Link</code> HTTP response header field.<ul>
+<li><code>style-src-elem</code> controls styles except for inline attributes.</li>
+<li><code>style-src-attr</code> controls styles attributes.</li>
+</ul>
+</li>
+</ul>
+<h2 id="document-directives"><a name="document-directives" class="plugin-anchor" href="#document-directives"><i class="fa fa-link" aria-hidden="true"></i></a>Document Directives</h2>
+<p>Document directives instruct the browser about the properties of the document to which the policies will apply to. </p>
+<ul>
+<li><code>base-uri</code> specifies the possible URLs that the <code>&lt;base&gt;</code> element can use.</li>
+<li><code>plugin-types</code> limits the types of resources that can be loaded into the document (<em>e.g.</em> application/pdf). 3 rules apply to the affected elements, <code>&lt;embed&gt;</code> and <code>&lt;object&gt;</code>:<ul>
+<li>The element needs to explicitly declare its type.</li>
+<li>The element&apos;s type needs to match the declared type.</li>
+<li>The element&apos;s resource need to match the declared type.</li>
+</ul>
+</li>
+<li><code>sandbox</code> restricts a page&apos;s actions such as submitting forms.<ul>
+<li>Only applies when used with the request header <code>Content-Security-Policy</code>.</li>
+<li>Not specifying a value for the directive activates all of the sandbox restrictions. <code>Content-Security-Policy: sandbox;</code></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/sandbox#Syntax" target="_blank">Sandbox syntax</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="navigation-directives"><a name="navigation-directives" class="plugin-anchor" href="#navigation-directives"><i class="fa fa-link" aria-hidden="true"></i></a>Navigation Directives</h2>
+<p>Navigation directives instruct the browser about the locations that the document can navigate to.</p>
+<ul>
+<li><code>navigate-to</code> restricts the URLs which a document can navigate to by any mean.</li>
+<li><code>form-action</code> restricts the URLs which the forms can submit to.</li>
+<li><code>frame-ancestors</code> restricts the URLs that can embed the requested resource inside of  <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;object&gt;</code>, <code>&lt;embed&gt;</code>, or <code>&lt;applet&gt;</code> elements.<ul>
+<li>If this directive is specified in a <code>&lt;meta&gt;</code> tag, the directive is ignored.</li>
+<li>This directive doesn&apos;t fallback to <code>default-src</code> directive.</li>
+<li><code>X-Frame-Options</code> is rendered obsolete by this directive and is ignored by the user agents.</li>
+</ul>
+</li>
+</ul>
+<h2 id="reporting-directives"><a name="reporting-directives" class="plugin-anchor" href="#reporting-directives"><i class="fa fa-link" aria-hidden="true"></i></a>Reporting Directives</h2>
+<p>Reporting directives deliver violation of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.</p>
+<ul>
+<li><code>report-to</code> which is a groupname defined in the header in a json formatted header value. Does not have proper browser support yet.<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to#Examples" target="_blank">MDN report-to documentation</a></li>
+</ul>
+</li>
+<li><code>report-uri</code> directive will be getting deprected by <code>report-to</code>, which is a URI that the reports are sent to.<ul>
+<li>Goes by the format of: <code>Content-Security-Policy: report-uri https://example.com/csp-reports</code></li>
+</ul>
+</li>
+</ul>
+<p>In order to ensure backward compatibility, use the 2 directives in conjonction. Whenever a browser supports <code>report-to</code>, it will ignore <code>report-uri</code>. Otherwise, <code>report-uri</code> will be used.</p>
+<h2 id="special-directive-sources"><a name="special-directive-sources" class="plugin-anchor" href="#special-directive-sources"><i class="fa fa-link" aria-hidden="true"></i></a>Special Directive Sources</h2>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&apos;none&apos;</td>
+<td>No URLs match.</td>
+</tr>
+<tr>
+<td>&apos;self&apos;</td>
+<td>Refers to the origin site with the same scheme and port number.</td>
+</tr>
+<tr>
+<td>&apos;unsafe-inline&apos;</td>
+<td>Allows the usage of inline scripts or styles.</td>
+</tr>
+<tr>
+<td>&apos;unsafe-eval&apos;</td>
+<td>Allows the usage of eval in scripts.</td>
+</tr>
+</tbody>
+</table>
+<p>In case where the developer needs to use inline scripts, it&apos;s recommended to use <code>sha256</code> for the script or a <code>nonce</code> randomly generated on every page request. </p>
+<p>For more details on hashes and nonces, check out <a href="https://scotthelme.co.uk/csp-cheat-sheet/#hashes" target="_blank">Scott Helme&apos;s Guide</a>.</p>
+<h1 id="csp-sample-policies"><a name="csp-sample-policies" class="plugin-anchor" href="#csp-sample-policies"><i class="fa fa-link" aria-hidden="true"></i></a>CSP Sample Policies</h1>
+<h2 id="basic-csp-policy"><a name="basic-csp-policy" class="plugin-anchor" href="#basic-csp-policy"><i class="fa fa-link" aria-hidden="true"></i></a>Basic CSP Policy</h2>
+<p>This policy will only allow resources from the originating domain for all the default level directives and will not allow inline scripts/styles to execute. If your application functions with these restrictions, it drastically reduces your attack surface, and works with most modern browsers.</p>
+<p>The most basic policy assumes:</p>
+<ul>
+<li>All resources are hosted by the same domain of the document.</li>
+<li>There are no inlines or evals for scripts and style resources.</li>
+</ul>
+<blockquote>
+<p><code>Content-Security-Policy: default-src &apos;self&apos;;</code></p>
+</blockquote>
+<p>To tighten further, one can do the following:</p>
+<blockquote>
+<p><code>Content-Security-Policy: default-src &apos;none&apos;; script-src &apos;self&apos;; connect-src &apos;self&apos;; img-src &apos;self&apos;; style-src &apos;self&apos;;</code></p>
+</blockquote>
+<p>This policy allows images, scripts, AJAX, and CSS from the same origin, and does not allow any other resources to load (eg. object, frame, media, etc).</p>
+<h2 id="mixed-content-policy"><a name="mixed-content-policy" class="plugin-anchor" href="#mixed-content-policy"><i class="fa fa-link" aria-hidden="true"></i></a>Mixed Content Policy</h2>
+<ul>
+<li><p>In order to prevent mixed content (resources being loaded over http, from a document loaded over https), one can use the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/block-all-mixed-content" target="_blank">block-all-mixed-content</a> directive to block mixed content.</p>
+<ul>
+<li><code>Content-Security-Policy: block-all-mixed-content;</code></li>
+</ul>
+</li>
+<li><p>On the other hand, if the developer is migrating from HTTP to HTTPS, the following directive will ensure that all requests will be sent over HTTPS with no fallback to HTTP:</p>
+<ul>
+<li><code>Content-Security-Policy: upgrade-insecure-requests;</code></li>
+</ul>
+</li>
+</ul>
+<p>If the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests" target="_blank">upgrade-insecure-requests</a> is set, the <code>block-all-mixed-content</code> is rendered meaningless and should be removed.</p>
+<h2 id="preventing-clickjacking"><a name="preventing-clickjacking" class="plugin-anchor" href="#preventing-clickjacking"><i class="fa fa-link" aria-hidden="true"></i></a>Preventing ClickJacking</h2>
+<ul>
+<li>To prevent all framing of your content use:<ul>
+<li><code>Content-Security-Policy: frame-ancestors &apos;none&apos;;</code></li>
+</ul>
+</li>
+<li>To allow for your site only, use:<ul>
+<li><code>Content-Security-Policy: frame-ancestors &apos;self&apos;;</code></li>
+</ul>
+</li>
+<li>To allow for trusted domain , do the following:<ul>
+<li><code>Content-Security-Policy: frame-ancestors trusted.com;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="loading-files-from-cdn"><a name="loading-files-from-cdn" class="plugin-anchor" href="#loading-files-from-cdn"><i class="fa fa-link" aria-hidden="true"></i></a>Loading Files from CDN</h2>
+<p>The below CSP allows loading from the same origin and loading images and scripts from the CDN:</p>
+<p><code>Content-Security-Policy: default-src &apos;self&apos;; image-src cdn.example.com; script-src cdn.example.com;</code></p>
+<h1 id="refactoring-inline-code"><a name="refactoring-inline-code" class="plugin-anchor" href="#refactoring-inline-code"><i class="fa fa-link" aria-hidden="true"></i></a>Refactoring inline code</h1>
+<p>By default CSP disables any unsigned JavaScript code placed inline in the HTML source, such as this:</p>
+<pre><code class="lang-javascript">&lt;script&gt;
+<span class="hljs-keyword">var</span> foo = <span class="hljs-string">&quot;314&quot;</span>
+&lt;script&gt;
+</code></pre>
+<p>The inline code can be enabled by <strong>specifying its SHA256 hash</strong> in the CSP header:</p>
+<blockquote>
+<p><code>Content-Security-Policy: script-src &apos;sha256-gPMJwWBMWDx0Cm7ZygJKZIU2vZpiYvzUQjl5Rh37hKs=&apos;;</code></p>
+</blockquote>
+<p>This particular script&apos;s hash can be calculated using the following command:</p>
+<blockquote>
+<p><code>echo -n &apos;var foo = &quot;314&quot;&apos; | openssl sha256 -binary | openssl base64</code></p>
+</blockquote>
+<p>Some browsers (e.g. Chrome) will also display the hash of the script in JavaScript console warning when blocking an unsigned script.</p>
+<p>The inline code can be also simply moved to a separate JavaScript file and the code in the page becomes:</p>
+<pre><code class="lang-javascript">&lt;script src=<span class="hljs-string">&quot;app.js&quot;</span>&gt;
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span>
+</code></pre>
+<p>with <code>app.js</code> containing the <code>var foo = &quot;314&quot;</code> code.</p>
+<p>The inline code restriction also applies to <code>inline event handlers</code>, so that the following construct will be blocked under CSP:</p>
+<blockquote>
+<p><code>&lt;button id=&quot;button1&quot; onclick=&quot;doSomething()&quot;&gt;</code></p>
+</blockquote>
+<p>This should be replaced by <code>addEventListener</code> calls:</p>
+<blockquote>
+<p><code>document.getElementById(&quot;button1&quot;).addEventListener(&apos;click&apos;, doSomething);</code></p>
+</blockquote>
+<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<ul>
+<li><a href="https://www.w3.org/TR/CSP3/" target="_blank">CSP Level 3 W3C</a></li>
+<li><a href="https://content-security-policy.com/" target="_blank">Content-Security-Policy</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy" target="_blank">MDN CSP</a></li>
+<li><a href="https://csp.withgoogle.com/docs/" target="_blank">CSP with Google</a></li>
+<li><a href="https://scotthelme.co.uk/csp-cheat-sheet/" target="_blank">CSP CheatSheet by Scott Helme</a></li>
+</ul>
+<h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
+<ul>
+<li>Elie Saad</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Clickjacking_Defense_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Clickjacking Defense ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Credential Stuffing Prevention ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Content Security Policy ","level":"1.16","depth":1,"next":{"title":"Credential Stuffing Prevention ","level":"1.17","depth":1,"path":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Clickjacking Defense ","level":"1.15","depth":1,"path":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","ref":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Content_Security_Policy_Cheat_Sheet.md","mtime":"2019-04-21T09:39:34.983Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-04-21T09:39:51.788Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
