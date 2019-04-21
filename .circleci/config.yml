@@ -25,7 +25,7 @@ jobs:
     - run: 'zip -T site.zip'
     - store_artifacts:
         path: ./site.zip
-        destination: OfflineWebsite-Build.zip
+        destination: bundle.zip
   deploy-offline-website:
     docker:
       - image: 'circleci/node:10-stretch'
@@ -41,8 +41,8 @@ jobs:
     - run: 'git checkout gh-pages'
     - run: 'git branch'
     - run: 'tgt=`curl -s https://circleci.com/api/v1.1/project/github/OWASP/CheatSheetSeries/latest/artifacts | jq -r .[0].url` ; wget $tgt'
-    - run: 'zip -T OfflineWebsite-Build.zip'
-    - run: 'unzip OfflineWebsite-Build.zip'    
+    - run: 'zip -T bundle.zip'
+    - run: 'unzip bundle.zip'    
     - run: 'rm -rf assets 1>/dev/null 2>&1'
     - run: 'rm -rf cheatsheets 1>/dev/null 2>&1'
     - run: 'rm -rf gitbook 1>/dev/null 2>&1'
@@ -51,15 +51,11 @@ jobs:
     - run: 'mv site/* .'
     - run: 'upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md'
     - run: 'rm -rf site'
-    - run: 'echo "OfflineWebsite-Build.zip" > .gitignore'
     - run: 'git config --global user.email "OWASP-CheatSheetSeries@circleci.com"'
     - run: 'git config --global user.name "CircleCI-CheatSheetSeries"'
     - run: 'git add --all .'
     - run: 'git commit -a -m "Deploy the generated website via CircleCI pipeline."'
-    - run: 'git push'
-    - store_artifacts:
-        path: ./OfflineWebsite-Build.zip    
-        destination: OfflineWebsite-Build.zip      
+    - run: 'git push'    
 workflows:
   version: 2
   build-publish-deploy:
