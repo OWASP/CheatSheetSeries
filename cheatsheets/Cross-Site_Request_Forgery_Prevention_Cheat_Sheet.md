@@ -91,33 +91,27 @@ For these cases, attempting to retrofit this pattern in existing applications re
 
 ### Encryption based Token Pattern
 
-The Encrypted Token Pattern leverages an encryption, rather than comparison method of Token-validation. It is most suitable for applications that do not want to maintain any state at server side.
+The Encrypted Token Pattern leverages an encryption, rather than comparison method of Token-validation. It is most suitable for applications that do not want to maintain any state at server side. 
 
-After successful authentication, the server generates a unique token comprised of the user's ID, a timestamp value and a [nonce](http://en.wikipedia.org/wiki/Cryptographic_nonce), using a unique key available only on the server. This token is returned to the client and embedded in a hidden field for forms, in the request-header/parameter for AJAX requests. On receipt of this request, the server reads and decrypts the token value with the same key used to create the token. Inability to correctly decrypt suggest an intrusion attempt. Once decrypted, the UserId and timestamp contained within the token are validated; the UserId is compared against the currently logged in user, and the timestamp is compared against the current time.
+Server generates a token comprised of the user's session ID and a timestamp (to prevent replay attacks) using a unique key available only on the server (AES256 or stronger encryption algorithms are recommended). This token is returned to the client and embedded in a hidden field for forms, in the request-header/parameter for AJAX requests. On receipt of this request, the server reads and decrypts the token value with the same key used to create the token. Inability to correctly decrypt suggest an intrusion attempt (recommend to block and log the attack for incident response purposes). Once decrypted, the users sessionId and timestamp contained within the token are validated; session-id is compared against the currently logged in user, and the timestamp is compared against the current time to verify that its not beyond the defined token expiry time. If session-id matches and the timestamp is under the defined token expiry time, request can be allowed.
 
-On successful token-decryption, the server has access to parsed values, ideally in the form of [claims](http://en.wikipedia.org/wiki/Claims-based_identity). These claims are processed by comparing the UserId claim to any potentially stored UserId (in a Cookie or Session variable, if the site already contains a means of authentication). The Timestamp is validated against the current time, preventing replay attacks. Alternatively, in the case of a CSRF attack, the server will be unable to decrypt the poisoned token, and can block and log the attack.
-
-This technique addresses some of the shortfalls in other stateless approaches, such as the need to store data in a Cookie, circumnavigating the Cookie-subdomain and HTTPONLY issues.
+If you would like to employ key rotations (recommended), you can include key related information (number representing rotation or any other identifier basing on your organizational/individual key management systems being used) in the token generation process and use that identifier while validating back at the server.
 
 ### HMAC Based Token Pattern
 
-[HMAC (hash-based message authentication code)](https://en.wikipedia.org/wiki/HMAC) is a cryptographic function that helps to guarantee integrity and authentication of a message. It is another way that CSRF mitigation can be achieved without maintaining any state at the server and is similar to an encryption token-based pattern with two main differences:
+This mitigation is also achieved without maintaining any state at the server. [HMAC](https://en.wikipedia.org/wiki/HMAC) based CSRF protection works similar to encryption based CSRF protection with couple of minor differences
+1. We use strong HMAC function (SHA256 or stronger algorithms are recommended) instead of an encryption function to generate the token
+2. Token is HMAC+timestamp
 
-- Uses a strong HMAC function instead of an encryption function to generate the token
-- Includes an additional field called ‘operation’ that would indicate the purpose of the operation for which you are including the CSRF token (may it be form tag/ajax call)
-
-Example:
-
-```text
-oneclickpurchase (or) buy/asin=SDFH&category=2&quantity=3)
-```
-
-**Note:** Fields mentioned in encryption token pattern (user's ID, a timestamp value and a nonce) are included.
-
-The operation field helps in mitigating the fact that the hash function generates the same value irrespective of multiple iterations (unlike strong encryption functions that generate different values when they are encrypted each time). So, it would help in avoiding having repeated token values across your application. Nonce field serves the same purpose as in encrypted token pattern (i.e., to avoid rare collisions due to weak cryptographic functions and acts as a defense-in-depth measure).
-
-Generate the token using HMAC including all four fields mentioned previously (user's ID, a timestamp value, nonce, and operation) and then include it in hidden fields for form tags, headers/parameters for ajax calls. Once you receive the HMAC from the client in the requests, re-generate HMAC with the same fields that you used to generate it, and then verify that the HMAC you re-generated matches the HMAC received from the client. If it does, it is a legitimate user request and if it does not, flag it as a CSRF intrusion and alert your incident response teams. Because an attacker has no visibility into the key used for generating the hash fields used in generating it, there is no way for them to re-generate it to use in forged request.
-
+Below steps explain implementing the HMAC based CSRF protection
+a) Generating the token
+   Using key K, generate HMAC(usersessionID+timestamp) and append the same timestamp value to it which results in your CSRF token.
+b) Include the token (i.e., HMAC+timestamp) in a hidden field for forms and in the request-header/parameter for AJAX requests 
+c) Validating the token 
+   When the request is received at the server, re-generate the token with same key K (parameters are sessionID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, we block the request and log the attack for incident response purposes.
+   
+Key rotation concept explained in encryption based token protection applies to this as well.
+  
 ## Auto CSRF Mitigation Techniques
 
 Though the technique of mitigating tokens is widely used (stateful with synchronizer token and stateless with encrypted/HMAC token), the major problem associated with these techniques is the human tendency to forget things at times. If a developer forgets to add the token to any state changing operation, they are making the application vulnerable to CSRF. To avoid this, you can try to automate the process of adding tokens to CSRF vulnerable resources (mentioned earlier in this document). You can achieve this by doing the following:
