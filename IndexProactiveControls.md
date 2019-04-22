@@ -17,6 +17,10 @@
 
 This cheatsheet will help users of the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) identify which cheatsheets map to each proactive controls item. This mapping is based the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) version 3.0 (2018).
 
+# Not addressed topic
+
+Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) if you need that a dedicated cheat sheet be created to provide information about the target Proactive Controls section.
+
 # 1. Define Security Requirements
 
 [Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
