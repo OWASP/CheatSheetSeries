@@ -1,7 +1,6 @@
 # Table of contents
 
 - [Objective](#objective)
-- [Not addressed topic](#not-addressed-topic)
 - [1. Define Security Requirements](#1-define-security-requirements)
 - [2. Leverage Security Frameworks and Libraries](#2-leverage-security-frameworks-and-libraries)
 - [3. Secure Database Access](#3-secure-database-access)
@@ -16,10 +15,6 @@
 # Objective
 
 This cheatsheet will help users of the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) identify which cheatsheets map to each proactive controls item. This mapping is based the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) version 3.0 (2018).
-
-# Not addressed topic
-
-Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) if you need that a dedicated cheat sheet be created to provide information about the target Proactive Controls section.
 
 # 1. Define Security Requirements
 
