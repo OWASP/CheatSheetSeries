@@ -285,10 +285,11 @@ The following shows techniques presumed to be CSRF mitigations but none of them 
 
 Since CSRF vulnerabilities are reportedly widespread, we recommend using the following best practices to mitigate risk.
 
-1. Logoff immediately after using a Web application.
-2. Do not allow your browser to save username/passwords, and do not allow sites to “remember” your login.
-3. Do not use the same browser to access sensitive applications and to surf the Internet freely (tabbed browsing).
-4. The use of plugins such as No-Script makes POST based CSRF vulnerabilities difficult to exploit. This is because JavaScript is used to automatically submit the form when the exploit is loaded. Without JavaScript, the attacker would have to trick the user into submitting the form manually.
+1. Logoff immediately after using a Web application.
+2. Do not allow your browser to save username/passwords, and do not allow sites to “remember” your login.
+3. Do not use the same browser to access sensitive applications and to surf the Internet freely (tabbed browsing).
+4. The use of plugins such as No-Script makes POST based CSRF vulnerabilities difficult to exploit. This is because JavaScript is used to automatically submit the form when the exploit is loaded. Without JavaScript, the attacker would have to trick the user into submitting the form manually.
+
 Integrated HTML-enabled mail/browser and newsreader/browser environments pose additional risks since simply viewing a mail message or a news message might lead to the execution of an attack. 
 
 # Implementation reference example
