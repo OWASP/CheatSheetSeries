@@ -77,23 +77,23 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 # Tabnabbing
 
-Attack is described in details into this [article](https://www.owasp.org/index.php/Reverse_Tabnabbing).
+Attack is described in detail in this [article](https://www.owasp.org/index.php/Reverse_Tabnabbing).
 
-To resume, it's the capacity from a new opened page to act on parent page's content or location via the back link exposed by the **opener** javascript object instance.
+To summarize, it's the capacity to act on parent page's content or location from a newly opened page via the back link exposed by the **opener** javascript object instance.
 
-It apply to html link or javascript `window.open` function using the attribute/instruction `target` to specify a [target loading location](https://www.w3schools.com/tags/att_a_target.asp) that do not replace the current location and then let the current window/tab available.
+It applies to html link or a javascript `window.open` function using the attribute/instruction `target` to specify a [target loading location](https://www.w3schools.com/tags/att_a_target.asp) that does not replace the current location and then makes the current window/tab available.
 
-To prevent this issue the following actions are available:
+To prevent this issue, the following actions are available:
 
 Cut the back link between the parent and the child pages:
 - For html link:
-    - To cut this back link then add the attribute `rel="noopener"` on the tag used to create the link from the parent page to the child page. This attribute value cut the link but, depending on the browser, let referrer information be present in the request to the child page.
-    - To remove also the referrer information then use this attribute value: `rel="noopener noreferrer"`.
+    - To cut this back link, add the attribute `rel="noopener"` on the tag used to create the link from the parent page to the child page. This attribute value cuts the link, but depending on the browser, lets referrer information be present in the request to the child page.
+    - To also remove the referrer information use this attribute value: `rel="noopener noreferrer"`.
 - For javascript `window.open` function, add the values `noopener,noreferrer` in the [windowFeatures](https://developer.mozilla.org/en-US/docs/Web/API/Window/open) parameter of the `window.open` function.
 
-As the behavior using the elements above is different between the browsers either using html link or javascript to open a window (or tab) then use this configuration to maximize the cross supports:
+As the behavior using the elements above is different between the browsers, either use html link or javascript to open a window (or tab), then use this configuration to maximize the cross supports:
 
-- For html link, add the attribute `rel="noopener noreferrer"` for every links.
+- For html link, add the attribute `rel="noopener noreferrer"` to every link.
 - For Javascript, use this function to open a window (or tab):
 
 ``` javascript
@@ -105,7 +105,7 @@ function openPopup(url, name, windowFeatures){
 }
 ```
 
-- Add the HTTP response header `Referrer-Policy: no-referrer` to every HTTP responses send by the application ([Header Referrer-Policy information](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#rp). This configuration will ensure that no referrer information is sent along with requests from page.
+- Add the HTTP response header `Referrer-Policy: no-referrer` to every HTTP response sent by the application ([Header Referrer-Policy information](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#rp). This configuration will ensure that no referrer information is sent along with requests from the page.
 
 Compatibility matrix:
 
@@ -116,11 +116,11 @@ Compatibility matrix:
 # Sandboxed frames
 
 - Use the `sandbox` attribute of an `iframe` for untrusted content.
-- The `sandbox` attribute of an `iframe` enables restrictions on content within a `iframe`. The following restrictions are active when the `sandbox` attribute is set:
+- The `sandbox` attribute of an `iframe` enables restrictions on content within an `iframe`. The following restrictions are active when the `sandbox` attribute is set:
     1.  All markup is treated as being from a unique origin.
     2.  All forms and scripts are disabled.
     3.  All links are prevented from targeting other browsing contexts.
-    4.  All features that triggers automatically are blocked.
+    4.  All features that trigger automatically are blocked.
     5.  All plugins are disabled.
 
 It is possible to have a [fine-grained control](https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-sandbox) over `iframe` capabilities using the value of the `sandbox` attribute.
@@ -130,7 +130,7 @@ It is possible to have a [fine-grained control](https://html.spec.whatwg.org/mul
 
 # Offline Applications
 
-- Whether the user agent requests permission to the user to store data for offline browsing and when this cache is deleted varies from one browser to the next. Cache poisoning is an issue if a user connects through insecure networks, so for privacy reasons it is encouraged to require user input before sending any `manifest` file.
+- Whether the user agent requests permission from the user to store data for offline browsing and when this cache is deleted, varies from one browser to the next. Cache poisoning is an issue if a user connects through insecure networks, so for privacy reasons it is encouraged to require user input before sending any `manifest` file.
 - Users should only cache trusted websites and clean the cache after browsing through open or insecure networks.
 
 # Progressive Enhancements and Graceful Degradation Risks
@@ -143,26 +143,26 @@ Consult the project [OWASP Secure Headers](https://www.owasp.org/index.php/OWASP
 
 # WebSocket implementation hints
 
-In addition to the elements mentioned above, this is the list of area for which caution must be taken during the implementation.
+In addition to the elements mentioned above, this is the list of areas for which caution must be taken during the implementation.
 
 - Access filtering through the "Origin" HTTP request header
-- Input / output validation
+- Input / Output validation
 - Authentication
 - Authorization
 - Access token explicit invalidation
 - Confidentiality and Integrity
 
-The section below will propose some implementation hints on every area and will be along with an application example showing all the points described.
+The section below will propose some implementation hints for every area and will go along with an application example showing all the points described.
 
 The complete source code of the example application is available [here](https://github.com/righettod/poc-websocket).
 
 ## Access filtering
 
-During a websocket channel initiation, the browser send the **Origin** HTTP request header that contain th source domain initiation the request to handshake. Event if this header can be spoofed in a forged HTTP request (not browser based), it cannot be overrided or forced in a browser context. It then represent a good candidate to apply filtering according to an expected value.
+During a websocket channel initiation, the browser sends the **Origin** HTTP request header that contains the source domain initiation for the request to handshake. Even if this header can be spoofed in a forged HTTP request (not browser based), it cannot be overridden or forced in a browser context. It then represents a good candidate to apply filtering according to an expected value.
 
-An example of attack using this vector and named *Cross-Site WebSocket Hijacking (CSWSH)* is described [here](https://www.christian-schneider.net/CrossSiteWebSocketHijacking.html).
+An example of an attack using this vector, named *Cross-Site WebSocket Hijacking (CSWSH)*, is described [here](https://www.christian-schneider.net/CrossSiteWebSocketHijacking.html).
 
-The code below define a configuration that apply filtering based on a "whitelist" of origins. This ensure that only allowed origins can establish a full handshake:
+The code below defines a configuration that applies filtering based on a "whitelist" of origins. This ensures that only allowed origins can establish a full handshake:
 
 ``` java
 import org.owasp.encoder.Encode;
@@ -216,15 +216,15 @@ public class EndpointConfigurator extends ServerEndpointConfig.Configurator {
 
 ## Authentication and Input/Output validation
 
-When using websocket as communication channel, it's important to use an authentication method allowing the user to receive an access *Token* that is not automatically sent by the browser and then must be expliclty sent by the client code during each exchange.
+When using websocket as communication channel, it's important to use an authentication method allowing the user to receive an access *Token* that is not automatically sent by the browser and then must be explicitly sent by the client code during each exchange.
 
-[JSON Web Token](https://jwt.io/introduction/) is a good candidate because it allow to transport access ticket information in a stateless and not alterable way. Moreover, it define a validity timeframe. You can find additional information about JWT token hardening on this [cheat sheet](JSON_Web_Token_Cheat_Sheet_for_Java.md).
+[JSON Web Token](https://jwt.io/introduction/) is a good candidate, because it allows the transport of access ticket information in a stateless and not alterable way. Moreover, it defines a validity timeframe. You can find additional information about JWT token hardening on this [cheat sheet](JSON_Web_Token_Cheat_Sheet_for_Java.md).
 
 [JSON Validation Schema](http://json-schema.org/) are used to define and validate the expected content in input and ouput messages.
 
-The code below define the complete authentication messages flow handling:
+The code below defines the complete authentication messages flow handling:
 
-**Authentication Web Socket endpoint** - Provide a WS endpoint the enable authentication exchange
+**Authentication Web Socket endpoint** - Provide a WS endpoint that enables authentication exchange
 
 ``` java
 import org.owasp.pocwebsocket.configurator.EndpointConfigurator;
@@ -502,7 +502,7 @@ public class AuthenticationUtils {
 }
 ```    
 
-**Authentication message decoder and encoder** - Perform the JSON serialization/deserialization and the input/output validation using dedicated JSON Schema. It allow to systematically ensure that all messages received and sent by the endpoint strictly respect the expected structure and content.
+**Authentication message decoder and encoder** - Perform the JSON serialization/deserialization and the input/output validation using dedicated JSON Schema. It makes it possible to systematically ensure that all messages received and sent by the endpoint strictly respect the expected structure and content.
 
 ``` java
 import com.fasterxml.jackson.databind.JsonNode;
@@ -523,7 +523,7 @@ import java.io.IOException;
 /**
  * Decode JSON text representation to an AuthenticationRequest object
  * <p>
- * As there one instance of the decoder class by endpoint session so we can use the 
+ * As there's one instance of the decoder class by endpoint session so we can use the 
  * JsonSchema as decoder instance variable.
  */
 public class AuthenticationRequestDecoder implements Decoder.Text<AuthenticationRequest> {
@@ -712,9 +712,9 @@ Authorization information is stored in the access token using the JWT *Claim* fe
 
 The access token is passed with every message sent to the message endpoint and a blacklist is used in order to allow the user to request an explicit token invalidation. 
 
-Explicit token invalidation is interesting from a user point of view because, often when token are used, the validity timeframe of the token is relatively long (it's common to see a valid timeframe superior to 1 hour) so it's important to allow a user to have a way to indicate to the system "OK, i have finished my exchange with you so you can close our exchange session and cleanup associated links". 
+Explicit token invalidation is interesting from a user's point of view because, often when tokens are used, the validity timeframe of the token is relatively long (it's common to see a valid timeframe superior to 1 hour) so it's important to allow a user to have a way to indicate to the system "OK, I have finished my exchange with you, so you can close our exchange session and cleanup associated links". 
 
-It's help also a user to revoke itself is current access if a malicious concurrent access is detected using the same token (case of token stealing).
+It also helps the user to revoke itself of current access if a malicious concurrent access is detected using the same token (case of token stealing).
 
 **Token blacklist** - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore
 
@@ -921,7 +921,7 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
 
 ## Confidentiality and Integrity
 
-If the raw version of the protocol is used (protocol `ws://`) then the transfered data are exposed to eavesdropping and potential on-the-fly alteration.
+If the raw version of the protocol is used (protocol `ws://`) then the transfered data is exposed to eavesdropping and potential on-the-fly alteration.
 
 Example of capture using [Wireshark](https://www.wireshark.org/) and searching for password exchanges in the stored PCAP file, not printable characters has been explicitly removed from the command result:
 
@@ -932,7 +932,7 @@ $ grep -aE '(password)' capture.pcap
 
 There is a way to check, at WebSocket endpoint level, if the channel is secure by calling the method `isSecure()` on the *session* object instance.
 
-Example of implementation in the method of the endpoint in charge of setup the session and affect the message handler:
+Example of implementation in the method of the endpoint in charge of setup of the session and affects the message handler:
 
 ``` java
 /**
