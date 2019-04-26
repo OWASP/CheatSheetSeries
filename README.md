@@ -74,25 +74,27 @@ Members:
 
 # PR usage for core commiters
 
-For the following kind of modification, the PR system will be used by the core commiters in order to allow peer review using the GitHub PR review system:
-* Adding of new cheat sheet.
+For the following kind of modifications, the PR system will be used by the core commiters in order to allow peer review using the GitHub PR review system:
+* Addition of a new cheat sheet.
 * Deep modification of an existing cheat sheet.
 
-This the procedure:
+Below are the steps to properly submit a PR:
 1. Clone the project.
-2. Move on the `master` branch: 
+2. Move on to the `master` branch: 
     > `git checkout master`
-3. Create a branch named `feature_request_[ID]` where **[ID]** is the number of the linked issue opened prior to the PR to follow the contribution process:
-    > `git checkout -b feature_request_[ID]`
-4. Switch on this new branch (normally it's the already the case):
-    > `git checkout feature_request_[ID]`
-5. Do the expected work.
-6. Push the new branch:
-    > `git push origin feature_request_[ID]`   
-7. When the work is ready for the review, create a pull request by visiting this link:
-    > `https://github.com/OWASP/CheatSheetSeries/pull/new/feature_request_[ID]`
-8. Implements the modification requested by the reviewers and when the core technical review team is OK then the PR is merged.
-9. Once merged, delete the branch using this [GitHub feature](https://help.github.com/en/articles/creating-and-deleting-branches-within-your-repository#deleting-a-branch).
+3. Ensure that you have the latest files:
+    > `git pull`
+4. Create a branch named `CSS-[ID]` where **[ID]** is the number of the linked issue opened prior to the PR to follow the contribution process:
+    > `git checkout -b CSS-[ID]`
+5. Switch to this new branch (normally it's already the case):
+    > `git checkout CSS-[ID]`
+6. Do the expected work.
+7. Push the new branch:
+    > `git push origin CSS-[ID]`   
+8. When the work is ready for the review, create a pull request by visiting this link:
+    > `https://github.com/OWASP/CheatSheetSeries/pull/new/CSS-[ID]`
+9. Implement the modifications requested by the reviewers. Once the reviewers approve the PR, it is then merged to the `master` branch.
+10. Once merged, delete the branch using this [GitHub feature](https://help.github.com/en/articles/creating-and-deleting-branches-within-your-repository#deleting-a-branch).
 
 See project current [branches](https://github.com/OWASP/CheatSheetSeries/branches).
 
