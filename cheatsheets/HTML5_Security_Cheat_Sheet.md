@@ -15,7 +15,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 - Don't assume you have control over the `data` attribute. A single [Cross Site Scripting](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) flaw in the sending page allows an attacker to send messages of any given format.
 - Both pages should only interpret the exchanged messages as **data**. Never evaluate passed messages as code (e.g. via `eval()`) or insert it to a page DOM (e.g. via `innerHTML`), as that would create a DOM-based XSS vulnerability. For more information see [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md).
 - To assign the data value to an element, instead of using a insecure method like `element.innerHTML=data;`, use the safer option: `element.textContent=data;`
-- Check the origin properly exactly to match the FQDN(s) you expect. Note that the following code: `if(message.orgin.indexOf(".owasp.org")!=-1) { /* ... */ }` is very insecure and will not have the desired behavior as `www.owasp.org.attacker.com` will match.
+- Check the origin properly exactly to match the FQDN(s) you expect. Note that the following code: `if(message.origin.indexOf(".owasp.org")!=-1) { /* ... */ }` is very insecure and will not have the desired behavior as `www.owasp.org.attacker.com` will match.
 - If you need to embed external content/untrusted gadgets and allow user-controlled scripts (which is highly discouraged), consider using a JavaScript rewriting framework such as [Google Caja](http://code.google.com/p/google-caja/) or check the information on [sandboxed frames](HTML5_Security_Cheat_Sheet.md#sandboxed-frames).
 
 ## Cross Origin Resource Sharing
