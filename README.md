@@ -3,7 +3,9 @@
 [![PushAndPullRequestIntegrityCheck](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 [![OfflineWebsiteBuild](https://circleci.com/gh/OWASP/CheatSheetSeries/tree/master.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries/tree/master)
 
-![LogoOfficial](https://github.com/OWASP/owasp-swag/raw/master/projects/cheat-sheet-series/owasp-1.png)
+![OWASPHeader](assets/Preface_Cheatsheet_Header.png)
+
+![ProjectLogoOfficial](assets/Preface_Cheatsheet_Logo.png)
 
 # Welcome to OWASP Cheat Sheet Series V2
 
