@@ -8,9 +8,14 @@ The increase in XSS and clickjacking vulnerabilities demands a more `defense in 
 
 # Avoid CSP
 
+As mentioned in in the [w3c specifications](https://www.w3.org/TR/CSP3/#intro):
+> CSP is not intended as a first line of defense against content injection vulnerabilities. Instead, CSP is best used as defense-in-depth. It reduces the harm that a malicious injection can cause, but it is not a replacement for careful input validation and output encoding.
+
 If you are a developer of any of the applications mentioned below, CSP will barely provide or improve their security:
-- Single page applications with no cookies or authentication.
+- Single page applications with no cookies or authentication and that serve static content.
 - Applications that are already vulnerable to XSS vulnerabilities and chose not to remediate them. CSP is not the first line of defense.
+
+_Note:_ Despite CSP not being a first line of defense, using CSP to protect the user inside the browser from a vulnerability that is not going to be fixed or is under work **is recommended**.
 
 # Policy Delivery
 
