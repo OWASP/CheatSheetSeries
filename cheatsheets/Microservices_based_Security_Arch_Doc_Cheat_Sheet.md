@@ -20,7 +20,7 @@ In most cases, existing application architecture documentation is not suitable t
 
 # Objective
 
-The objective of the cheat sheet is to explain what architecture security-specific information can be collected to answer the questions above and provide to the security architects concrete proposal of approach to collect microservice-based architecture information to securing application.
+The objective of the cheat sheet are to explain what architecture security-specific information can be collected to answer the questions above and provide to the security architects concrete proposal of approach to collect microservice-based architecture information to securing application.
 
 # Proposition
 
@@ -59,16 +59,16 @@ Collect information on the parameters listed below related to each data storage.
 | Parameter name | Description | 
 | :--- | :--- |
 |Storage name (ID) | Unique storage name or ID
-|Software type | Specify software that implements the data storage (e.g., PostgreSQL,Redis, Apache Cassandra).
+|Software type | Specify software that implements the data storage (e.g., PostgreSQL, Redis, Apache Cassandra).
 
 ### Identify and describe message queues
 
-Messaging systems (e.g., Rabbit MQ or Apache Kafka) are used to implement asynchronous microservices communication mechanism. Collect information on the parameters listed below related to each message queue.
+Messaging systems (e.g., RabbitMQ or Apache Kafka) are used to implement asynchronous microservices communication mechanism. Collect information on the parameters listed below related to each message queue.
 
 | Parameter name | Description | 
 | :--- | :--- |
 |Message queue (ID) | Unique message queue name or ID
-|Software type | Specify software that implements the message queue (e.g., Rabbit MQ, Apache Kafka).
+|Software type | Specify software that implements the message queue (e.g., RabbitMQ, Apache Kafka).
 
 ### Identify and describe data assets
 
