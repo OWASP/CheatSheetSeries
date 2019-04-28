@@ -106,6 +106,7 @@ Collect information on the parameters listed below related to each “service-to
 ### Identify “service-to-service” asynchronous communications
 
 Collect information on the parameters listed below related to each “service-to-service” asynchronous communication.
+
 | Parameter name | Description | 
 | :--- | :--- |
 | Publisher service name (ID) | Specify publisher service name (ID) defined above
@@ -116,6 +117,7 @@ Collect information on the parameters listed below related to each “service-to
 ### Identify “asset-to-storage” relations
 
 Collect information on the parameters listed below related to each “asset-to-storage” relations.
+
 | Parameter name | Description | 
 | :--- | :--- |
 | Asset name (ID) | Asset name (ID) defined above
