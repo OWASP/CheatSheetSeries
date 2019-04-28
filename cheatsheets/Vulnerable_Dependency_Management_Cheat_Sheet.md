@@ -30,7 +30,9 @@ In the rest of the cheat sheet, when we refer to *development team* then we assu
 
 It's important to keep in mind the different ways in which a security issue is handled after its discovery. 
 
-## 1. [Responsible disclosure](https://en.wikipedia.org/wiki/Responsible_disclosure)*
+## 1. Responsible disclosure
+
+See a description [here](https://en.wikipedia.org/wiki/Responsible_disclosure).
 
 A researcher discovers a vulnerability in a component, and after collaboration with the component provider, they issue a [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures) (sometimes a specific vulnerability identifier to the provider is created but generally a CVE identifier is preferred) associated to the issue allowing the public referencing of the issue as well as the available fixation/mitigation. 
 
@@ -41,7 +43,9 @@ If in case the provider doesn't properly cooperate with the researcher, the foll
 
 Here, the vulnerability is always referenced in the [CVE global database](https://nvd.nist.gov/vuln/data-feeds) used, generally, by the detection tools as one of the several input sources used.
 
-## 2. [Full disclosure](https://en.wikipedia.org/wiki/Full_disclosure_(computer_security)#Full_disclosure)*
+## 2. Full disclosure
+
+See a description [here](https://en.wikipedia.org/wiki/Full_disclosure), into the section named **Computers** about **Computer Security**.
 
 The researcher decides to release all the information including exploitation code/method on services like [Full Disclosure mailing list](https://seclists.org/fulldisclosure/), [Exploit-DB](https://www.exploit-db.com).
 
