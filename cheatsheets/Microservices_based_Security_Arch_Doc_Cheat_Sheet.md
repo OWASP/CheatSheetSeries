@@ -29,6 +29,7 @@ The objective of the cheat sheet is to explain what architecture security-specif
 ### Identify and describe application-functionality services
 
 Application-functionality services implement one or several business process or functionality (e.g., storing customer details, storing and displaying product catalog, customer order processing). Collect information on the parameters listed below related to each application-functionality service.
+
 | Parameter name | Description | 
 | :--- | :--- |
 | Service name (ID) | Unique service name or ID
@@ -42,6 +43,7 @@ Application-functionality services implement one or several business process or 
 ### Identify and describe infrastructure services
 
 Infrastructure services including remote services implement authentication and authorization, service registration and discovery, security monitoring etc. Collect information on the parameters listed below related to each infrastructure service.
+
 | Parameter name | Description | 
 | :--- | :--- |
 Parameter name	| Parameter description
@@ -53,6 +55,7 @@ Parameter name	| Parameter description
 ### Identify and describe data storages
 
 Collect information on the parameters listed below related to each data storage.
+
 | Parameter name | Description | 
 | :--- | :--- |
 |Storage name (ID) | Unique storage name or ID
@@ -61,6 +64,7 @@ Collect information on the parameters listed below related to each data storage.
 ### Identify and describe message queues
 
 Messaging systems (e.g., Rabbit MQ or Apache Kafka) are used to implement asynchronous microservices communication mechanism. Collect information on the parameters listed below related to each message queue.
+
 | Parameter name | Description | 
 | :--- | :--- |
 |Message queue (ID) | Unique message queue name or ID
@@ -69,6 +73,7 @@ Messaging systems (e.g., Rabbit MQ or Apache Kafka) are used to implement asynch
 ### Identify and describe data assets
 
 Identify and describe data assets that processed by system microservices/services. It is advisable firstly to identify assets, which are valuable from a security perspective (e.g., “User information”, “Payment”). Collect information on the parameters listed below related to each asset.
+
 | Parameter name | Description | 
 | :--- | :--- |
 | Asset name (ID) | Unique asset name or ID
@@ -80,6 +85,7 @@ Identify and describe data assets that processed by system microservices/service
 ### Identify “service-to-storage” relations
 
 Collect information on the parameters listed below related to each “service-to-storage” relation.
+
 | Parameter name | Description | 
 | :--- | :--- |
 | Service name (ID) | Specify service name (ID) defined above
@@ -89,6 +95,7 @@ Collect information on the parameters listed below related to each “service-to
 ### Identify “service-to-service” synchronous communications
 
 Collect information on the parameters listed below related to each “service-to-service” synchronous communication.
+
 | Parameter name | Description | 
 | :--- | :--- |
 | Caller service name (ID) | Specify caller service name (ID) defined above
