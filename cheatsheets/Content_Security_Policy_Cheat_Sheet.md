@@ -40,14 +40,14 @@ Multiple types of directives exist that allow the developer to granularly contro
 
 Fetch directives tell the browser the locations to trust and load resources from.
 
-- `default-src` is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of `default-src`.
+Most fetch directives have a certain [fallback list specified in w3](https://www.w3.org/TR/CSP3/#directive-fallback-list). This list allows for granular control of the source of scripts, images, files, etc. 
+
 - `child-src` allows the developer to control nested browsing contexts and worker execution contexts.
   - According to [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Fetch_directives), the below 2 directives should be used to regulate nested browsing context and workers as `child-src` will be deprecated in the coming versions.
   - `frame-src` specifies the URLs which can be loaded into nested browsing contexts (*e.g.* `<iframe>`).
   - `worker-src` specifies the URLs which can be loaded as worker, sharedworker, or serviceworker. Fallback's on `script-src` too.
 - `connect-src` provides control over fetch requests, XHR, eventsource, beacon and websockets connections.
 - `font-src` specifies which URLs to load fonts from.
-
 - `img-src` specifies the URLs that images can be loaded from.
 - `manifest-src` specifies the URLs that application manifests may be loaded from.
 - `media-src` specifies the URLs from which video, audio and text track resources can be loaded from.
@@ -59,6 +59,7 @@ Fetch directives tell the browser the locations to trust and load resources from
 - `style-src` controls from where styles get applied to a document. This includes `<link>` elements, `@import` rules, and requests originating from a `Link` HTTP response header field.
   - `style-src-elem` controls styles except for inline attributes.
   - `style-src-attr` controls styles attributes.
+- `default-src` is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of `default-src`.
 
 ## Document Directives
 
