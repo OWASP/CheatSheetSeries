@@ -5,3 +5,4 @@ TOC.md
 node_modules/
 site/
 generated/
+.DS_Store
