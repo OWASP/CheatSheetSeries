@@ -1,14 +1,14 @@
 # Introduction
 
-[REST](http://en.wikipedia.org/wiki/Representational_state_transfer) (or **RE**presentational **S**tate **T**ransfer) is an architectural style first described in [Roy Fielding](https://en.wikipedia.org/wiki/Roy_Fielding)'s Ph.D. dissertation on [Architectural Styles and the Design of Network-based Software Architectures](https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm). 
+[REST](http://en.wikipedia.org/wiki/Representational_state_transfer) (or **RE**presentational **S**tate **T**ransfer) is an architectural style first described in [Roy Fielding](https://en.wikipedia.org/wiki/Roy_Fielding)'s Ph.D. dissertation on [Architectural Styles and the Design of Network-based Software Architectures](https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm).
 
 It evolved as Fielding wrote the HTTP/1.1 and URI specs and has been proven to be well-suited for developing distributed hypermedia applications. While REST is more widely applicable, it is most commonly used within the context of communicating with services via HTTP.
 
-The key abstraction of information in REST is a resource. A REST API resource is identified by a URI, usually a HTTP URL. REST components use connectors to perform actions on a resource by using a representation to capture the current or intended state of the resource and transferring that representation. 
+The key abstraction of information in REST is a resource. A REST API resource is identified by a URI, usually a HTTP URL. REST components use connectors to perform actions on a resource by using a representation to capture the current or intended state of the resource and transferring that representation.
 
 The primary connector types are client and server, secondary connectors include cache, resolver and tunnel.
 
-REST APIs are stateless. Stateful APIs do not adhere to the REST architectural style. State in the REST acronym refers to the state of the resource which the API accesses, not the state of a session within which the API is called. While there may be good reasons for building a stateful API, it is important to realize that managing sessions is complex and difficult to do securely. 
+REST APIs are stateless. Stateful APIs do not adhere to the REST architectural style. State in the REST acronym refers to the state of the resource which the API accesses, not the state of a session within which the API is called. While there may be good reasons for building a stateful API, it is important to realize that managing sessions is complex and difficult to do securely.
 
 Stateful services are out of scope of this Cheat Sheet: *Passing state from client to backend, while making the service technically stateless, is an anti-pattern that should also be avoided as it is prone to replay and impersonation attacks.*
 
@@ -16,7 +16,7 @@ In order to implement flows with REST APIs, resources are typically created, rea
 
 Another key feature of REST applications is the use of standard HTTP verbs and error codes in the pursuit or removing unnecessary variation among different services.
 
-Another key feature of REST applications is the use of [HATEOAS or Hypermedia As The Engine of Application State](https://en.wikipedia.org/wiki/HATEOAS). This provides REST applications a self-documenting nature making it easier for developers to interact with a REST service without a priori knowledge. 
+Another key feature of REST applications is the use of [HATEOAS or Hypermedia As The Engine of Application State](https://en.wikipedia.org/wiki/HATEOAS). This provides REST applications a self-documenting nature making it easier for developers to interact with a REST service without a priori knowledge.
 
 # HTTPS
 
@@ -37,7 +37,7 @@ Non-public REST services must perform access control at each API endpoint. Web s
 
 There seems to be a convergence towards using [JSON Web Tokens](https://tools.ietf.org/html/rfc7519) (JWT) as the format for security tokens. JWTs are JSON data structures containing a set of claims that can be used for access control decisions. A cryptographic signature or message authentication code (MAC) can be used to protect the integrity of the JWT.
 
-- Ensure JWTs are integrity protected by either a signature or a MAC. Do not allow the unsecured JWTs: `{"alg":"none"}`. 
+- Ensure JWTs are integrity protected by either a signature or a MAC. Do not allow the unsecured JWTs: `{"alg":"none"}`.
     - See [here](https://tools.ietf.org/html/rfc7519#section-6.1)
 - In general, signatures should be preferred over MACs for integrity protection of JWTs.
 
@@ -71,7 +71,7 @@ API keys can reduce the impact of denial-of-service attacks. However, when they 
 - Reject all requests not matching the whitelist with HTTP response code `405 Method not allowed`.
 - Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record
 
-In Java EE in particular, this can be difficult to implement properly. See [Bypassing Web Authentication and Authorization with HTTP Verb Tampering](http://www.aspectsecurity.com/research-presentations/bypassing-vbaac-with-http-verb-tampering) for an explanation of this common misconfiguration.
+In Java EE in particular, this can be difficult to implement properly. See [Bypassing Web Authentication and Authorization with HTTP Verb Tampering](../assets/Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf) for an explanation of this common misconfiguration.
 
 # Input validation
 
@@ -159,9 +159,9 @@ RESTful web services should be careful to prevent leaking credentials. Passwords
 
 # HTTP Return Code
 
-HTTP defines [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). When designing REST API, don't just use `200` for success or `404` for error. Always use the semantically appropriate status code for the response. 
+HTTP defines [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). When designing REST API, don't just use `200` for success or `404` for error. Always use the semantically appropriate status code for the response.
 
-Here is a non-exhaustive selection of security related REST API **status codes**. Use it to ensure you return the correct code. 
+Here is a non-exhaustive selection of security related REST API **status codes**. Use it to ensure you return the correct code.
 
 | Code | Message                | Decription                                                                                                                                                                                                           |
 |-------------|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
