@@ -203,4 +203,4 @@ This should be replaced by `addEventListener` calls:
 
 # Authors and Primary Editors
 
-- Elie Saad
+- Elie Saad - eliesaad7@gmail.com
