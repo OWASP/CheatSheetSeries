@@ -91,8 +91,8 @@ Navigation directives instruct the browser about the locations that the document
 Reporting directives deliver violation of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
 
 - `report-to` which is a groupname defined in the header in a json formatted header value. Does not have proper browser support yet.
-  - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to#Examples)
-- `report-uri` directive will be getting deprected by `report-to`, which is a URI that the reports are sent to.
+  - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)
+- `report-uri` directive is deprecated by `report-to`, which is a URI that the reports are sent to.
   - Goes by the format of: `Content-Security-Policy: report-uri https://example.com/csp-reports`
 
 In order to ensure backward compatibility, use the 2 directives in conjonction. Whenever a browser supports `report-to`, it will ignore `report-uri`. Otherwise, `report-uri` will be used.
