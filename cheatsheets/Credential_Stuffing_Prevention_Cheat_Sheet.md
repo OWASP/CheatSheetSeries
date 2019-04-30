@@ -51,6 +51,7 @@ Example library that can be helpful here is [fingerprintjs 2](https://github.com
 In many cases, credential reuse is an issue because user IDs are the same on multiple sites. In most cases, they are the email address of the user, for usability. This is an obvious problem when considering Credential Stuffing. One possible approach is to avoid use of email addresses as userids. Not using email addresses as userids also helps prevent spearfishing attacks against such users, because the email associated with the user account is far less obvious.
 
 # Secondary Defenses
+
 These techniques, are in most cases, only slowing attacker down. If the credential stuffing is a serious threat for you, they can buy you some time, to defend against ongoing attack. They can be also useful, against opportunistic attackers, who use standard tools and probably will choose easier targets to attack.
 
 ## Multi-Step Login Process
@@ -58,17 +59,20 @@ These techniques, are in most cases, only slowing attacker down. If the credenti
 *Most of the automated account validation we've seen is using single step validation and checking for a success conditions. By forcing the client to render the response and include that in the next request (and including [Synchronizer (CSRF) Tokens](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)), we are just eliminating the basic attempts. It's not comprehensive.*
 
 ##  Require JavaScript and/or block headless browsers
+
 Requiring JavaScript will increase cost of attack because attacker have to run real browser.
 Blocking headless browsers is another step after requiring javascript to block browsers simillar to PhantomJS or Headless Chrome. To detect such browsers application should check JavaScript properties that are used in theese browsers like:
 `navigator.webdriver`, `window._phantom`, `window.callPhantom` and user-agents `PhantomJS`, `HeadlessChrome`.
 
 ## Pwned Passwords
+
 Application can check whether passwords used by users were previously or recently exposed in data breaches. After check application can either notify user about it or force changing password to new one. Trustworthy, big and updated data source for such password is Troy Hunt’s service - [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host it yourself or use [API](https://haveibeenpwned.com/API/v2#PwnedPasswords). 
 In order to protect the value of the source password being searched for, Pwned Passwords implements a [k-Anonymity model](https://en.wikipedia.org/wiki/K-anonymity) that allows a password to be searched for by partial hash. This allows the first 5 characters of a SHA-1 password hash to be passed to the API.
 
 Remember that you should have access to passwords only just after user log-in or register new account (after that passwords will be stored in [hashed form](cheatsheets/Password_Storage_Cheat_Sheet.md#leverage-an-adaptive-one-way-function)), this is the only one plase where you can check if password was leaked. This is the only one place, where you can check if password was leaked. Make sure that you do not log or store plaintext password during this operation.
 
 ## Notify users about unusual security events 
+
 Many applications sends notification to their users about unusual security events like: password change, e-mail change, login from new browser, high number of unsuccessful logins etc. This notifications are useful because it allows users to verify and take actions themselves e.g. change password, invalidate sessions or contact your support if the action was really malicious. It will help you spot the real issue and allow you to defend user.
 
 There is also a risk associated with such notifications, if your customers will receive a lot of such messages with false positives or if they don't understand the message it may cause more harm than good.
