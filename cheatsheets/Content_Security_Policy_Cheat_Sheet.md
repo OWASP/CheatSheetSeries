@@ -8,7 +8,7 @@ The increase in XSS and clickjacking vulnerabilities demands a more `defense in 
 
 # Avoid CSP
 
-As mentioned in in the [w3c specifications](https://www.w3.org/TR/CSP3/#intro):
+As mentioned in the [w3c specifications](https://www.w3.org/TR/CSP3/#intro):
 > CSP is not intended as a first line of defense against content injection vulnerabilities. Instead, CSP is best used as defense-in-depth. It reduces the harm that a malicious injection can cause, but it is not a replacement for careful input validation and output encoding.
 
 If you are a developer of any of the applications mentioned below, CSP will barely provide or improve their security:
@@ -99,16 +99,19 @@ In order to ensure backward compatibility, use the 2 directives in conjonction. 
 
 ## Special Directive Sources
 
-| Value           | Description                                                     |
-|-----------------|-----------------------------------------------------------------|
-| 'none'          | No URLs match.                                                  |
-| 'self'          | Refers to the origin site with the same scheme and port number. |
-| 'unsafe-inline' | Allows the usage of inline scripts or styles.                   |
-| 'unsafe-eval'   | Allows the usage of eval in scripts.                            |
+| Value            | Description                                                                                                           |
+|------------------|-----------------------------------------------------------------------------------------------------------------------|
+| 'none'           | No URLs match.                                                                                                        |
+| 'self'           | Refers to the origin site with the same scheme and port number.                                                       |
+| 'unsafe-inline'  | Allows the usage of inline scripts or styles.                                                                         |
+| 'unsafe-eval'    | Allows the usage of eval in scripts.                                                                                  |
+| 'strict-dynamic' | Combining it with hashes or nonces, this tells the browser to trust scripts originating from the root trusted script. |
 
 In case where the developer needs to use inline scripts, it's recommended to use `sha256` for the script or a `nonce` randomly generated on every page request. 
 
 For more details on hashes and nonces, check out [Scott Helme's Guide](https://scotthelme.co.uk/csp-cheat-sheet/#hashes).
+
+_Note:_ `strict-dynamic` should be used in combination with a `nonce` or a `hash`. It is not a standalone directive.
 
 # CSP Sample Policies
 
