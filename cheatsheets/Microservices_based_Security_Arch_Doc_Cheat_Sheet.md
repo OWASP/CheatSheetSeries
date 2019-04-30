@@ -1,11 +1,11 @@
 # Introduction
 
-The microservice architecture is being increasingly used for designing and implementing application systems in both cloud-based and enterprise infrastructures. There are many security challenges need to be addressed in the application design and implementation phases. In order to address some security challenges it is necessity to collect security-specific information on application architecture.
+The microservice architecture is being increasingly used for designing and implementing application systems in both cloud-based and on-premise infrastructures. There are many security challenges need to be addressed in the application design and implementation phases. In order to address some security challenges it is necessity to collect security-specific information on application architecture.
 The goal of this article is to provide a concrete proposal of approach to collect microservice-based architecture information to securing application.
 
 # Context
 
-During securing applications based on microservices architecture, security architects/engineers usually face with the following questions (mostly referenced in the OWASP Application Security Verification Standard Project under the section V1 “Architecture, Design and Threat Modeling Requirements”):
+During securing applications based on microservices architecture, security architects/engineers usually face with the following questions (mostly referenced in the [OWASP Application Security Verification Standard Project](https://github.com/OWASP/ASVS) under the section [V1 “Architecture, Design and Threat Modeling Requirements”](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)):
 1. Threat modeling and enforcement of the principle of least privilege:
     * What scopes or API keys does microservice minimally need to access other microservice APIs?
     * What grants does microservice minimally need to access database or message queue?
