@@ -58,7 +58,7 @@ These techniques, are in most cases, only slowing attacker down. If the credenti
 
 *Most of the automated account validation we've seen is using single step validation and checking for a success conditions. By forcing the client to render the response and include that in the next request (and including [Synchronizer (CSRF) Tokens](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)), we are just eliminating the basic attempts. It's not comprehensive.*
 
-##  Require JavaScript and/or block headless browsers
+## Require JavaScript and/or block headless browsers
 
 Requiring JavaScript will increase cost of attack because attacker have to run real browser.
 Blocking headless browsers is another step after requiring javascript to block browsers simillar to PhantomJS or Headless Chrome. To detect such browsers application should check JavaScript properties that are used in theese browsers like:
