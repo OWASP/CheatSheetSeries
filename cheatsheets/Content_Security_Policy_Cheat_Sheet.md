@@ -107,11 +107,21 @@ In order to ensure backward compatibility, use the 2 directives in conjonction. 
 | 'unsafe-eval'    | Allows the usage of eval in scripts.                                                                                  |
 | 'strict-dynamic' | Combining it with hashes or nonces, this tells the browser to trust scripts originating from the root trusted script. |
 
-In case where the developer needs to use inline scripts, it's recommended to use `sha256` for the script or a `nonce` randomly generated on every page request. 
+In case where the developer needs to use inline scripts, it's recommended to use `hashes` for static scripts or a `nonce` on every page request.
 
-For more details on hashes and nonces, check out [Scott Helme's Guide](https://scotthelme.co.uk/csp-cheat-sheet/#hashes).
+To create hashes, check out this [hash generator](https://report-uri.com/home/hash). This is a great [example](https://csp.withgoogle.com/docs/faq.html#static-content) of using hashes.
 
-_Note:_ `strict-dynamic` should be used in combination with a `nonce` or a `hash`. It is not a standalone directive.
+To better understand how the directive sources work, check out the [source lists from w3c](https://w3c.github.io/webappsec-csp/#framework-directive-source-list).
+
+## Nonces
+
+[Nonces](https://en.wikipedia.org/wiki/Cryptographic_nonce) attributes are added to script tags. Nonce attributes are composed of base64 values. This nonce is verified against the nonce sent in the CSP header, and only matching nonces are allowed to execute.
+
+They can be used in dynamic script blocks in combination with `strict-dynamic`. If the script block is creating additional DOM elements and executing JS inside of them, `strict-dynamic` tells the browser to trust those elements.
+
+_Note:_ `strict-dynamic` is not a standalone directive and should be used in combination with other directive values, such as `https:`, `nonces`, `hashes`, etc.
+
+For more details on strict-dynamic, check out [strict-dynamic usage](https://w3c.github.io/webappsec-csp/#strict-dynamic-usage).
 
 # CSP Sample Policies
 
@@ -121,12 +131,12 @@ This policy will only allow resources from the originating domain for all the de
 
 The most basic policy assumes:
 
--   All resources are hosted by the same domain of the document.
--   There are no inlines or evals for scripts and style resources.
+- All resources are hosted by the same domain of the document.
+- There are no inlines or evals for scripts and style resources.
 
 > `Content-Security-Policy: default-src 'self';`
 
-To tighten further, one can do the following:
+To tighten further, one can apply the following:
 
 > `Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';`
 
@@ -148,18 +158,20 @@ If the [upgrade-insecure-requests](https://developer.mozilla.org/en-US/docs/Web/
 
 - To prevent all framing of your content use:
   - `Content-Security-Policy: frame-ancestors 'none';`
-- To allow for your site only, use:
+- To allow for the site itself, use:
   - `Content-Security-Policy: frame-ancestors 'self';`
-- To allow for trusted domain , do the following:
+- To allow for trusted domain, do the following:
   - `Content-Security-Policy: frame-ancestors trusted.com;`
 
-## Loading Files from CDN
+## Strict Policy
 
-The below CSP allows loading from the same origin and loading images and scripts from the CDN:
+In order to have a locked down CSP policy, applying [nonces](https://en.wikipedia.org/wiki/Cryptographic_nonce) on all loaded javascript is a must.
 
-`Content-Security-Policy: default-src 'self'; image-src cdn.example.com; script-src cdn.example.com;`
+Google went ahead and set up a [guide](https://csp.withgoogle.com/docs/strict-csp.html) to create a strict CSP based on nonces.
 
-# Refactoring inline code
+A recent [presentation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation) was done at the LocoMocoSec conference.
+
+## Refactoring inline code
 
 By default CSP disables any unsigned JavaScript code placed inline in the HTML source, such as this:
 
@@ -198,11 +210,12 @@ This should be replaced by `addEventListener` calls:
 
 # References
 
+- [CSP with Google](https://csp.withgoogle.com/docs/index.html)
 - [CSP Level 3 W3C](https://www.w3.org/TR/CSP3/)
 - [Content-Security-Policy](https://content-security-policy.com/)
 - [MDN CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
-- [CSP with Google](https://csp.withgoogle.com/docs/)
 - [CSP CheatSheet by Scott Helme](https://scotthelme.co.uk/csp-cheat-sheet/)
+- [Breaking Bad CSP](https://www.slideshare.net/LukasWeichselbaum/breaking-bad-csp)
 
 # Authors and Primary Editors
 
