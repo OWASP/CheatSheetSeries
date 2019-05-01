@@ -10,21 +10,21 @@ It should be noted that defense mechanisms are intended to be used in a layered 
 
 In many cases, brute force protections will overlap with credential stuffing defenses.
 
-Keep in mind that application can have different security levels for different users/roles or actions. For example for casual customers multi-factor authentication may by optional but for admins or some other special roles it can be required.
+Keep in mind that application can have different security levels for different users/roles or actions. For example for casual customers multi-factor authentication may be optional but for admins or some other special roles it should be enforced.
 
 ## Defense Option 1: Multi-Factor Authentication
 
 True multi-factor authentication is the best defense against Credential Stuffing attacks, but can have significant deployment and usability impacts, and so is frequently not a feasible option. If this defense is not feasible for your application, consider adopting as many of these other defenses as you can.
 
-In order to balance security and usability multi-factor authentication can be combined with other techniques to ask for 2nd factor only in special situations. For example it can be combined with [device fingerprinting](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md#defense-option-4-device-fingerprinting), in that scenario application can ask for 2nd factor only when application is accessed by unknown, new browser. Similary, cookies can be also used for remembering known browsers or application can ask about another factor based on login success ratio, IP address (like users from different network than company one like remote workers) etc.
+In order to balance security and usability, multi-factor authentication can be combined with other techniques to ask for 2nd factor only in special situations. For example, it can be combined with [device fingerprinting](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md#defense-option-4-device-fingerprinting), in that scenario, the application can ask for a 2nd factor only when the application is accessed by an unknown, new browser. Similary, cookies can also be used for remembering known browsers or the application can ask about another factor based on the login success ratio, IP address (like users from different network than company one like remote workers) etc.
 
-Assuming having user e-mail address - asking user to retype short, random token from e-mail only after new sucessfull login on a new browser provides good balance bewteen security and usability in a lot of cases.
+Having user e-mail address - asking user to retype short, random token from e-mail only after new sucessfull login on a new browser provides good balance between security and usability in a lot of cases.
 
 ## Defence Option 2: Use a CAPTCHA
 
 Similar to Multi-Factor Authentication this defence can be combined with other techniques to ask user to solve CAPTCHA only in special situations. 
 
-Lot of CAPTCHA examples with comparition can be found [here](https://www.whoishostingthis.com/resources/captcha/)
+Lots of CAPTCHA examples can be reviewed [here](https://www.whoishostingthis.com/resources/captcha/)
 
 ## Defense Option 3: IP blacklists
 
@@ -44,7 +44,7 @@ How you deal with mismatches is also a major consideration. If you are performin
 
 Using simple fingerprinting, with maybe 2 or 3 variables would require that less stringent actions be taken, due to it's higher likelihood of a false positive. In this case, maybe the source IP is blocked if it attempts more than 3 user IDs.
 
-Example library that can be helpful here is [fingerprintjs 2](https://github.com/Valve/fingerprintjs2)
+Example library that can be used is [fingerprintjs2](https://github.com/Valve/fingerprintjs2)
 
 ## Defense Option 5: Disallow Email Addresses as User IDs
 
@@ -52,7 +52,7 @@ In many cases, credential reuse is an issue because user IDs are the same on mul
 
 # Secondary Defenses
 
-These techniques, are in most cases, only slowing attacker down. If the credential stuffing is a serious threat for you, they can buy you some time, to defend against ongoing attack. They can be also useful, against opportunistic attackers, who use standard tools and probably will choose easier targets to attack.
+These techniques are, in most cases, only slowing the attacker down. If the credential stuffing is a serious threat to you, they can buy you some time to defend against ongoing attacks. They can be also useful, against opportunistic attackers, who use standard tools and probably will choose easier targets to attack.
 
 ## Multi-Step Login Process
 
@@ -61,7 +61,7 @@ These techniques, are in most cases, only slowing attacker down. If the credenti
 ## Require JavaScript and/or block headless browsers
 
 Requiring JavaScript will increase cost of attack because attacker have to run real browser.
-Blocking headless browsers is another step after requiring javascript to block browsers simillar to PhantomJS or Headless Chrome. To detect such browsers application should check JavaScript properties that are used in theese browsers like:
+Blocking headless browsers is another step after requiring javascript to block browsers similar to PhantomJS or Headless Chrome. To detect such browsers application should check JavaScript properties that are used in these browsers like:
 `navigator.webdriver`, `window._phantom`, `window.callPhantom` and user-agents `PhantomJS`, `HeadlessChrome`.
 
 ## Pwned Passwords
@@ -69,7 +69,7 @@ Blocking headless browsers is another step after requiring javascript to block b
 Application can check whether passwords used by users were previously or recently exposed in data breaches. After check application can either notify user about it or force changing password to new one. Trustworthy, big and updated data source for such password is Troy Hunt’s service - [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host it yourself or use [API](https://haveibeenpwned.com/API/v2#PwnedPasswords). 
 In order to protect the value of the source password being searched for, Pwned Passwords implements a [k-Anonymity model](https://en.wikipedia.org/wiki/K-anonymity) that allows a password to be searched for by partial hash. This allows the first 5 characters of a SHA-1 password hash to be passed to the API.
 
-Remember that you should have access to passwords only just after user log-in or register new account (after that passwords will be stored in [hashed form](cheatsheets/Password_Storage_Cheat_Sheet.md#leverage-an-adaptive-one-way-function)), this is the only one plase where you can check if password was leaked. This is the only one place, where you can check if password was leaked. Make sure that you do not log or store plaintext password during this operation.
+Remember that you should have access to passwords only just after user log-in or register new account (after that passwords will be stored in [hashed form](cheatsheets/Password_Storage_Cheat_Sheet.md#leverage-an-adaptive-one-way-function)). This is the only one place, where you can check if password was leaked. Make sure that you do not log or store plaintext password during this operation.
 
 ## Notify users about unusual security events 
 
