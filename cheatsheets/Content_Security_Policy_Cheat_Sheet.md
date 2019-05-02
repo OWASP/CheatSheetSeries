@@ -12,10 +12,10 @@ As mentioned in the [w3c specifications](https://www.w3.org/TR/CSP3/#intro):
 > CSP is not intended as a first line of defense against content injection vulnerabilities. Instead, CSP is best used as defense-in-depth. It reduces the harm that a malicious injection can cause, but it is not a replacement for careful input validation and output encoding.
 
 If you are a developer of any of the applications mentioned below, CSP will barely provide or improve their security:
-- Single page applications with no cookies or authentication and that serve static content.
+- Single page applications with no cookies or authentication and that serve static content (the application does not use input to generate content).
 - Applications that are already vulnerable to XSS vulnerabilities and chose not to remediate them. CSP is not the first line of defense.
 
-_Note:_ Despite CSP not being a first line of defense, using CSP to protect the user inside the browser from a vulnerability that is not going to be fixed or is under work **is recommended**.
+*Note:* Despite CSP not being a first line of defense, using CSP to protect the user inside the browser from a vulnerability that is not going to be fixed or is under work **is recommended**.
 
 # Policy Delivery
 
@@ -105,7 +105,9 @@ In order to ensure backward compatibility, use the 2 directives in conjonction. 
 | 'self'           | Refers to the origin site with the same scheme and port number.                                                       |
 | 'unsafe-inline'  | Allows the usage of inline scripts or styles.                                                                         |
 | 'unsafe-eval'    | Allows the usage of eval in scripts.                                                                                  |
-| 'strict-dynamic' | Combining it with hashes or nonces, this tells the browser to trust scripts originating from the root trusted script. |
+| 'strict-dynamic' | Informs the browser to trust scripts originating from a root trusted script.                                        |
+
+*Note:* `strict-dynamic` is not a standalone directive and should be used in combination with other directive values, such as `https:`, `nonce`, `hashes`, etc.
 
 In case where the developer needs to use inline scripts, it's recommended to use `hashes` for static scripts or a `nonce` on every page request.
 
@@ -118,8 +120,6 @@ To better understand how the directive sources work, check out the [source lists
 [Nonces](https://en.wikipedia.org/wiki/Cryptographic_nonce) attributes are added to script tags. Nonce attributes are composed of base64 values. This nonce is verified against the nonce sent in the CSP header, and only matching nonces are allowed to execute.
 
 They can be used in dynamic script blocks in combination with `strict-dynamic`. If the script block is creating additional DOM elements and executing JS inside of them, `strict-dynamic` tells the browser to trust those elements.
-
-_Note:_ `strict-dynamic` is not a standalone directive and should be used in combination with other directive values, such as `https:`, `nonces`, `hashes`, etc.
 
 For more details on strict-dynamic, check out [strict-dynamic usage](https://w3c.github.io/webappsec-csp/#strict-dynamic-usage).
 
