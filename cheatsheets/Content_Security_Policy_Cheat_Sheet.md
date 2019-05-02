@@ -88,7 +88,7 @@ Navigation directives instruct the browser about the locations that the document
 
 ## Reporting Directives
 
-Reporting directives deliver violation of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
+Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
 
 - `report-to` which is a groupname defined in the header in a json formatted header value. Does not have proper browser support yet.
   - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)
