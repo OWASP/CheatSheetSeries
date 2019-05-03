@@ -15,7 +15,7 @@ If you are a developer of any of the applications mentioned below, CSP will bare
 - Single page applications with no cookies or authentication and that serve static content (the application does not use input to generate content).
 - Applications that are already vulnerable to XSS vulnerabilities and chose not to remediate them. CSP is not the first line of defense.
 
-*Note:* Despite CSP not being a first line of defense, using CSP to protect the user inside the browser from a vulnerability that is not going to be fixed or is under work **is recommended**.
+*Note:* Despite CSP not being a first line of defense, using CSP to protect the user inside the browser from a vulnerability that is not going to be fixed, is under work, or under the case where the first security mechanism fails **is recommended**.
 
 # Policy Delivery
 
@@ -90,7 +90,7 @@ Navigation directives instruct the browser about the locations that the document
 
 Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
 
-- `report-to` which is a groupname defined in the header in a json formatted header value. Does not have proper browser support yet.
+- `report-to` which is a groupname defined in the header in a json formatted header value.
   - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)
 - `report-uri` directive is deprecated by `report-to`, which is a URI that the reports are sent to.
   - Goes by the format of: `Content-Security-Policy: report-uri https://example.com/csp-reports`
@@ -99,15 +99,15 @@ In order to ensure backward compatibility, use the 2 directives in conjonction. 
 
 ## Special Directive Sources
 
-| Value            | Description                                                                                                           |
-|------------------|-----------------------------------------------------------------------------------------------------------------------|
-| 'none'           | No URLs match.                                                                                                        |
-| 'self'           | Refers to the origin site with the same scheme and port number.                                                       |
-| 'unsafe-inline'  | Allows the usage of inline scripts or styles.                                                                         |
-| 'unsafe-eval'    | Allows the usage of eval in scripts.                                                                                  |
-| 'strict-dynamic' | Informs the browser to trust scripts originating from a root trusted script.                                        |
+| Value            | Description                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| 'none'           | No URLs match.                                                              |
+| 'self'           | Refers to the origin site with the same scheme and port number.             |
+| 'unsafe-inline'  | Allows the usage of inline scripts or styles.                               |
+| 'unsafe-eval'    | Allows the usage of eval in scripts.                                        |
+| 'strict-dynamic' | Informs the browser to trust scripts originating from a root trusted script.|
 
-*Note:* `strict-dynamic` is not a standalone directive and should be used in combination with other directive values, such as `https:`, `nonce`, `hashes`, etc.
+*Note:* `strict-dynamic` is not a standalone directive and should be used in combination with other directive values, such as `nonce`, `hashes`, etc.
 
 In case where the developer needs to use inline scripts, it's recommended to use `hashes` for static scripts or a `nonce` on every page request.
 
@@ -165,11 +165,25 @@ If the [upgrade-insecure-requests](https://developer.mozilla.org/en-US/docs/Web/
 
 ## Strict Policy
 
-In order to have a locked down CSP policy, applying [nonces](https://en.wikipedia.org/wiki/Cryptographic_nonce) on all loaded javascript is a must.
+A strict policy's role is to protect against classical stored, reflected, and some of the DOM XSS attacks and should be the optimal goal of any team trying to implement CSP.
 
-Google went ahead and set up a [guide](https://csp.withgoogle.com/docs/strict-csp.html) to create a strict CSP based on nonces.
+Google went ahead and set up a [guide](https://csp.withgoogle.com/docs/strict-csp.html) to adopt a strict CSP based on nonces.
 
-A recent [presentation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation) was done at the LocoMocoSec conference.
+Based on a [presentation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation?slide=55) at LocoMocoSec, the following two policies can be used to apply a strict policy:
+
+- Moderate Strict Policy:
+
+```
+script-src 'nonce-r4nd0m' 'strict-dynamic';
+object-src 'none'; base-uri 'none';
+```
+
+- Locked down Strict Policy:
+
+```
+script-src 'nonce-r4nd0m';
+object-src 'none'; base-uri 'none';
+```
 
 ## Refactoring inline code
 
@@ -216,6 +230,7 @@ This should be replaced by `addEventListener` calls:
 - [MDN CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
 - [CSP CheatSheet by Scott Helme](https://scotthelme.co.uk/csp-cheat-sheet/)
 - [Breaking Bad CSP](https://www.slideshare.net/LukasWeichselbaum/breaking-bad-csp)
+- [CSP A Successful Mess Between Hardening And Mitigation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation)
 
 # Authors and Primary Editors
 
