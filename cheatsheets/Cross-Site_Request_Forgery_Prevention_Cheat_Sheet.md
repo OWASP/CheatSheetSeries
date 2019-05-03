@@ -95,6 +95,8 @@ The Encrypted Token Pattern leverages an encryption, rather than comparison meth
 
 Server generates a token comprised of the user's session ID and a timestamp (to prevent replay attacks) using a unique key available only on the server (AES256-with GCM mode/GCM-SIV is recommended. Usage of ECB mode is strictly not recommended. If you would like to use any other block cipher mode of operation, refere [here](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Cryptographic_Storage_Cheat_Sheet.md) and [here](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) for more information). This token is returned to the client and embedded in a hidden field for forms, in the request-header/parameter for AJAX requests. On receipt of this request, the server reads and decrypts the token value with the same key used to create the token. Inability to correctly decrypt suggest an intrusion attempt (recommend to block and log the attack for incident response purposes). Once decrypted, the users sessionId and timestamp contained within the token are validated; session-id is compared against the currently logged in user, and the timestamp is compared against the current time to verify that its not beyond the defined token expiry time. If session-id matches and the timestamp is under the defined token expiry time, request can be allowed.
 
+Refer [here](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Key_Management_Cheat_Sheet.md#key-management-lifecycle-best-practices) to learn best practices about managing your encryption key.
+
 ### HMAC Based Token Pattern
 
 HMAC Based Token Pattern mitigation is also achieved without maintaining any state at the server. [HMAC](https://en.wikipedia.org/wiki/HMAC) based CSRF protection works similar to encryption based CSRF protection with a couple of minor differences
@@ -107,6 +109,8 @@ Below are the steps for the proper implementation of the HMAC based CSRF protect
 2. Include the token (i.e., HMAC+timestamp) in a hidden field for forms and in the request-header field/request body parameter for AJAX requests 
 3. Validating the token 
    When the request is received at the server, re-generate the token with same key K (parameters are sessionID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.
+   
+Refer [here](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Key_Management_Cheat_Sheet.md#key-management-lifecycle-best-practices) to learn best practices about managing your HMAC key.
      
 ## Auto CSRF Mitigation Techniques
 
