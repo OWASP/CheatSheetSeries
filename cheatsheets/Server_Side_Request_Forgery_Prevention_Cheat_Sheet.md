@@ -91,7 +91,7 @@ TODO:
 
 ### URL
 
-TODO:
+Do not accept complete URL from the user because URL are difficult to validate and parser can be abused depending on the technology used.
 
 ## Network layer
 
