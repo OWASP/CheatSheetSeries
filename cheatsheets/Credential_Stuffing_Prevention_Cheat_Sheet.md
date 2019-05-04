@@ -18,8 +18,6 @@ True multi-factor authentication is the best defense against Credential Stuffing
 
 In order to balance security and usability, multi-factor authentication can be combined with other techniques to ask for 2nd factor only in special situations. For example, it can be combined with [device fingerprinting](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md#defense-option-4-device-fingerprinting), in that scenario, the application can ask for a 2nd factor only when the application is accessed by an unknown, new browser. Similary, cookies can also be used for remembering known browsers or the application can ask about another factor based on the login success ratio, IP address (like users from different network than company one like remote workers) etc.
 
-Having user e-mail address - asking user to retype short, random token from e-mail only after new sucessfull login on a new browser provides good balance between security and usability in a lot of cases.
-
 ## Defence Option 2: Use a CAPTCHA
 
 Similar to Multi-Factor Authentication this defence can be combined with other techniques to ask user to solve CAPTCHA only in special situations. 
