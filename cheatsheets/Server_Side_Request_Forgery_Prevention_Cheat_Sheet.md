@@ -1,5 +1,3 @@
-# Mandatory markdown format rules
-
 # Introduction
 
 The objective of the cheat sheet is to provide advices regarding the protection against [Server Side Request Forgery](https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/) attack.
@@ -10,15 +8,10 @@ This cheat sheet will focus on the defense point of view and will not explains h
 
 # Context
 
-Sometime, an application need to perform request to another application, often located on other network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.
-
-*Example:* 
-
-We can imagine an web application that receive and use the information coming a user like the firstname/lastname/birthdate/email/SSN to create a profile into an HR system via a request to this HR system. 
-
-Basically, the user cannot reach the HR system directly but if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system. 
-
-The user use the web application as a proxy to the HR system, jumping accross the different networks in which the web application and the HR system are located.
+Server-Side Request Forgery is a way to force application to make a malicious network request. It can happen when user can control the URL to an external resource like: 
+- image on external server (e.g. user enter URL of the avatar, then the application will download this file and display some feedback like image itself or error)
+- custom WebHook (user have to specify WebHook handlers, Callback URLs)
+- request to another application, often located on other network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.
 
 Overview of an SSRF common flow:
 
