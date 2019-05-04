@@ -990,11 +990,16 @@
 <h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
 <p>The increase in XSS and clickjacking vulnerabilities demands a more <code>defense in depth</code> security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.</p>
 <h1 id="avoid-csp"><a name="avoid-csp" class="plugin-anchor" href="#avoid-csp"><i class="fa fa-link" aria-hidden="true"></i></a>Avoid CSP</h1>
+<p>As mentioned in the <a href="https://www.w3.org/TR/CSP3/#intro" target="_blank">w3c specifications</a>:</p>
+<blockquote>
+<p>CSP is not intended as a first line of defense against content injection vulnerabilities. Instead, CSP is best used as defense-in-depth. It reduces the harm that a malicious injection can cause, but it is not a replacement for careful input validation and output encoding.</p>
+</blockquote>
 <p>If you are a developer of any of the applications mentioned below, CSP will barely provide or improve their security:</p>
 <ul>
-<li>Single page applications with no cookies or authentication.</li>
+<li>Single page applications with no cookies or authentication and that serve static content (the application does not use input to generate content).</li>
 <li>Applications that are already vulnerable to XSS vulnerabilities and chose not to remediate them. CSP is not the first line of defense.</li>
 </ul>
+<p><em>Note:</em> Despite CSP not being a first line of defense, using CSP to protect the user inside the browser from a vulnerability that is not going to be fixed, is under work, or under the case where the first security mechanism fails <strong>is recommended</strong>.</p>
 <h1 id="policy-delivery"><a name="policy-delivery" class="plugin-anchor" href="#policy-delivery"><i class="fa fa-link" aria-hidden="true"></i></a>Policy Delivery</h1>
 <p>CSP can be delivered to the user agent in different techniques.</p>
 <ol>
@@ -1013,8 +1018,8 @@
 <p>Multiple types of directives exist that allow the developer to granularly control the flow of the policies.</p>
 <h2 id="fetch-directives"><a name="fetch-directives" class="plugin-anchor" href="#fetch-directives"><i class="fa fa-link" aria-hidden="true"></i></a>Fetch Directives</h2>
 <p>Fetch directives tell the browser the locations to trust and load resources from.</p>
+<p>Most fetch directives have a certain <a href="https://www.w3.org/TR/CSP3/#directive-fallback-list" target="_blank">fallback list specified in w3</a>. This list allows for granular control of the source of scripts, images, files, etc. </p>
 <ul>
-<li><code>default-src</code> is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of <code>default-src</code>.</li>
 <li><code>child-src</code> allows the developer to control nested browsing contexts and worker execution contexts.<ul>
 <li>According to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Fetch_directives" target="_blank">MDN</a>, the below 2 directives should be used to regulate nested browsing context and workers as <code>child-src</code> will be deprecated in the coming versions.</li>
 <li><code>frame-src</code> specifies the URLs which can be loaded into nested browsing contexts (<em>e.g.</em> <code>&lt;iframe&gt;</code>).</li>
@@ -1022,10 +1027,8 @@
 </ul>
 </li>
 <li><code>connect-src</code> provides control over fetch requests, XHR, eventsource, beacon and websockets connections.</li>
-<li><p><code>font-src</code> specifies which URLs to load fonts from.</p>
-</li>
-<li><p><code>img-src</code> specifies the URLs that images can be loaded from.</p>
-</li>
+<li><code>font-src</code> specifies which URLs to load fonts from.</li>
+<li><code>img-src</code> specifies the URLs that images can be loaded from.</li>
 <li><code>manifest-src</code> specifies the URLs that application manifests may be loaded from.</li>
 <li><code>media-src</code> specifies the URLs from which video, audio and text track resources can be loaded from.</li>
 <li><code>prefetch-src</code> specifies the URLs from which resources can be prefetched from.</li>
@@ -1040,6 +1043,7 @@
 <li><code>style-src-attr</code> controls styles attributes.</li>
 </ul>
 </li>
+<li><code>default-src</code> is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of <code>default-src</code>.</li>
 </ul>
 <h2 id="document-directives"><a name="document-directives" class="plugin-anchor" href="#document-directives"><i class="fa fa-link" aria-hidden="true"></i></a>Document Directives</h2>
 <p>Document directives instruct the browser about the properties of the document to which the policies will apply to. </p>
@@ -1071,13 +1075,13 @@
 </li>
 </ul>
 <h2 id="reporting-directives"><a name="reporting-directives" class="plugin-anchor" href="#reporting-directives"><i class="fa fa-link" aria-hidden="true"></i></a>Reporting Directives</h2>
-<p>Reporting directives deliver violation of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.</p>
+<p>Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.</p>
 <ul>
-<li><code>report-to</code> which is a groupname defined in the header in a json formatted header value. Does not have proper browser support yet.<ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to#Examples" target="_blank">MDN report-to documentation</a></li>
+<li><code>report-to</code> which is a groupname defined in the header in a json formatted header value.<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to" target="_blank">MDN report-to documentation</a></li>
 </ul>
 </li>
-<li><code>report-uri</code> directive will be getting deprected by <code>report-to</code>, which is a URI that the reports are sent to.<ul>
+<li><code>report-uri</code> directive is deprecated by <code>report-to</code>, which is a URI that the reports are sent to.<ul>
 <li>Goes by the format of: <code>Content-Security-Policy: report-uri https://example.com/csp-reports</code></li>
 </ul>
 </li>
@@ -1108,10 +1112,20 @@
 <td>&apos;unsafe-eval&apos;</td>
 <td>Allows the usage of eval in scripts.</td>
 </tr>
+<tr>
+<td>&apos;strict-dynamic&apos;</td>
+<td>Informs the browser to trust scripts originating from a root trusted script.</td>
+</tr>
 </tbody>
 </table>
-<p>In case where the developer needs to use inline scripts, it&apos;s recommended to use <code>sha256</code> for the script or a <code>nonce</code> randomly generated on every page request. </p>
-<p>For more details on hashes and nonces, check out <a href="https://scotthelme.co.uk/csp-cheat-sheet/#hashes" target="_blank">Scott Helme&apos;s Guide</a>.</p>
+<p><em>Note:</em> <code>strict-dynamic</code> is not a standalone directive and should be used in combination with other directive values, such as <code>nonce</code>, <code>hashes</code>, etc.</p>
+<p>In case where the developer needs to use inline scripts, it&apos;s recommended to use <code>hashes</code> for static scripts or a <code>nonce</code> on every page request.</p>
+<p>To create hashes, check out this <a href="https://report-uri.com/home/hash" target="_blank">hash generator</a>. This is a great <a href="https://csp.withgoogle.com/docs/faq.html#static-content" target="_blank">example</a> of using hashes.</p>
+<p>To better understand how the directive sources work, check out the <a href="https://w3c.github.io/webappsec-csp/#framework-directive-source-list" target="_blank">source lists from w3c</a>.</p>
+<h2 id="nonces"><a name="nonces" class="plugin-anchor" href="#nonces"><i class="fa fa-link" aria-hidden="true"></i></a>Nonces</h2>
+<p><a href="https://en.wikipedia.org/wiki/Cryptographic_nonce" target="_blank">Nonces</a> attributes are added to script tags. Nonce attributes are composed of base64 values. This nonce is verified against the nonce sent in the CSP header, and only matching nonces are allowed to execute.</p>
+<p>They can be used in dynamic script blocks in combination with <code>strict-dynamic</code>. If the script block is creating additional DOM elements and executing JS inside of them, <code>strict-dynamic</code> tells the browser to trust those elements.</p>
+<p>For more details on strict-dynamic, check out <a href="https://w3c.github.io/webappsec-csp/#strict-dynamic-usage" target="_blank">strict-dynamic usage</a>.</p>
 <h1 id="csp-sample-policies"><a name="csp-sample-policies" class="plugin-anchor" href="#csp-sample-policies"><i class="fa fa-link" aria-hidden="true"></i></a>CSP Sample Policies</h1>
 <h2 id="basic-csp-policy"><a name="basic-csp-policy" class="plugin-anchor" href="#basic-csp-policy"><i class="fa fa-link" aria-hidden="true"></i></a>Basic CSP Policy</h2>
 <p>This policy will only allow resources from the originating domain for all the default level directives and will not allow inline scripts/styles to execute. If your application functions with these restrictions, it drastically reduces your attack surface, and works with most modern browsers.</p>
@@ -1123,7 +1137,7 @@
 <blockquote>
 <p><code>Content-Security-Policy: default-src &apos;self&apos;;</code></p>
 </blockquote>
-<p>To tighten further, one can do the following:</p>
+<p>To tighten further, one can apply the following:</p>
 <blockquote>
 <p><code>Content-Security-Policy: default-src &apos;none&apos;; script-src &apos;self&apos;; connect-src &apos;self&apos;; img-src &apos;self&apos;; style-src &apos;self&apos;;</code></p>
 </blockquote>
@@ -1148,19 +1162,30 @@
 <li><code>Content-Security-Policy: frame-ancestors &apos;none&apos;;</code></li>
 </ul>
 </li>
-<li>To allow for your site only, use:<ul>
+<li>To allow for the site itself, use:<ul>
 <li><code>Content-Security-Policy: frame-ancestors &apos;self&apos;;</code></li>
 </ul>
 </li>
-<li>To allow for trusted domain , do the following:<ul>
+<li>To allow for trusted domain, do the following:<ul>
 <li><code>Content-Security-Policy: frame-ancestors trusted.com;</code></li>
 </ul>
 </li>
 </ul>
-<h2 id="loading-files-from-cdn"><a name="loading-files-from-cdn" class="plugin-anchor" href="#loading-files-from-cdn"><i class="fa fa-link" aria-hidden="true"></i></a>Loading Files from CDN</h2>
-<p>The below CSP allows loading from the same origin and loading images and scripts from the CDN:</p>
-<p><code>Content-Security-Policy: default-src &apos;self&apos;; image-src cdn.example.com; script-src cdn.example.com;</code></p>
-<h1 id="refactoring-inline-code"><a name="refactoring-inline-code" class="plugin-anchor" href="#refactoring-inline-code"><i class="fa fa-link" aria-hidden="true"></i></a>Refactoring inline code</h1>
+<h2 id="strict-policy"><a name="strict-policy" class="plugin-anchor" href="#strict-policy"><i class="fa fa-link" aria-hidden="true"></i></a>Strict Policy</h2>
+<p>A strict policy&apos;s role is to protect against classical stored, reflected, and some of the DOM XSS attacks and should be the optimal goal of any team trying to implement CSP.</p>
+<p>Google went ahead and set up a <a href="https://csp.withgoogle.com/docs/strict-csp.html" target="_blank">guide</a> to adopt a strict CSP based on nonces.</p>
+<p>Based on a <a href="https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation?slide=55" target="_blank">presentation</a> at LocoMocoSec, the following two policies can be used to apply a strict policy:</p>
+<ul>
+<li>Moderate Strict Policy:</li>
+</ul>
+<pre><code>script-src &apos;nonce-r4nd0m&apos; &apos;strict-dynamic&apos;;
+object-src &apos;none&apos;; base-uri &apos;none&apos;;
+</code></pre><ul>
+<li>Locked down Strict Policy:</li>
+</ul>
+<pre><code>script-src &apos;nonce-r4nd0m&apos;;
+object-src &apos;none&apos;; base-uri &apos;none&apos;;
+</code></pre><h2 id="refactoring-inline-code"><a name="refactoring-inline-code" class="plugin-anchor" href="#refactoring-inline-code"><i class="fa fa-link" aria-hidden="true"></i></a>Refactoring inline code</h2>
 <p>By default CSP disables any unsigned JavaScript code placed inline in the HTML source, such as this:</p>
 <pre><code class="lang-javascript">&lt;script&gt;
 <span class="hljs-keyword">var</span> foo = <span class="hljs-string">&quot;314&quot;</span>
@@ -1190,15 +1215,17 @@
 </blockquote>
 <h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
 <ul>
+<li><a href="https://csp.withgoogle.com/docs/index.html" target="_blank">CSP with Google</a></li>
 <li><a href="https://www.w3.org/TR/CSP3/" target="_blank">CSP Level 3 W3C</a></li>
 <li><a href="https://content-security-policy.com/" target="_blank">Content-Security-Policy</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy" target="_blank">MDN CSP</a></li>
-<li><a href="https://csp.withgoogle.com/docs/" target="_blank">CSP with Google</a></li>
 <li><a href="https://scotthelme.co.uk/csp-cheat-sheet/" target="_blank">CSP CheatSheet by Scott Helme</a></li>
+<li><a href="https://www.slideshare.net/LukasWeichselbaum/breaking-bad-csp" target="_blank">Breaking Bad CSP</a></li>
+<li><a href="https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation" target="_blank">CSP A Successful Mess Between Hardening And Mitigation</a></li>
 </ul>
 <h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
 <ul>
-<li>Elie Saad</li>
+<li>Elie Saad - eliesaad7@gmail.com</li>
 </ul>
 
                                 
@@ -1243,7 +1270,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Content Security Policy ","level":"1.16","depth":1,"next":{"title":"Credential Stuffing Prevention ","level":"1.17","depth":1,"path":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Clickjacking Defense ","level":"1.15","depth":1,"path":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","ref":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Content_Security_Policy_Cheat_Sheet.md","mtime":"2019-05-03T16:50:29.948Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-05-03T16:50:53.022Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Content Security Policy ","level":"1.16","depth":1,"next":{"title":"Credential Stuffing Prevention ","level":"1.17","depth":1,"path":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Clickjacking Defense ","level":"1.15","depth":1,"path":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","ref":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Content_Security_Policy_Cheat_Sheet.md","mtime":"2019-05-04T06:34:42.414Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-05-04T06:35:02.964Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
