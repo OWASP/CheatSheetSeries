@@ -346,7 +346,7 @@ The `SanitizeHelper` module provides a set of methods for scrubbing text of unde
 
 ## RULE \#7 - Avoid JavaScript URL's
 
-Untrusted URL's that include the protocol javascript: will execute javascript code when used in URL DOM locations such as ancor tag HREF attributes or iFrame src locations. Be sure to validate all untrusted URL's to ensure they only contain safe schemes such as HTTPS.
+Untrusted URL's that include the protocol javascript: will execute javascript code when used in URL DOM locations such as anchor tag HREF attributes or iFrame src locations. Be sure to validate all untrusted URL's to ensure they only contain safe schemes such as HTTPS.
 
 ## RULE \#8 - Prevent DOM-based XSS
 
