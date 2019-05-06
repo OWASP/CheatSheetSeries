@@ -289,7 +289,7 @@ Rule \#5 is for when you want to put untrusted data into HTTP GET parameter valu
 <a href="http://www.somesite.com?test=...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...">link</a >  
 ``` 
 
-Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the `%HH` escaping format. Including untrusted data in data: URLs should not be allowed as there is no good way to disable attacks with escaping to prevent switching out of the URL. 
+Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the `%HH` escaping format. Including untrusted data in `data:` URLs should not be allowed as there is no good way to disable attacks with escaping to prevent switching out of the URL. 
 
 All attributes should be quoted. Unquoted attributes can be broken out of with many characters including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`. Note that entity encoding is useless in this context.
 
