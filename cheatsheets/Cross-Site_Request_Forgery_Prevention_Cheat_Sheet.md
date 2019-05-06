@@ -106,7 +106,7 @@ HMAC Based Token Pattern mitigation is also achieved without maintaining any sta
 Below are the steps for the proper implementation of the HMAC based CSRF protection:
 1. Generate the token\
 Using key K, generate HMAC(usersessionID+timestamp) and append the same timestamp value to it which results in your CSRF token.
-2. Include the token (i.e., HMAC+timestamp)\
+2. Include the token (*i.e.* HMAC+timestamp)\
 Include token in a hidden field for forms and in the request-header field/request body parameter for AJAX requests. 
 3. Validating the token\
 When the request is received at the server, re-generate the token with same key K (parameters are sessionID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.
