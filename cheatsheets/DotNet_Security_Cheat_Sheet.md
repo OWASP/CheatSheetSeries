@@ -413,40 +413,13 @@ For more information about headers can be found [here](https://www.owasp.org/ind
 
 ## A4 XML External Entities (XXE)
 
-The following information for XXE injection in .NET is directly from this [web application of unit tests by Dean Fleming](https://github.com/deanf1/dotnet-security-unit-tests).
+XXE attacks occur when an XML parse does not properly process user input that contains external entity declaration in the doctype of an XML payload.
 
-This web application covers all currently supported .NET XML parsers, and has test cases for each demonstrating when they are safe from XXE injection and when they are not.
-
-Previously, this information was based on [James Jardine's excellent .NET XXE article](https://www.jardinesoftware.net/2016/05/26/xxe-and-net/).
-
-It originally provided more recent and more detailed information than the older article from [Microsoft on how to prevent XXE and XML Denial of Service in .NET](http://msdn.microsoft.com/en-us/magazine/ee335713.aspx), however, it has some inaccuracies that the web application covers.
-
-The following table lists all supported .NET XML parsers and their default safety levels:
-
-| XML Parser            | Safe by default? |
-|-----------------------|:----------------:|
-| LINQ to XML           | Yes              |
-| XmlDictionaryReader   | Yes              |
-| XmlDocument           |                  |
-| ...prior to 4.5.2     | No               |
-| ...in versions 4.5.2+ | Yes              |
-| XmlNodeReader         | Yes              |
-| XmlReader             | Yes              |
-| XmlTextReader         |                  |
-| ...prior to 4.5.2     | No               |
-| ...in versions 4.5.2+ | Yes              |
-| XPathNavigator        |                  |
-| ...prior to 4.5.2     | No               |
-| ...in versions 4.5.2+ | Yes              |
-| XslCompiledTransform  | Yes              |
+Below are the three most common [XML Processing Options](https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xml-processing-options) for .NET.
 
 ### LINQ to XML
 
 Both the `XElement` and `XDocument` objects in the `System.Xml.Linq` library are safe from XXE injection by default. `XElement` parses only the elements within the XML file, so DTDs are ignored altogether. `XDocument` has DTDs [disabled by default](https://github.com/dotnet/docs/blob/master/docs/visual-basic/programming-guide/concepts/linq/linq-to-xml-security.md), and is only unsafe if constructed with a different unsafe XML parser.
-
-### XmlDictionaryReader
-
-`System.Xml.XmlDictionaryReader` is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that "CData elements not valid at top level of an XML document". It becomes unsafe if constructed with a different unsafe XML parser.
 
 ### XmlDocument
 
@@ -472,10 +445,6 @@ The following example shows how it is made safe:
 
 `XmlDocument` can become unsafe if you create your own nonnull `XmlResolver` with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the [referenced MSDN article](https://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
 
-### XmlNodeReader
-
-`System.Xml.XmlNodeReader` objects are safe by default and will ignore DTDs even when constructed with an unsafe parser or wrapped in another unsafe parser.
-
 ### XmlReader
 
 `System.Xml.XmlReader` objects are safe by default.
@@ -486,70 +455,7 @@ Additionally, in .NET versions 4.5.2 and later, the `XmlReaderSettings` belongin
 
 Therefore, `XmlReader` objects will only become unsafe in version 4.5.2 and up if both the `DtdProcessing` property is set to Parse and the `XmlReaderSetting`'s `XmlResolver` is set to a nonnull XmlResolver with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the [referenced MSDN article](https://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
 
-### XmlTextReader
-
-`System.Xml.XmlTextReader` is **unsafe** by default in .NET Framework versions prior to 4.5.2. Here is how to make it safe in various .NET versions:
-
-#### Prior to .NET 4.0
-
-In .NET Framework versions prior to 4.0, DTD parsing behavior for `XmlReader` objects like `XmlTextReader` are controlled by the Boolean `ProhibitDtd` property found in the `System.Xml.XmlReaderSettings` and `System.Xml.XmlTextReader` classes.
-
-Set these values to true to disable inline DTDs completely.
-
-``` csharp
-XmlTextReader reader = new XmlTextReader(stream);
-// NEEDED because the default is FALSE!!
-reader.ProhibitDtd = true;  
-```
-
-#### .NET 4.0 - .NET 4.5.2
-
-In .NET Framework version 4.0, DTD parsing behavior has been changed. The `ProhibitDtd` property has been deprecated in favor of the new `DtdProcessing` property.
-
-However, they didn't change the default settings so `XmlTextReader` is still vulnerable to XXE by default.
-
-Setting `DtdProcessing` to `Prohibit` causes the runtime to throw an exception if a `<!DOCTYPE>` element is present in the XML.
-
-To set this value yourself, it looks like this:
-
-``` csharp
-XmlTextReader reader = new XmlTextReader(stream);
-// NEEDED because the default is Parse!!
-reader.DtdProcessing = DtdProcessing.Prohibit;  
-```
-
-Alternatively, you can set the `DtdProcessing` property to `Ignore`, which will not throw an exception on encountering a `<!DOCTYPE>` element but will simply skip over it and not process it. Finally, you can set `DtdProcessing` to `Parse` if you do want to allow and process inline DTDs.
-
-### .NET 4.5.2 and later
-
-In .NET Framework versions 4.5.2 and up, `XmlTextReader`'s internal `XmlResolver` is set to null by default, making the `XmlTextReader` ignore DTDs by default. The `XmlTextReader` can become unsafe if if you create your own nonnull `XmlResolver` with default or unsafe settings.
-
-### XPathNavigator
-
-`System.Xml.XPath.XPathNavigator` is **unsafe** by default in .NET Framework versions prior to 4.5.2.
-
-This is due to the fact that it implements `IXPathNavigable` objects like `XmlDocument`, which are also unsafe by default in versions prior to 4.5.2.
-
-You can make `XPathNavigator` safe by giving it a safe parser like `XmlReader` (which is safe by default) in the `XPathDocument`'s constructor.
-
-Here is an example:
-
-``` csharp
-XmlReader reader = XmlReader.Create("example.xml");
-XPathDocument doc = new XPathDocument(reader);
-XPathNavigator nav = doc.CreateNavigator();
-string xml = nav.InnerXml.ToString();
-```
-
-### XslCompiledTransform
-
-`System.Xml.Xsl.XslCompiledTransform` (an XML transformer) is safe by default as long as the parser it’s given is safe.
-
-It is safe by default because the default parser of the `Transform()` methods is an `XmlReader`, which is safe by default (per above).
-
-[The source code for this method is here.](http://www.dotnetframework.org/default.aspx/4@0/4@0/DEVDIV_TFS/Dev10/Releases/RTMRel/ndp/fx/src/Xml/System/Xml/Xslt/XslCompiledTransform@cs/1305376/XslCompiledTransform@cs)
-
-Some of the `Transform()` methods accept an `XmlReader` or `IXPathNavigable` (e.g., `XmlDocument`) as an input, and if you pass in an unsafe XML Parser then the `Transform` will also be unsafe.
+A more detailed list of all supported .NET XML parsers and their default safety levels can be found [here](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#net), at the OWASP XXE prevention cheatsheet.
 
 ## A5 Broken Access Control
 
@@ -776,101 +682,15 @@ DO: Enable a [Content Security Policy](https://developers.google.com/web/fundame
 
 DO NOT: Accept Serialized Objects from Untrusted Sources
 
-DO: Prevent Deserialization of Domain Objects
+DO: Validate User Input
+Malicious users are able to use objects like cookies to insert malicious information to change user roles. In some cases, hackers are able to elevate their privileges to administrator rights by using a pre-existing or cached password hash from a previous session. 
 
-DO: The Serialization Process Needs to Be Encrypted So That Hostile Object Creation and Data Tampering Cannot Run
+DO: Prevent Deserialization of Domain Objects
 
 DO: Run the Deserialization Code with Limited Access Permissions
 If a desterilized hostile object tries to initiate a system processes or access a resource within the server or the host’s OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
 
-DO: Validate User Input
-Malicious users are able to use objects like cookies to insert malicious information to change user roles. In some cases, hackers are able to elevate their privileges to administrator rights by using a pre-existing or cached password hash from a previous session. 
-
-### WhiteBox Review
-
-Search the source code for the following terms:
-
-1.  `TypeNameHandling`
-2.  `JavaScriptTypeResolver`
-
-Look for any serializers where the type is set by a user controlled variable.
-
-### BlackBox Review
-
-Search for the following base64 encoded content that starts with:
-
-```
-AAEAAAD/////
-```
-
-Search for content with the following text:
-
-1. `TypeObject`
-2.  `$type:`
-
-### General Precautions
-
-Don't allow the datastream to define the type of object that the stream will be deserialized to. You can prevent this by for example using the `DataContractSerializer` or `XmlSerializer` if at all possible.
-
-Where `JSON.Net` is being used make sure the `TypeNameHandling` is only set to `None`.
-
-```csharp
-TypeNameHandling = TypeNameHandling.None
-```
-
-If `JavaScriptSerializer` is to be used then do not use it with a `JavaScriptTypeResolver`.
-
-If you must deserialise data streams that define their own type, then restrict the types that are allowed to be deserialized. One should be aware that this is still risky as many native .Net types potentially dangerous in themselves. e.g.
-
-```csharp
-System.IO.FileInfo
-```    
-
-`FileInfo` objects that reference files actually on the server can when deserialized, change the properties of those files e.g. to read-only, creating a potential denial of service attack.
-
-Even if you have limited the types that can be deserialised remember that some types have properties that are risky. `System.ComponentModel.DataAnnotations.ValidationException`, for example has a property `Value` of type `Object`. if this type is the type allowed for deserialization then an attacker can set the `Value` property to any object type they choose.
-
-Attackers should be prevented from steering the type that will be instantiated. If this is possible then even `DataContractSerializer` or `XmlSerializer` can be subverted e.g.
-
-```csharp
-// Action below is dangerous if the attacker can change the data in the database
-var typename = GetTransactionTypeFromDatabase();  
-
-var serializer = new DataContractJsonSerializer(Type.GetType(typename));
-
-var obj = serializer.ReadObject(ms);
-```    
-
-Execution can occur within certain .Net types during deserialization. Creating a control such as the one shown below is ineffective.
-
-```csharp
-var suspectObject = myBinaryFormatter.Deserialize(untrustedData);
-
-//Check below is too late! Execution may have already occurred.
-if (suspectObject is SomeDangerousObjectType) 
-{
-    //generate warnings and dispose of suspectObject
-}
-```    
-
-For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of white list control useing a custom `SerializationBinder`.
-
-Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. **A deserializer can only instantiate types that it knows about**. 
-
-Try to keep any code that might create potential gagdets separate from any code that has internet connectivity. As an example `System.Windows.Data.ObjectDataProvider` used in WPF applications is a known gadget that allows arbitrary method invocation. It would be risky to have this a reference to this assembly in a REST service project that deserializes untrusted data.
-
-### Known .NET RCE Gadgets
-
-- `System.Configuration.Install.AssemblyInstaller`
-- `System.Activities.Presentation.WorkflowDesigner`
-- `System.Windows.ResourceDictionary`
-- `System.Windows.Data.ObjectDataProvider`
-- `System.Windows.Forms.BindingSource`
-- `Microsoft.Exchange.Management.SystemManager.WinForms.ExchangeSettingsProvider`
-- `System.Data.DataViewManager, System.Xml.XmlDocument/XmlDataDocument`
-- `System.Management.Automation.PSObject`
-
-More information can be found here: [Deserialization Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Deserialization_Cheat_Sheet.md)
+More information can be found here: [Deserialization Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Deserialization_Cheat_Sheet.md#net-csharp)
 
 ## A9 Using Components with Known Vulnerabilities
 
@@ -894,19 +714,28 @@ DO: Establish or adopt an incident response and recovery plan, such as NIST 800-
 
 ### Logging
 
-.NET Core introduced a generic logging interface, [ILogger](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger)
+.NET Core come with a LoggerFactory, which is in Microsoft.Extensions.Logging. More information about ILogger can be found [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger).
 
-e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (like mvc controllers). 
+e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers). 
 
 ``` csharp
-public class MyController
+public class ValuesController : Controller
 {
-    ILogger logger;
-    public MyController(ILogger<MyController> logger)
-    {
-        this.logger = logger;
-        this.logger.LogDebug($"New {nameof(MyController)} created");
-    }
+        private ILogger _Logger;
+
+        //set by dependency injection
+        public ValuesController( ILogger logger)
+        {
+            _Logger = logger;
+        }
+
+	[HttpGet]
+	[Route("{id}")]
+	public IEnumerable Get(int id)
+	{
+            _Logger.LogDebug("From direct dependency injection");
+	    ...
+	}
 }
 ```
 
