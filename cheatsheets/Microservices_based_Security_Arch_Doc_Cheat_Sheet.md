@@ -130,18 +130,115 @@ It is advisable to create graphical presentation of application architecture (bu
 
 ## Use collected information in secure software development practices
 
-Collected information may be useful for doing application security practices, e.g. during defining security requirements, threat modeling or security testing. Table below contains examples of activities related to securing application architecture (as well as its mapping to OWASP ASVS 4.0) and tips for their implementation using information collected above.
+Collected information may be useful for doing application security practices, e.g. during defining security requirements, threat modeling or security testing. Sections below contains examples of activities related to securing application architecture (as well as its mapping to OWASP projects) and tips for their implementation using information collected above.
 
-| Activity description | Implementation tips | Mapping to OWASP ASVS 4.0 |
-| :--- | :--- | :--- |
-| Attack surface analysis | To enumerate microservices endpoints that need to be tested during security testing and analyzed during threat modeling analyze data collected under the following sections: "Identify and describe application-functionality services" (parameter “API definition”) and "Identify and describe infrastructure services" (parameter “Link to the service documentation”) | 1.1.2
-| Data leakage analysis | To analyze possible data leakage analyze data collected under the following sections: "Identify and describe data assets", "Identify “service-to-storage” relations", "Identify “service-to-service” synchronous communications", "Identify “service-to-service” asynchronous communications" and "Identify “asset-to-storage” relations"	| 1.1.2
-| Verify documentation and justification of all the application's trust boundaries, components, and significant data flows | To do that activity analyze data collected under the following sections: "Identify and describe application-functionality services", "Identify and describe infrastructure services", "Identify and describe data storages", "Identify and describe message queues", "Identify “service-to-storage” relations", "Identify “service-to-service” synchronous communications" and "Identify “service-to-service” asynchronous communications" | 1.1.4
-| Verify definition and security analysis of the application's high-level architecture and all connected remote services | To do that activity analyze data collected under the following sections: "Identify and describe application-functionality services", "Identify and describe infrastructure services", "Identify and describe data storages" and "Identify and describe message queues" | 1.1.5
-| Verify implementation of centralized, simple (economy of design), vetted, secure, and reusable security controls to avoid duplicate, missing, ineffective, or insecure controls | To do that activity analyze data collected under the section "Identify and describe infrastructure services" | 1.1.6
-|Verify enforcement of the principle of least privilege in functions, data files, URLs, controllers, services, and other resources. This implies protection against spoofing and elevation of privilege | To define minimally needed microservice permissions analyze data collected under the following sections: "Identify and describe application-functionality services (parameter “API definition”)", "Identify “service-to-storage” relations", "Identify “service-to-service” synchronous communications" and "Identify “service-to-service” asynchronous communications" | 1.4.3
-| Verify that all sensitive data is identified and classified into protection levels | To do that activity analyze data collected under the following sections "Identify and describe data assets" and "Identify “asset-to-storage” relations" | 1.8.1
-|Verify the definition and documentation of all application components in terms of the business or security functions they provide | To do that activity analyze data collected under the following sections (parameter “Short description”): "Identify and describe application-functionality services" and "Identify and describe infrastructure services" | 1.11.1
+### Attack surface analysis
+
+#### Implementation tips
+
+To enumerate microservices endpoints that need to be tested during security testing and analyzed during threat modeling analyze data collected under the following sections:
+* "Identify and describe application-functionality services" (parameter “API definition”);
+* "Identify and describe infrastructure services" (parameter “Link to the service documentation”).
+
+#### Mapping to OWASP projects
+
+* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.1.2](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+* [OWASP Attack Surface Analysis Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md)
+
+### Data leakage analysis
+
+#### Implementation tips
+
+To analyze possible data leakage analyze data collected under the following sections: 
+* "Identify and describe data assets";
+* "Identify “service-to-storage” relations";
+* "Identify “service-to-service” synchronous communications";
+* "Identify “service-to-service” asynchronous communications";
+* "Identify “asset-to-storage” relations".
+
+#### Mapping to OWASP projects
+
+* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.1.2](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+* [OWASP Top 10-2017 A3-Sensitive Data Exposure](https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure)
+
+### Application's trust boundaries, components, and significant data flows justification
+
+#### Implementation tips
+
+To verify documentation and justification of all the application's trust boundaries, components, and significant data flows analyze data collected under the following sections:
+* "Identify and describe application-functionality services";
+* "Identify and describe infrastructure services";
+* "Identify and describe data storages";
+* "Identify and describe message queues"; 
+* "Identify “service-to-storage” relations"; 
+* "Identify “service-to-service” synchronous communications";
+* "Identify “service-to-service” asynchronous communications".
+
+#### Mapping to OWASP projects
+
+* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.1.4](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+
+### Analysis of the application's high-level architecture
+
+#### Implementation tips
+
+To verify definition and security analysis of the application's high-level architecture and all connected remote services analyze data collected under the following sections:
+* "Identify and describe application-functionality services";
+* "Identify and describe infrastructure services";
+* "Identify and describe data storages";
+* "Identify and describe message queues".
+
+#### Mapping to OWASP projects
+
+* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.1.5](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+
+### Implementation of centralized security controls verification
+
+#### Implementation tips
+
+To verify implementation of centralized, simple (economy of design), vetted, secure, and reusable security controls to avoid duplicate, missing, ineffective, or insecure controls analyze data collected under the section "Identify and describe infrastructure services".
+
+#### Mapping to OWASP projects
+
+* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.1.6](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+
+### Enforcement of the principle of least privilege
+
+#### Implementation tips
+
+To define minimally needed microservice permissions analyze data collected under the following sections:
+* "Identify and describe application-functionality services (parameter “API definition”)";
+* "Identify “service-to-storage” relations";
+* "Identify “service-to-service” synchronous communications"; 
+* "Identify “service-to-service” asynchronous communications".
+
+#### Mapping to OWASP projects
+
+* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.4.3](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+
+### Sensitive data identification and classification
+
+#### Implementation tips
+
+To verify that all sensitive data is identified and classified into protection levels analyze data collected under the following sections:
+* "Identify and describe data assets";
+* "Identify “asset-to-storage” relations".
+
+#### Mapping to OWASP projects
+
+* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.8.1](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+
+### Application components business/security functions verification
+
+#### Implementation tips
+
+To verify the definition and documentation of all application components in terms of the business or security functions they provide analyze data collected under the following sections (parameter “Short description”): 
+* "Identify and describe application-functionality services";
+* "Identify and describe infrastructure services".
+
+#### Mapping to OWASP projects
+
+* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.11.1](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
 
 # Authors and Primary Editors
 
