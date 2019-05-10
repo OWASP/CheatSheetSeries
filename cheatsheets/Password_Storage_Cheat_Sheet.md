@@ -62,7 +62,8 @@ Example `protect()` pseudo-code follows:
 return [salt] + pbkdf2([salt], [credential], c=[iteration_count]);
 ```
 
-In the example above, as PBKDF2 computation time depend on the target system, **iteration_count** must have a number implying that the computation time on the target system must take at least 1 second (like 1000.000 for example).
+In the example above, as PBKDF2 computation time depend on the target system, **iteration_count** must have a number implying that the computation time on the target system must take at least 1 second.  
+500.000 is a good example, but please note that, as PBKDF2 is **not** time constant, this configuration is highly dependant on the target machine and you should probably [test the appropriate number for your specific situation](../assets/Password_Storage_Cheat_Sheet_Test_PBKDF2_Iterations.java). 
 
 Designers select one-way adaptive functions to implement `protect()` because these functions can be configured to cost (linearly or exponentially) more than a hash function to execute. Defenders adjust work factor to keep pace with threats’ increasing hardware capabilities. Those implementing adaptive one-way functions must tune work factors so as to impede attackers while providing acceptable user experience and scale.
 
