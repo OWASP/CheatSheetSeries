@@ -716,7 +716,14 @@ DO: Establish or adopt an incident response and recovery plan, such as NIST 800-
 
 .NET Core come with a LoggerFactory, which is in Microsoft.Extensions.Logging. More information about ILogger can be found [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger).
 
-How to log all errors from the ```Startup.cs```, so that anytime an error is thrown it will be logged.
+What Logs to Collect:
+	* Authentication, Authorization, and Access: These events include things such as successful and failed authentication and authorizations, system access, data access and application access.
+	* Changes: These events include changes to systems or applications, changes to data (creation and destruction) and application installation and changes.
+	* Availability: Availability events include startup and shutdown of systems and applications, faults and errors that affect application availability and backup successes and failures.
+	* Resources: Resource issues to log include exhausted resources, exceeded capacities and connectivity issues.
+	* Threats: Some common threats to logs include invalid inputs and security issues known to affect the application.
+
+How to log all errors from the ```Startup.cs`, so that anytime an error is thrown it will be logged.
 
 ``` csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -782,14 +789,7 @@ public class AccountsController : Controller
 
 Logging levels for ILogger are listed below, in order of high to low importance:
 
-|Level |Description          |Example       |
-|------|:-------------------:|:-------------|
-|Critical|	When the application reaches a scenario where immediate attention is required. It can often cause it to end abnormally	|No memory or disk space|
-|Error|	An unexpected exception has happened, most of the time aborting the current operation|	Cannot reach a REST API or failed to update a database record|
-|Warning|	When something unexpected happens that requires attention, however the application remains working|	Configuration file was not found|
-|Information|	Track general application flow|	Request received, file opened, user created|
-|Debug|	Track important information during development or troubleshooting production system|	Using API located at http://myapi:8080 or Listening on port 8080|
-|Trace|	Track important for development purposes, might contain sensitive information	|Using connection string: server=dbserver;UserID=sa;password=mysecret|
+
 
 ### Monitoring
 
