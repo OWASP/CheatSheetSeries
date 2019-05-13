@@ -726,7 +726,8 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		_isDevelopment = true;
 		app.UseDeveloperExceptionPage();
 	}
-
+	
+	//Log all errors in the application
 	app.UseExceptionHandler(errorApp =>
 	{
 		errorApp.Run(async context =>
@@ -734,36 +735,48 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		    var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
 		    var exception = errorFeature.Error;
 		    
-		    Log.Information(String.Format("Stacktrace of error: {0}",exception.StackTrace.ToString()));
+		    Log.Error(String.Format("Stacktrace of error: {0}",exception.StackTrace.ToString()));
 		});
 	});
 
         app.UseAuthentication();
             app.UseMvc();
         }
+}
 ```
 
-e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers). 
+e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers).  The belwo exaple shows logging of all unsucessful log in attempts.
 
 ``` csharp
-public class ValuesController : Controller
+public class AccountsController : Controller
 {
         private ILogger _Logger;
 
-        //set by dependency injection
-        public ValuesController( ILogger logger)
+        public AccountsController( ILogger logger)
         {
             _Logger = logger;
         }
 
-	[HttpGet]
-	[Route("{id}")]
-	public IEnumerable Get(int id)
-	{
-            _Logger.LogDebug("From direct dependency injection");
-	    ...
+	[HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+			//Code for successful login
+		}
+		else
+		{
+			//Log all incorrect log in attempts
+			Log.Information(String.Format("User: {0}, Incorrec Password", model.Email));
+		}
 	}
-}
+	
+	...
 ```
 
 Logging levels for ILogger are listed below, in order of high to low importance:
