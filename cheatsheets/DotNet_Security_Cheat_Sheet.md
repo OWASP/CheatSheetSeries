@@ -716,6 +716,33 @@ DO: Establish or adopt an incident response and recovery plan, such as NIST 800-
 
 .NET Core come with a LoggerFactory, which is in Microsoft.Extensions.Logging. More information about ILogger can be found [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger).
 
+How to log all errors from the ```Startup.cs```, so that anytime an error is thrown it will be logged.
+
+``` csharp
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+	if (env.IsDevelopment())
+	{
+		_isDevelopment = true;
+		app.UseDeveloperExceptionPage();
+	}
+
+	app.UseExceptionHandler(errorApp =>
+	{
+		errorApp.Run(async context =>
+		{
+		    var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
+		    var exception = errorFeature.Error;
+		    
+		    Log.Information(String.Format("Stacktrace of error: {0}",exception.StackTrace.ToString()));
+		});
+	});
+
+        app.UseAuthentication();
+            app.UseMvc();
+        }
+```
+
 e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers). 
 
 ``` csharp
