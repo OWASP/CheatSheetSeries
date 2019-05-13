@@ -702,15 +702,13 @@ DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dep
 
 ## A10 Insufficient Logging & Monitoring
 
-DO: Ensure all login, access control failures and server-side input validation failures can be logged with sufficient user context to identify suspicious or malicious accounts, and are held for sufficient time to allow delayed forensic analysis.
-
-DO: Ensure logs are generated in a format that can be easily consumed by a centralized log management solution.
-
-DO: Ensure high-value transactions have an audit trail with integrity controls to prevent tampering or deletion, such as append-only database tables.
+DO: Ensure all login, access control failures and server-side input validation failures can be logged with sufficient user context to identify suspicious or malicious accounts.
 
 DO: Establish effective monitoring and alerting so suspicious activities are detected and responded to in a timely fashion.
 
-DO: Establish or adopt an incident response and recovery plan, such as NIST 800-61 rev 2.
+DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was thrown");``` rather log the stack trace, error message and user Id who caused the error.
+
+DO NOT: Log sesnsitive data such as user's passwords.
 
 ### Logging
 
@@ -718,9 +716,9 @@ DO: Establish or adopt an incident response and recovery plan, such as NIST 800-
 
 What Logs to Collect:
 
-* Authentication, Authorization, and Access: These events include things such as successful and failed authentication and authorizations, system access, data access and application access.
+* Authentication, Authorization, and Access:  These include successful and failed authentication and authorizations, system access, data access and application access.
 
-* Changes: These events include changes to systems or applications, changes to data (creation and destruction) and application installation and changes.
+* Changes: These include changes to systems or applications, changes to data (creation and destruction) and application installation and changes.
 
 * Availability: Availability events include startup and shutdown of systems and applications, faults and errors that affect application availability and backup successes and failures.
 
@@ -728,7 +726,7 @@ What Logs to Collect:
 
 * Threats: Some common threats to logs include invalid inputs and security issues known to affect the application.
 
-How to log all errors from the ```Startup.cs`, so that anytime an error is thrown it will be logged.
+How to log all errors from the `Startup.cs`, so that anytime an error is thrown it will be logged.
 
 ``` csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
