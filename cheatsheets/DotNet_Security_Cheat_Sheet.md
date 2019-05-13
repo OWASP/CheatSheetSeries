@@ -768,11 +768,12 @@ public class AccountsController : Controller
                 if (result.Succeeded)
                 {
 			//Code for successful login
+			Log.Information(String.Format("User: {0}, Successfully Logged in", model.Email));
 		}
 		else
 		{
 			//Log all incorrect log in attempts
-			Log.Information(String.Format("User: {0}, Incorrec Password", model.Email));
+			Log.Information(String.Format("User: {0}, Incorrect Password", model.Email));
 		}
 	}
 	
