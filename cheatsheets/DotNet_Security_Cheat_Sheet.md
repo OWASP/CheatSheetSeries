@@ -777,8 +777,9 @@ public class AccountsController : Controller
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-			//Code for successful login
+			//Log all successful log in attempts
 			Log.Information(String.Format("User: {0}, Successfully Logged in", model.Email));
+			//Code for successful login
 		}
 		else
 		{
