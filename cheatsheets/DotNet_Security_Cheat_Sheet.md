@@ -793,8 +793,6 @@ public class AccountsController : Controller
 
 Logging levels for ILogger are listed below, in order of high to low importance:
 
-
-
 ### Monitoring
 
 Monitoring allow us to validate the performance and health of a running system through key performance indicators.
