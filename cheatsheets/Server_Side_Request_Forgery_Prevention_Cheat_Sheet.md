@@ -19,7 +19,26 @@ Overview of an SSRF common flow:
 
 *Note:* SSRF is not limited to HTTP protocol, even if often the first request performed by the attacker leverage the HTTP protocol, the second request (performed by the vulnerable application, the SSRF in fact) can use different protocol like HTTP, FTP, SMTP, SMB and so on...It depends on the technical need of the vulnerable application to perform the normal expected job on the other application on which the request is sent.
 
-# Available protections
+# Cases
+Depending on application functionality and requirements there are two basic cases when SSRF can happen:
+* Application should send request only to couple, specified applications - case when whitelist approach is available
+* Application can send requests to ANY other IP address or domain name - case when whitelist approach is not available
+
+Because these two cases are very different this document will describe defences against them separately.
+
+# Case 1 - Application should send request only to couple, specified applications
+
+Sometime, an application need to perform request to another application, often located on other network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.
+
+*Example:* 
+
+We can imagine an web application that receive and use the information coming a user like the firstname/lastname/birthdate/email/SSN to create a profile into an HR system via a request to this HR system. 
+
+Basically, the user cannot reach the HR system directly but if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system. 
+
+The user use the web application as a proxy to the HR system, jumping accross the different networks in which the web application and the HR system are located.
+
+## Available protections
 
 ```text
 In the rest of this section, we assume that we application absolutely need that the application 
@@ -29,7 +48,7 @@ the expected job.
 
 Several protections measures are possible at Application and Network layers, both layers will be addressed in this cheat sheet in order to apply the *defense in deph* principle.
 
-## Application layer
+### Application layer
 
 The first level of protection that come to mind is [Input validation](Input_Validation_Cheat_Sheet.md). 
 
@@ -43,7 +62,7 @@ We can identify the following kind of information that we can receive from a use
 * Domain name.
 * URL
 
-### String
+#### String
 
 A [regex](https://www.regular-expressions.info/) can be used to ensure that data receive are valid from a security point of view.
 
@@ -57,7 +76,7 @@ if(Pattern.matches("[a-zA-Z0-9\\s\\-]{1,50}", userInput)){
 }
 ```
 
-### IP address
+#### IP address
 
 In the context of an SSRF, there is 2 validation to perform:
 
@@ -78,17 +97,35 @@ Once you are sure that the value is a valid IP address then you can perform the 
 * Verify that the IP address is not part of your IP ranges.
 * Verify that the IP is into the whitelist.
 
-### Domain name
+#### Domain name
 
 TODO:
 
-### URL
+#### URL
 
 Do not accept complete URL from the user because URL are difficult to validate and parser can be abused depending on the technology used.
 
-## Network layer
+### Network layer
 
 TODO:
+
+# Case 2 - Application can send requests to ANY external IP address or domain name
+
+This case happen when user can control an URL to an external resource and application makes a request to this URL (e.g. in case of webhooks). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing. **In that case system should blok all IPs/domains that are in private network including localhost and IPv4 Link-Local addresses 169.254.0.0-169.254.255.255 (that is all not-routable ip addresses).** In practice it is a hard task.
+
+*Random notes: When whitelist approach is not available, attacker can try to forge requests to two types of internal applications: 1. applications that normally are not requested by this application - and here attacker should be stopped by authentication 2. applications that normally are exchanging data thus vulnerable application is allowed to make requests. Here are couple of options like adding custom header to all requests that maybe controlled by attacker and rejecting them in internal applications. In this attack attacker typically can control URL but not headers etc*
+
+## Challenges in blocking URLs at application layer
+
+It is know in security industry that blacklisting is very hard and prone to errors. Below is described why filtering URLs is very hard at application layer.
+
+## Available protections
+
+### Application layer
+
+*Random notes: it cannot be done only on app layer but on that layer we can do scheme:// white-listing + logging*
+
+### Network layer
 
 # Authors and Primary Editors
 
