@@ -144,7 +144,7 @@ We assume that if in the design of the application it should only perform call t
 
 Thus **External** here refer to any IP/domain *located outside* the company's global network. So, the goal here is to ensure that every call initiated by the *VulnerableApplication*:
 * **Is NOT** targeting one of the IP/domain *located inside* the company's global network.
-* Use a convention defined between the **VulnerableApplication** and the expected IP/domain in order to *proof* that the call has been legitimately initiated.
+* Use a convention defined between the *VulnerableApplication* and the expected IP/domain in order to *proof* that the call has been legitimately initiated.
 
 ## Challenges in blocking URLs at application layer
 
