@@ -153,21 +153,56 @@ Based on the description of the context of application of this case, we see that
 Below is described why filtering URLs is very hard at application layer.
 
 * It imply that the application must be able to detect, at code level, that the provided IP (**V4 + V6**) is not in official [private networks ranges](https://en.wikipedia.org/wiki/Private_network) including also `localhost` and IPv4 Link-Local addresses `169.254.0.0-169.254.255.255` (that is all not-routable IP addresses). Not every SDK provide a built-in feature for this kind of verification so it made this task a hard one.
-* Same remark for domain name: The company must maintains a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain name. (**FIXME: Not sure about my proposal here about DNS and if i'm not wrong then this point is in fact easy to check**)
+* Same remark for domain name: The company must maintains a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain name. 
+    * **FIXME: Not sure about my proposal here about DNS and if i'm not wrong then this point is in fact easy to check**
 
 ## Notes from Jakub
 
  > In that case system should blok all IPs/domains that are in private network including localhost and IPv4 Link-Local addresses 169.254.0.0-169.254.255.255 (that is all not-routable ip addresses). In practice it is a hard task.
 
- > Random notes: When whitelist approach is not available, attacker can try to forge requests to two types of internal applications: 1. applications that normally are not requested by this application - and here attacker should be stopped by authentication 2. applications that normally are exchanging data thus vulnerable application is allowed to make requests. Here are couple of options like adding custom header to all requests that maybe controlled by attacker and rejecting them in internal applications. In this attack attacker typically can control URL but not headers etc
+ > Random notes for Case 2: When whitelist approach is not available, attacker can try to forge requests to two types of internal applications: 1. applications that normally are not requested by this application - and here attacker should be stopped by authentication 2. applications that normally are exchanging data thus vulnerable application is allowed to make requests. Here are couple of options like adding custom header to all requests that maybe controlled by attacker and rejecting them in internal applications. In this attack attacker typically can control URL but not headers etc
+
+ > Random notes Application layer: it cannot be done only on app layer but on that layer we can do scheme:// white-listing + logging
+
+## Notes from Dom for discussion
+
+> Usage of a custom header with a shared secret do not prevent SSRF triggering if it is the *VulnerableApplication* that add the custom header with the shared secret during the building of the request because the attacker can use the SSRF and the secret will be automatically added.
+
+> Same remark regarding authentication if it's the *VulnerableApplication* that add the authentication information during the building of the request.
+
+> To be effective, it must be a secret that is not automatically added by the application during the creation of the request but expliclty added by the user based on a secret generated and received/validated by the targeted application during a kind of "enrolement" phase in which a communication convention is defined between the *VulnerableApplication* and the targeted application. Unfortunately it imply that the *VulnerableApplication* let the request be send and it's up to the targeted application to verify the presence and validity of the secret.
+
+> *VulnerableApplication* must prevent these things: User must NOT be able to pass custom parameters to the targeted application or arbitrary choose the protocol used by the request (selection in a allowed list of protocols). For HTTP protocol, the user must not be able to arbitrary choose the VERB used for the request (it ix fixed by the *VulnerableApplication*). Using this way, the request is sent by the user have limited surface of action on it because it control only the destination and the value of the shared secret (not the name of the parameter). 
+
+> Depending on the destination it can happen case in which the user must be able to set the param name but this point can be tackled by the *VulnerableApplication* by proposing integration with the targeted application and then fix the parameter name in order to prevent to open the name to user input influence.
+
+## Notes from Elie
+
+> ...
 
 ## Available protections
 
+We take the same assumption than for the case n°1 regarding the application user input data needed and the *defense in deph* principle.
+
 ### Application layer
 
-*Random notes: it cannot be done only on app layer but on that layer we can do scheme:// white-listing + logging*
+Like for the case n°1, we assume that we need `String`, `IP address` or `domain name` to create the request that will be sent to the final application.
+
+The input data first validation presented in the case n°1 on the 3 types of data will be the same for this case **BUT the second validation will differ**, indeed, here we must use the blacklist approach.
+
+Validation flow - if one the validation step fail then the request is rejected:
+1. Input data first validation
+2. Blacklist second validation:
+    * For IP address: Verify that is a public one.
+    * For Domain name: Verify that is a public one.
+3. Receive the protocol to use for the request via a dedicated input parameter for which you verify the value (`HTTP`, `HTTPS`...) against a allowed list of protocols (ex: using a enumeration).
+4. Build the request using only validated information.
+
+TODO: Show technically how to performs the validation flow and provide lib that can be used like for case n°1 based on notes from Jakub/Dom/Elie...
 
 ### Network layer
+
+TODO: Add technical infos...
 
 # Authors and Primary Editors
 
