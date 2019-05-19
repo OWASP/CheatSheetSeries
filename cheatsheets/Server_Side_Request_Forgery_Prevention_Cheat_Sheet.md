@@ -22,7 +22,7 @@ Overview of an SSRF common flow:
 # Cases
 
 Depending on application functionality and requirements there are two basic cases when SSRF can happen:
-* Application should send request only to **identified and trusted applications/*: *Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is available*.
+* Application should send request only to **identified and trusted applications**: *Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is available*.
 * Application can send requests to **ANY other IP address or domain name**: *Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is not available*.
 
 Because these two cases are very different this document will describe defences against them separately.
