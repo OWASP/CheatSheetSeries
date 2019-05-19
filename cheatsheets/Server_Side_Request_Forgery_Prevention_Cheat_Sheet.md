@@ -33,11 +33,13 @@ Sometime, an application need to perform request to another application, often l
 
 *Example:* 
 
-We can imagine an web application that receive and use the information coming a user like the firstname/lastname/birthdate/email/SSN to create a profile into an HR system via a request to this HR system. 
+ > We can imagine an web application that receive and use the information coming a user like the firstname/lastname/birthdate/... to create a profile into an HR system via a request to this HR system. 
 
-Basically, the user cannot reach the HR system directly but if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system. 
+ > Basically, the user cannot reach the HR system directly but if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system. 
 
-The user use the web application as a proxy to the HR system, jumping accross the different networks in which the web application and the HR system are located.
+ > The user use the web application as a proxy to the HR system, jumping accross the different networks in which the web application and the HR system are located.
+
+Whitelist approach can be used here because the application called by the *VulnerableApplication* is clearly identified in the technical/business flow. So, the goal here is to ensure that every call is targeted to one of the identified and trusted applications.
 
 ## Available protections
 
@@ -80,7 +82,7 @@ In the context of an SSRF, there is 2 validation to perform:
 1. Ensure that the data provided is a valid IP V4 or V6 address.
 2. Ensure that the IP address provided belong to the one of the IP addresses of the identified and trusted applications (the whitelisting come to action here).
 
-The first validation can be performed using one of this libraries depending on your technologies (libray option is proposed here in order to delegate the managing of the IP address format and leverage battle tested validation function):
+The first validation can be performed using one of this libraries depending on your technologies (library option is proposed here in order to delegate the managing of the IP address format and leverage battle tested validation function):
 
 * **JAVA:** Method [InetAddressValidator.isValid](http://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/InetAddressValidator.html#isValid(java.lang.String)) from the [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/) library.
 * **.NET**: Method [IPAddress.TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8) from the SDK. 
@@ -101,13 +103,13 @@ In the context of an SSRF, there is 2 validation to perform:
 1. Ensure that the data provided is a valid domain name.
 2. Ensure that the domain name provided belong to the one of the domain name of the identified and trusted applications (the whitelisting come to action here).
 
-Like for IP address, the first validation can be performed using one of this libraries depending on your technologies (libray option is proposed here in order to delegate the managing of the domain name format and leverage battle tested validation function), proposed functions do not perform any DNS resolution query:
+Like for IP address, the first validation can be performed using one of this libraries depending on your technologies (library option is proposed here in order to delegate the managing of the domain name format and leverage battle tested validation function), proposed functions do not perform any DNS resolution query:
 
 * **JAVA:** Method [DomainValidator.isValid](https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html#isValid(java.lang.String)) from the [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/) library.
 * **.NET**: Method [Uri.CheckHostName](https://docs.microsoft.com/en-us/dotnet/api/system.uri.checkhostname?view=netframework-4.8) from the SDK. 
 * **JavaScript**: Library [is-valid-domain](https://www.npmjs.com/package/is-valid-domain).
 * **Python**: Module [validators.domain](https://validators.readthedocs.io/en/latest/#module-validators.domain).
-* **Ruby**: TODO:
+* **Ruby**: **FIXME: Find a Gem**.
 
 Once you are sure that the value is a valid domain name then you can perform the second validation. As we are, here, in a context where whitelist is possible then we can apply this approach:
 
@@ -130,17 +132,34 @@ In the schema below we show the goal that we want the achieve by leveraging the 
 
 ![Case 1 for Network layer protection about flows that we want to prevent](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.png)
 
-Network segregation can also be leveraged and **is highly recommanded in order to block not legit call directly at network level itself**.
+[Network segregation](https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation) (see this set of [implementation advices](https://www.cyber.gov.au/publications/network-segmentation-and-segregation)) can also be leveraged and **is highly recommanded in order to block not legit call directly at network level itself**.
 
 # Case 2 - Application can send requests to ANY external IP address or domain name
 
-This case happen when user can control an URL to an external resource and application makes a request to this URL (e.g. in case of webhooks). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing. **In that case system should blok all IPs/domains that are in private network including localhost and IPv4 Link-Local addresses 169.254.0.0-169.254.255.255 (that is all not-routable ip addresses).** In practice it is a hard task.
+This case happen when user can control an URL to an **External** resource and application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing. 
 
-*Random notes: When whitelist approach is not available, attacker can try to forge requests to two types of internal applications: 1. applications that normally are not requested by this application - and here attacker should be stopped by authentication 2. applications that normally are exchanging data thus vulnerable application is allowed to make requests. Here are couple of options like adding custom header to all requests that maybe controlled by attacker and rejecting them in internal applications. In this attack attacker typically can control URL but not headers etc*
+We talk here about the notion of **External** in way that, at the opposite the of the case n°1 in which we know all the call flow, here the *VulnerableApplication* can, by design, call any target IP/domain. 
+
+We assume that if in the design of the application it should only perform call to IP/domain that are located inside the company's global network then whitelist approach can be used and then we apply the case n°1. 
+
+Thus **External** here refer to any IP/domain *located outside* the company's global network. So, the goal here is to ensure that every call initiated by the *VulnerableApplication*:
+* **Is NOT** targeting one of the IP/domain *located inside* the company's global network.
+* Use a convention defined between the **VulnerableApplication** and the expected IP/domain in order to *proof* that the call has been legitimately initiated.
 
 ## Challenges in blocking URLs at application layer
 
-It is know in security industry that blacklisting is very hard and prone to errors. Below is described why filtering URLs is very hard at application layer.
+Based on the description of the context of application of this case, we see that will use the blacklist approach. It is know in security industry that blacklisting is very hard and prone to errors. 
+
+Below is described why filtering URLs is very hard at application layer.
+
+* It imply that the application must be able to detect, at code level, that the provided IP (**V4 + V6**) is not in official [private networks ranges](https://en.wikipedia.org/wiki/Private_network) including also `localhost` and IPv4 Link-Local addresses `169.254.0.0-169.254.255.255` (that is all not-routable IP addresses). Not every SDK provide a built-in feature for this kind of verification so it made this task a hard one.
+* Same remark for domain name: The company must maintains a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain name. (**FIXME: Not sure about my proposal here about DNS and if i'm not wrong then this point is in fact easy to check**)
+
+## Notes from Jakub
+
+ > In that case system should blok all IPs/domains that are in private network including localhost and IPv4 Link-Local addresses 169.254.0.0-169.254.255.255 (that is all not-routable ip addresses). In practice it is a hard task.
+
+ > Random notes: When whitelist approach is not available, attacker can try to forge requests to two types of internal applications: 1. applications that normally are not requested by this application - and here attacker should be stopped by authentication 2. applications that normally are exchanging data thus vulnerable application is allowed to make requests. Here are couple of options like adding custom header to all requests that maybe controlled by attacker and rejecting them in internal applications. In this attack attacker typically can control URL but not headers etc
 
 ## Available protections
 
@@ -156,8 +175,7 @@ Firstname Lastname - email@email.com
 
 # Tools and code used for schemas
 
-* [Mermaid Online Editor](https://mermaidjs.github.io/mermaid-live-editor).
-* [Mermaid documentation](https://mermaidjs.github.io/).
+* [Mermaid Online Editor](https://mermaidjs.github.io/mermaid-live-editor) and [Mermaid documentation](https://mermaidjs.github.io/).
 * [Draw.io Online Editor](https://www.draw.io/).
 
 Mermaid code for SSRF common flow (printscreen are used to capture PNG image inserted into this cheat sheet):
