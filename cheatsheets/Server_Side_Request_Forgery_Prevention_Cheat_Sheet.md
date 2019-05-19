@@ -118,11 +118,19 @@ Once you are sure that the value is a valid domain name then you can perform the
 
 Do not accept complete URL from the user because URL are difficult to validate and parser can be abused depending on the technology used like demonstrated by the [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf) of [Orange Tsai](https://twitter.com/orange_8361). 
 
-If network related information is really nedded then only accept valid an IP address or a domain name.
+If network related information is really nedded then only accept an valid IP address or domain name.
 
 ### Network layer
 
-TODO:
+The objective here is to prevent that the *VulnerableApplication* performs call to arbitrary applications, so, only the expected *routes* will be opened at network level.
+
+The Firewall component, as a specific device or using the one provided within the operating system, will be used here define the legitimate flows. 
+
+In the schema below we show the goal that we want the achieve by leveraging the Firewall component, using this way, even if an application is vulnerable to SSRF, the attacker can only call applications that are part of legitimate flows:
+
+![Case 1 for Network layer protection about flows that we want to prevent](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.png)
+
+Network segregation can also be leveraged and **is highly recommanded in order to block not legit call directly at network level itself**.
 
 # Case 2 - Application can send requests to ANY external IP address or domain name
 
@@ -150,6 +158,7 @@ Firstname Lastname - email@email.com
 
 * [Mermaid Online Editor](https://mermaidjs.github.io/mermaid-live-editor).
 * [Mermaid documentation](https://mermaidjs.github.io/).
+* [Draw.io Online Editor](https://www.draw.io/).
 
 Mermaid code for SSRF common flow (printscreen are used to capture PNG image inserted into this cheat sheet):
 
@@ -165,3 +174,5 @@ sequenceDiagram
     VulnerableApplication->>Attacker: Response
     Note left of VulnerableApplication: Include response<br>from the<br>TargetedApplication
 ```
+
+Draw.io schema XML code for the "[case 1 for network layer protection about flows that we want to prevent](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.xml)" schema (printscreen are used to capture PNG image inserted into this cheat sheet).
