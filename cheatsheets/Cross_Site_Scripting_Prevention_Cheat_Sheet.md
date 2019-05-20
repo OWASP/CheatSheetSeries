@@ -380,7 +380,8 @@ This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/He
 
 Modern javascript frameworks have pretty good XSS protection built in. It is important how to use them properly to benefit from it.
 
-When using ReactJS *do not use `dangerouslySetInnerHTML`*. If you really, really really have to use `dangerouslySetInnerHTML` remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.
+When using ReactJS, *do not use [the function `dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)*. When using Angular (2+), *do not use [functions with the pattern `bypassSecurityTrust{something}`](https://angular.io/guide/security#bypass-security-apis)* (i.e. `bypassSecurityTrustHtml`, `bypassSecurityTrustStyle`, etc).  
+If you really, really really have to use these functions remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.
 
 For Angular (2+) remember to build Angular templates with `-prod` parameter (`ng build --prod`) in order to avoid template injection.
 
