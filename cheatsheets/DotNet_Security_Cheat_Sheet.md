@@ -265,23 +265,31 @@ process.Start();
 
 DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-e.g Validating user input using Regex (IP Address)
+e.g Validating user input using [IPAddress.Parse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.parse?view=netframework-4.8)
 
 ``` csharp
 //User input
-string address = "127.0.0.1";
-//Match pattern for IP address    
-string Pattern = @"^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$";    
-//Regular Expression object    
-Regex check = new Regex(Pattern);    
+string ipaddress = "127.0.0.1";
  
 //check to make sure an ip address was provided    
-if (string.IsNullOrEmpty(address))    
-    //returns false if IP is not provided    
-    ...    
-else    
-    //Matching the pattern
+if (string.IsNullOrEmpty(address))  
+{   
+	try
+	{
+		// Create an instance of IPAddress for the specified address string (in 
+		// dotted-quad, or colon-hexadecimal notation).
+		IPAddress address = IPAddress.Parse(ipAddress);
+
+		// Display the address in standard notation.
+		return address.ToString();
+	}
+	catch(ArgumentNullException e)
+	{
+		//ipaddress is not of type IPaddress
+		...
+	}
     ...
+}
  ```
  
 ### LDAP injection
