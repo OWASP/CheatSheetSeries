@@ -248,7 +248,7 @@ EXEC strQry // SQL Injection vulnerability!
 
 DO: Practise Least Privilege - Connect to the database using an account with a minimum set of permissions required to do it's job i.e. not the sa account
 
-### [OS Injection](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md)
+### [OS Injection](OS_Command_Injection_Defense_Cheat_Sheet.md#net)
 
 DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
 
