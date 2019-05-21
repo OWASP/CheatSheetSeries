@@ -411,7 +411,7 @@ app.UseCsp(opts => opts
 
 For more information about headers can be found [here](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#xpcdp).
 
-## A4 XML External Entities (XXE)
+## A4 [XML External Entities (XXE)](XML_External_Entity_Prevention_Cheat_Sheet.md#net)
 
 XXE attacks occur when an XML parse does not properly process user input that contains external entity declaration in the doctype of an XML payload.
 
