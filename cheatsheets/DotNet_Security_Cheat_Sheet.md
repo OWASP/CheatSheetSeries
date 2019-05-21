@@ -350,13 +350,13 @@ services.ConfigureApplicationCookie(options =>
 
 ## A3 Sensitive Data Exposure
 
-DO NOT: Store encrypted passwords.
+DO NOT: [Store encrypted passwords](Password_Storage_Cheat_Sheet.md#do-not-limit-the-character-set-and-set-long-max-lengths-for-credentials).
 
 DO: Use a strong hash to store password credentials. Use Argon2, PBKDF2, BCrypt or SCrypt with at least 8000 iterations and a strong key.
 
 DO: Enforce passwords with a minimum complexity that will survive a dictionary attack i.e. longer passwords that use the full character set (numbers, symbols and letters) to increase the entropy.
 
-DO: Use a strong encryption routine such as AES-512 where personally identifiable data needs to be restored to it's original format. Do not encrypt passwords. Protect encryption keys more than any other asset. Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly.
+DO: Use a strong encryption routine such as AES-512 where personally identifiable data needs to be restored to it's original format. Do not encrypt passwords. Protect encryption keys more than any other asset. Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly. More information [here](Transport_Layer_Protection_Cheat_Sheet.md).
 
 DO: Use TLS 1.2 for your entire site. Get a free certificate [LetsEncrypt.org](https://letsencrypt.org/).
 
@@ -678,7 +678,7 @@ DO: Enable a [Content Security Policy](https://developers.google.com/web/fundame
                 font-src 'self'; script-src 'self'" />
 ```
 
-## A8 Insecure Deserialization
+## A8 [Insecure Deserialization](Deserialization_Cheat_Sheet.md#net-csharp)
 
 DO NOT: Accept Serialized Objects from Untrusted Sources
 
@@ -710,7 +710,7 @@ DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was throw
 
 DO NOT: Log sesnsitive data such as user's passwords.
 
-### Logging
+### [Logging](Logging_Cheat_Sheet.md)
 
 .NET Core come with a LoggerFactory, which is in Microsoft.Extensions.Logging. More information about ILogger can be found [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger).
 
