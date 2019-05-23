@@ -5,7 +5,7 @@ Objective of the Threat Modelling Control Cheat Sheet – To provide guidance to
 Audience:
 
 1.  Designers and Architects.
-2.  Assessors: Threat Modeling SMEs or Security Assessors who are responsible for analyzing the security of the entire applciations’ components.
+2.  Assessors: Threat Modeling SMEs or Security Assessors who are responsible for analyzing the security of the entire applications’ components.
 
 This cheat sheet provides guidance to assess existing apps as well as new apps. The instructions in here will help designer and architects address applications risks in an early stage of the development life cycle to help developers consider these risks while writing the code. It will also help assessors to look at risks from a comprehensive perspective.
 
