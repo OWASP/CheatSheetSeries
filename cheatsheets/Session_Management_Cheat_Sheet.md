@@ -180,7 +180,7 @@ Data stored using the localStorage API is persisted across browsing sessions, me
 
 ### Use Case
 
-WHATWG suggests the use of localStorage for data that needs to be accessed across windows or tabs, across multiple sessions, and where large (multi-megabyte) volumes of data may ned to be stored for performance reasons.
+WHATWG suggests the use of localStorage for data that needs to be accessed across windows or tabs, across multiple sessions, and where large (multi-megabyte) volumes of data may need to be stored for performance reasons.
 
 ## The sessionStorage API
 
@@ -196,13 +196,13 @@ The sessionStorage API only stores data for the duration of the current browsing
 
 ### Use Case
 
-Inspite of the name, WHATWG does not suggest that sessionStorage be used to store session identifiers.
-Rather, WHATWG suggests the use of sessionStorage for data that is relevent for one-instance of a work-flow, such as details for a ticket booking, but where multiple work-flows could be performed in other tabs concurrently. The window/tab bound nature will keep the data from leaking between workflows in seperate tabs.
+Despite the name, WHATWG does not suggest that sessionStorage be used to store session identifiers.
+Rather, WHATWG suggests the use of sessionStorage for data that is relevant for one-instance of a workflow, such as details for a ticket booking, but where multiple workflows could be performed in other tabs concurrently. The window/tab bound nature will keep the data from leaking between workflows in separate tabs.
 
 ## Security Risks
 
-In general, secure or sensitive data should not be stored persistently in browser data stores as this may permit information leakage to other users on the same host. Because the Web Storage mechanisms are API's, this also permits access from injected scripts, making it less secure than a cookie with the httponly flags applied.
-These characteristics would would restrict the use of localStorage to public data. While a case could be made for storing workflow specific data in sessionStorage for use by that specific tab/window across reloads, sensitive data should not be stored this way.
+In general, secure or sensitive data should not be stored persistently in browser data stores as this may permit information leakage to other users on the same host. Because the Web Storage mechanisms are API's, this also permits access from injected scripts, making it less secure than a cookie with the “httponly” flags applied.
+These characteristics would restrict the use of localStorage to public data. While a case could be made for storing workflow specific data in sessionStorage for use by that specific tab/window across reloads, sensitive data should not be stored this way.
 An authentication request to an API endpoint should result in a Set-Cookie header with an appropriate identifier as raised above, which is restricted to the domain and path of the API, with no persistence, and with the recommended flags implemented.
 
 # Session ID Life Cycle
