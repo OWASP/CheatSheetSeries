@@ -163,62 +163,62 @@ Typically, session management capabilities to track users after authentication m
 - Ensure entire cookie should be encrypted if sensitive data is persisted in the cookie
 - Define all cookies being used by the application, their name and why they are needed
 
-# Start Edit
+# HTML5 Web Storage API
+https://wpreset.com/localstorage-sessionstorage-cookies-detailed-comparison/
+https://www.whitehatsec.com/blog/web-storage-security/
+https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+http://www.gwtproject.org/doc/latest/DevGuideHtml5Storage.html
+https://www.w3.org/TR/webstorage/
+https://auth0.com/docs/security/store-tokens
+https://html.spec.whatwg.org/multipage/webstorage.html
+https://www.cio.com/article/2382838/4-client-side-web-storage-options-that-replace-cookies.html
+https://www.owasp.org/index.php/Test_Local_Storage_(OTG-CLIENT-012)
+https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/bg142799(v=vs.85)
+https://www.checkmarx.com/2016/02/15/wanted-know-html5-security-2/
+https://codinglatte.com/posts/angular/angular-5-token-based-authentication/
 
-# Cookies
+https://whatwg.org/
 
-The session ID exchange mechanism based on cookies provides multiple security features in the form of cookie attributes that can be used to protect the exchange of the session ID:
+The Web Hypertext Application Technology Working Group (WHATWG) describes the HTML5 Web Storage APIs, localStorage and sessionStorage, as mechanisms for storing name-value pairs client-side.
+Unlike HTTP cookies, the contents of localStorage and sessionStorage are not automatically shared within requests or responses by the browser and are used for storing data client-side.
 
-## Secure Attribute
+## The localStorage API
 
-The `Secure` cookie attribute instructs web browsers to only send the cookie through an encrypted HTTPS (SSL/TLS) connection. This session protection mechanism is mandatory to prevent the disclosure of the session ID through MitM (Man-in-the-Middle) attacks. It ensures that an attacker cannot simply capture the session ID from web browser traffic.
+### Scope
 
-Forcing the web application to only use HTTPS for its communication (even when port TCP/80, HTTP, is closed in the web application host) does not protect against session ID disclosure if the `Secure` cookie has not been set - the web browser can be deceived to disclose the session ID over an unencrypted HTTP connection. The attacker can intercept and manipulate the victim user traffic and inject an HTTP unencrypted reference to the web application that will force the web browser to submit the session ID in the clear.
+Data stored using the localStorage API is accessible by pages which are loaded from the same protocol, port and host.
+This provides similar access to this data as would be achieved by using the "secure" flag on a cookie, meaning that data stored from https://example.com could not be retrieved by http://example.com.
 
-See also: [SecureFlag](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies)
+### Duration
 
-## HttpOnly Attribute
+Data stored using the localStorage API is persisted across browsing sessions, meaning that this data is susceptible to access by other system users. 
 
-The `HttpOnly` cookie attribute instructs web browsers not to allow scripts (e.g. JavaScript or VBscript) an ability to access the cookies via the DOM document.cookie object. This session ID protection is mandatory to prevent session ID stealing through XSS attacks.
+### Use Case
 
-See the OWASP [XSS (Cross Site Scripting) Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
+WHATWG suggests the use of localStorage for data that needs to be accessed across windows or tabs, across multiple sessions, and where large (multi-megabyte) volumes of data may ned to be stored for performance reasons.
 
-See also: [HttpOnly](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies)
+## The sessionStorage API
 
-## SameSite Attribute
+### Scope
 
-SameSite allows a server define a cookie attribute making it impossible to the browser send this cookie along with cross-site requests. The main goal is mitigate the risk of cross-origin information leakage, and provides some protection against cross-site request forgery attacks.
+The sessionStorage API is accessible only to the window or tab that it was stored from. Also, like the localStorage API, data stored using the sessionStorage API is accessible by pages which are loaded from the same protocol, port and host.
+This provides similar access to this data as would be achieved by using the "secure" flag on a cookie, meaning that data stored from https://example.com could not be retrieved by http://example.com.
 
-See also: [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies)
+### Duration
 
-## Domain and Path Attributes
+The sessionStorage API only stores data for the duration of the current browsing session. Once the tab is closed, that data is no longer retrievable.
 
-The [`Domain` cookie attribute](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) instructs web browsers to only send the cookie to the specified domain and all subdomains. If the attribute is not set, by default the cookie will only be sent to the origin server. The [`Path` cookie attribute](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) instructs web browsers to only send the cookie to the specified directory or subdirectories (or paths or resources) within the web application. If the attribute is not set, by default the cookie will only be sent for the directory (or path) of the resource requested and setting the cookie.
+### Use Case
 
-It is recommended to use a narrow or restricted scope for these two attributes. In this way, the `Domain` attribute should not be set (restricting the cookie just to the origin server) and the `Path` attribute should be set as restrictive as possible to the web application path that makes use of the session ID.
+Inspite of the name, WHATWG does not suggest that sessionStorage be used to store session identifiers.
+Rather, WHATWG suggests the use of sessionStorage for data that is relevent for one-instance of a work-flow, such as details for a ticket booking, but where multiple work-flows could be performed in other tabs concurrently. The window/tab bound nature will keep the data from colliding between workflows.
 
-Setting the `Domain` attribute to a too permissive value, such as `example.com` allows an attacker to launch attacks on the session IDs between different hosts and web applications belonging to the same domain, known as cross-subdomain cookies. For example, vulnerabilities in `www.example.com` might allow an attacker to get access to the session IDs from `secure.example.com`.
+## Security Risks
 
-Additionally, it is recommended not to mix web applications of different security levels on the same domain. Vulnerabilities in one of the web applications would allow an attacker to set the session ID for a different web application on the same domain by using a permissive `Domain` attribute (such as `example.com`) which is a technique that can be used in [session fixation attacks](http://www.acrossecurity.com/papers/session_fixation.pdf).
+In general, secure or sensitive data should not be stored persistently in browser data stores as this may permit information leakage to other users on the same host. Because the Web Storage mechanisms are API's, this permits access from injected scripts, making it less secure than a cookie with the recommended flags applied. This would restrict the use of localStorage to public data. While a case could be made for storing workflow specific data in sessionStorage for use by that specific tab/window across reloads, sensitive data should not be stored this way.
+An authentication request to an API endpoint should result in a Set-Cookie header with an appropriate identifier as raised above, which is restricted to the domain and path of the API, with no persistence, and with the recommended flags implemented.
 
-Although the `Path` attribute allows the isolation of session IDs between different web applications using different paths on the same host, it is highly recommended not to run different web applications (especially from different security levels or scopes) on the same host. Other methods can be used by these applications to access the session IDs, such as the `document.cookie` object. Also, any web application can set cookies for any path on that host.
-
-Cookies are vulnerable to DNS spoofing/hijacking/poisoning attacks, where an attacker can manipulate the DNS resolution to force the web browser to disclose the session ID for a given host or domain.
-
-## Expire and Max-Age Attributes
-
-Session management mechanisms based on cookies can make use of two types of cookies, non-persistent (or session) cookies, and persistent cookies. If a cookie presents the [`Max-Age`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) (that has preference over `Expires`) or [`Expires`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) attributes, it will be considered a persistent cookie and will be stored on disk by the web browser based until the expiration time. 
-
-Typically, session management capabilities to track users after authentication make use of non-persistent cookies. This forces the session to disappear from the client if the current web browser instance is closed. Therefore, it is highly recommended to use non-persistent cookies for session management purposes, so that the session ID does not remain on the web client cache for long periods of time, from where an attacker can obtain it.
-
-- Ensure that sensitive information is not comprised, by ensuring that sensitive information is not persistent / encrypting / stored on a need basis for the duration of the need
-- Ensure that unauthorized activities cannot take place via cookie manipulation
-- Ensure secure flag is set to prevent accidental transmission over “the wire” in a non-secure manner
-- Determine if all state transitions in the application code properly check for the cookies and enforce their use
-- Ensure entire cookie should be encrypted if sensitive data is persisted in the cookie
-- Define all cookies being used by the application, their name and why they are needed
-
-# End Edit
+https://html.spec.whatwg.org/multipage/webstorage.html#introduction-15
 
 # Session ID Life Cycle
 
