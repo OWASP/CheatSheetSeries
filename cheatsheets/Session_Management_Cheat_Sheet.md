@@ -165,46 +165,60 @@ Typically, session management capabilities to track users after authentication m
 
 # HTML5 Web Storage API
 
-The Web Hypertext Application Technology Working Group (WHATWG) describes the HTML5 Web Storage APIs, localStorage and sessionStorage, as mechanisms for storing name-value pairs client-side.
-Unlike HTTP cookies, the contents of localStorage and sessionStorage are not automatically shared within requests or responses by the browser and are used for storing data client-side.
+The Web Hypertext Application Technology Working Group (WHATWG) describes the HTML5 Web Storage APIs, `localStorage` and `sessionStorage`, as mechanisms for storing name-value pairs client-side.
+Unlike HTTP cookies, the contents of `localStorage` and `sessionStorage` are not automatically shared within requests or responses by the browser and are used for storing data client-side.
 
 ## The localStorage API
 
 ### Scope
 
-Data stored using the localStorage API is accessible by pages which are loaded from the same protocol, port and host.
-This provides similar access to this data as would be achieved by using the "secure" flag on a cookie, meaning that data stored from https could not be retrieved via http.
+Data stored using the `localStorage` API is accessible by pages which are loaded from the same origin, which is defined as the scheme (`https:\\`), host (`example.com`), port (`443`) and domain/realm (`example.com`).
+This provides similar access to this data as would be achieved by using the `secure` flag on a cookie, meaning that data stored from `https` could not be retrieved via `http`. Due to potential concurrent access from separate windows/threads, data stored using `localStorage` may be susceptible to shared access issues (such as race-conditions) and should be considered non-locking ([Web Storage API Spec](https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute)). 
 
 ### Duration
 
-Data stored using the localStorage API is persisted across browsing sessions, meaning that this data is susceptible to access by other system users. 
+Data stored using the `localStorage` API is persisted across browsing sessions, extending the timeframe in which it may be accessible to other system users. 
+
+### Offline Access
+
+The standards do not require `localStorage` data to be encrypted-at-rest, meaning it may be possible to directly access this data from disk.
 
 ### Use Case
 
-WHATWG suggests the use of localStorage for data that needs to be accessed across windows or tabs, across multiple sessions, and where large (multi-megabyte) volumes of data may need to be stored for performance reasons.
+WHATWG suggests the use of `localStorage` for data that needs to be accessed across windows or tabs, across multiple sessions, and where large (multi-megabyte) volumes of data may need to be stored for performance reasons.
 
 ## The sessionStorage API
 
 ### Scope
 
-The sessionStorage API is accessible only to the window or tab that it was stored from, meaning that Tab 1 cannot access data for Tab 2.
-Also, like the localStorage API, data stored using the sessionStorage API is accessible by pages which are loaded from the same protocol, port and host.
-This provides similar access to this data as would be achieved by using the "secure" flag on a cookie, meaning that data stored from https could not be retrieved by http.
+The `sessionStorage` API stores data within the window context from which it was called, meaning that Tab 1 cannot access data which was stored from Tab 2.
+Also, like the `localStorage` API, data stored using the `sessionStorage` API is accessible by pages which are loaded from the same origin, which is defined as the scheme (`https:\\`), host (`example.com`), port (`443`) and domain/realm (`example.com`)..
+This provides similar access to this data as would be achieved by using the `secure` flag on a cookie, meaning that data stored from `https` could not be retrieved by `http`.
 
 ### Duration
 
-The sessionStorage API only stores data for the duration of the current browsing session. Once the tab is closed, that data is no longer retrievable.
+The `sessionStorage` API only stores data for the duration of the current browsing session. Once the tab is closed, that data is no longer retrievable. This does not necessarily prevent access, should a browser tab be reused or left open. Data may also persist in memory until a garbage collection event.
+
+### Offline Access
+
+The standards do not require `sessionStorage` data to be encrypted-at-rest, meaning it may be possible to directly access this data from disk.
 
 ### Use Case
 
-Despite the name, WHATWG does not suggest that sessionStorage be used to store session identifiers.
-Rather, WHATWG suggests the use of sessionStorage for data that is relevant for one-instance of a workflow, such as details for a ticket booking, but where multiple workflows could be performed in other tabs concurrently. The window/tab bound nature will keep the data from leaking between workflows in separate tabs.
+WHATWG suggests the use of `sessionStorage` for data that is relevant for one-instance of a workflow, such as details for a ticket booking, but where multiple workflows could be performed in other tabs concurrently. The window/tab bound nature will keep the data from leaking between workflows in separate tabs.
 
 ## Security Risks
 
-In general, secure or sensitive data should not be stored persistently in browser data stores as this may permit information leakage to other users on the same host. Because the Web Storage mechanisms are API's, this also permits access from injected scripts, making it less secure than a cookie with the “httponly” flags applied.
-These characteristics would restrict the use of localStorage to public data. While a case could be made for storing workflow specific data in sessionStorage for use by that specific tab/window across reloads, sensitive data should not be stored this way.
-An authentication request to an API endpoint should result in a Set-Cookie header with an appropriate identifier as raised above, which is restricted to the domain and path of the API, with no persistence, and with the recommended flags implemented.
+In general, secure or sensitive data should not be stored persistently in browser data stores as this may permit information leakage on shared systems. Because the Web Storage mechanisms are API's, this also permits access from injected scripts, making it less secure than cookies with the `httponly` flag applied.
+While a case could be made for storing workflow specific data in `sessionStorage` for use by that specific tab/window across reloads, the Web Storage API's should be treated as insecure storage. Because of this, if a business solution requres the use of the `localStorage` or `sessionStorage` to store sensitive data, such a solution should encipher data and apply replay protections.
+Due to the potential to access Web Storage API's via an XSS attack, session identifiers should be stored using non-persistent cookies, with the appropriate flags to protect from [insecure access](Transport_Layer_Protection_Cheat_Sheet.md) (`Secure`), [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) (`HttpOnly`) and [CSRF](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) issues (`SameSite`).
+
+## References
+
+- https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+- https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+- https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
+- https://html.spec.whatwg.org/multipage/webstorage.html#webstorage
 
 # Session ID Life Cycle
 
