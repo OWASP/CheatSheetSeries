@@ -192,8 +192,8 @@ WHATWG suggests the use of `localStorage` for data that needs to be accessed acr
 ### Scope
 
 The `sessionStorage` API stores data within the window context from which it was called, meaning that Tab 1 cannot access data which was stored from Tab 2.
-Also, like the `localStorage` API, data stored using the `sessionStorage` API is accessible by pages which are loaded from the same origin, which is defined as the scheme (`https:\\`), host (`example.com`), port (`443`) and domain/realm (`example.com`)..
-This provides similar access to this data as would be achieved by using the `secure` flag on a cookie, meaning that data stored from `https` could not be retrieved by `http`.
+Also, like the `localStorage` API, data stored using the `sessionStorage` API is accessible by pages which are loaded from the same origin, which is defined as the scheme (`https:\\`), host (`example.com`), port (`443`) and domain/realm (`example.com`).
+This provides similar access to this data as would be achieved by using the `secure` flag on a cookie, meaning that data stored from `https` could not be retrieved via `http`.
 
 ### Duration
 
@@ -209,9 +209,9 @@ WHATWG suggests the use of `sessionStorage` for data that is relevant for one-in
 
 ## Security Risks
 
-In general, secure or sensitive data should not be stored persistently in browser data stores as this may permit information leakage on shared systems. Because the Web Storage mechanisms are API's, this also permits access from injected scripts, making it less secure than cookies with the `httponly` flag applied.
-While a case could be made for storing workflow specific data in `sessionStorage` for use by that specific tab/window across reloads, the Web Storage API's should be treated as insecure storage. Because of this, if a business solution requres the use of the `localStorage` or `sessionStorage` to store sensitive data, such a solution should encipher data and apply replay protections.
-Due to the potential to access Web Storage API's via an XSS attack, session identifiers should be stored using non-persistent cookies, with the appropriate flags to protect from [insecure access](Transport_Layer_Protection_Cheat_Sheet.md) (`Secure`), [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) (`HttpOnly`) and [CSRF](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) issues (`SameSite`).
+In general, secure or sensitive data should not be stored persistently in browser data stores as this may permit information leakage on shared systems. Because the Web Storage mechanisms are APIs, this also permits access from injected scripts, making it less secure than cookies with the `httponly` flag applied.
+While a case could be made for storing workflow specific data in `sessionStorage` for use by that specific tab/window across reloads, the Web Storage APIs should be treated as insecure storage. Because of this, if a business solution requires the use of the `localStorage` or `sessionStorage` to store sensitive data, such a solution should encipher data and apply replay protections.
+Due to the potential to access Web Storage APIs via an XSS attack, session identifiers should be stored using non-persistent cookies, with the appropriate flags to protect from [insecure access](Transport_Layer_Protection_Cheat_Sheet.md) (`Secure`), [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) (`HttpOnly`) and [CSRF](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) issues (`SameSite`).
 
 ## References
 
