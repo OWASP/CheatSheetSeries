@@ -1,6 +1,6 @@
 # Introduction
 
-[Cross-Site Request Forgery (CSRF)](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user’s web browser to perform an unwanted action on a trusted site when the user is authenticated. A CSRF attack works because browser requests automatically include any credentials associated with the site, such as the user's session cookie, IP address, etc. Therefore, if the user is authenticated to the site, the site cannot distinguish between the forged or legitimate request sent by the victim. We would need a token/identifier that is not accessible to attacker and would not be sent along (like cookies) with forged requests that attacker initiates. For more information on CSRF, see OWASP [Cross-Site Request Forgery (CSRF) page](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)).
+[Cross-Site Request Forgery (CSRF)](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user’s web browser to perform an unwanted action on a trusted site when the user is authenticated. A CSRF attack works because browser requests automatically include any credentials associated with the site, such as the user's session cookie, IP address, etc. Therefore, if the user is authenticated to the site, the site cannot distinguish between the forged or legitimate request sent by the victim. We would need a token/identifier that is not accessible to attacker and would not be sent along (like cookies) with forged requests that attacker initiates. For more information on CSRF, see OWASP [Cross-Site Request Forgery (CSRF) page](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)).
 
 The impact of a successful CSRF attack is limited to the capabilities exposed by the vulnerable application. For example, this attack could result in a transfer of funds, changing a password, or making a purchase with the user’s credentials. In effect, CSRF attacks are used by an attacker to make a target system perform a function via the target's browser, without the user’s knowledge, at least until the unauthorized transaction has been committed.
 
@@ -12,9 +12,9 @@ If you have seen OWASP [old CSRF prevention cheat sheets](https://www.owasp.org/
 
 # Warning: No Cross-Site Scripting (XSS) Vulnerabilities
 
-[Cross-Site Scripting](https://www.owasp.org/index.php/Cross-Site_Scripting) is not necessary for CSRF to work. However, any cross-site scripting vulnerability can be used to defeat all CSRF mitigation techniques available in the market today (except mitigation techniques that involve user interaction and described later in this cheatsheet). This is because an XSS payload can simply read any page on the site using an XMLHttpRequest (direct DOM access can be done, if on same page) and obtain the generated token from the response, and include that token with a forged request.  This technique is exactly how the [MySpace (Samy) worm](https://en.wikipedia.org/wiki/Samy_(computer_worm)) defeated MySpace's anti-CSRF defenses in 2005, which enabled the worm to propagate.
+[Cross-Site Scripting](https://www.owasp.org/index.php/Cross-Site_Scripting) is not necessary for CSRF to work. However, any cross-site scripting vulnerability can be used to defeat all CSRF mitigation techniques available in the market today (except mitigation techniques that involve user interaction and described later in this cheatsheet). This is because an XSS payload can simply read any page on the site using an XMLHttpRequest (direct DOM access can be done, if on same page) and obtain the generated token from the response, and include that token with a forged request.  This technique is exactly how the [MySpace (Samy) worm](https://en.wikipedia.org/wiki/Samy_(computer_worm)) defeated MySpace's anti-CSRF defenses in 2005, which enabled the worm to propagate.
 
-It is imperative that no XSS vulnerabilities are present to ensure that CSRF defenses can't be circumvented. Please see the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.
+It is imperative that no XSS vulnerabilities are present to ensure that CSRF defenses can't be circumvented. Please see the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.
 
 # Resources that need to be protected from CSRF vulnerability
 
@@ -201,9 +201,9 @@ There are a couple of drawbacks associated with the assumptions made here. The p
 
 "*With double submit, if an attacker can write a cookie they can obviously defeat the protection. And again, writing cookies is significantly easier then reading them. The fact that cookies can be written is difficult for many people to understand. After all, doesn't the same origin policy specify that one domain cannot access cookies from another domain? However, there are two common scenarios where writing cookies across domains is possible:*
 
-*a)   While it's true that hellokitty.marketing.example.com cannot read cookies or access the DOM from secure.example.com because of the same origin policy, hellokitty.marketing.example.com can write cookies to the parent domain (example.com), and these cookies are then consumed by secure.example.com (secure.example.com has no good way to distinguish which site set the cookie). Additionally, there are methods of forcing secure.example.com to always accept your cookie first. What this means is that XSS in hellokitty.marketing.example.com is able to overwrite cookies in secure.example.com.*
+*a)   While it's true that hellokitty.marketing.example.com cannot read cookies or access the DOM from secure.example.com because of the same origin policy, hellokitty.marketing.example.com can write cookies to the parent domain (example.com), and these cookies are then consumed by secure.example.com (secure.example.com has no good way to distinguish which site set the cookie). Additionally, there are methods of forcing secure.example.com to always accept your cookie first. What this means is that XSS in hellokitty.marketing.example.com is able to overwrite cookies in secure.example.com.*
 
-*b)   If an attacker is in the middle, they can usually force a request to the same domain over HTTP. If an application is hosted at `https://secure.example.com`, even if the cookies are set with the secure flag, a man in the middle can force connections to `http://secure.example.com` and set (overwrite) any arbitrary cookies (even though the secure flag prevents the attacker from reading those cookies). Even if the HSTS header is set on the server and the browser visiting the site supports HSTS (this would prevent a man in the middle from forcing plaintext HTTP requests) unless the HSTS header is set in a way that includes all subdomains, a man in the middle can simply force a request to a separate subdomain and overwrite cookies similar to 1. In other words, as long as `http://hellokitty.marketing.example.com` doesn't force https, then an attacker can overwrite cookies on any `example.com` subdomain.*"
+*b)   If an attacker is in the middle, they can usually force a request to the same domain over HTTP. If an application is hosted at `https://secure.example.com`, even if the cookies are set with the secure flag, a man in the middle can force connections to `http://secure.example.com` and set (overwrite) any arbitrary cookies (even though the secure flag prevents the attacker from reading those cookies). Even if the HSTS header is set on the server and the browser visiting the site supports HSTS (this would prevent a man in the middle from forcing plaintext HTTP requests) unless the HSTS header is set in a way that includes all subdomains, a man in the middle can simply force a request to a separate subdomain and overwrite cookies similar to 1. In other words, as long as `http://hellokitty.marketing.example.com` doesn't force https, then an attacker can overwrite cookies on any `example.com` subdomain.*"
 
 So, unless you are sure that your subdomains are fully secured and only accept HTTPS connections (we believe it’s difficult to guarantee at large enterprises), you should not rely on the Double Submit Cookie technique as a primary mitigation for CSRF.
 
@@ -285,7 +285,7 @@ Since CSRF vulnerabilities are reportedly widespread, we recommend using the fol
 3. Do not use the same browser to access sensitive applications and to surf the Internet freely (tabbed browsing).
 4. The use of plugins such as No-Script makes POST based CSRF vulnerabilities difficult to exploit. This is because JavaScript is used to automatically submit the form when the exploit is loaded. Without JavaScript, the attacker would have to trick the user into submitting the form manually.
 
-Integrated HTML-enabled mail/browser and newsreader/browser environments pose additional risks since simply viewing a mail message or a news message might lead to the execution of an attack. 
+Integrated HTML-enabled mail/browser and newsreader/browser environments pose additional risks since simply viewing a mail message or a news message might lead to the execution of an attack.
 
 # Implementation reference example
 
@@ -539,6 +539,7 @@ public class CSRFValidationFilter implements Filter {
     }
 }
 ```
+
 # JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header
 
 The following guidance considers **GET**, **HEAD** and **OPTIONS** methods are safe operations. Therefore **GET**, **HEAD**, and **OPTIONS** method AJAX calls need not be appended with a CSRF token header. However, if the verbs are used to perform state changing operations, they will also require a CSRF token header.
@@ -547,7 +548,7 @@ The following guidance considers **GET**, **HEAD** and **OPTIONS** methods are s
 
 ## Storing the CSRF Token Value in the DOM
 
-A CSRF token can be included in the <meta> tag as shown below. All subsequent calls in the page can extract the CSRF token from this <meta> tag. It can also be stored in a JS variable / anywhere on the DOM. However, it is not recommended to store it in cookies or browser local storage.
+A CSRF token can be included in the ```<meta>``` tag as shown below. All subsequent calls in the page can extract the CSRF token from this <meta> tag. It can also be stored in a JS variable / anywhere on the DOM. However, it is not recommended to store it in cookies or browser local storage.
 
 The following code snippet can be used to include a CSRF token as a ```<meta>``` tag:
 
@@ -587,6 +588,7 @@ This can be done as demonstrated in the following code snippet:
  ```
 
 ### AngularJS
+
 AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS's documentation for [$httpProvider](https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults).
 
 ```html
@@ -611,6 +613,7 @@ AngularJS allows for setting default headers for HTTP operations. Further docume
       }]);
  </script>
 ```
+
 This code snippet has been tested with AngularJS version 1.7.7.
 
 ### Axios
@@ -635,6 +638,7 @@ This code snippet has been tested with AngularJS version 1.7.7.
 This code snippet has been tested with Axios version 0.18.0.
 
 ### JQuery
+
 JQuery exposes an API called $.ajaxSetup() which can be used to add the ```anti-csrf-token``` header to the AJAX request. API documentation for ```$.ajaxSetup()``` can be found here. The function ```csrfSafeMethod()``` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
 
 You can configure JQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:
@@ -657,6 +661,7 @@ You can configure JQuery to automatically add the token to all request headers b
     });
 </script>
 ```
+
 This code snippet has been tested with jQuery version 3.3.1.
 
 # Authors and Primary Editors
@@ -670,5 +675,3 @@ Paul Petefish
 Eric Sheridan - eric.sheridan@owasp.org
 
 Dominique Righetto - dominique.righetto@owasp.org
-
-[Arun John Kuruvilla (Amazon Application Security Team)](https://github.com/arunjohnkuruvilla)
