@@ -1423,6 +1423,98 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
     }
 }
 </code></pre>
+<h1 id="javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header"><a name="javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header" class="plugin-anchor" href="#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header"><i class="fa fa-link" aria-hidden="true"></i></a>JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header</h1>
+<p>The following guidance considers <strong>GET</strong>, <strong>HEAD</strong> and <strong>OPTIONS</strong> methods are safe operations. Therefore <strong>GET</strong>, <strong>HEAD</strong>, and <strong>OPTIONS</strong> method AJAX calls need not be appended with a CSRF token header. However, if the verbs are used to perform state changing operations, they will also require a CSRF token header.</p>
+<p><strong>POST</strong>, <strong>PUT</strong>, <strong>PATCH</strong>, <strong>DELETE</strong> and <strong>TRACE</strong> verbs, being state changing verbs, should have a CSRF token attached to the request. The following guidance will demonstrate how to create overrides in JavaScript libraries to have CSRF tokens included automatically with every AJAX request for the state changing methods mentioned above.</p>
+<h2 id="storing-the-csrf-token-value-in-the-dom"><a name="storing-the-csrf-token-value-in-the-dom" class="plugin-anchor" href="#storing-the-csrf-token-value-in-the-dom"><i class="fa fa-link" aria-hidden="true"></i></a>Storing the CSRF Token Value in the DOM</h2>
+<p>A CSRF token can be included in the <code>&lt;meta&gt;</code> tag as shown below. All subsequent calls in the page can extract the CSRF token from this <code>&lt;meta&gt;</code> tag. It can also be stored in a JS variable / anywhere on the DOM. However, it is not recommended to store it in cookies or browser local storage.</p>
+<p>The following code snippet can be used to include a CSRF token as a <code>&lt;meta&gt;</code> tag:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;csrf-token&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;{{ csrf_token() }}&quot;</span>&gt;</span>
+</code></pre>
+<p>The exact syntax of populating the content attribute would depend on your web application&apos;s backend programming language.</p>
+<h2 id="overriding-defaults-to-set-custom-header"><a name="overriding-defaults-to-set-custom-header" class="plugin-anchor" href="#overriding-defaults-to-set-custom-header"><i class="fa fa-link" aria-hidden="true"></i></a>Overriding Defaults to Set Custom Header</h2>
+<p>Several JavaScript libraries allow for overriding default settings to have a header added automatically to all AJAX requests.</p>
+<h3 id="xmlhttprequest-native-javascript"><a name="xmlhttprequest-native-javascript" class="plugin-anchor" href="#xmlhttprequest-native-javascript"><i class="fa fa-link" aria-hidden="true"></i></a>XMLHttpRequest (Native JavaScript)</h3>
+<p>XMLHttpRequest&apos;s open() method can be overridden to set the <code>anti-csrf-token</code> header whenever the <code>open()</code> method is invoked next. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
+<p>This can be done as demonstrated in the following code snippet:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript">
+    <span class="hljs-keyword">var</span> csrf_token = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;meta[name=&apos;csrf-token&apos;]&quot;</span>).getAttribute(<span class="hljs-string">&quot;content&quot;</span>);
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">csrfSafeMethod</span>(<span class="hljs-params">method</span>) </span>{
+        <span class="hljs-comment">// these HTTP methods do not require CSRF protection</span>
+        <span class="hljs-keyword">return</span> (<span class="hljs-regexp">/^(GET|HEAD|OPTIONS)$/</span>.test(method));
+    }
+    <span class="hljs-keyword">var</span> o = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+        <span class="hljs-keyword">var</span> res = o.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+        <span class="hljs-keyword">var</span> err = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>();
+        <span class="hljs-keyword">if</span> (!csrfSafeMethod(<span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>])) {
+            <span class="hljs-keyword">this</span>.setRequestHeader(<span class="hljs-string">&apos;anti-csrf-token&apos;</span>, csrf_token);
+        }
+        <span class="hljs-keyword">return</span> res;
+    };
+ </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h3 id="angularjs"><a name="angularjs" class="plugin-anchor" href="#angularjs"><i class="fa fa-link" aria-hidden="true"></i></a>AngularJS</h3>
+<p>AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS&apos;s documentation for <a href="https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults" target="_blank">$httpProvider</a>.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+    <span class="hljs-keyword">var</span> csrf_token = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;meta[name=&apos;csrf-token&apos;]&quot;</span>).getAttribute(<span class="hljs-string">&quot;content&quot;</span>);
+
+    <span class="hljs-keyword">var</span> app = angular.module(<span class="hljs-string">&quot;app&quot;</span>, []);
+
+    app.config([<span class="hljs-string">&apos;$httpProvider&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$httpProvider</span>) </span>{
+        $httpProvider.defaults.headers.post[<span class="hljs-string">&quot;anti-csrf-token&quot;</span>] = csrf_token;
+        $httpProvider.defaults.headers.put[<span class="hljs-string">&quot;anti-csrf-token&quot;</span>] = csrf_token;
+        $httpProvider.defaults.headers.patch[<span class="hljs-string">&quot;anti-csrf-token&quot;</span>] = csrf_token;
+        <span class="hljs-comment">// AngularJS does not create an object for DELETE and TRACE methods by default, and has to be manually created.</span>
+        $httpProvider.defaults.headers.delete = {
+            <span class="hljs-string">&quot;Content-Type&quot;</span> : <span class="hljs-string">&quot;application/json;charset=utf-8&quot;</span>,
+            <span class="hljs-string">&quot;anti-csrf-token&quot;</span> : csrf_token
+        };
+        $httpProvider.defaults.headers.trace = {
+            <span class="hljs-string">&quot;Content-Type&quot;</span> : <span class="hljs-string">&quot;application/json;charset=utf-8&quot;</span>,
+            <span class="hljs-string">&quot;anti-csrf-token&quot;</span> : csrf_token
+        };
+      }]);
+ </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>This code snippet has been tested with AngularJS version 1.7.7.</p>
+<h3 id="axios"><a name="axios" class="plugin-anchor" href="#axios"><i class="fa fa-link" aria-hidden="true"></i></a>Axios</h3>
+<p><a href="https://github.com/axios/axios" target="_blank">Axios</a> allows us to set default headers for the POST, PUT, DELETE and PATCH actions.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript">
+    <span class="hljs-keyword">var</span> csrf_token = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;meta[name=&apos;csrf-token&apos;]&quot;</span>).getAttribute(<span class="hljs-string">&quot;content&quot;</span>);
+
+    axios.defaults.headers.post[<span class="hljs-string">&apos;anti-csrf-token&apos;</span>] = csrf_token;
+    axios.defaults.headers.put[<span class="hljs-string">&apos;anti-csrf-token&apos;</span>] = csrf_token;
+    axios.defaults.headers.delete[<span class="hljs-string">&apos;anti-csrf-token&apos;</span>] = csrf_token;
+    axios.defaults.headers.patch[<span class="hljs-string">&apos;anti-csrf-token&apos;</span>] = csrf_token;
+
+    <span class="hljs-comment">// Axios does not create an object for TRACE method by default, and has to be created manually.</span>
+    axios.defaults.headers.trace = {}
+    axios.defaults.headers.trace[<span class="hljs-string">&apos;anti-csrf-token&apos;</span>] = csrf_token
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>This code snippet has been tested with Axios version 0.18.0.</p>
+<h3 id="jquery"><a name="jquery" class="plugin-anchor" href="#jquery"><i class="fa fa-link" aria-hidden="true"></i></a>JQuery</h3>
+<p>JQuery exposes an API called $.ajaxSetup() which can be used to add the <code>anti-csrf-token</code> header to the AJAX request. API documentation for <code>$.ajaxSetup()</code> can be found here. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
+<p>You can configure JQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript">
+    <span class="hljs-keyword">var</span> csrf_token = $(<span class="hljs-string">&apos;meta[name=&quot;csrf-token&quot;]&apos;</span>).attr(<span class="hljs-string">&apos;content&apos;</span>);
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">csrfSafeMethod</span>(<span class="hljs-params">method</span>) </span>{
+        <span class="hljs-comment">// these HTTP methods do not require CSRF protection</span>
+        <span class="hljs-keyword">return</span> (<span class="hljs-regexp">/^(GET|HEAD|OPTIONS)$/</span>.test(method));
+    }
+
+    $.ajaxSetup({
+        beforeSend: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">xhr, settings</span>) </span>{
+            <span class="hljs-keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="hljs-keyword">this</span>.crossDomain) {
+                xhr.setRequestHeader(<span class="hljs-string">&quot;anti-csrf-token&quot;</span>, csrf_token);
+            }
+        }
+    });
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>This code snippet has been tested with jQuery version 3.3.1.</p>
 <h1 id="authors-and-primary-editors"><a name="authors-and-primary-editors" class="plugin-anchor" href="#authors-and-primary-editors"><i class="fa fa-link" aria-hidden="true"></i></a>Authors and Primary Editors</h1>
 <p><a href="http://www.manideepk.com" target="_blank">Manideep Konakandla (Amazon Application Security Team)</a></p>
 <p>Dave Wichers - dave.wichers@owasp.org</p>
@@ -1472,7 +1564,7 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Cross-Site Request Forgery Prevention ","level":"1.18","depth":1,"next":{"title":"Cross Site Scripting Prevention ","level":"1.19","depth":1,"path":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Credential Stuffing Prevention ","level":"1.17","depth":1,"path":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md","mtime":"2019-05-27T19:08:52.510Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-05-27T19:09:21.361Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Cross-Site Request Forgery Prevention ","level":"1.18","depth":1,"next":{"title":"Cross Site Scripting Prevention ","level":"1.19","depth":1,"path":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Credential Stuffing Prevention ","level":"1.17","depth":1,"path":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md","mtime":"2019-05-31T08:40:13.449Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-05-31T08:40:34.255Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
