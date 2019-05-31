@@ -23,7 +23,7 @@ The following list assumes that you are not violating [RFC2616](http://www.w3.or
 **Note:** If for any reason you violate, you would also need to protect those resources, which is mostly achieved with default `form` `tag` `[GET method]`, `href`, and `src` attributes.
 
 - Form tags with POST
-- Ajax/XHR calls (Sample implementations can be found below.)
+- Ajax/XHR calls
 
 # CSRF Defense Recommendations Summary
 
@@ -91,7 +91,7 @@ For these cases, attempting to retrofit this pattern in existing applications re
 
 ### Encryption based Token Pattern
 
-The Encrypted Token Pattern leverages an encryption, rather than comparison method of Token-validation. It is most suitable for applications that do not want to maintain any state at server side.
+The Encrypted Token Pattern leverages an encryption, rather than comparison method of Token-validation. It is most suitable for applications that do not want to maintain any state at server side. 
 
 Server generates a token comprised of the user's session ID and a timestamp (to prevent replay attacks) using a unique key available only on the server (AES256-with GCM mode/GCM-SIV is recommended. Usage of ECB mode is strictly not recommended. If you would like to use any other block cipher mode of operation, refere [here](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Cryptographic_Storage_Cheat_Sheet.md) and [here](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) for more information). This token is returned to the client and embedded in a hidden field for forms, in the request-header/parameter for AJAX requests. On receipt of this request, the server reads and decrypts the token value with the same key used to create the token. Inability to correctly decrypt suggest an intrusion attempt (recommend to block and log the attack for incident response purposes). Once decrypted, the users sessionId and timestamp contained within the token are validated; session-id is compared against the currently logged in user, and the timestamp is compared against the current time to verify that its not beyond the defined token expiry time. If session-id matches and the timestamp is under the defined token expiry time, request can be allowed.
 
@@ -107,12 +107,12 @@ Below are the steps for the proper implementation of the HMAC based CSRF protect
 1. Generate the token\
 Using key K, generate HMAC(usersessionID+timestamp) and append the same timestamp value to it which results in your CSRF token.
 2. Include the token (*i.e.* HMAC+timestamp)\
-Include token in a hidden field for forms and in the request-header field/request body parameter for AJAX requests.
+Include token in a hidden field for forms and in the request-header field/request body parameter for AJAX requests. 
 3. Validating the token\
 When the request is received at the server, re-generate the token with same key K (parameters are sessionID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.
-
+   
 Refer [here](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Key_Management_Cheat_Sheet.md#key-management-lifecycle-best-practices) to learn best practices about managing your HMAC key.
-
+     
 ## Auto CSRF Mitigation Techniques
 
 Though the technique of mitigating tokens is widely used (stateful with synchronizer token and stateless with encrypted/HMAC token), the major problem associated with these techniques is the human tendency to forget things at times. If a developer forgets to add the token to any state changing operation, they are making the application vulnerable to CSRF. To avoid this, you can try to automate the process of adding tokens to CSRF vulnerable resources (mentioned earlier in this document). You can achieve this by doing the following:
@@ -285,7 +285,7 @@ Since CSRF vulnerabilities are reportedly widespread, we recommend using the fol
 3. Do not use the same browser to access sensitive applications and to surf the Internet freely (tabbed browsing).
 4. The use of plugins such as No-Script makes POST based CSRF vulnerabilities difficult to exploit. This is because JavaScript is used to automatically submit the form when the exploit is loaded. Without JavaScript, the attacker would have to trick the user into submitting the form manually.
 
-Integrated HTML-enabled mail/browser and newsreader/browser environments pose additional risks since simply viewing a mail message or a news message might lead to the execution of an attack.
+Integrated HTML-enabled mail/browser and newsreader/browser environments pose additional risks since simply viewing a mail message or a news message might lead to the execution of an attack. 
 
 # Implementation reference example
 
@@ -322,18 +322,18 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 
 /**
- * Filter in charge of validating each incoming HTTP request about Headers
+ * Filter in charge of validating each incoming HTTP request about Headers 
  * and CSRF token.
  * It is called for all requests to backend destination.
  *
  * We use the approach in which:
  * - The CSRF token is changed after each valid HTTP exchange
  * - The custom Header name for the CSRF token transmission is fixed
- * - A CSRF token is associated to a backend service URI in order to enable
+ * - A CSRF token is associated to a backend service URI in order to enable 
  *   the support for multiple parallel Ajax request from the same application
  * - The CSRF cookie name is the backend service name prefixed with a fixed prefix
  *
- * Here for the POC we show the "access denied" reason in the response but in
+ * Here for the POC we show the "access denied" reason in the response but in 
  * production code only return a generic message !
  *
  * @see "https://wiki.mozilla.org/Security/Origin"
@@ -374,7 +374,7 @@ public class CSRFValidationFilter implements Filter {
      * {@inheritDoc}
      */
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
     throws IOException, ServletException {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpResp = (HttpServletResponse) response;
@@ -386,10 +386,10 @@ public class CSRFValidationFilter implements Filter {
         if (this.isBlank(source)) {
             //If empty then fallback on "Referer" header
             source = httpReq.getHeader("Referer");
-            //If this one is empty too then we trace the event and we block the request
+            //If this one is empty too then we trace the event and we block the request 
             //(recommendation of the article)...
             if (this.isBlank(source)) {
-                accessDeniedReason = "CSRFValidationFilter: ORIGIN and REFERER request" +
+                accessDeniedReason = "CSRFValidationFilter: ORIGIN and REFERER request" + 
                 "headers are both absent/empty so we block the request !";
                 LOG.warn(accessDeniedReason);
                 httpResp.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedReason);
@@ -399,11 +399,11 @@ public class CSRFValidationFilter implements Filter {
 
         //Compare the source against the expected target origin
         URL sourceURL = new URL(source);
-        if (!this.targetOrigin.getProtocol().equals(sourceURL.getProtocol()) ||
+        if (!this.targetOrigin.getProtocol().equals(sourceURL.getProtocol()) || 
             !this.targetOrigin.getHost().equals(sourceURL.getHost())
         || this.targetOrigin.getPort() != sourceURL.getPort()) {
             //One the part do not match so we trace the event and we block the request
-            accessDeniedReason = String.format("CSRFValidationFilter: Protocol/Host/Port " +
+            accessDeniedReason = String.format("CSRFValidationFilter: Protocol/Host/Port " + 
             "do not fully matches so we block the request! (%s != %s) ",
                 this.targetOrigin, sourceURL);
             LOG.warn(accessDeniedReason);
@@ -412,21 +412,21 @@ public class CSRFValidationFilter implements Filter {
         }
 
         /* STEP 2: Verifying CSRF token using "Double Submit Cookie" approach */
-        //If CSRF token cookie is absent from the request then we provide one
+        //If CSRF token cookie is absent from the request then we provide one 
         //in response but we stop the process at this stage.
         //Using this way we implement the first providing of token
         Cookie tokenCookie = null;
         if (httpReq.getCookies() != null) {
             String csrfCookieExpectedName = this.determineCookieName(httpReq);
-            tokenCookie = Arrays.stream(httpReq.getCookies()).filter(c
+            tokenCookie = Arrays.stream(httpReq.getCookies()).filter(c 
             -> c.getName().equals(csrfCookieExpectedName)).findFirst().orElse(null);
         }
         if (tokenCookie == null || this.isBlank(tokenCookie.getValue())) {
-            LOG.info("CSRFValidationFilter: CSRF cookie absent or value" +
+            LOG.info("CSRFValidationFilter: CSRF cookie absent or value" + 
             " is null/empty so we provide one and return an HTTP NO_CONTENT response !");
             //Add the CSRF token cookie and header
             this.addTokenCookieAndHeader(httpReq, httpResp);
-            //Set response state to "204 No Content" in order to allow the requester to
+            //Set response state to "204 No Content" in order to allow the requester to 
             //clearly identify an initial response providing the initial CSRF token
             httpResp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         } else {
@@ -435,22 +435,22 @@ public class CSRFValidationFilter implements Filter {
             String tokenFromHeader = httpReq.getHeader(CSRF_TOKEN_NAME);
             //If empty then we trace the event and we block the request
             if (this.isBlank(tokenFromHeader)) {
-                accessDeniedReason = "CSRFValidationFilter: Token provided via HTTP Header"+
+                accessDeniedReason = "CSRFValidationFilter: Token provided via HTTP Header"+ 
                 " is absent/empty so we block the request !";
                 LOG.warn(accessDeniedReason);
                 httpResp.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedReason);
             } else if (!tokenFromHeader.equals(tokenCookie.getValue())) {
                 //Verify that token from header and one from cookie are the same
                 //Here is not the case so we trace the event and we block the request
-                accessDeniedReason = "CSRFValidationFilter: Token provided via HTTP Header"+
+                accessDeniedReason = "CSRFValidationFilter: Token provided via HTTP Header"+ 
                 "and via Cookie are not equals so we block the request !";
                 LOG.warn(accessDeniedReason);
                 httpResp.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedReason);
             } else {
                 //Verify that token from header and one from cookie matches
-                //Here is the case so we let the request reach the target component
+                //Here is the case so we let the request reach the target component 
                 //(ServiceServlet, jsp...) and add a new token when we get back the bucket
-                HttpServletResponseWrapper httpRespWrapper =
+                HttpServletResponseWrapper httpRespWrapper = 
                                             new HttpServletResponseWrapper(httpResp);
                 chain.doFilter(request, httpRespWrapper);
                 //Add the CSRF token cookie and header
@@ -464,7 +464,7 @@ public class CSRFValidationFilter implements Filter {
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        //To easier the configuration, we load the target expected origin from
+        //To easier the configuration, we load the target expected origin from 
         //an JVM property
         //Reconfiguration only require an application restart that is generally acceptable
         try {
@@ -473,7 +473,7 @@ public class CSRFValidationFilter implements Filter {
             LOG.error("Cannot init the filter !", e);
             throw new ServletException(e);
         }
-        LOG.info("CSRFValidationFilter: Filter init, set expected target origin to '{}'.",
+        LOG.info("CSRFValidationFilter: Filter init, set expected target origin to '{}'.", 
                  this.targetOrigin);
     }
 
@@ -523,15 +523,15 @@ public class CSRFValidationFilter implements Filter {
      * @param httpRequest  Source HTTP request
      * @param httpResponse HTTP response object to update
      */
-    private void addTokenCookieAndHeader(HttpServletRequest httpRequest,
+    private void addTokenCookieAndHeader(HttpServletRequest httpRequest, 
                                          HttpServletResponse httpResponse) {
         //Get new token
         String token = this.generateToken();
-        //Add cookie manually because the current Cookie class implementation
+        //Add cookie manually because the current Cookie class implementation 
         //do not support the "SameSite" attribute
         //We let the adding of the "Secure" cookie attribute to the reverse proxy rewriting...
         //Here we lock the cookie from JS access and we use the SameSite new attribute protection
-        String cookieSpec = String.format("%s=%s; Path=%s; HttpOnly; SameSite=Strict",
+        String cookieSpec = String.format("%s=%s; Path=%s; HttpOnly; SameSite=Strict", 
                             this.determineCookieName(httpRequest), token, httpRequest.getRequestURI());
         httpResponse.addHeader("Set-Cookie", cookieSpec);
         //Add cookie header to give access to the token to the JS code
