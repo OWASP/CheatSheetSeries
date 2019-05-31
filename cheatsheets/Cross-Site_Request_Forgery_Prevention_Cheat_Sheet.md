@@ -548,7 +548,7 @@ The following guidance considers **GET**, **HEAD** and **OPTIONS** methods are s
 
 ## Storing the CSRF Token Value in the DOM
 
-A CSRF token can be included in the ```<meta>``` tag as shown below. All subsequent calls in the page can extract the CSRF token from this <meta> tag. It can also be stored in a JS variable / anywhere on the DOM. However, it is not recommended to store it in cookies or browser local storage.
+A CSRF token can be included in the ```<meta>``` tag as shown below. All subsequent calls in the page can extract the CSRF token from this ```<meta>``` tag. It can also be stored in a JS variable / anywhere on the DOM. However, it is not recommended to store it in cookies or browser local storage.
 
 The following code snippet can be used to include a CSRF token as a ```<meta>``` tag:
 
