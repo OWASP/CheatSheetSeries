@@ -540,6 +540,130 @@ public class CSRFValidationFilter implements Filter {
 }
 ```
 
+# JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header
+
+The following guidance considers **GET**, **HEAD** and **OPTIONS** methods are safe operations. Therefore **GET**, **HEAD**, and **OPTIONS** method AJAX calls need not be appended with a CSRF token header. However, if the verbs are used to perform state changing operations, they will also require a CSRF token header.
+
+**POST**, **PUT**, **PATCH**, **DELETE** and **TRACE** verbs, being state changing verbs, should have a CSRF token attached to the request. The following guidance will demonstrate how to create overrides in JavaScript libraries to have CSRF tokens included automatically with every AJAX request for the state changing methods mentioned above.
+
+## Storing the CSRF Token Value in the DOM
+
+A CSRF token can be included in the ```<meta>``` tag as shown below. All subsequent calls in the page can extract the CSRF token from this ```<meta>``` tag. It can also be stored in a JS variable / anywhere on the DOM. However, it is not recommended to store it in cookies or browser local storage.
+
+The following code snippet can be used to include a CSRF token as a ```<meta>``` tag:
+
+```html
+<meta name="csrf-token" content="{{ csrf_token() }}">
+```
+
+The exact syntax of populating the content attribute would depend on your web application's backend programming language.
+
+## Overriding Defaults to Set Custom Header
+
+Several JavaScript libraries allow for overriding default settings to have a header added automatically to all AJAX requests.
+
+### XMLHttpRequest (Native JavaScript)
+
+XMLHttpRequest's open() method can be overridden to set the ```anti-csrf-token``` header whenever the ```open()``` method is invoked next. The function ```csrfSafeMethod()``` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
+
+This can be done as demonstrated in the following code snippet:
+
+```html
+<script type="text/javascript">
+    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS)$/.test(method));
+    }
+    var o = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(){
+        var res = o.apply(this, arguments);
+        var err = new Error();
+        if (!csrfSafeMethod(arguments[0])) {
+            this.setRequestHeader('anti-csrf-token', csrf_token);
+        }
+        return res;
+    };
+ </script>
+ ```
+
+### AngularJS
+
+AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS's documentation for [$httpProvider](https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults).
+
+```html
+<script>
+    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+    var app = angular.module("app", []);
+
+    app.config(['$httpProvider', function ($httpProvider) {
+        $httpProvider.defaults.headers.post["anti-csrf-token"] = csrf_token;
+        $httpProvider.defaults.headers.put["anti-csrf-token"] = csrf_token;
+        $httpProvider.defaults.headers.patch["anti-csrf-token"] = csrf_token;
+        // AngularJS does not create an object for DELETE and TRACE methods by default, and has to be manually created.
+        $httpProvider.defaults.headers.delete = {
+            "Content-Type" : "application/json;charset=utf-8",
+            "anti-csrf-token" : csrf_token
+        };
+        $httpProvider.defaults.headers.trace = {
+            "Content-Type" : "application/json;charset=utf-8",
+            "anti-csrf-token" : csrf_token
+        };
+      }]);
+ </script>
+```
+
+This code snippet has been tested with AngularJS version 1.7.7.
+
+### Axios
+
+[Axios](https://github.com/axios/axios) allows us to set default headers for the POST, PUT, DELETE and PATCH actions.
+
+```html
+<script type="text/javascript">
+    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+    axios.defaults.headers.post['anti-csrf-token'] = csrf_token;
+    axios.defaults.headers.put['anti-csrf-token'] = csrf_token;
+    axios.defaults.headers.delete['anti-csrf-token'] = csrf_token;
+    axios.defaults.headers.patch['anti-csrf-token'] = csrf_token;
+
+    // Axios does not create an object for TRACE method by default, and has to be created manually.
+    axios.defaults.headers.trace = {}
+    axios.defaults.headers.trace['anti-csrf-token'] = csrf_token
+</script>
+```
+
+This code snippet has been tested with Axios version 0.18.0.
+
+### JQuery
+
+JQuery exposes an API called $.ajaxSetup() which can be used to add the ```anti-csrf-token``` header to the AJAX request. API documentation for ```$.ajaxSetup()``` can be found here. The function ```csrfSafeMethod()``` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
+
+You can configure JQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:
+
+```html
+<script type="text/javascript">
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS)$/.test(method));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("anti-csrf-token", csrf_token);
+            }
+        }
+    });
+</script>
+```
+
+This code snippet has been tested with jQuery version 3.3.1.
+
 # Authors and Primary Editors
 
 [Manideep Konakandla (Amazon Application Security Team)](http://www.manideepk.com)
