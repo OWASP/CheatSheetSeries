@@ -215,10 +215,10 @@ Due to the potential to access Web Storage APIs via an XSS attack, session ident
 
 ## References
 
-- https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-- https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
-- https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
-- https://html.spec.whatwg.org/multipage/webstorage.html#webstorage
+- [Web Storage APIs](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API)
+- [LocalStorage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+- [SessionStorage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+- [WHATWG Web Storage Spec](https://html.spec.whatwg.org/multipage/webstorage.html#webstorage)
 
 # Session ID Life Cycle
 
