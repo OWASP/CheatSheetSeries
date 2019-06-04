@@ -137,8 +137,8 @@ Collected information may be useful for doing application security practices, e.
 #### Implementation tips
 
 To enumerate microservices endpoints that need to be tested during security testing and analyzed during threat modeling analyze data collected under the following sections:
-* "Identify and describe application-functionality services" (parameter “API definition”);
-* "Identify and describe infrastructure services" (parameter “Link to the service documentation”).
+* Identify and describe application-functionality services (parameter “API definition”)
+* Identify and describe infrastructure services (parameter “Link to the service documentation”)
 
 #### Mapping to OWASP projects
 
@@ -150,11 +150,11 @@ To enumerate microservices endpoints that need to be tested during security test
 #### Implementation tips
 
 To analyze possible data leakage analyze data collected under the following sections: 
-* "Identify and describe data assets";
-* "Identify “service-to-storage” relations";
-* "Identify “service-to-service” synchronous communications";
-* "Identify “service-to-service” asynchronous communications";
-* "Identify “asset-to-storage” relations".
+* Identify and describe data assets
+* Identify “service-to-storage” relations
+* Identify “service-to-service” synchronous communications
+* Identify “service-to-service” asynchronous communications
+* Identify “asset-to-storage” relations
 
 #### Mapping to OWASP projects
 
@@ -166,13 +166,13 @@ To analyze possible data leakage analyze data collected under the following sect
 #### Implementation tips
 
 To verify documentation and justification of all the application's trust boundaries, components, and significant data flows analyze data collected under the following sections:
-* "Identify and describe application-functionality services";
-* "Identify and describe infrastructure services";
-* "Identify and describe data storages";
-* "Identify and describe message queues"; 
-* "Identify “service-to-storage” relations"; 
-* "Identify “service-to-service” synchronous communications";
-* "Identify “service-to-service” asynchronous communications".
+* Identify and describe application-functionality services
+* Identify and describe infrastructure services
+* Identify and describe data storages
+* Identify and describe message queues 
+* Identify “service-to-storage” relations 
+* Identify “service-to-service” synchronous communications
+* Identify “service-to-service” asynchronous communications
 
 #### Mapping to OWASP projects
 
@@ -183,10 +183,10 @@ To verify documentation and justification of all the application's trust boundar
 #### Implementation tips
 
 To verify definition and security analysis of the application's high-level architecture and all connected remote services analyze data collected under the following sections:
-* "Identify and describe application-functionality services";
-* "Identify and describe infrastructure services";
-* "Identify and describe data storages";
-* "Identify and describe message queues".
+* Identify and describe application-functionality services
+* Identify and describe infrastructure services
+* Identify and describe data storages
+* Identify and describe message queues
 
 #### Mapping to OWASP projects
 
@@ -207,10 +207,10 @@ To verify implementation of centralized, simple (economy of design), vetted, sec
 #### Implementation tips
 
 To define minimally needed microservice permissions analyze data collected under the following sections:
-* "Identify and describe application-functionality services (parameter “API definition”)";
-* "Identify “service-to-storage” relations";
-* "Identify “service-to-service” synchronous communications"; 
-* "Identify “service-to-service” asynchronous communications".
+* Identify and describe application-functionality services (parameter “API definition”)
+* Identify “service-to-storage” relations
+* Identify “service-to-service” synchronous communications 
+* Identify “service-to-service” asynchronous communications
 
 #### Mapping to OWASP projects
 
@@ -221,8 +221,8 @@ To define minimally needed microservice permissions analyze data collected under
 #### Implementation tips
 
 To verify that all sensitive data is identified and classified into protection levels analyze data collected under the following sections:
-* "Identify and describe data assets";
-* "Identify “asset-to-storage” relations".
+* Identify and describe data assets
+* Identify “asset-to-storage” relations
 
 #### Mapping to OWASP projects
 
@@ -233,13 +233,10 @@ To verify that all sensitive data is identified and classified into protection l
 #### Implementation tips
 
 To verify the definition and documentation of all application components in terms of the business or security functions they provide analyze data collected under the following sections (parameter “Short description”): 
-* "Identify and describe application-functionality services";
-* "Identify and describe infrastructure services".
+* Identify and describe application-functionality services
+* Identify and describe infrastructure services
 
 #### Mapping to OWASP projects
 
 * [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.11.1](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
 
-# Authors and Primary Editors
-
-Alexander Barabanov - barabanov.iu8@gmail.com
