@@ -1,0 +1,1438 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Microservices based Security Arch Doc  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="OS_Command_Injection_Defense_Cheat_Sheet.html" />
+    
+    
+    <link rel="prev" href="Mass_Assignment_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
+            
+                <a href="IndexProactiveControls.html">
+            
+                    
+                    Index Proactive Controls
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
+            
+                <a href="Content_Security_Policy_Cheat_Sheet.html">
+            
+                    
+                    Content Security Policy 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.40" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
+            
+                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
+            
+                    
+                    Microservices based Security Arch Doc 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.41" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.63" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
+            
+                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
+            
+                    
+                    Vulnerable Dependency Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.64" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.65" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.66" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Microservices based Security Arch Doc </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>The microservice architecture is being increasingly used for designing and implementing application systems in both cloud-based and on-premise infrastructures. There are many security challenges need to be addressed in the application design and implementation phases. In order to address some security challenges it is necessity to collect security-specific information on application architecture.
+The goal of this article is to provide a concrete proposal of approach to collect microservice-based architecture information to securing application.</p>
+<h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
+<p>During securing applications based on microservices architecture, security architects/engineers usually face with the following questions (mostly referenced in the <a href="https://github.com/OWASP/ASVS" target="_blank">OWASP Application Security Verification Standard Project</a> under the section <a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;</a>):</p>
+<ol>
+<li>Threat modeling and enforcement of the principle of least privilege:<ul>
+<li>What scopes or API keys does microservice minimally need to access other microservice APIs?</li>
+<li>What grants does microservice minimally need to access database or message queue?</li>
+</ul>
+</li>
+<li>Data leakage analysis:<ul>
+<li>What storages or message queues do contain sensitive data?</li>
+<li>Does microservice read/write date from/to specific database or message queue?</li>
+<li>What microservices are invoked by dedicated microservice? What data is passed between microservices?</li>
+</ul>
+</li>
+<li>Attack surface analysis:<ul>
+<li>What microservices endpoints need to be tested during security testing?</li>
+</ul>
+</li>
+</ol>
+<p>In most cases, existing application architecture documentation is not suitable to answer those questions. Next sections propose what architecture security-specific information can be collected to answer the questions above.</p>
+<h1 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h1>
+<p>The objectives of the cheat sheet are to explain what architecture security-specific information can be collected to answer the questions above and provide concrete proposal of approach to collect microservice-based architecture information to securing application.</p>
+<h1 id="proposition"><a name="proposition" class="plugin-anchor" href="#proposition"><i class="fa fa-link" aria-hidden="true"></i></a>Proposition</h1>
+<h2 id="collect-information-on-the-building-blocks"><a name="collect-information-on-the-building-blocks" class="plugin-anchor" href="#collect-information-on-the-building-blocks"><i class="fa fa-link" aria-hidden="true"></i></a>Collect information on the building blocks</h2>
+<h3 id="identify-and-describe-application-functionality-services"><a name="identify-and-describe-application-functionality-services" class="plugin-anchor" href="#identify-and-describe-application-functionality-services"><i class="fa fa-link" aria-hidden="true"></i></a>Identify and describe application-functionality services</h3>
+<p>Application-functionality services implement one or several business process or functionality (e.g., storing customer details, storing and displaying product catalog). Collect information on the parameters listed below related to each application-functionality service.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter name</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Service name (ID)</td>
+<td style="text-align:left">Unique service name or ID</td>
+</tr>
+<tr>
+<td style="text-align:left">Short description</td>
+<td style="text-align:left">Short description of business process or functionality implemented by the microservice</td>
+</tr>
+<tr>
+<td style="text-align:left">Link to source code repository</td>
+<td style="text-align:left">Specify a link to service source code repository</td>
+</tr>
+<tr>
+<td style="text-align:left">Development Team</td>
+<td style="text-align:left">Specify development team which develops the microservice</td>
+</tr>
+<tr>
+<td style="text-align:left">API definition</td>
+<td style="text-align:left">If microservice exposes external interface specify a link to the interface description (e.g., OpenAPI specification). It is advisable to define used security scheme, e.g. define scopes or API keys needed to invoke dedicated endpoint (e.g., <a href="https://swagger.io/docs/specification/authentication/" target="_blank">see</a>).</td>
+</tr>
+<tr>
+<td style="text-align:left">The microservice architecture description</td>
+<td style="text-align:left">Specify a link to the microservice architecture diagram, description (if available)</td>
+</tr>
+<tr>
+<td style="text-align:left">Link to runbook</td>
+<td style="text-align:left">Specify a link to the microservice runbook</td>
+</tr>
+</tbody>
+</table>
+<h3 id="identify-and-describe-infrastructure-services"><a name="identify-and-describe-infrastructure-services" class="plugin-anchor" href="#identify-and-describe-infrastructure-services"><i class="fa fa-link" aria-hidden="true"></i></a>Identify and describe infrastructure services</h3>
+<p>Infrastructure services including remote services may implement authentication, authorization, service registration and discovery, security monitoring, logging etc. Collect information on the parameters listed below related to each infrastructure service.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter name</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<p>Parameter name    | Parameter description
+|Service name (ID) | Unique service name or ID
+|Short description | Short description of functionality implemented by the service (e.g., authentication, authorization, service registration and discovery, logging, security monitoring, API gateway).
+|Link to source code repository | Specify a link to service source code repository (if applicable)
+|Link to the service documentation | Specify a link to the service documentation that includes service API definition, operational guidance/runbook, etc.</p>
+<h3 id="identify-and-describe-data-storages"><a name="identify-and-describe-data-storages" class="plugin-anchor" href="#identify-and-describe-data-storages"><i class="fa fa-link" aria-hidden="true"></i></a>Identify and describe data storages</h3>
+<p>Collect information on the parameters listed below related to each data storage.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter name</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Storage name (ID)</td>
+<td style="text-align:left">Unique storage name or ID</td>
+</tr>
+<tr>
+<td style="text-align:left">Software type</td>
+<td style="text-align:left">Specify software that implements the data storage (e.g., PostgreSQL, Redis, Apache Cassandra).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="identify-and-describe-message-queues"><a name="identify-and-describe-message-queues" class="plugin-anchor" href="#identify-and-describe-message-queues"><i class="fa fa-link" aria-hidden="true"></i></a>Identify and describe message queues</h3>
+<p>Messaging systems (e.g., RabbitMQ or Apache Kafka) are used to implement asynchronous microservices communication mechanism. Collect information on the parameters listed below related to each message queue.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter name</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Message queue (ID)</td>
+<td style="text-align:left">Unique message queue name or ID</td>
+</tr>
+<tr>
+<td style="text-align:left">Software type</td>
+<td style="text-align:left">Specify software that implements the message queue (e.g., RabbitMQ, Apache Kafka).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="identify-and-describe-data-assets"><a name="identify-and-describe-data-assets" class="plugin-anchor" href="#identify-and-describe-data-assets"><i class="fa fa-link" aria-hidden="true"></i></a>Identify and describe data assets</h3>
+<p>Identify and describe data assets that processed by system microservices/services. It is advisable firstly to identify assets, which are valuable from a security perspective (e.g., &#x201C;User information&#x201D;, &#x201C;Payment&#x201D;). Collect information on the parameters listed below related to each asset.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter name</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Asset name (ID)</td>
+<td style="text-align:left">Unique asset name or ID</td>
+</tr>
+<tr>
+<td style="text-align:left">Protection level</td>
+<td style="text-align:left">Specify asset protection level (e.g., PII, confidential)</td>
+</tr>
+<tr>
+<td style="text-align:left">Additional info</td>
+<td style="text-align:left">Add clarifying information</td>
+</tr>
+</tbody>
+</table>
+<h2 id="collect-information-on-relations-between-building-blocks"><a name="collect-information-on-relations-between-building-blocks" class="plugin-anchor" href="#collect-information-on-relations-between-building-blocks"><i class="fa fa-link" aria-hidden="true"></i></a>Collect information on relations between building blocks</h2>
+<h3 id="identify-service-to-storage-relations"><a name="identify-service-to-storage-relations" class="plugin-anchor" href="#identify-service-to-storage-relations"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &#x201C;service-to-storage&#x201D; relations</h3>
+<p>Collect information on the parameters listed below related to each &#x201C;service-to-storage&#x201D; relation.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter name</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Service name (ID)</td>
+<td style="text-align:left">Specify service name (ID) defined above</td>
+</tr>
+<tr>
+<td style="text-align:left">Storage name (ID)</td>
+<td style="text-align:left">Specify storage name (ID) defined above</td>
+</tr>
+<tr>
+<td style="text-align:left">Access type</td>
+<td style="text-align:left">Specify access type, e.g. &#x201C;Read&#x201D; or &#x201C;Read/Write&#x201D;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="identify-service-to-service-synchronous-communications"><a name="identify-service-to-service-synchronous-communications" class="plugin-anchor" href="#identify-service-to-service-synchronous-communications"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &#x201C;service-to-service&#x201D; synchronous communications</h3>
+<p>Collect information on the parameters listed below related to each &#x201C;service-to-service&#x201D; synchronous communication.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter name</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Caller service name (ID)</td>
+<td style="text-align:left">Specify caller service name (ID) defined above</td>
+</tr>
+<tr>
+<td style="text-align:left">Called service name (ID)</td>
+<td style="text-align:left">Specify called service name (ID) defined above</td>
+</tr>
+<tr>
+<td style="text-align:left">Protocol/framework used</td>
+<td style="text-align:left">Specify protocol/framework used for communication, e.g. HTTP (REST, SOAP), Apache Thrif, gRPC</td>
+</tr>
+<tr>
+<td style="text-align:left">Short description</td>
+<td style="text-align:left">Shortly describe the purpose of communication (requests for query of information or request/commands for a state-changing business function) and data passed between services (if possible, in therms of assets defined above)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="identify-service-to-service-asynchronous-communications"><a name="identify-service-to-service-asynchronous-communications" class="plugin-anchor" href="#identify-service-to-service-asynchronous-communications"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &#x201C;service-to-service&#x201D; asynchronous communications</h3>
+<p>Collect information on the parameters listed below related to each &#x201C;service-to-service&#x201D; asynchronous communication.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter name</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Publisher service name (ID)</td>
+<td style="text-align:left">Specify publisher service name (ID) defined above</td>
+</tr>
+<tr>
+<td style="text-align:left">Subscriber service name (ID)</td>
+<td style="text-align:left">Specify subscriber service name (ID) defined above</td>
+</tr>
+<tr>
+<td style="text-align:left">Message queue (ID)</td>
+<td style="text-align:left">Specify message queue (ID) defined above</td>
+</tr>
+<tr>
+<td style="text-align:left">Short description</td>
+<td style="text-align:left">Shortly describe the purpose of communication (receiving of information or commands for a state-changing business function) and data passed between services (if possible, in therms of assets defined above)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="identify-asset-to-storage-relations"><a name="identify-asset-to-storage-relations" class="plugin-anchor" href="#identify-asset-to-storage-relations"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &#x201C;asset-to-storage&#x201D; relations</h3>
+<p>Collect information on the parameters listed below related to each &#x201C;asset-to-storage&#x201D; relation.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter name</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Asset name (ID)</td>
+<td style="text-align:left">Asset name (ID) defined above</td>
+</tr>
+<tr>
+<td style="text-align:left">Storage name (ID)</td>
+<td style="text-align:left">Specify storage name (ID) defined above</td>
+</tr>
+<tr>
+<td style="text-align:left">Storage type</td>
+<td style="text-align:left">Specify storage type for the asset, e.g. &quot;golden source&quot; or &quot;cache&quot;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="create-a-graphical-presentation-of-application-architecture"><a name="create-a-graphical-presentation-of-application-architecture" class="plugin-anchor" href="#create-a-graphical-presentation-of-application-architecture"><i class="fa fa-link" aria-hidden="true"></i></a>Create a graphical presentation of application architecture</h2>
+<p>It is advisable to create graphical presentation of application architecture (building blocks and relations defined above) in form of services call graph or data flow diagram. In order to do that one can use special software tools (e.g. Enterprise Architect) or <a href="https://en.wikipedia.org/wiki/DOT_(graph_description_language" target="_blank">DOT language</a>). See example of using DOT language <a href="https://gist.github.com/vladgolubev/80c5523336ddec3859c0e90d9a070882" target="_blank">here</a>.</p>
+<h2 id="use-collected-information-in-secure-software-development-practices"><a name="use-collected-information-in-secure-software-development-practices" class="plugin-anchor" href="#use-collected-information-in-secure-software-development-practices"><i class="fa fa-link" aria-hidden="true"></i></a>Use collected information in secure software development practices</h2>
+<p>Collected information may be useful for doing application security practices, e.g. during defining security requirements, threat modeling or security testing. Sections below contains examples of activities related to securing application architecture (as well as its mapping to OWASP projects) and tips for their implementation using information collected above.</p>
+<h3 id="attack-surface-analysis"><a name="attack-surface-analysis" class="plugin-anchor" href="#attack-surface-analysis"><i class="fa fa-link" aria-hidden="true"></i></a>Attack surface analysis</h3>
+<h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
+<p>To enumerate microservices endpoints that need to be tested during security testing and analyzed during threat modeling analyze data collected under the following sections:</p>
+<ul>
+<li>Identify and describe application-functionality services (parameter &#x201C;API definition&#x201D;)</li>
+<li>Identify and describe infrastructure services (parameter &#x201C;Link to the service documentation&#x201D;)</li>
+</ul>
+<h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
+<ul>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.1.2</a></li>
+<li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md" target="_blank">OWASP Attack Surface Analysis Cheat Sheet</a></li>
+</ul>
+<h3 id="data-leakage-analysis"><a name="data-leakage-analysis" class="plugin-anchor" href="#data-leakage-analysis"><i class="fa fa-link" aria-hidden="true"></i></a>Data leakage analysis</h3>
+<h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
+<p>To analyze possible data leakage analyze data collected under the following sections: </p>
+<ul>
+<li>Identify and describe data assets</li>
+<li>Identify &#x201C;service-to-storage&#x201D; relations</li>
+<li>Identify &#x201C;service-to-service&#x201D; synchronous communications</li>
+<li>Identify &#x201C;service-to-service&#x201D; asynchronous communications</li>
+<li>Identify &#x201C;asset-to-storage&#x201D; relations</li>
+</ul>
+<h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
+<ul>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.1.2</a></li>
+<li><a href="https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure" target="_blank">OWASP Top 10-2017 A3-Sensitive Data Exposure</a></li>
+</ul>
+<h3 id="applications-trust-boundaries-components-and-significant-data-flows-justification"><a name="applications-trust-boundaries-components-and-significant-data-flows-justification" class="plugin-anchor" href="#applications-trust-boundaries-components-and-significant-data-flows-justification"><i class="fa fa-link" aria-hidden="true"></i></a>Application&apos;s trust boundaries, components, and significant data flows justification</h3>
+<h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
+<p>To verify documentation and justification of all the application&apos;s trust boundaries, components, and significant data flows analyze data collected under the following sections:</p>
+<ul>
+<li>Identify and describe application-functionality services</li>
+<li>Identify and describe infrastructure services</li>
+<li>Identify and describe data storages</li>
+<li>Identify and describe message queues </li>
+<li>Identify &#x201C;service-to-storage&#x201D; relations </li>
+<li>Identify &#x201C;service-to-service&#x201D; synchronous communications</li>
+<li>Identify &#x201C;service-to-service&#x201D; asynchronous communications</li>
+</ul>
+<h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
+<ul>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.1.4</a></li>
+</ul>
+<h3 id="analysis-of-the-applications-high-level-architecture"><a name="analysis-of-the-applications-high-level-architecture" class="plugin-anchor" href="#analysis-of-the-applications-high-level-architecture"><i class="fa fa-link" aria-hidden="true"></i></a>Analysis of the application&apos;s high-level architecture</h3>
+<h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
+<p>To verify definition and security analysis of the application&apos;s high-level architecture and all connected remote services analyze data collected under the following sections:</p>
+<ul>
+<li>Identify and describe application-functionality services</li>
+<li>Identify and describe infrastructure services</li>
+<li>Identify and describe data storages</li>
+<li>Identify and describe message queues</li>
+</ul>
+<h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
+<ul>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.1.5</a></li>
+</ul>
+<h3 id="implementation-of-centralized-security-controls-verification"><a name="implementation-of-centralized-security-controls-verification" class="plugin-anchor" href="#implementation-of-centralized-security-controls-verification"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation of centralized security controls verification</h3>
+<h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
+<p>To verify implementation of centralized, simple (economy of design), vetted, secure, and reusable security controls to avoid duplicate, missing, ineffective, or insecure controls analyze data collected under the section &quot;Identify and describe infrastructure services&quot;.</p>
+<h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
+<ul>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.1.6</a></li>
+</ul>
+<h3 id="enforcement-of-the-principle-of-least-privilege"><a name="enforcement-of-the-principle-of-least-privilege" class="plugin-anchor" href="#enforcement-of-the-principle-of-least-privilege"><i class="fa fa-link" aria-hidden="true"></i></a>Enforcement of the principle of least privilege</h3>
+<h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
+<p>To define minimally needed microservice permissions analyze data collected under the following sections:</p>
+<ul>
+<li>Identify and describe application-functionality services (parameter &#x201C;API definition&#x201D;)</li>
+<li>Identify &#x201C;service-to-storage&#x201D; relations</li>
+<li>Identify &#x201C;service-to-service&#x201D; synchronous communications </li>
+<li>Identify &#x201C;service-to-service&#x201D; asynchronous communications</li>
+</ul>
+<h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
+<ul>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.4.3</a></li>
+</ul>
+<h3 id="sensitive-data-identification-and-classification"><a name="sensitive-data-identification-and-classification" class="plugin-anchor" href="#sensitive-data-identification-and-classification"><i class="fa fa-link" aria-hidden="true"></i></a>Sensitive data identification and classification</h3>
+<h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
+<p>To verify that all sensitive data is identified and classified into protection levels analyze data collected under the following sections:</p>
+<ul>
+<li>Identify and describe data assets</li>
+<li>Identify &#x201C;asset-to-storage&#x201D; relations</li>
+</ul>
+<h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
+<ul>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.8.1</a></li>
+</ul>
+<h3 id="application-components-businesssecurity-functions-verification"><a name="application-components-businesssecurity-functions-verification" class="plugin-anchor" href="#application-components-businesssecurity-functions-verification"><i class="fa fa-link" aria-hidden="true"></i></a>Application components business/security functions verification</h3>
+<h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
+<p>To verify the definition and documentation of all application components in terms of the business or security functions they provide analyze data collected under the following sections (parameter &#x201C;Short description&#x201D;): </p>
+<ul>
+<li>Identify and describe application-functionality services</li>
+<li>Identify and describe infrastructure services</li>
+</ul>
+<h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
+<ul>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.11.1</a></li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Mass_Assignment_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Mass Assignment ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: OS Command Injection Defense ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Microservices based Security Arch Doc ","level":"1.40","depth":1,"next":{"title":"OS Command Injection Defense ","level":"1.41","depth":1,"path":"cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md","ref":"cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md","articles":[]},"previous":{"title":"Mass Assignment ","level":"1.39","depth":1,"path":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","ref":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","mtime":"2019-06-05T07:54:00.267Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-05T07:54:26.388Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
