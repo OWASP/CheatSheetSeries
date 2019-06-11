@@ -224,10 +224,14 @@ To detect containers with known vulnerabilities - scan images using static analy
   - [JFrog XRay](https://jfrog.com/xray/) 
   - [Qualys](https://www.qualys.com/apps/container-security/)
 
-To detect missconfigurations in Kubernetes:
+To detect misconfigurations in Kubernetes:
  - [kubeaudit](https://github.com/Shopify/kubeaudit)
  - [kubesec.io](https://kubesec.io/)
  - [kube-bench](https://github.com/aquasecurity/kube-bench)
+
+To detect misconfigurations in Docker:
+ - [inspec.io](https://www.inspec.io/docs/reference/resources/docker/)
+ - [dev-sec.io](https://dev-sec.io/baselines/docker/)
 
 # Related Projects
 
