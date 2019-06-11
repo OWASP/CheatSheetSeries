@@ -82,7 +82,11 @@ To enable pinning, [the `<pin-set>` configuration setting](https://developer.and
 
 If devices running a version of Android that is earlier than N need to be supported, a backport of the Network Security Configuration pinning functionality is available via the [TrustKit Android library](https://github.com/datatheorem/TrustKit-Android).
 
-Lastly, the Android documentation provides an example of how SSL validation can be customized within the app's code (in order to implement pinning) in the [Unknown CA implementation document](https://developer.android.com/training/articles/security-ssl.html#UnknownCa). However, implementing pinning validation from scratch should be avoided, as implementation mistakes are extremely likely and usually lead to severe vulnerabilities.
+Alternatively you can use methods such as the pinning from OkHTTP in order to set specific pins programmatically, as explained in [the MSTG](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md#network-libraries-and-webviews) and [the OKHttp documentation](https://square.github.io/okhttp/3.x/okhttp/okhttp3/CertificatePinner.html).
+
+The Android documentation provides an example of how SSL validation can be customized within the app's code (in order to implement pinning) in the [Unknown CA implementation document](https://developer.android.com/training/articles/security-ssl.html#UnknownCa). However, implementing pinning validation from scratch should be avoided, as implementation mistakes are extremely likely and usually lead to severe vulnerabilities.
+
+Lastly, if you want to validate whether the pinning is succesfull, please follow instructions from the Mobile Security Testing Guide its [ntroduction into testing network communication](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04f-Testing-Network-Communication.md#testing-network-communication) and the [Android specific network testing](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md#android-network-apis).
 
 ## iOS
 
@@ -90,9 +94,11 @@ Lastly, the Android documentation provides an example of how SSL validation can 
 
 Otherwise, more details regarding how SSL validation can be customized on iOS (in order to implement pinning) are available in the [HTTPS Server Trust Evaluation](https://developer.apple.com/library/content/technotes/tn2232/_index.html) technical note. However, implementing pinning validation from scratch should be avoided, as implementation mistakes are extremely likely and usually lead to severe vulnerabilities.
 
+Lastly, if you want to validate whether the pinning is succesfull, please follow instructions from the Mobile Security Testing Guide its [introduction into testing network communication](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04f-Testing-Network-Communication.md#testing-network-communication) and the [iOS specific network testing](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06g-Testing-Network-Communication.md).
+
 ## .Net
 
-.Net pinning can be achieved by using [`ServicePointManager`](https://docs.microsoft.com/en-us/dotnet/api/system.net.servicepointmanager?view=netframework-4.7.2).
+.Net pinning can be achieved by using [`ServicePointManager`](https://docs.microsoft.com/en-us/dotnet/api/system.net.servicepointmanager?view=netframework-4.7.2). An example can be found at the [OWASP MSTG](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md#xamarin-applications).
 
 Download the [.Net sample program](../assets/Pinning_Cheat_Sheet_Certificate_DotNetSample.zip).
 
@@ -118,6 +124,7 @@ Otherwise, you can validate certificates by yourself using [ses.setCertificateVe
 - OWASP [Injection Theory](https://www.owasp.org/index.php/Injection_Theory)
 - OWASP [Data Validation](https://www.owasp.org/index.php/Data_Validation)
 - OWASP [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)
+- OWASP [Mobile Security Testing Guide](https://github.com/OWASP/owasp-mstg)
 - IETF [RFC 1421 (PEM Encoding)](http://www.ietf.org/rfc/rfc1421.txt)
 - IETF [RFC 4648 (Base16, Base32, and Base64 Encodings)](http://www.ietf.org/rfc/rfc4648.txt)
 - IETF [RFC 5280 (Internet X.509, PKIX)](http://www.ietf.org/rfc/rfc5280.txt)
@@ -140,3 +147,5 @@ Jim Manico - jim@owasp.org
 Kevin Wall - kevin@owasp.org
 
 Ricardo Iramar - ricardo.iramar@gmail.com
+
+Jeroen Willemsen - jeroen.willemsen@owasp.org
