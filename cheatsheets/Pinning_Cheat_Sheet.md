@@ -147,5 +147,3 @@ Jim Manico - jim@owasp.org
 Kevin Wall - kevin@owasp.org
 
 Ricardo Iramar - ricardo.iramar@gmail.com
-
-Jeroen Willemsen - jeroen.willemsen@owasp.org
