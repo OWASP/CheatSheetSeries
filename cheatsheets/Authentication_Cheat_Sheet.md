@@ -28,7 +28,7 @@ A key concern when using passwords for authentication is password strength. A "s
 Longer passwords provide a greater combination of characters and consequently make it more difficult for an attacker to guess.
 
 - **Minimum** length of the passwords should be **enforced** by the application.
-    - Passwords **shorter than 10 characters** are considered to be weak ([NIST SP800-132](http://csrc.nist.gov/publications/nistpubs/800-132/nist-sp800-132.pdf)).
+    - Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
 
 While minimum length enforcement may cause problems with memorizing passwords among some users, applications should encourage them to set *passphrases* (sentences or combination of words) that can be much longer than typical passwords and yet much easier to remember.
 
