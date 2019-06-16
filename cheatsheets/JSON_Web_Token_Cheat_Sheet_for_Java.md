@@ -603,6 +603,10 @@ You can also use:
 - [JohnTheRipper](https://github.com/hashcat/hashcat/issues/1057#issuecomment-279651700) to perform the password dictionary attack.
 - [Hashcat](https://hashcat.net/hashcat/).
 
+### Additional Reading
+
+- [JWT Best Practices Internet Draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-bcp/)
+
 # Authors and Primary Editors
 
 Jim Manico - jim.manico@owasp.org
