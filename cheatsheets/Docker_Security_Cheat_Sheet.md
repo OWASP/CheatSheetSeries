@@ -224,10 +224,32 @@ To detect containers with known vulnerabilities - scan images using static analy
   - [JFrog XRay](https://jfrog.com/xray/) 
   - [Qualys](https://www.qualys.com/apps/container-security/)
 
-To detect missconfigurations in Kubernetes:
+To detect misconfigurations in Kubernetes:
  - [kubeaudit](https://github.com/Shopify/kubeaudit)
  - [kubesec.io](https://kubesec.io/)
  - [kube-bench](https://github.com/aquasecurity/kube-bench)
+
+To detect misconfigurations in Docker:
+ - [inspec.io](https://www.inspec.io/docs/reference/resources/docker/)
+ - [dev-sec.io](https://dev-sec.io/baselines/docker/)
+
+## RULE \#10 - Set the logging level to at least INFO
+
+By default, the Docker daemon is configured to have a base logging level of 'info', and if this is not the case: set the Docker daemon log level to 'info'. Rationale: Setting up an appropriate log level, configures the Docker daemon to log events that you would want to review later. A base log level of 'info' and above would capture all logs except debug logs. Until and unless required, you should not run docker daemon at 'debug' log level.
+
+To configure the log level in docker-compose:
+
+```
+$ docker-compose --log-level info up
+```
+
+References:
+
+ - [Docker Baselines on DevSec](https://dev-sec.io/baselines/docker/)
+ - [Use the Docker command line](https://docs.docker.com/engine/reference/commandline/cli/)
+ - [Overview of docker-compose CLI](https://docs.docker.com/compose/reference/overview/)
+ - [Configuring Logging Drivers](https://docs.docker.com/config/containers/logging/configure/)
+ - [View logs for a container or service](https://docs.docker.com/config/containers/logging/)
 
 # Related Projects
 
