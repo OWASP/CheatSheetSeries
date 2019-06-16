@@ -1147,11 +1147,28 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
 </ul>
 </li>
 </ul>
-<p>To detect missconfigurations in Kubernetes:</p>
+<p>To detect misconfigurations in Kubernetes:</p>
 <ul>
 <li><a href="https://github.com/Shopify/kubeaudit" target="_blank">kubeaudit</a></li>
 <li><a href="https://kubesec.io/" target="_blank">kubesec.io</a></li>
 <li><a href="https://github.com/aquasecurity/kube-bench" target="_blank">kube-bench</a></li>
+</ul>
+<p>To detect misconfigurations in Docker:</p>
+<ul>
+<li><a href="https://www.inspec.io/docs/reference/resources/docker/" target="_blank">inspec.io</a></li>
+<li><a href="https://dev-sec.io/baselines/docker/" target="_blank">dev-sec.io</a></li>
+</ul>
+<h2 id="rule-10---set-the-logging-level-to-at-least-info"><a name="rule-10---set-the-logging-level-to-at-least-info" class="plugin-anchor" href="#rule-10---set-the-logging-level-to-at-least-info"><i class="fa fa-link" aria-hidden="true"></i></a>RULE #10 - Set the logging level to at least INFO</h2>
+<p>By default, the Docker daemon is configured to have a base logging level of &apos;info&apos;, and if this is not the case: set the Docker daemon log level to &apos;info&apos;. Rationale: Setting up an appropriate log level, configures the Docker daemon to log events that you would want to review later. A base log level of &apos;info&apos; and above would capture all logs except debug logs. Until and unless required, you should not run docker daemon at &apos;debug&apos; log level.</p>
+<p>To configure the log level in docker-compose:</p>
+<pre><code>$ docker-compose --log-level info up
+</code></pre><p>References:</p>
+<ul>
+<li><a href="https://dev-sec.io/baselines/docker/" target="_blank">Docker Baselines on DevSec</a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/cli/" target="_blank">Use the Docker command line</a></li>
+<li><a href="https://docs.docker.com/compose/reference/overview/" target="_blank">Overview of docker-compose CLI</a></li>
+<li><a href="https://docs.docker.com/config/containers/logging/configure/" target="_blank">Configuring Logging Drivers</a></li>
+<li><a href="https://docs.docker.com/config/containers/logging/" target="_blank">View logs for a container or service</a></li>
 </ul>
 <h1 id="related-projects"><a name="related-projects" class="plugin-anchor" href="#related-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Related Projects</h1>
 <p><a href="https://github.com/OWASP/Docker-Security" target="_blank">OWASP Docker Top 10</a></p>
@@ -1200,7 +1217,7 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Docker Security ","level":"1.24","depth":1,"next":{"title":"DotNet Security ","level":"1.25","depth":1,"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","ref":"cheatsheets/DotNet_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Deserialization ","level":"1.23","depth":1,"path":"cheatsheets/Deserialization_Cheat_Sheet.md","ref":"cheatsheets/Deserialization_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Docker_Security_Cheat_Sheet.md","mtime":"2019-06-16T08:10:58.695Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-16T08:11:18.553Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Docker Security ","level":"1.24","depth":1,"next":{"title":"DotNet Security ","level":"1.25","depth":1,"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","ref":"cheatsheets/DotNet_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Deserialization ","level":"1.23","depth":1,"path":"cheatsheets/Deserialization_Cheat_Sheet.md","ref":"cheatsheets/Deserialization_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Docker_Security_Cheat_Sheet.md","mtime":"2019-06-16T08:17:07.804Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-06-16T08:17:25.539Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
