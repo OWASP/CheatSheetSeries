@@ -17,4 +17,4 @@ If your PR is related to an issue. Please end your PR text with the following li
 This PR covers issue #<insert number here>.
 ```
 
-Thanks you again for your contribution :smiley:
+Thank you again for your contribution :smiley:
