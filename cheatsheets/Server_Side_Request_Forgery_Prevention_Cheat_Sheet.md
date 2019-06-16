@@ -123,7 +123,9 @@ Unfortunately here, the application is still vulnerable to the bypass described 
 1. Ensure that the domains that are part of your organization are resolved by the your internal DNS server first in the DNS resolver chain.
 2. Monitor that the white list of domains in order to detect if any of them change to resolve to an:
     * Local IP address (V4 + V6).
-    * Internal IP or your organizatin for the domain that are not part of your organization.
+    * Internal IP or your organization for the domain that are not part of your organization.
+
+TODO: Provide a python script to do this monitoring in order to be used as starting point
 
 #### URL
 
@@ -199,19 +201,24 @@ Like for the case n°1, we assume that we need `String`, `IP address` or `domain
 
 The input data first validation presented in the case n°1 on the 3 types of data will be the same for this case **BUT the second validation will differ**, indeed, here we must use the blacklist approach.
 
-Validation flow - if one the validation step fail then the request is rejected:
-1. Input data first validation
-2. Blacklist second validation:
-    * For IP address: Verify that is a public one.
-    * For domain name: Verify that is a public one by trying to resolve the domain name against the DNS server that only resolve internal domain name.  Here, it must return a response indicating that it do not know the provided domain.
-3. Receive the protocol to use for the request via a dedicated input parameter for which you verify the value (`HTTP`, `HTTPS`...) against a allowed list of protocols (ex: using a enumeration).
-4. Build the request using only validated information.
+> **Regarding the proof of legitimacy of the request**: The final application that will receive the request must generate a random token (ex: alphanumeric of 20 characters) that is expected to be passed by the caller (in body via a parameter for which the name is also defined by the application itself and only allow characters set `[a-z]{1,10}`) to perform a valid request. The reception endpoint must only accept **HTTP POST** request.
 
-TODO: Show technically how to performs the validation flow and provide lib that can be used like for case n°1 based on notes from Jakub/Dom/Elie...
+Validation flow - if one the validation step fail then the request is rejected:
+1. Receive the IP address or domain name of the target application and apply input data first validation.
+2. Blacklist second validation against the IP address or domain name of the target application:
+    * For IP address: Verify that is a public one.
+    * For domain name: Verify that is a public one by trying to resolve the domain name against the DNS server that only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain.
+3. Receive the protocol to use for the request via a dedicated input parameter for which you verify the value against a allowed list of protocols (`HTTP` or `HTTPS`).
+4. Receive the parameter name for the token to pass to the target application via a dedicated input parameter for which you only allow characters set `[a-z]{1,10}`.
+5. Receive the token itself via a dedicated input parameter for which you only allow characters set `[a-zA-Z0-9]{20}`.
+6. Receive and validate any business data needed to perform a valid call from a business point of view.
+7. Build the HTTP POST request **using only validated informations** and send it (*do not forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
+
+TODO: Show technically how to performs the validation flow and provide lib that can be used like for case n°1 based on notes from Jakub/Dom/Elie...Ensure that IP validation API proposed are resilient to encoding bypass (see both reference on SSRF).
 
 ### Network layer
 
-TODO: Add technical infos...
+Same like for the case n°1.
 
 # References
 
