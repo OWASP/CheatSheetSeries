@@ -61,6 +61,8 @@ We can identify the following kind of information that we can receive from a use
 * Domain name.
 * URL
 
+**Note:** Disable the support for the following of the [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in your web client in order to prevent the bypass of the input validation described in the section `Exploitation tricks > Bypassing restrictions > Input validation > Unsafe redirect` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf).
+
 #### String
 
 In the context of an SSRF, we can simply ensure that the provided string respect the business/technical format expected. A [regex](https://www.regular-expressions.info/) can be used to ensure that data receive is valid from a security point of view. We assume here that the expected data is a non-network related data like firstname/lastname/birthdate/...
@@ -94,8 +96,9 @@ Once you are sure that the value is a valid IP address then you can perform the 
 
 #### Domain name
 
-When validation of a domain name come to mind, the first idea is to do a DNS resolution in order to see if the domain exists, it's not a bad idea but it bring 2 problems depending on the configuration of the application regarding the DNS servers to use for the resolution:
+When validation of a domain name come to mind, the first idea is to do a DNS resolution in order to see if the domain exists, it's not a bad idea but it bring some problems depending on the configuration of the application regarding the DNS servers to use for the resolution:
 * It can disclose information to external DNS resolvers.
+* It can be used by an attacker to bind a legit domain name to an internal IP address. See the section `Exploitation tricks > Bypassing restrictions > Input validation > DNS pinning` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf).
 * It can be used, by an attacker, to deliver a malicious payload to the internal DNS resolvers as well as to the API (SDK or third-party) used by the application to handle the DNS communication and then, potentially, trigger a vulnerability in one of these both components.
 
 In the context of an SSRF, there is 2 validation to perform:
@@ -115,6 +118,12 @@ Once you are sure that the value is a valid domain name then you can perform the
 
 1. Build a whitelist with all the domain names of every identified and trusted applications.
 2. Verify that the domain name received is part of this whitelist (string strict comparison with case sensitive).
+
+Unfortunately here, the application is still vulnerable to the bypass described in the section `Exploitation tricks > Bypassing restrictions > Input validation > DNS pinning` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf). To address that issue, the following action must be taken in addition of the validation on the domain name:
+1. Ensure that the domains that are part of your organization are resolved by the your internal DNS server first in the DNS resolver chain.
+2. Monitor that the white list of domains in order to detect if any of them change to resolve to an:
+    * Local IP address (V4 + V6).
+    * Internal IP or your organizatin for the domain that are not part of your organization.
 
 #### URL
 
@@ -153,7 +162,7 @@ Based on the description of the context of application of this case, we see that
 Below is described why filtering URLs is very hard at application layer.
 
 * It imply that the application must be able to detect, at code level, that the provided IP (**V4 + V6**) is not in official [private networks ranges](https://en.wikipedia.org/wiki/Private_network) including also `localhost` and IPv4 Link-Local addresses `169.254.0.0-169.254.255.255` (that is all not-routable IP addresses). Not every SDK provide a built-in feature for this kind of verification so it made this task a hard one.
-* Same remark for domain name: The company must maintains a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain name. 
+* Same remark for domain name: The company must maintains a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain name (*must only resolve internal domain name*). 
     * **FIXME: Not sure about my proposal here about DNS and if i'm not wrong then this point is in fact easy to check**
 
 ## Notes from Jakub
@@ -194,7 +203,7 @@ Validation flow - if one the validation step fail then the request is rejected:
 1. Input data first validation
 2. Blacklist second validation:
     * For IP address: Verify that is a public one.
-    * For Domain name: Verify that is a public one.
+    * For domain name: Verify that is a public one by trying to resolve the domain name against the DNS server that only resolve internal domain name.  Here, it must return a response indicating that it do not know the provided domain.
 3. Receive the protocol to use for the request via a dedicated input parameter for which you verify the value (`HTTP`, `HTTPS`...) against a allowed list of protocols (ex: using a enumeration).
 4. Build the request using only validated information.
 
@@ -204,9 +213,11 @@ TODO: Show technically how to performs the validation flow and provide lib that 
 
 TODO: Add technical infos...
 
-# Authors and Primary Editors
+# References
 
-Firstname Lastname - email@email.com
+Online version of the [SSRF bible](https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM) (PDF version is used in this cheat sheet).
+
+Article about [Bypassing SSRF Protection](https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b).
 
 # Tools and code used for schemas
 
