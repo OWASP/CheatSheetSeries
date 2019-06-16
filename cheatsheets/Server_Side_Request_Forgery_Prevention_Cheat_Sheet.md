@@ -121,7 +121,7 @@ Once you are sure that the value is a valid domain name then you can perform the
 
 Unfortunately here, the application is still vulnerable to the bypass described in the section `Exploitation tricks > Bypassing restrictions > Input validation > DNS pinning` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf). To address that issue, the following action must be taken in addition of the validation on the domain name:
 1. Ensure that the domains that are part of your organization are resolved by the your internal DNS server first in the DNS resolver chain.
-2. Monitor that the white list of domains in order to detect if any of them change to resolve to an:
+2. Monitor that the whitelist of domains in order to detect if any of them change to resolve to an:
     * Local IP address (V4 + V6).
     * Internal IP or your organization for the domain that are not part of your organization.
 
