@@ -201,15 +201,15 @@ Like for the case n°1, we assume that we need `String`, `IP address` or `domain
 
 The input data first validation presented in the case n°1 on the 3 types of data will be the same for this case **BUT the second validation will differ**, indeed, here we must use the blacklist approach.
 
-> **Regarding the proof of legitimacy of the request**: The final application that will receive the request must generate a random token (ex: alphanumeric of 20 characters) that is expected to be passed by the caller (in body via a parameter for which the name is also defined by the application itself and only allow characters set `[a-z]{1,10}`) to perform a valid request. The reception endpoint must only accept **HTTP POST** request.
+> **Regarding the proof of legitimacy of the request**: The *TargetedApplication* that will receive the request must generate a random token (ex: alphanumeric of 20 characters) that is expected to be passed by the caller (in body via a parameter for which the name is also defined by the application itself and only allow characters set `[a-z]{1,10}`) to perform a valid request. The reception endpoint must only accept **HTTP POST** request.
 
 Validation flow - if one the validation step fail then the request is rejected:
-1. Receive the IP address or domain name of the target application and apply input data first validation.
-2. Blacklist second validation against the IP address or domain name of the target application:
+1. Receive the IP address or domain name of the *TargetedApplication* and apply input data first validation.
+2. Blacklist second validation against the IP address or domain name of the *TargetedApplication*:
     * For IP address: Verify that is a public one.
     * For domain name: Verify that is a public one by trying to resolve the domain name against the DNS server that only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain.
 3. Receive the protocol to use for the request via a dedicated input parameter for which you verify the value against a allowed list of protocols (`HTTP` or `HTTPS`).
-4. Receive the parameter name for the token to pass to the target application via a dedicated input parameter for which you only allow characters set `[a-z]{1,10}`.
+4. Receive the parameter name for the token to pass to the *TargetedApplication* via a dedicated input parameter for which you only allow characters set `[a-z]{1,10}`.
 5. Receive the token itself via a dedicated input parameter for which you only allow characters set `[a-zA-Z0-9]{20}`.
 6. Receive and validate any business data needed to perform a valid call from a business point of view.
 7. Build the HTTP POST request **using only validated informations** and send it (*do not forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
