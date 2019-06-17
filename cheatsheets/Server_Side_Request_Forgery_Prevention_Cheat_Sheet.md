@@ -162,7 +162,8 @@ def verify_dns_records(domain, records, type):
                 ip = ipaddress.ip_address(value)
                 # See https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address.is_global
                 if not ip.is_global:
-                    print("[!] DNS record type '%s' for domain name '%s' resolve to a non public IP address '%s'!" % (type, domain, value))
+                    print("[!] DNS record type '%s' for domain name '%s' resolve to 
+                    a non public IP address '%s'!" % (type, domain, value))
                     error_detected = True
             except ValueError:
                 error_detected = True
@@ -191,7 +192,8 @@ def check():
             ip_v6_records = None
             print("[i] Cannot get AAAA record for domain '%s': %s\n" % (domain,e))
         # Verify the IPs obtained
-        if verify_dns_records(domain, ip_v4_records, "A") or verify_dns_records(domain, ip_v6_records, "AAAA"):
+        if verify_dns_records(domain, ip_v4_records, "A") 
+        or verify_dns_records(domain, ip_v6_records, "AAAA"):
             error_detected = True
     return error_detected
 
