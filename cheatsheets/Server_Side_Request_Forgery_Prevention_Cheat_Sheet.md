@@ -86,11 +86,21 @@ In the context of an SSRF, there is 2 validation to perform:
 
 The first validation can be performed using one of this libraries depending on your technologies (library option is proposed here in order to delegate the managing of the IP address format and leverage battle tested validation function):
 
+> Verification of the proposed libraries has been performed regarding the exposure to bypass (Hex, Octal, Dword, URL and Mixed encoding) described in this [article](https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b).
+
 * **JAVA:** Method [InetAddressValidator.isValid](http://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/InetAddressValidator.html#isValid(java.lang.String)) from the [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/) library.
-* **.NET**: Method [IPAddress.TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8) from the SDK. 
+    * **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
+* **.NET**: Method [IPAddress.TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8) from the SDK.
+    * **It is exposed** to bypass using Hex, Octal, Dword and Mixed encoding but **NOT** the URL encoding.
+    * As whitelisting is used here, any bypass tentative will be blocked during the comparison against the allowed list of IP addresses.
 * **JavaScript**: Library [ip-address](https://www.npmjs.com/package/ip-address).
+    * **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 * **Python**: Module [ipaddress](https://docs.python.org/3/library/ipaddress.html) from the SDK.
+    * **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 * **Ruby**: Class [IPAddr](https://ruby-doc.org/stdlib-2.0.0/libdoc/ipaddr/rdoc/IPAddr.html) from the SDK.
+    * **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
+
+> **Use the output value of the method/library as the IP address to compare against the whitelist.**
 
 Once you are sure that the value is a valid IP address then you can perform the second validation. Here, as a whitelist has been built with all the IP addresses (**V4 + V6** in order to avoid bypass using one of the 2 IP type) of every identified and trusted applications, then a verification can be made to ensure that the IP address provided is part of this whitelist (string strict comparison with case sensitive).
 
@@ -121,11 +131,76 @@ Once you are sure that the value is a valid domain name then you can perform the
 
 Unfortunately here, the application is still vulnerable to the bypass described in the section `Exploitation tricks > Bypassing restrictions > Input validation > DNS pinning` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf). To address that issue, the following action must be taken in addition of the validation on the domain name:
 1. Ensure that the domains that are part of your organization are resolved by the your internal DNS server first in the DNS resolver chain.
-2. Monitor that the whitelist of domains in order to detect if any of them change to resolve to an:
+2. Monitor the whitelist of domains in order to detect if any of them change to resolve to an:
     * Local IP address (V4 + V6).
-    * Internal IP or your organization for the domain that are not part of your organization.
+    * Internal IP of your organization (expected to be in private IP ranges) for the domain that are not part of your organization.
 
-TODO: Provide a python script to do this monitoring in order to be used as starting point
+The following Python3 script can be used, as a starting point, for the monitoring mentioned above:
+
+```python
+# Dependencies: pip install ipaddress dnspython
+import ipaddress
+import dns.resolver
+
+# Configure the whitelist to check
+DOMAINS_WHITELIST = ["owasp.org", "labslinux"]
+
+# Configure the DNS resolver to use for all DNS queries
+DNS_RESOLVER = dns.resolver.Resolver()
+DNS_RESOLVER.nameservers = ["1.1.1.1"]
+
+def verify_dns_records(domain, records, type):
+    """
+    Verify if one of the DNS records resolve to a non public IP address.
+    Return a boolean indicating if any error has been detected.
+    """
+    error_detected = False
+    if records is not None:
+        for record in records:
+            value = record.to_text().strip()
+            try:
+                ip = ipaddress.ip_address(value)
+                # See https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address.is_global
+                if not ip.is_global:
+                    print("[!] DNS record type '%s' for domain name '%s' resolve to a non public IP address '%s'!" % (type, domain, value))
+                    error_detected = True
+            except ValueError:
+                error_detected = True
+                print("[!] '%s' is not valid IP address!" % value)
+    return error_detected
+            
+def check():
+    """
+    Perform the check of the whitelist of domains.
+    Return a boolean indicating if any error has been detected.
+    """
+    error_detected = False
+    for domain in DOMAINS_WHITELIST:    
+        # Get the IPs of the curent domain
+        # See https://en.wikipedia.org/wiki/List_of_DNS_record_types
+        try:
+            # A = IPv4 address record        
+            ip_v4_records = DNS_RESOLVER.query(domain, "A")
+        except Exception as e:
+            ip_v4_records = None            
+            print("[i] Cannot get A record for domain '%s': %s\n" % (domain,e))        
+        try:
+            # AAAA = IPv6 address record
+            ip_v6_records = DNS_RESOLVER.query(domain, "AAAA")
+        except Exception as e:
+            ip_v6_records = None
+            print("[i] Cannot get AAAA record for domain '%s': %s\n" % (domain,e))
+        # Verify the IPs obtained
+        if verify_dns_records(domain, ip_v4_records, "A") or verify_dns_records(domain, ip_v6_records, "AAAA"):
+            error_detected = True
+    return error_detected
+
+if __name__== "__main__":
+    if check():
+        exit(1)
+    else:
+        exit(0)
+```
 
 #### URL
 
@@ -214,7 +289,7 @@ Validation flow - if one the validation step fail then the request is rejected:
 6. Receive and validate any business data needed to perform a valid call from a business point of view.
 7. Build the HTTP POST request **using only validated informations** and send it (*do not forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
 
-TODO: Show technically how to performs the validation flow and provide lib that can be used like for case n°1 based on notes from Jakub/Dom/Elie...Ensure that IP validation API proposed are resilient to encoding bypass (see both reference on SSRF).
+TODO: Show how to technically perform the step 2
 
 ### Network layer
 
