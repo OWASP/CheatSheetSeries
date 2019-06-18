@@ -283,6 +283,9 @@ def is_private_ip(ip_address):
     """
     # Build the list of IP prefix for V4 and V6 addresses
     ip_prefix = []
+    # Add prefix for loopback addresses
+    ip_prefix.append("127.")    
+    ip_prefix.append("0.")    
     # Add IP V4 prefix for private addresses
     # See https://en.wikipedia.org/wiki/Private_network
     ip_prefix.append("10.")
