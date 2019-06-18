@@ -241,32 +241,7 @@ Based on the description of the context of application of this case, we see that
 Below is described why filtering URLs is very hard at application layer.
 
 * It imply that the application must be able to detect, at code level, that the provided IP (**V4 + V6**) is not in official [private networks ranges](https://en.wikipedia.org/wiki/Private_network) including also `localhost` and IPv4 Link-Local addresses `169.254.0.0-169.254.255.255` (that is all not-routable IP addresses). Not every SDK provide a built-in feature for this kind of verification so it made this task a hard one.
-* Same remark for domain name: The company must maintains a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain name (*must only resolve internal domain name*). 
-    * **FIXME: Not sure about my proposal here about DNS and if i'm not wrong then this point is in fact easy to check**
-
-## Notes from Jakub
-
- > In that case system should blok all IPs/domains that are in private network including localhost and IPv4 Link-Local addresses 169.254.0.0-169.254.255.255 (that is all not-routable ip addresses). In practice it is a hard task.
-
- > Random notes for Case 2: When whitelist approach is not available, attacker can try to forge requests to two types of internal applications: 1. applications that normally are not requested by this application - and here attacker should be stopped by authentication 2. applications that normally are exchanging data thus vulnerable application is allowed to make requests. Here are couple of options like adding custom header to all requests that maybe controlled by attacker and rejecting them in internal applications. In this attack attacker typically can control URL but not headers etc
-
- > Random notes Application layer: it cannot be done only on app layer but on that layer we can do scheme:// white-listing + logging
-
-## Notes from Dom for discussion
-
-> Usage of a custom header with a shared secret do not prevent SSRF triggering if it is the *VulnerableApplication* that add the custom header with the shared secret during the building of the request because the attacker can use the SSRF and the secret will be automatically added.
-
-> Same remark regarding authentication if it's the *VulnerableApplication* that add the authentication information during the building of the request.
-
-> To be effective, it must be a secret that is not automatically added by the application during the creation of the request but expliclty added by the user based on a secret generated and received/validated by the targeted application during a kind of "enrolement" phase in which a communication convention is defined between the *VulnerableApplication* and the targeted application. Unfortunately it imply that the *VulnerableApplication* let the request be send and it's up to the targeted application to verify the presence and validity of the secret.
-
-> *VulnerableApplication* must prevent these things: User must NOT be able to pass custom parameters to the targeted application or arbitrary choose the protocol used by the request (selection in a allowed list of protocols). For HTTP protocol, the user must not be able to arbitrary choose the VERB used for the request (it ix fixed by the *VulnerableApplication*). Using this way, the request is sent by the user have limited surface of action on it because it control only the destination and the value of the shared secret (not the name of the parameter). 
-
-> Depending on the destination it can happen case in which the user must be able to set the param name but this point can be tackled by the *VulnerableApplication* by proposing integration with the targeted application and then fix the parameter name in order to prevent to open the name to user input influence.
-
-## Notes from Elie
-
-> ...
+* Same remark for domain name: The company must maintains a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain name (*must only resolve internal domain name*).
 
 ## Available protections
 
@@ -280,18 +255,72 @@ The input data first validation presented in the case n°1 on the 3 types of dat
 
 > **Regarding the proof of legitimacy of the request**: The *TargetedApplication* that will receive the request must generate a random token (ex: alphanumeric of 20 characters) that is expected to be passed by the caller (in body via a parameter for which the name is also defined by the application itself and only allow characters set `[a-z]{1,10}`) to perform a valid request. The reception endpoint must only accept **HTTP POST** request.
 
-Validation flow - if one the validation step fail then the request is rejected:
-1. Receive the IP address or domain name of the *TargetedApplication* and apply input data first validation.
+**Validation flow (if one the validation step fail then the request is rejected):**
+1. Receive the IP address or domain name of the *TargetedApplication* and apply input data first validation using the libraries/regex mentioned in this [section](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer).
 2. Blacklist second validation against the IP address or domain name of the *TargetedApplication*:
-    * For IP address: Verify that is a public one.
-    * For domain name: Verify that is a public one by trying to resolve the domain name against the DNS server that only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain.
+    * For IP address: Verify that is a public one (take a below to see how to dot it).
+    * For domain name: 
+        1. Verify that is a public one by trying to resolve the domain name against the DNS server that only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.
+        2. To prevent the *DNS pinning* attack described into this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf), get the IPs of behind the domain name (records *A* + *AAAA* for IPv4 + IPv6) and apply the same verificaton than if you have received an IP address.
 3. Receive the protocol to use for the request via a dedicated input parameter for which you verify the value against a allowed list of protocols (`HTTP` or `HTTPS`).
 4. Receive the parameter name for the token to pass to the *TargetedApplication* via a dedicated input parameter for which you only allow characters set `[a-z]{1,10}`.
 5. Receive the token itself via a dedicated input parameter for which you only allow characters set `[a-zA-Z0-9]{20}`.
 6. Receive and validate any business data needed to perform a valid call from a business point of view.
 7. Build the HTTP POST request **using only validated informations** and send it (*do not forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
 
-TODO: Show how to technically perform the step 2
+**Hints for the step 2 regarding the verification on an IP address:**
+
+As mentioned above, not every SDK provide a built-in feature to verify if an IP (V4 + V6) is private/public. So, the following approach can be used based on a blacklist composed of private IP ranges (*example is given in python in order to be easy to understand and portable to others technologies*) :
+
+```python
+def is_private_ip(ip_address):
+    is_private = False
+    """
+    Determine if a IP address provided is a private one.
+    Return TRUE if it's the case, FALSE otherwise.
+    """
+    # Build the list of IP prefix for V4 and V6 addresses
+    ip_prefix = []
+    # Add IP V4 prefix for private addresses
+    # See https://en.wikipedia.org/wiki/Private_network
+    ip_prefix.append("10.")
+    ip_prefix.append("172.16.")
+    ip_prefix.append("172.17.")
+    ip_prefix.append("172.18.")
+    ip_prefix.append("172.19.")
+    ip_prefix.append("172.20.")
+    ip_prefix.append("172.21.")
+    ip_prefix.append("172.22.")
+    ip_prefix.append("172.23.")
+    ip_prefix.append("172.24.")
+    ip_prefix.append("172.25.")
+    ip_prefix.append("172.26.")
+    ip_prefix.append("172.27.")
+    ip_prefix.append("172.28.")
+    ip_prefix.append("172.29.")
+    ip_prefix.append("172.30.")
+    ip_prefix.append("172.31.")
+    ip_prefix.append("192.168.")
+    ip_prefix.append("169.254.")
+    # Add IP V6 prefix for private addresses
+    # See https://en.wikipedia.org/wiki/Unique_local_address
+    # See https://en.wikipedia.org/wiki/Private_network
+    # See https://simpledns.com/private-ipv6
+    ip_prefix.append("fc")
+    ip_prefix.append("fd")
+    ip_prefix.append("fe")
+    # Verify the provided IP address
+    if ip_address is not None:
+        # Remove whitespace characters from the beginning/end of the string 
+        # and convert it to lower case
+        ip_to_verify = ip_address.strip().lower()
+        # Perform the check against the list of prefix
+        for prefix in ip_prefix:
+            if ip_to_verify.startswith(prefix):
+                is_private = True
+                break
+    return is_private   
+```
 
 ### Network layer
 
