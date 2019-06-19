@@ -122,7 +122,33 @@ Like for IP address, the first validation can be performed using one of this lib
 * **.NET**: Method [Uri.CheckHostName](https://docs.microsoft.com/en-us/dotnet/api/system.uri.checkhostname?view=netframework-4.8) from the SDK. 
 * **JavaScript**: Library [is-valid-domain](https://www.npmjs.com/package/is-valid-domain).
 * **Python**: Module [validators.domain](https://validators.readthedocs.io/en/latest/#module-validators.domain).
-* **Ruby**: **TODO: Find a Gem**.
+* **Ruby**: No valid dedicated gem has been found.
+    * [domainator](https://github.com/mhuggins/domainator), [public_suffix](https://github.com/weppos/publicsuffix-ruby) and [addressable](https://github.com/sporkmonger/addressable) has been tested but unfortunately they all consider `<script>alert(1)</script>.owasp.org` as a valid domain name. 
+    * This regex, taken from [here](https://stackoverflow.com/a/26987741), can thus be used: `^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$`
+
+Example of execution of the proposed regex for Ruby:
+
+```ruby
+domain_names = ["owasp.org","owasp-test.org","doc-test.owasp.org","doc.owasp.org", 
+                "<script>alert(1)</script>","<script>alert(1)</script>.owasp.org"]
+domain_names.each { |domain_name|
+    if ( domain_name =~ /^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$/ )
+        puts "[i] #{domain_name} is VALID"
+    else
+        puts "[!] #{domain_name} is INVALID"
+    end
+}
+```
+
+```bash
+$ ruby test.rb
+[i] owasp.org is VALID
+[i] owasp-test.org is VALID
+[i] doc-test.owasp.org is VALID
+[i] doc.owasp.org is VALID
+[!] <script>alert(1)</script> is INVALID
+[!] <script>alert(1)</script>.owasp.org is INVALID
+```
 
 Once we are sure that the value is a valid domain name then we can perform the second validation. As we are, here, in a context where whitelist is possible then we can apply this approach:
 
