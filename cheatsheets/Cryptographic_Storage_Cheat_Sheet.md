@@ -67,7 +67,7 @@ The following functions are considered **weak** random number generators and sho
 
 - C : `random()`, `rand()` instead use [getrandom(2)](http://man7.org/linux/man-pages/man2/getrandom.2.html)
 - Java : `java.util.Random()` instead use `java.security.SecureRandom`
-- PHP : `rand()`, `mt_rand()`, `array_rand()`, `uniqid()` instead use [random_bytes()](https://www.php.net/manual/en/function.random-bytes.php), [random_int()](https://www.php.net/manual/en/function.random-int.php) (PHP 7) or [openssl_random_pseudo_bytes()](https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php) (PHP 5 - **deprecated**)
+- PHP : `rand()`, `mt_rand()`, `array_rand()`, `uniqid()` instead use [random_bytes()](https://www.php.net/manual/en/function.random-bytes.php), [random_int()](https://www.php.net/manual/en/function.random-int.php) in PHP 7 or [openssl_random_pseudo_bytes()](https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php) in PHP 5 (which is **deprecated** and **should not be used**)
 
 For secure random number generation, refer to NIST SP 800-90A. CTR-DRBG, HASH-DRBG or HMAC-DRBG are recommended. Refer to NIST SP800-22 A Statistical Test Suite for Random and Pseudorandom Number Generators for Cryptographic Applications, and the testing toolkit.
 
