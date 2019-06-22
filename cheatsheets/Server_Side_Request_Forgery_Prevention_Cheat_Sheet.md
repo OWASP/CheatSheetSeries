@@ -340,6 +340,7 @@ def is_private_ip(ip_address):
     ip_prefix.append("fc")
     ip_prefix.append("fd")
     ip_prefix.append("fe")
+    ip_prefix.append("::1")
     # Verify the provided IP address
     if ip_address is not None:
         # Remove whitespace characters from the beginning/end of the string 
