@@ -1,59 +1,57 @@
 # Introduction
 
-The objective of the cheat sheet is to provide advices regarding the protection against [Server Side Request Forgery](https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/) attack.
+The objective of the cheat sheet is to provide advices regarding the protection against [Server Side Request Forgery](https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/) (SSRF) attack.
 
-**S**erver **S**ide **R**equest **F**orgery will be named **SSRF** in the rest of the cheat sheet.
-
-This cheat sheet will focus on the defense point of view and will not explains how to perform this attack. This [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf) from the security researcher [Orange Tsai](https://twitter.com/orange_8361) as well as this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf) provides deep advices about how to perform this kind of attack.
+This cheat sheet will focus on the defensive point of view and will not explain how to perform this attack. This [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf) from the security researcher [Orange Tsai](https://twitter.com/orange_8361) as well as this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf) provide techniques on how to perform this kind of attack.
 
 # Context
 
-SSRF is a way to force an application to make a malicious network request. It can happen when a user can control the URL to an external resource like: 
-- Image on external server (e.g. user enter URL of the avatar, then, the application will download this file and display some feedback like image itself or error).
+SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples: 
+- Image on external server (*e.g.* user enters image URL of their avatar for the application to download and use).
 - Custom [WebHook](https://en.wikipedia.org/wiki/Webhook) (user have to specify WebHook handlers or Callback URLs).
 - Request to another application, often located on another network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.
 
-Overview of an SSRF common flow:
+## Overview of an SSRF common flow
 
 ![SSRFCommonFlow](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Common_Flow.png)
 
-*Note:* SSRF is not limited to HTTP protocol, even if often the first request performed by the attacker leverage the HTTP protocol, the second request (performed by the vulnerable application, the SSRF in fact) can use different protocol like HTTP, FTP, SMTP, SMB and so on...It depends on the technical need of the vulnerable application to perform the normal expected job on the other application on which the request is sent.
+*Note:* SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (*e.g.* FTP, SMB, SMTP, etc.). The protocol usage is highly dependent on the application’s requirements.
 
 # Cases
 
-Depending on the application functionality and requirements, there are two basic cases in which SSRF can happen:
-* Application can send request only to **identified and trusted applications**: *Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is available*.
-* Application can send requests to **ANY other IP address or domain name**: *Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is not available*.
+Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:
+* Application can send request only to **identified and trusted applications**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
+* Application can send requests to **ANY other IP address or domain name**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is not available.
 
 Because these two cases are very different, this cheat sheet will describe defences against them separately.
 
-# Case 1 - Application can send request only to identified and trusted applications
+## Case 1 - Application can send request only to identified and trusted applications
 
-Sometime, an application need to perform request to another application, often located on other network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.
+Sometimes, an application need to perform request to another application, often located on another network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.
 
 *Example:* 
 
- > We can imagine an web application that receive and use the information coming from a user like the firstname/lastname/birthdate/... to create a profile into an HR system via a request to this HR system. 
+ > We can imagine a web application receives and uses personal information from a user, such as their firstname/lastname/birthdate to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands in order to process that data.
 
  > Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system. 
 
- > The user leverage the web application as a proxy to the HR system, jumping accross the different networks in which the web application and the HR system are located.
+ > The user leverages the web application as a proxy to the HR system.
 
-Whitelist approach can be used here because the application called by the *VulnerableApplication* is clearly identified in the technical/business flow. So, the goal here is to ensure that every call is targeted to one of the identified and trusted applications.
+The whitelist approach is a viable option in this case since the internal application called by the *VulnerableApplication* is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.
 
-## Available protections
+### Available protections
 
-Several protections measures are possible at **Application** and **Network** layers, both layers will be addressed in this cheat sheet in order to apply the *defense in deph* principle.
+Several protective measures are possible at the **Application** and **Network** layers. In order to apply the **defense in depth** principle, both layers will be hardened against such attacks.
 
-### Application layer
+#### Application layer
 
 The first level of protection that come to mind is [Input validation](Input_Validation_Cheat_Sheet.md). 
 
-It's a good point but then this question is then raised: *How to perform this input validation?*
+Based on that point, the following question comes to mind: *How to perform this input validation?*
 
-As [Orange Tsai](https://twitter.com/orange_8361) show in his [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf), depending on the programming language used, parser can be abused. One possible countermeasure is to apply the [whitelisting approach](Input_Validation_Cheat_Sheet.md#whitelisting-vs-blacklisting) when input validation is used because, most of the time, the format of the information expected from the user is globally know.
+As [Orange Tsai](https://twitter.com/orange_8361) shows in his [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf), depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the [whitelisting approach](Input_Validation_Cheat_Sheet.md#whitelisting-vs-blacklisting) when input validation is used because, most of the time, the format of the information expected from the user is globally know.
 
-We can identify the following kind of information that we can receive from a user and that will use to create the request that will be sent to the final application:
+The request sent to the internal application will be based on the following kind of information:
 * String containing business data.
 * IP address (V4 or V6).
 * Domain name.
@@ -61,13 +59,18 @@ We can identify the following kind of information that we can receive from a use
 
 **Note:** Disable the support for the following of the [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in your web client in order to prevent the bypass of the input validation described in the section `Exploitation tricks > Bypassing restrictions > Input validation > Unsafe redirect` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf).
 
-#### String
+##### String
 
-In the context of an SSRF, we can simply ensure that the provided string respect the business/technical format expected. A [regex](https://www.regular-expressions.info/) can be used to ensure that data receive is valid from a security point of view. We assume here that the expected data is a non-network related data like firstname/lastname/birthdate/...
+In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected. 
+
+A [regex](https://www.regular-expressions.info/) can be used to ensure that data received is valid from a security point of view if the input data have a simple format (*e.g.* token, zip code, etc.) otherwise prefer validation using string because regex for complex format are difficult to maintain and are highly error prone.
+
+User input is assumed to be non-network related and consists of the user's personal information.
 
 Example:
 
 ```java
+//Regex validation for a data having a simple format
 if(Pattern.matches("[a-zA-Z0-9\\s\\-]{1,50}", userInput)){
     //Continue the processing because the input data is valid
 }else{
@@ -75,16 +78,16 @@ if(Pattern.matches("[a-zA-Z0-9\\s\\-]{1,50}", userInput)){
 }
 ```
 
-#### IP address
+##### IP address
 
-In the context of an SSRF, there is 2 validations to perform:
+In the context of SSRF, there are 2 possible validations to perform:
 
 1. Ensure that the data provided is a valid IP V4 or V6 address.
-2. Ensure that the IP address provided belong to the one of the IP addresses of the identified and trusted applications (the whitelisting come to action here).
+2. Ensure that the IP address provided belong to the one of the IP addresses of the identified and trusted applications.
 
-The first validation can be performed using one of this libraries depending on your technologies (library option is proposed here in order to delegate the managing of the IP address format and leverage battle tested validation function):
+The first layer of validation can be applied using libraries that ensure the security of the IP address format, based on the technology used (library option is proposed here in order to delegate the managing of the IP address format and leverage battle tested validation function):
 
-> Verification of the proposed libraries has been performed regarding the exposure to bypass (Hex, Octal, Dword, URL and Mixed encoding) described in this [article](https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b).
+> Verification of the proposed libraries has been performed regarding the exposure to bypasses (Hex, Octal, Dword, URL and Mixed encoding) described in this [article](https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b).
 
 * **JAVA:** Method [InetAddressValidator.isValid](http://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/InetAddressValidator.html#isValid(java.lang.String)) from the [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/) library.
     * **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
@@ -100,21 +103,21 @@ The first validation can be performed using one of this libraries depending on y
 
 > **Use the output value of the method/library as the IP address to compare against the whitelist.**
 
-Once we are sure that the value is a valid IP address then you we perform the second validation. Here, as a whitelist has been built with all the IP addresses (V4 + V6 in order to avoid bypass using one of the 2 IP type) of every identified and trusted applications, then, a verification can be made to ensure that the IP address provided is part of this whitelist (string strict comparison with case sensitive).
+After ensuring the validity of the incoming IP address, the second layer of validation is applied. A whitelist is created after determining all the IP addresses (v4 and v6 in order to avoid bypasses) of the identified and trusted applications. The valid IP is cross checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).
 
-#### Domain name
+##### Domain name
 
-When validation of a domain name come to mind, the first idea is to do a DNS resolution in order to see if the domain exists, it's not a bad idea but it bring some problems depending on the configuration of the application regarding the DNS servers to use for the resolution:
+In the attempt of validating domain names, it is apparent to do a DNS resolution in order to verify the existence of the domain. In general, it is not a bad idea, yet it opens up the application to attacks depending on the configuration used regarding the DNS servers used for the domain name resolution:
 * It can disclose information to external DNS resolvers.
 * It can be used by an attacker to bind a legit domain name to an internal IP address. See the section `Exploitation tricks > Bypassing restrictions > Input validation > DNS pinning` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf).
-* It can be used, by an attacker, to deliver a malicious payload to the internal DNS resolvers as well as to the API (SDK or third-party) used by the application to handle the DNS communication and then, potentially, trigger a vulnerability in one of these both components.
+* It can be used, by an attacker, to deliver a malicious payload to the internal DNS resolvers as well as to the API (SDK or third-party) used by the application to handle the DNS communication and then, potentially, trigger a vulnerability in one of these components.
 
-In the context of an SSRF, there is 2 validations to perform:
+In the context of SSRF, there are 2 validations to perform:
 
 1. Ensure that the data provided is a valid domain name.
-2. Ensure that the domain name provided belong to the one of the domain name of the identified and trusted applications (the whitelisting come to action here).
+2. Ensure that the domain name provided belong to one of the domain name of the identified and trusted applications (the whitelisting come to action here).
 
-Like for IP address, the first validation can be performed using one of this libraries depending on your technologies (library option is proposed here in order to delegate the managing of the domain name format and leverage battle tested validation function):
+Similar to the IP address validation, the first layer of validation can be applied using libraries that ensure the security of the domain name format, based on the technology used (library option is proposed here in order to delegate the managing of the domain name format and leverage battle tested validation function):
 
 > Verification of the proposed libraries has been performed to ensure that the proposed functions do not perform any DNS resolution query.
 
@@ -124,7 +127,7 @@ Like for IP address, the first validation can be performed using one of this lib
 * **Python**: Module [validators.domain](https://validators.readthedocs.io/en/latest/#module-validators.domain).
 * **Ruby**: No valid dedicated gem has been found.
     * [domainator](https://github.com/mhuggins/domainator), [public_suffix](https://github.com/weppos/publicsuffix-ruby) and [addressable](https://github.com/sporkmonger/addressable) has been tested but unfortunately they all consider `<script>alert(1)</script>.owasp.org` as a valid domain name. 
-    * This regex, taken from [here](https://stackoverflow.com/a/26987741), can thus be used: `^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$`
+    * This regex, taken from [here](https://stackoverflow.com/a/26987741), can be used: `^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$`
 
 Example of execution of the proposed regex for Ruby:
 
@@ -150,14 +153,14 @@ $ ruby test.rb
 [!] <script>alert(1)</script>.owasp.org is INVALID
 ```
 
-Once we are sure that the value is a valid domain name then we can perform the second validation. As we are, here, in a context where whitelist is possible then we can apply this approach:
+After ensuring the validity of the incoming domain name, the second layer of validation is applied:
 
 1. Build a whitelist with all the domain names of every identified and trusted applications.
 2. Verify that the domain name received is part of this whitelist (string strict comparison with case sensitive).
 
 Unfortunately here, the application is still vulnerable to the bypass described in the section `Exploitation tricks > Bypassing restrictions > Input validation > DNS pinning` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf) because a DNS resolution will be made when the business code will be executed. To address that issue, the following action must be taken in addition of the validation on the domain name:
-1. Ensure that the domains that are part of your organization are resolved by the your internal DNS server first in the chains of DNS resolvers.
-2. Monitor the whitelist of domains in order to detect if any of them change to resolve to an:
+1. Ensure that the domains that are part of your organization are resolved by your internal DNS server first in the chains of DNS resolvers.
+2. Monitor the domains whitelist in order to detect when any of them resolves to a/an:
     * Local IP address (V4 + V6).
     * Internal IP of your organization (expected to be in private IP ranges) for the domain that are not part of your organization.
 
@@ -230,71 +233,69 @@ if __name__== "__main__":
         exit(0)
 ```
 
-#### URL
+##### URL
 
-Do not accept complete URL from the user because URL are difficult to validate and parser can be abused depending on the technology used like demonstrated by the [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf) of [Orange Tsai](https://twitter.com/orange_8361). 
+Do not accept complete URLs from the user because URL are difficult to validate and the parser can be abused depending on the technology used as showcased by the following [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf) of [Orange Tsai](https://twitter.com/orange_8361). 
 
-If network related information is really nedded then only accept an valid IP address or domain name.
+If network related information is really nedded then only accept a valid IP address or domain name.
 
-### Network layer
+#### Network layer
 
-The objective here is to prevent that the *VulnerableApplication* performs call to arbitrary applications, so, only the expected *routes* will be opened at network level.
+The objective of the Network layer security is to prevent the *VulnerableApplication* from performing calls to arbitrary applications. Only allowed *routes* will be available for this application in order to limit its network access to only those that it should communicate with.
 
 The Firewall component, as a specific device or using the one provided within the operating system, will be used here to define the legitimate flows. 
 
-In the schema below, we show the goal that we want the achieve by leveraging the Firewall component, using this way, even if an application is vulnerable to SSRF, the attacker can only call applications that are part of legitimate flows:
+In the schema below, a Firewall component is leveraged to limit the application's access, and in turn, limit the impact of an application vulnerable to SSRF:
 
 ![Case 1 for Network layer protection about flows that we want to prevent](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.png)
 
-[Network segregation](https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation) (see this set of [implementation advices](https://www.cyber.gov.au/publications/network-segmentation-and-segregation)) can also be leveraged and **is highly recommanded in order to block not legit call directly at network level itself**.
+[Network segregation](https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation) (see this set of [implementation advices](https://www.cyber.gov.au/publications/network-segmentation-and-segregation)) can also be leveraged and **is highly recommanded in order to block illegitimate calls directly at network level itself**.
 
-# Case 2 - Application can send requests to ANY external IP address or domain name
+## Case 2 - Application can send requests to ANY external IP address or domain name
 
-This case happen when user can control an URL to an **External** resource and the application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing. 
+This case happens when user can control an URL to an **External** resource and the application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing. 
 
-We talk here about the notion of **External** in way that, at the opposite of the case n°1 in which we know all the call flow, here the *VulnerableApplication* can, by design, call any target IP/domain. 
+In this scenario, *External* refers to any IP that is doesn't belong to the internal network, and should be reached by going over the public internet.
 
-We assume that if in the design of the application it should only perform call to IP/domain that are located inside the company's global network then whitelist approach can be used and then we apply the case n°1. 
-
-Thus **External** here refer to any IP/domain *located outside* the company's global network. So, the goal here is to ensure that every call initiated by the *VulnerableApplication*:
+Thus, the call from the *Vulnerable Application*: 
 * **Is NOT** targeting one of the IP/domain *located inside* the company's global network.
-* Use a convention defined between the *VulnerableApplication* and the expected IP/domain in order to *proof* that the call has been legitimately initiated.
+* Uses a convention defined between the *VulnerableApplication* and the expected IP/domain in order to *prove* that the call has been legitimately initiated.
 
-## Challenges in blocking URLs at application layer
+### Challenges in blocking URLs at application layer
 
-Based on the description of the context of application of this case, we see that we will use the blacklist approach. By the way, it is know in security industry that blacklisting is very hard and prone to errors but we are forced to use this approach here. 
+Based on the business requirements of the above mentioned applications, the whitelist approach is not a valid solution. Despite knowing that the blacklist approach is not an impenetrable wall, it is the best solution in this scenario. It helps tell the application what it should **not** do.
 
-Below is described why filtering URLs is very hard at application layer.
+Here is why filtering URLs is hard at the Application layer:
 
-* It imply that the application must be able to detect, at code level, that the provided IP (V4 + V6) is not in official [private networks ranges](https://en.wikipedia.org/wiki/Private_network) including also *localhost* and *IPv4/v6 Link-Local* addresses. Not every SDK provide a built-in feature for this kind of verification so it made this task a hard one.
-* Same remark for domain name: The company must maintains a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain name (*must only resolve internal domain name*).
+* It implies that the application must be able to detect, at the code level, that the provided IP (V4 + V6) is not part of the official [private networks ranges](https://en.wikipedia.org/wiki/Private_network) including also *localhost* and *IPv4/v6 Link-Local* addresses. Not every SDK provides a built-in feature for this kind of verification, and leaves the handling up to the developer understand all of its pitfalls and possible values, which makes it a demanding task.
+* Same remark for domain name: The company must maintains a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain names.
 
-## Available protections
+### Available protections
 
 We take the same assumption than for the case n°1 regarding the application user input data needed and the *defense in deph* principle.
 
-### Application layer
+#### Application layer
 
-Like for the case n°1, we assume that we need `String`, `IP address` or `domain name` to create the request that will be sent to the *TargetedApplication*.
+Like for the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#case-1---application-can-send-request-only-to-identified-and-trusted-applications), it is assumed that the `IP Address` or `domain name` is required to create the request that will be sent to the *TargetApplication*.
 
-The first validation on the input data presented in the case n°1 on the 3 types of data will be the same for this case **BUT the second validation will differ**, indeed, here we must use the blacklist approach.
+The first validation on the input data presented in the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer) on the 3 types of data will be the same for this case **BUT the second validation will differ**. Indeed, here we must use the blacklist approach.
 
-> **Regarding the proof of legitimacy of the request**: The *TargetedApplication* that will receive the request must generate a random token (ex: alphanumeric of 20 characters) that is expected to be passed by the caller (in body via a parameter for which the name is also defined by the application itself and only allow characters set `[a-z]{1,10}`) to perform a valid request. The reception endpoint must only accept **HTTP POST** kind of request.
+> **Regarding the proof of legitimacy of the request**: The *TargetedApplication* that will receive the request must generate a random token (ex: alphanumeric of 20 characters) that is expected to be passed by the caller (in body via a parameter for which the name is also defined by the application itself and only allow characters set `[a-z]{1,10}`) to perform a valid request. The receiving endpoint must only accept HTTP POST requests.
 
-**Validation flow (if one the validation step fail then the request is rejected):**
+**Validation flow (if one the validation steps fail then the request is rejected):**
 
-1. We receive the IP address or domain name of the *TargetedApplication* and apply the first validation on the input data using the libraries/regex mentioned in this [section](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer).
-2. We apply the second validation against the IP address or domain name of the *TargetedApplication* using the following blacklist apporach:
+1. The application receive the IP address or domain name of the *TargetedApplication* and apply the first validation on the input data using the libraries/regex mentioned in this [section](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer).
+2. The second validation is applied against the IP address or domain name of the *TargetedApplication* using the following blacklist approach:
     * For IP address: 
-        * We verify that it is a public one (cf. below to see how to dot it).
+        * The application verify that it is a public one (see the hint provided in the next paragraph with the python code sample).
     * For domain name: 
         1. We verify that it is a public one by trying to resolve the domain name against the DNS resolver that only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.
         2. To prevent the *DNS pinning* attack described into this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf), we retrieve the IPs behind the domain name provided (taking records *A* + *AAAA* for IPv4 + IPv6) and we apply the same verificaton than if we have received an IP address.
-3. We receive the protocol to use for the request via a dedicated input parameter for which we verify the value against a allowed list of protocols (`HTTP` or `HTTPS`).
-4. We receive the parameter name for the token to pass to the *TargetedApplication* via a dedicated input parameter for which we only allow characters set `[a-z]{1,10}`.
-5. We receive the token itself via a dedicated input parameter for which we only allow characters set `[a-zA-Z0-9]{20}`.
-6. We receive and validate (from a security point of view) any business data needed to perform a valid call.
-7. We build the HTTP POST request **using only validated informations** and send it (*we do not forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
+3. The application receive the protocol to use for the request via a dedicated input parameter for which we verify the value against a allowed list of protocols (`HTTP` or `HTTPS`).
+4. The application receive the parameter name for the token to pass to the *TargetedApplication* via a dedicated input parameter for which we only allow characters set `[a-z]{1,10}`.
+5. The application receive the token itself via a dedicated input parameter for which we only allow characters set `[a-zA-Z0-9]{20}`.
+6. The application receive and validate (from a security point of view) any business data needed to perform a valid call.
+7. The application build the HTTP POST request **using only validated informations** and send it (*we do not forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
 
 **Hints for the step 2 regarding the verification on an IP address:**
 
@@ -342,21 +343,22 @@ def is_private_ip(ip_address):
     ip_prefix.append("fe")
     ip_prefix.append("::1")
     # Verify the provided IP address
-    if ip_address is not None:
-        # Remove whitespace characters from the beginning/end of the string 
-        # and convert it to lower case
-        ip_to_verify = ip_address.strip().lower()
-        # Perform the check against the list of prefix
-        for prefix in ip_prefix:
-            if ip_to_verify.startswith(prefix):
-                is_private = True
-                break
+    # Remove whitespace characters from the beginning/end of the string 
+    # and convert it to lower case 
+    # Lower case is for preventing any IPV6 case bypass using mixed case
+    # depending on the source used to get the IP address
+    ip_to_verify = ip_address.strip().lower()
+    # Perform the check against the list of prefix
+    for prefix in ip_prefix:
+        if ip_to_verify.startswith(prefix):
+            is_private = True
+            break
     return is_private   
 ```
 
-### Network layer
+#### Network layer
 
-Same like for the case n°1.
+Same like for the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#network-layer).
 
 # References
 
@@ -371,7 +373,7 @@ Article about [Bypassing SSRF Protection](https://medium.com/@vickieli/bypassing
 
 Mermaid code for SSRF common flow (printscreen are used to capture PNG image inserted into this cheat sheet):
 
-```text
+```
 sequenceDiagram
     participant Attacker
     participant VulnerableApplication
