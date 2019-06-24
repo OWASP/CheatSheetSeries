@@ -21,7 +21,7 @@ SSRF is an attack vector that abuses an application to interact with the interna
 
 Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:
 * Application can send request only to **identified and trusted applications**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
-* Application can send requests to **ANY other IP address or domain name**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is not available.
+* Application can send requests to **ANY external IP address or domain name**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is not available.
 
 Because these two cases are very different, this cheat sheet will describe defences against them separately.
 
