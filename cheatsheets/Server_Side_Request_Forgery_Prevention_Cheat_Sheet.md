@@ -29,7 +29,7 @@ Because these two cases are very different, this cheat sheet will describe defen
 
 Sometimes, an application need to perform request to another application, often located on another network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.
 
-*Example:* 
+### Example
 
  > We can imagine a web application receives and uses personal information from a user, such as their firstname/lastname/birthdate to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands in order to process that data.
 
