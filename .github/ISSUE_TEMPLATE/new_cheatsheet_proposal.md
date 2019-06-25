@@ -4,7 +4,8 @@ about: Used to create a proposal to add a new cheat sheet to the project
 title: New cheat sheet proposal
 labels: ACK_WAITING, HELP_WANTED, NEW_CS
 assignees: ''
-
+milestone: 'Roadmap 2019'
+projects: CheatSheetSeries/1
 ---
 
 Thank you for proposing a new cheat sheet.
