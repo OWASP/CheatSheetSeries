@@ -102,6 +102,8 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://www.ow
 
 [XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
 
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
+
 # 6. Implement Digital Identity
 
 [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)

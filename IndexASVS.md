@@ -287,6 +287,8 @@ None.
 
 ## V5.2 Sanitization and Sandboxing Requirements
 
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md).
+
 [XSS Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
 [DOM based XSS Prevention Cheat Sheet](cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md).
@@ -451,6 +453,8 @@ None.
 
 ## V12.6 SSRF Protection Requirements
 
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md).
+
 [Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md).
 
 # V13: API and Web Service Verification Requirements
@@ -458,6 +462,8 @@ None.
 ## V13.1 Generic Web Service Security Verification Requirements
 
 [Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md).
+
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md).
 
 ## V13.2 RESTful Web Service Verification Requirements
 
