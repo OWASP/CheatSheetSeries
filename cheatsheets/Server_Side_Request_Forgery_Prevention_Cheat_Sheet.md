@@ -11,7 +11,7 @@ SSRF is an attack vector that abuses an application to interact with the interna
 - Custom [WebHook](https://en.wikipedia.org/wiki/Webhook) (user have to specify WebHook handlers or Callback URLs).
 - Internal requests to interact with another service to serve a certain functionality. Most of the times, user data is sent along to be processed, and if badly handled, can perform certain injection attacks.
 
-## Overview of an SSRF common flow
+## Overview of a SSRF common flow
 
 ![SSRF Common Flow](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Common_Flow.png)
 
