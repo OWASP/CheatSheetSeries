@@ -161,7 +161,7 @@ After ensuring the validity of the incoming domain name, the second layer of val
 1. Build a whitelist with all the domain names of every identified and trusted applications.
 2. Verify that the domain name received is part of this whitelist (string strict comparison with case sensitive).
 
-Unfortunately here, the application is still vulnerable to the `DNS pinning` bypass mentioned into this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf). Indeed, a DNS resolution will be made when the business code will be executed. To address that issue, the following action must be taken in addition of the validation on the domain name:
+Unfortunately here, the application is still vulnerable to the `DNS pinning` bypass mentioned in this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf). Indeed, a DNS resolution will be made when the business code will be executed. To address that issue, the following action must be taken in addition of the validation on the domain name:
 1. Ensure that the domains that are part of your organization are resolved by your internal DNS server first in the chains of DNS resolvers.
 2. Monitor the domains whitelist in order to detect when any of them resolves to a/an:
     * Local IP address (V4 + V6).
@@ -266,7 +266,7 @@ Thus, the call from the *Vulnerable Application*:
 
 ### Challenges in blocking URLs at application layer
 
-Based on the business requirements of the above mentioned applications, the whitelist approach is not a valid solution. Despite knowing that the blacklist approach is not an impenetrable wall, it is the best solution in this scenario. It informing the application what it should **not** do.
+Based on the business requirements of the above mentioned applications, the whitelist approach is not a valid solution. Despite knowing that the blacklist approach is not an impenetrable wall, it is the best solution in this scenario. It is informing the application what it should **not** do.
 
 Here is why filtering URLs is hard at the Application layer:
 
@@ -293,12 +293,12 @@ The first validation on the input data presented in the case [n°1](Server_Side_
         * The application will verify that it is a public one (see the hint provided in the next paragraph with the python code sample).
     * For domain name: 
         1. The application will verify that it is a public one by trying to resolve the domain name against the DNS resolver that will only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.
-        2. To prevent the `DNS pinning` attack described into this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf), the application will retrieve all the IP adddresses behind the domain name provided (taking records *A* + *AAAA* for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.
-3. The application will receive the protocol to use for the request via a dedicated input parameter for which it will verify the value against a allowed list of protocols (`HTTP` or `HTTPS`).
+        2. To prevent the `DNS pinning` attack described in this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf), the application will retrieve all the IP adddresses behind the domain name provided (taking records *A* + *AAAA* for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.
+3. The application will receive the protocol to use for the request via a dedicated input parameter for which it will verify the value against an allowed list of protocols (`HTTP` or `HTTPS`).
 4. The application will receive the parameter name for the token to pass to the *TargetedApplication* via a dedicated input parameter for which it will only allow the characters set `[a-z]{1,10}`.
 5. The application will receive the token itself via a dedicated input parameter for which it will only allow the characters set `[a-zA-Z0-9]{20}`.
 6. The application will receive and validate (from a security point of view) any business data needed to perform a valid call.
-7. The application will build the HTTP POST request **using only validated informations** and will send it (*the application will do not forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
+7. The application will build the HTTP POST request **using only validated informations** and will send it (*don't forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
 
 **Hints for the step 2 regarding the verification on an IP address:**
 
