@@ -248,7 +248,9 @@ EXEC strQry // SQL Injection vulnerability!
 
 DO: Practise Least Privilege - Connect to the database using an account with a minimum set of permissions required to do it's job i.e. not the sa account
 
-### [OS Injection](OS_Command_Injection_Defense_Cheat_Sheet.md#net)
+### OS Injection
+
+Information about OS Injection can be found on this [cheat sheet](OS_Command_Injection_Defense_Cheat_Sheet.md#net).
 
 DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
 
@@ -283,7 +285,7 @@ if (string.IsNullOrEmpty(address))
 		// Display the address in standard notation.
 		return address.ToString();
 	}
-	catch(ArgumentNullException e)
+	catch(FormatException e)
 	{
 		//ipaddress is not of type IPaddress
 		...
@@ -294,22 +296,11 @@ if (string.IsNullOrEmpty(address))
  
 ### LDAP injection
 
-Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash "\" escape character. Active Directory requires that the following characters be escaped:
-
-| Character | Escape character |
-|-----------|:-----:|
-|Comma	|,|
-|Backslash character|\|
-|Pound sign (hash sign)|#|
-|Plus sign|+|
-|Less than symbol|<|
-|Greater than symbol|>|
-|Semicolon|;|
-|Double quote (quotation mark)|"|
-|Equal sign|=|
-|Leading or trailing spaces| | 
+Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash "\" escape character. A table showing which characters that should be escaped for Active Directory can be found at the [Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function).
 
 NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.
+
+More information can be found here, [LDAP Injection Prevention Cheat Sheet Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md#defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection).
 
 ## A2 Broken Authentication
 
@@ -360,11 +351,12 @@ services.ConfigureApplicationCookie(options =>
 
 DO NOT: [Store encrypted passwords](Password_Storage_Cheat_Sheet.md#do-not-limit-the-character-set-and-set-long-max-lengths-for-credentials).
 
-DO: Use a strong hash to store password credentials. Use Argon2, PBKDF2, BCrypt or SCrypt with at least 8000 iterations and a strong key.
+DO: Use a strong hash to store password credentials. For hash refer to [this section](Password_Storage_Cheat_Sheet.md#guidance).
 
 DO: Enforce passwords with a minimum complexity that will survive a dictionary attack i.e. longer passwords that use the full character set (numbers, symbols and letters) to increase the entropy.
 
-DO: Use a strong encryption routine such as AES-512 where personally identifiable data needs to be restored to it's original format. Do not encrypt passwords. Protect encryption keys more than any other asset. Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly. More information [here](Transport_Layer_Protection_Cheat_Sheet.md).
+DO: Use a strong encryption routine such as AES-512 where personally identifiable data needs to be restored to it's original format. Protect encryption keys more than any other asset, please find [more information of storing encryption keys at rest](Password_Storage_Cheat_Sheet.md#guidance).
+Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly. More information can be found [here](Transport_Layer_Protection_Cheat_Sheet.md).
 
 DO: Use TLS 1.2 for your entire site. Get a free certificate [LetsEncrypt.org](https://letsencrypt.org/).
 
@@ -374,6 +366,7 @@ DO: Have a strong TLS policy (see [SSL Best Practises](http://www.ssllabs.com/pr
 
 DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs) , [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/), disable via `web.config` or [startup.cs](https://medium.com/bugbountywriteup/security-headers-1c770105940b):
 
+More information on Transport Layer Protection can be found [here](Transport_Layer_Protection_Cheat_Sheet.md).
 e.g Web.config
 
 ```xml
@@ -419,51 +412,14 @@ app.UseCsp(opts => opts
 
 For more information about headers can be found [here](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#xpcdp).
 
-## A4 [XML External Entities (XXE)](XML_External_Entity_Prevention_Cheat_Sheet.md#net)
+
+## A4 XML External Entities (XXE)
+
+Please refer to the XXE cheat sheet so more detailed information, which can be found [here](XML_External_Entity_Prevention_Cheat_Sheet.md#net).
 
 XXE attacks occur when an XML parse does not properly process user input that contains external entity declaration in the doctype of an XML payload.
 
 Below are the three most common [XML Processing Options](https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xml-processing-options) for .NET.
-
-### LINQ to XML
-
-Both the `XElement` and `XDocument` objects in the `System.Xml.Linq` library are safe from XXE injection by default. `XElement` parses only the elements within the XML file, so DTDs are ignored altogether. `XDocument` has DTDs [disabled by default](https://github.com/dotnet/docs/blob/master/docs/visual-basic/programming-guide/concepts/linq/linq-to-xml-security.md), and is only unsafe if constructed with a different unsafe XML parser.
-
-### XmlDocument
-
-Prior to .NET Framework version 4.5.2, `System.Xml.XmlDocument` is **unsafe** by default. The `XmlDocument` object has an `XmlResolver` object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this `XmlResolver` is set to null by default.
-
-The following example shows how it is made safe:
-
-``` csharp
- static void LoadXML()
- {
-   string xxePayload = "<!DOCTYPE doc [<!ENTITY win SYSTEM 'file:///C:/Users/testdata2.txt'>]>" 
-                     + "<doc>&win;</doc>";
-   string xml = "<?xml version='1.0' ?>" + xxePayload;
-
-   XmlDocument xmlDoc = new XmlDocument();
-   // Setting this to NULL disables DTDs - Its NOT null by default.
-   xmlDoc.XmlResolver = null;   
-   xmlDoc.LoadXml(xml);
-   Console.WriteLine(xmlDoc.InnerText);
-   Console.ReadLine();
- }
-```
-
-`XmlDocument` can become unsafe if you create your own nonnull `XmlResolver` with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the [referenced MSDN article](https://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
-
-### XmlReader
-
-`System.Xml.XmlReader` objects are safe by default.
-
-They are set by default to have their ProhibitDtd property set to false in .NET Framework versions 4.0 and earlier, or their `DtdProcessing` property set to Prohibit in .NET versions 4.0 and later.
-
-Additionally, in .NET versions 4.5.2 and later, the `XmlReaderSettings` belonging to the `XmlReader` has its `XmlResolver` set to null by default, which provides an additional layer of safety.
-
-Therefore, `XmlReader` objects will only become unsafe in version 4.5.2 and up if both the `DtdProcessing` property is set to Parse and the `XmlReaderSetting`'s `XmlResolver` is set to a nonnull XmlResolver with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the [referenced MSDN article](https://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
-
-A more detailed list of all supported .NET XML parsers and their default safety levels can be found [here](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#net), at the OWASP XXE prevention cheatsheet.
 
 ## A5 Broken Access Control
 
@@ -675,7 +631,7 @@ maxRequestLength="4096" />
 
 DO NOT: Use the `[AllowHTML]` attribute or helper class `@Html.Raw` unless you really know that the content you are writing to the browser is safe and has been escaped properly.
 
-DO: Enable a [Content Security Policy](https://developers.google.com/web/fundamentals/security/csp/), this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):
+DO: Enable a [Content Security Policy](Content_Security_Policy_Cheat_Sheet.md#context), this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):
 
 ```xml
 <system.webServer>
@@ -686,7 +642,9 @@ DO: Enable a [Content Security Policy](https://developers.google.com/web/fundame
                 font-src 'self'; script-src 'self'" />
 ```
 
-## A8 [Insecure Deserialization](Deserialization_Cheat_Sheet.md#net-csharp)
+## A8 Insecure Deserialization
+
+Information about Insecure Deserialization can be found on this [cheat sheet](Deserialization_Cheat_Sheet.md#net-csharp).
 
 DO NOT: Accept Serialized Objects from Untrusted Sources
 
@@ -706,7 +664,7 @@ DO: Keep the .Net framework updated with the latest patches
 
 DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to date, many will contain their own vulnerabilities.
 
-DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dependency_Check) against your application as part of your build process and act on any high level vulnerabilities.
+DO: Run the [OWASP Dependency Checker](Vulnerable_Dependency_Management_Cheat_Sheet.md) against your application as part of your build process and act on any high level vulnerabilities.
 
 ## A10 Insufficient Logging & Monitoring
 
@@ -718,21 +676,11 @@ DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was throw
 
 DO NOT: Log sesnsitive data such as user's passwords.
 
-### [Logging](Logging_Cheat_Sheet.md)
+### Logging
+
+What Logs to Collect and more information about Logging can be found on this [cheat sheet](Logging_Cheat_Sheet.md).
 
 .NET Core come with a LoggerFactory, which is in Microsoft.Extensions.Logging. More information about ILogger can be found [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger).
-
-What Logs to Collect:
-
-* Authentication, Authorization, and Access:  These include successful and failed authentication and authorizations, system access, data access and application access.
-
-* Changes: These include changes to systems or applications, changes to data (creation and destruction) and application installation and changes.
-
-* Availability: Availability events include startup and shutdown of systems and applications, faults and errors that affect application availability and backup successes and failures.
-
-* Resources: Resource issues to log include exhausted resources, exceeded capacities and connectivity issues.
-
-* Threats: Some common threats to logs include invalid inputs and security issues known to affect the application.
 
 How to log all errors from the `Startup.cs`, so that anytime an error is thrown it will be logged.
 
