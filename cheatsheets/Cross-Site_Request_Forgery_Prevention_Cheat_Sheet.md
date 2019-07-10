@@ -213,24 +213,24 @@ Including the token in an encrypted cookie - often within the authentication coo
 
 ## Samesite Cookie Attribute
 
-SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) introduced by Google to mitigate CSRF attacks. It is defined in [this](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7) Internet Draft. This attribute helps in preventing the browser from sending cookies along with cross-site requests. Possible values for this attribute are lax or strict.
+SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) introduced by Google to mitigate CSRF attacks. It is defined in [rfc6265](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7). This attribute helps the browser decide when to send cookies along with cross-site requests. Possible values for this attribute are Lax or Strict.
 
-The strict value will prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link. For example, for a GitHub-like website this would mean that if a logged-in user follows a link to a private GitHub project posted on a corporate discussion forum or email, GitHub will not receive the session cookie and the user will not be able to access the project. A bank website however most likely doesn't want to allow any transactional pages to be linked from external sites, so the strict flag would be most appropriate.
+The Strict value will prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link. For example, for a GitHub-like website this would mean that if a logged-in user follows a link to a private GitHub project posted on a corporate discussion forum or email, GitHub will not receive the session cookie and the user will not be able to access the project. A bank website however doesn't want to allow any transactional pages to be linked from external sites, so the Strict flag would be most appropriate.
 
-The default lax value provides a reasonable balance between security and usability for websites that want to maintain user's logged-in session after the user arrives from an external link. In the above GitHub scenario, the session cookie would be allowed when following a regular link from an external website while blocking it in CSRF-prone request methods such as POST. Only cross-site-requests that are allowed in lax mode are the ones that have top-level navigations and are also “safe” HTTP methods (more details [here](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1)).
+The default Lax value provides a reasonable balance between security and usability for websites that want to maintain user's logged-in session after the user arrives from an external link. In the above GitHub scenario, the session cookie would be allowed when following a regular link from an external website while blocking it in CSRF-prone request methods such as POST. Only cross-site-requests that are allowed in Lax mode are the ones that have top-level navigations and are also [safe](https://tools.ietf.org/html/rfc7231#section-4.2.1) HTTP methods.
+
+For more details on the `SameSite` values, check the following [section](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1) from the [rfc](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02).
 
 Example of cookies using this attribute:
 
-```text
+```
 Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
 Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
-```    
+```
 
-Support for this attribute in different browsers is increasing but there are still browsers that need to adopt this. As of August 2018, SameSite attribute is on browsers used by 68.92% of Internet users (detailed statistics are [here](https://caniuse.com/#feat=same-site-cookie-attribute)).
+All desktop browsers and almost all mobile browsers now support the `SameSite` attribute. To keep track of the browsers implementing it and the usage of the attribute, refer to the following [service](https://caniuse.com/#feat=same-site-cookie-attribute).
 
-Though this technique seems to be efficient in mitigating CSRF attacks, it is still in early stages (in [draft](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7)) and does not have full browser support as mentioned above. Google’s [draft](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7) also mentions a couple cases where forged requests can be simulated by attackers as same-site requests (and thus allowing to send SameSite cookies).
-
-Considering the factors above, it is not recommended to be used as a primary defense. Google agrees with this stance and strongly encourages developers to deploy server-side defenses such as tokens to mitigate CSRF more fully.
+It is important to note that this attribute should be implemented as an additional layer *defense in depth* concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following [section](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1). This attribute should not replace having a CSRF Token. Instead, it should co-exist with that token in order to protect the user in a more robust way.
 
 ## Use of Custom Request Headers
 
