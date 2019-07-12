@@ -188,6 +188,8 @@ Following [RFC 5321](https://tools.ietf.org/html/rfc5321), best practice for val
 - Ensure the domain is no longer than **255 octets**.
 - Ensure the address **is deliverable**.
 
+Note that [RFC 5321](https://tools.ietf.org/html/rfc5321) allows potentially dangerous characters in email addresses. For example, `"><script>alert(1);</script>"@example.org` is a valid email address. As such, it should not be assumed that strings which are valid email addresses are safe to display unencoded or to include in SQL queries.
+
 To ensure an address is deliverable, the only way to check this is to send the user an email and have the user take action to confirm receipt. Beyond confirming that the email address is valid and deliverable, this also provides a positive acknowledgement that the user has access to the mailbox and is likely to be authorized to use it. 
 
 This does not mean that other users cannot access this mailbox, for example when the user makes use of a service that generates a throw away email address.

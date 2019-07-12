@@ -289,7 +289,7 @@ Rule \#5 is for when you want to put untrusted data into HTTP GET parameter valu
 <a href="http://www.somesite.com?test=...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...">link</a >  
 ``` 
 
-Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the `%HH` escaping format. Including untrusted data in data: URLs should not be allowed as there is no good way to disable attacks with escaping to prevent switching out of the URL. 
+Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the `%HH` escaping format. Including untrusted data in `data:` URLs should not be allowed as there is no good way to disable attacks with escaping to prevent switching out of the URL. 
 
 All attributes should be quoted. Unquoted attributes can be broken out of with many characters including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`. Note that entity encoding is useless in this context.
 
@@ -339,14 +339,14 @@ The `SanitizeHelper` module provides a set of methods for scrubbing text of unde
 ```
 
 **Other libraries that provide HTML Sanitization include:**
-- [HTML sanitizer](https://github.com/google/closure-library/tree/master/closure/goog/html/sanitizer) from [Google Closure Library](https://developers.google.com/closure/library/)
-- [PHP HTML Purifier](http://htmlpurifier.org/).
-- [JavaScript/Node.js Bleach](https://github.com/ecto/bleach).
-- [Python Bleach](https://pypi.python.org/pypi/bleach).
+- [HTML sanitizer](https://github.com/google/closure-library/blob/master/closure/goog/html/sanitizer/htmlsanitizer.js) from [Google Closure Library](https://developers.google.com/closure/library/) (JavaScript/Node.js, [docs](https://google.github.io/closure-library/api/goog.html.sanitizer.HtmlSanitizer.html))
+- [DOMPurify](https://github.com/cure53/DOMPurify) (JavaScript, requires [jsdom](https://github.com/jsdom/jsdom) for Node.js)
+- [PHP HTML Purifier](http://htmlpurifier.org/)
+- [Python Bleach](https://pypi.python.org/pypi/bleach)
 
 ## RULE \#7 - Avoid JavaScript URL's
 
-Untrusted URL's that include the protocol javascript: will execute javascript code when used in URL DOM locations such as ancor tag HREF attributes or iFrame src locations. Be sure to validate all untrusted URL's to ensure they only contain safe schemes such as HTTPS.
+Untrusted URL's that include the protocol javascript: will execute javascript code when used in URL DOM locations such as anchor tag HREF attributes or iFrame src locations. Be sure to validate all untrusted URL's to ensure they only contain safe schemes such as HTTPS.
 
 ## RULE \#8 - Prevent DOM-based XSS
 
@@ -378,9 +378,10 @@ This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/He
 
 ## Bonus Rule \#5: Properly use modern JS frameworks like Angular (2+) or ReactJS
 
-Modern javascript frameworks have pretty good XSS protection built in. It is important how to use them properly to benefit from it.
+Modern javascript frameworks have pretty good XSS protection built in. It is important to use them properly to benefit from it.
 
-When using ReactJS *do not use `dangerouslySetInnerHTML`*. If you really, really really have to use `dangerouslySetInnerHTML` remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.
+When using ReactJS, *do not use [the function `dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)*. When using Angular (2+), *do not use [functions with the pattern `bypassSecurityTrust{something}`](https://angular.io/guide/security#bypass-security-apis)* (i.e. `bypassSecurityTrustHtml`, `bypassSecurityTrustStyle`, etc).  
+If you really, really really have to use these functions remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.
 
 For Angular (2+) remember to build Angular templates with `-prod` parameter (`ng build --prod`) in order to avoid template injection.
 

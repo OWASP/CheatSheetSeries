@@ -1,4 +1,6 @@
-Thank you for submitting a Pull Request to the Cheat Sheet Series. 
+Thank you for submitting a **P**ull **R**equest (PR) to the Cheat Sheet Series. 
+
+> :triangular_flag_on_post: If your PR is related to grammar/typo mistakes, please double check the file for other mistakes in order to fix all the issue on the current cheat sheet.
 
 Please make sure that for your contribution:
 
@@ -17,4 +19,4 @@ If your PR is related to an issue. Please end your PR text with the following li
 This PR covers issue #<insert number here>.
 ```
 
-Thanks you again for your contribution :smiley:
+Thank you again for your contribution :smiley:

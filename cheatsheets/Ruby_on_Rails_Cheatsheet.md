@@ -232,7 +232,7 @@ There is an [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
 
 By default, Ruby on Rails apps use a RESTful uri structure. That means that paths are often intuitive and guessable. To protect against a user trying to access or modify data that belongs to another user, it is important to specifically control actions. Out of the gate on a vanilla Rails application, there is no such built in protection. It is possible to do this by hand at the controller level.
 
-It is also possible, and probably recommended, to consider resource-based access control libraries such as [cancancan](https://github.com/CanCanCommunity/cancancan) (cancan replacement) or [pundit](https://github.com/elabs/pundit)to do this. This ensures that all operations on a database object are authorized by the business logic of the application.
+It is also possible, and probably recommended, to consider resource-based access control libraries such as [cancancan](https://github.com/CanCanCommunity/cancancan) (cancan replacement) or [pundit](https://github.com/elabs/pundit) to do this. This ensures that all operations on a database object are authorized by the business logic of the application.
 
 More general information about this class of vulnerability is in the [OWASP Top 10 Page](https://www.owasp.org/index.php/Top_10_2010-A4-Insecure_Direct_Object_References).
 

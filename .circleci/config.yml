@@ -1,12 +1,16 @@
-version: 2
-jobs:
-  build-offline-website:
+version: 2.1
+executors:
+  my-executor:
     docker:
       - image: 'circleci/node:10-stretch'
     working_directory: ~/repo
-    environment:
-      TERM: dumb
+jobs:
+  build-offline-website:
+    executor: my-executor
     steps:
+    - add_ssh_keys:
+        fingerprints:
+          - "b3:87:ac:df:0d:3a:8f:fd:e1:0a:ab:e4:27:c0:83:87"        
     - checkout
     - run: 'sudo apt-get install -y python3.5'
     - run: 'sudo npm install -g markdownlint-cli'
@@ -18,20 +22,50 @@ jobs:
     - run: 'cd scripts;bash Apply_Linter_Check.sh'
     - run: 'cd scripts;bash Generate_Site.sh'
     - run: 'ls -l generated/site/'
-    - run: 'cd generated;zip -r ../site.zip site'
-    - run: 'zip -T site.zip'
-    - store_artifacts:
-        path: ./site.zip
-        destination: OfflineWebsite-NightBuild.zip
+    - run: 'cd generated;zip -r ../bundle.zip site'
+    - run: 'zip -T bundle.zip'
+    - persist_to_workspace:
+        root: ~/repo
+        paths:
+          - bundle.zip
+  deploy-offline-website:
+    executor: my-executor
+    steps:
+    - add_ssh_keys:
+        fingerprints:
+          - "95:d7:48:7d:1f:8c:4c:5d:59:fe:7e:4f:b7:9a:a5:b2"    
+    - attach_workspace:
+        at: /tmp/workspace          
+    - checkout
+    - run: 'sudo apt-get install -y unzip zip'
+    - run: 'git checkout gh-pages'
+    - run: 'cp /tmp/workspace/bundle.zip .'
+    - run: 'zip -T bundle.zip'
+    - run: 'unzip bundle.zip'    
+    - run: 'rm -rf assets 1>/dev/null 2>&1'
+    - run: 'rm -rf cheatsheets 1>/dev/null 2>&1'
+    - run: 'rm -rf gitbook 1>/dev/null 2>&1'
+    - run: 'rm index.html 1>/dev/null 2>&1'
+    - run: 'rm search_index.json 1>/dev/null 2>&1'
+    - run: 'mv site/* .'
+    - run: 'upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md'
+    - run: 'rm -rf site'
+    - run: 'git config --global user.email "OWASP-CheatSheetSeries@circleci.com"'
+    - run: 'git config --global user.name "CircleCI-CheatSheetSeries"'
+    - run: 'git add --all .'
+    - run: 'git commit -a -m "Deploy the generated website via CircleCI pipeline."'
+    - run: 'git push'    
 workflows:
   version: 2
-  scheduled-night-build:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
+  build-publish-deploy:
+    jobs:
+      - build-offline-website:
           filters:
             branches:
-              only:
-                - master
-    jobs:
-      - build-offline-website
+              only: master      
+      - deploy-offline-website:
+          requires:
+            - build-offline-website
+          filters:
+            branches:
+              only: master

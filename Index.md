@@ -1,4 +1,4 @@
-**60** cheat sheets available.
+**63** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -98,6 +98,8 @@
 
 [Mass Assignment Cheat Sheet](cheatsheets/Mass_Assignment_Cheat_Sheet.md). ![Javascript](assets/Index_Javascript.png) ![Java](assets/Index_Java.png) ![Html](assets/Index_Html.png) ![Php](assets/Index_Php.png) 
 
+[Microservices based Security Arch Doc Cheat Sheet](cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md).
+
 # O
 
 [OS Command Injection Defense Cheat Sheet](cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Csharp](assets/Index_Csharp.png) ![Shell](assets/Index_Shell.png) 
@@ -130,6 +132,8 @@
 
 [Securing Cascading Style Sheets Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md).
 
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Python](assets/Index_Python.png) ![Ruby](assets/Index_Ruby.png) ![Bash](assets/Index_Bash.png) 
+
 [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md).
 
 [SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Csharp](assets/Index_Csharp.png) ![Php](assets/Index_Php.png) ![Sql](assets/Index_Sql.png) ![Vbnet](assets/Index_Vbnet.png) 
@@ -157,6 +161,8 @@
 [Virtual Patching Cheat Sheet](cheatsheets/Virtual_Patching_Cheat_Sheet.md). ![Html](assets/Index_Html.png) 
 
 [Vulnerability Disclosure Cheat Sheet](cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md).
+
+[Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
 
 # W
 

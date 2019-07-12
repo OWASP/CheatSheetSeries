@@ -3,7 +3,6 @@
 <!-- Generated with "https://ecotrust-canada.github.io/markdown-toc/" -->
 
 - [Objective](#objective)
-- [Not addressed topic](#not-addressed-topic)
 - [V1: Architecture, Design and Threat Modeling Requirements](#v1--architecture--design-and-threat-modeling-requirements)
   * [V1.1 Secure Software Development Lifecycle Requirements](#v11-secure-software-development-lifecycle-requirements)
   * [V1.2 Authentication Architectural Requirements](#v12-authentication-architectural-requirements)
@@ -95,12 +94,6 @@
 This index have for objective to indicate to help an OWASP [Application Security Verification Standard](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project)  (ASVS) user to clearly identify which cheat sheets are useful for each section during his usage of the ASVS.
 
 This index is based on the version 4.x of the ASVS.
-
-# Not addressed topic
-
-Section with **None** content can spot a topic that should be addressed by the Cheat Sheet Series project.
-
-Do not hesitate to open an [issue](https://github.com/OWASP/CheatSheetSeries/issues/new?assignees=&labels=ACK_WAITING%2C+NEW_CS&template=new_cheatsheet_proposal.md&title=New+cheat+sheet+proposal) if you need that a dedicated cheat sheet be created to provide information about the target ASVS section.
 
 # V1: Architecture, Design and Threat Modeling Requirements
 
@@ -294,6 +287,8 @@ None.
 
 ## V5.2 Sanitization and Sandboxing Requirements
 
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md).
+
 [XSS Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
 [DOM based XSS Prevention Cheat Sheet](cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md).
@@ -458,6 +453,8 @@ None.
 
 ## V12.6 SSRF Protection Requirements
 
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md).
+
 [Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md).
 
 # V13: API and Web Service Verification Requirements
@@ -465,6 +462,8 @@ None.
 ## V13.1 Generic Web Service Security Verification Requirements
 
 [Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md).
+
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md).
 
 ## V13.2 RESTful Web Service Verification Requirements
 
@@ -491,6 +490,8 @@ None.
 ## V14.2 Dependency
 
 [Docker Security Cheat Sheet](cheatsheets/Docker_Security_Cheat_Sheet.md).
+
+[Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md).
 
 ## V14.3 Unintended Security Disclosure Requirements
 

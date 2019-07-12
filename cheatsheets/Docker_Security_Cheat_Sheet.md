@@ -12,11 +12,11 @@ To prevent from known, container escapes vulnerabilities, which typically ends i
 
 In addition containers (unlike in a virtual machines) share kernel with the host, therefore kernel exploit runned inside the container will directly hit host kernel. For example kernel privilege escalation exploit ([like Dirty COW](https://github.com/scumjr/dirtycow-vdso)) runned inside well insulated container will result in root access in a host.
 
-## RULE \#1 - Do not expose the Docker deamon socket (even to the containers)
+## RULE \#1 - Do not expose the Docker daemon socket (even to the containers)
 
 Docker socket */var/run/docker.sock* is the UNIX socket that Docker is listening to. This is primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving a unrestricted root access to your host. 
 
-**Do not enable *tcp* Docker deamon socket.**  If you are running docker daemon with `-H tcp://0.0.0.0:XXX` or similar you are exposing un-encrypted and un-authenticated direct access to the Docker daemon. 
+**Do not enable *tcp* Docker daemon socket.**  If you are running docker daemon with `-H tcp://0.0.0.0:XXX` or similar you are exposing un-encrypted and un-authenticated direct access to the Docker daemon. 
 If you really, **really** have to do this you should secure it. Check how to do this [following Docker official documentation](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option).
 
 **Do not expose */var/run/docker.sock* to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in docker-compose file is somethink like this:
@@ -45,7 +45,7 @@ RUN groupadd -r myuser && useradd -r -g myuser myuser
 USER myuser
 ```
 
-3. Enable user namespace support (`--userns-remap=default`) in [Docker deamon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
+3. Enable user namespace support (`--userns-remap=default`) in [Docker daemon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
 
 More informatrion about this topic can be found in [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/)
 
@@ -134,7 +134,7 @@ As an Kubernetes cluster administrator you can for it using [Pod Security Polici
 ## RULE \#5 - Disable inter-container communication (--icc=false)
 
 By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using [`docker0` bridged network](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)).
-This can be disabled by running docker deamon with `--icc=false` flag. 
+This can be disabled by running docker daemon with `--icc=false` flag. 
 If icc is disabled (icc=false) it is required to tell which containers can communicate using --link=CONTAINER_NAME_or_ID:ALIAS option. 
 See more in [Docker documentation - container communication](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)
 
@@ -224,10 +224,32 @@ To detect containers with known vulnerabilities - scan images using static analy
   - [JFrog XRay](https://jfrog.com/xray/) 
   - [Qualys](https://www.qualys.com/apps/container-security/)
 
-To detect missconfigurations in Kubernetes:
+To detect misconfigurations in Kubernetes:
  - [kubeaudit](https://github.com/Shopify/kubeaudit)
  - [kubesec.io](https://kubesec.io/)
  - [kube-bench](https://github.com/aquasecurity/kube-bench)
+
+To detect misconfigurations in Docker:
+ - [inspec.io](https://www.inspec.io/docs/reference/resources/docker/)
+ - [dev-sec.io](https://dev-sec.io/baselines/docker/)
+
+## RULE \#10 - Set the logging level to at least INFO
+
+By default, the Docker daemon is configured to have a base logging level of 'info', and if this is not the case: set the Docker daemon log level to 'info'. Rationale: Setting up an appropriate log level, configures the Docker daemon to log events that you would want to review later. A base log level of 'info' and above would capture all logs except debug logs. Until and unless required, you should not run docker daemon at 'debug' log level.
+
+To configure the log level in docker-compose:
+
+```
+$ docker-compose --log-level info up
+```
+
+References:
+
+ - [Docker Baselines on DevSec](https://dev-sec.io/baselines/docker/)
+ - [Use the Docker command line](https://docs.docker.com/engine/reference/commandline/cli/)
+ - [Overview of docker-compose CLI](https://docs.docker.com/compose/reference/overview/)
+ - [Configuring Logging Drivers](https://docs.docker.com/config/containers/logging/configure/)
+ - [View logs for a container or service](https://docs.docker.com/config/containers/logging/)
 
 # Related Projects
 

@@ -225,7 +225,7 @@ If one or several abuse cases are handled at:
     - Put a special comment in the classes/scripts/modules to indicate that *This class/module/script takes into account the abuse cases ABUSE_CASE_001, ABUSE_CASE_002, ABUSE_CASE_xxx*.
     - Dedicated annotation like `@AbuseCase(ids={"ABUSE_CASE_001","ABUSE_CASE_002"})` can be used to facilitate tracking and allow identification into integrated development environment.
 
-Using this way, it becomes possible (via some minor scripting) to identify where the the abuse cases are addressed.
+Using this way, it becomes possible (via some minor scripting) to identify where abuse cases are addressed.
 
 ## Step 5: During implementation - Abuse cases handling validation
 

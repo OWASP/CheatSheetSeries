@@ -1,8 +1,12 @@
-![LogoOffical](https://github.com/OWASP/owasp-swag/raw/master/projects/cheat-sheet-series/owasp-1.png)
+![OWASPHeader](assets/Preface_Cheatsheet_Header.png)
+
+![ProjectLogoOfficial](assets/Preface_Cheatsheet_Logo.png)
 
 The **OWASP Cheat Sheet Series** was created to provide a concise collection of high value information on specific application security topics. These cheat sheets were created by various application security professionals who have expertise in specific topics. 
 
 We hope that this project provides you with excellent security guidance in an easy to read format.
+
+You can download this site [here](bundle.zip).
 
 Project leaders:
 - [Dominique Righetto](https://www.owasp.org/index.php/User:Dominique_RIGHETTO).

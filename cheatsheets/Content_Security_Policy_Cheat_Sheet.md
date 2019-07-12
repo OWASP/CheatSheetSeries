@@ -8,9 +8,14 @@ The increase in XSS and clickjacking vulnerabilities demands a more `defense in 
 
 # Avoid CSP
 
+As mentioned in the [w3c specifications](https://www.w3.org/TR/CSP3/#intro):
+> CSP is not intended as a first line of defense against content injection vulnerabilities. Instead, CSP is best used as defense-in-depth. It reduces the harm that a malicious injection can cause, but it is not a replacement for careful input validation and output encoding.
+
 If you are a developer of any of the applications mentioned below, CSP will barely provide or improve their security:
-- Single page applications with no cookies or authentication.
+- Single page applications with no cookies or authentication and that serve static content (the application does not use input to generate content).
 - Applications that are already vulnerable to XSS vulnerabilities and chose not to remediate them. CSP is not the first line of defense.
+
+*Note:* Despite CSP not being a first line of defense, using CSP to protect the user inside the browser from a vulnerability that is not going to be fixed, is under work, or under the case where the first security mechanism fails **is recommended**.
 
 # Policy Delivery
 
@@ -35,14 +40,14 @@ Multiple types of directives exist that allow the developer to granularly contro
 
 Fetch directives tell the browser the locations to trust and load resources from.
 
-- `default-src` is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of `default-src`.
+Most fetch directives have a certain [fallback list specified in w3](https://www.w3.org/TR/CSP3/#directive-fallback-list). This list allows for granular control of the source of scripts, images, files, etc. 
+
 - `child-src` allows the developer to control nested browsing contexts and worker execution contexts.
   - According to [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Fetch_directives), the below 2 directives should be used to regulate nested browsing context and workers as `child-src` will be deprecated in the coming versions.
   - `frame-src` specifies the URLs which can be loaded into nested browsing contexts (*e.g.* `<iframe>`).
   - `worker-src` specifies the URLs which can be loaded as worker, sharedworker, or serviceworker. Fallback's on `script-src` too.
 - `connect-src` provides control over fetch requests, XHR, eventsource, beacon and websockets connections.
 - `font-src` specifies which URLs to load fonts from.
-
 - `img-src` specifies the URLs that images can be loaded from.
 - `manifest-src` specifies the URLs that application manifests may be loaded from.
 - `media-src` specifies the URLs from which video, audio and text track resources can be loaded from.
@@ -54,6 +59,7 @@ Fetch directives tell the browser the locations to trust and load resources from
 - `style-src` controls from where styles get applied to a document. This includes `<link>` elements, `@import` rules, and requests originating from a `Link` HTTP response header field.
   - `style-src-elem` controls styles except for inline attributes.
   - `style-src-attr` controls styles attributes.
+- `default-src` is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of `default-src`.
 
 ## Document Directives
 
@@ -82,27 +88,40 @@ Navigation directives instruct the browser about the locations that the document
 
 ## Reporting Directives
 
-Reporting directives deliver violation of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
+Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
 
-- `report-to` which is a groupname defined in the header in a json formatted header value. Does not have proper browser support yet.
-  - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to#Examples)
-- `report-uri` directive will be getting deprected by `report-to`, which is a URI that the reports are sent to.
+- `report-to` which is a groupname defined in the header in a json formatted header value.
+  - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)
+- `report-uri` directive is deprecated by `report-to`, which is a URI that the reports are sent to.
   - Goes by the format of: `Content-Security-Policy: report-uri https://example.com/csp-reports`
 
 In order to ensure backward compatibility, use the 2 directives in conjonction. Whenever a browser supports `report-to`, it will ignore `report-uri`. Otherwise, `report-uri` will be used.
 
 ## Special Directive Sources
 
-| Value           | Description                                                     |
-|-----------------|-----------------------------------------------------------------|
-| 'none'          | No URLs match.                                                  |
-| 'self'          | Refers to the origin site with the same scheme and port number. |
-| 'unsafe-inline' | Allows the usage of inline scripts or styles.                   |
-| 'unsafe-eval'   | Allows the usage of eval in scripts.                            |
+| Value            | Description                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| 'none'           | No URLs match.                                                              |
+| 'self'           | Refers to the origin site with the same scheme and port number.             |
+| 'unsafe-inline'  | Allows the usage of inline scripts or styles.                               |
+| 'unsafe-eval'    | Allows the usage of eval in scripts.                                        |
+| 'strict-dynamic' | Informs the browser to trust scripts originating from a root trusted script.|
 
-In case where the developer needs to use inline scripts, it's recommended to use `sha256` for the script or a `nonce` randomly generated on every page request. 
+*Note:* `strict-dynamic` is not a standalone directive and should be used in combination with other directive values, such as `nonce`, `hashes`, etc.
 
-For more details on hashes and nonces, check out [Scott Helme's Guide](https://scotthelme.co.uk/csp-cheat-sheet/#hashes).
+In case where the developer needs to use inline scripts, it's recommended to use `hashes` for static scripts or a `nonce` on every page request.
+
+To create hashes, check out this [hash generator](https://report-uri.com/home/hash). This is a great [example](https://csp.withgoogle.com/docs/faq.html#static-content) of using hashes.
+
+To better understand how the directive sources work, check out the [source lists from w3c](https://w3c.github.io/webappsec-csp/#framework-directive-source-list).
+
+## Nonces
+
+[Nonces](https://en.wikipedia.org/wiki/Cryptographic_nonce) attributes are added to script tags. Nonce attributes are composed of base64 values. This nonce is verified against the nonce sent in the CSP header, and only matching nonces are allowed to execute.
+
+They can be used in dynamic script blocks in combination with `strict-dynamic`. If the script block is creating additional DOM elements and executing JS inside of them, `strict-dynamic` tells the browser to trust those elements.
+
+For more details on strict-dynamic, check out [strict-dynamic usage](https://w3c.github.io/webappsec-csp/#strict-dynamic-usage).
 
 # CSP Sample Policies
 
@@ -112,12 +131,12 @@ This policy will only allow resources from the originating domain for all the de
 
 The most basic policy assumes:
 
--   All resources are hosted by the same domain of the document.
--   There are no inlines or evals for scripts and style resources.
+- All resources are hosted by the same domain of the document.
+- There are no inlines or evals for scripts and style resources.
 
 > `Content-Security-Policy: default-src 'self';`
 
-To tighten further, one can do the following:
+To tighten further, one can apply the following:
 
 > `Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';`
 
@@ -139,18 +158,34 @@ If the [upgrade-insecure-requests](https://developer.mozilla.org/en-US/docs/Web/
 
 - To prevent all framing of your content use:
   - `Content-Security-Policy: frame-ancestors 'none';`
-- To allow for your site only, use:
+- To allow for the site itself, use:
   - `Content-Security-Policy: frame-ancestors 'self';`
-- To allow for trusted domain , do the following:
+- To allow for trusted domain, do the following:
   - `Content-Security-Policy: frame-ancestors trusted.com;`
 
-## Loading Files from CDN
+## Strict Policy
 
-The below CSP allows loading from the same origin and loading images and scripts from the CDN:
+A strict policy's role is to protect against classical stored, reflected, and some of the DOM XSS attacks and should be the optimal goal of any team trying to implement CSP.
 
-`Content-Security-Policy: default-src 'self'; image-src cdn.example.com; script-src cdn.example.com;`
+Google went ahead and set up a [guide](https://csp.withgoogle.com/docs/strict-csp.html) to adopt a strict CSP based on nonces.
 
-# Refactoring inline code
+Based on a [presentation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation?slide=55) at LocoMocoSec, the following two policies can be used to apply a strict policy:
+
+- Moderate Strict Policy:
+
+```
+script-src 'nonce-r4nd0m' 'strict-dynamic';
+object-src 'none'; base-uri 'none';
+```
+
+- Locked down Strict Policy:
+
+```
+script-src 'nonce-r4nd0m';
+object-src 'none'; base-uri 'none';
+```
+
+## Refactoring inline code
 
 By default CSP disables any unsigned JavaScript code placed inline in the HTML source, such as this:
 
@@ -189,12 +224,14 @@ This should be replaced by `addEventListener` calls:
 
 # References
 
+- [CSP with Google](https://csp.withgoogle.com/docs/index.html)
 - [CSP Level 3 W3C](https://www.w3.org/TR/CSP3/)
 - [Content-Security-Policy](https://content-security-policy.com/)
 - [MDN CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
-- [CSP with Google](https://csp.withgoogle.com/docs/)
 - [CSP CheatSheet by Scott Helme](https://scotthelme.co.uk/csp-cheat-sheet/)
+- [Breaking Bad CSP](https://www.slideshare.net/LukasWeichselbaum/breaking-bad-csp)
+- [CSP A Successful Mess Between Hardening And Mitigation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation)
 
 # Authors and Primary Editors
 
-- Elie Saad
+- Elie Saad - eliesaad7@gmail.com
