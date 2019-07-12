@@ -419,7 +419,6 @@ app.UseCsp(opts => opts
 
 For more information about headers can be found [here](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#xpcdp).
 
-
 ## A4 XML External Entities (XXE)
 
 Please refer to the XXE cheat sheet so more detailed information, which can be found [here](XML_External_Entity_Prevention_Cheat_Sheet.md#net).
