@@ -66,7 +66,7 @@ Be aware of the following Java API uses for potential serilization vulnerability
 
 2. `XStream` with `fromXML` method (xstream version <= v1.46 is vulnerable to the serialization issue)
 
-3. `ObjectInputSteam` with `readObject`
+3. `ObjectInputStream` with `readObject`
 
 4. Uses of `readObject`, `readObjectNodData`, `readResolve` or `readExternal`
 
