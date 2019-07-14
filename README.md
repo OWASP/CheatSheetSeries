@@ -9,10 +9,16 @@
 
 # Welcome to OWASP Cheat Sheet Series V2
 
-This repository contains all the cheat sheets of the project and represent the V2 of the [OWASP Cheat Sheet Series](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series) project.
+This repository contains all the cheat sheets of the project and represent the V2 of the **OWASP Cheat Sheet Series** project.
+
+Links:
+* [OWASP home page of the project](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series)
+* [Official website](https://cheatsheetseries.owasp.org)
+* [Github repository](https://github.com/OWASP/CheatSheetSeries)
 
 # Table of Contents
 
+- [Reference to the Cheat Sheets](#reference-to-the-cheat-sheets)
 - [Cheat Sheets index](#cheat-sheets-index)
 - [Special thanks](#special-thanks)
 - [Editor & validation policy](#editor--validation-policy)
@@ -28,6 +34,12 @@ This repository contains all the cheat sheets of the project and represent the V
 - [License](#license)
 - [Code of conduct](CODE_OF_CONDUCT.md)
 
+# Reference to the Cheat Sheets
+
+When a reference to a cheat sheet need to be created then a link pointing to the project (generated) official web site hosted on **https://cheatsheetseries.owasp.org** must be used.
+
+:triangular_flag_on_post: Markdown files are the working sources and are not intented to be referenced in any external documentation/book/website/etc.
+
 # Cheat Sheets index
 
 The following indexes are provided:
@@ -38,19 +50,7 @@ The following indexes are provided:
 * This [index](IndexProactiveControls.md) reference all released cheat sheets using the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) project as reading source.
     * This index is manually managed in order to allow contribution along custom content.
 
-You can also search into this repository using a keywords via this URL:
-
-```text
-https://github.com/OWASP/CheatSheetSeries/search?q=[KEYWORDS]
-```
-
-Example:
-
-```text
-https://github.com/OWASP/CheatSheetSeries/search?q=csrf
-```
-
-More information about the GitHub search feature can be found [here](https://help.github.com/en/articles/about-searching-on-github).
+The official website provide a search bar (top left corner) that can be used.
 
 # Project leaders
 
@@ -141,9 +141,11 @@ However, to propose the possibility the consult, in a full offline mode, the col
 * **book.json**: Gitbook configuration file.
 * **Preface.md**: Project preface description applied on the generated site.
 
+:information_source: It is this generated content that is hosted of the [official web site](https://cheatsheetseries.owasp.org) of the project.
+
 ## Automated build
 
-This [link](https://owasp.github.io/CheatSheetSeries/bundle.zip) allow you to download a build (zip archive) of the offline website.
+This [link](https://cheatsheetseries.owasp.org/bundle.zip) allow you to download a build (zip archive) of the offline website.
 
 ## Manual build
 
