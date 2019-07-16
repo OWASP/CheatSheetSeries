@@ -213,7 +213,7 @@ Including the token in an encrypted cookie - often within the authentication coo
 
 ## Samesite Cookie Attribute
 
-SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) introduced by Google to mitigate CSRF attacks. It is defined in [rfc6265](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7). This attribute helps the browser decide when to send cookies along with cross-site requests. Possible values for this attribute are Lax or Strict.
+SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) which aims to mitigate CSRF attacks. It is defined in [RFC6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7). This attribute helps the browser decide whether to send cookies along with cross-site requests. Possible values for this attribute are `Lax`, `Strict`, or `None`.
 
 The Strict value will prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link. For example, for a GitHub-like website this would mean that if a logged-in user follows a link to a private GitHub project posted on a corporate discussion forum or email, GitHub will not receive the session cookie and the user will not be able to access the project. A bank website however doesn't want to allow any transactional pages to be linked from external sites, so the Strict flag would be most appropriate.
 
