@@ -12,7 +12,7 @@ Project leaders:
 - [Dominique Righetto](https://www.owasp.org/index.php/User:Dominique_RIGHETTO).
 - [Jim Manico](https://www.owasp.org/index.php/User:Jmanico).
 
-Core technical review team:
+Core team:
 - [Elie Saad](https://github.com/ThunderSon).
 - [Jakub Maćkowski](https://github.com/mackowski).
 - [Dominique Righetto](https://github.com/righettod).
