@@ -6,10 +6,6 @@ The impact of a successful CSRF attack is limited to the capabilities exposed by
 
 Impacts of successful CSRF exploits vary greatly based on the privileges of each victim. When targeting a normal user, a successful CSRF attack can compromise end-user data and their associated functions. If the targeted end user is an administrator account, a CSRF attack can compromise the entire web application. Using social engineering, an attacker can embed malicious HTML or JavaScript code into an email or website to request a specific 'task URL'. The task then executes with or without the user's knowledge, either directly or by using a Cross-Site Scripting flaw. For example, see [Samy MySpace Worm](https://en.wikipedia.org/wiki/Samy_(computer_worm)).
 
-# What's new?
-
-If you have seen OWASP [old CSRF prevention cheat sheets](https://www.owasp.org/index.php?title=Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet&action=history), you can observe that a lot has changed in this newer version. One of the major changes is that the “Verifying same origin with standard headers” CSRF defense has been moved to the Defense in Depth section, whereas token based mitigation moved to the Primary Defense section (technical reasons for this switch were added under respective sections). Multiple new sections (HMAC based token protection, auto CSRF mitigation techniques, login CSRF, not so popular CSRF mitigations and CSRF mitigation myths) were added besides adding new content, removing obsolete content to the existing sections. Security issues/caveats associated with each mitigation were also included.
-
 # Warning: No Cross-Site Scripting (XSS) Vulnerabilities
 
 [Cross-Site Scripting](https://www.owasp.org/index.php/Cross-Site_Scripting) is not necessary for CSRF to work. However, any cross-site scripting vulnerability can be used to defeat all CSRF mitigation techniques available in the market today (except mitigation techniques that involve user interaction and described later in this cheatsheet). This is because an XSS payload can simply read any page on the site using an XMLHttpRequest (direct DOM access can be done, if on same page) and obtain the generated token from the response, and include that token with a forged request.  This technique is exactly how the [MySpace (Samy) worm](https://en.wikipedia.org/wiki/Samy_(computer_worm)) defeated MySpace's anti-CSRF defenses in 2005, which enabled the worm to propagate.
@@ -135,6 +131,27 @@ If sub-domains under your master domain are treated as not trusty in your threat
 
 # Defense In Depth Techniques
 
+## Samesite Cookie Attribute
+
+SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) which aims to mitigate CSRF attacks. It is defined in [RFC6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7). This attribute helps the browser decide whether to send cookies along with cross-site requests. Possible values for this attribute are `Lax`, `Strict`, or `None`.
+
+The Strict value will prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link. For example, for a GitHub-like website this would mean that if a logged-in user follows a link to a private GitHub project posted on a corporate discussion forum or email, GitHub will not receive the session cookie and the user will not be able to access the project. A bank website however doesn't want to allow any transactional pages to be linked from external sites, so the Strict flag would be most appropriate.
+
+The default Lax value provides a reasonable balance between security and usability for websites that want to maintain user's logged-in session after the user arrives from an external link. In the above GitHub scenario, the session cookie would be allowed when following a regular link from an external website while blocking it in CSRF-prone request methods such as POST. Only cross-site-requests that are allowed in Lax mode are the ones that have top-level navigations and are also [safe](https://tools.ietf.org/html/rfc7231#section-4.2.1) HTTP methods.
+
+For more details on the `SameSite` values, check the following [section](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1) from the [rfc](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02).
+
+Example of cookies using this attribute:
+
+```
+Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
+Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
+```
+
+All desktop browsers and almost all mobile browsers now support the `SameSite` attribute. To keep track of the browsers implementing it and the usage of the attribute, refer to the following [service](https://caniuse.com/#feat=same-site-cookie-attribute).
+
+It is important to note that this attribute should be implemented as an additional layer *defense in depth* concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following [section](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1). This attribute should not replace having a CSRF Token. Instead, it should co-exist with that token in order to protect the user in a more robust way.
+
 ## Verifying origin with standard headers
 
 This defense technique is specifically proposed in section 5.0 of [Robust Defenses for Cross-Site Request Forgery](https://seclab.stanford.edu/websec/csrf/csrf.pdf). This paper proposes the first creation of the Origin header and its use as a CSRF defense mechanism.
@@ -211,27 +228,6 @@ Scenarios a and b mentioned above are possible only if the CSRF token is not der
 
 Including the token in an encrypted cookie - often within the authentication cookie - and then at the server side matching it (after decrypting authentication cookie) with the token in hidden form field or parameter/header for ajax calls mitigates both the issues mentioned above. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.
 
-## Samesite Cookie Attribute
-
-SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) which aims to mitigate CSRF attacks. It is defined in [RFC6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7). This attribute helps the browser decide whether to send cookies along with cross-site requests. Possible values for this attribute are `Lax`, `Strict`, or `None`.
-
-The Strict value will prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link. For example, for a GitHub-like website this would mean that if a logged-in user follows a link to a private GitHub project posted on a corporate discussion forum or email, GitHub will not receive the session cookie and the user will not be able to access the project. A bank website however doesn't want to allow any transactional pages to be linked from external sites, so the Strict flag would be most appropriate.
-
-The default Lax value provides a reasonable balance between security and usability for websites that want to maintain user's logged-in session after the user arrives from an external link. In the above GitHub scenario, the session cookie would be allowed when following a regular link from an external website while blocking it in CSRF-prone request methods such as POST. Only cross-site-requests that are allowed in Lax mode are the ones that have top-level navigations and are also [safe](https://tools.ietf.org/html/rfc7231#section-4.2.1) HTTP methods.
-
-For more details on the `SameSite` values, check the following [section](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1) from the [rfc](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02).
-
-Example of cookies using this attribute:
-
-```
-Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
-Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
-```
-
-All desktop browsers and almost all mobile browsers now support the `SameSite` attribute. To keep track of the browsers implementing it and the usage of the attribute, refer to the following [service](https://caniuse.com/#feat=same-site-cookie-attribute).
-
-It is important to note that this attribute should be implemented as an additional layer *defense in depth* concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following [section](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1). This attribute should not replace having a CSRF Token. Instead, it should co-exist with that token in order to protect the user in a more robust way.
-
 ## Use of Custom Request Headers
 
 Adding CSRF tokens, a double submit cookie and value, encrypted token, or other defense that involves changing the UI can frequently be complex or otherwise problematic. An alternate defense that is particularly well suited for AJAX/XHR endpoints is the use of a custom request header. This defense relies on the [same-origin policy (SOP)](https://en.wikipedia.org/wiki/Same-origin_policy) restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests.
@@ -253,39 +249,6 @@ While all the techniques referenced here do not require any user interaction, so
 - CAPTCHA
 
 While these are a very strong CSRF defense, it does create a huge impact on the user experience. For applications that are in need of high security for some operations (password change, money transfer etc.), these techniques should be used along with token based mitigation. Please note that tokens by themselves can mitigate CSRF, developers should use these techniques only to achieve additional security for their high sensitive operations.
-
-# Not So Popular CSRF Mitigations
-
-## Triple Submit Cookie
-
-This mitigation is proposed by John Wilander in 2012 at OWASP Appsec Research. This technique adds an additional step to double submit cookie approach by verifying if the request contains two cookies with same name (please note, attacker need to write an additional cookie to bypass double submit cookie mitigation). Though it mitigates the issues discussed in bypass of double submit cookie, it introduces new problems such as cookie jar overflow (in-details and more issue details [here](https://media.blackhat.com/eu-13/briefings/Lundeen/bh-eu-13-deputies-still-confused-lundeen-wp.pdf) and [here](https://webstersprodigy.net/2012/08/03/analysis-of-john-wilanders-triple-submit-cookies/)). We were not able to find any real-time implementations of this mitigation so far.
-
-## Content-Type Header Validation
-
-This technique is better known than the triple submit cookie mitigation. In first place, this header is not designed for security (initial RFC [here](https://tools.ietf.org/html/rfc1049) and later well-defined in [this](https://www.ietf.org/rfc/rfc2045.txt) RFC) but only to let receiving agents know the type of data they would be handling, so that they can invoke corresponding parsers. The pre-flighting behavior of this header (pre-flight if header has value other than application/x-www-form-urlencoded, multipart/form-data, or text/plain) is what treated as a CSRF mitigation and thus forcing all requests to have a header value that would force a pre-flight (such as application/json. Server side can reject cross-origin requests with CORS/SOP during this pre-flight).
-
-This approach has two main problems. One that it would mandate all requests to have a header value that would force pre-flight despite the real use case and the other that this technique is relying on a feature that is not designed for security, to mitigate a security vulnerability. When a bug was discovered in the Chrome API, browser architects even considered to removing this pre-flighting behavior. Because this header was not designed as a security control, architects can re-design it to better cater its primary purpose. In the future, there’s a possibility that new content-type header types can be included (to better support various use-cases), which can put systems relying on this header for CSRF mitigation in trouble. For more information, see [Common CSRF Prevention Misconceptions](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/).
-
-[This](https://blog.appsecco.com/exploiting-csrf-on-json-endpoints-with-flash-and-redirects-681d4ad6b31b) article by Riyaz Walikar also talks about how this type of content-type header validation can be vulnerable to FLASH based re-direct attacks (as discussed in section 5.7, use of custom request headers)
-
-# CSRF Mitigation Myths
-
-The following shows techniques presumed to be CSRF mitigations but none of them fully/actually mitigates a CSRF vulnerability.
-
-- **CORS**: CORS is a header designed to relax Same-Origin-Policy when cross-origin communication between sites is required. It is not designed, nor prevents CSRF attacks.
-- **Using HTTPS**: Using HTTPS has nothing to do with the protection from CSRF attacks. Resources that are under HTTPS are still vulnerable to CSRF if proper CSRF mitigations described above are not included.
-- More myths can be found [here](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)).
-
-# Personal Safety CSRF Tips for Users
-
-Since CSRF vulnerabilities are reportedly widespread, we recommend using the following best practices to mitigate risk.
-
-1. Logoff immediately after using a Web application.
-2. Do not allow your browser to save username/passwords, and do not allow sites to “remember” your login.
-3. Do not use the same browser to access sensitive applications and to surf the Internet freely (tabbed browsing).
-4. The use of plugins such as No-Script makes POST based CSRF vulnerabilities difficult to exploit. This is because JavaScript is used to automatically submit the form when the exploit is loaded. Without JavaScript, the attacker would have to trick the user into submitting the form manually.
-
-Integrated HTML-enabled mail/browser and newsreader/browser environments pose additional risks since simply viewing a mail message or a news message might lead to the execution of an attack. 
 
 # Implementation reference example
 
