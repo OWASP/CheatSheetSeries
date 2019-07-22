@@ -14,9 +14,9 @@ In addition containers (unlike in a virtual machines) share kernel with the host
 
 ## RULE \#1 - Do not expose the Docker daemon socket (even to the containers)
 
-Docker socket */var/run/docker.sock* is the UNIX socket that Docker is listening to. This is primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving a unrestricted root access to your host. 
+Docker socket */var/run/docker.sock* is the UNIX socket that Docker is listening to. This is primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving a unrestricted root access to your host.
 
-**Do not enable *tcp* Docker daemon socket.**  If you are running docker daemon with `-H tcp://0.0.0.0:XXX` or similar you are exposing un-encrypted and un-authenticated direct access to the Docker daemon. 
+**Do not enable *tcp* Docker daemon socket.**  If you are running docker daemon with `-H tcp://0.0.0.0:XXX` or similar you are exposing un-encrypted and un-authenticated direct access to the Docker daemon.
 If you really, **really** have to do this you should secure it. Check how to do this [following Docker official documentation](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option).
 
 **Do not expose */var/run/docker.sock* to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in docker-compose file is somethink like this:
@@ -26,7 +26,7 @@ volumes:
 - "/var/run/docker.sock:/var/run/docker.sock"
 ```
 
-## RULE \#2 - Set a user 
+## RULE \#2 - Set a user
 
 Configuring container, to use unprivileged user, is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways:
 
@@ -71,9 +71,9 @@ As an Kubernetes cluster administrator you can for it using [Pod Security Polici
 
 ## RULE \#3 - Limit capabilities (Grant only specific capabilities, needed by a container)
 
-[Linux kernel capabilities](http://man7.org/linux/man-pages/man7/capabilities.7.html) are set of privileges that can be used by privileged. Docker, by default, runs with only a  subset of capabilities. 
-You can change it and drop some capabilities (using `--cap-drop`) to harden your docker containers, or add some capabilities (using `--cap-add`) if needed. 
-Remember not to run containers with the `--privileged` flag - this will add ALL Linux kernel capabilities to the container. 
+[Linux kernel capabilities](http://man7.org/linux/man-pages/man7/capabilities.7.html) are set of privileges that can be used by privileged. Docker, by default, runs with only a  subset of capabilities.
+You can change it and drop some capabilities (using `--cap-drop`) to harden your docker containers, or add some capabilities (using `--cap-add`) if needed.
+Remember not to run containers with the `--privileged` flag - this will add ALL Linux kernel capabilities to the container.
 
 The most secure setup is to drop all capabilities `--cap-drop all` and then add only required ones. For example:
 
@@ -107,7 +107,7 @@ spec:
 
 As an Kubernetes cluster administrator you can for it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
 
-## RULE \#4 - Add –no-new-privileges flag
+## RULE \#4 - Add --no-new-privileges flag
 
 Always run your docker images with `--security-opt=no-new-privileges` in order to prevent escalate privileges using `setuid` or `setgid` binaries.
 
@@ -134,17 +134,17 @@ As an Kubernetes cluster administrator you can for it using [Pod Security Polici
 ## RULE \#5 - Disable inter-container communication (--icc=false)
 
 By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using [`docker0` bridged network](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)).
-This can be disabled by running docker daemon with `--icc=false` flag. 
-If icc is disabled (icc=false) it is required to tell which containers can communicate using --link=CONTAINER_NAME_or_ID:ALIAS option. 
+This can be disabled by running docker daemon with `--icc=false` flag.
+If icc is disabled (icc=false) it is required to tell which containers can communicate using --link=CONTAINER_NAME_or_ID:ALIAS option.
 See more in [Docker documentation - container communication](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)
 
 In Kubernetes [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) can be used for it.
 
 ## RULE \#6 - Use Linux Security Module (seccomp, AppArmor, or SELinux)
 
-**First of all do not disable default security profile!** 
+**First of all do not disable default security profile!**
 
-Consider using security profile like [seccomp](https://docs.docker.com/engine/security/seccomp/) or [AppArmor](https://docs.docker.com/engine/security/apparmor/). 
+Consider using security profile like [seccomp](https://docs.docker.com/engine/security/seccomp/) or [AppArmor](https://docs.docker.com/engine/security/apparmor/).
 
 Instructions how to do this inside Kubernetes can be found in [Security Context documentation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) and in [Kubernetes API documentation](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#securitycontext-v1-core)
 
@@ -157,7 +157,7 @@ The best way to avoid DoS attacks is limiting resources. You can limit [memory](
 You can also do this inside Kubernetes: [Assign Memory Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/), [Assign CPU Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/) and [Assign Extended Resources to a Container
 ](https://kubernetes.io/docs/tasks/configure-pod-container/extended-resource/)
 
-## RULE \#8 - Set filesystem and volumes to read-only 
+## RULE \#8 - Set filesystem and volumes to read-only
 
 **Run containers with a read-only filesystem** using `--read-only` flag. For example:
 
@@ -214,7 +214,7 @@ $ docker run --mount source=volume-name,destination=/path/in/container,readonly 
 
 ## RULE \#9 - Use static analysis tools
 
-To detect containers with known vulnerabilities - scan images using static analysis tools. 
+To detect containers with known vulnerabilities - scan images using static analysis tools.
 
 - Free
   - [Clair](https://github.com/coreos/clair)
@@ -223,7 +223,7 @@ To detect containers with known vulnerabilities - scan images using static analy
   - [Snyk](https://snyk.io/) **(open source and free option available)**
   - [anchore](https://anchore.com/opensource/) **(open source and free option available)**
   - [Aqua Security's MicroScanner](https://github.com/aquasecurity/microscanner) **(free option available for rate-limited number of scans)**
-  - [JFrog XRay](https://jfrog.com/xray/) 
+  - [JFrog XRay](https://jfrog.com/xray/)
   - [Qualys](https://www.qualys.com/apps/container-security/)
 
 To detect misconfigurations in Kubernetes:
