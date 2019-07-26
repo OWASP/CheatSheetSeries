@@ -1,7 +1,7 @@
 # Introduction
 
-When looking at XSS (Cross-Site Scripting), there are three generally recognized forms of [XSS](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)):
-* [Reflected or Stored](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)#Stored_and_Reflected_XSS_Attacks)
+When looking at XSS (Cross-Site Scripting), there are three generally recognized forms of [XSS](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29):
+* [Reflected or Stored](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29#Stored_and_Reflected_XSS_Attacks)
 * [DOM Based XSS](https://www.owasp.org/index.php/DOM_Based_XSS). 
 
 The [XSS Prevention Cheatsheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) does an excellent job of addressing Reflected and Stored XSS. This cheatsheet addresses DOM (Document Object Model) based XSS and is an extension (and assumes comprehension of) the [XSS Prevention Cheatsheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).

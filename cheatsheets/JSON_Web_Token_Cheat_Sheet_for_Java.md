@@ -315,7 +315,7 @@ This attack occur when a attacker access to a token (or a set of tokens) and ext
 
 A way to protect, is to cipher the token using for example a symetric algorithm.
 
-It's also important to protect the ciphered data against attack like [Padding Oracle](https://www.owasp.org/index.php/Testing_for_Padding_Oracle_(OTG-CRYPST-002)) or any other attack using cryptanalysis.
+It's also important to protect the ciphered data against attack like [Padding Oracle](https://www.owasp.org/index.php/Testing_for_Padding_Oracle_%28OTG-CRYPST-002%29) or any other attack using cryptanalysis.
 
 In order to achieve all these goals, the algorithm *AES-[GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)* is used, this one provide *Authenticated Encryption with Associated Data*.
 

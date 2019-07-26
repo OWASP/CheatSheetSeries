@@ -46,7 +46,7 @@ If a transaction authentication process requires a user to enter transaction dat
 
 ## 1.2 Change of authorization token should be authorized using the current authorization token
 
-When a user is allowed to change authorization token by using the application interface, the operation should be authorized by using his current authorization credentials (as is the case with [password change procedure](https://www.owasp.org/index.php/Testing_for_weak_password_change_or_reset_functionalities_(OTG-AUTHN-009)#Test_Password_Change)). For example: when a user changes a phone number for SMS codes an authorization SMS code should be sent to the current phone number.
+When a user is allowed to change authorization token by using the application interface, the operation should be authorized by using his current authorization credentials (as is the case with [password change procedure](https://www.owasp.org/index.php/Testing_for_weak_password_change_or_reset_functionalities_%28OTG-AUTHN-009%29#Test_Password_Change)). For example: when a user changes a phone number for SMS codes an authorization SMS code should be sent to the current phone number.
 
 ## 1.3 Change of authorization method should be authorized using the current authorization method
 
