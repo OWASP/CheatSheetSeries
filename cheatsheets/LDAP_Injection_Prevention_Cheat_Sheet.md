@@ -100,7 +100,7 @@ Input validation can be used to detect unauthorized input before it is passed to
 
 - OWASP article on [LDAP Injection](https://www.owasp.org/index.php/LDAP_injection) Vulnerabilities.
 - OWASP article on [Preventing LDAP Injection in Java](https://www.owasp.org/index.php/Preventing_LDAP_Injection_in_Java).
-- [OWASP Testing Guide](https://www.owasp.org/index.php/OWASP_Testing_Project) article on how to [Test for LDAP Injection](https://www.owasp.org/index.php/Testing_for_LDAP_Injection_(OTG-INPVAL-006)) Vulnerabilities.
+- [OWASP Testing Guide](https://www.owasp.org/index.php/OWASP_Testing_Project) article on how to [Test for LDAP Injection](https://www.owasp.org/index.php/Testing_for_LDAP_Injection_%28OTG-INPVAL-006%29) Vulnerabilities.
 
 # Authors and Primary Editors
 

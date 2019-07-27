@@ -299,7 +299,7 @@ Assert.assertEquals(finalSafeOutputExpected, safeOutput);
 
 ### References
 
-- [XSS](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS))
+- [XSS](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29)
 - [OWASP Java HTML Sanitizer](https://github.com/owasp/java-html-sanitizer)
 - [OWASP Java Encoder](https://github.com/owasp/owasp-java-encoder)
 - [Java RegEx](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html)
