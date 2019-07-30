@@ -23,7 +23,7 @@ For information on validating email addresses, please visit the [input validatio
 
 A key concern when using passwords for authentication is password strength. A "strong" password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:
 
- - Password Length 
+- Password Length
     - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)). 
     - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters.
 
@@ -34,8 +34,8 @@ A key concern when using passwords for authentication is password strength. A "s
 - Make sure that there are no periodic credential rotation or password history requirements.
 
 - Include password strength meter to help users create a more complex password and block common and previously breached passwords
-     - [zxcvbn library](https://github.com/dropbox/zxcvbn) can be used for this purpose. (Note that this library is no longer maintained)
-     - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service maintained by [Troy Hunt](https://www.troyhunt.com/) where passwords can be checked against previously breached passwords. You can host it yourself or use (API)(https://haveibeenpwned.com/API/v2#PwnedPasswords).
+    - [zxcvbn library](https://github.com/dropbox/zxcvbn) can be used for this purpose. (Note that this library is no longer maintained)
+    - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service maintained by [Troy Hunt](https://www.troyhunt.com/) where passwords can be checked against previously breached passwords. You can host it yourself or use (API)(https://haveibeenpwned.com/API/v2#PwnedPasswords).
 
 ### For more detailed information check:
 
