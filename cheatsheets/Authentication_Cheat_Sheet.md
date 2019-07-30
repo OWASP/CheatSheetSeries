@@ -38,6 +38,7 @@ A key concern when using passwords for authentication is password strength. A "s
      - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service maintained by [Troy Hunt](https://www.troyhunt.com/) where passwords can be checked against previously breached passwords. You can host it yourself or use (API)(https://haveibeenpwned.com/API/v2#PwnedPasswords).
 
 ### For more detailed information check:
+
 - [ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements)
 - [Passwords Evolved: Authentication Guidance for the Modern Era](https://www.troyhunt.com/passwords-evolved-authentication-guidance-for-the-modern-era/)
 
