@@ -25,17 +25,17 @@ A key concern when using passwords for authentication is password strength. A "s
 
 - Password Length
     - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)). 
-    - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters.
+    - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters. When selecting maximum password length, limitation of hashing algorithm, that will be used for hashing passwords, should be taken into consideration because some of them [has a maximum password length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851).
 
 - Do do not truncate passwords. Make sure that every character the user types in is actually included in the password. 
 
 - Allow usage of **all** characters including unicode and whitespaces. There should be no password composition rules limiting the type of characters permitted.
 
-- Make sure that there are no periodic credential rotation or password history requirements.
+- Ensure credential rotation when a password leak, or at the time of compromise identification.
 
 - Include password strength meter to help users create a more complex password and block common and previously breached passwords
     - [zxcvbn library](https://github.com/dropbox/zxcvbn) can be used for this purpose. (Note that this library is no longer maintained)
-    - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service maintained by [Troy Hunt](https://www.troyhunt.com/) where passwords can be checked against previously breached passwords. You can host it yourself or use (API)(https://haveibeenpwned.com/API/v2#PwnedPasswords).
+    - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service where passwords can be checked against previously breached passwords. You can host it yourself or use [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
 
 ### For more detailed information check:
 
