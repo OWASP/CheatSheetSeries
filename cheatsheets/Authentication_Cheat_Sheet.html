@@ -1098,21 +1098,72 @@
 <h2 id="authentication-and-error-messages"><a name="authentication-and-error-messages" class="plugin-anchor" href="#authentication-and-error-messages"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication and Error Messages</h2>
 <p>Incorrectly implemented error messages in the case of authentication functionality can be used for the purposes of user ID and password enumeration. An application should respond (both HTTP and HTML) in a generic manner.</p>
 <h4 id="authentication-responses"><a name="authentication-responses" class="plugin-anchor" href="#authentication-responses"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication Responses</h4>
-<p>An application should respond with a generic error message regardless of whether the user ID or password was incorrect. It should also give no indication to the status of an existing account.</p>
-<h4 id="incorrect-response-examples"><a name="incorrect-response-examples" class="plugin-anchor" href="#incorrect-response-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Incorrect Response Examples</h4>
+<p>Using any of the authentication mechanisms (login, password reset or password recovery) an application must respond with a generic error message regardless of whether:</p>
+<ul>
+<li>The user ID or password was incorrect.</li>
+<li>The account does not exist.</li>
+<li>The account is locked or disabled.</li>
+</ul>
+<p>The account registration feature should also be taken into consideration, and the same approach of generic error message can be applied regarding the case in which the user exists.</p>
+<p>The objective is to prevent the creation of a <a href="https://cwe.mitre.org/data/definitions/204.html" target="_blank">discrepancy factor</a> allowing an attacker to mount a user enumeration action against the application.</p>
+<p>It is interesting to note that the business logic itself can bring a discrepancy factor related to the processing time taken. Indeed, depending on the implementation, the processing time can be significantly different according to the case (success vs failure) allowing an attacker to mount a <a href="https://en.wikipedia.org/wiki/Timing_attack" target="_blank">time-based attack</a> (delta of some seconds for example).</p>
+<p>Example using pseudo-code for a login feature:</p>
+<p><em>First implementation using the &quot;quick exit&quot; approach</em></p>
+<pre><code>IF USER_EXISTS(username) THEN
+    password_hash=HASH(password)
+    IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
+    IF NOT IS_VALID THEN
+        RETURN Error(&quot;Invalid Username or Password!&quot;)    
+    ENDIF
+ELSE
+   RETURN Error(&quot;Invalid Username or Password!&quot;)
+ENDIF
+</code></pre><p>It can be clearly seen that if the user doesn&apos;t exist, the application will directly throw out an error. Otherwise, when the user exists and the password doesn&apos;t, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.</p>
+<p><em>Second implementation without relying on the &quot;quick exit&quot; approach:</em></p>
+<pre><code>password_hash=HASH(password)
+IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
+IF NOT IS_VALID THEN
+   RETURN Error(&quot;Invalid Username or Password!&quot;)
+ENDIF
+</code></pre><p>This code will go through the same process no matter what the user or the password is, allowing the application to return in approximately the same response time.</p>
+<p>The problem with returning a generic error message for the user is a User Experience (UX) matter. A legitimate user might feel confused with the generic messages, thus making it hard for them to use the application, and might after several retries, leave the application because of its complexity. The decision to return a <em>generic error message</em> can be determined based on the criticality of the application and its data. For example, for critical applications, the team can decide that under the failure scenario, a user will always be redirected to the support page and a <em>generic error message</em> will be returned.</p>
+<p>Regarding the user enumeration itself, protection against <a href="Authentication_Cheat_Sheet.html#prevent-brute-force-attacks">brute-force attack</a> are also effective because they prevent an attacker to apply the enumeration at scale. Usage of <a href="https://en.wikipedia.org/wiki/CAPTCHA" target="_blank">CAPTCHA</a> can be applied on a feature for which a <em>generic error message</em> cannot be returned because the <em>user experience</em> must be preserved.</p>
+<h4 id="incorrect-and-correct-response-examples"><a name="incorrect-and-correct-response-examples" class="plugin-anchor" href="#incorrect-and-correct-response-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Incorrect and correct response examples</h4>
+<h5 id="login"><a name="login" class="plugin-anchor" href="#login"><i class="fa fa-link" aria-hidden="true"></i></a>Login</h5>
+<p>Incorrect response examples:</p>
 <ul>
 <li>&quot;Login for User foo: invalid password&quot;</li>
 <li>&quot;Login failed, invalid user ID&quot;</li>
 <li>&quot;Login failed; account disabled&quot;</li>
 <li>&quot;Login failed; this user is not active&quot;</li>
 </ul>
-<h4 id="correct-response-example"><a name="correct-response-example" class="plugin-anchor" href="#correct-response-example"><i class="fa fa-link" aria-hidden="true"></i></a>Correct Response Example</h4>
+<p>Correct response example:</p>
 <ul>
 <li>&quot;Login failed; Invalid userID or password&quot;</li>
 </ul>
-<p>The correct response does not indicate if the user ID or password is the incorrect parameter and hence inferring a valid user ID.</p>
+<h5 id="password-recovery"><a name="password-recovery" class="plugin-anchor" href="#password-recovery"><i class="fa fa-link" aria-hidden="true"></i></a>Password recovery</h5>
+<p>Incorrect response examples:</p>
+<ul>
+<li>&quot;We just sent you a password-reset link&quot;</li>
+<li>&quot;This email address doesn&#x2019;t exist in our database&quot;</li>
+</ul>
+<p>Correct response example:</p>
+<ul>
+<li>&quot;If that email address is in our database, we will send you an email to reset your password&quot;</li>
+</ul>
+<h5 id="account-creation"><a name="account-creation" class="plugin-anchor" href="#account-creation"><i class="fa fa-link" aria-hidden="true"></i></a>Account creation</h5>
+<p>Incorrect response examples:</p>
+<ul>
+<li>&quot;This user ID is already in use&quot;</li>
+<li>&quot;Welcome! You have signed up successfully&quot;</li>
+</ul>
+<p>Correct response example:</p>
+<ul>
+<li>&quot;A link to activate your account has been emailed to &#x27E8;input email address&#x27E9;&quot;</li>
+</ul>
 <h4 id="error-codes-and-urls"><a name="error-codes-and-urls" class="plugin-anchor" href="#error-codes-and-urls"><i class="fa fa-link" aria-hidden="true"></i></a>Error Codes and URLs</h4>
-<p>The application may return a different HTTP Error code depending on the authentication attempt response. It may respond with a 200 for a positive result and a 403 for a negative result. Even though a generic error page is shown to a user, the HTTP response code may differ which can leak information about whether the account is valid or not.</p>
+<p>The application may return a different <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" target="_blank">HTTP Error code</a> depending on the authentication attempt response. It may respond with a 200 for a positive result and a 403 for a negative result. Even though a generic error page is shown to a user, the HTTP response code may differ which can leak information about whether the account is valid or not.</p>
+<p>Error disclosure can also be used as a discrepancy factor, consult the <a href="Error_Handling_Cheat_Sheet.html">error handling cheat sheet</a> regarding the global handling of different errors in an application.</p>
 <h2 id="prevent-brute-force-attacks"><a name="prevent-brute-force-attacks" class="plugin-anchor" href="#prevent-brute-force-attacks"><i class="fa fa-link" aria-hidden="true"></i></a>Prevent Brute-Force Attacks</h2>
 <p>If an attacker is able to guess passwords without the account becoming disabled due to failed authentication attempts, the attacker has an opportunity to continue with a brute force attack until the account is compromised. Automating brute-force/password guessing attacks on web applications is a trivial challenge. Password lockout mechanisms should be employed that lock out an account if more than a preset number of unsuccessful login attempts are made. Password lockout mechanisms have a logical weakness. An attacker that undertakes a large number of authentication attempts on known account names can produce a result that locks out entire blocks of user accounts. Given that the intent of a password lockout system is to protect from brute-force attacks, a sensible strategy is to lockout accounts for a period of time (e.g., 20 minutes). This significantly slows down attackers, while allowing the accounts to reopen automatically for legitimate users.</p>
 <p>Also, multi-factor authentication is a very powerful deterrent when trying to prevent brute force attacks since the credentials are a moving target. When multi-factor is implemented and active, account lockout may no longer be necessary.</p>
@@ -1204,7 +1255,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Authentication ","level":"1.9","depth":1,"next":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"previous":{"title":"Attack Surface Analysis ","level":"1.8","depth":1,"path":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","ref":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authentication_Cheat_Sheet.md","mtime":"2019-07-27T07:23:00.081Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-07-27T07:23:18.668Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Authentication ","level":"1.9","depth":1,"next":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"previous":{"title":"Attack Surface Analysis ","level":"1.8","depth":1,"path":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","ref":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authentication_Cheat_Sheet.md","mtime":"2019-08-01T16:09:13.979Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-01T16:09:38.589Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
