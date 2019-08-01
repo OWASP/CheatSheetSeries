@@ -303,11 +303,11 @@ if (string.IsNullOrEmpty(address))
  
 ### LDAP injection
 
-Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash "\" escape character. A table showing which characters that should be escaped for Active Directory can be found at the [Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function).
+Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash `\` escape character. A table showing which characters that should be escaped for Active Directory can be found at the in the LDAP_Injection_Prevention_Cheat_Sheet.
 
 NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.
 
-More information can be found here, [LDAP Injection Prevention Cheat Sheet Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md#defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection).
+More information can be found here, [LDAP Injection Prevention Cheat Sheet Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md#introduction).
 
 ## A2 Broken Authentication
 
@@ -492,6 +492,7 @@ public class UserController
 
 You can also check roles in code using identity features in .net: `System.Web.Security.Roles.IsUserInRole(userName, roleName)`
 
+You can find more information[here](Access_Control_Cheat_Sheet.md#introduction) on Access Control and [here](Authorization_Testing_Automation.md) for Authorization.
 ### Insecure Direct object references
 
 When you have a resource (object) which can be accessed by a reference (in the sample below this is the `id`) then you need to ensure that the user is intended to be there
@@ -518,6 +519,8 @@ public ActionResult Edit(int id)
   return View("Edit", new UserViewModel(user);
 }
 ```
+
+More information can be found [here](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) for Insecure Direct Object Reference.
 
 ## A6 Security Misconfiguration
 
@@ -617,6 +620,8 @@ After .NET Core 2.0 it is possible to automatically generate and verify the anti
 
 And then add the `[AutoValidateAntiforgeryToken]` attribute to the action result.
 
+More information can be found [here](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) for Cross-Site Request Forgery.
+
 ## A7 Cross-Site Scripting (XSS)
 
 DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists
@@ -647,6 +652,8 @@ DO: Enable a [Content Security Policy](Content_Security_Policy_Cheat_Sheet.md#co
                 value="default-src 'none'; style-src 'self'; img-src 'self'; 
                 font-src 'self'; script-src 'self'" />
 ```
+
+More information can be found [here](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for Cross-Site Scripting.
 
 ## A8 Insecure Deserialization
 
@@ -803,6 +810,7 @@ Other advice:
 - Protect against Clickjacking and man in the middle attack from capturing an initial Non-TLS request, set the `X-Frame-Options` and `Strict-Transport-Security` (HSTS) headers. Full details [here](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs)
 - Protect against a man in the middle attack for a user who has never been to your site before. Register for [HSTS preload](https://hstspreload.org/)
 - Maintain security testing and analysis on Web API services. They are hidden inside MEV sites, and are public parts of a site that will be found by an attacker. All of the MVC guidance and much of the WCF guidance applies to the Web API.
+- [Unvalidated Redirects and Forwards Cheat Sheet](Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md).
 
 More information:
 
