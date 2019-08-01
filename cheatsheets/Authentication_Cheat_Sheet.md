@@ -117,7 +117,7 @@ Using any of the authentication mechanisms (login, password reset or password re
 
 The account registration feature should also be taken into consideration, and the same approach of generic error message can be applied regarding the case in which the user exists.
 
-The objective is to prevent to create a [discrepancy factor](https://cwe.mitre.org/data/definitions/204.html) allowing an attacker to mount a user enumeration action against the application.
+The objective is to prevent the creation of a [discrepancy factor](https://cwe.mitre.org/data/definitions/204.html) allowing an attacker to mount a user enumeration action against the application.
 
 It is interesting to note that the business logic itself can bring a discrepancy factor related to the processing time taken. Indeed, depending on the implementation, the processing time can be significantly different according to the case (success vs failure) allowing an attacker to mount a [time-based attack](https://en.wikipedia.org/wiki/Timing_attack) (delta of some seconds for example).
 
@@ -137,7 +137,7 @@ ELSE
 ENDIF
 ```
 
-It can be clearly seen that if the user doesn't exist, the application will directly throw out an error. Otherwise, when the user exists and the password doesn't, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing for the attacker to differentiate between a wrong username and a wrong password.
+It can be clearly seen that if the user doesn't exist, the application will directly throw out an error. Otherwise, when the user exists and the password doesn't, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.
 
 *Second implementation without relying on the "quick exit" approach:*
 
@@ -151,7 +151,7 @@ ENDIF
 
 This code will go through the same process no matter what the user or the password is, allowing the application to return in approximately the same response time.
 
-The main issue with the fact to return a generic error message is that it will decrease the *user experience* of the feature and can confuse a legitimate user because the generic error message will not allow them to understand the source of the issue preventing them access to their account. The decision to return or not a *generic error message* can be determined according to the criticality of the application and the data managed. For example, for critical applications, team can decide that in case of trouble, a user will be redirected to the helpdesk and a *generic error message* will always be returned.
+The problem with returning a generic error message for the user is a User Experience (UX) matter. A legitimate user might feel confused with the generic messages, thus making it hard for them to use the application, and might after several retries, leave the application because of its complexity. The decision to return a *generic error message* can be determined based on the criticality of the application and its data. For example, for critical applications, the team can decide that under the failure scenario, a user will always be redirected to the support page and a *generic error message* will be returned.
 
 Regarding the user enumeration itself, protection against [brute-force attack](Authentication_Cheat_Sheet.md#prevent-brute-force-attacks) are also effective because they prevent an attacker to apply the enumeration at scale. Usage of [CAPTCHA](https://en.wikipedia.org/wiki/CAPTCHA) can be applied on a feature for which a *generic error message* cannot be returned because the *user experience* must be preserved.
 
