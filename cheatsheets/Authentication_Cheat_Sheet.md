@@ -110,14 +110,14 @@ Incorrectly implemented error messages in the case of authentication functionali
 
 #### Authentication Responses
 
-Whatever the authentication feature involved (login, password reset or password recovery) an application must respond with a generic error message regardless of whether:
+Using any of the authentication mechanisms (login, password reset or password recovery) an application must respond with a generic error message regardless of whether:
 * The user ID or password was incorrect.
 * The account does not exist.
 * The account is locked or disabled.
 
-The account creation feature is also impacted and the same approach of generic error message can be applied regarding the case in which the user exists.
+The account registration feature should also be taken into consideration, and the same approach of generic error message can be applied regarding the case in which the user exists.
 
-The objective is to prevent to create a [discrepancy factor](https://cwe.mitre.org/data/definitions/204.html) allowing an attacker to mount a user enumeration action against the feature.
+The objective is to prevent to create a [discrepancy factor](https://cwe.mitre.org/data/definitions/204.html) allowing an attacker to mount a user enumeration action against the application.
 
 It is interesting to note that the business logic itself can bring a discrepancy factor related to the processing time taken. Indeed, depending on the implementation, the processing time can be significantly different according to the case (success vs failure) allowing an attacker to mount a [time-based attack](https://en.wikipedia.org/wiki/Timing_attack) (delta of some seconds for example).
 
@@ -126,32 +126,32 @@ Example using pseudo-code for a login feature:
 *First implementation using the "quick exit" approach*
 
 ```
-IF USER_EXISTS(login) THEN
+IF USER_EXISTS(username) THEN
     password_hash=HASH(password)
-    IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(login, password_hash)
+    IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
     IF NOT IS_VALID THEN
-        RETURN Error("Invalid User or Password!")    
+        RETURN Error("Invalid Username or Password!")    
     ENDIF
 ELSE
-   RETURN Error("Invalid User or Password!")
+   RETURN Error("Invalid Username or Password!")
 ENDIF
 ```
 
-With this implementation: We can have a time-based discrepancy factor because, if the user exists then two time-taking operations are performed otherwise only one if the user does not exist.
+It can be clearly seen that if the user doesn't exist, the application will directly throw out an error. Otherwise, when the user exists and the password doesn't, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing for the attacker to differentiate between a wrong username and a wrong password.
 
-*Second implementation do not using the "quick exit" approach:*
+*Second implementation without relying on the "quick exit" approach:*
 
 ```
 password_hash=HASH(password)
-IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(login, password_hash)
+IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
 IF NOT IS_VALID THEN
-   RETURN Error("Invalid User or Password!")
+   RETURN Error("Invalid Username or Password!")
 ENDIF
 ```
 
-With this implementation: The presence of a time-based discrepancy factor is less possible because, whatever if the user exists or not then two time-taking operations are always performed.
+This code will go through the same process no matter what the user or the password is, allowing the application to return in approximately the same response time.
 
-The main issue with the fact to return a generic error message is that it will decrease the *user experience* of the feature and can confuse a legitimate user because the generic error message will not allow him to understand the source of the issue preventing him to access to his account/data. The decision to return or not a *generic error message* can be determined according to the criticity of the application and the data managed. For example, for critical applications, we can decide that in case of trouble, a user will be redirected to the helpdesk and a *generic error message* will always be returned.
+The main issue with the fact to return a generic error message is that it will decrease the *user experience* of the feature and can confuse a legitimate user because the generic error message will not allow them to understand the source of the issue preventing them access to their account. The decision to return or not a *generic error message* can be determined according to the criticality of the application and the data managed. For example, for critical applications, team can decide that in case of trouble, a user will be redirected to the helpdesk and a *generic error message* will always be returned.
 
 Regarding the user enumeration itself, protection against [brute-force attack](Authentication_Cheat_Sheet.md#prevent-brute-force-attacks) are also effective because they prevent an attacker to apply the enumeration at scale. Usage of [CAPTCHA](https://en.wikipedia.org/wiki/CAPTCHA) can be applied on a feature for which a *generic error message* cannot be returned because the *user experience* must be preserved.
 
