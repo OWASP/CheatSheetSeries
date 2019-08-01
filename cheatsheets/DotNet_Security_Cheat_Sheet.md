@@ -493,6 +493,7 @@ public class UserController
 You can also check roles in code using identity features in .net: `System.Web.Security.Roles.IsUserInRole(userName, roleName)`
 
 You can find more information[here](Access_Control_Cheat_Sheet.md#introduction) on Access Control and [here](Authorization_Testing_Automation.md) for Authorization.
+
 ### Insecure Direct object references
 
 When you have a resource (object) which can be accessed by a reference (in the sample below this is the `id`) then you need to ensure that the user is intended to be there
