@@ -81,11 +81,11 @@ Additional countermeasures considererd should include:
 
 Need an architectural diagram? The [SAML technical overview](http://www.oasis-open.org/committees/download.php/11511/sstc-saml-tech-overview-2.0-draft-03.pdf) contains the most complete diagrams. For the Web Browser SSO Profile with Redirect/POST bindings refer to the section 4.1.3. In fact, of all the SAML documentation, the technical overview is the most valuable from a high-level perspective.
 
-# First and Last Mile Considerations
+# Identity Provider and Service Provider Considerations
 
 The SAML protocol is rarely the vector of choice, though it's important to have cheatsheets to make sure that this is robust. The various endpoints are more targeted, so how the SAML token is generated and how it is consumed are both important in practice.
 
-## First Mile Considerations
+## Identity Provider (IdP) Considerations
 
 - Validate X.509 Certificate for algorithm compatibility, strength of encryption, export restrictions
 - Validate Strong Authentication options for generating the SAML token
@@ -94,19 +94,21 @@ The SAML protocol is rarely the vector of choice, though it's important to have 
 - Synchronize to a common Internet timesource
 - Define levels of assurance for identity verification
 - Prefer asymmetric identifiers for identity assertions over personally identifiable information (e.g. SSNs, etc)
-- Sign assertions whenever possible
+- Sign each individual Assertion or the entire Response element
 
-## Last Mile Considerations
+## Service Provider (SP) Considerations
 
 - Validating session state for user
 - Level of granularity in setting authZ context when consuming SAML token (do you use groups, roles, attributes)
-- Validate authorized IDP
-- Validate IDP certificates for expiry against CRL/OCSP
+- Ensure each Assertion or the entire Response element is signed
+- Validate signature (see further hints for secure signature checking [above](#validate-protocol-usage))
+- Validate if signed by authorized IDP
+- Validate IDP certificates for expiration and revocation against CRL/OCSP
 - Validate NotBefore and NotOnorAfter
+- Validate Recipient attribute
 - Define criteria for SAML logout
 - Exchange assertions only over secure transports
 - Define criteria for session management
-- Validate signature whenever possible
 - Verify user identities obtained from SAML ticket assertions whenever possible.
 
 # Input Validation
