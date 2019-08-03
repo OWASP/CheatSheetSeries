@@ -35,6 +35,7 @@ Links:
 - [License](#license)
 - [Code of conduct](CODE_OF_CONDUCT.md)
 - [DNS configuration for the website](#dns-configuration-for-the-website)
+- [Flagship graduation](#flagship-graduation)
 
 # Reference to the Cheat Sheets
 
@@ -259,3 +260,7 @@ owasp.github.io.	3600	IN	A	185.199.108.153
 ```
 
 As well as this final configuration [action](https://help.github.com/en/articles/setting-up-a-custom-subdomain).
+
+# Flagship graduation
+
+The result of the project review, by the foundation, is available [here](assets/README_FlagshipCombinedReviews.pdf).
