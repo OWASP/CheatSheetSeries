@@ -170,7 +170,6 @@ This is the representation of each sheet along with an example of content that w
 |--------------------------|--------------------------------------------------------|---------------------------------------------------------|
 | DEFENSE_001              | Validate the uploaded file by loading it into a parser | Use advice from the OWASP Cheat Sheet about file upload |
 
-
 ## Step 2: During the workshop
 
 Use the spreadsheet to review all the features. For each feature, follow this flow:
