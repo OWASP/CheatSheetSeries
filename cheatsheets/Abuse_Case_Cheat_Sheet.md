@@ -29,12 +29,12 @@ This cheat sheet can be seen as a getting-started tutorial.
 
 ## Why clearly identify the attacks?
 
-Clearly identifying the attacks against which the application must defend is essential in order to enable the following steps in a project or sprint:
+Clearly identifying the attacks which the application must defend against is essential for enabling the following steps:
 
 - Evaluate the business risk for each of the identified attacks in order perform a selection according to the business risk and the project/sprint budget.
-- Derive security requirements and add them into the project specification or sprint's user stories and acceptance criteria.
-- Estimate the overhead of provision in the initial project/sprint charge that will be necessary to implement the countermeasures.
-- About countermeasures: Allow the project team to define them, and to determine in which location they are appropriate (network, infrastructure, code...) to be located.
+- Derive security requirements and add them into the project specification, or sprint's user stories and acceptance criteria.
+- Estimate the resources that will be necessary to implement the countermeasures.
+- Allow the team to define countermeasures, and to determine in which location they are appropriate (network, infrastructure, code...) to be located.
 
 ## Notion of Abuse Case
 
@@ -66,9 +66,7 @@ that lead to proper protection of these critical business use cases.
 
 ## How to define the list of Abuse Cases?
 
-There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).
-
-The project [OWASP Open SAMM](https://www.owasp.org/index.php/OWASP_SAMM_Project) proposes the following approach in the *Activity A* of the Security Practice *Threat Assessment* for the Maturity level 2:
+There are many different ways to define the list of abuse cases for a feature. The project [OWASP Open SAMM](https://www.owasp.org/index.php/OWASP_SAMM_Project) proposes the following approach in the *Activity A* of the Security Practice *Threat Assessment* for the Maturity level 2:
 
 ```
 Further considering the threats to the organization, conduct a more formal
@@ -115,15 +113,15 @@ It is important to take into account **Technical** and **Business** kind of abus
 *Example:*
 
 - Technical flagged abuse case: Add Cross Site Scripting injection into a comment input field.
-- Business flagged abuse case: Ability to modify arbitrary the price of an article in an online shop prior to pass an order causing the user to pay a lower amount for the wanted article.
+- Business flagged abuse case: Ability to modify  the price of an article in an online causing the user to pay a lower amount for the wanted article.
 
 ## When to define the list of Abuse Cases?
 
-On agile project, the definition workshop must be made after the meeting in which User Stories are includen in a Sprint.
+On an agile project, the definition workshop must be made after the meeting in which User Stories are includen in a Sprint.
 
-In waterfall projects, the definition workshop must be made when the business feature to implements are identified and known by the business.
+In waterfall projects, the definition workshop must be made when the business feature to implement are identified and known by the business.
 
-Whatever the mode of project used (agile or waterfall), the abuse cases selected to be addressed must become security requirements in each feature specification section (waterfall) or User Story acceptance criteria (agile) in order to allow additional cost/effort evaluation, identification and implementation of the countermeasures.
+The abuse cases selected to be addressed must become security requirements in each feature specification section (waterfall) or User Story acceptance criteria (agile) to allow additional cost/effort evaluation, identification, and implementation of the countermeasures.
 
 Each abuse case must have a unique identifier in order to allow tracking throughout the whole project/sprint (details about this point will be given in the proposal section).
 
@@ -141,7 +139,7 @@ The proposal will focus on the output of the workshop explained in the previous 
 
 First, even if it seems obvious, the key business people must be sure to know, understand and be able to explain the business features that will be processed during the workshop.
 
-Secondly, create a new Microsoft Excel file (you can also use Google Sheets or any other similar software) with the following sheets (or tabs):
+Start by creating a new spreadsheet with the following sheets/tabs:
 
 - **FEATURES**
     - Will contain a table with the list of business features planned for the workshop.
@@ -150,7 +148,7 @@ Secondly, create a new Microsoft Excel file (you can also use Google Sheets or a
 - **COUNTERMEASURES**
     - Will contain a table with the list of possible countermeasures (light description) imagined for the abuse cases identified.
     - This sheet is not mandatory, but it can be useful (for an abuse case to know), if a fix is easy to implement and then can impact the risk rating.
-    - Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks but also to build or identify defenses (it is not always the case for the Pentester profile because this person’s focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).
+    - Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks and also build or identify defenses (it is not always the case for the Pentester profile because this person’s focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).
 
 This is the representation of each sheet along with an example of content that will be filled during the workshop:
 
@@ -160,23 +158,22 @@ This is the representation of each sheet along with an example of content that w
 |:-----------------:|:---------------------:|:---------------------------------------------:|
 | FEATURE_001       | DocumentUploadFeature | Allow user to upload document along a message |
 
-*COUNTERMEASURES* sheet:
-
-| Countermeasure unique ID | Countermeasure short description                       | Countermeasure help/hint                                |
-|--------------------------|--------------------------------------------------------|---------------------------------------------------------|
-| DEFENSE_001              | Validate the uploaded file by loading it into a parser | Use advice from the OWASP Cheat Sheet about file upload |
-
 *ABUSE CASES* sheet:
 
 | Abuse case unique ID | Feature ID impacted |                     Abuse case's attack description                     | Attack referential ID (if applicable) | CVSS V3 risk rating (score) |                CVSS V3 string                | Kind of abuse case | Countermeasure ID applicable | Handling decision (To Address or Risk Accepted) |
 |:--------------------:|:-------------------:|:-----------------------------------------------------------------------:|:-------------------------------------:|:---------------------------:|:--------------------------------------------:|:------------------:|:----------------------------:|:-----------------------------------------------:|
 | ABUSE_CASE_001       | FEATURE_001         | Upload Office file with malicious macro in charge of dropping a malware | CAPEC-17                              | HIGH (7.7)                  | CVSS:3.0/AV:N/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:H | Technical          | DEFENSE_001                  | To Address                                      |
 
+*COUNTERMEASURES* sheet:
+
+| Countermeasure unique ID | Countermeasure short description                       | Countermeasure help/hint                                |
+|--------------------------|--------------------------------------------------------|---------------------------------------------------------|
+| DEFENSE_001              | Validate the uploaded file by loading it into a parser | Use advice from the OWASP Cheat Sheet about file upload |
+
+
 ## Step 2: During the workshop
 
-Use the spreadsheet to review all the features.
-
-For each feature, follow this flow:
+Use the spreadsheet to review all the features. For each feature, follow this flow:
 
 1.  Key business people explain the current feature from a business point of view.
 2.  Offensives propose and explain a set of attacks that they can perform against the feature.
