@@ -13,7 +13,7 @@ In order to build a secure application, from an pragmatic point of view, it is i
 
 # Objective
 
-The objective of this cheat sheet is to provide an explanation of about what an **Abuse Case** is, why abuse cases are important when considering the security of an application, and further finally, to provide a proposal for a pragmatic approach to builing  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).
+The objective of this cheat sheet is to provide an explanation of what an **Abuse Case** is, why abuse cases are important, and to provide a pragmatic approach to builing abuse cases for tracking during feature implementation of an application. This cheat sheet applies regardless of the project methodology used (waterfall or agile).
 
 **Important note about this Cheat Sheet:**
 
