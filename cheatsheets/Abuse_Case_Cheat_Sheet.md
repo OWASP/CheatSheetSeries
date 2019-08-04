@@ -34,7 +34,7 @@ Clearly identifying the attacks which the application must defend against is ess
 - Evaluate the business risk for each of the identified attacks in order perform a selection according to the business risk and the project/sprint budget.
 - Derive security requirements and add them into the project specification, or sprint's user stories and acceptance criteria.
 - Estimate the resources that will be necessary to implement the countermeasures.
-- Allow the team to define countermeasures, and to determine in which location they are appropriate (network, infrastructure, code...) to be located.
+- Allow the team to define countermeasures, and to determine in which location they are appropriately deployed (network, infrastructure, code, etc.)
 
 ## Notion of Abuse Case
 
