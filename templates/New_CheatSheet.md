@@ -50,7 +50,3 @@ in the more teaching possible way.
 Add pointer to the public GitHub repository on 
 which the source code of POC is hosted.
 ```
-
-# Authors and Primary Editors
-
-Firstname Lastname - email@email.com
