@@ -565,11 +565,3 @@ For instance, one might set work factors targeting the following run times:
 ## Ref8
 
 - [Painless Password Hash Upgrades](https://veggiespam.com/painless-password-hash-upgrades/).
-
-# Authors and Primary Editors
-
-John Steven - john.steven@owasp.org
-
-Jim Manico - jim@owasp.org
-
-Dominique Righetto - dominique.righetto@owasp.org

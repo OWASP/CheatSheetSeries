@@ -150,9 +150,3 @@ openssl ciphers -V "DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RS
 - [OWASP: Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md).
 - [BetterCrypto.org: Applied Crypto Hardening (DRAFT)](https://bettercrypto.org).
 - [Mozilla: Security/Server Side TLS](https://wiki.mozilla.org/Security/Server_Side_TLS).
-
-# Authors and Primary Editors
-
-Torsten Gigler - torsten.gigler@owasp.org
-
-Achim Hoffmann - achim@owasp.org

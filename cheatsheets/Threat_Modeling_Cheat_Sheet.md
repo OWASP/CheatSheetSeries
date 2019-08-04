@@ -309,9 +309,3 @@ TODO
 # Appendix
 
 TODO: *Sample Design for Implementation View in 4+1 Model*
-
-# Authors and Primary Editors
-
-Mohamed Alfateh 
-
-Ahmed Kanoma

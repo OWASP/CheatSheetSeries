@@ -663,15 +663,3 @@ You can configure JQuery to automatically add the token to all request headers b
 ```
 
 This code snippet has been tested with jQuery version 3.3.1.
-
-# Authors and Primary Editors
-
-[Manideep Konakandla (Amazon Application Security Team)](http://www.manideepk.com)
-
-Dave Wichers - dave.wichers@owasp.org
-
-Paul Petefish
-
-Eric Sheridan - eric.sheridan@owasp.org
-
-Dominique Righetto - dominique.righetto@owasp.org

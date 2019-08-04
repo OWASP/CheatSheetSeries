@@ -82,7 +82,3 @@ You may go further and create full webpage with recent security events.
 - [OWASP Credential Stuffing Article](https://www.owasp.org/index.php/Credential_stuffing)
 - [OWASP Automated Threats to Web Applications](https://www.owasp.org/index.php/OWASP_Automated_Threats_to_Web_Applications)
 - Project: [OAT-008 Credential Stuffing](https://www.owasp.org/index.php/OAT-008_Credential_Stuffing), which is one of 20 defined threats in the [OWASP Automated Threat Handbook](https://www.owasp.org/index.php/File:Automated-threat-handbook.pdf) this project produced.
-
-# Authors and Primary Editors
-
-Brad Causey

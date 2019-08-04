@@ -595,7 +595,3 @@ public class ImageDocumentSanitizerImpl implements DocumentSanitizer {
 # Sources of the prototype
 
 GitHub [repository](https://github.com/righettod/document-upload-protection)
-
-# Authors and Primary Editors
-
-Dominique Righetto - dominique.righetto@owasp.org

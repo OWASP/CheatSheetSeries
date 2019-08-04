@@ -299,7 +299,3 @@ The MarSecOps requirements to implement technical controls at the speed of chang
 - [Magecart – a malicious infrastructure for stealing payment details from online shops](https://www.clearskysec.com/magecart/).
 - [Compromised E-commerce Sites Lead to “Magecart”](https://www.riskiq.com/blog/labs/magecart-keylogger-injection/)
 - [Inbenta, blamed for Ticketmaster breach, admits it was hacked](https://www.zdnet.com/article/inbenta-blamed-for-ticketmaster-breach-says-other-sites-not-affected/).
-
-# Authors and Primary Editors
-
-Jim Weiler - Jim.Weiler@owasp.org

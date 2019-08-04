@@ -282,27 +282,3 @@ Activate [designMode](https://developer.mozilla.org/en-US/docs/Web/API/Document/
 ```javascript
 document.designMode = "on";
 ```
-
-# Authors and Primary Editors
-
-Jim Manico - jim@owasp.org
-
-Santhosh Tuppad - santhosh.tuppad@gmail.com 
-
-Jeffrey Walton
-
-Till Maas
-
-Dave Wichers - dwichers@gmail.com 
-
-Michael Brook
-
-Tom Parker
-
-Shruti kulkarni
-
-Yozo
-
-Eelgheez
-
- Aabashkin

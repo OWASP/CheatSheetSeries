@@ -205,7 +205,3 @@ Unfortunately this does and will make input harder to normalise and correctly ma
 
 - Store the user-part as provided and verified by user verification.
 - Perform comparisons by `lowercase(provided)==lowercase(persisted)`.
-
-# Authors and Primary Editors
-
-Dave Wichers - dave.wichers@aspectsecurity.com
