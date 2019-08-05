@@ -1026,52 +1026,32 @@
 </ul>
 <h2 id="implement-proper-password-strength-controls"><a name="implement-proper-password-strength-controls" class="plugin-anchor" href="#implement-proper-password-strength-controls"><i class="fa fa-link" aria-hidden="true"></i></a>Implement Proper Password Strength Controls</h2>
 <p>A key concern when using passwords for authentication is password strength. A &quot;strong&quot; password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:</p>
-<h3 id="password-length"><a name="password-length" class="plugin-anchor" href="#password-length"><i class="fa fa-link" aria-hidden="true"></i></a>Password Length</h3>
-<p>Longer passwords provide a greater combination of characters and consequently make it more difficult for an attacker to guess.</p>
 <ul>
-<li><strong>Minimum</strong> length of the passwords should be <strong>enforced</strong> by the application.<ul>
-<li>Passwords <strong>shorter than 8 characters</strong> are considered to be weak (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank">NIST SP800-63B</a>).</li>
+<li><p>Password Length</p>
+<ul>
+<li><strong>Minimum</strong> length of the passwords should be <strong>enforced</strong> by the application. Passwords <strong>shorter than 8 characters</strong> are considered to be weak (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank">NIST SP800-63B</a>). </li>
+<li><p><strong>Maximum</strong> password length should not be set <strong>too low</strong>, as it will prevent users from creating passphrases. Typical maximum length is 128 characters. </p>
+<p>When selecting maximum password length, limitation of hashing algorithm that will be used for hashing passwords, should be taken into consideration because some of them <a href="https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851" target="_blank">have a maximum password length</a>.</p>
+</li>
+</ul>
+</li>
+<li><p>Do do not truncate passwords. Make sure that every character the user types in is actually included in the password. </p>
+</li>
+<li><p>Allow usage of <strong>all</strong> characters including unicode and whitespaces. There should be no password composition rules limiting the type of characters permitted.</p>
+</li>
+<li><p>Ensure credential rotation when a password leak, or at the time of compromise identification.</p>
+</li>
+<li><p>Include password strength meter to help users create a more complex password and block common and previously breached passwords</p>
+<ul>
+<li><a href="https://github.com/dropbox/zxcvbn" target="_blank">zxcvbn library</a> can be used for this purpose. (Note that this library is no longer maintained)</li>
+<li><a href="https://haveibeenpwned.com/Passwords" target="_blank">Pwned Passwords</a> is a service where passwords can be checked against previously breached passwords. You can host it yourself or use <a href="https://haveibeenpwned.com/API/v2#PwnedPasswords" target="_blank">API</a>.</li>
 </ul>
 </li>
 </ul>
-<p>While minimum length enforcement may cause problems with memorizing passwords among some users, applications should encourage them to set <em>passphrases</em> (sentences or combination of words) that can be much longer than typical passwords and yet much easier to remember.</p>
+<h3 id="for-more-detailed-information-check"><a name="for-more-detailed-information-check" class="plugin-anchor" href="#for-more-detailed-information-check"><i class="fa fa-link" aria-hidden="true"></i></a>For more detailed information check:</h3>
 <ul>
-<li><strong>Maximum</strong> password length should not be set <strong>too low</strong>, as it will prevent users from creating passphrases. Typical maximum length is 128 characters.<ul>
-<li>Passphrases shorter than 20 characters are usually considered weak if they only consist of lower case Latin characters.</li>
-</ul>
-</li>
-</ul>
-<h3 id="password-complexity"><a name="password-complexity" class="plugin-anchor" href="#password-complexity"><i class="fa fa-link" aria-hidden="true"></i></a>Password Complexity</h3>
-<p>Applications should enforce password complexity rules to discourage easy to guess passwords. Password mechanisms should allow virtually any character the user can type to be part of their password, including the space character. Passwords should, obviously, be case sensitive in order to increase their complexity. Occasionally, we find systems where passwords aren&apos;t case sensitive, frequently due to legacy system issues like old mainframes that didn&apos;t have case sensitive passwords.</p>
-<p>The password change mechanism should require a minimum level of complexity that makes sense for the application and its user population. For example:</p>
-<ul>
-<li>Password must meet at least 3 out of the following 4 complexity rules<ul>
-<li>at least 1 uppercase character (A-Z)</li>
-<li>at least 1 lowercase character (a-z)</li>
-<li>at least 1 digit (0-9)</li>
-<li>at least 1 <a href="https://www.owasp.org/index.php/Password_special_characters" target="_blank">special character (punctuation)</a> &#x2014; do not forget to treat space as special characters too</li>
-</ul>
-</li>
-<li>at least 10 characters</li>
-<li>at most 128 characters</li>
-<li>not more than 2 identical characters in a row (e.g., 111 not allowed)</li>
-</ul>
-<p>Further reading:</p>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=zUM7i8fsf0g" target="_blank">Your Password Complexity Requirements are Worthless - OWASP AppSecUSA 2014</a> presentation for further discussion of legacy password complexity rules</li>
-<li><a href="https://www.korelogic.com/Resources/Presentations/bsidesavl_pathwell_2014-06.pdf" target="_blank">PathWell: Password Topology Histogram Wear-Leveling</a></li>
-</ul>
-<h3 id="password-topologies"><a name="password-topologies" class="plugin-anchor" href="#password-topologies"><i class="fa fa-link" aria-hidden="true"></i></a>Password Topologies</h3>
-<ul>
-<li>Ban commonly used password topologies</li>
-<li>Force multiple users to use different password topologies</li>
-<li>Require a minimum topology change between old and new passwords</li>
-</ul>
-<h3 id="additional-information"><a name="additional-information" class="plugin-anchor" href="#additional-information"><i class="fa fa-link" aria-hidden="true"></i></a>Additional Information</h3>
-<ul>
-<li>Make sure that every character the user types in is actually included in the password. We&apos;ve seen systems that truncate the password at a length shorter than what the user provided (e.g., truncated at 15 characters when they entered 20).</li>
-<li>As application&apos;s require more complex password policies, they need to be very clear about what these policies are. The required policy needs to be explicitly stated on the password change page</li>
-<li>If the new password doesn&apos;t comply with the complexity policy, the error message should describe EVERY complexity rule that the new password does not comply with, not just the 1st rule it doesn&apos;t comply with.</li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements" target="_blank">ASVS v4.0 Password Security Requirements</a></li>
+<li><a href="https://www.troyhunt.com/passwords-evolved-authentication-guidance-for-the-modern-era/" target="_blank">Passwords Evolved: Authentication Guidance for the Modern Era</a></li>
 </ul>
 <h2 id="implement-secure-password-recovery-mechanism"><a name="implement-secure-password-recovery-mechanism" class="plugin-anchor" href="#implement-secure-password-recovery-mechanism"><i class="fa fa-link" aria-hidden="true"></i></a>Implement Secure Password Recovery Mechanism</h2>
 <p>It is common for an application to have a mechanism that provides a means for a user to gain access to their account in the event they forget their password. Please see <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> for details on this feature.</p>
@@ -1196,7 +1176,7 @@ ENDIF
 <h1 id="session-management-general-guidelines"><a name="session-management-general-guidelines" class="plugin-anchor" href="#session-management-general-guidelines"><i class="fa fa-link" aria-hidden="true"></i></a>Session Management General Guidelines</h1>
 <p>Session management is directly related to authentication. The <strong>Session Management General Guidelines</strong> previously available on this OWASP Authentication Cheat Sheet have been integrated into the <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a>.</p>
 <h1 id="password-managers"><a name="password-managers" class="plugin-anchor" href="#password-managers"><i class="fa fa-link" aria-hidden="true"></i></a>Password Managers</h1>
-<p>Password managers are programs, browser plugins or web services that automate management of large number of different credentials, including memorizing and filling-in, generating random passwords on different sites etc. While use of password managers is subject to controversies and many organisations block their usage, their contribution to authentication security is positive, as pointed out by <a href="https://www.ncsc.gov.uk/blog-post/what-does-ncsc-think-password-managers" target="_blank">National Cyber Security Centre</a>.</p>
+<p>Password managers are programs, browser plugins or web services that automate management of large number of different credentials, including memorizing and filling-in, generating random passwords on different sites etc.</p>
 <p>Web applications should at least not make password managers job more difficult than necessary by observing the following recommendations:</p>
 <ul>
 <li>use standard HTML forms for username and password input with appropriate <code>type</code> attributes,</li>
@@ -1248,7 +1228,7 @@ ENDIF
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Authentication ","level":"1.9","depth":1,"next":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"previous":{"title":"Attack Surface Analysis ","level":"1.8","depth":1,"path":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","ref":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authentication_Cheat_Sheet.md","mtime":"2019-08-05T04:25:00.600Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-05T04:25:25.246Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Authentication ","level":"1.9","depth":1,"next":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"previous":{"title":"Attack Surface Analysis ","level":"1.8","depth":1,"path":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","ref":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authentication_Cheat_Sheet.md","mtime":"2019-08-05T07:49:20.963Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-05T07:50:01.299Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
