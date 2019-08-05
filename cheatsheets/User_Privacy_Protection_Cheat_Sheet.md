@@ -113,7 +113,3 @@ Honesty goes a long way towards cultivating a culture of trust between a web app
 More insight regarding secure logging can be found at:
 
 - [OWASP Logging Cheat Sheet](Logging_Cheat_Sheet.md)
-
-# Authors and Primary Editors
-
-Mohammed ALDOUB

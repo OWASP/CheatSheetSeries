@@ -250,13 +250,3 @@ Use only reputable crypto libraries that are well maintained and updated, as wel
 
 - [The definitive guide to encryption key management fundamentals](https://info.townsendsecurity.com/definitive-guide-to-encryption-key-management-fundamentals).
 - [Practical cryptography for developers](https://cryptobook.nakov.com/).
-
-# Authors and Primary Editors
-
-Brian Russell - russellbri@leidos.com
-
-Drew Van Duren - drew.f.van.duren@leidos.com
-
-Vanessa Amador - vanessa.c.amador@leidos.com
-
-Susanna Bezold – BezoldCISSP@aol.com

@@ -95,9 +95,3 @@ When integrating with platform security on a Linux host, you should use the foll
 Windows programs should include `/dynamicbase`, `/NXCOMPAT`, `/GS`, and `/SafeSEH` to ensure address space layout randomizations (ASLR), data execution prevention (DEP), use of stack cookies, and thwart exception handler overwrites.
 
 For additional details on the GCC and Windows options and flags, see *[GCC Options Summary](http://gcc.gnu.org/onlinedocs/gcc/Option-Summary.html)* and *[Protecting Your Code with Visual C++ Defenses](http://msdn.microsoft.com/en-us/magazine/cc337897.aspx)*.
-
-# Authors and Primary Editors
-
-- Jeffrey Walton - jeffrey@owasp.org
-- Jim Manico - jim@owasp.org
-- Kevin Wall - kevin@owasp.org

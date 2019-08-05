@@ -488,9 +488,3 @@ other log viewing/analysis tools that don't expect the log data to be pre-HTML e
 - [LOG4J Appender](https://logging.apache.org/log4j/2.x/manual/appenders.html)
 - [Log Forging](https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging) - See the Logback section about the `CRLFConverter` this library provides.
 - [Usage of OWASP Security Logging with Logback](https://github.com/javabeanz/owasp-security-logging/wiki/Usage-with-Logback)
-
-# Authors and Primary Editors
-
-Dominique Righetto - dominique.righetto@owasp.org
-
-Dave Wichers - dave.wichers@owasp.org

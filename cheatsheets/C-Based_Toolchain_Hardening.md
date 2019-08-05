@@ -649,11 +649,3 @@ Visual Studio offers a number of debugging aides for use during development. The
 Finally, for runtime hardening, Microsoft has a helpful tool called EMET. EMET is the [Enhanced Mitigation Experience Toolkit](http://support.microsoft.com/kb/2458544), and allows you to apply runtime hardening to an executable which was built without. Its very useful for utilities and other programs that were built without an SDLC.
 
 ![Windows2](../assets/C-Based_Toolchain_Hardening_Windows2.png)
-
-# Authors and Editors
-
-Jeffrey Walton - jeffrey@owasp.org
-
-Jim Manico - jim@owasp.org
-
-Kevin Wall - kevin@owasp.org

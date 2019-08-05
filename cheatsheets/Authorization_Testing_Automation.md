@@ -511,7 +511,3 @@ Example of the rendering:
 # Sources of the prototype
 
 [Github repository](https://github.com/righettod/poc-authz-testing)
-
-# Authors and Primary Editors
-
-Dominique Righetto - dominique.righetto@owasp.org

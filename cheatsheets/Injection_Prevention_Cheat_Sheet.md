@@ -321,13 +321,3 @@ If a parameterized API is not available, you should carefully escape special cha
 [LDAP Injection Prevention Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md)
 
 [Injection Prevention Cheat Sheet in Java](Injection_Prevention_Cheat_Sheet_in_Java.md)
-
-# Authors and Primary Editors
-
-Jim Manico - jim@owasp.org
-
-Alexander Meisel - alexander.meisel@owasp.org
-
-Erlend Oftedal - erlend.oftedal@owasp.org
-
-Sherif Mansour - sherif.mansour@owasp.org

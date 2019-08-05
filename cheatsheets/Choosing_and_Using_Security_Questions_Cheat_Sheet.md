@@ -117,7 +117,3 @@ First, it bears repeating again...if passwords are considered weak authenticatio
 
 - [Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md)
 - [Good Security Questions web site](http://goodsecurityquestions.com/)
-
-# Authors and Primary Editors
-
-Kevin Wall - kevin.w.wall@gmail com

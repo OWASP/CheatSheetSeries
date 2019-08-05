@@ -225,11 +225,3 @@ In order to accurately test out the newly created virtual patches, it may be nec
 
 - [OWASP Virtual Patching Best Practices](https://www.owasp.org/index.php/Virtual_Patching_Best_Practices).
 - [OWASP Securing WebGoat with ModSecurity](https://www.owasp.org/index.php/Category:OWASP_Securing_WebGoat_using_ModSecurity_Project).
-
-# Authors and Primary Editors
-
-Ryan Barnett - ryan.barnett@owasp.org
-
-Josh Zlatin - jamuse@gmail.com
-
-Christian Folini - christian.folini@netnea.com

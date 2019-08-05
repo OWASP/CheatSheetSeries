@@ -231,7 +231,3 @@ This should be replaced by `addEventListener` calls:
 - [CSP CheatSheet by Scott Helme](https://scotthelme.co.uk/csp-cheat-sheet/)
 - [Breaking Bad CSP](https://www.slideshare.net/LukasWeichselbaum/breaking-bad-csp)
 - [CSP A Successful Mess Between Hardening And Mitigation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation)
-
-# Authors and Primary Editors
-
-- Elie Saad - eliesaad7@gmail.com

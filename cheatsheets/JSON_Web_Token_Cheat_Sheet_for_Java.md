@@ -606,11 +606,3 @@ You can also use:
 ### Additional Reading
 
 - [JWT Best Practices Internet Draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-bcp/)
-
-# Authors and Primary Editors
-
-Jim Manico - jim.manico@owasp.org
-
-Dominique Righetto - dominique.righetto@owasp.org
-
-Paul Ionescu - paul.ionescu@owasp.org

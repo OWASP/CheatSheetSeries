@@ -468,7 +468,3 @@ private String articleTitle;
 ```
 
 Spring MVC will then look up a message with id *article.title.error* in a defined MessageSource. More on this [documentation](http://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/).
-
-# Authors and Primary Editors
-
-Anton Abashkin - abashkin.anton@gmail.com

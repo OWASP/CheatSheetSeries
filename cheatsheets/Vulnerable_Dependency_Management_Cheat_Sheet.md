@@ -242,12 +242,4 @@ It's important to ensure, during the selection process of a vulnerable dependenc
     * [Renovate](https://renovatebot.com) (allow to detect old dependencies):
         * [Full support](https://renovatebot.com/docs/) for many languages and package manager. 
     * [Requires.io](https://requires.io/) (allow to detect old dependencies - open source and free option available):
-        * [Full support](https://requires.io/features/): Python only.         
-
-# Authors and Primary Editors
-
-Dominique Righetto - dominique.righetto@owasp.org
-
-Elie Saad - eliesaad7@gmail.com
-
-Jakub Maćkowski - jakub.mackowski@owasp.org
+        * [Full support](https://requires.io/features/): Python only.

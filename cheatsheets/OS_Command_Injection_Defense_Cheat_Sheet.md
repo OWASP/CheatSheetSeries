@@ -221,9 +221,3 @@ In PHP use [escapeshellarg()](http://php.net/manual/en/function.escapeshellarg.p
 ## External References
 
 - [CWE Entry 77 on Command Injection](https://cwe.mitre.org/data/definitions/77.html).
-
-# Authors and Primary Editors
-
-Katy Anton - katy.anton@owasp.org
-
-Jim Manico - jim.manico@owasp.org

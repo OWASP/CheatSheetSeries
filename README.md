@@ -26,6 +26,7 @@ Links:
 - [Conversion rules](#conversion-rules)
 - [How to setup my contributor environment?](#how-to-setup-my-contributor-environment)
 - [How to contribute?](#how-to-contribute)
+- [Contributors](#contributors)
 - [Offline website](#offline-website)
 - [Project leaders](#project-leaders)
 - [Core team](#core-team)
@@ -224,6 +225,11 @@ See [here](CONTRIBUTING.md#how-to-setup-my-contributor-environment).
 # How to contribute?
 
 See [here](CONTRIBUTING.md#how-to-contribute).
+
+# Contributors
+
+* **From 2014 to 2018:** [V1](CONTRIBUTOR-V1.md) - Initial version of the project hosted on the [OWASP WIKI](https://www.owasp.org).
+* **From 2019:** [V2](https://github.com/OWASP/CheatSheetSeries/graphs/contributors) - Hosted on [GitHub](https://github.com/OWASP/CheatSheetSeries).
 
 # Special thanks
 

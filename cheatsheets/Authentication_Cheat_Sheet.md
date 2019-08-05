@@ -260,17 +260,3 @@ Web applications should at least not make password managers job more difficult t
 - avoid plugin-based login pages (Flash, Silverlight etc)
 
 As of 2017 [Credential Management Level 1](https://w3c.github.io/webappsec-credential-management/) standard for web browsers is being developed that may further facilitate interaction between password managers and complex log-in schemes (e.g. single sign-on).
-
-# Authors and Primary Editors
-
-Eoin Keary eoinkeary
-
-Jim Manico
-
-Timo Goosen
-
-Pawel Krawczyk
-
-Sven Neuhaus
-
-Manuel Aude Morales
