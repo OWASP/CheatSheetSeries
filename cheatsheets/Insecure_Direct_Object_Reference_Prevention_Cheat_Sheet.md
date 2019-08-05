@@ -23,7 +23,7 @@ EMP-00002
 
 Based on this, an attacker can build a collection of valid ID from *EMP-00000* to *EMP-99999*.
 
-To be exploited, an IDOR issue must be combined with an [Access Control](Access_Control_Cheat_Sheet.md) issue because it's the Access Control issue that "allow" the attacker to access to the object for which he have guessed the identifier through is enumeration attack.
+To be exploited, an IDOR issue must be combined with an [Access Control](Access_Control_Cheat_Sheet.md) issue because it's the Access Control issue that "allow" the attacker to access to the object for which they have guessed the identifier through is enumeration attack.
 
 # Additional remarks
 
@@ -63,29 +63,29 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Handle the creation of ID that will be send to front end side 
+ * Handle the creation of ID that will be send to front end side
  * in order to prevent IDOR
  */
 
 public class IDORUtil {
     /**
-     * SALT used for the generation of the HASH of the real item identifier 
+     * SALT used for the generation of the HASH of the real item identifier
      * in order to prevent to forge it on front end side.
      */
     private static final String SALT = "[READ_IT_FROM_APP_CONFIGURATION]";
 
     /**
-     * Compute a identifier that will be send to the front end and be used as item 
+     * Compute a identifier that will be send to the front end and be used as item
      * unique identifier on client side.
      *
-     * @param realItemBackendIdentifier Identifier of the item on the backend storage 
+     * @param realItemBackendIdentifier Identifier of the item on the backend storage
      *                                  (real identifier)
      * @return A string representing the identifier to use
      * @throws UnsupportedEncodingException If string's byte cannot be obtained
-     * @throws NoSuchAlgorithmException If the hashing algorithm used is not 
+     * @throws NoSuchAlgorithmException If the hashing algorithm used is not
      *                                  supported is not available
      */
-    public static String computeFrontEndIdentifier(String realItemBackendIdentifier) 
+    public static String computeFrontEndIdentifier(String realItemBackendIdentifier)
      throws NoSuchAlgorithmException, UnsupportedEncodingException {
         String frontEndId = null;
         if (realItemBackendIdentifier != null && !realItemBackendIdentifier.trim().isEmpty()) {
@@ -128,7 +128,7 @@ public Map<String, String> listAllMovies() {
                 //Add the computed ID and the associated item name to the result map
                 result.put(frontEndId, m.getName());
             } catch (Exception e) {
-                LOGGER.error("Error during ID generation for real ID {}: {}", m.getBackendIdentifier(), 
+                LOGGER.error("Error during ID generation for real ID {}: {}", m.getBackendIdentifier(),
                              e.getMessage());
             }
         });
@@ -166,7 +166,7 @@ public Movie obtainMovieName(@PathVariable("id") String id) {
         return match;
     }).findFirst();
 
-    //We have marked the Backend Identifier class field as excluded 
+    //We have marked the Backend Identifier class field as excluded
     //from the serialization
     //So we can send the object to front end through the serializer
     return movie.get();

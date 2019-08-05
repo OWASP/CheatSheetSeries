@@ -22,7 +22,7 @@ As Web Services are incorporated into application environments, having a good ch
 Purpose
 -------
 
-This document is intended to be an easy to use checklist while performing assessments against web services. The penetration tester is advised to incorporate this into his or her corporate testing methodology as a supplemental checklist or is free to use this checklist as the sole testing guideline.
+This document is intended to be an easy to use checklist while performing assessments against web services. The penetration tester is advised to incorporate this into their corporate testing methodology as a supplemental checklist or is free to use this checklist as the sole testing guideline.
 
 Checklist
 ---------

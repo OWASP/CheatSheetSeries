@@ -40,12 +40,12 @@ Problems that can be encountered while using this methodology:
 The areas of caution while using RBAC are:
 
 - Roles must be only be transferred or delegated using strict sign-offs and procedures.
-- When a user changes his role to another one, the administrator must make sure that the earlier access is revoked such that at any given point of time, a user is assigned to only those roles on a need to know basis.
+- When a user changes their role to another one, the administrator must make sure that the earlier access is revoked such that at any given point of time, a user is assigned to only those roles on a need to know basis.
 - Assurance for RBAC must be carried out using strict access control reviews.
 
 # Discretionary Access Control (DAC)
 
-Discretionary Access Control (DAC) is a means of restricting access to information based on the identity of users and/or membership in certain groups. Access decisions are typically based on the authorizations granted to a user based on the credentials he presented at the time of authentication (user name, password, hardware/software token, etc.). In most typical DAC models, the owner of information or any resource is able to change its permissions at his discretion (thus the name).
+Discretionary Access Control (DAC) is a means of restricting access to information based on the identity of users and/or membership in certain groups. Access decisions are typically based on the authorizations granted to a user based on the credentials they presented at the time of authentication (user name, password, hardware/software token, etc.). In most typical DAC models, the owner of information or any resource is able to change its permissions at their discretion (thus the name).
 
 A DAC framework can provide web application security administrators with the ability to implement fine grained access control. This model can be a basis for data based access control implementation
 

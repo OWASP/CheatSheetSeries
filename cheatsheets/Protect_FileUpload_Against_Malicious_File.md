@@ -8,7 +8,7 @@ Into web applications, when we expect upload of working documents from users, we
 
 We use the term "malicious" here to refer to documents that embed *malicious code* that will be executed when another user (admin, back office operator...) will open the document with the associated application reader.
 
-Usually, when an application expect his user to upload a document, the application expect to receive a document for which the intended use will be for reading/printing/archiving. The document should not alter is content at opening time and should be in a final rendered state.
+Usually, when an application expects their user to upload a document, the application expects to receive a document for which the intended use will be for reading/printing/archiving. The document should not alter is content at opening time and should be in a final rendered state.
 
 The most common file types used to transmit *malicious code* into file upload feature are the following:
 
@@ -72,7 +72,7 @@ import java.io.File;
  */
 public interface DocumentSanitizer {
     /**
-     * Method to try to (sanitize) disable any code contained into the specified file 
+     * Method to try to (sanitize) disable any code contained into the specified file
      * by using re-writing approach.
      *
      * @param f File to made safe
@@ -126,11 +126,11 @@ public class WordDocumentDetectorImpl implements DocumentDetector {
      * We reject MHTML file because:<br>
      * <ul>
      * <li>API cannot detect macro into this format</li>
-     * <li>Is not normal to use this format to represent a Word file 
+     * <li>Is not normal to use this format to represent a Word file
      *     (there plenty of others supported format)</li>
      * </ul>
      */
-    private static final List<String> ALLOWED_FORMAT = 
+    private static final List<String> ALLOWED_FORMAT =
                          Arrays.asList(new String[] { "doc", "docx", "docm", "wml", "dot", "dotm" });
 
     /**
@@ -145,7 +145,7 @@ public class WordDocumentDetectorImpl implements DocumentDetector {
                 // Perform a first check on Word document format
                 FileFormatInfo formatInfo = FileFormatUtil.detectFileFormat(f.getAbsolutePath());
                 String formatExtension = FileFormatUtil.loadFormatToExtension(formatInfo.getLoadFormat());
-                if ((formatExtension != null) 
+                if ((formatExtension != null)
                 && ALLOWED_FORMAT.contains(formatExtension.toLowerCase(Locale.US).replaceAll("\\.", ""))) {
                     // Load the file into the Word document parser
                     Document document = new Document(f.getAbsolutePath());
@@ -217,7 +217,7 @@ public class ExcelDocumentDetectorImpl implements DocumentDetector {
      * Allow also XLSM/XSLB because both can exists without macro inside.<br>
      * Allow also XLT/XLTM because both can exists without macro inside.<br>
      */
-    private static final List<String> ALLOWED_FORMAT = 
+    private static final List<String> ALLOWED_FORMAT =
                     Arrays.asList(new String[] { "xls", "xlsx", "xlsm", "xlsb", "xlt", "xltm" });
 
     /**
@@ -231,7 +231,7 @@ public class ExcelDocumentDetectorImpl implements DocumentDetector {
                 // Perform a first check on Excel document format
                 FileFormatInfo formatInfo = FileFormatUtil.detectFileFormat(f.getAbsolutePath());
                 String formatExtension = FileFormatUtil.loadFormatToExtension(formatInfo.getLoadFormat());
-                if ((formatExtension != null) 
+                if ((formatExtension != null)
                 && ALLOWED_FORMAT.contains(formatExtension.toLowerCase(Locale.US).replaceAll("\\.", ""))) {
                     // Load the file into the Excel document parser
                     Workbook book = new Workbook(f.getAbsolutePath());
@@ -307,7 +307,7 @@ public class PowerpointDocumentDetectorImpl implements DocumentDetector {
                 Presentation presentation = new Presentation(f.getAbsolutePath());
                 // First check on Powerpoint format skipped because:
                 // FileFormatInfo class is not provided for Aspose Slides API
-                // PresentationFactory.getInstance().getPresentationInfo() can be used 
+                // PresentationFactory.getInstance().getPresentationInfo() can be used
                 // but the LoadFormat class miss format like POT or PPT XML
                 // Aspose API do not support PPT XML format
                 // Get safe state from presence of a VBA project in the presentation
@@ -441,7 +441,7 @@ import java.util.Iterator;
 /**
  * Implementation of the sanitizer for Image file.
  * <p>
- * Use Java built-in API in complement of Apache Commons Imaging 
+ * Use Java built-in API in complement of Apache Commons Imaging
  * for format not supported by the built-in API.
  *
  * @see "http://commons.apache.org/proper/commons-imaging/"
@@ -468,16 +468,16 @@ public class ImageDocumentSanitizerImpl implements DocumentSanitizer {
                 String formatName;
                 try (ImageInputStream iis = ImageIO.createImageInputStream(f)) {
                     Iterator<ImageReader> imageReaderIterator = ImageIO.getImageReaders(iis);
-                    //If there not ImageReader instance found so it's means that the current 
+                    //If there not ImageReader instance found so it's means that the current
                     // format is not supported by the Java built-in API
                     if (!imageReaderIterator.hasNext()) {
                         ImageInfo imageInfo = Imaging.getImageInfo(f);
-                        if (imageInfo != null && imageInfo.getFormat() != null 
+                        if (imageInfo != null && imageInfo.getFormat() != null
                         && imageInfo.getFormat().getName() != null) {
                             formatName = imageInfo.getFormat().getName();
                             fallbackOnApacheCommonsImaging = true;
                         } else {
-                            throw new IOException("Format of the original image is " + 
+                            throw new IOException("Format of the original image is " +
                                                 "not supported for read operation !");
                         }
                     } else {
@@ -506,19 +506,19 @@ public class ImageDocumentSanitizerImpl implements DocumentSanitizer {
 
 
                 // Resize the image by removing 1px on Width and Height
-                Image resizedImage = originalImage.getScaledInstance(originalWidth - 1, 
-                                                                     originalHeight - 1, 
+                Image resizedImage = originalImage.getScaledInstance(originalWidth - 1,
+                                                                     originalHeight - 1,
                                                                      Image.SCALE_SMOOTH);
 
                 // Resize the resized image by adding 1px on Width and Height
                 // In fact set image to is initial size
-                Image initialSizedImage = resizedImage.getScaledInstance(originalWidth, 
+                Image initialSizedImage = resizedImage.getScaledInstance(originalWidth,
                                                                          originalHeight,
                                                                          Image.SCALE_SMOOTH);
 
                 // Save image by overwriting the provided source file content
-                BufferedImage sanitizedImage = new BufferedImage(initialSizedImage.getWidth(null), 
-                                                                 initialSizedImage.getHeight(null), 
+                BufferedImage sanitizedImage = new BufferedImage(initialSizedImage.getWidth(null),
+                                                                 initialSizedImage.getHeight(null),
                                                                  BufferedImage.TYPE_INT_RGB);
                 Graphics bg = sanitizedImage.getGraphics();
                 bg.drawImage(initialSizedImage, 0, 0, null);
@@ -528,7 +528,7 @@ public class ImageDocumentSanitizerImpl implements DocumentSanitizer {
                         ImageIO.write(sanitizedImage, formatName, fos);
                     } else {
                         ImageParser imageParser;
-                        //Handle only formats for which Apache Commons Imaging can successfully write 
+                        //Handle only formats for which Apache Commons Imaging can successfully write
                         // (YES in Write column of the reference link) the image format
                         //See reference link in the class header
                         switch (formatName) {
@@ -569,7 +569,7 @@ public class ImageDocumentSanitizerImpl implements DocumentSanitizer {
                                 break;
                             }
                             default: {
-                                throw new IOException("Format of the original image is not" + 
+                                throw new IOException("Format of the original image is not" +
                                                       " supported for write operation !");
                             }
 

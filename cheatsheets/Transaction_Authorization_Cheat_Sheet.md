@@ -8,11 +8,11 @@ The Purpose of this cheat sheet is to provide guidelines on how to securely impl
 
 # Introduction
 
-Some applications use a second factor to check whether an authorized user is performing sensitive operations. A common example is wire transfer authorization, typically used in online or mobile banking applications. 
+Some applications use a second factor to check whether an authorized user is performing sensitive operations. A common example is wire transfer authorization, typically used in online or mobile banking applications.
 
 For the purpose of this document we will call that process: *transaction authorization*.
 
-Usage scenarios are not only limited to financial systems. For example: an e-mail with a secret code or a link with some kind of token to unlock a user account is also a special case of transaction authorization. A user authorizes the operation of account unlocking by using a second factor (a unique code sent to his email address). Transaction authorization can be implemented using various methods, e.g.:
+Usage scenarios are not only limited to financial systems. For example: an e-mail with a secret code or a link with some kind of token to unlock a user account is also a special case of transaction authorization. A user authorizes the operation of account unlocking by using a second factor (a unique code sent to their email address). Transaction authorization can be implemented using various methods, e.g.:
 
 - Cards with transaction authorization numbers (TAN),
 - Time based OTP tokens, such as [OATH TOTP (Time-based One-Time Password)](https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm),
@@ -30,7 +30,7 @@ Transaction authorization is implemented in order to protect for unauthorized wi
 
 User’s computers cannot be trusted due to malware threats. Hence a method that prevents a user from identifying transaction on an external device cannot be considered as secure. Transaction data should be presented and acknowledged using an external authorization component.
 
-Such a transaction authorization components should be build using the *What You See Is What You Sign* principle. When a user authorizes a transaction he needs to know what he is authorizing. Based on this principle, an authorization method must permit a user to identify and acknowledge the data which are significant to a given transaction. For example, in the case of a wire transfer: the target account and amount.
+Such a transaction authorization components should be build using the *What You See Is What You Sign* principle. When a user authorizes a transaction they need to know what they are authorizing. Based on this principle, an authorization method must permit a user to identify and acknowledge the data which are significant to a given transaction. For example, in the case of a wire transfer: the target account and amount.
 
 The decision about which transaction data can be considered as significant should be chosen based on:
 
@@ -46,11 +46,11 @@ If a transaction authentication process requires a user to enter transaction dat
 
 ## 1.2 Change of authorization token should be authorized using the current authorization token
 
-When a user is allowed to change authorization token by using the application interface, the operation should be authorized by using his current authorization credentials (as is the case with [password change procedure](https://www.owasp.org/index.php/Testing_for_weak_password_change_or_reset_functionalities_%28OTG-AUTHN-009%29#Test_Password_Change)). For example: when a user changes a phone number for SMS codes an authorization SMS code should be sent to the current phone number.
+When a user is allowed to change authorization token by using the application interface, the operation should be authorized by using their current authorization credentials (as is the case with [password change procedure](https://www.owasp.org/index.php/Testing_for_weak_password_change_or_reset_functionalities_%28OTG-AUTHN-009%29#Test_Password_Change)). For example: when a user changes a phone number for SMS codes an authorization SMS code should be sent to the current phone number.
 
 ## 1.3 Change of authorization method should be authorized using the current authorization method
 
-Some applications allow a user to chose between multiple methods of transaction authorization. In such cases, the user should authorize the change in authorization method using his current authorization method. Otherwise, malware may change the authorization method to the most vulnerable method.
+Some applications allow a user to chose between multiple methods of transaction authorization. In such cases, the user should authorize the change in authorization method using their current authorization method. Otherwise, malware may change the authorization method to the most vulnerable method.
 
 Additionally, the application should inform the user about the potential dangers associated to the selected authorization method.
 
@@ -71,7 +71,7 @@ Safeguards should allow the user to easily distinguish authentication from trans
 
 ## 1.5 Each transaction should be authorized using unique authorization credentials
 
-Some applications are asking for transaction authorization credentials only once, e.g. static password, code sent through SMS, token response. Afterwards a user is able to authorize any transaction during the whole user’s session or at least he has to reuse the same credentials each time he needs to authorize a transaction. Such behavior is not sufficient to prevent malware attacks because malware will sniff such credentials and use them to authorize any transaction without the user’s knowledge.
+Some applications are asking for transaction authorization credentials only once, e.g. static password, code sent through SMS, token response. Afterwards a user is able to authorize any transaction during the whole user’s session or at least they have to reuse the same credentials each time they need to authorize a transaction. Such behavior is not sufficient to prevent malware attacks because malware will sniff such credentials and use them to authorize any transaction without the user’s knowledge.
 
 # 2. Non-functional guidelines
 
@@ -104,7 +104,7 @@ A common anti pattern is to collect significant transaction data client-side and
 
 ## 2.4 Application should prevent authorization credentials brute-forcing
 
-When transaction authorization credentials are sent to the server for verification, an application has to prevent brute-forcing. The transaction authorization process must be restarted after number of failed authorization attempts. In addition other anti brute-forcing and anti-automation techniques should be considered to prevent an attacker from automating his attacks,see [OWASP Authentication Cheat Sheet](Authentication_Cheat_Sheet.md#prevent-brute-force-attacks).
+When transaction authorization credentials are sent to the server for verification, an application has to prevent brute-forcing. The transaction authorization process must be restarted after number of failed authorization attempts. In addition other anti brute-forcing and anti-automation techniques should be considered to prevent an attacker from automating their attacks, see [OWASP Authentication Cheat Sheet](Authentication_Cheat_Sheet.md#prevent-brute-force-attacks).
 
 ## 2.5 Application should control which transaction state transitions are allowed
 

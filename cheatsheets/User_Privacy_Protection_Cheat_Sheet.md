@@ -60,7 +60,7 @@ The appropriate panic mode to implement differs depending on the application typ
 
 E-mail providers might implement a panic mode that hides predefined sensitive emails or contacts, allowing reading innocent e-mail messages only, usually as defined by the user, while preventing the panic mode from overtaking the actual account.
 
-An important note about panic modes is that they must not be easily discoverable, if at all. An adversary inside a victim's panic mode must not have any way, or as few possibilities as possible, of finding out the truth. This means that once inside a panic mode, most non-sensitive normal operations must be allowed to continue (such as sending or receiving email), and that further panic modes must be possible to create from inside the original panic mode (If the adversary tried to create a panic mode on a victim's panic mode and failed, the adversary would know he/she was already inside a panic mode, and might attempt to hurt the victim). 
+An important note about panic modes is that they must not be easily discoverable, if at all. An adversary inside a victim's panic mode must not have any way, or as few possibilities as possible, of finding out the truth. This means that once inside a panic mode, most non-sensitive normal operations must be allowed to continue (such as sending or receiving email), and that further panic modes must be possible to create from inside the original panic mode (If the adversary tried to create a panic mode on a victim's panic mode and failed, the adversary would know he/she was already inside a panic mode, and might attempt to hurt the victim).
 
 Another solution would be to prevent panic modes from being generated from the user account, and instead making it a bit harder to spoof by adversaries. For example it could be only created Out Of Band, and adversaries must have no way to know a panic mode already exists for that particular account.
 
@@ -96,7 +96,7 @@ For more information about anonymity networks, and the user protections they pro
 
 Preventing leakage of user IP addresses is of great significance when user protection is in scope. Any application that hosts external 3rd party content, such as avatars, signatures or photo attachments; must take into account the benefits of allowing users to block 3rd-party content from being loaded in the application page.
 
-If it was possible to embed 3rd-party, external domain images, for example, in a user's feed or timeline; an adversary might use it to discover a victim's real IP address by hosting it on his domain and watch for HTTP requests for that image.
+If it was possible to embed 3rd-party, external domain images, for example, in a user's feed or timeline; an adversary might use it to discover a victim's real IP address by hosting it on their domain and watch for HTTP requests for that image.
 
 Many web applications need user content to operate, and this is completely acceptable as a business process; however web developers are advised to consider giving users the option of blocking external content as a precaution. This applies mainly to social networks and forums, but can also apply to web-based e-mail, where images can be embedded in HTML-formatted e-mails.
 
