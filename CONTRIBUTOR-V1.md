@@ -1,10 +1,8 @@
 # Contributors to the intial version of the project
 
-> If you want to modify something regarding the mention made to you (typo/link to your profile/etc), feel free to submit a PR with the expected content. 
+If you want to modify something regarding the mention made to you (typo/link to your profile/etc), feel free to submit a PR with the expected content. Same approach if you think that we have forgotten someone.
 
-> Same approach if you think that we have forgotten someone.
-
-> Sorting applied on the name is an alphabetical one.
+Sorting applied on the name is an alphabetical one.
 
 **[AJAX Security Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/AJAX_Security_Cheat_Sheet.md)**
 * Michael Eddington
