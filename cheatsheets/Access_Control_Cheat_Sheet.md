@@ -18,7 +18,7 @@ The intention of having an access control policy is to ensure that security requ
 
 In Role-Based Access Control (RBAC), access decisions are based on an individual's roles and responsibilities within the organization or user base.
 
-The process of defining roles is usually based on analyzing the fundamental goals and structure of an organization and is usually linked to the security policy. For instance, in a medical organization, the different roles of users may include those such as doctor, nurse, attendant, nurse, patients, etc. Obviously, these members require different levels of access in order to perform their functions, but also the types of web transactions and their allowed context vary greatly depending on the security policy and any relevant regulations (HIPAA, Gramm-Leach-Bliley, etc.).
+The process of defining roles is usually based on analyzing the fundamental goals and structure of an organization and is usually linked to the security policy. For instance, in a medical organization, the different roles of users may include those such as doctor, nurse, attendant, patients, etc. Obviously, these members require different levels of access in order to perform their functions, but also the types of web transactions and their allowed context vary greatly depending on the security policy and any relevant regulations (HIPAA, Gramm-Leach-Bliley, etc.).
 
 An RBAC access control framework should provide web application security administrators with the ability to determine who can perform what actions, when, from where, in what order, and in some cases under what relational circumstances.
 
@@ -39,15 +39,15 @@ Problems that can be encountered while using this methodology:
 
 The areas of caution while using RBAC are:
 
-- Roles must be only be transferred or delegated using strict sign-offs and procedures.
-- When a user changes his role to another one, the administrator must make sure that the earlier access is revoked such that at any given point of time, a user is assigned to only those roles on a need to know basis.
+- Roles must only be transferred or delegated using strict sign-offs and procedures.
+- When a user changes their role to another one, the administrator must make sure that the earlier access is revoked such that at any given point of time, a user is assigned to only those roles on a need to know basis.
 - Assurance for RBAC must be carried out using strict access control reviews.
 
 # Discretionary Access Control (DAC)
 
-Discretionary Access Control (DAC) is a means of restricting access to information based on the identity of users and/or membership in certain groups. Access decisions are typically based on the authorizations granted to a user based on the credentials he presented at the time of authentication (user name, password, hardware/software token, etc.). In most typical DAC models, the owner of information or any resource is able to change its permissions at his discretion (thus the name).
+Discretionary Access Control (DAC) is a means of restricting access to information based on the identity of users and/or membership in certain groups. Access decisions are typically based on the authorizations granted to a user based on the credentials they presented at the time of authentication (user name, password, hardware/software token, etc.). In most typical DAC models, the owner of information or any resource is able to change its permissions at their discretion (thus the name).
 
-A DAC framework can provide web application security administrators with the ability to implement fine grained access control. This model can be a basis for data based access control implementation
+A DAC framework can provide web application security administrators with the ability to implement fine grained access control. This model can be a basis for data based access control implementation.
 
 The advantages of using this model are:
 
