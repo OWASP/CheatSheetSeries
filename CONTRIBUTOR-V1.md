@@ -266,8 +266,6 @@ Sorting applied on the name is an alphabetical one.
 **[Securing Cascading Style Sheets Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md)**
 * [Santhosh Tuppad](https://twitter.com/santhoshst)
 
-**[Server Side Request Forgery Prevention Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)**
-
 **[Session Management Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Session_Management_Cheat_Sheet.md)**
 * Raul Siles (DinoSec) - raul@dinosec.com
 
