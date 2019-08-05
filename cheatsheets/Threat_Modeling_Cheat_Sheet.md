@@ -23,7 +23,7 @@ Understand the Relation between Risk, Threats, and Vulnerabilities.
 
 Information Asset: is a body of knowledge that is organized and managed as a single entity. Like any other corporate asset, an organization's information assets have financial value.
 
-Threat Agent: The term Threat Agent is used to indicate an individual or group that can manifest a threat. It is fundamental to identify who would want to exploit the assets of a company, and how they might use them against the company. 
+Threat Agent: The term Threat Agent is used to indicate an individual or group that can manifest a threat. It is fundamental to identify who would want to exploit the assets of a company, and how they might use them against the company.
 
 Attack Surface: The attack surface of a software environment is the sum of the different points (the "attack vectors") where an unauthorized user (the "attacker") can try to enter data to or extract data from an environment.
 
@@ -51,7 +51,7 @@ If you are not performing threat modeling during the development (in the design 
 
 ## Create design documents
 
-There are many ways to generate design documents; the **4+1** view model is one of the matured approaches to building your design document. 
+There are many ways to generate design documents; the **4+1** view model is one of the matured approaches to building your design document.
 
 Reference to **4+1** view model of architecture [here](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model).
 
@@ -216,7 +216,7 @@ In most cases after defining the attack vectors, the compromised user role could
 
 Enumerate Attacks posed by the most dangerous attacker in designated areas of the logical and physical maps of the target of evaluation.
 
-Assume the attacker has a zero-day because he does. In this methodology, we assume compromise; because a zero-day will exist or already does exist (even if we don't know about it). This is about what can be done by skilled attackers, with much more time, money, motive and opportunity that we have.
+Assume the attacker has a zero-day because they do. In this methodology, we assume compromise; because a zero-day will exist or already does exist (even if we don't know about it). This is about what can be done by skilled attackers, with much more time, money, motive and opportunity that we have.
 
 Use risk management methodology to determine the risk behind the threat
 
@@ -250,7 +250,7 @@ PASTA introduces a complete risk analysis and evaluation procedures that you can
 
 The idea behind addressing the impact earlier in PASTA approach is that the audience that knows impact knows the consequences on a product or use case failures more than participants in the threat analysis phase.
 
-Application security risk assessments are not enough because they are very binary and leverage a control framework basis for denoting risks. It is recommended to contextually look at threats impacts, probability and effectiveness of countermeasures that may be present. 
+Application security risk assessments are not enough because they are very binary and leverage a control framework basis for denoting risks. It is recommended to contextually look at threats impacts, probability and effectiveness of countermeasures that may be present.
 
 ```text
 R = (T * V * P * I) / Countermeasures

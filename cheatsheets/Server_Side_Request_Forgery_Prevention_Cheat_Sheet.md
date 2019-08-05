@@ -6,7 +6,7 @@ This cheat sheet will focus on the defensive point of view and will not explain 
 
 # Context
 
-SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples: 
+SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples:
 - Image on external server (*e.g.* user enters image URL of their avatar for the application to download and use).
 - Custom [WebHook](https://en.wikipedia.org/wiki/Webhook) (user have to specify WebHook handlers or Callback URLs).
 - Internal requests to interact with another service to serve a certain functionality. Most of the times, user data is sent along to be processed, and if badly handled, can perform certain injection attacks.
@@ -15,7 +15,7 @@ SSRF is an attack vector that abuses an application to interact with the interna
 
 ![SSRF Common Flow](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Common_Flow.png)
 
-*Notes:* 
+*Notes:*
 
 * SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (*e.g.* FTP, SMB, SMTP, etc.) and schemes (*e.g.* `file://`, `phar://`, `gopher://`, `data://`, `dict://`, etc.). The protocol/scheme usage is highly dependent on the application’s requirements.
 * If the application is vulnerable to [XML eXternal Entity (XXE) injection](https://portswigger.net/web-security/xxe) then it can by exploited to perform a [SSRF attack](https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks), take a look at the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md) to learn how to prevent the exposure to XXE.
@@ -36,7 +36,7 @@ Sometimes, an application need to perform request to another application, often 
 
  > Take the example of a web application that receives and uses personal information from a user, such as their firstname/lastname/birthdate to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands in order to process that data.
 
- > Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system. 
+ > Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system.
 
  > The user leverages the web application as a proxy to the HR system.
 
@@ -48,7 +48,7 @@ Several protective measures are possible at the **Application** and **Network** 
 
 #### Application layer
 
-The first level of protection that comes to mind is [Input validation](Input_Validation_Cheat_Sheet.md). 
+The first level of protection that comes to mind is [Input validation](Input_Validation_Cheat_Sheet.md).
 
 Based on that point, the following question comes to mind: *How to perform this input validation?*
 
@@ -64,7 +64,7 @@ The request sent to the internal application will be based on the following info
 
 ##### String
 
-In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected. 
+In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected.
 
 A [regex](https://www.regular-expressions.info/) can be used to ensure that data received is valid from a security point of view if the input data have a simple format (*e.g.* token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the `string` object because regex for complex formats are difficult to maintain and are highly error prone.
 
@@ -125,17 +125,17 @@ Similar to the IP address validation, the first layer of validation can be appli
 > Verification of the proposed libraries has been performed to ensure that the proposed functions do not perform any DNS resolution query.
 
 * **JAVA:** Method [DomainValidator.isValid](https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html#isValid(java.lang.String)) from the [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/) library.
-* **.NET**: Method [Uri.CheckHostName](https://docs.microsoft.com/en-us/dotnet/api/system.uri.checkhostname?view=netframework-4.8) from the SDK. 
+* **.NET**: Method [Uri.CheckHostName](https://docs.microsoft.com/en-us/dotnet/api/system.uri.checkhostname?view=netframework-4.8) from the SDK.
 * **JavaScript**: Library [is-valid-domain](https://www.npmjs.com/package/is-valid-domain).
 * **Python**: Module [validators.domain](https://validators.readthedocs.io/en/latest/#module-validators.domain).
 * **Ruby**: No valid dedicated gem has been found.
-    * [domainator](https://github.com/mhuggins/domainator), [public_suffix](https://github.com/weppos/publicsuffix-ruby) and [addressable](https://github.com/sporkmonger/addressable) has been tested but unfortunately they all consider `<script>alert(1)</script>.owasp.org` as a valid domain name. 
+    * [domainator](https://github.com/mhuggins/domainator), [public_suffix](https://github.com/weppos/publicsuffix-ruby) and [addressable](https://github.com/sporkmonger/addressable) has been tested but unfortunately they all consider `<script>alert(1)</script>.owasp.org` as a valid domain name.
     * This regex, taken from [here](https://stackoverflow.com/a/26987741), can be used: `^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$`
 
 Example of execution of the proposed regex for Ruby:
 
 ```ruby
-domain_names = ["owasp.org","owasp-test.org","doc-test.owasp.org","doc.owasp.org", 
+domain_names = ["owasp.org","owasp-test.org","doc-test.owasp.org","doc.owasp.org",
                 "<script>alert(1)</script>","<script>alert(1)</script>.owasp.org"]
 domain_names.each { |domain_name|
     if ( domain_name =~ /^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$/ )
@@ -194,29 +194,29 @@ def verify_dns_records(domain, records, type):
                 ip = ipaddress.ip_address(value)
                 # See https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address.is_global
                 if not ip.is_global:
-                    print("[!] DNS record type '%s' for domain name '%s' resolve to 
+                    print("[!] DNS record type '%s' for domain name '%s' resolve to
                     a non public IP address '%s'!" % (type, domain, value))
                     error_detected = True
             except ValueError:
                 error_detected = True
                 print("[!] '%s' is not valid IP address!" % value)
     return error_detected
-            
+
 def check():
     """
     Perform the check of the whitelist of domains.
     Return a boolean indicating if any error has been detected.
     """
     error_detected = False
-    for domain in DOMAINS_WHITELIST:    
+    for domain in DOMAINS_WHITELIST:
         # Get the IPs of the curent domain
         # See https://en.wikipedia.org/wiki/List_of_DNS_record_types
         try:
-            # A = IPv4 address record        
+            # A = IPv4 address record
             ip_v4_records = DNS_RESOLVER.query(domain, "A")
         except Exception as e:
-            ip_v4_records = None            
-            print("[i] Cannot get A record for domain '%s': %s\n" % (domain,e))        
+            ip_v4_records = None
+            print("[i] Cannot get A record for domain '%s': %s\n" % (domain,e))
         try:
             # AAAA = IPv6 address record
             ip_v6_records = DNS_RESOLVER.query(domain, "AAAA")
@@ -224,7 +224,7 @@ def check():
             ip_v6_records = None
             print("[i] Cannot get AAAA record for domain '%s': %s\n" % (domain,e))
         # Verify the IPs obtained
-        if verify_dns_records(domain, ip_v4_records, "A") 
+        if verify_dns_records(domain, ip_v4_records, "A")
         or verify_dns_records(domain, ip_v6_records, "AAAA"):
             error_detected = True
     return error_detected
@@ -238,7 +238,7 @@ if __name__== "__main__":
 
 ##### URL
 
-Do not accept complete URLs from the user because URL are difficult to validate and the parser can be abused depending on the technology used as showcased by the following [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf) of [Orange Tsai](https://twitter.com/orange_8361). 
+Do not accept complete URLs from the user because URL are difficult to validate and the parser can be abused depending on the technology used as showcased by the following [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf) of [Orange Tsai](https://twitter.com/orange_8361).
 
 If network related information is really nedded then only accept a valid IP address or domain name.
 
@@ -246,7 +246,7 @@ If network related information is really nedded then only accept a valid IP addr
 
 The objective of the Network layer security is to prevent the *VulnerableApplication* from performing calls to arbitrary applications. Only allowed *routes* will be available for this application in order to limit its network access to only those that it should communicate with.
 
-The Firewall component, as a specific device or using the one provided within the operating system, will be used here to define the legitimate flows. 
+The Firewall component, as a specific device or using the one provided within the operating system, will be used here to define the legitimate flows.
 
 In the schema below, a Firewall component is leveraged to limit the application's access, and in turn, limit the impact of an application vulnerable to SSRF:
 
@@ -256,11 +256,11 @@ In the schema below, a Firewall component is leveraged to limit the application'
 
 ## Case 2 - Application can send requests to ANY external IP address or domain name
 
-This case happens when a user can control an URL to an **External** resource and the application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing. 
+This case happens when a user can control an URL to an **External** resource and the application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.
 
 In this scenario, *External* refers to any IP that doesn't belong to the internal network, and should be reached by going over the public internet.
 
-Thus, the call from the *Vulnerable Application*: 
+Thus, the call from the *Vulnerable Application*:
 * **Is NOT** targeting one of the IP/domain *located inside* the company's global network.
 * Uses a convention defined between the *VulnerableApplication* and the expected IP/domain in order to *prove* that the call has been legitimately initiated.
 
@@ -289,9 +289,9 @@ The first validation on the input data presented in the case [n°1](Server_Side_
 
 1. The application will receive the IP address or domain name of the *TargetedApplication* and it will apply the first validation on the input data using the libraries/regex mentioned in this [section](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer).
 2. The second validation will be applied against the IP address or domain name of the *TargetedApplication* using the following blacklist approach:
-    * For IP address: 
+    * For IP address:
         * The application will verify that it is a public one (see the hint provided in the next paragraph with the python code sample).
-    * For domain name: 
+    * For domain name:
         1. The application will verify that it is a public one by trying to resolve the domain name against the DNS resolver that will only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.
         2. To prevent the `DNS pinning` attack described in this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf), the application will retrieve all the IP addresses behind the domain name provided (taking records *A* + *AAAA* for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.
 3. The application will receive the protocol to use for the request via a dedicated input parameter for which it will verify the value against an allowed list of protocols (`HTTP` or `HTTPS`).
@@ -314,8 +314,8 @@ def is_private_ip(ip_address):
     # Build the list of IP prefix for V4 and V6 addresses
     ip_prefix = []
     # Add prefix for loopback addresses
-    ip_prefix.append("127.")    
-    ip_prefix.append("0.")    
+    ip_prefix.append("127.")
+    ip_prefix.append("0.")
     # Add IP V4 prefix for private addresses
     # See https://en.wikipedia.org/wiki/Private_network
     ip_prefix.append("10.")
@@ -347,8 +347,8 @@ def is_private_ip(ip_address):
     ip_prefix.append("ff")
     ip_prefix.append("::1")
     # Verify the provided IP address
-    # Remove whitespace characters from the beginning/end of the string 
-    # and convert it to lower case 
+    # Remove whitespace characters from the beginning/end of the string
+    # and convert it to lower case
     # Lower case is for preventing any IPV6 case bypass using mixed case
     # depending on the source used to get the IP address
     ip_to_verify = ip_address.strip().lower()
@@ -357,7 +357,7 @@ def is_private_ip(ip_address):
         if ip_to_verify.startswith(prefix):
             is_private = True
             break
-    return is_private   
+    return is_private
 ```
 
 #### Network layer
@@ -387,7 +387,7 @@ sequenceDiagram
     Attacker->>VulnerableApplication: Crafted HTTP request
     VulnerableApplication->>TargetedApplication: Request (HTTP, FTP...)
     Note left of TargetedApplication: Use payload included<br>into the request to<br>VulnerableApplication
-    TargetedApplication->>VulnerableApplication: Response 
+    TargetedApplication->>VulnerableApplication: Response
     VulnerableApplication->>Attacker: Response
     Note left of VulnerableApplication: Include response<br>from the<br>TargetedApplication
 ```

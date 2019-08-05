@@ -34,7 +34,7 @@ The basic requirements for using TLS are: access to a Public Key Infrastructure 
 
 ## SSL vs. TLS
 
-The terms, Secure Socket Layer (SSL) and Transport Layer Security (TLS) are often used interchangeably. In fact, SSL v3.1 is equivalent to TLS v1.0. However, different versions of SSL and TLS are supported by modern web browsers and by most modern web frameworks and platforms. 
+The terms, Secure Socket Layer (SSL) and Transport Layer Security (TLS) are often used interchangeably. In fact, SSL v3.1 is equivalent to TLS v1.0. However, different versions of SSL and TLS are supported by modern web browsers and by most modern web frameworks and platforms.
 
 For the purposes of this cheat sheet we will refer to the technology generically as TLS. Recommendations regarding the use of SSL and TLS protocols, as well as browser support for TLS, can be found in the rule below titled **Only Support Strong Protocols**.
 
@@ -189,21 +189,21 @@ Ephemeral key exchanges are based on Diffie-Hellman and use per-session, tempora
 
 Use cryptographic parameters (like [DH-parameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters)) that use a secure length that match to the supported keylength of your certificate (superior or equals to 2048 bits or equivalent Elliptic Curves). As some middleware had some issues with this, upgrade to the latest version. Note: There are some legacy browsers or old Java versions that are not capable to cope with DH-Params superior ro 1024 bits, please read this [Rule - Only Support Strong Cryptographic Ciphers](Transport_Layer_Protection_Cheat_Sheet.md#rule---only-support-strong-cryptographic-ciphers) to know how this can be solved.
 
-Do NOT use standardized [DH-parameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters) like they are defined by RFCs [2409](https://tools.ietf.org/html/rfc2409), [3526](https://tools.ietf.org/html/rfc3526), or [5114](https://tools.ietf.org/html/rfc5114). 
+Do NOT use standardized [DH-parameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters) like they are defined by RFCs [2409](https://tools.ietf.org/html/rfc2409), [3526](https://tools.ietf.org/html/rfc3526), or [5114](https://tools.ietf.org/html/rfc5114).
 
-Generate your individual [DH-parameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters) to get unique prime numbers (this may take a long time): 
-
-```bash
-$ openssl dhparam 2048 -out dhparam2048.pem 
-```
-
-Set the path to use this parameter file, e.g. when using Apache: 
+Generate your individual [DH-parameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters) to get unique prime numbers (this may take a long time):
 
 ```bash
-SSLOpenSSLConfCmd DHParameters <path to dhparam2048.pem> 
+$ openssl dhparam 2048 -out dhparam2048.pem
 ```
 
-If you have a server farm and are providing [forward secrecy](https://scotthelme.co.uk/perfect-forward-secrecy/), then you might have to disable session resumption. For example, Apache writes the session id's and master secrets to disk so all servers in the farm can participate in resuming a session (there is currently no in-memory mechanism to achieve the sharing). 
+Set the path to use this parameter file, e.g. when using Apache:
+
+```bash
+SSLOpenSSLConfCmd DHParameters <path to dhparam2048.pem>
+```
+
+If you have a server farm and are providing [forward secrecy](https://scotthelme.co.uk/perfect-forward-secrecy/), then you might have to disable session resumption. For example, Apache writes the session id's and master secrets to disk so all servers in the farm can participate in resuming a session (there is currently no in-memory mechanism to achieve the sharing).
 
 Writing the session id and master secret to disk undermines [forward secrecy](https://scotthelme.co.uk/perfect-forward-secrecy/).
 
@@ -241,7 +241,7 @@ Each protocol (TLSv1.0, TLSv1.1, TLSv1.2, etc) provides cipher suites. As of TLS
 openssl ciphers -v "EDH+aRSA+AESGCM:EDH+aRSA+AES:EECDH+aRSA+AESGCM:EECDH+aRSA+AES:-SHA:ECDHE-RSA-AES256-SHA
 :ECDHE-RSA-AES128-SHA:RSA+AESGCM:RSA+AES+SHA256
 :RSA+AES+SHA:DES-CBC3-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA"
-#add optionally ':!aNULL:!eNULL:!LOW:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA' 
+#add optionally ':!aNULL:!eNULL:!LOW:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA'
 #to protect older Versions of OpenSSL
 #3DES (=DES-CBC3-SHA): please read the text above
 #you may use openssl ciphers -V "..." for openssl >= 1.0.1:
@@ -295,7 +295,7 @@ Finally, using a PAKE removes the need to trust an outside party, such as a Cert
 
 ### Rule - Only Support Secure Renegotiations
 
-A design weakness in TLS, identified as [CVE-2009-3555](http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-3555), allows an attacker to inject a plaintext of his choice into a TLS session of a victim. In the HTTPS context the attacker might be able to inject his own HTTP requests on behalf of the victim. The issue can be mitigated either by disabling support for TLS renegotiations or by supporting only renegotiations compliant with [RFC 5746](https://tools.ietf.org/html/rfc5746). All modern browsers have been updated to comply with this RFC.
+A design weakness in TLS, identified as [CVE-2009-3555](http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2009-3555), allows an attacker to inject a plaintext of their choice into a TLS session of a victim. In the HTTPS context the attacker might be able to inject their own HTTP requests on behalf of the victim. The issue can be mitigated either by disabling support for TLS renegotiations or by supporting only renegotiations compliant with [RFC 5746](https://tools.ietf.org/html/rfc5746). All modern browsers have been updated to comply with this RFC.
 
 ### Rule - Disable Compression
 

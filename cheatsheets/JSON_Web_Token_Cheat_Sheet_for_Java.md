@@ -8,7 +8,7 @@ From [JWT.IO](https://jwt.io/introduction):
 
 JSON Web Token is used to carry information related to the identity and characteristics (claims) of a client. This "container" is signed by the server in order to avoid that a client tamper it in order to change, for example, the identity or any characteristics (example: change the role from simple user to admin or change the client login).
 
-This token is created during authentication (is provided in case of successful authentication) and is verified by the server before any processing. It is used by an application to allow a client to present a token representing his "identity card" (container with all information about him) to server and allow the server to verify the validity and integrity of the token in a secure way, all of this in a stateless and portable approach (portable in the way that client and server technologies can be different including also the transport channel even if HTTP is the most often used).
+This token is created during authentication (is provided in case of successful authentication) and is verified by the server before any processing. It is used by an application to allow a client to present a token representing their "identity card" (container with all information about them) to server and allow the server to verify the validity and integrity of the token in a secure way, all of this in a stateless and portable approach (portable in the way that client and server technologies can be different including also the transport channel even if HTTP is the most often used).
 
 # Token structure
 
@@ -20,7 +20,7 @@ Token structure example taken from [JWT.IO](https://jwt.io/#debugger):
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
 eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.
 TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
-```    
+```
 
 Chunk 1: **Header**
 
@@ -29,7 +29,7 @@ Chunk 1: **Header**
      "alg": "HS256",
      "typ": "JWT"
     }
-```    
+```
 
 Chunk 2: **Payload**
 
@@ -39,19 +39,19 @@ Chunk 2: **Payload**
      "name": "John Doe",
      "admin": true
     }
-```    
+```
 
 Chunk 3: **Signature**
 
 ```javascript
 HMACSHA256( base64UrlEncode(header) + "." + base64UrlEncode(payload), KEY )
-```    
+```
 
 # Objective
 
 This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT) with Java.
 
-The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens. 
+The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens.
 
 You can find the Java project [here](https://github.com/righettod/poc-jwt), it uses the official [JWT library](https://jwt.io/#libraries).
 
@@ -85,7 +85,7 @@ private transient byte[] keyHMAC = ...;
 
 ...
 
-//Create a verification context for the token requesting 
+//Create a verification context for the token requesting
 //explicitly the use of the HMAC-256 hashing algorithm
 JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyHMAC)).build();
 
@@ -106,7 +106,7 @@ A way to protect is to add "user context" in the token. User context will be com
 - A random string that will be generated during the authentication phase and will be included into the token and also send to the client as an hardened cookie (flags: [HttpOnly + Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies) + [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies) + [cookie prefixes](https://googlechrome.github.io/samples/cookie-prefixes/)).
 - A SHA256 hash of the random string will be stored in the token (instead of the raw value) in order to prevent that any XSS issue allow the attacker to read the random string value and set the expected cookie.
 
-IP address will not be used because there some situation in which IP address can change during the same session like for example when a user access an application through his mobile and he change of mobile operator during the exchange then he change legitimately (often) is IP address. Moreover, using IP address can potentially cause issue at [European GDPR](http://www.eugdpr.org/) compliance level.
+IP address will not be used because there are some situations in which IP address can change during the same session, like for example when a user accesses an application through their mobile and they change their mobile operator during the exchange, then they legitimately change (often) their IP address. Moreover, using IP address can potentially cause issue at [European GDPR](http://www.eugdpr.org/) compliance level.
 
 During token validation, if the received token do not contains the right context so, it is replayed and then it must be rejected.
 
@@ -127,15 +127,15 @@ byte[] randomFgp = new byte[50];
 secureRandom.nextBytes(randomFgp);
 String userFingerprint = DatatypeConverter.printHexBinary(randomFgp);
 
-//Add the fingerprint in a hardened cookie - Add cookie manually because 
+//Add the fingerprint in a hardened cookie - Add cookie manually because
 //SameSite attribute is not supported by javax.servlet.http.Cookie class
-String fingerprintCookie = "__Secure-Fgp=" + userFingerprint 
+String fingerprintCookie = "__Secure-Fgp=" + userFingerprint
                            + "; SameSite=Strict; HttpOnly; Secure";
 response.addHeader("Set-Cookie", fingerprintCookie);
 
-//Compute a SHA256 hash of the fingerprint in order to store the 
+//Compute a SHA256 hash of the fingerprint in order to store the
 //fingerprint hash (instead of the raw value) in the token
-//to prevent an XSS to be able to read the fingerprint and 
+//to prevent an XSS to be able to read the fingerprint and
 //set the expected cookie itself
 MessageDigest digest = MessageDigest.getInstance("SHA-256");
 byte[] userFingerprintDigest = digest.digest(userFingerprint.getBytes("utf-8"));
@@ -177,7 +177,7 @@ if (request.getCookies() != null && request.getCookies().length > 0) {
  }
 }
 
-//Compute a SHA256 hash of the received fingerprint in cookie in order to compare 
+//Compute a SHA256 hash of the received fingerprint in cookie in order to compare
 //it to the fingerprint hash stored in the token
 MessageDigest digest = MessageDigest.getInstance("SHA-256");
 byte[] userFingerprintDigest = digest.digest(userFingerprint.getBytes("utf-8"));
@@ -214,7 +214,7 @@ When the user want to "logout" then it call a dedicated service that will add th
 A database table with the following structure will used as central blacklist storage.
 
 ``` sql
-create table if not exists revoked_token(jwt_token_digest varchar(255) primary key, 
+create table if not exists revoked_token(jwt_token_digest varchar(255) primary key,
 revokation_date timestamp default now());
 ```
 
@@ -225,7 +225,7 @@ Code in charge of adding a token to the blacklist and check if a token is revoke
 ``` java
 /**
 * Handle the revokation of the token (logout).
-* Use a DB in order to allow multiple instances to check for revoked token 
+* Use a DB in order to allow multiple instances to check for revoked token
 * and allow cleanup at centralized DB level.
 */
 public class TokenRevoker {
@@ -235,7 +235,7 @@ public class TokenRevoker {
  private DataSource storeDS;
 
  /**
-  * Verify if a digest encoded in HEX of the ciphered token is present 
+  * Verify if a digest encoded in HEX of the ciphered token is present
   * in the revokation table
   *
   * @param jwtInHex Token encoded in HEX
@@ -322,15 +322,15 @@ In order to achieve all these goals, the algorithm *AES-[GCM](https://en.wikiped
 More details from [here](https://github.com/google/tink/blob/master/docs/PRIMITIVES.md#deterministic-authenticated-encryption-with-associated-data):
 
 ```text
-AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric 
-authenticated encryption. 
+AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric
+authenticated encryption.
 
-Implementations of this primitive are secure against adaptive chosen ciphertext attacks. 
+Implementations of this primitive are secure against adaptive chosen ciphertext attacks.
 
-When encrypting a plaintext one can optionally provide associated data that should be authenticated 
-but not encrypted. 
+When encrypting a plaintext one can optionally provide associated data that should be authenticated
+but not encrypted.
 
-That is, the encryption with associated data ensures authenticity (ie. who the sender is) and 
+That is, the encryption with associated data ensures authenticity (ie. who the sender is) and
 integrity (ie. data has not been tampered with) of that data, but not its secrecy.
 
 See RFC5116: https://tools.ietf.org/html/rfc5116
@@ -467,7 +467,7 @@ It's occur when a application store the token in a way allowing this one to be:
 2.  Add it as a *Bearer* with JavaScript when calling services.
 3.  Add [fingerprint](JSON_Web_Token_Cheat_Sheet_for_Java.md#token-sidejacking) information to the token.
 
-By storing the token in browser *sessionStorage* container it expose the token to be steal in case of XSS issue. However, fingerprint added to the token prevent reuse of the stolen token by the attacker on his machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#csp) to harden the execution context.
+By storing the token in browser *sessionStorage* container it exposes the token to be stolen in case of an XSS issue. However, the fingerprint added to the token prevents reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#csp) to harden the execution context.
 
 *Note:*
 

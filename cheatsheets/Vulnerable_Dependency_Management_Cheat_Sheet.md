@@ -4,7 +4,7 @@ The objective of the cheat sheet is to provide a proposal of approach regarding 
 
 The cheat sheet is not tools oriented but it contains a [tools](#Tools) section informing the reader about free and commercial solutions that can be used to detect vulnerable dependencies, depending on the level of support on the technologies at hand
 
-**Note:** 
+**Note:**
 
 Proposals mentioned in this cheat sheet are not silver-bullet (recipes that work in all situations) yet can be used as a foundation and adapted to your context.
 
@@ -22,19 +22,19 @@ Based on this context, it's important for a project to ensure that all the third
 
 It's highly recommended to perform automated analysis of the dependencies from the birth of the project. Indeed, if this task is added at the middle or end of the project, it can imply a huge amount of work to handle all the issues identified and that will in turn impose a huge burden on the development team and might to blocking the advancement of the project at hand.
 
-**Note:** 
+**Note:**
 
 In the rest of the cheat sheet, when we refer to *development team* then we assume that the team contains a member with the required application security skills or can refer to someone in the company having these kind of skills to analyse the vulnerability impacting the dependency.
 
 # Remark about the detection
 
-It's important to keep in mind the different ways in which a security issue is handled after its discovery. 
+It's important to keep in mind the different ways in which a security issue is handled after its discovery.
 
 ## 1. Responsible disclosure
 
 See a description [here](https://en.wikipedia.org/wiki/Responsible_disclosure).
 
-A researcher discovers a vulnerability in a component, and after collaboration with the component provider, they issue a [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures) (sometimes a specific vulnerability identifier to the provider is created but generally a CVE identifier is preferred) associated to the issue allowing the public referencing of the issue as well as the available fixation/mitigation. 
+A researcher discovers a vulnerability in a component, and after collaboration with the component provider, they issue a [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures) (sometimes a specific vulnerability identifier to the provider is created but generally a CVE identifier is preferred) associated to the issue allowing the public referencing of the issue as well as the available fixation/mitigation.
 
 If in case the provider doesn't properly cooperate with the researcher, the following results are expected:
 
@@ -59,7 +59,7 @@ When a security issue is detected, it's possible to decide to accept the risk re
 
 When a security issue is detected, the development team can meet one of the situations (named *Case* in the rest of the cheat sheet) presented in the sub sections below.
 
-If the vulnerably impact a [transitive dependency](https://en.wikipedia.org/wiki/Transitive_dependency) then the action will be taken on the direct dependency of the project because acting on a transitive dependency often impact the stability of the application. 
+If the vulnerably impact a [transitive dependency](https://en.wikipedia.org/wiki/Transitive_dependency) then the action will be taken on the direct dependency of the project because acting on a transitive dependency often impact the stability of the application.
 
 Acting on a on a transitive dependency require the developmement team to fully understand the complete relation/communication/usage from the project first level dependency until the dependency impacted by the security vulnerability, this task is very time consuming.
 
@@ -108,7 +108,7 @@ Provider can share any of the below with the development team:
 
 If a workaround is provided, it should be applied and validated on the testing environment, and thereafter deployed to production.
 
-If the provider has given the team a list of the impacted functions, protective code must wrap the calls to these functions to ensure that the input and the output data is safe. 
+If the provider has given the team a list of the impacted functions, protective code must wrap the calls to these functions to ensure that the input and the output data is safe.
 
 Moreover, security devices, such as the Web Application Firewall (WAF), can handle such issues by protecting the internal applications through parameter validation and by generating detection rules for those specific libraries. Yet, in this cheat sheet, the focus is set on the application level in order to patch the vulnerability as close as possible to the source.
 
@@ -136,7 +136,7 @@ If the provider has provided the team with the exploitation code, and the team m
 
 If you have a set of automated unit or integration or functionnal or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.
 
-Add a comment in the project *README* explaining that the issue (specify the related [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures)) is handled during the waiting time of a patched version because the detection tool will continue to raise an alert on this dependency. 
+Add a comment in the project *README* explaining that the issue (specify the related [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures)) is handled during the waiting time of a patched version because the detection tool will continue to raise an alert on this dependency.
 
 **Note:** You can add the dependency to the ignore list but the ignore scope for this dependency must only cover the [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures) related to the vulnerability because a dependency can be impacted by several vulnerabilities having each one its own [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures).
 
@@ -144,11 +144,11 @@ Add a comment in the project *README* explaining that the issue (specify the rel
 
 ### Context
 
-Provider inform the team that he cannot fix the issue, so no patched version will be released at all (applies also if provider does not want to fix the issue or does not answer at all).
+Provider inform the team that they cannot fix the issue, so no patched version will be released at all (applies also if provider does not want to fix the issue or does not answer at all).
 
 In this case the only information given to the development team is the [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures).
 
-**Notes:** 
+**Notes:**
 
 * This case is really complex and time consuming and is generally used as last resort.
 * If the impacted dependency is an open source library then we, the development team, can create a patch and create [pull request](https://help.github.com/en/articles/about-pull-requests) - that way we can protect our company/application from the source as well as helping others secure their applications.
@@ -184,8 +184,8 @@ The team has an application using the Jackson API in a version exposed to the [C
 The description of the CVE is as follows:
 
 ```text
-XML external entity (XXE) vulnerability in XmlMapper in the Data format extension for Jackson 
-(aka jackson-dataformat-xml) allows attackers to have unspecified impact via unknown vectors.  
+XML external entity (XXE) vulnerability in XmlMapper in the Data format extension for Jackson
+(aka jackson-dataformat-xml) allows attackers to have unspecified impact via unknown vectors.
 ```
 
 Based on these information, the team determines that the necessary patching will be to add a [pre-validation of any XML data](XML_External_Entity_Prevention_Cheat_Sheet.md) passed to the Jakson API to prevent [XML external entity (XXE)](https://www.acunetix.com/blog/articles/xml-external-entity-xxe-vulnerabilities/) vulnerability.
@@ -227,7 +227,7 @@ It's important to ensure, during the selection process of a vulnerable dependenc
 * Support for flagging an issue raised on a component as a [false-positive](https://www.whitehatsec.com/glossary/content/false-positive).
 
 * Free
-    * [OWASP Dependency Check](https://www.owasp.org/index.php/OWASP_Dependency_Check): 
+    * [OWASP Dependency Check](https://www.owasp.org/index.php/OWASP_Dependency_Check):
         * Full support: Java, .Net.
         * Experimental support: Python, Ruby, PHP (composer), NodeJS, C, C++.
     * [NPM Audit](https://docs.npmjs.com/cli/audit)
@@ -236,10 +236,10 @@ It's important to ensure, during the selection process of a vulnerable dependenc
     * To manage the vulnerable dependencies in a transversal way in an organization the [OWASP Dependency Track](https://dependencytrack.org/) project can be used.
 * Commercial
     * [Snyk](https://snyk.io/) (open source and free option available):
-        * [Full support](https://snyk.io/docs/) for many languages and package manager. 
+        * [Full support](https://snyk.io/docs/) for many languages and package manager.
     * [JFrog XRay](https://jfrog.com/xray/):
-        * [Full support](https://jfrog.com/integration/) for many languages and package manager. 
+        * [Full support](https://jfrog.com/integration/) for many languages and package manager.
     * [Renovate](https://renovatebot.com) (allow to detect old dependencies):
-        * [Full support](https://renovatebot.com/docs/) for many languages and package manager. 
+        * [Full support](https://renovatebot.com/docs/) for many languages and package manager.
     * [Requires.io](https://requires.io/) (allow to detect old dependencies - open source and free option available):
         * [Full support](https://requires.io/features/): Python only.

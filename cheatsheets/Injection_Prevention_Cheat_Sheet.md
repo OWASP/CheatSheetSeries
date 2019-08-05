@@ -36,7 +36,7 @@ But also LDAP, SOAP, XPath and REST based queries can be susceptible to injectio
 
 ### SQL Injection
 
-An SQL injection attack consists of insertion or "injection" of either a partial or complete SQL query via the data input or transmitted from the client (browser) to the web application. 
+An SQL injection attack consists of insertion or "injection" of either a partial or complete SQL query via the data input or transmitted from the client (browser) to the web application.
 
 A successful SQL injection attack can read sensitive data from the database, modify database data (insert/update/delete), execute administration operations on the database (such as shutdown the DBMS), recover the content of a given file existing on the DBMS file system or write files into the file system, and, in some cases, issue commands to the operating system. SQL injection attacks are a type of injection attack, in which SQL commands are injected into data-plane input in order to affect the execution of predefined SQL commands.
 
@@ -74,13 +74,13 @@ The time delay exploitation technique is very useful when the tester find a Blin
 http://www.example.com/product.php?id=10 AND IF(version() like ‘5%’, sleep(10), ‘false’))--
 ```
 
-In this example the tester if checking whether the MySql version is 5.x or not, making the server to delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn’t need to wait for the response. Sometimes he can set a very high value (e.g. 100) and cancel the request after some seconds.
+In this example the tester if checking whether the MySql version is 5.x or not, making the server to delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn’t need to wait for the response. Sometimes they can set a very high value (e.g. 100) and cancel the request after some seconds.
 
 **Out of band Exploitation technique**
 
-This technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester’s server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section. 
+This technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester’s server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section.
 
-#### Remediation 
+#### Remediation
 
 **Defense Option 1: Prepared Statements (with Parameterized Queries)**
 
@@ -88,7 +88,7 @@ Prepared statements ensure that an attacker is not able to change the intent of 
 
 **Defense Option 2: Stored Procedures**
 
-The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. 
+The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application.
 
 Both of these techniques have the same effectiveness in preventing SQL injection so your organization should choose which approach makes the most sense for you. Stored procedures are not always safe from SQL injection. However, certain standard stored procedure programming constructs have the same effect as the use of parameterized queries when implemented safely* which is the norm for most stored procedure languages.
 
@@ -96,7 +96,7 @@ Both of these techniques have the same effectiveness in preventing SQL injection
 
 **Defense Option 3: White List Input Validation**
 
-Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters. 
+Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.
 
 But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full re-write should be considered if time allows.
 
@@ -104,34 +104,34 @@ But if user parameter values are used to make different for table names and colu
 
 This technique should only be used as a last resort, when none of the above are feasible. Input validation is probably a better choice as this methodology is frail compared to other defenses and we cannot guarantee it will prevent all SQL Injection in all situations.
 
-This technique is to escape user input before putting it in a query. It's usually only recommended to retrofit legacy code when implementing input validation isn't cost effective. 
+This technique is to escape user input before putting it in a query. It's usually only recommended to retrofit legacy code when implementing input validation isn't cost effective.
 
-#### Example code - Java 
+#### Example code - Java
 
 **Safe Java Prepared Statement Example**
 
 The following code example uses a `PreparedStatement`, Java's implementation of a parameterized query, to execute the same database query.
 
 ```java
-// This should REALLY be validated too 
-String custname = request.getParameter("customerName"); 
-// Perform input validation to detect attacks 
-String query = "SELECT account_balance FROM user_data WHERE user_name = ?";  
+// This should REALLY be validated too
+String custname = request.getParameter("customerName");
+// Perform input validation to detect attacks
+String query = "SELECT account_balance FROM user_data WHERE user_name = ?";
 PreparedStatement pstmt = connection.prepareStatement(query);
 pstmt.setString(1, custname);
 ResultSet results = pstmt.executeQuery();
 ```
 
-We have shown examples in Java, but practically all other languages, including Cold Fusion, and Classic ASP, support parameterized query interfaces. 
+We have shown examples in Java, but practically all other languages, including Cold Fusion, and Classic ASP, support parameterized query interfaces.
 
 **Safe Java Stored Procedure Example**
 
-The following code example uses a `CallableStatement`, Java's implementation of the stored procedure interface, to execute the same database query. The `sp_getAccountBalance` stored procedure would have to be predefined in the database and implement the same functionality as the query defined above. 
+The following code example uses a `CallableStatement`, Java's implementation of the stored procedure interface, to execute the same database query. The `sp_getAccountBalance` stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.
 
 ```java
 // This should REALLY be validated
 String custname = request.getParameter("customerName");
-try { 	
+try {
  CallableStatement cs = connection.prepareCall("{call sp_getAccountBalance(?)}");
  cs.setString(1, custname);
  ResultSet results = cs.executeQuery();
@@ -169,13 +169,13 @@ The main way LDAP stores names is based on DN ([distinguished name](https://ldap
 A DN might look like this
 
 ```text
-cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu 
+cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu
 ```
 
 or
 
 ```text
-uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com 
+uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com
 ```
 
 There are certain characters that are considered special characters in a DN. The exhaustive list is the following: `\ # + < > , ; " =` and leading or trailing spaces
@@ -186,12 +186,12 @@ Example:
 
 ```text
 (&(ou=Physics)(| (manager=cn=Freeman Dyson,ou=Physics,dc=Caltech,dc=edu)
-(manager=cn=Albert Einstein,ou=Physics,dc=Princeton,dc=edu) )) 
+(manager=cn=Albert Einstein,ou=Physics,dc=Princeton,dc=edu) ))
 ```
 
-When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource. 
+When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource.
 
-#### Example code - Java 
+#### Example code - Java
 
 **Safe Java for LDAP escaping Example**
 
@@ -200,17 +200,17 @@ public String escapeDN (String name) {
  //From RFC 2253 and the / character for JNDI
  final char[] META_CHARS = {'+', '"', '<', '>', ';', '/'};
  String escapedStr = new String(name);
- //Backslash is both a Java and an LDAP escape character, 
- //so escape it first      
+ //Backslash is both a Java and an LDAP escape character,
+ //so escape it first
  escapedStr = escapedStr.replaceAll("\\\\\\\\","\\\\\\\\");
  //Positional characters - see RFC 2253
  escapedStr = escapedStr.replaceAll("\^#","\\\\\\\\#");
  escapedStr = escapedStr.replaceAll("\^ | $","\\\\\\\\ ");
  for (int i=0 ; i < META_CHARS.length ; i++) {
-        escapedStr = escapedStr.replaceAll("\\\\" + 
+        escapedStr = escapedStr.replaceAll("\\\\" +
                      META_CHARS[i],"\\\\\\\\" + META_CHARS[i]);
- }     
- return escapedStr; 
+ }
+ return escapedStr;
 }
 ```
 
@@ -224,10 +224,10 @@ public String escapeSearchFilter (String filter) {
  escapedStr = escapedStr.replaceAll("\\\\\*","\\\\\\\\2a");
  escapedStr = escapedStr.replaceAll("\\\\(","\\\\\\\\28");
  escapedStr = escapedStr.replaceAll("\\\\)","\\\\\\\\29");
- escapedStr = escapedStr.replaceAll("\\\\" + 
+ escapedStr = escapedStr.replaceAll("\\\\" +
                Character.toString('\\u0000'), "\\\\\\\\00");
- return escapedStr;   
-}  
+ return escapedStr;
+}
 ```
 
 ### XPath Injection
@@ -242,9 +242,9 @@ Every time a scripting language is used, the actual implementation of the 'highe
 
 ## Operating System Commands
 
-OS command injection is a technique used via a web interface in order to execute OS commands on a web server. The user supplies operating system commands through a web interface in order to execute OS commands. 
+OS command injection is a technique used via a web interface in order to execute OS commands on a web server. The user supplies operating system commands through a web interface in order to execute OS commands.
 
-Any web interface that is not properly sanitized is subject to this exploit. With the ability to execute OS commands, the user can upload malicious programs or even obtain passwords. OS command injection is preventable when security is emphasized during the design and development of applications. 
+Any web interface that is not properly sanitized is subject to this exploit. With the ability to execute OS commands, the user can upload malicious programs or even obtain passwords. OS command injection is preventable when security is emphasized during the design and development of applications.
 
 ### How to test for the issue?
 
@@ -252,15 +252,15 @@ Any web interface that is not properly sanitized is subject to this exploit. Wit
 
 Check if any command execute methods are called and in unvalidated user input are taken as data for that command.
 
-Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. `%3B` is url encoded and decodes to semicolon. This is because the `;` is interpreted as a command separator. 
+Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. `%3B` is url encoded and decodes to semicolon. This is because the `;` is interpreted as a command separator.
 
 Example: `http://sensitive/something.php?dir=%3Bcat%20/etc/passwd`
 
 If the application responds with the output of the `/etc/passwd` file then you know the attack has been successful. Many web application scanners can be used to test for this attack as they inject variations of command injections and test the response.
 
-Equally Static Code Analysis tools check the data flow of untrusted user input into a web application and check if the data is then entered into a dangerous method which executes the user input as a command. 
+Equally Static Code Analysis tools check the data flow of untrusted user input into a web application and check if the data is then entered into a dangerous method which executes the user input as a command.
 
-### Remediation 
+### Remediation
 
 If it is considered unavoidable the call to a system command incorporated with user-supplied, the following two layers of defense should be used within software in order to prevent attacks
 
@@ -273,7 +273,7 @@ If it is considered unavoidable the call to a system command incorporated with u
 
 `^[a-z0-9]{3,10}$`
 
-### Example code - Java 
+### Example code - Java
 
 **Incorrect Usage**
 

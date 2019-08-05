@@ -68,12 +68,12 @@ Some applications should use a second factor to check whether a user may perform
 
 ### TLS Client Authentication
 
-TLS Client Authentication, also known as two-way TLS authentication, consists of both, browser and server, sending their respective TLS certificates during the TLS handshake process. Just as you can validate the authenticity of a server by using the certificate and asking a well known Certificate Authority (CA) if the certificate is valid, the server can authenticate the user by receiving a certificate from the client and validating against a third party CA or its own CA. To do this, the server must provide the user with a certificate generated specifically for him, assigning values to the subject so that these can be used to determine what user the certificate should validate. The user installs the certificate on a browser and now uses it for the website.
+TLS Client Authentication, also known as two-way TLS authentication, consists of both, browser and server, sending their respective TLS certificates during the TLS handshake process. Just as you can validate the authenticity of a server by using the certificate and asking a well known Certificate Authority (CA) if the certificate is valid, the server can authenticate the user by receiving a certificate from the client and validating against a third party CA or its own CA. To do this, the server must provide the user with a certificate generated specifically for them, assigning values to the subject so that these can be used to determine what user the certificate should validate. The user installs the certificate on a browser and now uses it for the website.
 
 It is a good idea to do this when:
 
 - It is acceptable (or even preferred) that the user only has access to the website from only a single computer/browser.
-- The user is not easily scared by the process of installing TLS certificates on his browser or there will be someone, probably from IT support, that will do this for the user.
+- The user is not easily scared by the process of installing TLS certificates on their browser or there will be someone, probably from IT support, that will do this for the user.
 - The website requires an extra step of security.
 - It is also a good thing to use when the website is for an intranet of a company or organization.
 
@@ -107,7 +107,7 @@ IF USER_EXISTS(username) THEN
     password_hash=HASH(password)
     IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
     IF NOT IS_VALID THEN
-        RETURN Error("Invalid Username or Password!")    
+        RETURN Error("Invalid Username or Password!")
     ENDIF
 ELSE
    RETURN Error("Invalid Username or Password!")
@@ -197,7 +197,7 @@ OAuth 2.0 relies on HTTPS for security and is currently used and implemented by 
 
 ## OpenId
 
-OpenId is an HTTP-based protocol that uses identity providers to validate that a user is who he says he is. It is a very simple protocol which allows a service provider initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user in multiple websites, without the need to provide any website the password, except for the OpenId identity provider.
+OpenId is an HTTP-based protocol that uses identity providers to validate that a user is who they says they are. It is a very simple protocol which allows a service provider initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user in multiple websites, without the need to provide any website the password, except for the OpenId identity provider.
 
 Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well known identity providers for OpenId are Stack Exchange, Google, Facebook and Yahoo!
 

@@ -2,9 +2,9 @@
 
 ## Definition
 
-Software frameworks sometime allow developers to automatically bind HTTP request parameters into program code variables or objects to make using that framework easier on developers. This can sometimes cause harm. 
+Software frameworks sometime allow developers to automatically bind HTTP request parameters into program code variables or objects to make using that framework easier on developers. This can sometimes cause harm.
 
-Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended. 
+Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended.
 
 This is called a **Mass Assignment** vulnerability.
 
@@ -27,7 +27,7 @@ Suppose there is a form for editing a user's account information:
      <input name="email" text="text">
      <input type="submit">
 </form>  
-``` 
+```
 
 Here is the object that the form is binding to:
 
@@ -78,7 +78,7 @@ This functionality becomes exploitable when:
 
 ## GitHub case study
 
-In 2012, GitHub was hacked using mass assignment. A user was able to upload his public key to any organization and thus make any subsequent changes in their repositories. [GitHub's Blog Post](https://blog.github.com/2012-03-04-public-key-security-vulnerability-and-mitigation/).
+In 2012, GitHub was hacked using mass assignment. A user was able to upload their public key to any organization and thus make any subsequent changes in their repositories. [GitHub's Blog Post](https://blog.github.com/2012-03-04-public-key-security-vulnerability-and-mitigation/).
 
 ## Solutions
 

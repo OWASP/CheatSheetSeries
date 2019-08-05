@@ -10,7 +10,7 @@ There is no industry standard for implementing a **Forgot Password** feature. Th
 
 ## Step 1) Gather Identity Data or Security Questions
 
-The first page of a secure Forgot Password feature asks the user for multiple pieces of hard data that should have been previously collected (generally when the user first registers). 
+The first page of a secure Forgot Password feature asks the user for multiple pieces of hard data that should have been previously collected (generally when the user first registers).
 
 Steps for this are detailed in the identity section the Choosing and Using Security Questions Cheat Sheet [here](Choosing_and_Using_Security_Questions_Cheat_Sheet.md#step-1-decide-on-identity-data-vs-canned-questions-vs-user-created-questions).
 
@@ -18,27 +18,27 @@ At a minimum, you should have collected some data that will allow you to send th
 
 ## Step 2) Verify Security Questions
 
-After the form on Step 1 is submitted, the application verifies that each piece of data is correct for the given username. If anything is incorrect, or if the username is not recognized, the second page displays a generic error message such as *Sorry, invalid data*. 
+After the form on Step 1 is submitted, the application verifies that each piece of data is correct for the given username. If anything is incorrect, or if the username is not recognized, the second page displays a generic error message such as *Sorry, invalid data*.
 
 If all submitted data is correct, Step 2 should display at least two of the user’s pre-established personal security questions, along with input fields for the answers. It’s important that the answer fields are part of a single HTML form.
 
-Do not provide a drop-down list for the user to select the questions he wants to answer. Avoid sending the username as a parameter (hidden or otherwise) when the form on this page is submitted. The username should be stored in the server-side session where it can be retrieved as needed.
+Do not provide a drop-down list for the user to select the questions they want to answer. Avoid sending the username as a parameter (hidden or otherwise) when the form on this page is submitted. The username should be stored in the server-side session where it can be retrieved as needed.
 
 Because users' security questions / answers generally contains much less entropy than a well-chosen password (how many likely answers are there to the typical *What's your favorite sports team?* or *In what city where you born?* security questions anyway?), make sure you limit the number of guesses attempted and if some threshold is exceeded for that user (say 3 to 5), lock out the user's account for some reasonable duration (say at least 5 minutes) and then challenge the user with some form of challenge token per standard multi-factor workflow; see \#3, below) to mitigate attempts by hackers to guess the questions and reset the user's password. It is not unreasonable to think that a user's email account may have already been compromised, so tokens that do not involve email, such as SMS or a mobile soft-token, are best.
 
 ## Step 3) Send a Token Over a Side-Channel
 
-After step 2, lock out the user's account immediately. Then SMS or utilize some other multi-factor token challenge with a randomly-generated code having 8 or more characters. 
+After step 2, lock out the user's account immediately. Then SMS or utilize some other multi-factor token challenge with a randomly-generated code having 8 or more characters.
 
-This introduces an *out-of-band* communication channel and adds defense-in-depth as it is another barrier for a hacker to overcome. If the bad guy has somehow managed to successfully get past steps 1 and 2, he is unlikely to have compromised the side-channel. It is also a good idea to have the random code which your system generates to only have a limited validity period, say no more than 20 minutes or so. That way if the user doesn't get around to checking their email and their email account is later compromised, the random token used to reset the password would no longer be valid if the user never reset their password and the *reset password* token was discovered by an attacker. 
+This introduces an *out-of-band* communication channel and adds defense-in-depth as it is another barrier for a hacker to overcome. If the bad guy has somehow managed to successfully get past steps 1 and 2, they are unlikely to have compromised the side-channel. It is also a good idea to have the random code which your system generates to only have a limited validity period, say no more than 20 minutes or so. That way if the user doesn't get around to checking their email and their email account is later compromised, the random token used to reset the password would no longer be valid if the user never reset their password and the *reset password* token was discovered by an attacker.
 
 Of course, by all means, once a user's password has been reset, the randomly-generated token should no longer be valid.
 
 ## Step 4) Allow user to change password in the existing session
 
-Step 4 requires input of the code sent in step 3 in the existing session where the challenge questions were answered in step 2, and allows the user to reset his password. Display a simple HTML form with one input field for the code, one for the new password, and one to confirm the new password. Verify the correct code is provided and be sure to enforce all password complexity requirements that exist in other areas of the application. 
+Step 4 requires input of the code sent in step 3 in the existing session where the challenge questions were answered in step 2, and allows the user to reset their password. Display a simple HTML form with one input field for the code, one for the new password, and one to confirm the new password. Verify the correct code is provided and be sure to enforce all password complexity requirements that exist in other areas of the application.
 
-As before, avoid sending the username as a parameter when the form is submitted. Finally, it's critical to have a check to prevent a user from accessing this last step without first completing steps 1 and 2 correctly. Otherwise, a [forced browsing](https://www.owasp.org/index.php/Forced_browsing) attack may be possible. Ensure the user changes their password and does not simply surf to another page in the application. 
+As before, avoid sending the username as a parameter when the form is submitted. Finally, it's critical to have a check to prevent a user from accessing this last step without first completing steps 1 and 2 correctly. Otherwise, a [forced browsing](https://www.owasp.org/index.php/Forced_browsing) attack may be possible. Ensure the user changes their password and does not simply surf to another page in the application.
 
 The reset must be performed before any other operations can be performed by the user.
 

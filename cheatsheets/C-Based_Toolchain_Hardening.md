@@ -44,7 +44,7 @@ For GCC, optimizations and debug symbolication are controlled through two switch
 
 ```text
 -O0 -g3 -ggdb
-```    
+```
 
 `-O0` turns off optimizations and `-g3` ensures maximum debug information is available. You may need to use `-O1` so some analysis is performed. Otherwise, your debug build will be missing a number of warnings not present in release builds. `-g3` ensures maximum debugging information is available for the debug session, including symbolic constants and `#defines`. `-ggdb` includes extensions to help with a debug session under GDB. For completeness, Jan Krachtovil stated `-ggdb` currently has no effect in a private email.
 
@@ -64,7 +64,7 @@ For release builds, you should use the following as part of `CFLAGS` and `CXXFLA
 
 ```text
 -On -g2
-```    
+```
 
 `-O`*`n`* sets optimizations for speed or size (for example, `-Os` or `-O2`), and `-g2` ensure debugging information is created.
 
@@ -88,7 +88,7 @@ Because all interfaces are tested (and not just the public ones), your `CFLAGS` 
 
 You should also change `__attribute__` `((visibility` `("hidden")))` to `__attribute__` `((visibility` `("default")))`.
 
-Nearly everyone gets a positive test right, so no more needs to be said. The negative self tests are much more interesting, and you should concentrate on trying to make your program fail so you can verify its fails gracefully. Remember, a bad guy is not going to be courteous when he attempts to cause your program to fail. And its your project that takes egg on the face by way of a bug report or guest appearance on [Full Disclosure](http://www.grok.org.uk/full-disclosure/) or [Bugtraq](http://www.securityfocus.com/archive) - not `<some library>` you included.
+Nearly everyone gets a positive test right, so no more needs to be said. The negative self tests are much more interesting, and you should concentrate on trying to make your program fail so you can verify its fails gracefully. Remember, a bad guy is not going to be courteous when they attempt to cause your program to fail. And its your project that takes egg on the face by way of a bug report or guest appearance on [Full Disclosure](http://www.grok.org.uk/full-disclosure/) or [Bugtraq](http://www.securityfocus.com/archive) - not `<some library>` you included.
 
 ## Auto Tools
 
@@ -104,7 +104,7 @@ To demonstrate the first issue, confider your project with the following: `confi
 $ configure CFLAGS="-Wall -Wextra -Wconversion -fPIE -Wno-unused-parameter
     -Wformat=2 -Wformat-security -fstack-protector-all -Wstrict-overflow"
     LDFLAGS="-pie -z,noexecstack -z,noexecheap -z,relro -z,now"
-```        
+```
 
 For the second point, you will probably be disappointed to learn [Automake does not support the concept of configurations](https://lists.gnu.org/archive/html/automake/2012-12/msg00019.html). Its not entirely Autoconf's or Automake's fault - *Make* and its inability to detect changes is the underlying problem. Specifically, *Make* only [checks modification times of prerequisites and targets](http://pubs.opengroup.org/onlinepubs/009695399/utilities/make.html), and does not check things like `CFLAGS` and `CXXFLAGS`. The net effect is you will not receive expected results when you issue `make` `debug` and then `make` `test` or `make` `release`.
 
@@ -139,9 +139,9 @@ ifeq ($(WANT_RELEASE),1)
 endif
 
 ifeq ($(WANT_TEST),1)
-    ESAPI_CFLAGS += -DESAPI_NO_ASSERT=1 -g2 -ggdb -O2 -Dprivate=public 
+    ESAPI_CFLAGS += -DESAPI_NO_ASSERT=1 -g2 -ggdb -O2 -Dprivate=public
                                                       -Dprotected=public
-    ESAPI_CXXFLAGS += -DESAPI_NO_ASSERT=1 -g2 -ggdb -O2 -Dprivate=public 
+    ESAPI_CXXFLAGS += -DESAPI_NO_ASSERT=1 -g2 -ggdb -O2 -Dprivate=public
                                                         -Dprotected=public
 endif
 …
@@ -152,14 +152,14 @@ override CFLAGS := $(ESAPI_CFLAGS) $(CFLAGS)
 override CXXFLAGS := $(ESAPI_CXXFLAGS) $(CXXFLAGS)
 override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 …
-```    
+```
 
 Make will first build the program in a debug configuration for a session under the debugger using a rule similar to:
 
 ```text
 %.cpp:%.o:
         $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
-```            
+```
 
 When you want the release build, Make will do nothing because it considers everything up to date despite the fact `CFLAGS` and `CXXFLAGS` have changed. Hence, your program will actually be in a debug configuration and risk a `SIGABRT` at runtime because debug instrumentation is present (recall `assert` calls `abort()` when `NDEBUG` is **not** defined). In essence, you have DoS'd yourself due to `make`.
 
@@ -167,7 +167,7 @@ In addition, many projects do not honor the user's command line. ESAPI C++ does 
 
 ```bash
 $ make CFLAGS="-fPIE" CXXFLAGS="-fPIE" LDFLAGS="-pie -z,noexecstack, -z,noexecheap"
-```    
+```
 
 Defenses such as ASLR and DEP are especially important on Linux because [Data Execution - not Prevention - is the norm](http://linux.die.net/man/5/elf).
 
@@ -182,9 +182,9 @@ In addition, project level integration is an opportunity to harden third party l
 Another example is including OpenSSL. You know (1) [SSLv2 is insecure](http://www.schneier.com/paper-ssl-revised.pdf), (2) [SSLv3 is insecure](https://blog.qualys.com/ssllabs/2014/10/15/ssl-3-is-dead-killed-by-the-poodle-attack), and (3) [compression is insecure](http://arstechnica.com/security/2012/09/crime-hijacks-https-sessions/) (among others). In addition, suppose you don't use hardware and engines, and only allow static linking. Given the knowledge and specifications, you would configure the OpenSSL library as follows:
 
 ```bash
-$ Configure darwin64-x86_64-cc -no-hw -no-engine -no-comp -no-shared 
+$ Configure darwin64-x86_64-cc -no-hw -no-engine -no-comp -no-shared
     -no-dso -no-ssl2 -no-ssl3 --openssldir=…
-```    
+```
 
 *Note Well*: you might want engines, especially on Ivy Bridge microarchitectures (3rd generation Intel Core i5 and i7 processors). To have OpenSSL use the processor's random number generator (via the of `rdrand` instruction), you will need to call OpenSSL's `ENGINE_load_rdrand()` function and then `ENGINE_set_default` with `ENGINE_METHOD_RAND`. See [OpenSSL's Random Numbers](https://wiki.openssl.org/index.php/Random_Numbers) for details.
 
@@ -192,7 +192,7 @@ If you configure without the switches, then you will likely have vulnerable code
 
 ```bash
 $ echo "GET / HTTP1.0" | openssl s_client -connect <nowiki>example.com:443</nowiki>
-```    
+```
 
 `nm` or `openssl` `s_client` will show that compression is enabled in the client. In fact, any symbol within the `OPENSSL_NO_COMP` preprocessor macro will bear witness since `-no-comp` is translated into a `CFLAGS` define.
 
@@ -200,7 +200,7 @@ $ echo "GET / HTTP1.0" | openssl s_client -connect <nowiki>example.com:443</nowi
 $ nm /usr/local/ssl/iphoneos/lib/libcrypto.a 2>/dev/null | egrep -i "(COMP_CTX_new|COMP_CTX_free)"
 0000000000000110 T COMP_CTX_free
 0000000000000000 T COMP_CTX_new
-```    
+```
 
 Even more egregious is the answer given to auditors who specifically ask about configurations and protocols: "we don't use weak/wounded/broken ciphers" or "we follow best practices." The use of compression tells the auditor that you are using wounded protocol in an insecure configuration and you don't follow best practices. That will likely set off alarm bells, and ensure the auditor dives deeper on more items.
 
@@ -218,12 +218,12 @@ In addition to `NDEBUG` (Release) and `DEBUG` (Debug), you have two additional c
 
 ```c
 // Only one or the other, but not both
-#if (defined(DEBUG) || defined(_DEBUG)) && (defined(NDEBUG) 
+#if (defined(DEBUG) || defined(_DEBUG)) && (defined(NDEBUG)
                                            || defined(_NDEBUG))
 # error Both DEBUG and NDEBUG are defined.
 #endif
 
-// The only time we switch to debug is when asked. 
+// The only time we switch to debug is when asked.
 // NDEBUG or {nothing} results
 // in release build (fewer surprises at runtime).
 #if defined(DEBUG) || defined(_DEBUG)
@@ -231,7 +231,7 @@ In addition to `NDEBUG` (Release) and `DEBUG` (Debug), you have two additional c
 #else
 # define ESAPI_BUILD_RELEASE 1
 #endif
-```    
+```
 
 When `DEBUG` is in effect, your code should receive full debug instrumentation, including the full force of assertions.
 
@@ -250,9 +250,9 @@ Since self-debugging programs are so powerful, you will have to have to supply y
 ESAPI C++ supplies its own assert with the behavior described above. In the code below, `ASSERT` raises `SIGTRAP` when in effect or it evaluates to `void` in other cases.
 
 ```c
-// A debug assert which should be sprinkled liberally. 
+// A debug assert which should be sprinkled liberally.
 // This assert fires and then continues rather
-// than calling abort(). Useful when examining negative 
+// than calling abort(). Useful when examining negative
 // test cases from the command line.
 #if (defined(ESAPI_BUILD_DEBUG) && defined(ESAPI_OS_STARNIX))
 #  define ESAPI_ASSERT1(exp) {                                    \
@@ -377,10 +377,10 @@ $ gcc -dumpspecs
 …
 *link_ssp: %{fstack-protector:}
 
-*ssp_default: %{!fno-stack-protector:%{!fstack-protector-all: 
+*ssp_default: %{!fno-stack-protector:%{!fstack-protector-all:
               %{!ffreestanding:%{!nostdlib:-fstack-protector}}}}
 …
-```    
+```
 
 The “SSP” above stands for Stack Smashing Protector. SSP is a reimplementation of Hiroaki Etoh's work on IBM Pro Police Stack Detector. See Hiroaki Etoh's patch *[gcc stack-smashing protector](http://gcc.gnu.org/ml/gcc-patches/2001-06/msg01753.html)* and IBM's *[GCC extension for protecting applications from stack-smashing attacks](https://pdfs.semanticscholar.org/9d92/fa9eaa6ca12888d303deffe8bc392b85c09f.pdf)* for details.
 
@@ -479,7 +479,7 @@ override CFLAGS := $(MY_CC_FLAGS) $(CFLAGS)
 override CXXFLAGS := $(MY_CC_FLAGS) $(CXXFLAGS)
 override LDFLAGS := $(MY_LD_FLAGS) $(LDFLAGS)
 …
-```    
+```
 
 ## Clang/Xcode
 
@@ -525,7 +525,7 @@ int main(int argc, char* argv[])
     UNUSED_PARAMETER(argv);
     …
 }
-```    
+```
 
 A potential minefield lies near "comparing unsigned and signed" values, and `-Wconversion` will catch it for you. This is because C/C++ promotion rules state the signed value will be promoted to an unsigned value and then compared. That means `-1` `>` `1` after promotion! To fix this, you cannot blindly cast - you must first range test the value:
 
@@ -541,7 +541,7 @@ if(static_cast<unsigned int>(x) > y)
     cout << "x is greater than y" << endl;
 else
     cout << "x is not greater than y" << endl;
-```        
+```
 
 Notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with `x`. Just run the program and wait for it to tell you there is a problem. If there is a problem, the program will snap the debugger (and more importantly, not call a useless `abort()` as specified by Posix). It beats the snot out of `printf` that are removed when no longer needed or pollute outputs.
 
@@ -552,7 +552,7 @@ struct sockaddr_in addr;
 …
 
 addr.sin_port = htons(atoi(argv[2]));
-```    
+```
 
 The following would probably serve you much better. Notice `atoi` and fiends are not used because they can silently fail. In addition, the code is instrumented so you don't need to waste a lot of time debugging potential problems:
 
@@ -583,7 +583,7 @@ if(!(t < static_cast<long long>(numeric_limits<unsigned int>::max())))
 // OK to use port
 unsigned short port = static_cast<unsigned short>(t);
 …
-```    
+```
 
 Again, notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with `port`. This code will continue checking conditions, years after being instrumented (assuming to wrote code to read a config file early in the project). There's no need to remove the `ASSERT`s as with `printf` since they are silent guardians.
 
@@ -602,7 +602,7 @@ if(ret == -1 || ret >= sizeof(path))
 
 // OK to use path
 …
-```    
+```
 
 The problem is pandemic, and not just boring user land programs. Projects which offer high integrity code, such as SELinux, suffer silent truncations. The following is from an approved SELinux patch even though a comment was made that it suffered silent truncations in its `security_compute_create_name` function from `compute_create.c`.
 
@@ -624,7 +624,7 @@ The problem is pandemic, and not just boring user land programs. Projects which 
 26
 27    snprintf(path, sizeof path, "%s/create", selinux_mnt);
 28    fd = open(path, O_RDWR);
-```    
+```
 
 Unlike other examples, the above code will not debug itself, and you will have to set breakpoints and trace calls to determine the point of first failure. (And the code above gambles that the truncated file does not exist or is not under an adversary's control by blindly performing the `open`).
 
