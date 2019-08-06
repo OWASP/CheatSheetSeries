@@ -43,7 +43,7 @@ The recommended cipher strings are based on different scenarios:
 
 * Take care, use this cipher string only if you are forced to support non [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) for real old clients with very old libraries or for other protocols besides https.
 * Be aware of the existing risks (e.g. ciphers without PFS, ciphers with 3DES) and of new vulnerabilities that may appear the most likely.
-* **No not use** WEAK ciphers based on `3DES` e.g. (`TLS_RSA_WITH_3DES_EDE_CBC_SHA`, `DES-CBC3-SHA`) 
+* **Do not use** WEAK ciphers based on `3DES` e.g. (`TLS_RSA_WITH_3DES_EDE_CBC_SHA`, `DES-CBC3-SHA`)
 * **Never use** even more INSECURE or elder ciphers based on `RC2`, `RC4`, `DES`, `MD4`, `MD5`, `EXP`, `EXP1024`, `AH`, `ADH`, `aNULL`, `eNULL`, `SEED` nor `IDEA`.
 * [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers are preferred, except all [DHE](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange) ciphers that use SHA-1 (to prevent possible incompatibility issues caused by the length of the [DHparameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters)).
 * Plan to move to 'A' for https or at least 'B' otherwise in middle-term.
