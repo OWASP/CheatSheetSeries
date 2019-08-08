@@ -28,7 +28,9 @@ The [AVANTSSAR](http://www.avantssar.eu/) team suggested the following data elem
 - **Response(ID, SP, IdP, {AA} K -1/IdP):** A Response must contain all these elements. Where `ID` is a string uniquely identifying the response. `SP` identifies the recipient of the response. `IdP` identifies the identity provider authorizing the response. `{AA} K -1/IdP` is the assertion digitally signed with the private key of the `IdP`.
 - **AuthAssert(ID, C, IdP, SP):** An authentication assertion must exist within the Response. It must contain an `ID`, a client `(C)`, an identity provider `(IdP)`, and a service provider `(SP)` identifier.
 
-Further vulnerabilities in SAML implementations were described in 2012 ([On Breaking SAML: Be Whoever You Want to Be](https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf)). 
+# Validate Signatures
+
+Vulnerabilities in SAML implementations due to XML Signature Wrapping attacks were described in 2012 ([On Breaking SAML: Be Whoever You Want to Be](https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf)). 
 
 The following recommendations were proposed in response ([Secure SAML validation to prevent XML signature wrapping attacks](http://arxiv.org/pdf/1401.7483v1.pdf)):
 
@@ -101,7 +103,7 @@ The SAML protocol is rarely the vector of choice, though it's important to have 
 - Validating session state for user
 - Level of granularity in setting authZ context when consuming SAML token (do you use groups, roles, attributes)
 - Ensure each Assertion or the entire Response element is signed
-- Validate signature (see further hints for secure signature checking [above](#validate-protocol-usage))
+- Validate signature (see also section [Validate Signatures](#validate-signatures))
 - Validate if signed by authorized IDP
 - Validate IDP certificates for expiration and revocation against CRL/OCSP
 - Validate NotBefore and NotOnorAfter
