@@ -373,7 +373,3 @@ References:
 # Sources of the prototype
 
 The source code of all the sandbox projects created to find the right setup to use is stored into this [GitHub repository](https://github.com/righettod/poc-error-handling).
-
-# Authors and Primary Editors
-
-Dominique Righetto - dominique.righetto@owasp.org

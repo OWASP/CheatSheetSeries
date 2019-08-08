@@ -101,9 +101,3 @@ As you add new user types or roles or privilege levels, you do the same kind of 
 This kind of threat or risk assessment can be done periodically, or as a part of design work in serial / phased / spiral / waterfall development projects, or continuously and incrementally in Agile / iterative development.
 
 Normally, an application's Attack Surface will increase over time as you add more interfaces and user types and integrate with other systems. You also want to look for ways to reduce the size of the Attack Surface when you can by simplifying the model (reducing the number of user levels for example or not storing confidential data that you don't absolutely have to), turning off features and interfaces that aren't being used, by introducing operational controls such as a Web Application Firewall (WAF) and real-time application-specific attack detection.
-
-# Authors and Primary Editors
-
-Jim Bird - jim.bird@owasp.org
-
-Jim Manico - jim@owasp.org

@@ -444,13 +444,3 @@ The following articles describe how to exploit different kinds of SQL Injection 
 **How to Test for SQL Injection Vulnerabilities**
 
 - [OWASP Testing Guide](https://www.owasp.org/index.php/:Category:OWASP_Testing_Project) article on how to [Test for SQL Injection](https://www.owasp.org/index.php/Testing_for_SQL_Injection_%28OWASP-DV-005%29) Vulnerabilities
-
-# Authors and Primary Editors
-
-Dave Wichers - dave.wichers@owasp.org
-
-Jim Manico - jim@owasp.org
-
-Matt Seil - mseil@acm.org
-
-Dhiraj Mishra - mishra.dhiraj@owasp.org

@@ -133,7 +133,7 @@ Services including script code (e.g. JavaScript) in their responses must be espe
 
 To make sure the content of a given resources is interpreted correctly by the browser, the server should always send the `Content-Type` header with the correct content type, and preferably the `Content-Type` header should include a charset. The server should also send the `X-Content-Type-Options: nosniff` [security header](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers) to make sure the browser does not try to detect a different `Content-Type` than what is actually sent (can lead to XSS).
 
-Additionally the client should send the `X-Frame-Options: deny` [security header](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers) to protect against drag'n drop clickjacking attacks in older browsers.
+Additionally the server should send the `X-Frame-Options: deny` [security header](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers) to protect against drag'n drop clickjacking attacks in older browsers.
 
 # CORS
 
@@ -187,19 +187,3 @@ Here is a non-exhaustive selection of security related REST API **status codes**
 | 503         | Service Unavailable    |  The REST service is temporarily unable to process the request. Used to inform the client it should retry at a later time.                                                                                         |
 
 Additional information about HTTP return code usage in REST API can be found [here](https://www.restapitutorial.com/httpstatuscodes.html) and [here](https://restfulapi.net/http-status-codes).
-
-# Authors and primary editors
-
-Erlend Oftedal - erlend.oftedal@owasp.org
-
-Andrew van der Stock - vanderaj@owasp.org
-
-Tony Hsu Hsiang Chih- Hsiang_chihi@yahoo.com
-
-Johan Peeters - yo@johanpeeters.com
-
-Jan Wolff - jan.wolff@owasp.org
-
-Rocco Gränitz - rocco.graenitz@owasp.org
-
-Manh Pham - manhpt2811@gmail.com

@@ -23,49 +23,26 @@ For information on validating email addresses, please visit the [input validatio
 
 A key concern when using passwords for authentication is password strength. A "strong" password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:
 
-### Password Length
+- Password Length
+    - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)). 
+    - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters. 
 
-Longer passwords provide a greater combination of characters and consequently make it more difficult for an attacker to guess.
+      When selecting maximum password length, limitation of hashing algorithm that will be used for hashing passwords, should be taken into consideration because some of them [have a maximum password length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851).
 
-- **Minimum** length of the passwords should be **enforced** by the application.
-    - Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
+- Do do not truncate passwords. Make sure that every character the user types in is actually included in the password. 
 
-While minimum length enforcement may cause problems with memorizing passwords among some users, applications should encourage them to set *passphrases* (sentences or combination of words) that can be much longer than typical passwords and yet much easier to remember.
+- Allow usage of **all** characters including unicode and whitespaces. There should be no password composition rules limiting the type of characters permitted.
 
-- **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters.
-    - Passphrases shorter than 20 characters are usually considered weak if they only consist of lower case Latin characters.
+- Ensure credential rotation when a password leak, or at the time of compromise identification.
 
-### Password Complexity
+- Include password strength meter to help users create a more complex password and block common and previously breached passwords
+    - [zxcvbn library](https://github.com/dropbox/zxcvbn) can be used for this purpose. (Note that this library is no longer maintained)
+    - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service where passwords can be checked against previously breached passwords. You can host it yourself or use [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
 
-Applications should enforce password complexity rules to discourage easy to guess passwords. Password mechanisms should allow virtually any character the user can type to be part of their password, including the space character. Passwords should, obviously, be case sensitive in order to increase their complexity. Occasionally, we find systems where passwords aren't case sensitive, frequently due to legacy system issues like old mainframes that didn't have case sensitive passwords.
+### For more detailed information check:
 
-The password change mechanism should require a minimum level of complexity that makes sense for the application and its user population. For example:
-
-- Password must meet at least 3 out of the following 4 complexity rules
-    - at least 1 uppercase character (A-Z)
-    - at least 1 lowercase character (a-z)
-    - at least 1 digit (0-9)
-    - at least 1 [special character (punctuation)](https://www.owasp.org/index.php/Password_special_characters) — do not forget to treat space as special characters too
-- at least 10 characters
-- at most 128 characters
-- not more than 2 identical characters in a row (e.g., 111 not allowed)
-
-Further reading:
-
-- [Your Password Complexity Requirements are Worthless - OWASP AppSecUSA 2014](https://www.youtube.com/watch?v=zUM7i8fsf0g) presentation for further discussion of legacy password complexity rules
-- [PathWell: Password Topology Histogram Wear-Leveling](https://www.korelogic.com/Resources/Presentations/bsidesavl_pathwell_2014-06.pdf)
-
-### Password Topologies
-
-- Ban commonly used password topologies
-- Force multiple users to use different password topologies
-- Require a minimum topology change between old and new passwords
-
-### Additional Information
-
-- Make sure that every character the user types in is actually included in the password. We've seen systems that truncate the password at a length shorter than what the user provided (e.g., truncated at 15 characters when they entered 20).
-- As application's require more complex password policies, they need to be very clear about what these policies are. The required policy needs to be explicitly stated on the password change page
-- If the new password doesn't comply with the complexity policy, the error message should describe EVERY complexity rule that the new password does not comply with, not just the 1st rule it doesn't comply with.
+- [ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements)
+- [Passwords Evolved: Authentication Guidance for the Modern Era](https://www.troyhunt.com/passwords-evolved-authentication-guidance-for-the-modern-era/)
 
 ## Implement Secure Password Recovery Mechanism
 
@@ -250,7 +227,7 @@ Session management is directly related to authentication. The **Session Manageme
 
 # Password Managers
 
-Password managers are programs, browser plugins or web services that automate management of large number of different credentials, including memorizing and filling-in, generating random passwords on different sites etc. While use of password managers is subject to controversies and many organisations block their usage, their contribution to authentication security is positive, as pointed out by [National Cyber Security Centre](https://www.ncsc.gov.uk/blog-post/what-does-ncsc-think-password-managers).
+Password managers are programs, browser plugins or web services that automate management of large number of different credentials, including memorizing and filling-in, generating random passwords on different sites etc.
 
 Web applications should at least not make password managers job more difficult than necessary by observing the following recommendations:
 
@@ -260,17 +237,3 @@ Web applications should at least not make password managers job more difficult t
 - avoid plugin-based login pages (Flash, Silverlight etc)
 
 As of 2017 [Credential Management Level 1](https://w3c.github.io/webappsec-credential-management/) standard for web browsers is being developed that may further facilitate interaction between password managers and complex log-in schemes (e.g. single sign-on).
-
-# Authors and Primary Editors
-
-Eoin Keary eoinkeary
-
-Jim Manico
-
-Timo Goosen
-
-Pawel Krawczyk
-
-Sven Neuhaus
-
-Manuel Aude Morales

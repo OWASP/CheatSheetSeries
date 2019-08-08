@@ -192,11 +192,3 @@ public class Movie {
 # Sources of the prototype
 
 [Github repository](https://github.com/righettod/poc-idor).
-
-# Authors and Primary Editors
-
-Eric Sheridan - eric.sheridan@owasp.org
-
-Jeff Williams - jeff.williams@contrastsecurity.com
-
-Dominique Righetto - dominique.righetto@owasp.org

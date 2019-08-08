@@ -839,7 +839,3 @@ Once an attacker confirms that it is possible to perform a port scan, performing
 ]>
 <root>&user;</root>
 ```
-
-# Authors and Primary Editors
-
-Fernando Arnaboldi - fernando.arnaboldi@ioactive.com

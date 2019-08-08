@@ -58,7 +58,3 @@ This [NPM package](https://www.npmjs.com/package/rename-css-selectors) can be us
 Web applications that allow users to author content via HTML input could be vulnerable to malicious use of CSS. Uploaded HTML could use styles that are allowed by the web application but could be used for purposes other than intended which could lead to security risks.
 
 Example: You can read about how [LinkedIn](https://www.scmagazineuk.com/style-sheet-vulnerability-allowed-attacker-hijack-linkedin-pages/article/1479529) had a vulnerability which allowed malicious use of CSS that lead to the authoring of a page where the entire page was clickable including overwriting LinkedIn's standard navigation elements.
-
-# Authors and Primary Editors
-
-[Santhosh Tuppad](https://twitter.com/santhoshst)

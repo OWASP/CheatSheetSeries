@@ -220,17 +220,3 @@ To perform the strong key management functions we have seen in requirement 3.6 w
 
 - [TestSSL](https://testssl.sh/)
 - [Cryptosense](https://cryptosense.com/discovery/)
-
-# Authors and Primary Editors
-
-Kevin Kenan - kevin@k2dd.com
-
-David Rook - david.a.rook@gmail.com
-
-Kevin Wall - kevin.w.wall@gmail.com
-
-Jim Manico - jim@owasp.org
-
-Fred Donovan - fred.donovan@owasp.org
-
-Tony Hsu - hsiang_chih@yahoo.com

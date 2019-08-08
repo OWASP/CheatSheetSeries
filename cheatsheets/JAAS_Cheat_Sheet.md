@@ -182,7 +182,3 @@ public void handle(Callback[] callbacks) {
 # Disclosure
 
 All of the code in the attached JAAS cheat sheet has been copied verbatim from this [free source](https://jaasbook.wordpress.com/2009/09/27/intro/).
-
-# Authors and Primary Editors
-
-Dr. A.L. Gottlieb - AnthonyG@owasp.org

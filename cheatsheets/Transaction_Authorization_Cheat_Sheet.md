@@ -169,24 +169,6 @@ We identify other issues that should be taken into consideration while implement
 - Protection of the signing keys using a second factor either be password, biometric, etc..
 - Protection of the signing keys leveraging secure elements (TEE, TPM, Smart card..)
 
-# Authors and Primary Editors
-
-Wojciech Dworakowski - wojciech.dworakowski@securing.pl
-
-# Contributors
-
-Following persons helped by reviewing and providing valuable feedback to this work:
-
-- Steven Wierckx, Toreon
-- Adam Zachara, SecuRing
-- Adam Lange
-- Sławomir Jasek, SecuRing
-- Andrzej Kleśnicki, Qualys
-- Sven Thomassin, PwC BE - Technology Consulting
-- James Holland, HID Global
-- Francois-Eric Guyomarch, HID Global
-- Milan Khan, HID Global
-
 # References and future reading
 
 References and future reading:

@@ -189,11 +189,3 @@ END
 
 - [The Bobby Tables site (inspired by the XKCD webcomic) has numerous examples in different languages of parameterized Prepared Statements and Stored Procedures](http://bobby-tables.com/)
 - OWASP [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md)
-
-# Authors and Primary Editors
-
-Jim Manico - jim@owasp.org
-
-Dave Wichers - dave.wichers@owasp.org
-
-Neil Matatal - neil@owasp.org

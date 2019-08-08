@@ -317,9 +317,3 @@ If the application knows before deserialization which messages will need to be p
   - [James Forshaw - Black Hat USA 2012 - Are You My Type? Breaking .net Sandboxes Through Serialization](https://www.youtube.com/watch?v=Xfbu-pQ1tIc)
   - [Jonathan Birch BlueHat v17 - Dangerous Contents - Securing .Net Deserialization](https://www.youtube.com/watch?v=oxlD8VWWHE8)
   - [Alvaro Muñoz & Oleksandr Mirosh - Friday the 13th: Attacking JSON - AppSecUSA 2017](https://www.youtube.com/watch?v=NqHsaVhlxAQ)
-
-# Authors and Primary Editors
-
-Arshan Dabirsiaghi - arshan@contrastsecurity.org
-
-Tony Hsu (Hsiang-Chih) Shane Murnion

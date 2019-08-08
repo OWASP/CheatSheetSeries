@@ -440,11 +440,3 @@ The following article describes how to exploit different kinds of XSS Vulnerabil
 
 - [OWASP Testing Guide](https://www.owasp.org/index.php/:Category:OWASP_Testing_Project) article on [Testing for Cross site scripting](https://www.owasp.org/index.php/Testing_for_Cross_site_scripting) Vulnerabilities.
 - [XSS Experimental Minimal Encoding Rules](https://www.owasp.org/index.php/XSS_Experimental_Minimal_Encoding_Rules)
-
-# Authors and Primary Editors
-
-Jeff Williams - jeff.williams@contrastsecurity.com
-
-Jim Manico - jim@owasp.org
-
-Neil Mattatall - neil@owasp.org

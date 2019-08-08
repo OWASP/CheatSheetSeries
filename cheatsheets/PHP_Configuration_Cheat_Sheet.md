@@ -125,13 +125,3 @@ report_memleaks         = On
 track_errors            = Off
 html_errors             = Off
 ```
-
-# Authors and Primary Editors
-
-Achim Hoffmann - Achim@owasp.org 
-
-Tony Hsu HsiangChih 
-
-Abbas Naderi - abbas.naderi@owasp.org
-
-Dan Ehrlich - dan.ehrlich@owasp.org

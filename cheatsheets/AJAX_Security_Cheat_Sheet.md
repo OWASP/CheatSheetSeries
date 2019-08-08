@@ -104,9 +104,3 @@ Use the framework and be safe, do it by hand and have security issues.
 ### Use JSON And XML Schema for Webservices
 
 You need to use a 3rd party library to validate web services.
-
-# Authors and Primary Editors
-
-Til Mas
-
-Michael Eddington

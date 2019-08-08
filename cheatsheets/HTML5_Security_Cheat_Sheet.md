@@ -962,17 +962,3 @@ public void start(Session session) {
 ```
 
 Expose WebSocket endpoints only on [wss://](https://kaazing.com/html5-websocket-security-is-strong/) protocol (WebSockets over SSL/TLS) in order to ensure *Confidentiality* and *Integrity* of the traffic like using HTTP over SSL/TLS to secure HTTP exchanges.
-
-# Authors and Primary Editors
-
-Mark Roxberry mark.roxberry@owasp.org
-
-Krzysztof Kotowicz krzysztof@kotowicz.net
-
-Will Stranathan will@cltnc.us
-
-Shreeraj Shah shreeraj.shah@blueinfy.net
-
-Juan Galiana Lara jgaliana@owasp.org
-
-Dominique Righetto dominique.righetto@owasp.org
