@@ -30,7 +30,7 @@ The [AVANTSSAR](http://www.avantssar.eu/) team suggested the following data elem
 
 # Validate Signatures
 
-Vulnerabilities in SAML implementations due to XML Signature Wrapping attacks were described in 2012 ([On Breaking SAML: Be Whoever You Want to Be](https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf)). 
+Vulnerabilities in SAML implementations due to XML Signature Wrapping attacks were described in 2012, [On Breaking SAML: Be Whoever You Want to Be](https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf).
 
 The following recommendations were proposed in response ([Secure SAML validation to prevent XML signature wrapping attacks](http://arxiv.org/pdf/1401.7483v1.pdf)):
 
