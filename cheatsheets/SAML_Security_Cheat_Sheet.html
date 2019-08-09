@@ -1037,7 +1037,8 @@
 <li><strong>Response(ID, SP, IdP, {AA} K -1/IdP):</strong> A Response must contain all these elements. Where <code>ID</code> is a string uniquely identifying the response. <code>SP</code> identifies the recipient of the response. <code>IdP</code> identifies the identity provider authorizing the response. <code>{AA} K -1/IdP</code> is the assertion digitally signed with the private key of the <code>IdP</code>.</li>
 <li><strong>AuthAssert(ID, C, IdP, SP):</strong> An authentication assertion must exist within the Response. It must contain an <code>ID</code>, a client <code>(C)</code>, an identity provider <code>(IdP)</code>, and a service provider <code>(SP)</code> identifier.</li>
 </ul>
-<p>Further vulnerabilities in SAML implementations were described in 2012 (<a href="https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf" target="_blank">On Breaking SAML: Be Whoever You Want to Be</a>). </p>
+<h2 id="validate-signatures"><a name="validate-signatures" class="plugin-anchor" href="#validate-signatures"><i class="fa fa-link" aria-hidden="true"></i></a>Validate Signatures</h2>
+<p>Vulnerabilities in SAML implementations due to XML Signature Wrapping attacks were described in 2012, <a href="https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf" target="_blank">On Breaking SAML: Be Whoever You Want to Be</a>.</p>
 <p>The following recommendations were proposed in response (<a href="http://arxiv.org/pdf/1401.7483v1.pdf" target="_blank">Secure SAML validation to prevent XML signature wrapping attacks</a>):</p>
 <ul>
 <li>Always perform schema validation on the XML document prior to using it for any security-&#xAD;related purposes:<ul>
@@ -1100,9 +1101,9 @@
 </li>
 </ul>
 <p>Need an architectural diagram? The <a href="http://www.oasis-open.org/committees/download.php/11511/sstc-saml-tech-overview-2.0-draft-03.pdf" target="_blank">SAML technical overview</a> contains the most complete diagrams. For the Web Browser SSO Profile with Redirect/POST bindings refer to the section 4.1.3. In fact, of all the SAML documentation, the technical overview is the most valuable from a high-level perspective.</p>
-<h1 id="first-and-last-mile-considerations"><a name="first-and-last-mile-considerations" class="plugin-anchor" href="#first-and-last-mile-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>First and Last Mile Considerations</h1>
+<h1 id="identity-provider-and-service-provider-considerations"><a name="identity-provider-and-service-provider-considerations" class="plugin-anchor" href="#identity-provider-and-service-provider-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>Identity Provider and Service Provider Considerations</h1>
 <p>The SAML protocol is rarely the vector of choice, though it&apos;s important to have cheatsheets to make sure that this is robust. The various endpoints are more targeted, so how the SAML token is generated and how it is consumed are both important in practice.</p>
-<h2 id="first-mile-considerations"><a name="first-mile-considerations" class="plugin-anchor" href="#first-mile-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>First Mile Considerations</h2>
+<h2 id="identity-provider-idp-considerations"><a name="identity-provider-idp-considerations" class="plugin-anchor" href="#identity-provider-idp-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>Identity Provider (IdP) Considerations</h2>
 <ul>
 <li>Validate X.509 Certificate for algorithm compatibility, strength of encryption, export restrictions</li>
 <li>Validate Strong Authentication options for generating the SAML token</li>
@@ -1111,19 +1112,21 @@
 <li>Synchronize to a common Internet timesource</li>
 <li>Define levels of assurance for identity verification</li>
 <li>Prefer asymmetric identifiers for identity assertions over personally identifiable information (e.g. SSNs, etc)</li>
-<li>Sign assertions whenever possible</li>
+<li>Sign each individual Assertion or the entire Response element</li>
 </ul>
-<h2 id="last-mile-considerations"><a name="last-mile-considerations" class="plugin-anchor" href="#last-mile-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>Last Mile Considerations</h2>
+<h2 id="service-provider-sp-considerations"><a name="service-provider-sp-considerations" class="plugin-anchor" href="#service-provider-sp-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>Service Provider (SP) Considerations</h2>
 <ul>
 <li>Validating session state for user</li>
 <li>Level of granularity in setting authZ context when consuming SAML token (do you use groups, roles, attributes)</li>
-<li>Validate authorized IDP</li>
-<li>Validate IDP certificates for expiry against CRL/OCSP</li>
+<li>Ensure each Assertion or the entire Response element is signed</li>
+<li><a href="#validate-signatures">Validate Signatures</a></li>
+<li>Validate if signed by authorized IDP</li>
+<li>Validate IDP certificates for expiration and revocation against CRL/OCSP</li>
 <li>Validate NotBefore and NotOnorAfter</li>
+<li>Validate Recipient attribute</li>
 <li>Define criteria for SAML logout</li>
 <li>Exchange assertions only over secure transports</li>
 <li>Define criteria for session management</li>
-<li>Validate signature whenever possible</li>
 <li>Verify user identities obtained from SAML ticket assertions whenever possible.</li>
 </ul>
 <h1 id="input-validation"><a name="input-validation" class="plugin-anchor" href="#input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Input Validation</h1>
@@ -1179,7 +1182,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"SAML Security ","level":"1.50","depth":1,"next":{"title":"SQL Injection Prevention ","level":"1.51","depth":1,"path":"cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Ruby on Rails Cheatsheet","level":"1.49","depth":1,"path":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","ref":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/SAML_Security_Cheat_Sheet.md","mtime":"2019-08-09T13:41:39.362Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-09T13:42:06.622Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"SAML Security ","level":"1.50","depth":1,"next":{"title":"SQL Injection Prevention ","level":"1.51","depth":1,"path":"cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Ruby on Rails Cheatsheet","level":"1.49","depth":1,"path":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","ref":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/SAML_Security_Cheat_Sheet.md","mtime":"2019-08-09T13:59:48.064Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-09T14:00:13.890Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
