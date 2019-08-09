@@ -103,7 +103,7 @@ The SAML protocol is rarely the vector of choice, though it's important to have 
 - Validating session state for user
 - Level of granularity in setting authZ context when consuming SAML token (do you use groups, roles, attributes)
 - Ensure each Assertion or the entire Response element is signed
-- Validate signature (see also section [Validate Signatures](#validate-signatures))
+- [Validate Signatures](#validate-signatures)
 - Validate if signed by authorized IDP
 - Validate IDP certificates for expiration and revocation against CRL/OCSP
 - Validate NotBefore and NotOnorAfter
