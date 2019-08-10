@@ -128,6 +128,23 @@ It is possible to have a [fine-grained control](https://html.spec.whatwg.org/mul
 - In old versions of user agents where this feature is not supported, this attribute will be ignored. Use this feature as an additional layer of protection or check if the browser supports sandboxed frames and only show the untrusted content if supported.
 - Apart from this attribute, to prevent Clickjacking attacks and unsolicited framing it is encouraged to use the header `X-Frame-Options` which supports the `deny` and `same-origin` values. Other solutions like framebusting `if(window!==window.top) { window.top.location=location;}` are not recommended.
 
+# Credential and Personally Identifiable Information (PII) Input hints
+
+- Protect the input values from being cached by the browser. 
+
+Example: access a financial account from a public computer. Even though one is logged-off, the next person who uses the machine can log-in because the browser autocomplete functionality. To mitigate this, we tell the input fields not to assist in any way.
+
+```html
+<input type="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></input>
+```
+
+Text areas and input fields for PII (name, email, address, phone number) and login credentials (username, password) should be prevented from being stored in the browser. Use these HTML5 attributes to prevent the browser from storing PII from your form:
+
+- `spellcheck="false"`
+- `autocomplete="off"`
+- `autocorrect="off"`
+- `autocapitalize="off"`
+
 # Offline Applications
 
 - Whether the user agent requests permission from the user to store data for offline browsing and when this cache is deleted, varies from one browser to the next. Cache poisoning is an issue if a user connects through insecure networks, so for privacy reasons it is encouraged to require user input before sending any `manifest` file.
