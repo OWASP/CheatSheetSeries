@@ -188,7 +188,7 @@ The user of this cheat can depend on the following list of risks and threat libr
 1.  Risks with [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project).
 2.  Testing Procedure with [OWASP ASVS](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project).
 3.  Risks with [SANS Top 25](https://www.sans.org/top25-software-errors).
-4.  Microsoft [STRIDE](https://en.wikipedia.org/wiki/STRIDE_(security)).
+4.  Microsoft [STRIDE](https://en.wikipedia.org/wiki/STRIDE_%28security%29).
 
 ## Map Threat agents to application Entry points
 
@@ -226,7 +226,7 @@ Here we will highlight two risk methodology that could be used:
 
 ### DREAD
 
-[DREAD](https://en.wikipedia.org/wiki/DREAD_(risk_assessment_model)), is about evaluating each existing vulnerability using a mathematical formula to retrieve the vulnerability’s corresponding risk. The **DREAD** formula is divided into 5 main categories:
+[DREAD](https://en.wikipedia.org/wiki/DREAD_%28risk_assessment_model%29), is about evaluating each existing vulnerability using a mathematical formula to retrieve the vulnerability’s corresponding risk. The **DREAD** formula is divided into 5 main categories:
 
 - **D**amage - how bad would an attack be?
 - **R**eproducibility - how easy it is to reproduce the attack?
@@ -309,9 +309,3 @@ TODO
 # Appendix
 
 TODO: *Sample Design for Implementation View in 4+1 Model*
-
-# Authors and Primary Editors
-
-Mohamed Alfateh 
-
-Ahmed Kanoma

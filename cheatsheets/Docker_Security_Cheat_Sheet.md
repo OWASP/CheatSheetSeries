@@ -256,7 +256,3 @@ References:
 # Related Projects
 
 [OWASP Docker Top 10](https://github.com/OWASP/Docker-Security)
-
-# Authors and Primary Editors
-
-Jakub Maćkowski - jakub.mackowski@owasp.org

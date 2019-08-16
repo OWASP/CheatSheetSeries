@@ -109,7 +109,7 @@ Using [Content Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) 
 
 [Brakeman scanner](https://github.com/presidentbeef/brakeman) helps in finding XSS problems in Rails apps.
 
-OWASP provides more general information about XSS in a top level page: [Cross-site Scripting (XSS)](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)).
+OWASP provides more general information about XSS in a top level page: [Cross-site Scripting (XSS)](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29).
 
 ## Sessions
 
@@ -224,7 +224,7 @@ $ rails g devise_token_auth:install [USER_CLASS] [MOUNT_PATH]
 
 You may need to edit the generated migration to avoid unnecessary fields and/or field duplication depending on your use case.
 
-Note: when you use only token authentication, there is no more need in [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) protection in controllers. If you use both ways: cookies and tokens, the paths where cookies are used for authentication still must be protected from forgery!
+Note: when you use only token authentication, there is no more need in [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29) protection in controllers. If you use both ways: cookies and tokens, the paths where cookies are used for authentication still must be protected from forgery!
 
 There is an [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
 
@@ -245,7 +245,7 @@ class ApplicationController < ActionController::Base
     protect_from_forgery
 ```
 
-Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API’s or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) protection for the show method.
+Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API’s or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29) protection for the show method.
 
 ``` ruby
 class ProjectController < ApplicationController
@@ -256,7 +256,7 @@ Also note that by default Rails does not provide CSRF protection for any HTTP `G
 
 **Note:** if you use token authentication only, there is no need to protect from CSRF in controllers like this. If cookie-based authentication is used on some paths, then the protections is still required on them.
 
-There is a top level OWASP page for [Cross-Site Request Forgery (CSRF)](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)).
+There is a top level OWASP page for [Cross-Site Request Forgery (CSRF)](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29).
 
 ## Mass Assignment and Strong Parameters
 
@@ -502,27 +502,3 @@ Launched in May 2013 and very similiar to brakeman scanner, the [dawnscanner](ht
 - [The Ruby Security Reviewers Guide](http://code.google.com/p/ruby-security/wiki/Guide)
 - [The Ruby on Rails Security Mailing List](https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-security)
 - [Rails Insecure Defaults](http://blog.codeclimate.com/blog/2013/03/27/rails-insecure-defaults/)
-
-# Authors and Primary Editors
-
-Matt Konda - mkonda@jemurai.com
-
-Neil Matatall - neil@matatall.com
-
-Ken Johnson - cktricky@gmail.com
-
-Justin Collins - justin@presidentbeef.com
-
-Jon Rose - jrose400@gmail.com
-
-Lance Vaughn - lance@cabforward.com
-
-Jon Claudius - jonathan.claudius@gmail.com
-
-Jim Manico - jim@owasp.org
-
-Aaron Bedra - aaron@aaronbedra.com
-
-Egor Homakov - homakov@gmail.com
-
-Zaur Molotnikov - qutorial@gmail.com

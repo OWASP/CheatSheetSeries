@@ -456,11 +456,3 @@ All figures were created using https://www.draw.io/ site and exported (as PNG im
 All XML descriptor files for each schema are available below (using XML description, modification of the schema is possible using DRAW.IO site):
 
 [Schemas descriptors archive](../assets/Abuse_Case_Cheat_Sheet_SchemaBundle.zip)
-
-# Authors and Primary Editors
-
-James Robinson - jrobinson@netskope.com
-
-Dominique Righetto - dominique.righetto@owasp.org
-
-[Rick Mitchell](https://www.owasp.org/index.php/User:Rick.mitchell)

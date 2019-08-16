@@ -216,14 +216,8 @@ In PHP use [escapeshellarg()](http://php.net/manual/en/function.escapeshellarg.p
 
 ## How to Test
 
-- [OWASP Testing Guide](https://www.owasp.org/index.php/OWASP_Testing_Project) article on [Testing for Command Injection](https://www.owasp.org/index.php/Testing_for_Command_Injection_(OTG-INPVAL-013)).
+- [OWASP Testing Guide](https://www.owasp.org/index.php/OWASP_Testing_Project) article on [Testing for Command Injection](https://www.owasp.org/index.php/Testing_for_Command_Injection_%28OTG-INPVAL-013%29).
 
 ## External References
 
 - [CWE Entry 77 on Command Injection](https://cwe.mitre.org/data/definitions/77.html).
-
-# Authors and Primary Editors
-
-Katy Anton - katy.anton@owasp.org
-
-Jim Manico - jim.manico@owasp.org

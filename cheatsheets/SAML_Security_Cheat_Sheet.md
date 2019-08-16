@@ -28,7 +28,9 @@ The [AVANTSSAR](http://www.avantssar.eu/) team suggested the following data elem
 - **Response(ID, SP, IdP, {AA} K -1/IdP):** A Response must contain all these elements. Where `ID` is a string uniquely identifying the response. `SP` identifies the recipient of the response. `IdP` identifies the identity provider authorizing the response. `{AA} K -1/IdP` is the assertion digitally signed with the private key of the `IdP`.
 - **AuthAssert(ID, C, IdP, SP):** An authentication assertion must exist within the Response. It must contain an `ID`, a client `(C)`, an identity provider `(IdP)`, and a service provider `(SP)` identifier.
 
-Further vulnerabilities in SAML implementations were described in 2012 ([On Breaking SAML: Be Whoever You Want to Be](https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf)). 
+## Validate Signatures
+
+Vulnerabilities in SAML implementations due to XML Signature Wrapping attacks were described in 2012, [On Breaking SAML: Be Whoever You Want to Be](https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf).
 
 The following recommendations were proposed in response ([Secure SAML validation to prevent XML signature wrapping attacks](http://arxiv.org/pdf/1401.7483v1.pdf)):
 
@@ -81,11 +83,11 @@ Additional countermeasures considererd should include:
 
 Need an architectural diagram? The [SAML technical overview](http://www.oasis-open.org/committees/download.php/11511/sstc-saml-tech-overview-2.0-draft-03.pdf) contains the most complete diagrams. For the Web Browser SSO Profile with Redirect/POST bindings refer to the section 4.1.3. In fact, of all the SAML documentation, the technical overview is the most valuable from a high-level perspective.
 
-# First and Last Mile Considerations
+# Identity Provider and Service Provider Considerations
 
 The SAML protocol is rarely the vector of choice, though it's important to have cheatsheets to make sure that this is robust. The various endpoints are more targeted, so how the SAML token is generated and how it is consumed are both important in practice.
 
-## First Mile Considerations
+## Identity Provider (IdP) Considerations
 
 - Validate X.509 Certificate for algorithm compatibility, strength of encryption, export restrictions
 - Validate Strong Authentication options for generating the SAML token
@@ -94,19 +96,21 @@ The SAML protocol is rarely the vector of choice, though it's important to have 
 - Synchronize to a common Internet timesource
 - Define levels of assurance for identity verification
 - Prefer asymmetric identifiers for identity assertions over personally identifiable information (e.g. SSNs, etc)
-- Sign assertions whenever possible
+- Sign each individual Assertion or the entire Response element
 
-## Last Mile Considerations
+## Service Provider (SP) Considerations
 
 - Validating session state for user
 - Level of granularity in setting authZ context when consuming SAML token (do you use groups, roles, attributes)
-- Validate authorized IDP
-- Validate IDP certificates for expiry against CRL/OCSP
+- Ensure each Assertion or the entire Response element is signed
+- [Validate Signatures](#validate-signatures)
+- Validate if signed by authorized IDP
+- Validate IDP certificates for expiration and revocation against CRL/OCSP
 - Validate NotBefore and NotOnorAfter
+- Validate Recipient attribute
 - Define criteria for SAML logout
 - Exchange assertions only over secure transports
 - Define criteria for session management
-- Validate signature whenever possible
 - Verify user identities obtained from SAML ticket assertions whenever possible.
 
 # Input Validation
@@ -120,13 +124,3 @@ Just because SAML is a security protocol does not mean that input validation goe
 Solutions relying cryptographic algorithms need to follow the latest developments in cryptoanalysis.
 
 - Ensure all SAML elements in the chain use [strong encryption](Cryptographic_Storage_Cheat_Sheet.md#rule---use-strong-approved-authenticated-encryption)
-
-# Authors and Primary Editors
-
-[Brad Broulik](http://bradbroulik.blogspot.dk/2010/01/bulletproof-sso-with-saml-20.html)
-
-[Paweł Krawczyk](https://ipsec.pl/)
-
-Gunnar Peterson
-
-James McGovern

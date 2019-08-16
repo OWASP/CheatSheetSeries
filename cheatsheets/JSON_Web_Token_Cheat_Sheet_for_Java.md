@@ -197,7 +197,7 @@ DecodedJWT decodedToken = verifier.verify(token);
 
 ### Symptom
 
-This problem is inerrant to JWT token because a token become only invalid when it expires. The user has no built-in feature to explicitly revoke the validity of an token. So, in case of steal, a user cannot revoke the token itself and then block the attacker.
+This problem is inherent to JWT because a token become only invalid when it expires. The user has no built-in feature to explicitly revoke the validity of an token. This means that if it is stolen, a user cannot revoke the token itself and then block the attacker.
 
 ### How to prevent
 
@@ -315,7 +315,7 @@ This attack occur when a attacker access to a token (or a set of tokens) and ext
 
 A way to protect, is to cipher the token using for example a symetric algorithm.
 
-It's also important to protect the ciphered data against attack like [Padding Oracle](https://www.owasp.org/index.php/Testing_for_Padding_Oracle_(OTG-CRYPST-002)) or any other attack using cryptanalysis.
+It's also important to protect the ciphered data against attack like [Padding Oracle](https://www.owasp.org/index.php/Testing_for_Padding_Oracle_%28OTG-CRYPST-002%29) or any other attack using cryptanalysis.
 
 In order to achieve all these goals, the algorithm *AES-[GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)* is used, this one provide *Authenticated Encryption with Associated Data*.
 
@@ -467,7 +467,7 @@ It's occur when a application store the token in a way allowing this one to be:
 2.  Add it as a *Bearer* with JavaScript when calling services.
 3.  Add [fingerprint](JSON_Web_Token_Cheat_Sheet_for_Java.md#token-sidejacking) information to the token.
 
-By storing the token in browser *sessionStorage* container it expose the token to be steal in case of XSS issue. However, fingerprint added to the token prevent reuse of the stolen token by the attacker on his machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#csp) to harden the execution context.
+By storing the token in browser *sessionStorage* container it expose the token to being stolen by through an XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#csp) to harden the execution context.
 
 *Note:*
 
@@ -606,11 +606,3 @@ You can also use:
 ### Additional Reading
 
 - [JWT Best Practices Internet Draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-bcp/)
-
-# Authors and Primary Editors
-
-Jim Manico - jim.manico@owasp.org
-
-Dominique Righetto - dominique.righetto@owasp.org
-
-Paul Ionescu - paul.ionescu@owasp.org

@@ -94,13 +94,3 @@ The key concept in Permission Based Access Control is the abstraction of applica
 The *has* relationship between the user and permission may be satisfied by creating a direct relationship between the user and permission (called a *grant*), or an indirect one. In the indirect model the permission *grant* is to an intermediate entity such as *user group*. A user is considered a member of a *user group* if and only if the user *inherits* permissions from the *user group*. The indirect model makes it easier to manage the permissions for a large number of users, since changing the permissions assigned to the user group affects all members of the user group.
 
 In some Permission Based Access Control systems that provide fine-grained domain object level access control, permissions may be grouped into *classes*. In this model it is assumed that each domain object in the system can be associated with a *class* which determines the permissions applicable to the respective domain object. In such a system a "DOCUMENT" class may be defined with the permissions "READ", "WRITE" and DELETE"; a "SERVER" class may be defined with the permissions "START", "STOP", and "REBOOT".
-
-# Authors and Primary Editors
-
-Shruti Kulkarni - shruti.kulkarni@owasp.org
-
-Adinath Raveendra Raj - adinath@acciente.com
-
-Mennouchi Islam Azeddine - azeddine.mennouchi@owasp.org
-
-Jim Manico - jim@owasp.org

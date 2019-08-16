@@ -1,5 +1,6 @@
-![CSCounterBadge](https://img.shields.io/badge/Cheat_sheets_available-63-orange.svg)
-![LicenseBadge](https://img.shields.io/badge/License-C_C-blue.svg)
+[![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)
+![CSCounterBadge](https://img.shields.io/badge/cheat_sheets_available-63-orange.svg)
+![LicenseBadge](https://img.shields.io/badge/license-C_C-blue.svg)
 [![PushAndPullRequestIntegrityCheck](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
 [![OfflineWebsiteBuild](https://circleci.com/gh/OWASP/CheatSheetSeries/tree/master.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries/tree/master)
 
@@ -25,6 +26,7 @@ Links:
 - [Conversion rules](#conversion-rules)
 - [How to setup my contributor environment?](#how-to-setup-my-contributor-environment)
 - [How to contribute?](#how-to-contribute)
+- [Contributors](#contributors)
 - [Offline website](#offline-website)
 - [Project leaders](#project-leaders)
 - [Core team](#core-team)
@@ -34,12 +36,13 @@ Links:
 - [License](#license)
 - [Code of conduct](CODE_OF_CONDUCT.md)
 - [DNS configuration for the website](#dns-configuration-for-the-website)
+- [Flagship graduation](#flagship-graduation)
 
 # Reference to the Cheat Sheets
 
 When a reference to a cheat sheet need to be created then a link pointing to the project (generated) official web site hosted on **https://cheatsheetseries.owasp.org** must be used.
 
-:triangular_flag_on_post: Markdown files are the working sources and are not intented to be referenced in any external documentation/book/website/etc.
+:triangular_flag_on_post: Markdown files are the working sources and are not intended to be referenced in any external documentation/book/website/etc.
 
 # Cheat Sheets index
 
@@ -223,6 +226,11 @@ See [here](CONTRIBUTING.md#how-to-setup-my-contributor-environment).
 
 See [here](CONTRIBUTING.md#how-to-contribute).
 
+# Contributors
+
+* **From 2014 to 2018:** [V1](CONTRIBUTOR-V1.md) - Initial version of the project hosted on the [OWASP WIKI](https://www.owasp.org).
+* **From 2019:** [V2](https://github.com/OWASP/CheatSheetSeries/graphs/contributors) - Hosted on [GitHub](https://github.com/OWASP/CheatSheetSeries).
+
 # Special thanks
 
 A special thanks you to the following peoples for the help provided during the migration:
@@ -258,3 +266,7 @@ owasp.github.io.	3600	IN	A	185.199.108.153
 ```
 
 As well as this final configuration [action](https://help.github.com/en/articles/setting-up-a-custom-subdomain).
+
+# Flagship graduation
+
+The result of the project review, by the foundation, is available [here](assets/README_FlagshipCombinedReviews.pdf).

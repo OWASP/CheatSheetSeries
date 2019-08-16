@@ -64,7 +64,3 @@ Lastly, when [fuzzing](https://www.owasp.org/index.php/Fuzzing), don't forget to
 
 - [REST Security Cheat Sheet](REST_Security_Cheat_Sheet.md) - the other side of this cheat sheet
 - [RESTful services, web security blind spot](https://xiom.com/2016/10/31/restful-services-web-security-blind-spot/) - a presentation (including video) elaborating on most of the topics on this cheat sheet.
-
-# Authors and Primary Editors
-
-Ofer Shezaf - ofer@shezaf.com

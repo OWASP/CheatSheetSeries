@@ -30,7 +30,7 @@ Typical defenses include, but are not restricted to: in-house script mirroring (
 
 ## Risk 2: Execution of arbitrary code on client systems
 
-This risk arises from the fact that 3rd party JavaScript code is rarely reviewed by the invoking party prior to its integration into a website/application. As the client reaches the hosting website/application, this 3rd party code gets executed, thus granting the 3rd party the exact same privileges that were granted to the user (similar to [XSS attacks](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS))).
+This risk arises from the fact that 3rd party JavaScript code is rarely reviewed by the invoking party prior to its integration into a website/application. As the client reaches the hosting website/application, this 3rd party code gets executed, thus granting the 3rd party the exact same privileges that were granted to the user (similar to [XSS attacks](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29)).
 
 Any testing performed prior to entering production loses some of its validity, including `AST testing` ([IAST](https://www.veracode.com/security/interactive-application-security-testing-iast), [RAST](https://www.veracode.com/sites/default/files/pdf/resources/whitepapers/what-is-rasp.pdf), [SAST](https://www.gartner.com/it-glossary/static-application-security-testing-sast), [DAST](https://www.gartner.com/it-glossary/dynamic-application-security-testing-dast), etc.). 
 
@@ -60,7 +60,7 @@ There are three basic deployment mechanisms for **tags**. These mechanisms can b
 
 ## Vendor Javascript on page
 
-This is where the vendor provides the host with the javascript and the host puts it on the host page. To be secure the host company must review the code for any vulnerabilities like [XSS attacks](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)) or malicious actions such as sending sensitive data from the DOM to a malicious site. This is often difficult because the javascript is commonly obfuscated.
+This is where the vendor provides the host with the javascript and the host puts it on the host page. To be secure the host company must review the code for any vulnerabilities like [XSS attacks](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29) or malicious actions such as sending sensitive data from the DOM to a malicious site. This is often difficult because the javascript is commonly obfuscated.
 
 ```html
 <!-- Some host, e.g. foobar.com, HTML code here -->
@@ -207,7 +207,7 @@ It is important to know that in order for SRI to work, the vendor host needs [CO
 
 ## Keeping JavaScript libraries updated
 
-[OWASP Top 10 2013 A9](https://www.owasp.org/index.php/Top_10_2013-A9-Using_Components_with_Known_Vulnerabilities) describes the problem of using components with known vulnerabilities. This includes JavaScript libraries. JavaScript libraries must be kept up to date, as previous version can have known vulnerabilities which can lead to the site typically being vulnerable to [Cross Site Scripting](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)). There are several tools out there that can help identify such libraries. One such tool is the free open source tool [RetireJS](https://retirejs.github.io)
+[OWASP Top 10 2013 A9](https://www.owasp.org/index.php/Top_10_2013-A9-Using_Components_with_Known_Vulnerabilities) describes the problem of using components with known vulnerabilities. This includes JavaScript libraries. JavaScript libraries must be kept up to date, as previous version can have known vulnerabilities which can lead to the site typically being vulnerable to [Cross Site Scripting](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29). There are several tools out there that can help identify such libraries. One such tool is the free open source tool [RetireJS](https://retirejs.github.io)
 
 ## Sandboxing with iframe
 
@@ -299,7 +299,3 @@ The MarSecOps requirements to implement technical controls at the speed of chang
 - [Magecart – a malicious infrastructure for stealing payment details from online shops](https://www.clearskysec.com/magecart/).
 - [Compromised E-commerce Sites Lead to “Magecart”](https://www.riskiq.com/blog/labs/magecart-keylogger-injection/)
 - [Inbenta, blamed for Ticketmaster breach, admits it was hacked](https://www.zdnet.com/article/inbenta-blamed-for-ticketmaster-breach-says-other-sites-not-affected/).
-
-# Authors and Primary Editors
-
-Jim Weiler - Jim.Weiler@owasp.org

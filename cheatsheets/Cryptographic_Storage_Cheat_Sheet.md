@@ -36,7 +36,7 @@ E.g. [CCM](http://en.wikipedia.org/wiki/CCM_mode) or [GCM](http://en.wikipedia.o
 
 Do not implement an existing cryptographic algorithm on your own, no matter how easy it appears. Instead, use widely accepted algorithms and widely accepted implementations.
 
-Only use approved public algorithms such as AES, RSA public key cryptography, and SHA-256 or better for hashing. Do not use weak algorithms, such as MD5 or SHA1. Avoid hashing for password storage, instead use Argon2, PBKDF2, bcrypt or scrypt. Note that the classification of a "strong" cryptographic algorithm can change over time. See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) or ISO TR 14742 “Recommendations on Cryptographic Algorithms and their use” or [Algorithms, key size and parameters report – 2014](http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-size-and-parameters-report-2014/at_download/fullReport) from European Union Agency for Network and Information Security. E.g. [AES](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 128, [RSA](http://en.wikipedia.org/wiki/RSA_(cryptosystem)) 3072, [SHA](http://en.wikipedia.org/wiki/Secure_Hash_Algorithm) 256.
+Only use approved public algorithms such as AES, RSA public key cryptography, and SHA-256 or better for hashing. Do not use weak algorithms, such as MD5 or SHA1. Avoid hashing for password storage, instead use Argon2, PBKDF2, bcrypt or scrypt. Note that the classification of a "strong" cryptographic algorithm can change over time. See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) or ISO TR 14742 “Recommendations on Cryptographic Algorithms and their use” or [Algorithms, key size and parameters report – 2014](http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-size-and-parameters-report-2014/at_download/fullReport) from European Union Agency for Network and Information Security. E.g. [AES](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 128, [RSA](http://en.wikipedia.org/wiki/RSA_%28cryptosystem%29) 3072, [SHA](http://en.wikipedia.org/wiki/Secure_Hash_Algorithm) 256.
 
 Ensure that the implementation has (at minimum) had some cryptography experts involved in its creation. If possible, use an implementation that is FIPS 140-2 certified.
 
@@ -208,7 +208,7 @@ To perform the strong key management functions we have seen in requirement 3.6 w
 
 ## Documentation
 
-- [Testing for SSL-TLS](https://www.owasp.org/index.php/Testing_for_SSL-TLS_(OWASP-CM-001))
+- [Testing for SSL-TLS](https://www.owasp.org/index.php/Testing_for_SSL-TLS_%28OWASP-CM-001%29)
 - [Guide to Cryptography](https://www.owasp.org/index.php/Guide_to_Cryptography)
 - [Application Security Verification Standard (ASVS) – Communication Security Verification Requirements (V10)](http://www.owasp.org/index.php/ASVS)
 - [SSLLabs wiki](https://github.com/ssllabs/research/wiki)
@@ -220,17 +220,3 @@ To perform the strong key management functions we have seen in requirement 3.6 w
 
 - [TestSSL](https://testssl.sh/)
 - [Cryptosense](https://cryptosense.com/discovery/)
-
-# Authors and Primary Editors
-
-Kevin Kenan - kevin@k2dd.com
-
-David Rook - david.a.rook@gmail.com
-
-Kevin Wall - kevin.w.wall@gmail.com
-
-Jim Manico - jim@owasp.org
-
-Fred Donovan - fred.donovan@owasp.org
-
-Tony Hsu - hsiang_chih@yahoo.com

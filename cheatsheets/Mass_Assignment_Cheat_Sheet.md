@@ -279,7 +279,3 @@ Take a look [here](http://flexjson.sourceforge.net/#Serialization) for the docum
 # References and future reading
 
 - [Mass Assignment, Rails and You](https://code.tutsplus.com/tutorials/mass-assignment-rails-and-you--net-31695)
-
-# Authors and Primary Editors
-
-Abashkin Anton - abashkin.anton@gmail.com
