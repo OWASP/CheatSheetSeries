@@ -194,7 +194,7 @@ This mitigation is working properly when origin or referrer headers are present 
 - Origin header is included for all cross origin requests but for same origin requests, in most browsers it is only included in POST/DELETE/PUT **Note:** Although it is not ideal, many developers use GET requests to do state changing operations.
 - Referer header is no exception. There are multiple use cases where referrer header is omitted as well ([1](https://stackoverflow.com/questions/6880659/in-what-cases-will-http-referer-be-empty), [2](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer), [3](https://en.wikipedia.org/wiki/HTTP_referer#Referer_hiding), [4](https://seclab.stanford.edu/websec/csrf/csrf.pdf) and [5](https://www.google.com/search?q=referrer+header+sent+null+value+site:stackoverflow.com)). Load balancers, proxies and embedded network devices are also well known to strip the referrer header due to privacy reasons in logging them.
 
-Usually, a minor percentage of traffic does fall under above categories ([1-2%](http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html)) and no enterprise would want to lose even this minor % of traffic. One of the popular technique used across Internet to make this technique more usable is to accept the request if the Origin/referrer matches your configured list of domains "OR" a null value (Examples [here](http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html). null value is to cover the edge cases mentioned above where these headers are not sent). Please note that, attackers can use it to exploit CSRF using the edge cases but many prefer to deploy this technique it as a defense in depth measure because of minor effort involved in creating it.
+Usually, a minor percentage of traffic does fall under above categories ([1-2%](http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html)) and no enterprise would want to lose even this minor % of traffic. One of the popular technique used across Internet to make this technique more usable is to accept the request if the Origin/referrer matches your configured list of domains "OR" a null value (Examples [here](http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html). null value is to cover the edge cases mentioned above where these headers are not sent). Please note that, attackers can exploit this but people prefer to use this technique as a defense in depth measure because of minor effort involved in deploying it
 
 ## Double Submit Cookie
 
@@ -213,6 +213,10 @@ Scenarios a and b mentioned above are possible only if the CSRF token is not der
 
 Including the token in an encrypted cookie - often within the authentication cookie - and then at the server side matching it (after decrypting authentication cookie) with the token in hidden form field or parameter/header for ajax calls mitigates both the issues mentioned above. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.
 
+**Note about Triple Submit Cookie** 
+
+This mitigation is proposed by John Wilander in 2012 at OWASP Appsec Research. This technique adds an additional step to double submit cookie approach by verifying if the request contains two cookies with same name (please note, attacker need to write an additional cookie to bypass double submit cookie mitigation). Though it mitigates the issues discussed in bypass of double submit cookie, it introduces new problems such as cookie jar overflow (in-details and more issue details [here](https://media.blackhat.com/eu-13/briefings/Lundeen/bh-eu-13-deputies-still-confused-lundeen-wp.pdf) and [here](https://webstersprodigy.net/2012/08/03/analysis-of-john-wilanders-triple-submit-cookies/)
+
 ## Use of Custom Request Headers
 
 Adding CSRF tokens, a double submit cookie and value, encrypted token, or other defense that involves changing the UI can frequently be complex or otherwise problematic. An alternate defense that is particularly well suited for AJAX/XHR endpoints is the use of a custom request header. This defense relies on the [same-origin policy (SOP)](https://en.wikipedia.org/wiki/Same-origin_policy) restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests.
@@ -224,6 +228,10 @@ If this is the case for your system, you can simply verify the presence of this 
 This defense technique is specifically discussed in section 4.3 of [Robust Defenses for Cross-Site Request Forgery](https://seclab.stanford.edu/websec/csrf/csrf.pdf). However, bypasses of this defense using Flash were documented as early as 2008 and again as recently as 2015 by Mathias Karlsson to [exploit a CSRF flaw in Vimeo](https://hackerone.com/reports/44146). Riyaz Walikar from [Appsecco Labs](https://appsecco.com/) was able to exploit this even in early 2019 [using older versions of Firefox](https://blog.appsecco.com/exploiting-csrf-on-json-endpoints-with-flash-and-redirects-681d4ad6b31b) and also in some recent versions of Chrome (with a bit of [user involvement](https://github.com/sp1d3r/swf_json_csrf/blob/master/read.html)). Since we cannot the control the versions of browser end user uses nor depend on it for their security, this technique is not recommended as a primary defense in measure.
 
 This technique obviously works for Ajax calls and you have to still need protect `<form>` tags with approaches described in this document such as tokens. Also, CORS configuration should also be robust to make this solution work effectively (as custom headers for requests coming from other domains trigger a pre-flight CORS check).
+
+**Note about Content-Type Header Validation** 
+
+Do not use Content-Type Header as a CSRF mitigation. For more information why, see [Common CSRF Prevention Misconceptions](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/)
 
 ## User Interaction Based CSRF Defense
 
