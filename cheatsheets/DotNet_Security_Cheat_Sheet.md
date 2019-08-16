@@ -229,7 +229,7 @@ This section is based on this. Your approach to securing your web application sh
 
 DO: Using an object relational mapper (ORM) or stored procedures is the most effective way of countering the SQL Injection vulnerability.
 
-DO: Use parameterized queries where a direct sql query must be used.
+DO: Use parameterized queries where a direct sql query must be used. More Inofrmation can be found [here](Query_Parameterization_Cheat_Sheet.md).
 
 e.g. In entity frameworks:
 
@@ -492,7 +492,7 @@ public class UserController
 
 You can also check roles in code using identity features in .net: `System.Web.Security.Roles.IsUserInRole(userName, roleName)`
 
-You can find more information[here](Access_Control_Cheat_Sheet.md#introduction) on Access Control and [here](Authorization_Testing_Automation.md) for Authorization.
+You can find more information [here](Access_Control_Cheat_Sheet.md#introduction) on Access Control and [here](Authorization_Testing_Automation.md) for Authorization.
 
 ### Insecure Direct object references
 
