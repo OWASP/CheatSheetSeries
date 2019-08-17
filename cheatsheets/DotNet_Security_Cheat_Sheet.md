@@ -229,7 +229,7 @@ This section is based on this. Your approach to securing your web application sh
 
 DO: Using an object relational mapper (ORM) or stored procedures is the most effective way of countering the SQL Injection vulnerability.
 
-DO: Use parameterized queries where a direct sql query must be used. More Inofrmation can be found [here](Query_Parameterization_Cheat_Sheet.md).
+DO: Use parameterized queries where a direct sql query must be used. More Information can be found [here](Query_Parameterization_Cheat_Sheet.md).
 
 e.g. In entity frameworks:
 
@@ -307,7 +307,7 @@ Almost any characters can be used in Distinguished Names. However, some must be 
 
 NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.
 
-More information can be found here, [LDAP Injection Prevention Cheat Sheet Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md#introduction).
+More information can be found [LDAP Injection Prevention Cheat Sheet Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md#introduction).
 
 ## A2 Broken Authentication
 
@@ -670,7 +670,7 @@ DO: Prevent Deserialization of Domain Objects
 DO: Run the Deserialization Code with Limited Access Permissions
 If a desterilized hostile object tries to initiate a system processes or access a resource within the server or the host’s OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
 
-More information can be found here: [Deserialization Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Deserialization_Cheat_Sheet.md#net-csharp)
+More information can be found here: [Deserialization Cheat Sheet](Deserialization_Cheat_Sheet.md#net-csharp)
 
 ## A9 Using Components with Known Vulnerabilities
 
