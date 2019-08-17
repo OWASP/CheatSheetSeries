@@ -307,7 +307,7 @@ Almost any characters can be used in Distinguished Names. However, some must be 
 
 NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.
 
-More information can be found [LDAP Injection Prevention Cheat Sheet Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md#introduction).
+More information can be found [here](LDAP_Injection_Prevention_Cheat_Sheet.md#introduction).
 
 ## A2 Broken Authentication
 
