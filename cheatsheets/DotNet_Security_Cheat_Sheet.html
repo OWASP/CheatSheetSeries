@@ -1218,11 +1218,12 @@
 </ul>
 <h1 id="asp-net-mvc-guidance"><a name="asp-net-mvc-guidance" class="plugin-anchor" href="#asp-net-mvc-guidance"><i class="fa fa-link" aria-hidden="true"></i></a>ASP NET MVC Guidance</h1>
 <p>ASP.NET MVC (Model&#x2013;View&#x2013;Controller) is a contemporary web application framework that uses more standardized HTTP communication than the Web Forms postback model. </p>
-<p>The OWASP Top 10 lists the most prevalent and dangerous threats to web security in the world today and is reviewed every 3 years. </p>
+<p>The OWASP Top 10 2017 lists the most prevalent and dangerous threats to web security in the world today and is reviewed every 3 years. </p>
 <p>This section is based on this. Your approach to securing your web application should be to start at the top threat A1 below and work down, this will ensure that any time spent on security will be spent most effectively spent and cover the top threats first and lesser threats afterwards. After covering the top 10 it is generally advisable to assess for other threats or get a professionally completed Penetration Test.</p>
-<h2 id="a1-sql-injection"><a name="a1-sql-injection" class="plugin-anchor" href="#a1-sql-injection"><i class="fa fa-link" aria-hidden="true"></i></a>A1 SQL Injection</h2>
+<h2 id="a1-injection"><a name="a1-injection" class="plugin-anchor" href="#a1-injection"><i class="fa fa-link" aria-hidden="true"></i></a>A1 Injection</h2>
+<h3 id="sql-injection"><a name="sql-injection" class="plugin-anchor" href="#sql-injection"><i class="fa fa-link" aria-hidden="true"></i></a>SQL Injection</h3>
 <p>DO: Using an object relational mapper (ORM) or stored procedures is the most effective way of countering the SQL Injection vulnerability.</p>
-<p>DO: Use parameterized queries where a direct sql query must be used.</p>
+<p>DO: Use parameterized queries where a direct sql query must be used. More Inofrmation can be found <a href="Query_Parameterization_Cheat_Sheet.html">here</a>.</p>
 <p>e.g. In entity frameworks:</p>
 <pre><code class="lang-sql">var sql = @&quot;<span class="hljs-keyword">Update</span> [<span class="hljs-keyword">User</span>] <span class="hljs-keyword">SET</span> FirstName = @FirstName <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">Id</span> = @<span class="hljs-keyword">Id</span><span class="hljs-string">&quot;;
 context.Database.ExecuteSqlCommand(
@@ -1238,7 +1239,136 @@ context.Database.ExecuteSqlCommand(
 EXEC strQry // SQL Injection vulnerability!
 </span></code></pre>
 <p>DO: Practise Least Privilege - Connect to the database using an account with a minimum set of permissions required to do it&apos;s job i.e. not the sa account</p>
-<h2 id="a2-weak-account-management"><a name="a2-weak-account-management" class="plugin-anchor" href="#a2-weak-account-management"><i class="fa fa-link" aria-hidden="true"></i></a>A2 Weak Account management</h2>
+<h3 id="os-injection"><a name="os-injection" class="plugin-anchor" href="#os-injection"><i class="fa fa-link" aria-hidden="true"></i></a>OS Injection</h3>
+<p>Information about OS Injection can be found on this <a href="OS_Command_Injection_Defense_Cheat_Sheet.html#net">cheat sheet</a>.</p>
+<p>DO: Use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2" target="_blank">System.Diagnostics.Process.Start</a> to call underlying OS functions.</p>
+<p>e.g</p>
+<pre><code class="lang-csharp">System.Diagnostics.Process process = <span class="hljs-keyword">new</span> System.Diagnostics.Process();
+System.Diagnostics.ProcessStartInfo startInfo = <span class="hljs-keyword">new</span> System.Diagnostics.ProcessStartInfo();
+startInfo.FileName = <span class="hljs-string">&quot;validatedCommand&quot;</span>;
+startInfo.Arguments = <span class="hljs-string">&quot;validatedArg1 validatedArg2 validatedArg3&quot;</span>;
+process.StartInfo = startInfo;
+process.Start();
+</code></pre>
+<p>DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
+<p>e.g Validating user input using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.parse?view=netframework-4.8" target="_blank">IPAddress.Parse Method</a></p>
+<pre><code class="lang-csharp"><span class="hljs-comment">//User input</span>
+<span class="hljs-keyword">string</span> ipaddress = <span class="hljs-string">&quot;127.0.0.1&quot;</span>;
+
+<span class="hljs-comment">//check to make sure an ip address was provided    </span>
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">string</span>.IsNullOrEmpty(address))  
+{   
+    <span class="hljs-keyword">try</span>
+    {
+        <span class="hljs-comment">// Create an instance of IPAddress for the specified address string (in </span>
+        <span class="hljs-comment">// dotted-quad, or colon-hexadecimal notation).</span>
+        IPAddress address = IPAddress.Parse(ipAddress);
+
+        <span class="hljs-comment">// Display the address in standard notation.</span>
+        <span class="hljs-keyword">return</span> address.ToString();
+    }
+    <span class="hljs-keyword">catch</span>(FormatException e)
+    {
+        <span class="hljs-comment">//ipaddress is not of type IPaddress</span>
+        ...
+    }
+    ...
+}
+</code></pre>
+<h3 id="ldap-injection"><a name="ldap-injection" class="plugin-anchor" href="#ldap-injection"><i class="fa fa-link" aria-hidden="true"></i></a>LDAP injection</h3>
+<p>Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash <code>\</code> escape character. A table showing which characters that should be escaped for Active Directory can be found at the in the LDAP_Injection_Prevention_Cheat_Sheet.</p>
+<p>NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.</p>
+<p>More information can be found here, <a href="LDAP_Injection_Prevention_Cheat_Sheet.html#introduction">LDAP Injection Prevention Cheat Sheet Cheat Sheet</a>.</p>
+<h2 id="a2-broken-authentication"><a name="a2-broken-authentication" class="plugin-anchor" href="#a2-broken-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>A2 Broken Authentication</h2>
+<p>DO: Use <a href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&amp;" target="_blank">ASP.net Core Identity</a>.
+ASP.net Core Identity framework is well configured by default, where it uses secure password hashes and an individual salt. Identity uses the PBKDF2 hashing function for passwords, and they generate a random salt per user.</p>
+<p>DO: Set secure password policy</p>
+<p>e.g ASP.net Core Identity </p>
+<pre><code class="lang-csharp"><span class="hljs-comment">//startup.cs</span>
+services.Configure&lt;IdentityOptions&gt;(options =&gt;
+{
+    <span class="hljs-comment">// Password settings</span>
+    options.Password.RequireDigit = <span class="hljs-keyword">true</span>;
+    options.Password.RequiredLength = <span class="hljs-number">8</span>;
+    options.Password.RequireNonAlphanumeric = <span class="hljs-keyword">true</span>;
+    options.Password.RequireUppercase = <span class="hljs-keyword">true</span>;
+    options.Password.RequireLowercase = <span class="hljs-keyword">true</span>;
+    options.Password.RequiredUniqueChars = <span class="hljs-number">6</span>;
+
+
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(<span class="hljs-number">30</span>);
+    options.Lockout.MaxFailedAccessAttempts = <span class="hljs-number">3</span>;
+
+    options.SignIn.RequireConfirmedEmail = <span class="hljs-keyword">true</span>;
+
+    options.User.RequireUniqueEmail = <span class="hljs-keyword">true</span>;
+});
+</code></pre>
+<p>DO: Set a cookie policy</p>
+<p>e.g </p>
+<pre><code class="lang-csharp"><span class="hljs-comment">//startup.cs</span>
+services.ConfigureApplicationCookie(options =&gt;
+{
+    options.Cookie.HttpOnly = <span class="hljs-keyword">true</span>;
+    options.Cookie.Expiration = TimeSpan.FromHours(<span class="hljs-number">1</span>)
+    options.SlidingExpiration = <span class="hljs-keyword">true</span>;
+});
+</code></pre>
+<h2 id="a3-sensitive-data-exposure"><a name="a3-sensitive-data-exposure" class="plugin-anchor" href="#a3-sensitive-data-exposure"><i class="fa fa-link" aria-hidden="true"></i></a>A3 Sensitive Data Exposure</h2>
+<p>DO NOT: <a href="Password_Storage_Cheat_Sheet.html#do-not-limit-the-character-set-and-set-long-max-lengths-for-credentials">Store encrypted passwords</a>.</p>
+<p>DO: Use a strong hash to store password credentials. For hash refer to <a href="Password_Storage_Cheat_Sheet.html#guidance">this section</a>.</p>
+<p>DO: Enforce passwords with a minimum complexity that will survive a dictionary attack i.e. longer passwords that use the full character set (numbers, symbols and letters) to increase the entropy.</p>
+<p>DO: Use a strong encryption routine such as AES-512 where personally identifiable data needs to be restored to it&apos;s original format. Protect encryption keys more than any other asset, please find <a href="Password_Storage_Cheat_Sheet.html#guidance">more information of storing encryption keys at rest</a>.
+Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly. More information can be found <a href="Transport_Layer_Protection_Cheat_Sheet.html">here</a>.</p>
+<p>DO: Use TLS 1.2 for your entire site. Get a free certificate <a href="https://letsencrypt.org/" target="_blank">LetsEncrypt.org</a>.</p>
+<p>DO NOT: <a href="https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices#22-use-secure-protocols" target="_blank">Allow SSL, this is now obsolete</a>.</p>
+<p>DO: Have a strong TLS policy (see <a href="http://www.ssllabs.com/projects/best-practises/" target="_blank">SSL Best Practises</a>), use TLS 1.2 wherever possible. Then check the configuration using <a href="https://www.ssllabs.com/ssltest/" target="_blank">SSL Test</a> or <a href="https://testssl.sh/" target="_blank">TestSSL</a>.</p>
+<p>DO: Ensure headers are not disclosing information about your application. See <a href="https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs" target="_blank">HttpHeaders.cs</a> , <a href="https://github.com/Dionach/StripHeaders/" target="_blank">Dionach StripHeaders</a>, disable via <code>web.config</code> or <a href="https://medium.com/bugbountywriteup/security-headers-1c770105940b" target="_blank">startup.cs</a>:</p>
+<p>More information on Transport Layer Protection can be found <a href="Transport_Layer_Protection_Cheat_Sheet.html">here</a>.
+e.g Web.config</p>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">system.web</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">httpRuntime</span> <span class="hljs-attr">enableVersionHeader</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">system.web</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">system.webServer</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">security</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">requestFiltering</span> <span class="hljs-attr">removeServerHeader</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">security</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">httpProtocol</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">customHeaders</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">add</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;X-Content-Type-Options&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;nosniff&quot;</span> /&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">add</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;X-Frame-Options&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;DENY&quot;</span> /&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">add</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;X-Permitted-Cross-Domain-Policies&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;master-only&quot;</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">add</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;X-XSS-Protection&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1; mode=block&quot;</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">remove</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;X-Powered-By&quot;</span>/&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">customHeaders</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">httpProtocol</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">system.webServer</span>&gt;</span>
+</code></pre>
+<p>e.g Startup.cs</p>
+<pre><code class="lang-csharp">app.UseHsts(hsts =&gt; hsts.MaxAge(<span class="hljs-number">365</span>).IncludeSubdomains());
+app.UseXContentTypeOptions();
+app.UseReferrerPolicy(opts =&gt; opts.NoReferrer());
+app.UseXXssProtection(options =&gt; options.EnabledWithBlockMode());
+app.UseXfo(options =&gt; options.Deny());
+
+app.UseCsp(opts =&gt; opts
+ .BlockAllMixedContent()
+ .StyleSources(s =&gt; s.Self())
+ .StyleSources(s =&gt; s.UnsafeInline())
+ .FontSources(s =&gt; s.Self())
+ .FormActions(s =&gt; s.Self())
+ .FrameAncestors(s =&gt; s.Self())
+ .ImageSources(s =&gt; s.Self())
+ .ScriptSources(s =&gt; s.Self())
+ );
+</code></pre>
+<p>For more information about headers can be found <a href="https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#xpcdp" target="_blank">here</a>.</p>
+<h2 id="a4-xml-external-entities-xxe"><a name="a4-xml-external-entities-xxe" class="plugin-anchor" href="#a4-xml-external-entities-xxe"><i class="fa fa-link" aria-hidden="true"></i></a>A4 XML External Entities (XXE)</h2>
+<p>Please refer to the XXE cheat sheet so more detailed information, which can be found <a href="XML_External_Entity_Prevention_Cheat_Sheet.html#net">here</a>.</p>
+<p>XXE attacks occur when an XML parse does not properly process user input that contains external entity declaration in the doctype of an XML payload.</p>
+<p>Below are the three most common <a href="https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xml-processing-options" target="_blank">XML Processing Options</a> for .NET.</p>
+<h2 id="a5-broken-access-control"><a name="a5-broken-access-control" class="plugin-anchor" href="#a5-broken-access-control"><i class="fa fa-link" aria-hidden="true"></i></a>A5 Broken Access Control</h2>
+<h3 id="weak-account-management"><a name="weak-account-management" class="plugin-anchor" href="#weak-account-management"><i class="fa fa-link" aria-hidden="true"></i></a>Weak Account management</h3>
 <p>Ensure cookies are sent via httpOnly:</p>
 <pre><code class="lang-csharp">CookieHttpOnly = <span class="hljs-keyword">true</span>,
 </code></pre>
@@ -1265,27 +1395,19 @@ Requests = <span class="hljs-number">3</span>, Seconds = <span class="hljs-numbe
 <p>DO NOT: Roll your own authentication or session management, use the one provided by .Net</p>
 <p>DO NOT: Tell someone if the account exists on LogOn, Registration or Password reset. Say something like &apos;Either the username or password was incorrect&apos;, or &apos;If this account exists then a reset token will be sent to the registered email address&apos;. This protects against account enumeration. </p>
 <p>The feedback to the user should be identical whether or not the account exists, both in terms of content and behaviour: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.</p>
-<h2 id="a3-cross-site-scripting"><a name="a3-cross-site-scripting" class="plugin-anchor" href="#a3-cross-site-scripting"><i class="fa fa-link" aria-hidden="true"></i></a>A3 Cross Site Scripting</h2>
-<p>DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists</p>
-<p>You get encoding of all HTML content with MVC3, to properly encode all content whether HTML, javascript, CSS, LDAP etc use the Microsoft AntiXSS library:</p>
-<p><code>Install-Package AntiXSS</code></p>
-<p>Then set in config:</p>
-<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">system.web</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">httpRuntime</span> <span class="hljs-attr">targetFramework</span>=<span class="hljs-string">&quot;4.5&quot;</span> 
-<span class="hljs-attr">enableVersionHeader</span>=<span class="hljs-string">&quot;false&quot;</span> 
-<span class="hljs-attr">encoderType</span>=<span class="hljs-string">&quot;Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary&quot;</span> 
-<span class="hljs-attr">maxRequestLength</span>=<span class="hljs-string">&quot;4096&quot;</span> /&gt;</span>
+<h3 id="missing-function-level-access-control"><a name="missing-function-level-access-control" class="plugin-anchor" href="#missing-function-level-access-control"><i class="fa fa-link" aria-hidden="true"></i></a>Missing function-level access control</h3>
+<p>DO: Authorize users on all externally facing endpoints. The .NET framework has many ways to authorize a user, use them at method level:</p>
+<pre><code class="lang-csharp">[Authorize(Roles = <span class="hljs-string">&quot;Admin&quot;</span>)]
+[HttpGet]
+<span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult <span class="hljs-title">Index</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> page = <span class="hljs-number">1</span></span>)
+</span></code></pre>
+<p>or better yet, at controller level:</p>
+<pre><code class="lang-csharp">[Authorize]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span>
 </code></pre>
-<p>DO NOT: Use the <code>[AllowHTML]</code> attribute or helper class <code>@Html.Raw</code> unless you really know that the content you are writing to the browser is safe and has been escaped properly.</p>
-<p>DO: Enable a <a href="https://developers.google.com/web/fundamentals/security/csp/" target="_blank">Content Security Policy</a>, this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):</p>
-<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">system.webServer</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">httpProtocol</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">customHeaders</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">add</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Content-Security-Policy&quot;</span> 
-                <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;default-src &apos;none&apos;; style-src &apos;self&apos;; img-src &apos;self&apos;; 
-                font-src &apos;self&apos;; script-src &apos;self&apos;&quot;</span> /&gt;</span>
-</code></pre>
-<h2 id="a4-insecure-direct-object-references"><a name="a4-insecure-direct-object-references" class="plugin-anchor" href="#a4-insecure-direct-object-references"><i class="fa fa-link" aria-hidden="true"></i></a>A4 Insecure Direct object references</h2>
+<p>You can also check roles in code using identity features in .net: <code>System.Web.Security.Roles.IsUserInRole(userName, roleName)</code></p>
+<p>You can find more information <a href="Access_Control_Cheat_Sheet.html#introduction">here</a> on Access Control and <a href="Authorization_Testing_Automation.html">here</a> for Authorization.</p>
+<h3 id="insecure-direct-object-references"><a name="insecure-direct-object-references" class="plugin-anchor" href="#insecure-direct-object-references"><i class="fa fa-link" aria-hidden="true"></i></a>Insecure Direct object references</h3>
 <p>When you have a resource (object) which can be accessed by a reference (in the sample below this is the <code>id</code>) then you need to ensure that the user is intended to be there</p>
 <pre><code class="lang-csharp"><span class="hljs-comment">// Insecure</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult <span class="hljs-title">Edit</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> id</span>)
@@ -1308,13 +1430,16 @@ Requests = <span class="hljs-number">3</span>, Seconds = <span class="hljs-numbe
   <span class="hljs-keyword">return</span> View(<span class="hljs-string">&quot;Edit&quot;</span>, <span class="hljs-keyword">new</span> UserViewModel(user);
 }
 </code></pre>
-<h2 id="a5-security-misconfiguration"><a name="a5-security-misconfiguration" class="plugin-anchor" href="#a5-security-misconfiguration"><i class="fa fa-link" aria-hidden="true"></i></a>A5 Security Misconfiguration</h2>
+<p>More information can be found <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">here</a> for Insecure Direct Object Reference.</p>
+<h2 id="a6-security-misconfiguration"><a name="a6-security-misconfiguration" class="plugin-anchor" href="#a6-security-misconfiguration"><i class="fa fa-link" aria-hidden="true"></i></a>A6 Security Misconfiguration</h2>
+<h3 id="debug-and-stack-trace"><a name="debug-and-stack-trace" class="plugin-anchor" href="#debug-and-stack-trace"><i class="fa fa-link" aria-hidden="true"></i></a>Debug and Stack Trace</h3>
 <p>Ensure debug and trace are off in production. This can be enforced using web.config transforms:</p>
 <pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">compilation</span> <span class="hljs-attr">xdt:Transform</span>=<span class="hljs-string">&quot;RemoveAttributes(debug)&quot;</span> /&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">trace</span> <span class="hljs-attr">enabled</span>=<span class="hljs-string">&quot;false&quot;</span> <span class="hljs-attr">xdt:Transform</span>=<span class="hljs-string">&quot;Replace&quot;</span>/&gt;</span>
 </code></pre>
 <p>DO NOT: Use default passwords</p>
-<p>DO: (When using TLS) Redirect a request made over Http to https: In <code>Global.asax.cs</code>:</p>
+<p>DO: (When using TLS) Redirect a request made over Http to https:</p>
+<p>e.g Global.asax.cs</p>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Application_BeginRequest</span>(<span class="hljs-params"></span>)
 </span>{
     <span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> !DEBUG</span>
@@ -1328,45 +1453,10 @@ Requests = <span class="hljs-number">3</span>, Seconds = <span class="hljs-numbe
     <span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
 }
 </code></pre>
-<h2 id="a6-sensitive-data-exposure"><a name="a6-sensitive-data-exposure" class="plugin-anchor" href="#a6-sensitive-data-exposure"><i class="fa fa-link" aria-hidden="true"></i></a>A6 Sensitive data exposure</h2>
-<p>DO NOT: Store encrypted passwords.</p>
-<p>DO: Use a strong hash to store password credentials. Use Argon2, PBKDF2, BCrypt or SCrypt with at least 8000 iterations and a strong key.</p>
-<p>DO: Enforce passwords with a minimum complexity that will survive a dictionary attack i.e. longer passwords that use the full character set (numbers, symbols and letters) to increase the entropy.</p>
-<p>DO: Use a strong encryption routine such as AES-256 where personally identifiable data needs to be restored to it&apos;s original format. Do not encrypt passwords. Protect encryption keys more than any other asset. Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly.</p>
-<p>DO: Use TLS 1.2 for your entire site. Get a free certificate <a href="https://letsencrypt.org/" target="_blank">LetsEncrypt.org</a>.</p>
-<p>DO NOT: <a href="https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices#22-use-secure-protocols" target="_blank">Allow SSL, this is now obsolete</a>.</p>
-<p>DO: Have a strong TLS policy (see <a href="http://www.ssllabs.com/projects/best-practises/" target="_blank">SSL Best Practises</a>), use TLS 1.2 wherever possible. Then check the configuration using <a href="https://www.ssllabs.com/ssltest/" target="_blank">SSL Test</a> or <a href="https://testssl.sh/" target="_blank">TestSSL</a>.</p>
-<p>DO: Ensure headers are not disclosing information about your application. See <a href="https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs" target="_blank">HttpHeaders.cs</a> , <a href="https://github.com/Dionach/StripHeaders/" target="_blank">Dionach StripHeaders</a> or disable via <code>web.config</code>:</p>
-<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">system.web</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">httpRuntime</span> <span class="hljs-attr">enableVersionHeader</span>=<span class="hljs-string">&quot;false&quot;</span>/&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">system.web</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">system.webServer</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">security</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">requestFiltering</span> <span class="hljs-attr">removeServerHeader</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">security</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">httpProtocol</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">customHeaders</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">add</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;X-Content-Type-Options&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;nosniff&quot;</span> /&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">add</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;X-Frame-Options&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;DENY&quot;</span> /&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">add</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;X-Permitted-Cross-Domain-Policies&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;master-only&quot;</span>/&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">add</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;X-XSS-Protection&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1; mode=block&quot;</span>/&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">remove</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;X-Powered-By&quot;</span>/&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">customHeaders</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">httpProtocol</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">system.webServer</span>&gt;</span>
+<p>e.g Startup.cs in the Configure()</p>
+<pre><code class="lang-csharp">  app.UseHttpsRedirection();
 </code></pre>
-<h2 id="a7-missing-function-level-access-control"><a name="a7-missing-function-level-access-control" class="plugin-anchor" href="#a7-missing-function-level-access-control"><i class="fa fa-link" aria-hidden="true"></i></a>A7 Missing function-level access control</h2>
-<p>DO: Authorize users on all externally facing endpoints. The .NET framework has many ways to authorize a user, use them at method level:</p>
-<pre><code class="lang-csharp">[Authorize(Roles = <span class="hljs-string">&quot;Admin&quot;</span>)]
-[HttpGet]
-<span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult <span class="hljs-title">Index</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> page = <span class="hljs-number">1</span></span>)
-</span></code></pre>
-<p>or better yet, at controller level:</p>
-<pre><code class="lang-csharp">[Authorize]
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span>
-</code></pre>
-<p>You can also check roles in code using identity features in .net: <code>System.Web.Security.Roles.IsUserInRole(userName, roleName)</code></p>
-<h1 id="a8-cross-site-request-forgery"><a name="a8-cross-site-request-forgery" class="plugin-anchor" href="#a8-cross-site-request-forgery"><i class="fa fa-link" aria-hidden="true"></i></a>A8 Cross-site request forgery</h1>
+<h3 id="cross-site-request-forgery"><a name="cross-site-request-forgery" class="plugin-anchor" href="#cross-site-request-forgery"><i class="fa fa-link" aria-hidden="true"></i></a>Cross-site request forgery</h3>
 <p>DO: Send the anti-forgery token with every POST/PUT request:</p>
 <pre><code class="lang-csharp"><span class="hljs-keyword">using</span> (Html.BeginForm(<span class="hljs-string">&quot;LogOff&quot;</span>, <span class="hljs-string">&quot;Account&quot;</span>, FormMethod.Post, <span class="hljs-keyword">new</span> { id = <span class="hljs-string">&quot;logoutForm&quot;</span>, 
                         @<span class="hljs-keyword">class</span> = <span class="hljs-string">&quot;pull-right&quot;</span> }))
@@ -1411,10 +1501,115 @@ Requests = <span class="hljs-number">3</span>, Seconds = <span class="hljs-numbe
 <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
 </code></pre>
 <p>And then add the <code>[AutoValidateAntiforgeryToken]</code> attribute to the action result.</p>
-<h2 id="a9-using-components-with-known-vulnerabilities"><a name="a9-using-components-with-known-vulnerabilities" class="plugin-anchor" href="#a9-using-components-with-known-vulnerabilities"><i class="fa fa-link" aria-hidden="true"></i></a>A9 Using components with known vulnerabilities</h2>
+<p>More information can be found <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">here</a> for Cross-Site Request Forgery.</p>
+<h2 id="a7-cross-site-scripting-xss"><a name="a7-cross-site-scripting-xss" class="plugin-anchor" href="#a7-cross-site-scripting-xss"><i class="fa fa-link" aria-hidden="true"></i></a>A7 Cross-Site Scripting (XSS)</h2>
+<p>DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists</p>
+<p>You get encoding of all HTML content with MVC3, to properly encode all content whether HTML, javascript, CSS, LDAP etc use the Microsoft AntiXSS library:</p>
+<p><code>Install-Package AntiXSS</code></p>
+<p>Then set in config:</p>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">system.web</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">httpRuntime</span> <span class="hljs-attr">targetFramework</span>=<span class="hljs-string">&quot;4.5&quot;</span> 
+<span class="hljs-attr">enableVersionHeader</span>=<span class="hljs-string">&quot;false&quot;</span> 
+<span class="hljs-attr">encoderType</span>=<span class="hljs-string">&quot;Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary&quot;</span> 
+<span class="hljs-attr">maxRequestLength</span>=<span class="hljs-string">&quot;4096&quot;</span> /&gt;</span>
+</code></pre>
+<p>DO NOT: Use the <code>[AllowHTML]</code> attribute or helper class <code>@Html.Raw</code> unless you really know that the content you are writing to the browser is safe and has been escaped properly.</p>
+<p>DO: Enable a <a href="Content_Security_Policy_Cheat_Sheet.html#context">Content Security Policy</a>, this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):</p>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">system.webServer</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">httpProtocol</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">customHeaders</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">add</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Content-Security-Policy&quot;</span> 
+                <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;default-src &apos;none&apos;; style-src &apos;self&apos;; img-src &apos;self&apos;; 
+                font-src &apos;self&apos;; script-src &apos;self&apos;&quot;</span> /&gt;</span>
+</code></pre>
+<p>More information can be found <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">here</a> for Cross-Site Scripting.</p>
+<h2 id="a8-insecure-deserialization"><a name="a8-insecure-deserialization" class="plugin-anchor" href="#a8-insecure-deserialization"><i class="fa fa-link" aria-hidden="true"></i></a>A8 Insecure Deserialization</h2>
+<p>Information about Insecure Deserialization can be found on this <a href="Deserialization_Cheat_Sheet.html#net-csharp">cheat sheet</a>.</p>
+<p>DO NOT: Accept Serialized Objects from Untrusted Sources</p>
+<p>DO: Validate User Input
+Malicious users are able to use objects like cookies to insert malicious information to change user roles. In some cases, hackers are able to elevate their privileges to administrator rights by using a pre-existing or cached password hash from a previous session. </p>
+<p>DO: Prevent Deserialization of Domain Objects</p>
+<p>DO: Run the Deserialization Code with Limited Access Permissions
+If a desterilized hostile object tries to initiate a system processes or access a resource within the server or the host&#x2019;s OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. </p>
+<p>More information can be found here: <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Deserialization_Cheat_Sheet.md#net-csharp" target="_blank">Deserialization Cheat Sheet</a></p>
+<h2 id="a9-using-components-with-known-vulnerabilities"><a name="a9-using-components-with-known-vulnerabilities" class="plugin-anchor" href="#a9-using-components-with-known-vulnerabilities"><i class="fa fa-link" aria-hidden="true"></i></a>A9 Using Components with Known Vulnerabilities</h2>
 <p>DO: Keep the .Net framework updated with the latest patches</p>
 <p>DO: Keep your <a href="https://docs.microsoft.com/en-us/nuget/" target="_blank">NuGet</a> packages up to date, many will contain their own vulnerabilities.</p>
-<p>DO: Run the <a href="https://www.owasp.org/index.php/OWASP_Dependency_Check" target="_blank">OWASP Dependency Checker</a> against your application as part of your build process and act on any high level vulnerabilities. </p>
+<p>DO: Run the <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">OWASP Dependency Checker</a> against your application as part of your build process and act on any high level vulnerabilities.</p>
+<h2 id="a10-insufficient-logging--monitoring"><a name="a10-insufficient-logging--monitoring" class="plugin-anchor" href="#a10-insufficient-logging--monitoring"><i class="fa fa-link" aria-hidden="true"></i></a>A10 Insufficient Logging &amp; Monitoring</h2>
+<p>DO: Ensure all login, access control failures and server-side input validation failures can be logged with sufficient user context to identify suspicious or malicious accounts.</p>
+<p>DO: Establish effective monitoring and alerting so suspicious activities are detected and responded to in a timely fashion.</p>
+<p>DO NOT: Log generic error messages such as: <code>csharp Log.Error(&quot;Error was thrown&quot;);</code> rather log the stack trace, error message and user Id who caused the error.</p>
+<p>DO NOT: Log sesnsitive data such as user&apos;s passwords.</p>
+<h3 id="logging"><a name="logging" class="plugin-anchor" href="#logging"><i class="fa fa-link" aria-hidden="true"></i></a>Logging</h3>
+<p>What Logs to Collect and more information about Logging can be found on this <a href="Logging_Cheat_Sheet.html">cheat sheet</a>.</p>
+<p>.NET Core come with a LoggerFactory, which is in Microsoft.Extensions.Logging. More information about ILogger can be found <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger" target="_blank">here</a>.</p>
+<p>How to log all errors from the <code>Startup.cs</code>, so that anytime an error is thrown it will be logged.</p>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IHostingEnvironment env</span>)
+</span>{
+    <span class="hljs-keyword">if</span> (env.IsDevelopment())
+    {
+        _isDevelopment = <span class="hljs-keyword">true</span>;
+        app.UseDeveloperExceptionPage();
+    }
+
+    <span class="hljs-comment">//Log all errors in the application</span>
+    app.UseExceptionHandler(errorApp =&gt;
+    {
+        errorApp.Run(<span class="hljs-keyword">async</span> context =&gt;
+        {
+            <span class="hljs-keyword">var</span> errorFeature = context.Features.Get&lt;IExceptionHandlerFeature&gt;();
+            <span class="hljs-keyword">var</span> exception = errorFeature.Error;
+
+            Log.Error(String.Format(<span class="hljs-string">&quot;Stacktrace of error: {0}&quot;</span>,exception.StackTrace.ToString()));
+        });
+    });
+
+        app.UseAuthentication();
+            app.UseMvc();
+        }
+}
+</code></pre>
+<p>e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers).  The belwo exaple shows logging of all unsucessful log in attempts.</p>
+<pre><code class="lang-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AccountsController</span> : <span class="hljs-title">Controller</span>
+{
+        <span class="hljs-keyword">private</span> ILogger _Logger;
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AccountsController</span>(<span class="hljs-params"> ILogger logger</span>)
+        </span>{
+            _Logger = logger;
+        }
+
+    [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;IActionResult&gt; <span class="hljs-title">Login</span>(<span class="hljs-params">LoginViewModel model</span>)
+        </span>{
+            <span class="hljs-keyword">if</span> (ModelState.IsValid)
+            {
+                <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: <span class="hljs-keyword">false</span>);
+                <span class="hljs-keyword">if</span> (result.Succeeded)
+                {
+            <span class="hljs-comment">//Log all successful log in attempts</span>
+            Log.Information(String.Format(<span class="hljs-string">&quot;User: {0}, Successfully Logged in&quot;</span>, model.Email));
+            <span class="hljs-comment">//Code for successful login</span>
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            <span class="hljs-comment">//Log all incorrect log in attempts</span>
+            Log.Information(String.Format(<span class="hljs-string">&quot;User: {0}, Incorrect Password&quot;</span>, model.Email));
+        }
+    }
+
+    ...
+</code></pre>
+<p>Logging levels for ILogger are listed below, in order of high to low importance:</p>
+<h3 id="monitoring"><a name="monitoring" class="plugin-anchor" href="#monitoring"><i class="fa fa-link" aria-hidden="true"></i></a>Monitoring</h3>
+<p>Monitoring allow us to validate the performance and health of a running system through key performance indicators.</p>
+<p>In .NET a great option to add monitoring capabilities is <a href="https://docs.microsoft.com/en-us/azure/application-insights/app-insights-asp-net-core" target="_blank">Application Insights</a>. </p>
+<p>More information about Logging and Monitoring can be found <a href="https://microsoft.github.io/code-with-engineering-playbook/Engineering/DevOpsLoggingDetailsCSharp.html" target="_blank">here</a>.</p>
+<h1 id="owasp-2013"><a name="owasp-2013" class="plugin-anchor" href="#owasp-2013"><i class="fa fa-link" aria-hidden="true"></i></a>OWASP 2013</h1>
+<p>Below is vulnerability not discussed in OWASP 2017</p>
 <h2 id="a10-unvalidated-redirects-and-forwards"><a name="a10-unvalidated-redirects-and-forwards" class="plugin-anchor" href="#a10-unvalidated-redirects-and-forwards"><i class="fa fa-link" aria-hidden="true"></i></a>A10 Unvalidated redirects and forwards</h2>
 <p>A protection against this was introduced in Mvc 3 template. Here is the code:</p>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;ActionResult&gt; <span class="hljs-title">LogOn</span>(<span class="hljs-params">LogOnViewModel model, <span class="hljs-keyword">string</span> returnUrl</span>)
@@ -1445,6 +1640,7 @@ Requests = <span class="hljs-number">3</span>, Seconds = <span class="hljs-numbe
 <li>Protect against Clickjacking and man in the middle attack from capturing an initial Non-TLS request, set the <code>X-Frame-Options</code> and <code>Strict-Transport-Security</code> (HSTS) headers. Full details <a href="https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs" target="_blank">here</a></li>
 <li>Protect against a man in the middle attack for a user who has never been to your site before. Register for <a href="https://hstspreload.org/" target="_blank">HSTS preload</a></li>
 <li>Maintain security testing and analysis on Web API services. They are hidden inside MEV sites, and are public parts of a site that will be found by an attacker. All of the MVC guidance and much of the WCF guidance applies to the Web API.</li>
+<li><a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">Unvalidated Redirects and Forwards Cheat Sheet</a>.</li>
 </ul>
 <p>More information:</p>
 <p>For more information on all of the above and code samples incorporated into a sample MVC5 application with an enhanced security baseline go to <a href="http://github.com/johnstaveley/SecurityEssentials/" target="_blank">Security Essentials Baseline project</a></p>
@@ -1508,7 +1704,7 @@ Requests = <span class="hljs-number">3</span>, Seconds = <span class="hljs-numbe
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"DotNet Security ","level":"1.25","depth":1,"next":{"title":"Error Handling ","level":"1.26","depth":1,"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","ref":"cheatsheets/Error_Handling_Cheat_Sheet.md","articles":[]},"previous":{"title":"Docker Security ","level":"1.24","depth":1,"path":"cheatsheets/Docker_Security_Cheat_Sheet.md","ref":"cheatsheets/Docker_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","mtime":"2019-08-13T16:29:33.692Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-13T16:29:53.773Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"DotNet Security ","level":"1.25","depth":1,"next":{"title":"Error Handling ","level":"1.26","depth":1,"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","ref":"cheatsheets/Error_Handling_Cheat_Sheet.md","articles":[]},"previous":{"title":"Docker Security ","level":"1.24","depth":1,"path":"cheatsheets/Docker_Security_Cheat_Sheet.md","ref":"cheatsheets/Docker_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","mtime":"2019-08-17T09:27:34.264Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-17T09:27:56.147Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
