@@ -1,3 +1,11 @@
+#Introduction
+Lorem Ipsum
+
+#General Things To Know About Apache
+Lorem ipseum
+
+# Apache2.conf | httpd.conf
+```
 ### Server Performance
 
 Mutex file:${APACHE_LOCK_DIR} default
@@ -236,3 +244,4 @@ Header set Referrer-Policy "no-referrer-when-downgrade"
 Header set Content-Security-Policy: default-src 'self'
 Header set Feature-Policy: camera: 'none'; vr: 'none'; microphone: 'none';  payment: 'none'; midi: 'none'; microphone: 'none'
 Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
+```
