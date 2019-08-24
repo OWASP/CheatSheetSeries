@@ -1,0 +1,238 @@
+### Server Performance
+
+Mutex file:${APACHE_LOCK_DIR} default
+PidFile ${APACHE_PID_FILE}
+Timeout 45
+KeepAlive On
+MaxKeepAliveRequests 500
+KeepAliveTimeout 2
+
+<IfModule mpm_prefork_module>
+    StartServers 1
+    MinSpareServers 3
+    MaxSpareServers 6
+    MaxClients 24
+    MaxRequestsPerChild 1500
+</IfModule>
+
+<IfModule mpm_worker_module>
+    StartServers 2
+    MinSpareThreads 25
+    MaxSpareThreads 75
+    ThreadLimit 64
+    ThreadsPerChild 25
+    MaxClients 150
+    MaxRequestsPerChild 0
+</IfModule>
+
+<IfModule mpm_event_module>
+    StartServers 2
+    MinSpareThreads 25
+    MaxSpareThreads 75
+    ThreadLimit 64
+    ThreadsPerChild 25
+    MaxClients 150
+    MaxRequestsPerChild 0
+</IfModule>
+
+
+### Other
+
+
+# This is the main Apache server configuration file.  It contains the
+# configuration directives that give the server its instructions.
+# See http://httpd.apache.org/docs/2.4/ for detailed information about
+# the directives and /usr/share/doc/apache2/README.Debian about Debian specific
+# hints.
+#
+#
+# Summary of how the Apache 2 configuration works in Debian:
+# The Apache 2 web server configuration in Debian is quite different to
+# upstream's suggested way to configure the web server. This is because Debian's
+# default Apache2 installation attempts to make adding and removing modules,
+# virtual hosts, and extra configuration directives as flexible as possible, in
+# order to make automating the changes and administering the server as easy as
+# possible.
+
+# It is split into several files forming the configuration hierarchy outlined
+# below, all located in the /etc/apache2/ directory:
+#
+#	/etc/apache2/
+#	|-- apache2.conf
+#	|	`--  ports.conf
+#	|-- mods-enabled
+#	|	|-- *.load
+#	|	`-- *.conf
+#	|-- conf-enabled
+#	|	`-- *.conf
+# 	`-- sites-enabled
+#	 	`-- *.conf
+#
+#
+# * apache2.conf is the main configuration file (this file). It puts the pieces
+#   together by including all remaining configuration files when starting up the
+#   web server.
+#
+# * ports.conf is always included from the main configuration file. It is
+#   supposed to determine listening ports for incoming connections which can be
+#   customized anytime.
+#
+# * Configuration files in the mods-enabled/, conf-enabled/ and sites-enabled/
+#   directories contain particular configuration snippets which manage modules,
+#   global configuration fragments, or virtual host configurations,
+#   respectively.
+#
+#   They are activated by symlinking available configuration files from their
+#   respective *-available/ counterparts. These should be managed by using our
+#   helpers a2enmod/a2dismod, a2ensite/a2dissite and a2enconf/a2disconf. See
+#   their respective man pages for detailed information.
+#
+# * The binary is called apache2. Due to the use of environment variables, in
+#   the default configuration, apache2 needs to be started/stopped with
+#   /etc/init.d/apache2 or apache2ctl. Calling /usr/bin/apache2 directly will not
+#   work with the default configuration.
+
+
+# Global configuration
+#
+
+#
+# ServerRoot: The top of the directory tree under which the server's
+# configuration, error, and log files are kept.
+#
+# NOTE!  If you intend to place this on an NFS (or otherwise network)
+# mounted filesystem then please read the Mutex documentation (available
+# at <URL:http://httpd.apache.org/docs/2.4/mod/core.html#mutex>);
+# you will save yourself a lot of trouble.
+#
+# Do NOT add a slash at the end of the directory path.
+#
+#ServerRoot "/etc/apache2"
+
+#
+# The accept serialization lock file MUST BE STORED ON A LOCAL DISK.
+#
+#Mutex file:${APACHE_LOCK_DIR} default
+
+#
+# The directory where shm and other runtime files will be stored.
+#
+
+DefaultRuntimeDir /run/apache2
+
+#
+# PidFile: The file in which the server should record its process
+# identification number when it starts.
+# This needs to be set in /etc/apache2/envvars
+#
+PidFile ${APACHE_PID_FILE}
+
+#
+# Timeout: The number of seconds before receives and sends time out.
+#
+Timeout 120
+
+#
+# KeepAlive: Whether or not to allow persistent connections (more than
+# one request per connection). Set to "Off" to deactivate.
+#
+KeepAlive On
+
+#
+# MaxKeepAliveRequests: The maximum number of requests to allow
+# during a persistent connection. Set to 0 to allow an unlimited amount.
+# We recommend you leave this number high, for maximum performance.
+#
+MaxKeepAliveRequests 100
+
+#
+# KeepAliveTimeout: Number of seconds to wait for the next request from the
+# same client on the same connection.
+#
+KeepAliveTimeout 5
+
+
+# These need to be set in /etc/apache2/envvars
+User ${APACHE_RUN_USER}
+Group ${APACHE_RUN_GROUP}
+ErrorLog ${APACHE_LOG_DIR}/error.log
+LogLevel warn
+
+# Include module configuration:
+IncludeOptional mods-enabled/*.load
+IncludeOptional mods-enabled/*.conf
+
+# Include list of ports to listen on
+Include ports.conf
+
+HTTPProtocolOptions Strict
+
+<VirtualHost *:80>
+        RewriteEngine On
+        RewriteCond %{HTTPS} off
+        RewriteRule (.*) https://%{SERVER_NAME}|/$1 [R,L]
+</VirtualHost>
+
+<VirtualHost _default_:443>
+        #SSL Engine Switch:
+        #Enable/Disable SSL for this virtual host.
+        SSLEngine on
+
+        SSLHonorCipherOrder on
+        SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH       
+        SSLCertificateFile      /etc/ssl/certs/selfsigned.cert.pem
+        SSLCertificateKeyFile /etc/ssl/private/selfsigned.key.pem
+</VirtualHost>
+
+<Directory />
+        Require all denied
+</Directory>
+
+<Directory /usr/share>
+       Require all denied
+</Directory>
+
+<Directory /var/www>
+        AllowMethods GET POST
+        Options None
+</Directory>
+
+
+
+AccessFileName .htaccess
+
+<FilesMatch "^\.ht">
+        Require all denied
+</FilesMatch>
+
+
+LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined
+LogFormat "%h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined
+LogFormat "%h %l %u %t \"%r\" %>s %O" common
+LogFormat "%{Referer}i -> %U" referer
+LogFormat "%{User-agent}i" agent
+
+
+IncludeOptional conf-enabled/*.conf
+IncludeOptional sites-enabled/*.conf
+
+### Security Through Obscurity
+ServerSignature Off
+ServerTokens Prod
+
+FileETag None
+Header unset ETag
+Header unset Server
+TraceEnable off
+HostnameLookups Off
+UseCanonicalName Off
+
+### Security Headers
+Header set X-XSS-Protection "1; mode=block"
+Header set X-Content-Type-Options nosniff
+Header set X-Frame-Options "sameorigin"
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+Header set Referrer-Policy "no-referrer-when-downgrade"
+Header set Content-Security-Policy: default-src 'self'
+Header set Feature-Policy: camera: 'none'; vr: 'none'; microphone: 'none';  payment: 'none'; midi: 'none'; microphone: 'none'
+Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
