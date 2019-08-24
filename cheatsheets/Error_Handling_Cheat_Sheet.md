@@ -1,6 +1,6 @@
 # Introduction
 
-Error handling is a part of the overwall security of an application. Except in movies, an attack always begin by a **Reconnaissance** phase in which the attacker will try to gather as many technical information (often *name* and *version* properties) as possible about the target like for example the application server, the technologies, the frameworks, the libraries...
+Error handling is a part of the overall security of an application. Except in movies, an attack always begin by a **Reconnaissance** phase in which the attacker will try to gather as many technical information (often *name* and *version* properties) as possible about the target like for example the application server, the technologies, the frameworks, the libraries...
 
 So, if errors are not well handled then it can highly facilitate the work for an attacker into this initial phase that is very important for the rest of the whole attack.
 
