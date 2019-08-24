@@ -29,7 +29,7 @@ However, an analysis of the real needs of the application should be conducted to
 4. Integrity of data in transit.
 5. Keys to create the data encryption keys.
 
-Once the understanding of the security needs of the application is achieved, developers can determine what protocols and algorithms are required. Once the protocols and algorithms are understood, you can you can begin to define the different types of keys that will support the application's objectives. 
+Once the understanding of the security needs of the application is achieved, developers can determine what protocols and algorithms are required. Once the protocols and algorithms are understood, you can begin to define the different types of keys that will support the application's objectives. 
 
 There are a diverse set of key types and certificates to consider, for example:
 
@@ -198,7 +198,7 @@ Strong cryptographic systems can be compromised by lax and inappropriate human a
 
 The compromise of a key has the following implications:
 
-1. In general, the unauthorized disclosure of a key used to provide confidentiality protection (i.e., via encryption) means that all information encrypted by that key could be expose or known by unauthorized entities. The disclosure of a Certificate of Authorities’s private signature key means that an adversary can create fraudulent certificates and Certificate Revocation Lists (CRLs).
+1. In general, the unauthorized disclosure of a key used to provide confidentiality protection (i.e., via encryption) means that all information encrypted by that key could be exposed or known by unauthorized entities. The disclosure of a Certificate of Authorities’s private signature key means that an adversary can create fraudulent certificates and Certificate Revocation Lists (CRLs).
 2. A compromise of the integrity of a key means that the key is incorrect - either that the key has been modified (either deliberately or accidentally), or that another key has been substituted; this includes a deletion (non-availability) of the key. The substitution or modification of a key used to provide integrity calls into question the integrity of all information protected by the key. This information could have been provided by, or changed by, an unauthorized entity that knows the key. The substitution of a public or secret key that will be used (at a later time) to encrypt data could allow an unauthorized entity (who knows the decryption key) to decrypt data that was encrypted using the encryption key.
 3. A compromise of a key’s usage or application association means that the key could be used for the wrong purpose (e.g., for key establishment instead of digital signatures) or for the wrong application, and could result in the compromise of information protected by the key.
 4. A compromise of a key’s association with the owner or other entity means that the identity of the other entity cannot be assured (i.e., one does not know who the other entity really is) or that information cannot be processed correctly (e.g., decrypted with the correct key).
