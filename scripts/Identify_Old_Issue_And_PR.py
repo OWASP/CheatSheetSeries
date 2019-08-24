@@ -75,11 +75,9 @@ for issue in issues:
 print("[+] State:")
 return_code = len(old_issues["PR"]) + len(old_issues["ISSUE"])
 if len(old_issues["PR"]) > 0:
-    print("\tOld pull request identified: %s" % old_issues["PR"])
-else:
-    print("\tAll PR are OK.")
+    print("Old pull request identified: %s" % old_issues["PR"])
 if len(old_issues["ISSUE"]) > 0:
-    print("\tOld issue identified: %s" % old_issues["ISSUE"])
-else:
-    print("\tAll issues are OK.")
+    print("Old issue identified: %s" % old_issues["ISSUE"])
+if return_code == 0:
+    print("Nothing identified.")
 sys.exit(return_code)
