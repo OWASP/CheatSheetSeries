@@ -1,7 +1,7 @@
-#Introduction
+# Introduction
 Lorem Ipsum
 
-#General Things To Know About Apache
+# General Things To Know About Apache
 Lorem ipseum
 
 # Apache2.conf | httpd.conf
