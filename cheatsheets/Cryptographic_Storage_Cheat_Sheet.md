@@ -80,6 +80,7 @@ The following functions are considered **weak** pseudo-random number generators 
 - Python : `random()`, instead use [secrets()](https://docs.python.org/3/library/secrets.html#module-secrets)
 - Ruby : `Random`, instead use [SecureRandom](https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html)
 - Go: `rand` using `math/rand` package, instead use [crypto.rand](https://golang.org/pkg/crypto/rand/) package
+- Rust: `rand::prng::XorShiftRng`, instead use [rand::prng::chacha::ChaChaRng](https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html) and the rest of the Rust library [CSPRNGs.](https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs)
 
 For secure random number generation, refer to NIST SP 800-90A. CTR-DRBG, HASH-DRBG or HMAC-DRBG are recommended. Refer to NIST SP800-22 A Statistical Test Suite for Random and Pseudorandom Number Generators for Cryptographic Applications, and the testing toolkit.
 
