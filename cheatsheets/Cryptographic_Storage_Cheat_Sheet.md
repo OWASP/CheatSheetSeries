@@ -57,12 +57,12 @@ In general, you should not use AES, DES or other symmetric cipher primitives dir
 
 #### Rule - Use cryptographically secure pseudo random number generators (CSPRNG)
 
-When generating random bits in the context of sofware security, use the available Cryptographically Secure Pseudo- Random Number Generator (CSPRNG) library or module
+When generating random bits in the context of sofware security, use the available Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) library or module
 available on the programming language you are using.  
 
 Do not use Pseudo-Random Number Generators (PRNG) since they are not secure and will produce deterministic results. The chosen numbers are not completely random because a mathematical algorithm is used to select them, but they are sufficiently random for practical purposes. 
 
-PRNGs are primarily used for generating random-looking numbers in use cases such as modeling and simulation in software,while CSPRNGs are intended for generating random-looking numbers resistant to prediction for security use cases such as random passwords, CSRF tokens, session IDs, etc.
+PRNGs are primarily used for generating random-looking numbers in use cases such as modeling and simulation in software, while CSPRNGs are intended for generating random-looking numbers resistant to prediction for security use cases such as random passwords, CSRF tokens, session IDs, etc.
 
 The use of CSPRNGs will ensure that all random numbers, especially those used for cryptographic parameters (keys, IV’s, MAC tags), random file names, random GUIDs, and random strings are generated in a cryptographically strong fashion.
 
@@ -75,11 +75,11 @@ The following functions are considered **weak** pseudo-random number generators 
 - C : `random()`, `rand()` instead use [getrandom(2)](http://man7.org/linux/man-pages/man2/getrandom.2.html)
 - Java and Android OS : `java.util.Random()` instead use `java.security.SecureRandom`
 - PHP : `rand()`, `mt_rand()`, `array_rand()`, `uniqid()` instead use [random_bytes()](https://www.php.net/manual/en/function.random-bytes.php), [random_int()](https://www.php.net/manual/en/function.random-int.php) in PHP 7 or [openssl_random_pseudo_bytes()](https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php) in PHP 5 (which is **deprecated** and **should not be used**)
-- .NET/C# : `Random()`, instead use `RNGCryptoServiceProvider`
--  Objective-C/Apple IOS : `arc4random()` (Uses RC4 Cipher), instead use `SecRandomCopyBytes`
-- Python : `random()`, instead use `secrets()`
-- Ruby : `Random`, instead use `SecureRandom`
-- Go: `rand` using `math/rand` package, instead use `crypto.rand` package
+- .NET/C# : `Random()`, instead use [RNGCryptoServiceProvider](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rngcryptoserviceprovider?view=netframework-4.8)
+-  Objective-C/Apple IOS : `arc4random()` (Uses RC4 Cipher), instead use [SecRandomCopyBytes](https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc)
+- Python : `random()`, instead use [secrets()](https://docs.python.org/3/library/secrets.html#module-secrets)
+- Ruby : `Random`, instead use [SecureRandom](https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html)
+- Go: `rand` using `math/rand` package, instead use [crypto.rand](https://golang.org/pkg/crypto/rand/) package
 
 For secure random number generation, refer to NIST SP 800-90A. CTR-DRBG, HASH-DRBG or HMAC-DRBG are recommended. Refer to NIST SP800-22 A Statistical Test Suite for Random and Pseudorandom Number Generators for Cryptographic Applications, and the testing toolkit.
 
