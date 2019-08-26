@@ -57,14 +57,13 @@ In general, you should not use AES, DES or other symmetric cipher primitives dir
 
 #### Rule - Use cryptographically secure pseudo random number generators (CSPRNG)
 
-When generating random bits in the context of sofware security, use the available Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) library or module
-available on the programming language you are using.  
+When generating random bits in the context of sofware security, use the available Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) library or module available on the programming language you are using.
 
 Do not use Pseudo-Random Number Generators (PRNG) since they are not secure and will produce deterministic results. The chosen numbers are not completely random because a mathematical algorithm is used to select them, but they are sufficiently random for practical purposes. 
 
 PRNGs are primarily used for generating random-looking numbers in use cases such as modeling and simulation in software, while CSPRNGs are intended for generating random-looking numbers resistant to prediction for security use cases such as random passwords, CSRF tokens, session IDs, etc.
 
-The use of CSPRNGs will ensure that all random numbers, especially those used for cryptographic parameters (keys, IV’s, MAC tags), random file names, random GUIDs, and random strings are generated in a cryptographically strong fashion.
+The use of CSPRNGs will ensure that all random numbers, especially those used for cryptographic parameters (keys, IVs, MAC tags), random file names, random GUIDs, and random strings are generated in a cryptographically strong fashion.
 
 Ensure that random algorithms are seeded with sufficient entropy.
 
