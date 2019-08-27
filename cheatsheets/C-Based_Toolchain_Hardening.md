@@ -114,7 +114,7 @@ A recent discussion on the Automake mailing list illuminates the issue: *[Enabli
 
 ## Makefiles
 
-Make is one of the earliest build systems dating back to the 1970s. Its available on Linux, Mac OS X and Unix, so you will frequently encounter projects using it. Unfortunately, Make has a number of short comings (*[Recursive Make Considered Harmful](http://aegis.sourceforge.net/auug97.pdf)* and *[What’s Wrong With GNU make?](http://www.conifersystems.com/whitepapers/gnu-make/)*), and can cause some discomfort. Despite issues with Make, ESAPI C++ uses Make primarily for three reasons: first, its omnipresent; second, its easier to manage than the Auto Tools family; and third, `libtool` was out of the question.
+Make is one of the earliest build systems dating back to the 1970s. Its available on Linux, Mac OS X and Unix, so you will frequently encounter projects using it. Unfortunately, Make has a number of short comings (*[Recursive Make Considered Harmful](http://aegis.sourceforge.net/auug97.pdf)* and *[What's Wrong With GNU make?](http://www.conifersystems.com/whitepapers/gnu-make/)*), and can cause some discomfort. Despite issues with Make, ESAPI C++ uses Make primarily for three reasons: first, its omnipresent; second, its easier to manage than the Auto Tools family; and third, `libtool` was out of the question.
 
 Consider what happens when you: (1) type `make` `debug`, and then type `make` `release`. Each build would require different `CFLAGS` due to optimizations and level of debug support. In your makefile, you would extract the relevant target and set `CFLAGS` and `CXXFLAGS` similar to below (taken from [ESAPI C++ Makefile](http://code.google.com/p/owasp-esapi-cplusplus/source/browse/trunk/Makefile)):
 
@@ -487,7 +487,7 @@ override LDFLAGS := $(MY_LD_FLAGS) $(LDFLAGS)
 
 IOC is incredibly useful, and has found bugs in a number of projects, from the Linux Kernel (`include/linux/bitops.h`, still unfixed), SQLite, PHP, Firefox (many still unfixed), LLVM, and Python. Future version of Clang (Clang 3.3 and above) will allow you to enable the checks out of the box with `-fsanitize=integer` and `-fsanitize=shift`.
 
-Clang options can be found at [Clang Compiler User’s Manual](http://clang.llvm.org/docs/UsersManual.html). Clang does include an option to turn on all warnings - `-Weverything`. Use it with care but use it regularly since you will get back a lot of noise and issues you missed. For example, add `-Weverything` for production builds and make non-spurious issues a quality gate. Under Xcode, simply add `-Weverything` to `CFLAGS` and `CXXFLAGS`.
+Clang options can be found at [Clang Compiler User's Manual](http://clang.llvm.org/docs/UsersManual.html). Clang does include an option to turn on all warnings - `-Weverything`. Use it with care but use it regularly since you will get back a lot of noise and issues you missed. For example, add `-Weverything` for production builds and make non-spurious issues a quality gate. Under Xcode, simply add `-Weverything` to `CFLAGS` and `CXXFLAGS`.
 
 In addition to compiler warnings, both static analysis and additional security checks can be performed. Reading on Clang's static analysis capabilities can be found at [Clang Static Analyzer](http://clang-analyzer.llvm.org). Figure 1 below shows some of the security checks utilized by Xcode.
 

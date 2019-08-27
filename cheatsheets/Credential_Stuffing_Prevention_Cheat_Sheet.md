@@ -64,7 +64,7 @@ Blocking headless browsers is another step after requiring javascript to block b
 
 ## Pwned Passwords
 
-Application can check whether passwords used by users were previously or recently exposed in data breaches. After check application can either notify user about it or force changing password to new one. Trustworthy, big and updated data source for such password is Troy Hunt’s service - [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host it yourself or use [API](https://haveibeenpwned.com/API/v2#PwnedPasswords). 
+Application can check whether passwords used by users were previously or recently exposed in data breaches. After check application can either notify user about it or force changing password to new one. Trustworthy, big and updated data source for such password is Troy Hunt's service - [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host it yourself or use [API](https://haveibeenpwned.com/API/v2#PwnedPasswords). 
 In order to protect the value of the source password being searched for, Pwned Passwords implements a [k-Anonymity model](https://en.wikipedia.org/wiki/K-anonymity) that allows a password to be searched for by partial hash. This allows the first 5 characters of a SHA-1 password hash to be passed to the API.
 
 Remember that you should have access to passwords only just after user log-in or register new account (after that passwords will be stored in [hashed form](cheatsheets/Password_Storage_Cheat_Sheet.md#leverage-an-adaptive-one-way-function)). This is the only one place, where you can check if password was leaked. Make sure that you do not log or store plaintext password during this operation.

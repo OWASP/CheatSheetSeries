@@ -23,7 +23,7 @@ Example:
 - `.exportProfileData`
 - ...
 
-Now, let’s examine what are the risks associated with this style of coding.
+Now, let's examine what are the risks associated with this style of coding.
 
 ## Risk \#1
 
@@ -35,9 +35,9 @@ In a nutshell, having global styling could reveal sensitive information that cou
 
 ## Risk \#2
 
-Let’s say, Santhosh has this habit of writing the descriptive selector names like `.profileSettings,` `exportUserData,` `.changePassword,` `.oldPassword,` `.newPassword,` `.confirmNewPassword` etc. Good programmers like to keep code readable and usable by other Code Reviewers of the team. The risk is that attackers could map these selectors to actual features of a web application.
+Let's say, Santhosh has this habit of writing the descriptive selector names like `.profileSettings,` `exportUserData,` `.changePassword,` `.oldPassword,` `.newPassword,` `.confirmNewPassword` etc. Good programmers like to keep code readable and usable by other Code Reviewers of the team. The risk is that attackers could map these selectors to actual features of a web application.
 
-# Defensive Mechanisms to Mitigate Attacker’s Motivation
+# Defensive Mechanisms to Mitigate Attacker's Motivation
 
 ## Defense Mechanism
 

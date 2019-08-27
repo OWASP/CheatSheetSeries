@@ -75,7 +75,7 @@ Further considering the threats to the organization, conduct a more formal analy
 potential misuse or abuse of functionality. Typically, this process begins with identification of
 normal usage scenarios, e.g. use-case diagrams if available.
 
-If a formal abuse-case technique isn’t used, generate a set of abuse-cases for each scenario by
+If a formal abuse-case technique isn't used, generate a set of abuse-cases for each scenario by
 starting with a statement of normal usage and brainstorming ways in which the statement might be
 negated, in whole or in part. The simplest way to get started is to insert the word "no" or "not" into
 the usage statement in as many ways as possible, typically around nouns and verbs. Each usage scenario
@@ -145,7 +145,7 @@ Secondly, create a new Microsoft Excel file (you can also use Google Sheets or a
 - **COUNTERMEASURES**
     - Will contain a table with the list of possible countermeasures (light description) imagined for the abuse cases identified.
     - This sheet is not mandatory, but it can be useful (for an abuse case to know), if a fix is easy to implement and then can impact the risk rating.
-    - Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks but also to build or identify defenses (it is not always the case for the Pentester profile because this person’s focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).
+    - Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks but also to build or identify defenses (it is not always the case for the Pentester profile because this person's focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).
 
 This is the representation of each sheet along with an example of content that will be filled during the workshop:
 
@@ -289,7 +289,7 @@ As an attacker, I manipulate session tokens using expired and fake tokens to gai
 
 *Epic:*
 
-Rather than directly attacking crypto, attackers steal keys, execute man-in-the-middle attacks, or steal clear text data off the server, while in transit, or from the user’s client, e.g. browser. A manual attack is generally required. Previously retrieved password databases could be brute forced by Graphics Processing Units (GPUs).
+Rather than directly attacking crypto, attackers steal keys, execute man-in-the-middle attacks, or steal clear text data off the server, while in transit, or from the user's client, e.g. browser. A manual attack is generally required. Previously retrieved password databases could be brute forced by Graphics Processing Units (GPUs).
 
 *Abuse Case:*
 
@@ -301,7 +301,7 @@ As an attacker, I execute man-in-the-middle attacks to get access to traffic and
 
 *Abuse Case:*
 
-As an attacker, I steal clear text data off the server, while in transit, or from the user’s client, e.g. browser to get unauthorized access to the application or system.
+As an attacker, I steal clear text data off the server, while in transit, or from the user's client, e.g. browser to get unauthorized access to the application or system.
 
 *Abuse Case:*
 
@@ -409,7 +409,7 @@ XSS is the second most prevalent issue in the OWASP Top 10, and is found in arou
 
 *Abuse Case:*
 
-As an attacker, I perform reflected XSS where the application or API includes unvalidated and unescaped user input as part of HTML output. My successful attack can allow the attacker to execution of arbitrary HTML and JavaScript in my victim’s browser. Typically the victim will need to interact with some malicious link that points to an attacker-controlled page, such as malicious watering hole websites, advertisements, or similar.
+As an attacker, I perform reflected XSS where the application or API includes unvalidated and unescaped user input as part of HTML output. My successful attack can allow the attacker to execution of arbitrary HTML and JavaScript in my victim's browser. Typically the victim will need to interact with some malicious link that points to an attacker-controlled page, such as malicious watering hole websites, advertisements, or similar.
 
 *Abuse Case:*
 

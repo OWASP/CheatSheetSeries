@@ -2,7 +2,7 @@
 
 Media covers the theft of large collections of passwords on an almost daily basis. Media coverage of password theft discloses the password storage scheme, the weakness of that scheme, and often discloses a large population of compromised credentials that can affect multiple web sites or other applications. This article provides guidance on properly storing passwords, secret question responses, and similar credential information. Proper storage helps prevent theft, compromise, and malicious use of credentials. Information systems store passwords and other credentials in a variety of protected forms. Common vulnerabilities allow the theft of protected passwords through attack vectors such as SQL Injection. Protected passwords can also be stolen from artifacts such as logs, dumps, and backups.
 
-Specific guidance herein protects against stored credential theft but the bulk of guidance aims to prevent credential compromise. That is, this guidance helps designs resist revealing users’ credentials or allowing system access in the event threats steal protected credential information. For more information and a thorough treatment of this topic, refer to the Secure Password Storage Threat Model [here](https://docs.google.com/document/d/1R6c9NW6wtoEoT3CS4UVmthw1a6Ex6TGSBaEqDay5U7g).
+Specific guidance herein protects against stored credential theft but the bulk of guidance aims to prevent credential compromise. That is, this guidance helps designs resist revealing users' credentials or allowing system access in the event threats steal protected credential information. For more information and a thorough treatment of this topic, refer to the Secure Password Storage Threat Model [here](https://docs.google.com/document/d/1R6c9NW6wtoEoT3CS4UVmthw1a6Ex6TGSBaEqDay5U7g).
 
 # Guidance
 
@@ -41,19 +41,19 @@ Salts serve two purposes:
 
 ## Impose infeasible verification on attacker
 
-The function used to protect stored credentials should balance attacker and defender verification. The defender needs an acceptable response time for verification of users’ credentials during peak use. However, the time required to map `<credential> → <protected form>` must remain beyond threats’ hardware (GPU, FPGA) and technique (dictionary-based, brute force, etc) capabilities.
+The function used to protect stored credentials should balance attacker and defender verification. The defender needs an acceptable response time for verification of users' credentials during peak use. However, the time required to map `<credential> → <protected form>` must remain beyond threats' hardware (GPU, FPGA) and technique (dictionary-based, brute force, etc) capabilities.
 
 Two approaches facilitate this, each imperfectly.
 
 ### Leverage an adaptive one-way function
 
-Adaptive one-way functions compute a one-way (irreversible) transform. Each function allows configuration of ‘work factor’. Underlying mechanisms used to achieve irreversibility and govern work factors (such as time, space, and parallelism) vary between functions and remain unimportant to this discussion.
+Adaptive one-way functions compute a one-way (irreversible) transform. Each function allows configuration of 'work factor'. Underlying mechanisms used to achieve irreversibility and govern work factors (such as time, space, and parallelism) vary between functions and remain unimportant to this discussion.
 
 Select:
 
 - **[Argon2](Password_Storage_Cheat_Sheet.md#ref7)** is the winner of the [password hashing competition](https://password-hashing.net/) and should **be considered as your first choice** for new applications;
 - **[PBKDF2](Password_Storage_Cheat_Sheet.md#ref4)** when FIPS certification or enterprise support on many platforms is required;
-- **[Scrypt](Password_Storage_Cheat_Sheet.md#ref5)** where resisting any/all hardware accelerated attacks is necessary but support isn’t.
+- **[Scrypt](Password_Storage_Cheat_Sheet.md#ref5)** where resisting any/all hardware accelerated attacks is necessary but support isn't.
 - **[Bcrypt](https://auth0.com/blog/hashing-in-action-understanding-bcrypt/)** where PBKDF2 or Scrypt support is not available.
 
 Example `protect()` pseudo-code follows:
@@ -65,9 +65,9 @@ return [salt] + pbkdf2([salt], [credential], c=[iteration_count]);
 In the example above, as PBKDF2 computation time depend on the target system, **iteration_count** must have a number implying that the computation time on the target system must take at least 1 second.  
 500.000 is a good example, but please note that, as PBKDF2 is **not** time constant, this configuration is highly dependant on the target machine and you should probably [test the appropriate number for your specific situation](../assets/Password_Storage_Cheat_Sheet_Test_PBKDF2_Iterations.java). 
 
-Designers select one-way adaptive functions to implement `protect()` because these functions can be configured to cost (linearly or exponentially) more than a hash function to execute. Defenders adjust work factor to keep pace with threats’ increasing hardware capabilities. Those implementing adaptive one-way functions must tune work factors so as to impede attackers while providing acceptable user experience and scale.
+Designers select one-way adaptive functions to implement `protect()` because these functions can be configured to cost (linearly or exponentially) more than a hash function to execute. Defenders adjust work factor to keep pace with threats' increasing hardware capabilities. Those implementing adaptive one-way functions must tune work factors so as to impede attackers while providing acceptable user experience and scale.
 
-Additionally, adaptive one-way functions do not effectively prevent reversal of common dictionary-based credentials (users with password ‘password’) regardless of user population size or salt usage.
+Additionally, adaptive one-way functions do not effectively prevent reversal of common dictionary-based credentials (users with password 'password') regardless of user population size or salt usage.
 
 #### Work Factor
 
@@ -79,7 +79,7 @@ However, it is critical to understand that a single work factor does not fit all
 
 ### Leverage Keyed functions
 
-Keyed functions, such as HMACs, compute a one-way (irreversible) transform using a private key and given input. For example, HMACs inherit properties of hash functions including their speed, allowing for near instant verification. Key size imposes infeasible size- and/or space- requirements on compromise--even for common credentials (aka password = ‘password’). Designers protecting stored credentials with keyed functions:
+Keyed functions, such as HMACs, compute a one-way (irreversible) transform using a private key and given input. For example, HMACs inherit properties of hash functions including their speed, allowing for near instant verification. Key size imposes infeasible size- and/or space- requirements on compromise--even for common credentials (aka password = 'password'). Designers protecting stored credentials with keyed functions:
 
 - Use a single "site-wide" key;
 - Protect this key as any private key using best practices;
@@ -99,14 +99,14 @@ Upholding security improvement over (solely) salted schemes relies on proper key
 
 The frequency and ease with which threats steal protected credentials demands "design for failure". Having detected theft, a credential storage scheme must support continued operation by marking credential data as compromised. It's also critical to engage alternative credential validation workflows as follows:
 
-1. Protect the user’s account
-    1. Invalidate authentication ‘shortcuts’ by disallowing login without 2nd factors, secret questions or some other form of strong authentication.
+1. Protect the user's account
+    1. Invalidate authentication 'shortcuts' by disallowing login without 2nd factors, secret questions or some other form of strong authentication.
     2. Disallow changes to user accounts such as editing secret questions and changing account multi-factor configuration settings.
 
 2. Load and use new protection scheme
     1. Load a new, stronger credential protection scheme (See next section on: Upgrading your existing password hashing solution)
     2. Include version information stored with form
-    3. Set ‘tainted’/‘compromised’ bit until user resets credentials
+    3. Set 'tainted'/'compromised' bit until user resets credentials
     4. Rotate any keys and/or adjust protection function parameters such as work factor or salt
     5. Increment scheme version number
 
@@ -549,7 +549,7 @@ The entire source code of the POC is available [here](https://github.com/righett
 
 ## Ref5
 
-- [Percival, C., Stronger Key Derivation Via Sequential Memory-Hard Functions, BSDCan ‘09, May, 2009](http://www.tarsnap.com/scrypt/scrypt.pdf).
+- [Percival, C., Stronger Key Derivation Via Sequential Memory-Hard Functions, BSDCan '09, May, 2009](http://www.tarsnap.com/scrypt/scrypt.pdf).
 
 ## Ref6
 

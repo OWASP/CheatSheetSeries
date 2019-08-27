@@ -244,7 +244,7 @@ An alternative to escaping and unescaping JSON directly in JavaScript, is to nor
 
 Rule \#4 is for when you want to put untrusted data into a stylesheet or a style tag. CSS is surprisingly powerful, and can be used for numerous attacks. Therefore, it's important that you only use untrusted data in a property **value** and not into other places in style data. You should stay away from putting untrusted data into complex properties like `url`, `behavior`, and custom (`-moz-binding`). 
 
-You should also not put untrusted data into IE’s expression property value which allows JavaScript.
+You should also not put untrusted data into IE's expression property value which allows JavaScript.
 
 Property value:
 
