@@ -2,18 +2,16 @@
 # -*- coding: utf-8 -*-
 """
 Python3 script to generate an RSS feed XML file based on merged pull requests:
-
 See https://github.com/OWASP/CheatSheetSeries/issues/186
-
 Do not require to have a local copy of the GitHub repository.
-
 Dependencies: pip install requests feedgen
 """
 import sys
-import requests
 import json
-from feedgen.feed import FeedGenerator
 from datetime import datetime
+
+import requests
+from feedgen.feed import FeedGenerator
 
 # Define constants
 # API to retrieve the list of PR
@@ -44,9 +42,9 @@ feed_generator.lastBuildDate(current_date)
 for pull_request in pull_requests:
     # Take only merged PR
     if pull_request["merged_at"] is None:
-        continue        
+        continue
     # Convert merge date from 2019-08-25T06:36:35Z To Sun, 19 May 2002 15:21:36 GMT
-    merge_date_src = pull_request["merged_at"] 
+    merge_date_src = pull_request["merged_at"]
     merge_date_dst = datetime.strptime(merge_date_src, "%Y-%m-%dT%H:%M:%SZ").strftime("%a, %d %B %Y %H:%M:%S GMT")
     feed_entry = feed_generator.add_entry()
     feed_entry.id(pull_request["html_url"])
