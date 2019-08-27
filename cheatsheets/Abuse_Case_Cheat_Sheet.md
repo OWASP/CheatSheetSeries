@@ -186,7 +186,6 @@ If the presence of offensives is not possible then you can use the following ref
 
 Important note on attacks and countermeasure knowledge base(s):
 
-
 > With the time and across projects, you will obtain your own dictionary of
 > attacks and countermeasures that are applicable to the kind of application
 > in your business domain.
