@@ -24,12 +24,12 @@ For information on validating email addresses, please visit the [input validatio
 A key concern when using passwords for authentication is password strength. A "strong" password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:
 
 - Password Length
-    - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)). 
-    - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters. 
+    - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
+    - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters.
 
       When selecting maximum password length, limitation of hashing algorithm that will be used for hashing passwords, should be taken into consideration because some of them [have a maximum password length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851).
 
-- Do do not truncate passwords. Make sure that every character the user types in is actually included in the password. 
+- Do do not truncate passwords. Make sure that every character the user types in is actually included in the password.
 
 - Allow usage of **all** characters including unicode and whitespaces. There should be no password composition rules limiting the type of characters permitted.
 

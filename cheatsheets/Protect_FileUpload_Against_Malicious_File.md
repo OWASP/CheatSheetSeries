@@ -8,7 +8,7 @@ Into web applications, when we expect upload of working documents from users, we
 
 We use the term "malicious" here to refer to documents that embed *malicious code* that will be executed when another user (admin, back office operator...) will open the document with the associated application reader.
 
-Usually, when an application expects their user to upload a document, the application expects to receive a document for which the intended use will be for reading/printing/archiving. The document should not alter is content at opening time and should be in a final rendered state.
+Usually, when an application expects their user to upload a document, the application expects to receive a document for which the intended use will be for reading/printing/archiving. The document should not alter its content at opening time and should be in a final rendered state.
 
 The most common file types used to transmit *malicious code* into file upload feature are the following:
 

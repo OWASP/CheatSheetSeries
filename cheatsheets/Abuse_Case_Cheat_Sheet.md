@@ -13,17 +13,15 @@ In order to build a secure application, from an pragmatic point of view, it is i
 
 # Objective
 
-The objective of this cheat sheet is to provide an explanation of what an **Abuse Case** is, why abuse cases are important, and to provide a pragmatic approach to builing abuse cases for tracking during feature implementation of an application. This cheat sheet applies regardless of the project methodology used (waterfall or agile).
+The objective of this cheat sheet is to provide an explanation of what an **Abuse Case** is, why abuse cases are important, and to provide a pragmatic approach to builing abuse cases for tracking during feature implementation of an application. This cheat sheet applies regardless of the project methodology used (Waterfall or Agile).
 
 **Important note about this Cheat Sheet:**
 
-```
-The main objective is to provide a pragmatic approach in order to allow a company or a project
-team to start building and handling the list of abuse cases and then customize the elements
-proposed to its context/culture in order to, finally, build its own method.
-
-This cheat sheet can be seen as a getting-started tutorial.
-```
+> The main objective is to provide a pragmatic approach in order to allow a company or a project
+> team to start building and handling the list of abuse cases and then customize the elements
+> proposed to its context/culture in order to, finally, build its own method.
+>
+> This cheat sheet can be seen as a getting-started tutorial.
 
 # Context & approach
 
@@ -42,25 +40,21 @@ In order to help build the list of attacks, the notion of **Abuse Cases** is hel
 
 An **Abuse Case** can be defined as:
 
-```
-A way to use a feature that was not expected by the implementer,
-allowing an attacker to influence the feature or outcome of use of
-the feature based on the attacker action (or input).
-```
+> A way to use a feature that was not expected by the implementer,
+> allowing an attacker to influence the feature or outcome of use of
+> the feature based on the attacker action (or input).
 
 Synopsys define an **Abuse Case** like this:
 
-```
-Misuse and abuse cases describe how users misuse or exploit the weaknesses
-of controls in software features to attack an application.
-
-This can lead to tangible business impact when a direct attack against
-business functionalities, which may bring in revenue or provide
-positive user experience, are attacked.
-
-Abuse cases can also be an effective way to drive security requirements
-that lead to proper protection of these critical business use cases.
-```
+> Misuse and abuse cases describe how users misuse or exploit the weaknesses
+> of controls in software features to attack an application.
+>
+> This can lead to tangible business impact when a direct attack against
+> business functionalities, which may bring in revenue or provide
+> positive user experience, are attacked.
+>
+> Abuse cases can also be an effective way to drive security requirements
+> that lead to proper protection of these critical business use cases.
 
 [Synopsys source](https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements)
 
@@ -68,31 +62,29 @@ that lead to proper protection of these critical business use cases.
 
 There are many different ways to define the list of abuse cases for a feature. The project [OWASP Open SAMM](https://www.owasp.org/index.php/OWASP_SAMM_Project) proposes the following approach in the *Activity A* of the Security Practice *Threat Assessment* for the Maturity level 2:
 
-```
-Further considering the threats to the organization, conduct a more formal
-analysis to determine potential misuse or abuse of functionality. Typically,
-this process begins with identification of normal usage scenarios,
-e.g. use-case diagrams if available.
-
-If a formal abuse-case technique isn’t used, generate a set of abuse-cases
-for each scenario by starting with a statement of normal usage and
-brainstorming ways in which the statement might be negated, in whole or in
-part. The simplest way to get started is to insert the word “no” or “not”
-into the usage statement in as many ways as possible, typically around nouns
-and verbs. Each usage scenario should generate several possible abuse-case
-statements.
-
-Further elaborate the abuse-case statements to include any application-specific
-concerns based on the business function of the software. The ultimate goal is
-for the completed set of abuse statements to form a model for usage patterns
-that should be disallowed by the software. If desired, these abuse cases can be
-combined with existing threat models.
-
-After initial creation, abuse-case models should be updated for active projects
-during the design phase. For existing projects, new requirements should be
-analyzed for potential abuse, and existing projects should opportunistically
-build abuse-cases for established functionality where practical.
-```
+> Further considering the threats to the organization, conduct a more formal
+> analysis to determine potential misuse or abuse of functionality. Typically,
+> this process begins with identification of normal usage scenarios,
+> e.g. use-case diagrams if available.
+>
+> If a formal abuse-case technique isn’t used, generate a set of abuse-cases
+> for each scenario by starting with a statement of normal usage and
+> brainstorming ways in which the statement might be negated, in whole or in
+> part. The simplest way to get started is to insert the word “no” or “not”
+> into the usage statement in as many ways as possible, typically around nouns
+> and verbs. Each usage scenario should generate several possible abuse-case
+> statements.
+>
+> Further elaborate the abuse-case statements to include any application-specific
+> concerns based on the business function of the software. The ultimate goal is
+> for the completed set of abuse statements to form a model for usage patterns
+> that should be disallowed by the software. If desired, these abuse cases can be
+> combined with existing threat models.
+>
+> After initial creation, abuse-case models should be updated for active projects
+> during the design phase. For existing projects, new requirements should be
+> analyzed for potential abuse, and existing projects should opportunistically
+> build abuse-cases for established functionality where practical.
 
 Open SAMM source: [Threat Assessment Level 2 Actvity A](https://www.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2)
 
@@ -113,15 +105,15 @@ It is important to take into account **Technical** and **Business** kind of abus
 *Example:*
 
 - Technical flagged abuse case: Add Cross Site Scripting injection into a comment input field.
-- Business flagged abuse case: Ability to modify  the price of an article in an online causing the user to pay a lower amount for the wanted article.
+- Business flagged abuse case: Ability to modify the price of an article in an online causing the user to pay a lower amount for the wanted article.
 
 ## When to define the list of Abuse Cases?
 
-On an agile project, the definition workshop must be made after the meeting in which User Stories are includen in a Sprint.
+On an Agile project, the definition workshop must be made after the meeting in which User Stories are included on a Sprint.
 
-In waterfall projects, the definition workshop must be made when the business feature to implement are identified and known by the business.
+In Waterfall projects, the definition workshop must be made when the business feature to implement is identified and known by the business.
 
-The abuse cases selected to be addressed must become security requirements in each feature specification section (waterfall) or User Story acceptance criteria (agile) to allow additional cost/effort evaluation, identification, and implementation of the countermeasures.
+The abuse cases selected must become security requirements in each feature specification section (Waterfall) or User Story acceptance criteria (Agile) to allow additional cost/effort evaluation, identification, and implementation of the countermeasures.
 
 Each abuse case must have a unique identifier in order to allow tracking throughout the whole project/sprint (details about this point will be given in the proposal section).
 
@@ -194,18 +186,17 @@ If the presence of offensives is not possible then you can use the following ref
 
 Important note on attacks and countermeasure knowledge base(s):
 
-```
-With the time and across projects, you will obtain your own dictionary of
-attacks and countermeasures that are applicable to the kind of application
-in your business domain.
 
-This dictionary will speed up the future workshops in a significant way.
-
-To promote the creation of this dictionary, you can, at the end of the
-project/sprint, gather the list of attacks and countermeasures identified in
-a central location (wiki, database, file...) that will be used during the next
-workshop in combination with input from offensives people.
-```
+> With the time and across projects, you will obtain your own dictionary of
+> attacks and countermeasures that are applicable to the kind of application
+> in your business domain.
+>
+> This dictionary will speed up the future workshops in a significant way.
+>
+> To promote the creation of this dictionary, you can, at the end of the
+> project/sprint, gather the list of attacks and countermeasures identified in
+> a central location (wiki, database, file...) that will be used during the next
+> workshop in combination with input from offensives people.
 
 ## Step 3: After the workshop
 
@@ -213,7 +204,7 @@ The spreadsheet contains (at this stage) the list of all abuse cases that must b
 
 Now, there are two remaining task:
 
-1.  Key business people must update the specification of each feature (waterfall) or the User Story of each feature (agile) to include the associated abuse cases as Security Requirements (waterfall) or Acceptance Criteria (agile).
+1. Key business people must update the specification of each feature (Waterfall) or the User Story of each feature (Agile) to include the associated abuse cases as Security Requirements (Waterfall) or Acceptance Criteria (Agile).
 2. Key technical people must evaluate the overhead in terms of charge/effort to take into account the countermeasure.
 
 ## Step 4: During implementation - Abuse cases handling tracking

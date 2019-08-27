@@ -45,7 +45,7 @@ The areas of caution while using RBAC are:
 
 # Discretionary Access Control (DAC)
 
-Discretionary Access Control (DAC) is a means of restricting access to information based on the identity of users and/or membership in certain groups. Access decisions are typically based on the authorizations granted to a user based on the credentials they presented at the time of authentication (user name, password, hardware/software token, etc.). In most typical DAC models, the owner of information or any resource is able to change its permissions at their discretion (thus the name).
+Discretionary Access Control (DAC) is a means of restricting access to information based on the identity of users or membership in certain groups. Access decisions are typically based on the authorizations granted to a user based on the credentials they presented at the time of authentication (user name, password, hardware/software token, etc.). In most typical DAC models, the owner of information or any resource is able to change its permissions at their discretion (thus the name).
 
 A DAC framework can provide web application security administrators with the ability to implement fine grained access control. This model can be a basis for data based access control implementation.
 

@@ -74,11 +74,11 @@ The time delay exploitation technique is very useful when the tester find a Blin
 http://www.example.com/product.php?id=10 AND IF(version() like ‘5%’, sleep(10), ‘false’))--
 ```
 
-In this example the tester if checking whether the MySql version is 5.x or not, making the server to delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn’t need to wait for the response. Sometimes they can set a very high value (e.g. 100) and cancel the request after some seconds.
+In this example the tester is checking whether the MySql version is 5.x or not, making the server to delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn’t need to wait for the response. Sometimes they can set a very high value (e.g. 100) and cancel the request after some seconds.
 
 **Out of band Exploitation technique**
 
-This technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester’s server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section.
+This technique is very useful when the tester finds a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester’s server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section.
 
 #### Remediation
 
