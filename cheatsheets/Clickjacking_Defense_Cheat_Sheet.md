@@ -2,7 +2,7 @@
 
 This cheat sheet is focused on providing developer guidance on [Clickjack/UI Redress](https://www.owasp.org/index.php/Clickjacking) attack prevention.
 
-The most popular way to defend against Clickjacking is to include some sort of "frame-breaking" functionality which prevents other web pages from framing the site you wish to defend. This cheat sheet will discuss two methods of implementing frame-breaking: first is X-Frame-Options headers (used if the browser supports the functionality); and second is javascript frame-breaking code.
+The most popular way to defend against Clickjacking is to include some sort of "frame-breaking" functionality which prevents other web pages from framing the site you wish to defend. This cheat sheet will discuss two methods of implementing frame-breaking: first is X-Frame-Options headers (used if the browser supports the functionality); and second is JavaScript frame-breaking code.
 
 # Defending with Content Security Policy (CSP) frame-ancestors directive
 
@@ -42,8 +42,8 @@ There are three possible values for the X-Frame-Options header:
 
 - **DENY**, which prevents any domain from framing the content. The "DENY" setting is recommended unless a specific need has been identified for framing.
 - **SAMEORIGIN**, which only allows the current site to frame the content.
-- **ALLOW-FROM uri**, which permits the specified 'uri' to frame this page. (e.g., `ALLOW-FROM http://www.example.com`). 
-    - Check limitations below because this will fail open if the browser does not support it. 
+- **ALLOW-FROM uri**, which permits the specified 'uri' to frame this page. (e.g., `ALLOW-FROM http://www.example.com`).
+    - Check limitations below because this will fail open if the browser does not support it.
     - Other browsers support the new [CSP frame-ancestors directive](https://w3c.github.io/webappsec-csp/#directive-frame-ancestors) instead. A few support both.
 
 ## Browser Support
@@ -77,6 +77,20 @@ Meta-tags that attempt to apply the X-Frame-Options directive DO NOT WORK. For e
 - **X-Frame-Options Deprecated** While the X-Frame-Options header is supported by the major browsers, it was never standardized and has been deprecated in favour of the frame-ancestors directive from the CSP Level 2 specification.
 - **Proxies** Web proxies are notorious for adding and stripping headers. If a web proxy strips the X-Frame-Options header then the site loses its framing protection.
 
+# Defending with SameSite Cookies
+
+The `SameSite` cookie attribute defined in [RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7) is primarily intended to defend against [cross-site request forgery (CSRF)](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md#samesite-cookie-attribute); however it can also provide protection against Clickjacking attacks.
+
+Cookies with a `SameSite` attribute of either `strict` or `lax` will not be included in requests made to a page within an `<iframe>`. This means that if the session cookies are marked as `SameSite`, any Clickjacking attack that requires the victim to be authenticated will not work, as the cookie will not be sent.
+
+## Limitations
+
+As of 2019 the `SameSite` attribute is supported by [most modern browsers](https://caniuse.com/#feat=same-site-cookie-attribute), although it it not widely supported on mobile browsers. Support in Internet Explorer will varies depending on the updates installed and the underlying operating system.
+
+Additionally, if the Clickjacking attack does not require that the user is authenticated, this attribute will not provide any degree of protection.
+
+This use of this attribute should be considered as part of a defence-in-depth approach, and it should not be relied upon as the sole protection against Clickjacking.
+
 # Best-for-now Legacy Browser Frame Breaking Script
 
 One way to defend against clickjacking is to include a "frame-breaker" script in each page that should not be framed. The following methodology will prevent a webpage from being framed even in legacy browsers, that do not support the X-Frame-Options-Header.
@@ -106,7 +120,7 @@ Then, delete that style by its ID immediately after in the script:
 
 This way, everything can be in the document HEAD and you only need one method/taglib in your API.
 
-Reference: 
+Reference:
 
 - [https://www.codemagi.com/blog/post/194](http://web.archive.org/web/20170430064506/https://www.codemagi.com/blog/post/194)
 
@@ -147,19 +161,19 @@ Some frame busting techniques navigate to the correct page by assigning a value 
 if(top.location != self.locaton) {
     parent.location = self.location;
 }
-```    
+```
 
 **Attacker top frame:**
 
 ```html
 <iframe src="attacker2.html">
-```    
+```
 
 **Attacker sub-frame:**
 
 ```html
 <iframe src="http://www.victim.com">
-```    
+```
 
 ## The onBeforeUnload Event
 
@@ -177,7 +191,7 @@ The attacker mounts this attack by registering an unload event on the top page u
 </script>
 
 <iframe src="http://www.paypal.com">
-```    
+```
 
 PayPal's frame busting code will generate a `BeforeUnload` event activating our function and prompting the user to cancel the navigation event.
 
@@ -196,7 +210,7 @@ setInterval( function() {
     window.top.location = 'http://nocontent204.com'
     }
 }, 1);
-```    
+``` 
 
 ```html
 <iframe src="http://www.victim.com">
@@ -214,13 +228,13 @@ IE8 and Google Chrome introduced reflective XSS filters that help protect web pa
         top.location = self.location;
     }
 </script>
-```    
+```
 
 **Attacker:**
 
 ```html
 <iframe src="http://www.victim.com/?v=<script>if''>
-```    
+```
 
 The XSS filter will match that parameter `<script>if` to the beginning of the frame busting script on the victim and will consequently disable all inline scripts in the victim's page, including the frame busting script. The XSSAuditor filter available for Google Chrome enables the same exploit.
 
@@ -236,18 +250,18 @@ Several modern browsers treat the location variable as a special immutable attri
 if(top.location != self.location) {
     top.location = self.location;
 }
-```    
+```
 
 **Attacker:**
 
 ```html
 <script>var location = "clobbered";</script>
 <iframe src="http://www.victim.com"></iframe>
-```    
+```
 
 **Safari 4.0.4**
 
-We observed that although location is kept immutable in most circumstances, when a custom location setter is defined via `defineSetter` (through window) the object location becomes undefined. 
+We observed that although location is kept immutable in most circumstances, when a custom location setter is defined via `defineSetter` (through window) the object location becomes undefined.
 
 The framing page simply does:
 
@@ -255,7 +269,7 @@ The framing page simply does:
 <script>
     window.defineSetter("location", function(){});
 </script>
-```  
+```
 
 Now any attempt to read or navigate the top frame's location will fail.
 
@@ -267,7 +281,7 @@ Most frame busting relies on JavaScript in the framed page to detect framing and
 
 ```html
 <iframe src="http://www.victim.com" security="restricted"></iframe>
-```        
+```
 
 **In Chrome:**
 
