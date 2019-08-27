@@ -1,6 +1,10 @@
 # How to contribute?
 
-**Note:** Regarding fixing of typo in existing cheat sheet, you can directly create a Pull Request otherwise follow the process below.
+**Notes:** 
+* Regarding fixing of a typo in existing cheat sheet, you can directly create a Pull Request otherwise follow the process below.
+* :heavy_exclamation_mark: Focus on updating a single file by Pull Request to facilitate the review by the core team.
+* :warning: Pull Request marked as **WAITING_UPDATE** (indicate that the core team wait an update from the author of the Pull Request) that do not receive any update from the author in a timeframe superior to one month then will be closed.
+* :warning: If the assignees of an issue do not provide any Pull Request in a timeframe superior to one month then the issue will go back to the **HELP_WANTED** state and assignees will be removed.
 
 Follow these steps:
 

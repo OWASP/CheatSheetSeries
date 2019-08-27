@@ -197,7 +197,7 @@ DecodedJWT decodedToken = verifier.verify(token);
 
 ### Symptom
 
-This problem is inerrant to JWT token because a token become only invalid when it expires. The user has no built-in feature to explicitly revoke the validity of an token. So, in case of steal, a user cannot revoke the token itself and then block the attacker.
+This problem is inherent to JWT because a token become only invalid when it expires. The user has no built-in feature to explicitly revoke the validity of an token. This means that if it is stolen, a user cannot revoke the token itself and then block the attacker.
 
 ### How to prevent
 
@@ -455,7 +455,7 @@ String token = tokenCipher.decipherToken(cipheredToken, this.keyCiphering);
 
 ### Symptom
 
-It's occur when a application store the token in a way allowing this one to be:
+This occurs when an application stores the token in a manner exibiting the following behavior:
 
 - Automatically sent by the browser (*Cookie* storage).
 - Retrieved even if the browser is restarted (Use of browser *localStorage* container).
@@ -467,7 +467,7 @@ It's occur when a application store the token in a way allowing this one to be:
 2.  Add it as a *Bearer* with JavaScript when calling services.
 3.  Add [fingerprint](JSON_Web_Token_Cheat_Sheet_for_Java.md#token-sidejacking) information to the token.
 
-By storing the token in browser *sessionStorage* container it exposes the token to be stolen in case of an XSS issue. However, the fingerprint added to the token prevents reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#csp) to harden the execution context.
+By storing the token in browser *sessionStorage* container it exposes the token to being stolen through an XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#csp) to harden the execution context.
 
 *Note:*
 
