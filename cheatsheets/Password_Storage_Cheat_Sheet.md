@@ -81,7 +81,7 @@ However, it is critical to understand that a single work factor does not fit all
 
 Keyed functions, such as HMACs, compute a one-way (irreversible) transform using a private key and given input. For example, HMACs inherit properties of hash functions including their speed, allowing for near instant verification. Key size imposes infeasible size- and/or space- requirements on compromise--even for common credentials (aka password = ‘password’). Designers protecting stored credentials with keyed functions:
 
-- Use a single “site-wide” key;
+- Use a single "site-wide" key;
 - Protect this key as any private key using best practices;
 - Store the key outside the credential store (aka: not in the database);
 - Generate the key using cryptographically-strong pseudo-random data;
@@ -97,7 +97,7 @@ Upholding security improvement over (solely) salted schemes relies on proper key
 
 ## Design password storage assuming eventual compromise
 
-The frequency and ease with which threats steal protected credentials demands “design for failure”. Having detected theft, a credential storage scheme must support continued operation by marking credential data as compromised. It's also critical to engage alternative credential validation workflows as follows:
+The frequency and ease with which threats steal protected credentials demands "design for failure". Having detected theft, a credential storage scheme must support continued operation by marking credential data as compromised. It's also critical to engage alternative credential validation workflows as follows:
 
 1. Protect the user’s account
     1. Invalidate authentication ‘shortcuts’ by disallowing login without 2nd factors, secret questions or some other form of strong authentication.

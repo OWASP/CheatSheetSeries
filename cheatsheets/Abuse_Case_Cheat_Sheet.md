@@ -77,7 +77,7 @@ normal usage scenarios, e.g. use-case diagrams if available.
 
 If a formal abuse-case technique isn’t used, generate a set of abuse-cases for each scenario by
 starting with a statement of normal usage and brainstorming ways in which the statement might be
-negated, in whole or in part. The simplest way to get started is to insert the word “no” or “not” into
+negated, in whole or in part. The simplest way to get started is to insert the word "no" or "not" into
 the usage statement in as many ways as possible, typically around nouns and verbs. Each usage scenario
 should generate several possible abuse-case statements.
 

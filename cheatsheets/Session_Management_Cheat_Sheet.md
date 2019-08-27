@@ -158,7 +158,7 @@ Typically, session management capabilities to track users after authentication m
 
 - Ensure that sensitive information is not comprised, by ensuring that sensitive information is not persistent / encrypting / stored on a need basis for the duration of the need
 - Ensure that unauthorized activities cannot take place via cookie manipulation
-- Ensure secure flag is set to prevent accidental transmission over “the wire” in a non-secure manner
+- Ensure secure flag is set to prevent accidental transmission over "the wire" in a non-secure manner
 - Determine if all state transitions in the application code properly check for the cookies and enforce their use
 - Ensure entire cookie should be encrypted if sensitive data is persisted in the cookie
 - Define all cookies being used by the application, their name and why they are needed

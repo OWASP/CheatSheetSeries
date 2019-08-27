@@ -13,7 +13,7 @@ when typed in a Windows command prompt, the application *Calculator* is displaye
 However, if the supplied value has been tempered with, and now it is:
 
 ``` shell
-calc & echo “test”
+calc & echo "test"
 ```
 
 When execute, it changes the meaning of the initial intended value. 
@@ -30,7 +30,7 @@ The problem is exacerbated if the compromised process does not follow the princi
 
 The primary defense is to avoid calling OS commands directly. Built-in library functions are a very good alternative to OS Commands, and they cannot be manipulated to perform tasks other than those it is intended to do.
 
-For example use `mkdir()` instead of `system(“mkdir /dir_name”)`.
+For example use `mkdir()` instead of `system("mkdir /dir_name")`.
 
 If there are available libraries or APIs for the language you used, this is the preferred method.
 

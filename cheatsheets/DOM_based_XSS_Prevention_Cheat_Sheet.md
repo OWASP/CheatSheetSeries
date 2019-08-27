@@ -95,7 +95,7 @@ For example, the general rule is to HTML Attribute encode untrusted data (data f
  form1.appendChild(x);
 ```
 
-The problem is that if companyName had the value “Johnson & Johnson”. What would be displayed in the input text field would be “Johnson & Johnson”. The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.
+The problem is that if companyName had the value "Johnson & Johnson". What would be displayed in the input text field would be "Johnson & Johnson". The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.
 
 ## SAFE and FUNCTIONALLY CORRECT example
 
@@ -500,7 +500,7 @@ There are a number of open source encoding libraries out there:
 4. [Jtidy](http://jtidy.sourceforge.net/)
 5. Your company’s custom implementation.
 
-Some work on a black list while others ignore important characters like “&lt;” and “&gt;”. 
+Some work on a black list while others ignore important characters like "&lt;" and "&gt;". 
 
 Java Encoder is an active project providing supports for HTML, CSS and JavaScript encoding.
 

@@ -90,7 +90,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 
 **Java Regex Usage Example**
 
-Example validating the parameter “zip” using a regular expression.
+Example validating the parameter "zip" using a regular expression.
 
 ```java
 private static final Pattern zipPattern = Pattern.compile("^\d{5}(-\d{4})?$");

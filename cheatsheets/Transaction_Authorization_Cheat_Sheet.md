@@ -67,7 +67,7 @@ Safeguards should allow the user to easily distinguish authentication from trans
 
 - Using different methods to authenticate and to authorize,
 - Or using different actions in an external security component (e.g. different mode of operation in CAP reader),
-- Or presenting the user a clear message about what he/she is “signing” (What You See Is What You Sign Principle).
+- Or presenting the user a clear message about what he/she is "signing" (What You See Is What You Sign Principle).
 
 ## 1.5 Each transaction should be authorized using unique authorization credentials
 
@@ -162,8 +162,8 @@ We identify other issues that should be taken into consideration while implement
 
 - Which transactions should be authorized? All transactions or only some of them. Each application is different and an application owner should decide if all transactions should be authorized or only some of them, considering risk analysis, risk exposition of given application, and other safeguards implemented in an application.
 - We recommend the use of cryptographic operations to protect transactions and to ensure integrity, confidentiality and non-repudiation.
-- Device enrolment or “pairing” of an external authorization device (or a mobile application) with the user account.
-- Provisioning & protection of the device signing keys, during device “pairing” is as critical as the signing protocol itself. Malware may attempt to inject/replace or steal the signing keys.
+- Device enrolment or "pairing" of an external authorization device (or a mobile application) with the user account.
+- Provisioning & protection of the device signing keys, during device "pairing" is as critical as the signing protocol itself. Malware may attempt to inject/replace or steal the signing keys.
 - User awareness. E.g.: For transaction authorization methods, when a user types-in significant transaction data to an authorization component (e.g. an external dedicated device or a mobile application), users should be trained to rewrite transaction data from trusted source and not from a computer screen.
 - There are some anti-malware solutions that protect against malware threats but such solutions [do not guarantee 100% effectiveness](http://www.securing.pl/en/script-based-malware-detection-in-online-banking-security-overview/index.html) and should be used only as an additional layer of protection.
 - Protection of the signing keys using a second factor either be password, biometric, etc..

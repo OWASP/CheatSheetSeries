@@ -8,7 +8,7 @@ Impacts of successful CSRF exploits vary greatly based on the privileges of each
 
 # What's new?
 
-If you have seen OWASP [old CSRF prevention cheat sheets](https://www.owasp.org/index.php?title=Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet&action=history), you can observe that a lot has changed in this newer version. One of the major changes is that the “Verifying same origin with standard headers” CSRF defense has been moved to the Defense in Depth section, whereas token based mitigation moved to the Primary Defense section (technical reasons for this switch were added under respective sections). Multiple new sections (HMAC based token protection, auto CSRF mitigation techniques, login CSRF, not so popular CSRF mitigations and CSRF mitigation myths) were added besides adding new content, removing obsolete content to the existing sections. Security issues/caveats associated with each mitigation were also included.
+If you have seen OWASP [old CSRF prevention cheat sheets](https://www.owasp.org/index.php?title=Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet&action=history), you can observe that a lot has changed in this newer version. One of the major changes is that the "Verifying same origin with standard headers" CSRF defense has been moved to the Defense in Depth section, whereas token based mitigation moved to the Primary Defense section (technical reasons for this switch were added under respective sections). Multiple new sections (HMAC based token protection, auto CSRF mitigation techniques, login CSRF, not so popular CSRF mitigations and CSRF mitigation myths) were added besides adding new content, removing obsolete content to the existing sections. Security issues/caveats associated with each mitigation were also included.
 
 # Warning: No Cross-Site Scripting (XSS) Vulnerabilities
 
@@ -179,7 +179,7 @@ As it’s implicit, this mitigation would work properly when origin or referrer 
 
 - Internet Explorer 11 does not add the Origin header on a CORS request across sites of a trusted zone. The Referer header will remain the only indication of the UI origin. See the following references in stackoverflow [here](https://stackoverflow.com/questions/20784209/internet-explorer-11-does-not-add-the-origin-header-on-a-cors-request) and [here](https://github.com/silverstripe/silverstripe-graphql/issues/118).
 - In an instance following a [302 redirect cross-origin](https://stackoverflow.com/questions/22397072/are-there-any-browsers-that-set-the-origin-header-to-null-for-privacy-sensitiv), Origin is not included in the redirected request because that may be considered sensitive information that should not be sent to the other origin.
-- There are some [privacy contexts](https://wiki.mozilla.org/Security/Origin#Privacy-Sensitive_Contexts) where Origin is set to “null” For example, see the following [here](https://www.google.com/search?q=origin+header+sent+null+value+site%3Astackoverflow.com&oq=origin+header+sent+null+value+site%3Astackoverflow.com).
+- There are some [privacy contexts](https://wiki.mozilla.org/Security/Origin#Privacy-Sensitive_Contexts) where Origin is set to "null" For example, see the following [here](https://www.google.com/search?q=origin+header+sent+null+value+site%3Astackoverflow.com&oq=origin+header+sent+null+value+site%3Astackoverflow.com).
 - Origin header is included for all cross origin requests but for same origin requests, in most browsers it is only included in POST/DELETE/PUT **Note:** Although it is not ideal, many developers use GET requests to do state changing operations.
 - Referer header is no exception. There are multiple use cases where referrer header is omitted as well ([1](https://stackoverflow.com/questions/6880659/in-what-cases-will-http-referer-be-empty), [2](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer), [3](https://en.wikipedia.org/wiki/HTTP_referer#Referer_hiding), [4](https://seclab.stanford.edu/websec/csrf/csrf.pdf) and [5](https://www.google.com/search?q=referrer+header+sent+null+value+site:stackoverflow.com)). Load balancers, proxies and embedded network devices are also well known to strip the referrer header due to privacy reasons in logging them.
 
@@ -236,7 +236,7 @@ It is important to note that this attribute should be implemented as an addition
 
 Adding CSRF tokens, a double submit cookie and value, encrypted token, or other defense that involves changing the UI can frequently be complex or otherwise problematic. An alternate defense that is particularly well suited for AJAX/XHR endpoints is the use of a custom request header. This defense relies on the [same-origin policy (SOP)](https://en.wikipedia.org/wiki/Same-origin_policy) restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests.
 
-A particularly attractive custom header and value to use is “X-Requested-With: XMLHttpRequest” because most JavaScript libraries already add this header to requests they generate by default. However, some do not. For example, AngularJS used to, but does not anymore. For more information, see [their rationale](https://github.com/angular/angular.js/commit/3a75b1124d062f64093a90b26630938558909e8d) and how to add it back.
+A particularly attractive custom header and value to use is "X-Requested-With: XMLHttpRequest" because most JavaScript libraries already add this header to requests they generate by default. However, some do not. For example, AngularJS used to, but does not anymore. For more information, see [their rationale](https://github.com/angular/angular.js/commit/3a75b1124d062f64093a90b26630938558909e8d) and how to add it back.
 
 If this is the case for your system, you can simply verify the presence of this header and value on all your server side AJAX endpoints in order to protect against CSRF attacks. This approach has the double advantage of usually requiring no UI changes and not introducing any server side state, which is particularly attractive to REST services. You can always add your own custom header and value if that is preferred.
 
@@ -281,7 +281,7 @@ The following shows techniques presumed to be CSRF mitigations but none of them 
 Since CSRF vulnerabilities are reportedly widespread, we recommend using the following best practices to mitigate risk.
 
 1. Logoff immediately after using a Web application.
-2. Do not allow your browser to save username/passwords, and do not allow sites to “remember” your login.
+2. Do not allow your browser to save username/passwords, and do not allow sites to "remember" your login.
 3. Do not use the same browser to access sensitive applications and to surf the Internet freely (tabbed browsing).
 4. The use of plugins such as No-Script makes POST based CSRF vulnerabilities difficult to exploit. This is because JavaScript is used to automatically submit the form when the exploit is loaded. Without JavaScript, the attacker would have to trick the user into submitting the form manually.
 

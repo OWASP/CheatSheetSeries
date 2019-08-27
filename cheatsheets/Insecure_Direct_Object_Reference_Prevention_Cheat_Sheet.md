@@ -29,7 +29,7 @@ To be exploited, an IDOR issue must be combined with an [Access Control](Access_
 
 **From Jeff Williams**:
 
-Direct Object Reference is fundamentally a Access Control problem. We split it out to emphasize the difference between URL access control and data layer access control. You can’t do anything about the data-layer problems with URL access control. And they’re not really input validation problems either. But we see DOR manipulation all the time. If we list only “Messed-up from the Floor-up Access Control” then people will probably only put in SiteMinder or JEE declarative access control on URLs and call it a day. That’s what we’re trying to avoid.
+Direct Object Reference is fundamentally a Access Control problem. We split it out to emphasize the difference between URL access control and data layer access control. You can’t do anything about the data-layer problems with URL access control. And they’re not really input validation problems either. But we see DOR manipulation all the time. If we list only "Messed-up from the Floor-up Access Control" then people will probably only put in SiteMinder or JEE declarative access control on URLs and call it a day. That’s what we’re trying to avoid.
 
 **From Eric Sheridan**:
 

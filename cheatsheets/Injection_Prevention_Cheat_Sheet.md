@@ -268,7 +268,7 @@ If it is considered unavoidable the call to a system command incorporated with u
 2.  **Input validation** - the values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:
     - When it comes to the **commands** used, these must be validated against a whitelist of allowed commands.
     - In regards to the **arguments** used for these commands, they should be validated using the following options:
-        - Positive or “whitelist” input validation - where are the arguments allowed explicitly defined
+        - Positive or "whitelist" input validation - where are the arguments allowed explicitly defined
         - White list Regular Expression - where is explicitly defined a whitelist of good characters allowed and the maximum length of the string. Ensure that metacharacters like `& | ; $ > < \` \ !` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:
 
 `^[a-z0-9]{3,10}$`
@@ -302,7 +302,7 @@ Web applications often communicate with network daemons (like SMTP, IMAP, FTP) w
 
 ## Rule \#1 (Perform proper input validation):
 
-Perform proper input validation. Positive or “whitelist” input validation with appropriate canonicalization is also recommended, but **is not a complete defense** as many applications require special characters in their input.
+Perform proper input validation. Positive or "whitelist" input validation with appropriate canonicalization is also recommended, but **is not a complete defense** as many applications require special characters in their input.
 
 ## Rule \#2 (Use a safe API):
 
