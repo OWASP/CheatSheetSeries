@@ -1,36 +1,42 @@
 # Introduction
 
-[Credential stuffing](https://www.owasp.org/index.php/Credential_stuffing) is the automated injection of breached username/password pairs (typically from other sites) in order to identify accounts on the target system that use the same credentials. 
+[Credential stuffing](https://www.owasp.org/index.php/Credential_stuffing) is the automated testing of breached username/password pairs (typically from other sites) in order to identify accounts on the target system that use the same credentials. 
 
-This is a subset of the brute force attack category: large numbers of spilled credentials are automatically entered into websites looking for matches to existing accounts, which the attacker can then hijack for their own purposes.
+This is different from a brute-force attack (where a large number of passwords are tried against a single user) or a password spraying attack (where a few weak passwords are tried against a large number of users). 
 
-# Primary Defenses
+# Multi-Factor Authentication
+Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacking, including credential stuffing attacks. It should be implemented wherever possible; however depending on the audience of the application it may not be practical or feasible to enforce the use of MFA. 
 
-It should be noted that defense mechanisms are intended to be used in a layered approach. In most cases, a single defense option would be inadequate to stop most Credential Stuffing attacks.
+In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor only in specific circumstances where there is reason to suspect that the login attempt may not be legitimate, such as a login from:
 
-In many cases, brute force protections will overlap with credential stuffing defenses.
+- A new browser/device or IP address.
+- An unusual country or location.
+- Specific countries that are considered untrusted.
+- An IP address that appears on known blacklists.
+- An IP address that has tried to login to multiple accounts.
+- A login attempt that appears to be scripted rather than manual.
 
-Keep in mind that application can have different security levels for different users/roles or actions. For example for casual customers multi-factor authentication may be optional but for admins or some other special roles it should be enforced.
+Additionally, for enterprise applications, known trusted IP ranges could be added to a whitelist so that MFA is not required when users connect from these ranges.
 
-## Defense Option 1: Multi-Factor Authentication
+# Alternative Defenses
 
-True multi-factor authentication is the best defense against Credential Stuffing attacks, but can have significant deployment and usability impacts, and so is frequently not a feasible option. If this defense is not feasible for your application, consider adopting as many of these other defenses as you can.
+Where it is not possible to implement MFA, there are a number of alternative defenses that can be used to protect against credential stuffing. In isolation none of these are as effective as MFA, however if multiple defenses are implemented in a layered approach, they can provide a reasonable degree of protection. In many cases, these mechanisms will also protect against brute-force or password spraying attacks.
 
-In order to balance security and usability, multi-factor authentication can be combined with other techniques to ask for 2nd factor only in special situations. For example, it can be combined with [device fingerprinting](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md#defense-option-4-device-fingerprinting), in that scenario, the application can ask for a 2nd factor only when the application is accessed by an unknown, new browser. Similary, cookies can also be used for remembering known browsers or the application can ask about another factor based on the login success ratio, IP address (like users from different network than company one like remote workers) etc.
+Where an application has multiple user roles, it may be appropraite to implement difference defenses for different roles. For example, it may not be feasible to enforce MFA for all users, but it should be possible to require that all administrators use it.
 
-## Defence Option 2: Use a CAPTCHA
+## CAPTCHA
 
-Similar to Multi-Factor Authentication this defence can be combined with other techniques to ask user to solve CAPTCHA only in special situations. 
+Requiring a user to solve a CAPTCHA for each login attempt can help to preven tautomated login attemps, which would significantly slow down a credential stuffing attack. However, CAPTCHAs are not perfect, and in many cases tools exist that can be used to break them with a reasonably high success rate.
 
-Lots of CAPTCHA examples can be reviewed [here](https://www.whoishostingthis.com/resources/captcha/)
+To improve usability, it may be desirable to only require the user solve a CAPTCHA when the login request is considered suspicious, using the same criteria discussed above.
 
-## Defense Option 3: IP blacklists
+## IP Blacklisting
 
-Because the attacker requests will likely originate from a few (or one) IP, addresses attempting to log into multiple accounts can be blocked or sandboxed.
+Less sophisticated attacks will often use a relatively small number of IP addresses, which can be blacklisted after a number of failed login attempts. These failures should be tracked separately to the per-user failures, which are intended to protect against brute-force attacks. The blacklist should be temporary, in order to reduce the likelihood of permenantly blocking legitimate users.
 
-Further, login monitoring with IP tracking could be used to eliminate (most) false positives. Use the last several IPs that the user's account logged in from and compare them to the suspected "bad" IP.
+Additionally, there are a number of publicly available blacklists of known bad IP addresses which are collected by websites such as [AbuseIPDB](https://www.abuseipdb.com) based on abuse reports from users. 
 
-Making the IP bans temporary, say 15 minutes, would reduce the negative impact to the customer and business services (who would have to fix false positives) significantly.
+Consider storing the last IP address which successfully logged in to each account, and if this IP address is added to a blacklist, then taking appropriate action such as locking the account and notifying the user, as it likely that their account has been compromised.
 
 ## Defense Option 4: Device Fingerprinting
 
