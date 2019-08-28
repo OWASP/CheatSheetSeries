@@ -20,7 +20,7 @@ At a minimum, you should have collected some data that will allow you to send th
 
 After the form on Step 1 is submitted, the application verifies that each piece of data is correct for the given username. If anything is incorrect, or if the username is not recognized, the second page displays a generic error message such as *Sorry, invalid data*. 
 
-If all submitted data is correct, Step 2 should display at least two of the user’s pre-established personal security questions, along with input fields for the answers. It’s important that the answer fields are part of a single HTML form.
+If all submitted data is correct, Step 2 should display at least two of the user's pre-established personal security questions, along with input fields for the answers. It's important that the answer fields are part of a single HTML form.
 
 Do not provide a drop-down list for the user to select the questions he wants to answer. Avoid sending the username as a parameter (hidden or otherwise) when the form on this page is submitted. The username should be stored in the server-side session where it can be retrieved as needed.
 

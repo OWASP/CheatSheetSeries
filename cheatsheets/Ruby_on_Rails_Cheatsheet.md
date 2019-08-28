@@ -36,7 +36,7 @@ A Rails 3.X example:
 
 ``` ruby
 name = params[:name]
-@projects = Project.where("name like ‘" + name + "‘");
+@projects = Project.where("name like '" + name + "'");
 ```
 
 In both of these cases, the statement is injectable because the name parameter is not escaped.
@@ -81,7 +81,7 @@ content_tag("/><script>alert('hack!');</script>") # XSS example
 
 The method `html_safe` of String is somewhat confusingly named. It means that we know for sure the content of the string is safe to include in HTML without escaping. **This method itself is un-safe!**
 
-If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn’t include HTML content that could be malicious. 
+If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious. 
 
 If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any javascript. And finally, consider using the `#sanitize` method that let's you whitelist allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.
 
@@ -94,7 +94,7 @@ An often overlooked XSS attack vector for older versions of rails is the `href` 
 If `@user.website` contains a link that starts with `javascript:`, the content will execute when a user clicks the generated link:
 
 ``` html
-<a href="javascript:alert(‘Haxored’)">Personal Website</a>
+<a href="javascript:alert('Haxored')">Personal Website</a>
 ```
 
 Newer Rails versions escape such links in a better way.
@@ -245,7 +245,7 @@ class ApplicationController < ActionController::Base
     protect_from_forgery
 ```
 
-Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API’s or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29) protection for the show method.
+Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API's or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29) protection for the show method.
 
 ``` ruby
 class ProjectController < ApplicationController
@@ -292,7 +292,7 @@ For example:
 
 `http://www.example.com/redirect?url=http://www.example_commerce_site.com/checkout`
 
-The above request would redirect the user to `http://www.example.com/checkout`. The security concern associated with this functionality is leveraging an organization’s trusted brand to phish users and trick them into visiting a malicious site, in our example, `badhacker.com`. 
+The above request would redirect the user to `http://www.example.com/checkout`. The security concern associated with this functionality is leveraging an organization's trusted brand to phish users and trick them into visiting a malicious site, in our example, `badhacker.com`. 
 
 Example:
 
@@ -315,7 +315,7 @@ If matching user input against a list of approved sites or TLDs against regular 
 Example:
 
 ``` ruby
-  require ‘uri’
+  require 'uri'
   host = URI.parse("#{params[:url]}").host
   # this can be vulnerable to javascript://trusted.com/%0Aalert(0) 
   # so check .scheme and .port too
@@ -338,14 +338,14 @@ Will give this URL:
 
 `http://example.com/redirect?to[status]=200&to[protocol]=javascript:alert(0)//`
 
-The obvious fix for this type of vulnerability is to restrict to specific Top-Level Domains (TLDs), statically define specific sites, or map a key to it’s value. 
+The obvious fix for this type of vulnerability is to restrict to specific Top-Level Domains (TLDs), statically define specific sites, or map a key to it's value. 
 
 Example code:
 
 ``` ruby
 ACCEPTABLE_URLS = {
-    ‘our_app_1’ => "https://www.example_commerce_site.com/checkout",
-    ‘our_app_2’ => "https://www.example_user_site.com/change_settings"
+    'our_app_1' => "https://www.example_commerce_site.com/checkout",
+    'our_app_2' => "https://www.example_user_site.com/change_settings"
 }
 ```
 
@@ -439,7 +439,7 @@ Any application in any technology can contain business logic errors that result 
 
 ## Attack Surface
 
-Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URL’s should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface. 
+Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URL's should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface. 
 
 An example might be as follows:
 

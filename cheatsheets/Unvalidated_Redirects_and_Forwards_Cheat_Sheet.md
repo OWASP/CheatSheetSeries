@@ -2,7 +2,7 @@
 
 Unvalidated redirects and forwards are possible when a web application accepts untrusted input that could cause the web application to redirect the request to a URL contained within untrusted input. By modifying untrusted URL input to a malicious site, an attacker may successfully launch a phishing scam and steal user credentials. 
 
-Because the server name in the modified link is identical to the original site, phishing attempts may have a more trustworthy appearance. Unvalidated redirect and forward attacks can also be used to maliciously craft a URL that would pass the application’s access control check and then forward the attacker to privileged functions that they would normally not be able to access.
+Because the server name in the modified link is identical to the original site, phishing attempts may have a more trustworthy appearance. Unvalidated redirect and forward attacks can also be used to maliciously craft a URL that would pass the application's access control check and then forward the attacker to privileged functions that they would normally not be able to access.
 
 # Safe URL Redirects
 
@@ -120,7 +120,7 @@ ASP.NET MVC 2 LogOn action in `AccountController.cs` (see Microsoft Docs link pr
 
 When applications allow user input to forward requests between different parts of the site, the application must check that the user is authorized to access the url, perform the functions it provides, and it is an appropriate url request. 
 
-If the application fails to perform these checks, an attacker crafted URL may pass the application’s access control check and then forward the attacker to an administrative function that is not normally permitted.
+If the application fails to perform these checks, an attacker crafted URL may pass the application's access control check and then forward the attacker to an administrative function that is not normally permitted.
 
 Example: 
 
@@ -158,7 +158,7 @@ Safe use of redirects and forwards can be done in a number of ways:
 
 - Simply avoid using redirects and forwards.
 - If used, do not allow the url as user input for the destination. This can usually be done. In this case, you should have a method to validate URL.
-- If user input can’t be avoided, ensure that the supplied **value** is valid, appropriate for the application, and is **authorized** for the user.
+- If user input can't be avoided, ensure that the supplied **value** is valid, appropriate for the application, and is **authorized** for the user.
 - It is recommended that any such destination input be mapped to a value, rather than the actual URL or portion of the URL, and that server side code translate this value to the target URL.
 - Sanitize input by creating a list of trusted URL's (lists of hosts or a regex).
 - Force all redirects to first go through a page notifying users that they are going off of your site, and have them click a link to confirm.
