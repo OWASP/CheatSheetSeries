@@ -1032,7 +1032,7 @@ open(<span class="hljs-string">&quot;\| os command here&quot;</span>)
 </code></pre>
 <p>A Rails 3.X example:</p>
 <pre><code class="lang-ruby">name = params[<span class="hljs-symbol">:name</span>]
-@projects = Project.where(<span class="hljs-string">&quot;name like &#x2018;&quot;</span> + name + <span class="hljs-string">&quot;&#x2018;&quot;</span>);
+@projects = Project.where(<span class="hljs-string">&quot;name like &apos;&quot;</span> + name + <span class="hljs-string">&quot;&apos;&quot;</span>);
 </code></pre>
 <p>In both of these cases, the statement is injectable because the name parameter is not escaped.</p>
 <p>Here is the idiom for building this kind of statement:</p>
@@ -1059,13 +1059,13 @@ open(<span class="hljs-string">&quot;\| os command here&quot;</span>)
 <span class="hljs-comment"># produces: &lt;/&gt;&lt;script&gt;alert(&apos;hack!&apos;);&lt;/script&gt;&gt;&lt;//&gt;&lt;script&gt;alert(&apos;hack!&apos;);&lt;/script&gt;&gt;</span>
 </code></pre>
 <p>The method <code>html_safe</code> of String is somewhat confusingly named. It means that we know for sure the content of the string is safe to include in HTML without escaping. <strong>This method itself is un-safe!</strong></p>
-<p>If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn&#x2019;t include HTML content that could be malicious. </p>
+<p>If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn&apos;t include HTML content that could be malicious. </p>
 <p>If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any javascript. And finally, consider using the <code>#sanitize</code> method that let&apos;s you whitelist allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.</p>
 <p>An often overlooked XSS attack vector for older versions of rails is the <code>href</code> value of a link:</p>
 <pre><code class="lang-ruby">&lt;%= link_to <span class="hljs-string">&quot;Personal Website&quot;</span>, @user.website %&gt;
 </code></pre>
 <p>If <code>@user.website</code> contains a link that starts with <code>javascript:</code>, the content will execute when a user clicks the generated link:</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;javascript:alert(&#x2018;Haxored&#x2019;)&quot;</span>&gt;</span>Personal Website<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;javascript:alert(&apos;Haxored&apos;)&quot;</span>&gt;</span>Personal Website<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
 </code></pre>
 <p>Newer Rails versions escape such links in a better way.</p>
 <pre><code class="lang-ruby">link_to <span class="hljs-string">&quot;Personal Website&quot;</span>, <span class="hljs-string">&apos;javascript:alert(1);&apos;</span>.html_safe()
@@ -1154,7 +1154,7 @@ $ gem <span class="hljs-string">&apos;omniauth&apos;</span>
 <pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ApplicationController</span> &lt; ActionController::Base</span>
     protect_from_forgery
 </code></pre>
-<p>Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API&#x2019;s or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29" target="_blank">CSRF</a> protection for the show method.</p>
+<p>Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API&apos;s or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29" target="_blank">CSRF</a> protection for the show method.</p>
 <pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ProjectController</span> &lt; ApplicationController</span>
     protect_from_forgery <span class="hljs-symbol">:except</span> =&gt; <span class="hljs-symbol">:show</span>
 </code></pre>
@@ -1179,7 +1179,7 @@ $ gem <span class="hljs-string">&apos;omniauth&apos;</span>
 <p>Web applications often require the ability to dynamically redirect users based on client-supplied data. To clarify, dynamic redirection usually entails the client including a URL in a parameter within a request to the application. Once received by the application, the user is redirected to the URL specified in the request. </p>
 <p>For example:</p>
 <p><code>http://www.example.com/redirect?url=http://www.example_commerce_site.com/checkout</code></p>
-<p>The above request would redirect the user to <code>http://www.example.com/checkout</code>. The security concern associated with this functionality is leveraging an organization&#x2019;s trusted brand to phish users and trick them into visiting a malicious site, in our example, <code>badhacker.com</code>. </p>
+<p>The above request would redirect the user to <code>http://www.example.com/checkout</code>. The security concern associated with this functionality is leveraging an organization&apos;s trusted brand to phish users and trick them into visiting a malicious site, in our example, <code>badhacker.com</code>. </p>
 <p>Example:</p>
 <p><code>http://www.example.com/redirect?url=http://badhacker.com</code></p>
 <p>The most basic, but restrictive protection is to use the <code>:only_path</code> option. Setting this to true will essentially strip out any host information. However, the <code>:only_path</code> option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or whitelist, this is one approach that can work:</p>
@@ -1193,7 +1193,7 @@ $ gem <span class="hljs-string">&apos;omniauth&apos;</span>
 </code></pre>
 <p>If matching user input against a list of approved sites or TLDs against regular expression is a must, it makes sense to leverage a library such as <code>URI.parse()</code> to obtain the host and then take the host value and match it against regular expression patterns. Those regular expressions must, at a minimum, have anchors or there is a greater chance of an attacker bypassing the validation routine.</p>
 <p>Example:</p>
-<pre><code class="lang-ruby">  <span class="hljs-keyword">require</span> &#x2018;uri&#x2019;
+<pre><code class="lang-ruby">  <span class="hljs-keyword">require</span> <span class="hljs-string">&apos;uri&apos;</span>
   host = URI.parse(<span class="hljs-string">&quot;<span class="hljs-subst">#{params[<span class="hljs-symbol">:url</span>]}</span>&quot;</span>).host
   <span class="hljs-comment"># this can be vulnerable to javascript://trusted.com/%0Aalert(0) </span>
   <span class="hljs-comment"># so check .scheme and .port too</span>
@@ -1209,11 +1209,11 @@ $ gem <span class="hljs-string">&apos;omniauth&apos;</span>
 </code></pre>
 <p>Will give this URL:</p>
 <p><code>http://example.com/redirect?to[status]=200&amp;to[protocol]=javascript:alert(0)//</code></p>
-<p>The obvious fix for this type of vulnerability is to restrict to specific Top-Level Domains (TLDs), statically define specific sites, or map a key to it&#x2019;s value. </p>
+<p>The obvious fix for this type of vulnerability is to restrict to specific Top-Level Domains (TLDs), statically define specific sites, or map a key to it&apos;s value. </p>
 <p>Example code:</p>
 <pre><code class="lang-ruby">ACCEPTABLE_URLS = {
-    &#x2018;our_app_1&#x2019; =&gt; <span class="hljs-string">&quot;https://www.example_commerce_site.com/checkout&quot;</span>,
-    &#x2018;our_app_2&#x2019; =&gt; <span class="hljs-string">&quot;https://www.example_user_site.com/change_settings&quot;</span>
+    <span class="hljs-string">&apos;our_app_1&apos;</span> =&gt; <span class="hljs-string">&quot;https://www.example_commerce_site.com/checkout&quot;</span>,
+    <span class="hljs-string">&apos;our_app_2&apos;</span> =&gt; <span class="hljs-string">&quot;https://www.example_user_site.com/change_settings&quot;</span>
 }
 </code></pre>
 <p>Will give this URL:</p>
@@ -1270,7 +1270,7 @@ $ gem <span class="hljs-string">&apos;omniauth&apos;</span>
 <h2 id="business-logic-bugs"><a name="business-logic-bugs" class="plugin-anchor" href="#business-logic-bugs"><i class="fa fa-link" aria-hidden="true"></i></a>Business Logic Bugs</h2>
 <p>Any application in any technology can contain business logic errors that result in security bugs. Business logic bugs are difficult to impossible to detect using automated tools. The best ways to prevent business logic security bugs are to do code review, pair program and write unit tests.</p>
 <h2 id="attack-surface"><a name="attack-surface" class="plugin-anchor" href="#attack-surface"><i class="fa fa-link" aria-hidden="true"></i></a>Attack Surface</h2>
-<p>Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URL&#x2019;s should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface. </p>
+<p>Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URL&apos;s should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface. </p>
 <p>An example might be as follows:</p>
 <pre><code class="lang-ruby"><span class="hljs-comment"># this is an example of what NOT to do</span>
 match <span class="hljs-string">&apos;:controller(/:action(/:id(.:format)))&apos;</span>
@@ -1354,7 +1354,7 @@ match <span class="hljs-string">&apos;:controller(/:action(/:id(.:format)))&apos
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Ruby on Rails Cheatsheet","level":"1.49","depth":1,"next":{"title":"SAML Security ","level":"1.50","depth":1,"path":"cheatsheets/SAML_Security_Cheat_Sheet.md","ref":"cheatsheets/SAML_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"REST Security ","level":"1.48","depth":1,"path":"cheatsheets/REST_Security_Cheat_Sheet.md","ref":"cheatsheets/REST_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","mtime":"2019-08-27T18:29:59.376Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-27T18:30:23.179Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Ruby on Rails Cheatsheet","level":"1.49","depth":1,"next":{"title":"SAML Security ","level":"1.50","depth":1,"path":"cheatsheets/SAML_Security_Cheat_Sheet.md","ref":"cheatsheets/SAML_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"REST Security ","level":"1.48","depth":1,"path":"cheatsheets/REST_Security_Cheat_Sheet.md","ref":"cheatsheets/REST_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","mtime":"2019-08-28T18:26:10.429Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-28T18:26:43.530Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

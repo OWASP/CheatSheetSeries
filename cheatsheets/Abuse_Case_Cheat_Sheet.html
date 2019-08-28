@@ -1062,9 +1062,9 @@ that lead to proper protection of these critical business use cases.
 potential misuse or abuse of functionality. Typically, this process begins with identification of
 normal usage scenarios, e.g. use-case diagrams if available.
 
-If a formal abuse-case technique isn&#x2019;t used, generate a set of abuse-cases for each scenario by
+If a formal abuse-case technique isn&apos;t used, generate a set of abuse-cases for each scenario by
 starting with a statement of normal usage and brainstorming ways in which the statement might be
-negated, in whole or in part. The simplest way to get started is to insert the word &#x201C;no&#x201D; or &#x201C;not&#x201D; into
+negated, in whole or in part. The simplest way to get started is to insert the word &quot;no&quot; or &quot;not&quot; into
 the usage statement in as many ways as possible, typically around nouns and verbs. Each usage scenario
 should generate several possible abuse-case statements.
 
@@ -1118,7 +1118,7 @@ projects should opportunistically build abuse-cases for established functionalit
 <li><strong>COUNTERMEASURES</strong><ul>
 <li>Will contain a table with the list of possible countermeasures (light description) imagined for the abuse cases identified.</li>
 <li>This sheet is not mandatory, but it can be useful (for an abuse case to know), if a fix is easy to implement and then can impact the risk rating.</li>
-<li>Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks but also to build or identify defenses (it is not always the case for the Pentester profile because this person&#x2019;s focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).</li>
+<li>Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks but also to build or identify defenses (it is not always the case for the Pentester profile because this person&apos;s focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).</li>
 </ul>
 </li>
 </ul>
@@ -1288,13 +1288,13 @@ used during the next workshop in combination with input from offensives people.
 <p>As an attacker, I manipulate session tokens using expired and fake tokens to gain access.</p>
 <h2 id="a32017-sensitive-data-exposure"><a name="a32017-sensitive-data-exposure" class="plugin-anchor" href="#a32017-sensitive-data-exposure"><i class="fa fa-link" aria-hidden="true"></i></a>A3:2017-Sensitive Data Exposure</h2>
 <p><em>Epic:</em></p>
-<p>Rather than directly attacking crypto, attackers steal keys, execute man-in-the-middle attacks, or steal clear text data off the server, while in transit, or from the user&#x2019;s client, e.g. browser. A manual attack is generally required. Previously retrieved password databases could be brute forced by Graphics Processing Units (GPUs).</p>
+<p>Rather than directly attacking crypto, attackers steal keys, execute man-in-the-middle attacks, or steal clear text data off the server, while in transit, or from the user&apos;s client, e.g. browser. A manual attack is generally required. Previously retrieved password databases could be brute forced by Graphics Processing Units (GPUs).</p>
 <p><em>Abuse Case:</em></p>
 <p>As an attacker, I steal keys that were exposed in the application to get unauthorized access to the application or system.</p>
 <p><em>Abuse Case:</em></p>
 <p>As an attacker, I execute man-in-the-middle attacks to get access to traffic and leverage it to obtain sensitive data and possibly get unauthorized access to the application.</p>
 <p><em>Abuse Case:</em></p>
-<p>As an attacker, I steal clear text data off the server, while in transit, or from the user&#x2019;s client, e.g. browser to get unauthorized access to the application or system.</p>
+<p>As an attacker, I steal clear text data off the server, while in transit, or from the user&apos;s client, e.g. browser to get unauthorized access to the application or system.</p>
 <p><em>Abuse Case:</em></p>
 <p>As an attacker, I find and target old or weak cryptographic algorithms by capturing traffic and breaking the encryption.</p>
 <h2 id="a42017-xml-external-entities-xxe"><a name="a42017-xml-external-entities-xxe" class="plugin-anchor" href="#a42017-xml-external-entities-xxe"><i class="fa fa-link" aria-hidden="true"></i></a>A4:2017-XML External Entities (XXE)</h2>
@@ -1348,7 +1348,7 @@ used during the next workshop in combination with input from offensives people.
 <p><em>Epic:</em></p>
 <p>XSS is the second most prevalent issue in the OWASP Top 10, and is found in around two-thirds of all applications.</p>
 <p><em>Abuse Case:</em></p>
-<p>As an attacker, I perform reflected XSS where the application or API includes unvalidated and unescaped user input as part of HTML output. My successful attack can allow the attacker to execution of arbitrary HTML and JavaScript in my victim&#x2019;s browser. Typically the victim will need to interact with some malicious link that points to an attacker-controlled page, such as malicious watering hole websites, advertisements, or similar.</p>
+<p>As an attacker, I perform reflected XSS where the application or API includes unvalidated and unescaped user input as part of HTML output. My successful attack can allow the attacker to execution of arbitrary HTML and JavaScript in my victim&apos;s browser. Typically the victim will need to interact with some malicious link that points to an attacker-controlled page, such as malicious watering hole websites, advertisements, or similar.</p>
 <p><em>Abuse Case:</em></p>
 <p>As an attacker, I perform stored XSS where the application or API stores unsanitized user input that is viewed at a later time by another user or an administrator.</p>
 <p><em>Abuse Case:</em></p>
@@ -1415,7 +1415,7 @@ used during the next workshop in combination with input from offensives people.
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Abuse Case ","level":"1.6","depth":1,"next":{"title":"Access Control ","level":"1.7","depth":1,"path":"cheatsheets/Access_Control_Cheat_Sheet.md","ref":"cheatsheets/Access_Control_Cheat_Sheet.md","articles":[]},"previous":{"title":"AJAX Security ","level":"1.5","depth":1,"path":"cheatsheets/AJAX_Security_Cheat_Sheet.md","ref":"cheatsheets/AJAX_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Abuse_Case_Cheat_Sheet.md","mtime":"2019-08-27T18:29:59.352Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-27T18:30:23.179Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Abuse Case ","level":"1.6","depth":1,"next":{"title":"Access Control ","level":"1.7","depth":1,"path":"cheatsheets/Access_Control_Cheat_Sheet.md","ref":"cheatsheets/Access_Control_Cheat_Sheet.md","articles":[]},"previous":{"title":"AJAX Security ","level":"1.5","depth":1,"path":"cheatsheets/AJAX_Security_Cheat_Sheet.md","ref":"cheatsheets/AJAX_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Abuse_Case_Cheat_Sheet.md","mtime":"2019-08-28T18:26:10.429Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-28T18:26:43.530Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

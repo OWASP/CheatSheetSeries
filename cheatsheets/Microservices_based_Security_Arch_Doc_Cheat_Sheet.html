@@ -1015,7 +1015,7 @@
 <p>The microservice architecture is being increasingly used for designing and implementing application systems in both cloud-based and on-premise infrastructures. There are many security challenges need to be addressed in the application design and implementation phases. In order to address some security challenges it is necessity to collect security-specific information on application architecture.
 The goal of this article is to provide a concrete proposal of approach to collect microservice-based architecture information to securing application.</p>
 <h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
-<p>During securing applications based on microservices architecture, security architects/engineers usually face with the following questions (mostly referenced in the <a href="https://github.com/OWASP/ASVS" target="_blank">OWASP Application Security Verification Standard Project</a> under the section <a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;</a>):</p>
+<p>During securing applications based on microservices architecture, security architects/engineers usually face with the following questions (mostly referenced in the <a href="https://github.com/OWASP/ASVS" target="_blank">OWASP Application Security Verification Standard Project</a> under the section <a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">V1 &quot;Architecture, Design and Threat Modeling Requirements&quot;</a>):</p>
 <ol>
 <li>Threat modeling and enforcement of the principle of least privilege:<ul>
 <li>What scopes or API keys does microservice minimally need to access other microservice APIs?</li>
@@ -1139,7 +1139,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </tbody>
 </table>
 <h3 id="identify-and-describe-data-assets"><a name="identify-and-describe-data-assets" class="plugin-anchor" href="#identify-and-describe-data-assets"><i class="fa fa-link" aria-hidden="true"></i></a>Identify and describe data assets</h3>
-<p>Identify and describe data assets that processed by system microservices/services. It is advisable firstly to identify assets, which are valuable from a security perspective (e.g., &#x201C;User information&#x201D;, &#x201C;Payment&#x201D;). Collect information on the parameters listed below related to each asset.</p>
+<p>Identify and describe data assets that processed by system microservices/services. It is advisable firstly to identify assets, which are valuable from a security perspective (e.g., &quot;User information&quot;, &quot;Payment&quot;). Collect information on the parameters listed below related to each asset.</p>
 <table>
 <thead>
 <tr>
@@ -1163,8 +1163,8 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </tbody>
 </table>
 <h2 id="collect-information-on-relations-between-building-blocks"><a name="collect-information-on-relations-between-building-blocks" class="plugin-anchor" href="#collect-information-on-relations-between-building-blocks"><i class="fa fa-link" aria-hidden="true"></i></a>Collect information on relations between building blocks</h2>
-<h3 id="identify-service-to-storage-relations"><a name="identify-service-to-storage-relations" class="plugin-anchor" href="#identify-service-to-storage-relations"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &#x201C;service-to-storage&#x201D; relations</h3>
-<p>Collect information on the parameters listed below related to each &#x201C;service-to-storage&#x201D; relation.</p>
+<h3 id="identify-service-to-storage-relations"><a name="identify-service-to-storage-relations" class="plugin-anchor" href="#identify-service-to-storage-relations"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &quot;service-to-storage&quot; relations</h3>
+<p>Collect information on the parameters listed below related to each &quot;service-to-storage&quot; relation.</p>
 <table>
 <thead>
 <tr>
@@ -1183,12 +1183,12 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </tr>
 <tr>
 <td style="text-align:left">Access type</td>
-<td style="text-align:left">Specify access type, e.g. &#x201C;Read&#x201D; or &#x201C;Read/Write&#x201D;</td>
+<td style="text-align:left">Specify access type, e.g. &quot;Read&quot; or &quot;Read/Write&quot;</td>
 </tr>
 </tbody>
 </table>
-<h3 id="identify-service-to-service-synchronous-communications"><a name="identify-service-to-service-synchronous-communications" class="plugin-anchor" href="#identify-service-to-service-synchronous-communications"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &#x201C;service-to-service&#x201D; synchronous communications</h3>
-<p>Collect information on the parameters listed below related to each &#x201C;service-to-service&#x201D; synchronous communication.</p>
+<h3 id="identify-service-to-service-synchronous-communications"><a name="identify-service-to-service-synchronous-communications" class="plugin-anchor" href="#identify-service-to-service-synchronous-communications"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &quot;service-to-service&quot; synchronous communications</h3>
+<p>Collect information on the parameters listed below related to each &quot;service-to-service&quot; synchronous communication.</p>
 <table>
 <thead>
 <tr>
@@ -1215,8 +1215,8 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </tr>
 </tbody>
 </table>
-<h3 id="identify-service-to-service-asynchronous-communications"><a name="identify-service-to-service-asynchronous-communications" class="plugin-anchor" href="#identify-service-to-service-asynchronous-communications"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &#x201C;service-to-service&#x201D; asynchronous communications</h3>
-<p>Collect information on the parameters listed below related to each &#x201C;service-to-service&#x201D; asynchronous communication.</p>
+<h3 id="identify-service-to-service-asynchronous-communications"><a name="identify-service-to-service-asynchronous-communications" class="plugin-anchor" href="#identify-service-to-service-asynchronous-communications"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &quot;service-to-service&quot; asynchronous communications</h3>
+<p>Collect information on the parameters listed below related to each &quot;service-to-service&quot; asynchronous communication.</p>
 <table>
 <thead>
 <tr>
@@ -1243,8 +1243,8 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </tr>
 </tbody>
 </table>
-<h3 id="identify-asset-to-storage-relations"><a name="identify-asset-to-storage-relations" class="plugin-anchor" href="#identify-asset-to-storage-relations"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &#x201C;asset-to-storage&#x201D; relations</h3>
-<p>Collect information on the parameters listed below related to each &#x201C;asset-to-storage&#x201D; relation.</p>
+<h3 id="identify-asset-to-storage-relations"><a name="identify-asset-to-storage-relations" class="plugin-anchor" href="#identify-asset-to-storage-relations"><i class="fa fa-link" aria-hidden="true"></i></a>Identify &quot;asset-to-storage&quot; relations</h3>
+<p>Collect information on the parameters listed below related to each &quot;asset-to-storage&quot; relation.</p>
 <table>
 <thead>
 <tr>
@@ -1275,12 +1275,12 @@ The goal of this article is to provide a concrete proposal of approach to collec
 <h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
 <p>To enumerate microservices endpoints that need to be tested during security testing and analyzed during threat modeling analyze data collected under the following sections:</p>
 <ul>
-<li>Identify and describe application-functionality services (parameter &#x201C;API definition&#x201D;)</li>
-<li>Identify and describe infrastructure services (parameter &#x201C;Link to the service documentation&#x201D;)</li>
+<li>Identify and describe application-functionality services (parameter &quot;API definition&quot;)</li>
+<li>Identify and describe infrastructure services (parameter &quot;Link to the service documentation&quot;)</li>
 </ul>
 <h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.1.2</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &quot;Architecture, Design and Threat Modeling Requirements&quot;, #1.1.2</a></li>
 <li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md" target="_blank">OWASP Attack Surface Analysis Cheat Sheet</a></li>
 </ul>
 <h3 id="data-leakage-analysis"><a name="data-leakage-analysis" class="plugin-anchor" href="#data-leakage-analysis"><i class="fa fa-link" aria-hidden="true"></i></a>Data leakage analysis</h3>
@@ -1288,14 +1288,14 @@ The goal of this article is to provide a concrete proposal of approach to collec
 <p>To analyze possible data leakage analyze data collected under the following sections: </p>
 <ul>
 <li>Identify and describe data assets</li>
-<li>Identify &#x201C;service-to-storage&#x201D; relations</li>
-<li>Identify &#x201C;service-to-service&#x201D; synchronous communications</li>
-<li>Identify &#x201C;service-to-service&#x201D; asynchronous communications</li>
-<li>Identify &#x201C;asset-to-storage&#x201D; relations</li>
+<li>Identify &quot;service-to-storage&quot; relations</li>
+<li>Identify &quot;service-to-service&quot; synchronous communications</li>
+<li>Identify &quot;service-to-service&quot; asynchronous communications</li>
+<li>Identify &quot;asset-to-storage&quot; relations</li>
 </ul>
 <h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.1.2</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &quot;Architecture, Design and Threat Modeling Requirements&quot;, #1.1.2</a></li>
 <li><a href="https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure" target="_blank">OWASP Top 10-2017 A3-Sensitive Data Exposure</a></li>
 </ul>
 <h3 id="applications-trust-boundaries-components-and-significant-data-flows-justification"><a name="applications-trust-boundaries-components-and-significant-data-flows-justification" class="plugin-anchor" href="#applications-trust-boundaries-components-and-significant-data-flows-justification"><i class="fa fa-link" aria-hidden="true"></i></a>Application&apos;s trust boundaries, components, and significant data flows justification</h3>
@@ -1306,13 +1306,13 @@ The goal of this article is to provide a concrete proposal of approach to collec
 <li>Identify and describe infrastructure services</li>
 <li>Identify and describe data storages</li>
 <li>Identify and describe message queues </li>
-<li>Identify &#x201C;service-to-storage&#x201D; relations </li>
-<li>Identify &#x201C;service-to-service&#x201D; synchronous communications</li>
-<li>Identify &#x201C;service-to-service&#x201D; asynchronous communications</li>
+<li>Identify &quot;service-to-storage&quot; relations </li>
+<li>Identify &quot;service-to-service&quot; synchronous communications</li>
+<li>Identify &quot;service-to-service&quot; asynchronous communications</li>
 </ul>
 <h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.1.4</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &quot;Architecture, Design and Threat Modeling Requirements&quot;, #1.1.4</a></li>
 </ul>
 <h3 id="analysis-of-the-applications-high-level-architecture"><a name="analysis-of-the-applications-high-level-architecture" class="plugin-anchor" href="#analysis-of-the-applications-high-level-architecture"><i class="fa fa-link" aria-hidden="true"></i></a>Analysis of the application&apos;s high-level architecture</h3>
 <h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
@@ -1325,49 +1325,49 @@ The goal of this article is to provide a concrete proposal of approach to collec
 </ul>
 <h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.1.5</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &quot;Architecture, Design and Threat Modeling Requirements&quot;, #1.1.5</a></li>
 </ul>
 <h3 id="implementation-of-centralized-security-controls-verification"><a name="implementation-of-centralized-security-controls-verification" class="plugin-anchor" href="#implementation-of-centralized-security-controls-verification"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation of centralized security controls verification</h3>
 <h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
 <p>To verify implementation of centralized, simple (economy of design), vetted, secure, and reusable security controls to avoid duplicate, missing, ineffective, or insecure controls analyze data collected under the section &quot;Identify and describe infrastructure services&quot;.</p>
 <h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.1.6</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &quot;Architecture, Design and Threat Modeling Requirements&quot;, #1.1.6</a></li>
 </ul>
 <h3 id="enforcement-of-the-principle-of-least-privilege"><a name="enforcement-of-the-principle-of-least-privilege" class="plugin-anchor" href="#enforcement-of-the-principle-of-least-privilege"><i class="fa fa-link" aria-hidden="true"></i></a>Enforcement of the principle of least privilege</h3>
 <h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
 <p>To define minimally needed microservice permissions analyze data collected under the following sections:</p>
 <ul>
-<li>Identify and describe application-functionality services (parameter &#x201C;API definition&#x201D;)</li>
-<li>Identify &#x201C;service-to-storage&#x201D; relations</li>
-<li>Identify &#x201C;service-to-service&#x201D; synchronous communications </li>
-<li>Identify &#x201C;service-to-service&#x201D; asynchronous communications</li>
+<li>Identify and describe application-functionality services (parameter &quot;API definition&quot;)</li>
+<li>Identify &quot;service-to-storage&quot; relations</li>
+<li>Identify &quot;service-to-service&quot; synchronous communications </li>
+<li>Identify &quot;service-to-service&quot; asynchronous communications</li>
 </ul>
 <h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.4.3</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &quot;Architecture, Design and Threat Modeling Requirements&quot;, #1.4.3</a></li>
 </ul>
 <h3 id="sensitive-data-identification-and-classification"><a name="sensitive-data-identification-and-classification" class="plugin-anchor" href="#sensitive-data-identification-and-classification"><i class="fa fa-link" aria-hidden="true"></i></a>Sensitive data identification and classification</h3>
 <h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
 <p>To verify that all sensitive data is identified and classified into protection levels analyze data collected under the following sections:</p>
 <ul>
 <li>Identify and describe data assets</li>
-<li>Identify &#x201C;asset-to-storage&#x201D; relations</li>
+<li>Identify &quot;asset-to-storage&quot; relations</li>
 </ul>
 <h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.8.1</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &quot;Architecture, Design and Threat Modeling Requirements&quot;, #1.8.1</a></li>
 </ul>
 <h3 id="application-components-businesssecurity-functions-verification"><a name="application-components-businesssecurity-functions-verification" class="plugin-anchor" href="#application-components-businesssecurity-functions-verification"><i class="fa fa-link" aria-hidden="true"></i></a>Application components business/security functions verification</h3>
 <h4 id="implementation-tips"><a name="implementation-tips" class="plugin-anchor" href="#implementation-tips"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation tips</h4>
-<p>To verify the definition and documentation of all application components in terms of the business or security functions they provide analyze data collected under the following sections (parameter &#x201C;Short description&#x201D;): </p>
+<p>To verify the definition and documentation of all application components in terms of the business or security functions they provide analyze data collected under the following sections (parameter &quot;Short description&quot;): </p>
 <ul>
 <li>Identify and describe application-functionality services</li>
 <li>Identify and describe infrastructure services</li>
 </ul>
 <h4 id="mapping-to-owasp-projects"><a name="mapping-to-owasp-projects" class="plugin-anchor" href="#mapping-to-owasp-projects"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping to OWASP projects</h4>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &#x201C;Architecture, Design and Threat Modeling Requirements&#x201D;, #1.11.1</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements" target="_blank">OWASP ASVS, V1 &quot;Architecture, Design and Threat Modeling Requirements&quot;, #1.11.1</a></li>
 </ul>
 
                                 
@@ -1412,7 +1412,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Microservices based Security Arch Doc ","level":"1.40","depth":1,"next":{"title":"OS Command Injection Defense ","level":"1.41","depth":1,"path":"cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md","ref":"cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md","articles":[]},"previous":{"title":"Mass Assignment ","level":"1.39","depth":1,"path":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","ref":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","mtime":"2019-08-27T18:29:59.368Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-27T18:30:23.179Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Microservices based Security Arch Doc ","level":"1.40","depth":1,"next":{"title":"OS Command Injection Defense ","level":"1.41","depth":1,"path":"cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md","ref":"cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md","articles":[]},"previous":{"title":"Mass Assignment ","level":"1.39","depth":1,"path":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","ref":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","mtime":"2019-08-28T18:26:10.429Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-28T18:26:43.530Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
