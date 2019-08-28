@@ -55,19 +55,31 @@ In general, you should not use AES, DES or other symmetric cipher primitives dir
 
 **Note:** Do not use [ECB mode](http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Electronic_codebook_.28ECB.29) for encrypting lots of data (the other modes are better because they chain the blocks of data together to improve the data security).
 
-#### Rule - Use strong random numbers
+#### Rule - Use cryptographically secure pseudo random number generators (CSPRNG)
 
-Ensure that all random numbers, especially those used for cryptographic parameters (keys, IV’s, MAC tags), random file names, random GUIDs, and random strings are generated in a cryptographically strong fashion.
+When generating random bits in the context of sofware security, use the available Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) library or module available on the programming language you are using.
+
+Do not use Pseudo-Random Number Generators (PRNG) since they are not secure and will produce deterministic results. The chosen numbers are not completely random because a mathematical algorithm is used to select them, but they are sufficiently random for practical purposes. 
+
+PRNGs are primarily used for generating random-looking numbers in use cases such as modeling and simulation in software, while CSPRNGs are intended for generating random-looking numbers resistant to prediction for security use cases such as random passwords, CSRF tokens, session IDs, etc.
+
+The use of CSPRNGs will ensure that all random numbers, especially those used for cryptographic parameters (keys, IVs, MAC tags), random file names, random GUIDs, and random strings are generated in a cryptographically strong fashion.
 
 Ensure that random algorithms are seeded with sufficient entropy.
 
 Tools like [NIST RNG Test tool](http://csrc.nist.gov/groups/ST/toolkit/rng/documentation_software.html) (as used in PCI PTS Derived Test Requirements) can be used to comprehensively assess the quality of a Random Number Generator by reading e.g. 128MB of data from the RNG source and then assessing its randomness properties with the tool.
 
-The following functions are considered **weak** random number generators and should not be used.
+The following functions are considered **weak** pseudo-random number generators and should not be used in the context of security:
 
 - C : `random()`, `rand()` instead use [getrandom(2)](http://man7.org/linux/man-pages/man2/getrandom.2.html)
-- Java : `java.util.Random()` instead use `java.security.SecureRandom`
+- Java and Android OS : `java.util.Random()` instead use [java.security.SecureRandom](https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html)
 - PHP : `rand()`, `mt_rand()`, `array_rand()`, `uniqid()` instead use [random_bytes()](https://www.php.net/manual/en/function.random-bytes.php), [random_int()](https://www.php.net/manual/en/function.random-int.php) in PHP 7 or [openssl_random_pseudo_bytes()](https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php) in PHP 5 (which is **deprecated** and **should not be used**)
+- .NET/C# : `Random()`, instead use [RNGCryptoServiceProvider](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rngcryptoserviceprovider?view=netframework-4.8)
+-  Objective-C/Apple IOS : `arc4random()` (Uses RC4 Cipher), instead use [SecRandomCopyBytes](https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc)
+- Python : `random()`, instead use [secrets()](https://docs.python.org/3/library/secrets.html#module-secrets)
+- Ruby : `Random`, instead use [SecureRandom](https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html)
+- Go: `rand` using `math/rand` package, instead use [crypto.rand](https://golang.org/pkg/crypto/rand/) package
+- Rust: `rand::prng::XorShiftRng`, instead use [rand::prng::chacha::ChaChaRng](https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html) and the rest of the Rust library [CSPRNGs.](https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs)
 
 For secure random number generation, refer to NIST SP 800-90A. CTR-DRBG, HASH-DRBG or HMAC-DRBG are recommended. Refer to NIST SP800-22 A Statistical Test Suite for Random and Pseudorandom Number Generators for Cryptographic Applications, and the testing toolkit.
 
