@@ -5,6 +5,7 @@
 This is different from a brute-force attack (where a large number of passwords are tried against a single user) or a password spraying attack (where a few weak passwords are tried against a large number of users). 
 
 # Multi-Factor Authentication
+
 Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacking, including credential stuffing attacks, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however depending on the audience of the application it may not be practical or feasible to enforce the use of MFA. 
 
 In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor only in specific circumstances where there is reason to suspect that the login attempt may not be legitimate, such as a login from:
