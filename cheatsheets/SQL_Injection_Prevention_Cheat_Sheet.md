@@ -5,7 +5,7 @@ This article is focused on providing clear, simple, actionable guidance for prev
 1.  the significant prevalence of SQL Injection vulnerabilities, and
 2.  the attractiveness of the target (i.e., the database typically contains all the interesting/critical data for your application).
 
-It’s somewhat shameful that there are so many successful SQL Injection attacks occurring, because it is EXTREMELY simple to avoid SQL Injection vulnerabilities in your code.
+It's somewhat shameful that there are so many successful SQL Injection attacks occurring, because it is EXTREMELY simple to avoid SQL Injection vulnerabilities in your code.
 
 SQL Injection flaws are introduced when software developers create dynamic database queries that include user supplied input. To avoid SQL injection flaws is simple. Developers need to either: a) stop writing dynamic queries; and/or b) prevent user supplied input which contains malicious SQL from affecting the logic of the executed query.
 
@@ -132,7 +132,7 @@ try {
 
 **Safe VB .NET Stored Procedure Example**
 
-The following code example uses a `SqlCommand`, .NET’s implementation of the stored procedure interface, to execute the same database query. The `sp_getAccountBalance` stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.
+The following code example uses a `SqlCommand`, .NET's implementation of the stored procedure interface, to execute the same database query. The `sp_getAccountBalance` stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.
 
 ```vbnet
  Try
@@ -387,13 +387,13 @@ Beyond adopting one of the four primary defenses, we also recommend adopting all
 
 ## Least Privilege
 
-To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Do not assign DBA or admin type access rights to your application accounts. We understand that this is easy, and everything just ‘works’ when you do it this way, but it is very dangerous. 
+To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Do not assign DBA or admin type access rights to your application accounts. We understand that this is easy, and everything just 'works' when you do it this way, but it is very dangerous. 
 
 Start from the ground up to determine what access rights your application accounts require, rather than trying to figure out what access rights you need to take away. Make sure that accounts that only need read access are only granted read access to the tables they need access to. 
 
 If an account only needs access to portions of a table, consider creating a view that limits access to that portion of the data and assigning the account access to the view instead, rather than the underlying table. Rarely, if ever, grant create or delete access to database accounts.
 
-If you adopt a policy where you use stored procedures everywhere, and don’t allow application accounts to directly execute their own queries, then restrict those accounts to only be able to execute the stored procedures they need. Don’t grant them any rights directly to the tables in the database.
+If you adopt a policy where you use stored procedures everywhere, and don't allow application accounts to directly execute their own queries, then restrict those accounts to only be able to execute the stored procedures they need. Don't grant them any rights directly to the tables in the database.
 
 SQL injection is not the only threat to your database data. Attackers can simply change the parameter values from one of the legal values they are presented with, to a value that is unauthorized for them, but the application itself might be authorized to access. As such, minimizing the privileges granted to your application will reduce the likelihood of such unauthorized access attempts, even when an attacker is not trying to use SQL injection as part of their exploit.
 

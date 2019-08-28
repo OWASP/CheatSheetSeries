@@ -5,7 +5,7 @@ The goal of this article is to provide a concrete proposal of approach to collec
 
 # Context
 
-During securing applications based on microservices architecture, security architects/engineers usually face with the following questions (mostly referenced in the [OWASP Application Security Verification Standard Project](https://github.com/OWASP/ASVS) under the section [V1 “Architecture, Design and Threat Modeling Requirements”](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)):
+During securing applications based on microservices architecture, security architects/engineers usually face with the following questions (mostly referenced in the [OWASP Application Security Verification Standard Project](https://github.com/OWASP/ASVS) under the section [V1 "Architecture, Design and Threat Modeling Requirements"](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)):
 1. Threat modeling and enforcement of the principle of least privilege:
     * What scopes or API keys does microservice minimally need to access other microservice APIs?
     * What grants does microservice minimally need to access database or message queue?
@@ -72,7 +72,7 @@ Messaging systems (e.g., RabbitMQ or Apache Kafka) are used to implement asynchr
 
 ### Identify and describe data assets
 
-Identify and describe data assets that processed by system microservices/services. It is advisable firstly to identify assets, which are valuable from a security perspective (e.g., “User information”, “Payment”). Collect information on the parameters listed below related to each asset.
+Identify and describe data assets that processed by system microservices/services. It is advisable firstly to identify assets, which are valuable from a security perspective (e.g., "User information", "Payment"). Collect information on the parameters listed below related to each asset.
 
 | Parameter name | Description | 
 | :--- | :--- |
@@ -82,19 +82,19 @@ Identify and describe data assets that processed by system microservices/service
 
 ## Collect information on relations between building blocks
 
-### Identify “service-to-storage” relations
+### Identify "service-to-storage" relations
 
-Collect information on the parameters listed below related to each “service-to-storage” relation.
+Collect information on the parameters listed below related to each "service-to-storage" relation.
 
 | Parameter name | Description | 
 | :--- | :--- |
 | Service name (ID) | Specify service name (ID) defined above
 | Storage name (ID) | Specify storage name (ID) defined above
-| Access type | Specify access type, e.g. “Read” or “Read/Write”
+| Access type | Specify access type, e.g. "Read" or "Read/Write"
 
-### Identify “service-to-service” synchronous communications
+### Identify "service-to-service" synchronous communications
 
-Collect information on the parameters listed below related to each “service-to-service” synchronous communication.
+Collect information on the parameters listed below related to each "service-to-service" synchronous communication.
 
 | Parameter name | Description | 
 | :--- | :--- |
@@ -103,9 +103,9 @@ Collect information on the parameters listed below related to each “service-to
 | Protocol/framework used| Specify protocol/framework used for communication, e.g. HTTP (REST, SOAP), Apache Thrif, gRPC
 | Short description | Shortly describe the purpose of communication (requests for query of information or request/commands for a state-changing business function) and data passed between services (if possible, in therms of assets defined above)
 
-### Identify “service-to-service” asynchronous communications
+### Identify "service-to-service" asynchronous communications
 
-Collect information on the parameters listed below related to each “service-to-service” asynchronous communication.
+Collect information on the parameters listed below related to each "service-to-service" asynchronous communication.
 
 | Parameter name | Description | 
 | :--- | :--- |
@@ -114,9 +114,9 @@ Collect information on the parameters listed below related to each “service-to
 | Message queue (ID) | Specify message queue (ID) defined above
 | Short description | Shortly describe the purpose of communication (receiving of information or commands for a state-changing business function) and data passed between services (if possible, in therms of assets defined above)
 
-### Identify “asset-to-storage” relations
+### Identify "asset-to-storage" relations
 
-Collect information on the parameters listed below related to each “asset-to-storage” relation.
+Collect information on the parameters listed below related to each "asset-to-storage" relation.
 
 | Parameter name | Description | 
 | :--- | :--- |
@@ -137,12 +137,12 @@ Collected information may be useful for doing application security practices, e.
 #### Implementation tips
 
 To enumerate microservices endpoints that need to be tested during security testing and analyzed during threat modeling analyze data collected under the following sections:
-* Identify and describe application-functionality services (parameter “API definition”)
-* Identify and describe infrastructure services (parameter “Link to the service documentation”)
+* Identify and describe application-functionality services (parameter "API definition")
+* Identify and describe infrastructure services (parameter "Link to the service documentation")
 
 #### Mapping to OWASP projects
 
-* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.1.2](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+* [OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.2](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
 * [OWASP Attack Surface Analysis Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md)
 
 ### Data leakage analysis
@@ -151,14 +151,14 @@ To enumerate microservices endpoints that need to be tested during security test
 
 To analyze possible data leakage analyze data collected under the following sections: 
 * Identify and describe data assets
-* Identify “service-to-storage” relations
-* Identify “service-to-service” synchronous communications
-* Identify “service-to-service” asynchronous communications
-* Identify “asset-to-storage” relations
+* Identify "service-to-storage" relations
+* Identify "service-to-service" synchronous communications
+* Identify "service-to-service" asynchronous communications
+* Identify "asset-to-storage" relations
 
 #### Mapping to OWASP projects
 
-* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.1.2](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+* [OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.2](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
 * [OWASP Top 10-2017 A3-Sensitive Data Exposure](https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure)
 
 ### Application's trust boundaries, components, and significant data flows justification
@@ -170,13 +170,13 @@ To verify documentation and justification of all the application's trust boundar
 * Identify and describe infrastructure services
 * Identify and describe data storages
 * Identify and describe message queues 
-* Identify “service-to-storage” relations 
-* Identify “service-to-service” synchronous communications
-* Identify “service-to-service” asynchronous communications
+* Identify "service-to-storage" relations 
+* Identify "service-to-service" synchronous communications
+* Identify "service-to-service" asynchronous communications
 
 #### Mapping to OWASP projects
 
-* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.1.4](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+* [OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.4](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
 
 ### Analysis of the application's high-level architecture
 
@@ -190,7 +190,7 @@ To verify definition and security analysis of the application's high-level archi
 
 #### Mapping to OWASP projects
 
-* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.1.5](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+* [OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.5](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
 
 ### Implementation of centralized security controls verification
 
@@ -200,21 +200,21 @@ To verify implementation of centralized, simple (economy of design), vetted, sec
 
 #### Mapping to OWASP projects
 
-* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.1.6](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+* [OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.1.6](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
 
 ### Enforcement of the principle of least privilege
 
 #### Implementation tips
 
 To define minimally needed microservice permissions analyze data collected under the following sections:
-* Identify and describe application-functionality services (parameter “API definition”)
-* Identify “service-to-storage” relations
-* Identify “service-to-service” synchronous communications 
-* Identify “service-to-service” asynchronous communications
+* Identify and describe application-functionality services (parameter "API definition")
+* Identify "service-to-storage" relations
+* Identify "service-to-service" synchronous communications 
+* Identify "service-to-service" asynchronous communications
 
 #### Mapping to OWASP projects
 
-* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.4.3](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+* [OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.4.3](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
 
 ### Sensitive data identification and classification
 
@@ -222,20 +222,20 @@ To define minimally needed microservice permissions analyze data collected under
 
 To verify that all sensitive data is identified and classified into protection levels analyze data collected under the following sections:
 * Identify and describe data assets
-* Identify “asset-to-storage” relations
+* Identify "asset-to-storage" relations
 
 #### Mapping to OWASP projects
 
-* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.8.1](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+* [OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.8.1](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
 
 ### Application components business/security functions verification
 
 #### Implementation tips
 
-To verify the definition and documentation of all application components in terms of the business or security functions they provide analyze data collected under the following sections (parameter “Short description”): 
+To verify the definition and documentation of all application components in terms of the business or security functions they provide analyze data collected under the following sections (parameter "Short description"): 
 * Identify and describe application-functionality services
 * Identify and describe infrastructure services
 
 #### Mapping to OWASP projects
 
-* [OWASP ASVS, V1 “Architecture, Design and Threat Modeling Requirements”, #1.11.1](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)
+* [OWASP ASVS, V1 "Architecture, Design and Threat Modeling Requirements", #1.11.1](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x10-V1-Architecture.md#v1-architecture-design-and-threat-modeling-requirements)

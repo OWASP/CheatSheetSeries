@@ -2,7 +2,7 @@
 
 This cheatsheet is focused on providing clear, simple, actionable guidance for preventing LDAP Injection flaws in your applications.
 
-LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it’s possible to modify LDAP statements through techniques similar to [SQL Injection](https://www.owasp.org/index.php/SQL_Injection). 
+LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements through techniques similar to [SQL Injection](https://www.owasp.org/index.php/SQL_Injection). 
 
 LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. 
 

@@ -4,17 +4,17 @@ This sheet is focused on providing an overall, common overview with an informati
 
 ## Fundamentals
 
-Considering that anti-DoS approaches are not one-step solutions, it becomes apparent that, for it to be implemented, it’s necessary to involve different profiles within your organization to assess the actual situation and to apply countermeasures accordingly. These profiles are: developers and architects in the area of application and infrastructure.
+Considering that anti-DoS approaches are not one-step solutions, it becomes apparent that, for it to be implemented, it's necessary to involve different profiles within your organization to assess the actual situation and to apply countermeasures accordingly. These profiles are: developers and architects in the area of application and infrastructure.
 
 Key concepts within information security evolve around criteria or properties such as the [CIA triad](https://whatis.techtarget.com/definition/Confidentiality-integrity-and-availability-CIA). The letter **A**, which stands for availability, is our focal point. The core essence of a DoS is to affect, by any means, the availability of instances or objects and to eventually render it inaccessible. Thus, for any information system to serve its purpose, it must be available at any time. Hence why every computing system within the interoperability flow must function correctly to achieve that.
 
-To remain resilient and resistant, it’s imperative - and suggested - to outline and to conduct a thorough analysis on components within your inventory based on functionality, architecture and performance (i.e. application-wise, infrastructure and network related). 
+To remain resilient and resistant, it's imperative - and suggested - to outline and to conduct a thorough analysis on components within your inventory based on functionality, architecture and performance (i.e. application-wise, infrastructure and network related). 
 
 ![DDOSFlow](../assets/Denial_of_Service_Cheat_Sheet_FlowDDOS.png) 
 
 The outcome of this research should identify potential causes of a DoS which highlight single point of failures ranging from programming related errors to resource exhaustion..
 
-From a prevention point of view, it’s important to have a clear picture on how to tackle your appropriate components to address the issue at stake (e.g. bottlenecks, etc.). That’s why a solid understanding of your environment is essential to develop a suitable defence mechanism. These could be aligned with:
+From a prevention point of view, it's important to have a clear picture on how to tackle your appropriate components to address the issue at stake (e.g. bottlenecks, etc.). That's why a solid understanding of your environment is essential to develop a suitable defence mechanism. These could be aligned with:
 
 1. scaling options (**up** = inner hardware components, **out** = the number of complete components)
 2. existing conceptual / logical techniques (such as applying redundancy measurements, bulk-heading, etc. - which expands your in-house capabilities)
@@ -38,7 +38,7 @@ The data layer is the protocol layer that transfers data between adjacent networ
 
 In MAC flooding attacks, a switch is flooded with packets, each with a different source MAC address. The intention is to consume the limited memory used by a switch to store the MAC and physical port translation table (MAC table). The result is that valid MAC addresses are purged and the switch enters a fail-over mode where it will act as a network hub. All data is then forwarded to all ports, resulting in a data leakage. TODO impact in relation to DoS TODO document compact remediation
 
-In ARP poisoning attacks a malicious actor sends spoofed ARP (Address Resolution Protocol) messages over the wire. The result is that the attacker’s MAC address can be linked to the IP address of a legitimate device on the network. This allows an attacker to intercept, modify or stop data in transit, that was intended for the victim IP address. The ARP protocol is specific to the local area network and could cause a DoS on the wire communication.
+In ARP poisoning attacks a malicious actor sends spoofed ARP (Address Resolution Protocol) messages over the wire. The result is that the attacker's MAC address can be linked to the IP address of a legitimate device on the network. This allows an attacker to intercept, modify or stop data in transit, that was intended for the victim IP address. The ARP protocol is specific to the local area network and could cause a DoS on the wire communication.
 
 Packet filtering technology can be used to inspect packets in transit to identify and block offending ARP packets. Another approach is to use static ARP tables but they prove difficult to be maintained.
 
@@ -48,7 +48,7 @@ Application layer attacks focus on rendering applications unavailable by exhaust
 
 **TODO:** List all attacks per category. Because we cannot map remediations one on one with an attack vector, we will first need to list them before discussing the action points
 
-**Slow HTTP** is a DoS attack type where HTTP requests are send very slow and fragmented, one at a time. Until the HTTP request was fully delivered, the server will keep resources stalled while waiting for the missing incoming data. At one moment, the server will reach the maximum concurrent connection pool, resulting in a DoS. From an attacker’s perspective, slow HTTP attacks are cheap to perform because they require minimal resources.
+**Slow HTTP** is a DoS attack type where HTTP requests are send very slow and fragmented, one at a time. Until the HTTP request was fully delivered, the server will keep resources stalled while waiting for the missing incoming data. At one moment, the server will reach the maximum concurrent connection pool, resulting in a DoS. From an attacker's perspective, slow HTTP attacks are cheap to perform because they require minimal resources.
 
 ## Software Design Concepts
 
@@ -65,7 +65,7 @@ Application layer attacks focus on rendering applications unavailable by exhaust
 ## Session
 
 - **Limit server side session time based on inactivity and a final timeout**: (resource exhaustion) While sessions timeout is most of the time discussed in relation to session security and preventing session hijacking, it is also an important measure to prevent resource exhaustion.
-- **Limit session bound information storage:** the less data is linked to a session, the less burden a user session has on webserver’s performance.
+- **Limit session bound information storage:** the less data is linked to a session, the less burden a user session has on webserver's performance.
 
 ## Input validation
 
@@ -73,7 +73,7 @@ Application layer attacks focus on rendering applications unavailable by exhaust
 - **Limit total request size** (resource exhaustion) to make it harder for resource consuming DoS attack to succeed.
 - **Prevent input based resource allocation** (resource exhaustion).
 - **Prevent input based function and threading interaction** (resource exhaustion). User input could influence how many times a function needs to be executed, or how intensive the CPU consumption becomes. Depending on (unfiltered) user input for resource allocation could allow a DoS scenario through resource exhaustion.
-- **Input based puzzles** like captchas or simple math problems are often used to ‘protect’ a web form. They serve a purpose to protect against functionality abuse. The classic example is a webform that will send out an e-mail after posting the request. A captcha could then prevent the mailbox from getting flooded by a malicious attacker or spambot. Notice that this kind of technology will not help defend against DoS attacks.
+- **Input based puzzles** like captchas or simple math problems are often used to 'protect' a web form. They serve a purpose to protect against functionality abuse. The classic example is a webform that will send out an e-mail after posting the request. A captcha could then prevent the mailbox from getting flooded by a malicious attacker or spambot. Notice that this kind of technology will not help defend against DoS attacks.
 
 ## Access control
 

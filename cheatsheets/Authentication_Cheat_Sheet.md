@@ -149,7 +149,7 @@ Correct response example:
 
 Incorrect response examples:
 - "We just sent you a password-reset link"
-- "This email address doesn’t exist in our database"
+- "This email address doesn't exist in our database"
 
 Correct response example:
 - "If that email address is in our database, we will send you an email to reset your password"

@@ -42,7 +42,7 @@ If your organization has a business relationship with users, you probably have c
 - zip code for address on file
 - street number for address on file
 
-For enhanced security, you may wish to consider asking the user for their email address first and then send an email that takes them to a private page that requests the other 2 (or more) identity factors. That way the email itself isn’t that useful because they still have to answer a bunch of ‘secret’ questions after they get to the landing page.
+For enhanced security, you may wish to consider asking the user for their email address first and then send an email that takes them to a private page that requests the other 2 (or more) identity factors. That way the email itself isn't that useful because they still have to answer a bunch of 'secret' questions after they get to the landing page.
 
 On the other hand, if you host a web site that targets the general public, such as social networking sites, free email sites, news sites, photo sharing sites, etc., then you likely to not have this identity information and will need to use some sort of the ubiquitous "security questions". However, also be sure that you collect some means to send the password reset information to some out-of-band side-channel, such as a (different) email address, an SMS texting number, etc.
 
