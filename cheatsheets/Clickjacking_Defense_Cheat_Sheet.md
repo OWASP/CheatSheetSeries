@@ -81,7 +81,9 @@ Meta-tags that attempt to apply the X-Frame-Options directive DO NOT WORK. For e
 
 The `SameSite` cookie attribute defined in [RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7) is primarily intended to defend against [cross-site request forgery (CSRF)](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md#samesite-cookie-attribute); however it can also provide protection against Clickjacking attacks.
 
-Cookies with a `SameSite` attribute of either `strict` or `lax` will not be included in requests made to a page within an `<iframe>`. This means that if the session cookies are marked as `SameSite`, any Clickjacking attack that requires the victim to be authenticated will not work, as the cookie will not be sent.
+Cookies with a `SameSite` attribute of either `strict` or `lax` will not be included in requests made to a page within an `<iframe>`. This means that if the session cookies are marked as `SameSite`, any Clickjacking attack that requires the victim to be authenticated will not work, as the cookie will not be sent. An article on the [Netsparker blog](https://www.netsparker.com/blog/web-security/same-site-cookie-attribute-prevent-cross-site-request-forgery/) provides further details on which types of requests cookies are sent for with the different SameSite policies.
+
+This approach is discussed on the [JavaScript.info website](https://javascript.info/clickjacking#samesite-cookie-attribute).
 
 ## Limitations
 
