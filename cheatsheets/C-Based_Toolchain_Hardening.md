@@ -114,7 +114,7 @@ A recent discussion on the Automake mailing list illuminates the issue: *[Enabli
 
 ## Makefiles
 
-Make is one of the earliest build systems dating back to the 1970s. Its available on Linux, Mac OS X and Unix, so you will frequently encounter projects using it. Unfortunately, Make has a number of short comings (*[Recursive Make Considered Harmful](http://aegis.sourceforge.net/auug97.pdf)* and *[What’s Wrong With GNU make?](http://www.conifersystems.com/whitepapers/gnu-make/)*), and can cause some discomfort. Despite issues with Make, ESAPI C++ uses Make primarily for three reasons: first, its omnipresent; second, its easier to manage than the Auto Tools family; and third, `libtool` was out of the question.
+Make is one of the earliest build systems dating back to the 1970s. Its available on Linux, Mac OS X and Unix, so you will frequently encounter projects using it. Unfortunately, Make has a number of short comings (*[Recursive Make Considered Harmful](http://aegis.sourceforge.net/auug97.pdf)* and *[What's Wrong With GNU make?](http://www.conifersystems.com/whitepapers/gnu-make/)*), and can cause some discomfort. Despite issues with Make, ESAPI C++ uses Make primarily for three reasons: first, its omnipresent; second, its easier to manage than the Auto Tools family; and third, `libtool` was out of the question.
 
 Consider what happens when you: (1) type `make` `debug`, and then type `make` `release`. Each build would require different `CFLAGS` due to optimizations and level of debug support. In your makefile, you would extract the relevant target and set `CFLAGS` and `CXXFLAGS` similar to below (taken from [ESAPI C++ Makefile](http://code.google.com/p/owasp-esapi-cplusplus/source/browse/trunk/Makefile)):
 
@@ -360,7 +360,7 @@ Compiler writers provide a rich set of warnings from the analysis of code during
 
 As a concrete example, (and for those not familiar with C/C++ promotion rules), a warning will be issued if a signed integer is promoted to an unsigned integer and then compared because a side effect is `-1` `>` `1` after promotion! GCC and Visual Studio will not currently catch, for example, SQL injections and other tainted data usage. For that, you will need a tool designed to perform data flow analysis or taint analysis.
 
-Some in the development community resist static analysis or refute its results. For example, when static analysis warned the Linux kernel's `sys_prctl` was comparing an unsigned value against less than zero, Jesper Juhl offered a patch to clean up the code. Linus Torvalds howled “No, you don't do this… GCC is crap” (referring to compiling with warnings). For the full discussion, see *[\[PATCH\] Don't compare unsigned variable for &lt;0 in sys_prctl()](http://linux.derkeiler.com/Mailing-Lists/Kernel/2006-11/msg08325.html)* from the Linux Kernel mailing list.
+Some in the development community resist static analysis or refute its results. For example, when static analysis warned the Linux kernel's `sys_prctl` was comparing an unsigned value against less than zero, Jesper Juhl offered a patch to clean up the code. Linus Torvalds howled "No, you don't do this… GCC is crap" (referring to compiling with warnings). For the full discussion, see *[\[PATCH\] Don't compare unsigned variable for &lt;0 in sys_prctl()](http://linux.derkeiler.com/Mailing-Lists/Kernel/2006-11/msg08325.html)* from the Linux Kernel mailing list.
 
 The following sections will detail steps for three platforms. First is a typical GNU Linux based distribution offering GCC and Binutils, second is Clang and Xcode, and third is modern Windows platforms.
 
@@ -382,13 +382,13 @@ $ gcc -dumpspecs
 …
 ```    
 
-The “SSP” above stands for Stack Smashing Protector. SSP is a reimplementation of Hiroaki Etoh's work on IBM Pro Police Stack Detector. See Hiroaki Etoh's patch *[gcc stack-smashing protector](http://gcc.gnu.org/ml/gcc-patches/2001-06/msg01753.html)* and IBM's *[GCC extension for protecting applications from stack-smashing attacks](https://pdfs.semanticscholar.org/9d92/fa9eaa6ca12888d303deffe8bc392b85c09f.pdf)* for details.
+The "SSP" above stands for Stack Smashing Protector. SSP is a reimplementation of Hiroaki Etoh's work on IBM Pro Police Stack Detector. See Hiroaki Etoh's patch *[gcc stack-smashing protector](http://gcc.gnu.org/ml/gcc-patches/2001-06/msg01753.html)* and IBM's *[GCC extension for protecting applications from stack-smashing attacks](https://pdfs.semanticscholar.org/9d92/fa9eaa6ca12888d303deffe8bc392b85c09f.pdf)* for details.
 
 ## GCC/Binutils
 
 GCC (the compiler collection) and Binutils (the assemblers, linkers, and other tools) are separate projects that work together to produce a final executable. Both the compiler and linker offer options to help you write safer and more secure code. The linker will produce code which takes advantage of platform security features offered by the kernel and PaX, such as no-exec stacks and heaps (NX) and Position Independent Executable (PIE).
 
-The table below offers a set of compiler options to build your program. Static analysis warnings help catch mistakes early, while the linker options harden the executable at runtime. In the table below, “GCC” should be loosely taken as “non-ancient distributions.” While the GCC team considers 4.2 ancient, you will still encounter it on Apple and BSD platforms due to changes in GPL licensing around 2007. Refer to *[GCC Option Summary](http://gcc.gnu.org/onlinedocs/gcc/Option-Summary.html)*, *[Options to Request or Suppress Warnings](http://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)* and *[Binutils (LD) Command Line Options](http://sourceware.org/binutils/docs-2.21/ld/Options.html)* for usage details.
+The table below offers a set of compiler options to build your program. Static analysis warnings help catch mistakes early, while the linker options harden the executable at runtime. In the table below, "GCC" should be loosely taken as "non-ancient distributions." While the GCC team considers 4.2 ancient, you will still encounter it on Apple and BSD platforms due to changes in GPL licensing around 2007. Refer to *[GCC Option Summary](http://gcc.gnu.org/onlinedocs/gcc/Option-Summary.html)*, *[Options to Request or Suppress Warnings](http://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)* and *[Binutils (LD) Command Line Options](http://sourceware.org/binutils/docs-2.21/ld/Options.html)* for usage details.
 
 Noteworthy of special mention are `-fno-strict-overflow` and `-fwrapv`ₐ. The flags ensure the compiler does not remove statements that result in overflow or wrap. If your program only runs correctly using the flags, it is likely violating C/C++ rules on overflow and illegal. If the program is illegal due to overflow or wrap checking, you should consider using [safe-iop](http://code.google.com/p/safe-iop/) for C or David LeBlanc's [SafeInt](http://safeint.codeplex.com) in C++.
 
@@ -487,7 +487,7 @@ override LDFLAGS := $(MY_LD_FLAGS) $(LDFLAGS)
 
 IOC is incredibly useful, and has found bugs in a number of projects, from the Linux Kernel (`include/linux/bitops.h`, still unfixed), SQLite, PHP, Firefox (many still unfixed), LLVM, and Python. Future version of Clang (Clang 3.3 and above) will allow you to enable the checks out of the box with `-fsanitize=integer` and `-fsanitize=shift`.
 
-Clang options can be found at [Clang Compiler User’s Manual](http://clang.llvm.org/docs/UsersManual.html). Clang does include an option to turn on all warnings - `-Weverything`. Use it with care but use it regularly since you will get back a lot of noise and issues you missed. For example, add `-Weverything` for production builds and make non-spurious issues a quality gate. Under Xcode, simply add `-Weverything` to `CFLAGS` and `CXXFLAGS`.
+Clang options can be found at [Clang Compiler User's Manual](http://clang.llvm.org/docs/UsersManual.html). Clang does include an option to turn on all warnings - `-Weverything`. Use it with care but use it regularly since you will get back a lot of noise and issues you missed. For example, add `-Weverything` for production builds and make non-spurious issues a quality gate. Under Xcode, simply add `-Weverything` to `CFLAGS` and `CXXFLAGS`.
 
 In addition to compiler warnings, both static analysis and additional security checks can be performed. Reading on Clang's static analysis capabilities can be found at [Clang Static Analyzer](http://clang-analyzer.llvm.org). Figure 1 below shows some of the security checks utilized by Xcode.
 
@@ -495,9 +495,9 @@ In addition to compiler warnings, both static analysis and additional security c
 
 ## Visual Studio
 
-Visual Studio offers a convenient Integrated Development Environment (IDE) for managing solutions and their settings. the section called “Visual Studio Options” discusses option which should be used with Visual Studio, and the section called “Project Properties” demonstrates incorporating those options into a solution's project.
+Visual Studio offers a convenient Integrated Development Environment (IDE) for managing solutions and their settings. the section called "Visual Studio Options" discusses option which should be used with Visual Studio, and the section called "Project Properties" demonstrates incorporating those options into a solution's project.
 
-The table below lists the compiler and linker switches which should be used under Visual Studio. Refer to Howard and LeBlanc's Writing Secure Code (Microsoft Press) for a detailed discussion; or *[Protecting Your Code with Visual C++ Defenses](http://msdn.microsoft.com/en-us/magazine/cc337897.aspx)* in Security Briefs by Michael Howard. In the table below, “Visual Studio” refers to nearly all versions of the development environment, including Visual Studio 5.0 and 6.0.
+The table below lists the compiler and linker switches which should be used under Visual Studio. Refer to Howard and LeBlanc's Writing Secure Code (Microsoft Press) for a detailed discussion; or *[Protecting Your Code with Visual C++ Defenses](http://msdn.microsoft.com/en-us/magazine/cc337897.aspx)* in Security Briefs by Michael Howard. In the table below, "Visual Studio" refers to nearly all versions of the development environment, including Visual Studio 5.0 and 6.0.
 
 For a project compiled and linked with hardened settings, those settings can be verified with BinScope. BinScope is a verification tool from Microsoft that analyzes binaries to ensure that they have been built in compliance with Microsoft's Security Development Lifecycle (SDLC) requirements and recommendations. See the *[BinScope Binary Analyzer](https://www.microsoft.com/en-us/download/details.aspx?id=44995)* download page for details.
 
