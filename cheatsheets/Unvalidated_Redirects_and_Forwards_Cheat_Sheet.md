@@ -169,6 +169,7 @@ Safe use of redirects and forwards can be done in a number of ways:
 - Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.
 
 ## Validating URLs
+
 When attempting to validate and sanitise user-input to determine whether the URL is safe, wherever possible you should use a built in library or function to parse the URLs, such as `parse_url()` in PHP, rather than rolling your own parser using regex. Additionally, make sure that you take the following into account:
 
 - Input starting with a `/` to redirect to local pages is **not safe**. `//example.org` is a valid URL.
