@@ -152,9 +152,9 @@ The use of self signed certificates is never acceptable. Self signed certificate
 
 Clients attempt to solve the problem of identifying a server or host using PKI and X509 certificate. When a user receives a server or host's certificate, the certificate must be validated back to a trusted root certification authority. This is known as path validation.
 
-There can be one or more intermediate certificates in between the end-entity (server or host) certificate and root certificate. In addition to validating both endpoints, the user will also have to validate all intermediate certificates. Validating all intermediate certificates can be tricky because the user may not have them locally. This is a well-known PKI issue called the “Which Directory?" problem.
+There can be one or more intermediate certificates in between the end-entity (server or host) certificate and root certificate. In addition to validating both endpoints, the user will also have to validate all intermediate certificates. Validating all intermediate certificates can be tricky because the user may not have them locally. This is a well-known PKI issue called the "Which Directory?" problem.
 
-To avoid the “Which Directory?" problem, a server should provide the user with all required certificates used in a path validation.
+To avoid the "Which Directory?" problem, a server should provide the user with all required certificates used in a path validation.
 
 ### Rule - Be aware of and have a plan for the SHA-1 deprecation plan
 

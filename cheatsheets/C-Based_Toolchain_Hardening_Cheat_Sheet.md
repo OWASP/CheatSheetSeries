@@ -84,7 +84,7 @@ When compiling programs with GCC, you should use the following flags to help det
 
 For a Microsoft platform, you should use: `/W4`, `/Wall`, and `/analyze`. If you don't use `/Wall`, Microsoft recomends using `/W4` and enabling C4191, C4242, C4263, C4264, C4265, C4266, C4302, C4826, C4905, C4906, and C4928. Finally, `/analyze` is Enterprise Code Analysis, which is freely available with the [Windows SDK for Windows Server 2008 and .NET Framework 3.5 SDK](https://www.microsoft.com/en-us/download/details.aspx?id=21) (you don't need Visual Studio Enterprise edition).
 
-For additional details on the GCC and Windows options and flags, see *[GCC Options to Request or Suppress Warnings](http://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)*, *[“Off By Default” Compiler Warnings in Visual C++](http://blogs.msdn.com/b/vcblog/archive/2010/12/14/off-by-default-compiler-warnings-in-visual-c.aspx)*, and *[Protecting Your Code with Visual C++ Defenses](http://msdn.microsoft.com/en-us/magazine/cc337897.aspx)*.
+For additional details on the GCC and Windows options and flags, see *[GCC Options to Request or Suppress Warnings](http://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)*, *["Off By Default" Compiler Warnings in Visual C++](http://blogs.msdn.com/b/vcblog/archive/2010/12/14/off-by-default-compiler-warnings-in-visual-c.aspx)*, and *[Protecting Your Code with Visual C++ Defenses](http://msdn.microsoft.com/en-us/magazine/cc337897.aspx)*.
 
 # Platform Security
 

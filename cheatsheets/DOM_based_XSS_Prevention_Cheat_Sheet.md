@@ -34,7 +34,7 @@ The following is an example vulnerability which occurs in the JavaScript context
  </script>
 ```
 
-Let’s look at the individual subcontexts of the execution context in turn.
+Let's look at the individual subcontexts of the execution context in turn.
 
 # RULE \#1 - HTML Escape then JavaScript Escape Before Inserting Untrusted Data into HTML Subcontext within the Execution Context
 
@@ -95,7 +95,7 @@ For example, the general rule is to HTML Attribute encode untrusted data (data f
  form1.appendChild(x);
 ```
 
-The problem is that if companyName had the value “Johnson & Johnson”. What would be displayed in the input text field would be “Johnson & Johnson”. The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.
+The problem is that if companyName had the value "Johnson & Johnson". What would be displayed in the input text field would be "Johnson & Johnson". The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.
 
 ## SAFE and FUNCTIONALLY CORRECT example
 
@@ -195,7 +195,7 @@ Because JavaScript is based on an international standard (ECMAScript), JavaScrip
 
 However the opposite is the case with HTML encoding. HTML tag elements are well defined and do not support alternate representations of the same tag. So HTML encoding cannot be used to allow the developer to have alternate representations of the `<a>` tag for example.
 
-## HTML Encoding’s Disarming Nature
+## HTML Encoding's Disarming Nature
 
 In general, HTML encoding serves to castrate HTML tags which are placed in HTML and HTML attribute contexts. Working example (no HTML encoding):
 
@@ -255,9 +255,9 @@ element.textContent = untrustedData;  //does not execute code
 
 # RULE \#7 - Fixing DOM Cross-site Scripting Vulnerabilities
 
-The best way to fix DOM based cross-site scripting is to use the right output method (sink). For example if you want to use user input to write in a `div tag` element don’t use `innerHtml`, instead use `innerText` or `textContent`. This will solve the problem, and it is the right way to re-mediate DOM based XSS vulnerabilities.
+The best way to fix DOM based cross-site scripting is to use the right output method (sink). For example if you want to use user input to write in a `div tag` element don't use `innerHtml`, instead use `innerText` or `textContent`. This will solve the problem, and it is the right way to re-mediate DOM based XSS vulnerabilities.
 
-**It is always a bad idea to use a user-controlled input in dangerous sources such as eval. 99% of the time it is an indication of bad or lazy programming practice, so simply don’t do it instead of trying to sanitize the input.**
+**It is always a bad idea to use a user-controlled input in dangerous sources such as eval. 99% of the time it is an indication of bad or lazy programming practice, so simply don't do it instead of trying to sanitize the input.**
 
 Finally, to fix the problem in our initial code, instead of trying to encode the output correctly which is a hassle and can easily go wrong we would simply use `element.textContent` to write it in a content like this:
 
@@ -446,15 +446,15 @@ Although the developer writing the code above was trying to add additional keyed
 
 Run your JavaScript in a ECMAScript 5 [canopy](https://github.com/jcoglan/canopy) or sandbox to make it harder for your JavaScript API to be compromised (Gareth Heyes and John Stevens).
 
-## GUIDELINE \#10 - Don’t eval() JSON to convert it to native JavaScript objects
+## GUIDELINE \#10 - Don't eval() JSON to convert it to native JavaScript objects
 
-Don’t `eval()` JSON to convert it to native JavaScript objects. Instead use `JSON.toJSON()` and `JSON.parse()` (Chris Schmidt).
+Don't `eval()` JSON to convert it to native JavaScript objects. Instead use `JSON.toJSON()` and `JSON.parse()` (Chris Schmidt).
 
 # Common Problems Associated with Mitigating DOM Based XSS
 
 ## Complex Contexts
 
-In many cases the context isn’t always straightforward to discern.
+In many cases the context isn't always straightforward to discern.
 
 ```html
 <a href="javascript:myFunction('<%=untrustedData%>', 'test');">Click Me</a>
@@ -498,9 +498,9 @@ There are a number of open source encoding libraries out there:
 2. OWASP [Java Encoder](https://www.owasp.org/index.php/OWASP_Java_Encoder_Project)
 3. Apache Commons Text [StringEscapeUtils](https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/StringEscapeUtils.html), replace one from [Apache Commons Lang3](https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringEscapeUtils.html)
 4. [Jtidy](http://jtidy.sourceforge.net/)
-5. Your company’s custom implementation.
+5. Your company's custom implementation.
 
-Some work on a black list while others ignore important characters like “&lt;” and “&gt;”. 
+Some work on a black list while others ignore important characters like "&lt;" and "&gt;". 
 
 Java Encoder is an active project providing supports for HTML, CSS and JavaScript encoding.
 
@@ -522,9 +522,9 @@ For example:
 </script>
 ```
 
-The HTML encoded value above is still executable. If that isn’t enough to keep in mind, you have to remember that encodings are lost when you retrieve them using the value attribute of a DOM element.
+The HTML encoded value above is still executable. If that isn't enough to keep in mind, you have to remember that encodings are lost when you retrieve them using the value attribute of a DOM element.
 
-Let’s look at the sample page and script:
+Let's look at the sample page and script:
 
 ```html
 <form name="myForm" ...>

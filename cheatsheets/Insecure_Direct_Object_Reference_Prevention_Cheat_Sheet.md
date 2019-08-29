@@ -29,7 +29,7 @@ To be exploited, an IDOR issue must be combined with an [Access Control](Access_
 
 **From Jeff Williams**:
 
-Direct Object Reference is fundamentally a Access Control problem. We split it out to emphasize the difference between URL access control and data layer access control. You can’t do anything about the data-layer problems with URL access control. And they’re not really input validation problems either. But we see DOR manipulation all the time. If we list only “Messed-up from the Floor-up Access Control” then people will probably only put in SiteMinder or JEE declarative access control on URLs and call it a day. That’s what we’re trying to avoid.
+Direct Object Reference is fundamentally a Access Control problem. We split it out to emphasize the difference between URL access control and data layer access control. You can't do anything about the data-layer problems with URL access control. And they're not really input validation problems either. But we see DOR manipulation all the time. If we list only "Messed-up from the Floor-up Access Control" then people will probably only put in SiteMinder or JEE declarative access control on URLs and call it a day. That's what we're trying to avoid.
 
 **From Eric Sheridan**:
 
@@ -37,9 +37,9 @@ An object reference map is first populated with a list of authorized values whic
 
 "A direct object reference occurs when a developer exposes a reference to an internal implementation object, such as a file, directory, database record, or key, as a URL or form parameter."
 
-I'm "down" with DOR’s for files, directories, etc. But not so much for ALL databases primary keys. That’s just insane, like you are suggesting. I think that anytime database primary keys are exposed, an access control rule is required. There is no way to practically DOR all database primary keys in a real enterprise or post-enterprise system.
+I'm "down" with DOR's for files, directories, etc. But not so much for ALL databases primary keys. That's just insane, like you are suggesting. I think that anytime database primary keys are exposed, an access control rule is required. There is no way to practically DOR all database primary keys in a real enterprise or post-enterprise system.
 
-But, suppose a user has a list of accounts, like a bank where database id 23456 is their checking account. I’d DOR that in a heartbeat. You need to be prudent about this.
+But, suppose a user has a list of accounts, like a bank where database id 23456 is their checking account. I'd DOR that in a heartbeat. You need to be prudent about this.
 
 # Objective
 

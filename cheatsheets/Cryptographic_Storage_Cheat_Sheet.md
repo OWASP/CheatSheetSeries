@@ -36,11 +36,11 @@ E.g. [CCM](http://en.wikipedia.org/wiki/CCM_mode) or [GCM](http://en.wikipedia.o
 
 Do not implement an existing cryptographic algorithm on your own, no matter how easy it appears. Instead, use widely accepted algorithms and widely accepted implementations.
 
-Only use approved public algorithms such as AES, RSA public key cryptography, and SHA-256 or better for hashing. Do not use weak algorithms, such as MD5 or SHA1. Avoid hashing for password storage, instead use Argon2, PBKDF2, bcrypt or scrypt. Note that the classification of a "strong" cryptographic algorithm can change over time. See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) or ISO TR 14742 “Recommendations on Cryptographic Algorithms and their use” or [Algorithms, key size and parameters report – 2014](http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-size-and-parameters-report-2014/at_download/fullReport) from European Union Agency for Network and Information Security. E.g. [AES](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 128, [RSA](http://en.wikipedia.org/wiki/RSA_%28cryptosystem%29) 3072, [SHA](http://en.wikipedia.org/wiki/Secure_Hash_Algorithm) 256.
+Only use approved public algorithms such as AES, RSA public key cryptography, and SHA-256 or better for hashing. Do not use weak algorithms, such as MD5 or SHA1. Avoid hashing for password storage, instead use Argon2, PBKDF2, bcrypt or scrypt. Note that the classification of a "strong" cryptographic algorithm can change over time. See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) or ISO TR 14742 "Recommendations on Cryptographic Algorithms and their use" or [Algorithms, key size and parameters report – 2014](http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-size-and-parameters-report-2014/at_download/fullReport) from European Union Agency for Network and Information Security. E.g. [AES](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 128, [RSA](http://en.wikipedia.org/wiki/RSA_%28cryptosystem%29) 3072, [SHA](http://en.wikipedia.org/wiki/Secure_Hash_Algorithm) 256.
 
 Ensure that the implementation has (at minimum) had some cryptography experts involved in its creation. If possible, use an implementation that is FIPS 140-2 certified.
 
-See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) Table 2 “Comparable strengths” for the strength (“security bits”) of different algorithms and key lengths, and how they compare to each other.
+See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) Table 2 "Comparable strengths" for the strength ("security bits") of different algorithms and key lengths, and how they compare to each other.
 
 - In general, where different algorithms are used, they should have comparable strengths e.g. if an AES-128 key is to be encrypted, an AES-128 key or greater, or RSA-3072 or greater could be used to encrypt it.
 - In general, hash lengths are twice as long as the security bits offered by the symmetric/asymmetric algorithm  e.g. SHA-224 for 3TDEA (112 security bits) (due to the [Birthday Attack](http://en.wikipedia.org/wiki/Birthday_attack))
@@ -55,19 +55,31 @@ In general, you should not use AES, DES or other symmetric cipher primitives dir
 
 **Note:** Do not use [ECB mode](http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Electronic_codebook_.28ECB.29) for encrypting lots of data (the other modes are better because they chain the blocks of data together to improve the data security).
 
-#### Rule - Use strong random numbers
+#### Rule - Use cryptographically secure pseudo random number generators (CSPRNG)
 
-Ensure that all random numbers, especially those used for cryptographic parameters (keys, IV’s, MAC tags), random file names, random GUIDs, and random strings are generated in a cryptographically strong fashion.
+When generating random bits in the context of sofware security, use the available Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) library or module available on the programming language you are using.
+
+Do not use Pseudo-Random Number Generators (PRNG) since they are not secure and will produce deterministic results. The chosen numbers are not completely random because a mathematical algorithm is used to select them, but they are sufficiently random for practical purposes. 
+
+PRNGs are primarily used for generating random-looking numbers in use cases such as modeling and simulation in software, while CSPRNGs are intended for generating random-looking numbers resistant to prediction for security use cases such as random passwords, CSRF tokens, session IDs, etc.
+
+The use of CSPRNGs will ensure that all random numbers, especially those used for cryptographic parameters (keys, IVs, MAC tags), random file names, random GUIDs, and random strings are generated in a cryptographically strong fashion.
 
 Ensure that random algorithms are seeded with sufficient entropy.
 
 Tools like [NIST RNG Test tool](http://csrc.nist.gov/groups/ST/toolkit/rng/documentation_software.html) (as used in PCI PTS Derived Test Requirements) can be used to comprehensively assess the quality of a Random Number Generator by reading e.g. 128MB of data from the RNG source and then assessing its randomness properties with the tool.
 
-The following functions are considered **weak** random number generators and should not be used.
+The following functions are considered **weak** pseudo-random number generators and should not be used in the context of security:
 
 - C : `random()`, `rand()` instead use [getrandom(2)](http://man7.org/linux/man-pages/man2/getrandom.2.html)
-- Java : `java.util.Random()` instead use `java.security.SecureRandom`
+- Java and Android OS : `java.util.Random()` instead use [java.security.SecureRandom](https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html)
 - PHP : `rand()`, `mt_rand()`, `array_rand()`, `uniqid()` instead use [random_bytes()](https://www.php.net/manual/en/function.random-bytes.php), [random_int()](https://www.php.net/manual/en/function.random-int.php) in PHP 7 or [openssl_random_pseudo_bytes()](https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php) in PHP 5 (which is **deprecated** and **should not be used**)
+- .NET/C# : `Random()`, instead use [RNGCryptoServiceProvider](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rngcryptoserviceprovider?view=netframework-4.8)
+-  Objective-C/Apple IOS : `arc4random()` (Uses RC4 Cipher), instead use [SecRandomCopyBytes](https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc)
+- Python : `random()`, instead use [secrets()](https://docs.python.org/3/library/secrets.html#module-secrets)
+- Ruby : `Random`, instead use [SecureRandom](https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html)
+- Go: `rand` using `math/rand` package, instead use [crypto.rand](https://golang.org/pkg/crypto/rand/) package
+- Rust: `rand::prng::XorShiftRng`, instead use [rand::prng::chacha::ChaChaRng](https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html) and the rest of the Rust library [CSPRNGs.](https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs)
 
 For secure random number generation, refer to NIST SP 800-90A. CTR-DRBG, HASH-DRBG or HMAC-DRBG are recommended. Refer to NIST SP800-22 A Statistical Test Suite for Random and Pseudorandom Number Generators for Cryptographic Applications, and the testing toolkit.
 
@@ -76,7 +88,7 @@ References:
 
 #### Rule - Use Authenticated Encryption of data
 
-Use ([AE](http://en.wikipedia.org/wiki/Authenticated_encryption)) modes under a uniform API. Recommended modes include [CCM](http://en.wikipedia.org/wiki/CCM_mode), and [GCM](http://en.wikipedia.org/wiki/Galois/Counter_Mode) as these, and only these as of November 2014, are specified in [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html), ISO IEC 19772 (2009) "Information technology — Security techniques — Authenticated encryption", and [IEEE P1619 Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices](http://en.wikipedia.org/wiki/IEEE_P1619):
+Use ([AE](http://en.wikipedia.org/wiki/Authenticated_encryption)) modes under a uniform API. Recommended modes include [CCM](http://en.wikipedia.org/wiki/CCM_mode), and [GCM](http://en.wikipedia.org/wiki/Galois/Counter_Mode) as these, and only these as of November 2014, are specified in [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html), ISO IEC 19772 (2009) "Information technology - Security techniques - Authenticated encryption", and [IEEE P1619 Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices](http://en.wikipedia.org/wiki/IEEE_P1619):
 
 - [Authenticated Encryption](http://en.wikipedia.org/wiki/Authenticated_encryption) gives [confidentiality](http://en.wikipedia.org/wiki/Confidentiality), [integrity](http://en.wikipedia.org/wiki/Data_integrity), and [authenticity](http://en.wikipedia.org/wiki/Authentication) (CIA); encryption alone just gives confidentiality. Encryption must always be combined with message integrity and authenticity protection. Otherwise the ciphertext may be vulnerable to manipulation causing changes to the underlying plaintext data, especially if it's being passed over untrusted channels (e.g. in an URL or cookie).
 - These modes require only one key. In general, the tag sizes and the IV sizes should be set to maximum values.
@@ -154,7 +166,7 @@ PCI DSS requirement 3 covers secure storage of credit card data. This requiremen
 
 Compliance with requirement 3.4 can be met by implementing any of the four types of secure storage described in the standard which includes encrypting and hashing data. These two approaches will often be the most popular choices from the list of options. The standard doesn't refer to any specific algorithms but it mandates the use of **Strong Cryptography**. The glossary document from the PCI council defines **Strong Cryptography** as:
 
-*Cryptography based on industry-tested and accepted algorithms, along with strong key lengths and proper key-management practices. Cryptography is a method to protect data and includes both encryption (which is reversible) and hashing (which is not reversible, or “one way”). SHA-1 is an example of an industry-tested and accepted hashing algorithm. Examples of industry-tested and accepted standards and algorithms for encryption include AES (128 bits and higher), TDES (minimum double-length keys), RSA (1024 bits and higher), ECC (160 bits and higher), and ElGamal (1024 bits and higher).*
+*Cryptography based on industry-tested and accepted algorithms, along with strong key lengths and proper key-management practices. Cryptography is a method to protect data and includes both encryption (which is reversible) and hashing (which is not reversible, or "one way"). SHA-1 is an example of an industry-tested and accepted hashing algorithm. Examples of industry-tested and accepted standards and algorithms for encryption include AES (128 bits and higher), TDES (minimum double-length keys), RSA (1024 bits and higher), ECC (160 bits and higher), and ElGamal (1024 bits and higher).*
 
 If you have implemented the second rule in this cheat sheet you will have implemented a strong cryptographic algorithm which is compliant with or stronger than the requirements of PCI DSS requirement 3.4. You need to ensure that you identify all locations that card data could be stored including logs and apply the appropriate level of protection. This could range from encrypting the data to replacing the card number in logs.
 

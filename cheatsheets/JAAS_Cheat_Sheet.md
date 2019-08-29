@@ -2,7 +2,7 @@
 
 The process of verifying the identity of a user or another system is authentication. 
 
-[JAAS](https://docs.oracle.com/javase/8/docs/technotes/guides/security/jaas/JAASRefGuide.html), as an authentication framework manages the authenticated user’s identity and credentials from login to logout.
+[JAAS](https://docs.oracle.com/javase/8/docs/technotes/guides/security/jaas/JAASRefGuide.html), as an authentication framework manages the authenticated user's identity and credentials from login to logout.
 
 The JAAS authentication lifecycle:
 
@@ -29,7 +29,7 @@ Branches
 
 Note the placement of the semicolons, terminating both `LoginModule` entries and stanzas. 
 
-The word required indicates the `LoginContext`’s `login()` method must be successful when logging in the user. The `LoginModule`-specific values `debug` and `succeeded` are passed to the `LoginModule`. 
+The word required indicates the `LoginContext`'s `login()` method must be successful when logging in the user. The `LoginModule`-specific values `debug` and `succeeded` are passed to the `LoginModule`. 
 
 They are defined by the `LoginModule` and their usage is managed inside the `LoginModule`. Note, Options are Configured using key-value pairing such as `debug="true"` and the key and value should be separated by a `=` sign.
 
@@ -111,7 +111,7 @@ There are two types of credentials, **Public** and **Private**:
 
 Principals (i.e. Identities the subject has other than their login name) such as employee number or membership ID in a user group are added to the subject. 
 
-Below, is an example `commit()` method where first, for each group the authenticated user has membership in, the group name is added as a principal to the subject. The subject’s username is then added to their public credentials.
+Below, is an example `commit()` method where first, for each group the authenticated user has membership in, the group name is added as a principal to the subject. The subject's username is then added to their public credentials.
 
 Code snippet setting then adding any principals and a public credentials to a subject:
 
@@ -132,7 +132,7 @@ public boolean commit() {
 
 ## abort()
 
-The `abort()` method is called when authentication doesn’t succeed. Before the `abort()` method exits the `LoginModule`, care should be taken to reset state including the user name and password input fields.
+The `abort()` method is called when authentication doesn't succeed. Before the `abort()` method exits the `LoginModule`, care should be taken to reset state including the user name and password input fields.
 
 ## logout()
 

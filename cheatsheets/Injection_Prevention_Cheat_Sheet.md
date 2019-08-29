@@ -71,14 +71,14 @@ When using dynamic SQL within a stored procedure, the application must properly 
 The time delay exploitation technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. This technique consists in sending an injected query and in case the conditional is true, the tester can monitor the time taken to for the server to respond. If there is a delay, the tester can assume the result of the conditional query is true. This exploitation technique can be different from DBMS to DBMS (check DBMS specific section).
 
 ```text
-http://www.example.com/product.php?id=10 AND IF(version() like ‘5%’, sleep(10), ‘false’))--
+http://www.example.com/product.php?id=10 AND IF(version() like '5%', sleep(10), 'false'))--
 ```
 
-In this example the tester if checking whether the MySql version is 5.x or not, making the server to delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn’t need to wait for the response. Sometimes he can set a very high value (e.g. 100) and cancel the request after some seconds.
+In this example the tester if checking whether the MySql version is 5.x or not, making the server to delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn't need to wait for the response. Sometimes he can set a very high value (e.g. 100) and cancel the request after some seconds.
 
 **Out of band Exploitation technique**
 
-This technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester’s server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section. 
+This technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester's server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section. 
 
 #### Remediation 
 
@@ -143,7 +143,7 @@ try {
 
 ### LDAP Injection
 
-LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it’s possible to modify LDAP statements through techniques similar to [SQL Injection](https://www.owasp.org/index.php/SQL_Injection). LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. For more information on LDAP Injection attacks, visit [LDAP injection](https://www.owasp.org/index.php/LDAP_injection).
+LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements through techniques similar to [SQL Injection](https://www.owasp.org/index.php/SQL_Injection). LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. For more information on LDAP Injection attacks, visit [LDAP injection](https://www.owasp.org/index.php/LDAP_injection).
 
 [LDAP injection](https://www.owasp.org/index.php/LDAP_injection) attacks are common due to two factors:
 
@@ -268,7 +268,7 @@ If it is considered unavoidable the call to a system command incorporated with u
 2.  **Input validation** - the values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:
     - When it comes to the **commands** used, these must be validated against a whitelist of allowed commands.
     - In regards to the **arguments** used for these commands, they should be validated using the following options:
-        - Positive or “whitelist” input validation - where are the arguments allowed explicitly defined
+        - Positive or "whitelist" input validation - where are the arguments allowed explicitly defined
         - White list Regular Expression - where is explicitly defined a whitelist of good characters allowed and the maximum length of the string. Ensure that metacharacters like `& | ; $ > < \` \ !` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:
 
 `^[a-z0-9]{3,10}$`
@@ -302,7 +302,7 @@ Web applications often communicate with network daemons (like SMTP, IMAP, FTP) w
 
 ## Rule \#1 (Perform proper input validation):
 
-Perform proper input validation. Positive or “whitelist” input validation with appropriate canonicalization is also recommended, but **is not a complete defense** as many applications require special characters in their input.
+Perform proper input validation. Positive or "whitelist" input validation with appropriate canonicalization is also recommended, but **is not a complete defense** as many applications require special characters in their input.
 
 ## Rule \#2 (Use a safe API):
 
