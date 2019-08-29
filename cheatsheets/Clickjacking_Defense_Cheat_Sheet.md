@@ -2,7 +2,7 @@
 
 This cheat sheet is focused on providing developer guidance on [Clickjack/UI Redress](https://www.owasp.org/index.php/Clickjacking) attack prevention.
 
-The most popular way to defend against Clickjacking is to include some sort of "frame-breaking" functionality which prevents other web pages from framing the site you wish to defend. This cheat sheet will discuss two methods of implementing frame-breaking: first is X-Frame-Options headers (used if the browser supports the functionality); and second is JavaScript frame-breaking code.
+The most popular way to defend against Clickjacking is to include some sort of "frame-breaking" functionality which prevents other web pages from framing the site you wish to defend. This cheat sheet will discuss two methods of implementing frame-breaking: first is [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) header (used if the browser supports the functionality); and second is JavaScript frame-breaking code.
 
 # Defending with Content Security Policy (CSP) frame-ancestors directive
 
@@ -87,11 +87,11 @@ This approach is discussed on the [JavaScript.info website](https://javascript.i
 
 ## Limitations
 
-As of 2019 the `SameSite` attribute is supported by [most modern browsers](https://caniuse.com/#feat=same-site-cookie-attribute), although it it not widely supported on mobile browsers. Support in Internet Explorer will varies depending on the updates installed and the underlying operating system.
+If the Clickjacking attack does not require the user to be authenticated, this attribute will not provide any protection.
 
-Additionally, if the Clickjacking attack does not require that the user is authenticated, this attribute will not provide any degree of protection.
+Additionally, while `SameSite` attribute is supported by [most modern browsers](https://caniuse.com/#feat=same-site-cookie-attribute), there are still a significant number of users (approximately 12% as of August 2019) with browsers which do not support it.
 
-This use of this attribute should be considered as part of a defence-in-depth approach, and it should not be relied upon as the sole protection against Clickjacking.
+The use of this attribute should be considered as part of a defence-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.
 
 # Best-for-now Legacy Browser Frame Breaking Script
 
