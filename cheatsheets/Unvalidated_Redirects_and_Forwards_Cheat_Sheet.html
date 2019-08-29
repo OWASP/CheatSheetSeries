@@ -1023,6 +1023,8 @@
 <pre><code class="lang-php"><span class="hljs-meta">&lt;?php</span>
 <span class="hljs-comment">/* Redirect browser */</span>
 header(<span class="hljs-string">&quot;Location: http://www.mysite.com&quot;</span>);
+<span class="hljs-comment">/* Exit to prevent the rest of the code from executing */</span>
+<span class="hljs-keyword">exit</span>;
 <span class="hljs-meta">?&gt;</span>
 </code></pre>
 <p>ASP .NET</p>
@@ -1038,7 +1040,7 @@ header(<span class="hljs-string">&quot;Location: http://www.mysite.com&quot;</sp
 <p>The following Java code receives the URL from the parameter named <code>url</code> (<a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-" target="_blank">GET or POST</a>) and redirects to that URL:</p>
 <pre><code class="lang-java">response.sendRedirect(request.getParameter(<span class="hljs-string">&quot;url&quot;</span>));
 </code></pre>
-<p>The following PHP code obtains a URL from the query string (via the parameter named <code>url</code>) and then redirects the user to that URL:</p>
+<p>The following PHP code obtains a URL from the query string (via the parameter named <code>url</code>) and then redirects the user to that URL. Additionally, the PHP code after this <code>header()</code> function will continue to execute, so if the user configures their browser to ignore the redirect, they may be able to access the rest of the page.</p>
 <pre><code class="lang-php">$redirect_url = $_GET[<span class="hljs-string">&apos;url&apos;</span>];
 header(<span class="hljs-string">&quot;Location: &quot;</span> . $redirect_url);
 </code></pre>
@@ -1086,7 +1088,7 @@ Response.Redirect(url);
  }
 </code></pre>
 <h2 id="dangerous-forward-example"><a name="dangerous-forward-example" class="plugin-anchor" href="#dangerous-forward-example"><i class="fa fa-link" aria-hidden="true"></i></a>Dangerous Forward Example</h2>
-<p>When applications allow user input to forward requests between different parts of the site, the application must check that the user is authorized to access the url, perform the functions it provides, and it is an appropriate url request. </p>
+<p>When applications allow user input to forward requests between different parts of the site, the application must check that the user is authorized to access the URL, perform the functions it provides, and it is an appropriate URL request. </p>
 <p>If the application fails to perform these checks, an attacker crafted URL may pass the application&apos;s access control check and then forward the attacker to an administrative function that is not normally permitted.</p>
 <p>Example: </p>
 <pre><code class="lang-text">http://www.example.com/function.jsp?fwd=admin.jsp
@@ -1116,11 +1118,27 @@ Response.Redirect(url);
 <p>Safe use of redirects and forwards can be done in a number of ways:</p>
 <ul>
 <li>Simply avoid using redirects and forwards.</li>
-<li>If used, do not allow the url as user input for the destination. This can usually be done. In this case, you should have a method to validate URL.</li>
-<li>If user input can&apos;t be avoided, ensure that the supplied <strong>value</strong> is valid, appropriate for the application, and is <strong>authorized</strong> for the user.</li>
-<li>It is recommended that any such destination input be mapped to a value, rather than the actual URL or portion of the URL, and that server side code translate this value to the target URL.</li>
-<li>Sanitize input by creating a list of trusted URL&apos;s (lists of hosts or a regex).</li>
-<li>Force all redirects to first go through a page notifying users that they are going off of your site, and have them click a link to confirm.</li>
+<li>If used, do not allow the URL as user input for the destination.</li>
+<li>Where possible, have the user provide short name, ID or token which is mapped server-side to a full target URL.<ul>
+<li>This provides the highest degree of protection against the attack tampering with the URL.</li>
+<li>Be careful that this doesn&apos;t introduce an enumeration vulnerability where a user could cycle through IDs to find all possible redirect targets</li>
+</ul>
+</li>
+<li>If user input can&#x2019;t be avoided, ensure that the supplied <strong>value</strong> is valid, appropriate for the application, and is <strong>authorized</strong> for the user.</li>
+<li>Sanitize input by creating a list of trusted URLs (lists of hosts or a regex).<ul>
+<li>This should be based on a white-list approach, rather than a blacklist.</li>
+</ul>
+</li>
+<li>Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.</li>
+</ul>
+<h2 id="validating-urls"><a name="validating-urls" class="plugin-anchor" href="#validating-urls"><i class="fa fa-link" aria-hidden="true"></i></a>Validating URLs</h2>
+<p>When attempting to validate and sanitise user-input to determine whether the URL is safe, wherever possible you should use a built in library or function to parse the URLs, such as <code>parse_url()</code> in PHP, rather than rolling your own parser using regex. Additionally, make sure that you take the following into account:</p>
+<ul>
+<li>Input starting with a <code>/</code> to redirect to local pages is <strong>not safe</strong>. <code>//example.org</code> is a valid URL.</li>
+<li>Input starting with the desired domain name is <strong>not safe</strong>. <code>https://example.org.attacker.com</code> is valid.</li>
+<li>Only allow HTTP(S) protocols. All other protocols, including JavaScript URIs such as <code>javascript:alert(1)</code> should be blocked</li>
+<li>Data URIs such as <code>data:text/html,&lt;script&gt;alert(document.domain)&lt;/script&gt;</code> should be blocked</li>
+<li>URIs containing CRLF characters can lead to header injection or response splitting attacks, and should be blocked.</li>
 </ul>
 <h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
 <ul>
@@ -1172,7 +1190,7 @@ Response.Redirect(url);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Unvalidated Redirects and Forwards ","level":"1.60","depth":1,"next":{"title":"User Privacy Protection ","level":"1.61","depth":1,"path":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","ref":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","articles":[]},"previous":{"title":"Transport Layer Protection ","level":"1.59","depth":1,"path":"cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md","ref":"cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md","mtime":"2019-08-28T18:26:10.429Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-28T18:26:43.530Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Unvalidated Redirects and Forwards ","level":"1.60","depth":1,"next":{"title":"User Privacy Protection ","level":"1.61","depth":1,"path":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","ref":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","articles":[]},"previous":{"title":"Transport Layer Protection ","level":"1.59","depth":1,"path":"cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md","ref":"cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md","mtime":"2019-08-29T06:54:29.823Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-29T06:54:49.523Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
