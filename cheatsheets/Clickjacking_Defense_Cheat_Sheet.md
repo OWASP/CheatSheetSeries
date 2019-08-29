@@ -1,8 +1,14 @@
 # Introduction
 
-This cheat sheet is focused on providing developer guidance on [Clickjack/UI Redress](https://www.owasp.org/index.php/Clickjacking) attack prevention.
+This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://www.owasp.org/index.php/Clickjacking), also known as UI redress attacks.
 
-The most popular way to defend against Clickjacking is to include some sort of "frame-breaking" functionality which prevents other web pages from framing the site you wish to defend. This cheat sheet will discuss two methods of implementing frame-breaking: first is [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) header (used if the browser supports the functionality); and second is JavaScript frame-breaking code.
+There are three main mechanisms that can be used to defend against these attacks:
+
+- Preventing the browser from loading the page in frame using the [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) or [Content Security Policy (frame-ancestors)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) HTTP headers.
+- Preventing session cookies from being included when the page is loaded in a frame using the [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) cookie attribute.
+- Implementing JavaScript code in the page to attempt to prevent it being loaded in a frame (known as a "frame-buster").
+
+Note that these mechanisms are all independent of each other, and where possible more than one of them should be implemented in order to provide defense in depth.
 
 # Defending with Content Security Policy (CSP) frame-ancestors directive
 
