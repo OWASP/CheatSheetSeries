@@ -18,7 +18,7 @@ Usage scenarios are not only limited to financial systems. For example: an e-mai
 - Time based OTP tokens, such as [OATH TOTP (Time-based One-Time Password)](https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm),
 - OTP sent by SMS or provided by phone
 - Digital signature using e.g. a smart card or a smart phone,
-- Challenge-response tokens, including unconnected card readers or solutions which scan transaction data from the user’s computer screen.
+- Challenge-response tokens, including unconnected card readers or solutions which scan transaction data from the user's computer screen.
 
 Some of these can be implemented on a physical device or in a mobile application.
 
@@ -28,7 +28,7 @@ Transaction authorization is implemented in order to protect for unauthorized wi
 
 ## 1.1 Transaction authorization method has to allow a user to identify and acknowledge significant transaction data
 
-User’s computers cannot be trusted due to malware threats. Hence a method that prevents a user from identifying transaction on an external device cannot be considered as secure. Transaction data should be presented and acknowledged using an external authorization component.
+User's computers cannot be trusted due to malware threats. Hence a method that prevents a user from identifying transaction on an external device cannot be considered as secure. Transaction data should be presented and acknowledged using an external authorization component.
 
 Such a transaction authorization components should be build using the *What You See Is What You Sign* principle. When a user authorizes a transaction he needs to know what he is authorizing. Based on this principle, an authorization method must permit a user to identify and acknowledge the data which are significant to a given transaction. For example, in the case of a wire transfer: the target account and amount.
 
@@ -61,17 +61,17 @@ Malware can trick users in authorizing fraudulent operations, when an applicatio
 - An application is using the same method for user authentication (usually as a second factor to traditional login/password) and for transaction authorization. E.g. by using a OTP token, Challenge-response codes, operation signing using external smartcard, ...
 - A malware may present the user a false error message after the first step (authentication to the application) and trick the user into repeating the authentication procedure. The first authentication code will be used by the malware for authentication, whereas the second code would be used to authorize a fraudulent transaction. Even challenge-response schemes could be abused using this scenario as malware can present a challenge taken from a fraudulent transaction and trick the user to provide response. Such an attack scenario is used widely in [malware attacks against electronic banking](http://securityintelligence.com/back-basics-malware-authors-downgrade-tactics-stay-radar/#.VX_qI_krLDc).
 
-In the abovementioned scenario, the same method was used to authenticate the user and to authorize the transaction. Malware can abuse this behaviour to extract transaction authorization credentials without the user’s knowledge. Social engineering methods [can be used despite utilized authentication and operation authorization methods](http://securityintelligence.com/tatanga-attack-exposes-chiptan-weaknesses/#.VZAy9PkrLDc) but the application shouldn’t simplify such attack scenarios.
+In the abovementioned scenario, the same method was used to authenticate the user and to authorize the transaction. Malware can abuse this behaviour to extract transaction authorization credentials without the user's knowledge. Social engineering methods [can be used despite utilized authentication and operation authorization methods](http://securityintelligence.com/tatanga-attack-exposes-chiptan-weaknesses/#.VZAy9PkrLDc) but the application shouldn't simplify such attack scenarios.
 
 Safeguards should allow the user to easily distinguish authentication from transaction authorization. This could be achieved by:
 
 - Using different methods to authenticate and to authorize,
 - Or using different actions in an external security component (e.g. different mode of operation in CAP reader),
-- Or presenting the user a clear message about what he/she is “signing” (What You See Is What You Sign Principle).
+- Or presenting the user a clear message about what he/she is "signing" (What You See Is What You Sign Principle).
 
 ## 1.5 Each transaction should be authorized using unique authorization credentials
 
-Some applications are asking for transaction authorization credentials only once, e.g. static password, code sent through SMS, token response. Afterwards a user is able to authorize any transaction during the whole user’s session or at least he has to reuse the same credentials each time he needs to authorize a transaction. Such behavior is not sufficient to prevent malware attacks because malware will sniff such credentials and use them to authorize any transaction without the user’s knowledge.
+Some applications are asking for transaction authorization credentials only once, e.g. static password, code sent through SMS, token response. Afterwards a user is able to authorize any transaction during the whole user's session or at least he has to reuse the same credentials each time he needs to authorize a transaction. Such behavior is not sufficient to prevent malware attacks because malware will sniff such credentials and use them to authorize any transaction without the user's knowledge.
 
 # 2. Non-functional guidelines
 
@@ -150,7 +150,7 @@ The result of the transaction entry and the authorization process described in p
 
 ## 2.9 Authorization credentials should be valid only by limited period of time
 
-In some malware attacks scenarios, authorization credentials entered by the user is passed to malware command and control server (C&C) and then used from an attacker-controlled machine. Such a process is often performed manually by an attacker. To make such attacks difficult, the server should allow authorizing the transaction only in a limited time window between generating of challenge or OTP and the transaction authorization. Additionally, such safeguard will also aid in preventing resource exhaustion attacks. The time window should be carefully selected to not disrupt normal users’ behavior.
+In some malware attacks scenarios, authorization credentials entered by the user is passed to malware command and control server (C&C) and then used from an attacker-controlled machine. Such a process is often performed manually by an attacker. To make such attacks difficult, the server should allow authorizing the transaction only in a limited time window between generating of challenge or OTP and the transaction authorization. Additionally, such safeguard will also aid in preventing resource exhaustion attacks. The time window should be carefully selected to not disrupt normal users' behavior.
 
 ## 2.10 Authorization credentials should be unique for every operation
 
@@ -162,8 +162,8 @@ We identify other issues that should be taken into consideration while implement
 
 - Which transactions should be authorized? All transactions or only some of them. Each application is different and an application owner should decide if all transactions should be authorized or only some of them, considering risk analysis, risk exposition of given application, and other safeguards implemented in an application.
 - We recommend the use of cryptographic operations to protect transactions and to ensure integrity, confidentiality and non-repudiation.
-- Device enrolment or “pairing” of an external authorization device (or a mobile application) with the user account.
-- Provisioning & protection of the device signing keys, during device “pairing” is as critical as the signing protocol itself. Malware may attempt to inject/replace or steal the signing keys.
+- Device enrolment or "pairing" of an external authorization device (or a mobile application) with the user account.
+- Provisioning & protection of the device signing keys, during device "pairing" is as critical as the signing protocol itself. Malware may attempt to inject/replace or steal the signing keys.
 - User awareness. E.g.: For transaction authorization methods, when a user types-in significant transaction data to an authorization component (e.g. an external dedicated device or a mobile application), users should be trained to rewrite transaction data from trusted source and not from a computer screen.
 - There are some anti-malware solutions that protect against malware threats but such solutions [do not guarantee 100% effectiveness](http://www.securing.pl/en/script-based-malware-detection-in-online-banking-security-overview/index.html) and should be used only as an additional layer of protection.
 - Protection of the signing keys using a second factor either be password, biometric, etc..

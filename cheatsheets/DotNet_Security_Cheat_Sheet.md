@@ -219,15 +219,17 @@ HttpContext.Current.Response.Headers.Remove("Server");
 
 ASP.NET MVC (Model–View–Controller) is a contemporary web application framework that uses more standardized HTTP communication than the Web Forms postback model. 
 
-The OWASP Top 10 lists the most prevalent and dangerous threats to web security in the world today and is reviewed every 3 years. 
+The OWASP Top 10 2017 lists the most prevalent and dangerous threats to web security in the world today and is reviewed every 3 years. 
 
 This section is based on this. Your approach to securing your web application should be to start at the top threat A1 below and work down, this will ensure that any time spent on security will be spent most effectively spent and cover the top threats first and lesser threats afterwards. After covering the top 10 it is generally advisable to assess for other threats or get a professionally completed Penetration Test.
 
-## A1 SQL Injection
+## A1 Injection
+
+### SQL Injection
 
 DO: Using an object relational mapper (ORM) or stored procedures is the most effective way of countering the SQL Injection vulnerability.
 
-DO: Use parameterized queries where a direct sql query must be used.
+DO: Use parameterized queries where a direct sql query must be used. More Information can be found [here](Query_Parameterization_Cheat_Sheet.md).
 
 e.g. In entity frameworks:
 
@@ -253,7 +255,181 @@ EXEC strQry // SQL Injection vulnerability!
 
 DO: Practise Least Privilege - Connect to the database using an account with a minimum set of permissions required to do it's job i.e. not the sa account
 
-## A2 Weak Account management
+### OS Injection
+
+Information about OS Injection can be found on this [cheat sheet](OS_Command_Injection_Defense_Cheat_Sheet.md#net).
+
+DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
+
+e.g
+
+``` csharp
+System.Diagnostics.Process process = new System.Diagnostics.Process();
+System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+startInfo.FileName = "validatedCommand";
+startInfo.Arguments = "validatedArg1 validatedArg2 validatedArg3";
+process.StartInfo = startInfo;
+process.Start();
+```
+
+DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+
+e.g Validating user input using [IPAddress.Parse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.parse?view=netframework-4.8)
+
+``` csharp
+//User input
+string ipaddress = "127.0.0.1";
+ 
+//check to make sure an ip address was provided    
+if (string.IsNullOrEmpty(address))  
+{   
+	try
+	{
+		// Create an instance of IPAddress for the specified address string (in 
+		// dotted-quad, or colon-hexadecimal notation).
+		IPAddress address = IPAddress.Parse(ipAddress);
+
+		// Display the address in standard notation.
+		return address.ToString();
+	}
+	catch(FormatException e)
+	{
+		//ipaddress is not of type IPaddress
+		...
+	}
+    ...
+}
+ ```
+ 
+### LDAP injection
+
+Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash `\` escape character. A table showing which characters that should be escaped for Active Directory can be found at the in the LDAP_Injection_Prevention_Cheat_Sheet.
+
+NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.
+
+More information can be found [here](LDAP_Injection_Prevention_Cheat_Sheet.md#introduction).
+
+## A2 Broken Authentication
+
+DO: Use [ASP.net Core Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&).
+ASP.net Core Identity framework is well configured by default, where it uses secure password hashes and an individual salt. Identity uses the PBKDF2 hashing function for passwords, and they generate a random salt per user.
+
+DO: Set secure password policy
+
+e.g ASP.net Core Identity 
+
+``` csharp
+//startup.cs
+services.Configure<IdentityOptions>(options =>
+{
+	// Password settings
+	options.Password.RequireDigit = true;
+	options.Password.RequiredLength = 8;
+	options.Password.RequireNonAlphanumeric = true;
+	options.Password.RequireUppercase = true;
+	options.Password.RequireLowercase = true;
+	options.Password.RequiredUniqueChars = 6;
+ 
+ 
+	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+	options.Lockout.MaxFailedAccessAttempts = 3;
+ 
+	options.SignIn.RequireConfirmedEmail = true;
+	
+	options.User.RequireUniqueEmail = true;
+});
+```
+
+DO: Set a cookie policy
+
+e.g 
+
+``` csharp
+//startup.cs
+services.ConfigureApplicationCookie(options =>
+{
+	options.Cookie.HttpOnly = true;
+	options.Cookie.Expiration = TimeSpan.FromHours(1)
+	options.SlidingExpiration = true;
+});
+```
+
+## A3 Sensitive Data Exposure
+
+DO NOT: [Store encrypted passwords](Password_Storage_Cheat_Sheet.md#do-not-limit-the-character-set-and-set-long-max-lengths-for-credentials).
+
+DO: Use a strong hash to store password credentials. For hash refer to [this section](Password_Storage_Cheat_Sheet.md#guidance).
+
+DO: Enforce passwords with a minimum complexity that will survive a dictionary attack i.e. longer passwords that use the full character set (numbers, symbols and letters) to increase the entropy.
+
+DO: Use a strong encryption routine such as AES-512 where personally identifiable data needs to be restored to it's original format. Protect encryption keys more than any other asset, please find [more information of storing encryption keys at rest](Password_Storage_Cheat_Sheet.md#guidance).
+Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly. More information can be found [here](Transport_Layer_Protection_Cheat_Sheet.md).
+
+DO: Use TLS 1.2 for your entire site. Get a free certificate [LetsEncrypt.org](https://letsencrypt.org/).
+
+DO NOT: [Allow SSL, this is now obsolete](https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices#22-use-secure-protocols).
+
+DO: Have a strong TLS policy (see [SSL Best Practises](http://www.ssllabs.com/projects/best-practises/)), use TLS 1.2 wherever possible. Then check the configuration using [SSL Test](https://www.ssllabs.com/ssltest/) or [TestSSL](https://testssl.sh/).
+
+DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs) , [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/), disable via `web.config` or [startup.cs](https://medium.com/bugbountywriteup/security-headers-1c770105940b):
+
+More information on Transport Layer Protection can be found [here](Transport_Layer_Protection_Cheat_Sheet.md).
+e.g Web.config
+
+```xml
+<system.web>
+    <httpRuntime enableVersionHeader="false"/>
+</system.web>
+<system.webServer>
+    <security>
+        <requestFiltering removeServerHeader="true" />
+    </security>
+    <httpProtocol>
+        <customHeaders>
+            <add name="X-Content-Type-Options" value="nosniff" />
+            <add name="X-Frame-Options" value="DENY" />
+            <add name="X-Permitted-Cross-Domain-Policies" value="master-only"/>
+            <add name="X-XSS-Protection" value="1; mode=block"/>
+            <remove name="X-Powered-By"/>
+        </customHeaders>
+    </httpProtocol>
+</system.webServer>    
+```
+
+e.g Startup.cs
+
+``` csharp
+app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
+app.UseXContentTypeOptions();
+app.UseReferrerPolicy(opts => opts.NoReferrer());
+app.UseXXssProtection(options => options.EnabledWithBlockMode());
+app.UseXfo(options => options.Deny());
+
+app.UseCsp(opts => opts
+ .BlockAllMixedContent()
+ .StyleSources(s => s.Self())
+ .StyleSources(s => s.UnsafeInline())
+ .FontSources(s => s.Self())
+ .FormActions(s => s.Self())
+ .FrameAncestors(s => s.Self())
+ .ImageSources(s => s.Self())
+ .ScriptSources(s => s.Self())
+ );
+```
+
+For more information about headers can be found [here](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#xpcdp).
+
+## A4 XML External Entities (XXE)
+
+Please refer to the XXE cheat sheet so more detailed information, which can be found [here](XML_External_Entity_Prevention_Cheat_Sheet.md#net).
+
+XXE attacks occur when an XML parse does not properly process user input that contains external entity declaration in the doctype of an XML payload.
+
+Below are the three most common [XML Processing Options](https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xml-processing-options) for .NET.
+
+## A5 Broken Access Control
+
+### Weak Account management
 
 Ensure cookies are sent via httpOnly:
 
@@ -297,38 +473,28 @@ DO NOT: Tell someone if the account exists on LogOn, Registration or Password re
 
 The feedback to the user should be identical whether or not the account exists, both in terms of content and behaviour: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
 
-## A3 Cross Site Scripting
+### Missing function-level access control
 
-DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists
+DO: Authorize users on all externally facing endpoints. The .NET framework has many ways to authorize a user, use them at method level:
 
-You get encoding of all HTML content with MVC3, to properly encode all content whether HTML, javascript, CSS, LDAP etc use the Microsoft AntiXSS library:
-
-`Install-Package AntiXSS`
-
-Then set in config:
-
-```xml
-<system.web>
-<httpRuntime targetFramework="4.5" 
-enableVersionHeader="false" 
-encoderType="Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary" 
-maxRequestLength="4096" />
+```csharp
+[Authorize(Roles = "Admin")]
+[HttpGet]
+public ActionResult Index(int page = 1)
 ```
 
-DO NOT: Use the `[AllowHTML]` attribute or helper class `@Html.Raw` unless you really know that the content you are writing to the browser is safe and has been escaped properly.
+or better yet, at controller level:
 
-DO: Enable a [Content Security Policy](https://developers.google.com/web/fundamentals/security/csp/), this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):
-
-```xml
-<system.webServer>
-    <httpProtocol>
-        <customHeaders>
-            <add name="Content-Security-Policy" 
-                value="default-src 'none'; style-src 'self'; img-src 'self'; 
-                font-src 'self'; script-src 'self'" />
+```csharp
+[Authorize]
+public class UserController
 ```
 
-## A4 Insecure Direct object references
+You can also check roles in code using identity features in .net: `System.Web.Security.Roles.IsUserInRole(userName, roleName)`
+
+You can find more information [here](Access_Control_Cheat_Sheet.md#introduction) on Access Control and [here](Authorization_Testing_Automation.md) for Authorization.
+
+### Insecure Direct object references
 
 When you have a resource (object) which can be accessed by a reference (in the sample below this is the `id`) then you need to ensure that the user is intended to be there
 
@@ -355,7 +521,11 @@ public ActionResult Edit(int id)
 }
 ```
 
-## A5 Security Misconfiguration
+More information can be found [here](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) for Insecure Direct Object Reference.
+
+## A6 Security Misconfiguration
+
+### Debug and Stack Trace
 
 Ensure debug and trace are off in production. This can be enforced using web.config transforms:
 
@@ -366,7 +536,9 @@ Ensure debug and trace are off in production. This can be enforced using web.con
 
 DO NOT: Use default passwords
 
-DO: (When using TLS) Redirect a request made over Http to https: In `Global.asax.cs`:
+DO: (When using TLS) Redirect a request made over Http to https:
+
+e.g Global.asax.cs
 
 ```csharp
 protected void Application_BeginRequest()
@@ -383,64 +555,13 @@ protected void Application_BeginRequest()
 }
 ```
 
-## A6 Sensitive data exposure
+e.g Startup.cs in the Configure()
 
-DO NOT: Store encrypted passwords.
-
-DO: Use a strong hash to store password credentials. Use Argon2, PBKDF2, BCrypt or SCrypt with at least 8000 iterations and a strong key.
-
-DO: Enforce passwords with a minimum complexity that will survive a dictionary attack i.e. longer passwords that use the full character set (numbers, symbols and letters) to increase the entropy.
-
-DO: Use a strong encryption routine such as AES-256 where personally identifiable data needs to be restored to it's original format. Do not encrypt passwords. Protect encryption keys more than any other asset. Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly.
-
-DO: Use TLS 1.2 for your entire site. Get a free certificate [LetsEncrypt.org](https://letsencrypt.org/).
-
-DO NOT: [Allow SSL, this is now obsolete](https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices#22-use-secure-protocols).
-
-DO: Have a strong TLS policy (see [SSL Best Practises](http://www.ssllabs.com/projects/best-practises/)), use TLS 1.2 wherever possible. Then check the configuration using [SSL Test](https://www.ssllabs.com/ssltest/) or [TestSSL](https://testssl.sh/).
-
-DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs) , [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/) or disable via `web.config`:
-
-```xml
-<system.web>
-    <httpRuntime enableVersionHeader="false"/>
-</system.web>
-<system.webServer>
-    <security>
-        <requestFiltering removeServerHeader="true" />
-    </security>
-    <httpProtocol>
-        <customHeaders>
-            <add name="X-Content-Type-Options" value="nosniff" />
-            <add name="X-Frame-Options" value="DENY" />
-            <add name="X-Permitted-Cross-Domain-Policies" value="master-only"/>
-            <add name="X-XSS-Protection" value="1; mode=block"/>
-            <remove name="X-Powered-By"/>
-        </customHeaders>
-    </httpProtocol>
-</system.webServer>    
+``` csharp
+  app.UseHttpsRedirection();
 ```
 
-## A7 Missing function-level access control
-
-DO: Authorize users on all externally facing endpoints. The .NET framework has many ways to authorize a user, use them at method level:
-
-```csharp
-[Authorize(Roles = "Admin")]
-[HttpGet]
-public ActionResult Index(int page = 1)
-```
-
-or better yet, at controller level:
-
-```csharp
-[Authorize]
-public class UserController
-```
-
-You can also check roles in code using identity features in .net: `System.Web.Security.Roles.IsUserInRole(userName, roleName)`
-
-# A8 Cross-site request forgery
+### Cross-site request forgery
 
 DO: Send the anti-forgery token with every POST/PUT request:
 
@@ -500,13 +621,159 @@ After .NET Core 2.0 it is possible to automatically generate and verify the anti
 
 And then add the `[AutoValidateAntiforgeryToken]` attribute to the action result.
 
-## A9 Using components with known vulnerabilities
+More information can be found [here](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) for Cross-Site Request Forgery.
+
+## A7 Cross-Site Scripting (XSS)
+
+DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists
+
+You get encoding of all HTML content with MVC3, to properly encode all content whether HTML, javascript, CSS, LDAP etc use the Microsoft AntiXSS library:
+
+`Install-Package AntiXSS`
+
+Then set in config:
+
+```xml
+<system.web>
+<httpRuntime targetFramework="4.5" 
+enableVersionHeader="false" 
+encoderType="Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary" 
+maxRequestLength="4096" />
+```
+
+DO NOT: Use the `[AllowHTML]` attribute or helper class `@Html.Raw` unless you really know that the content you are writing to the browser is safe and has been escaped properly.
+
+DO: Enable a [Content Security Policy](Content_Security_Policy_Cheat_Sheet.md#context), this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):
+
+```xml
+<system.webServer>
+    <httpProtocol>
+        <customHeaders>
+            <add name="Content-Security-Policy" 
+                value="default-src 'none'; style-src 'self'; img-src 'self'; 
+                font-src 'self'; script-src 'self'" />
+```
+
+More information can be found [here](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for Cross-Site Scripting.
+
+## A8 Insecure Deserialization
+
+Information about Insecure Deserialization can be found on this [cheat sheet](Deserialization_Cheat_Sheet.md#net-csharp).
+
+DO NOT: Accept Serialized Objects from Untrusted Sources
+
+DO: Validate User Input
+Malicious users are able to use objects like cookies to insert malicious information to change user roles. In some cases, hackers are able to elevate their privileges to administrator rights by using a pre-existing or cached password hash from a previous session. 
+
+DO: Prevent Deserialization of Domain Objects
+
+DO: Run the Deserialization Code with Limited Access Permissions
+If a desterilized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
+
+More information can be found here: [Deserialization Cheat Sheet](Deserialization_Cheat_Sheet.md#net-csharp)
+
+## A9 Using Components with Known Vulnerabilities
 
 DO: Keep the .Net framework updated with the latest patches
 
 DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to date, many will contain their own vulnerabilities.
 
-DO: Run the [OWASP Dependency Checker](https://www.owasp.org/index.php/OWASP_Dependency_Check) against your application as part of your build process and act on any high level vulnerabilities. 
+DO: Run the [OWASP Dependency Checker](Vulnerable_Dependency_Management_Cheat_Sheet.md) against your application as part of your build process and act on any high level vulnerabilities.
+
+## A10 Insufficient Logging & Monitoring
+
+DO: Ensure all login, access control failures and server-side input validation failures can be logged with sufficient user context to identify suspicious or malicious accounts.
+
+DO: Establish effective monitoring and alerting so suspicious activities are detected and responded to in a timely fashion.
+
+DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was thrown");``` rather log the stack trace, error message and user Id who caused the error.
+
+DO NOT: Log sesnsitive data such as user's passwords.
+
+### Logging
+
+What Logs to Collect and more information about Logging can be found on this [cheat sheet](Logging_Cheat_Sheet.md).
+
+.NET Core come with a LoggerFactory, which is in Microsoft.Extensions.Logging. More information about ILogger can be found [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger).
+
+How to log all errors from the `Startup.cs`, so that anytime an error is thrown it will be logged.
+
+``` csharp
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+	if (env.IsDevelopment())
+	{
+		_isDevelopment = true;
+		app.UseDeveloperExceptionPage();
+	}
+	
+	//Log all errors in the application
+	app.UseExceptionHandler(errorApp =>
+	{
+		errorApp.Run(async context =>
+		{
+		    var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
+		    var exception = errorFeature.Error;
+		    
+		    Log.Error(String.Format("Stacktrace of error: {0}",exception.StackTrace.ToString()));
+		});
+	});
+
+        app.UseAuthentication();
+            app.UseMvc();
+        }
+}
+```
+
+e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers).  The belwo exaple shows logging of all unsucessful log in attempts.
+
+``` csharp
+public class AccountsController : Controller
+{
+        private ILogger _Logger;
+
+        public AccountsController( ILogger logger)
+        {
+            _Logger = logger;
+        }
+
+	[HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+			//Log all successful log in attempts
+			Log.Information(String.Format("User: {0}, Successfully Logged in", model.Email));
+			//Code for successful login
+		}
+		else
+		{
+			//Log all incorrect log in attempts
+			Log.Information(String.Format("User: {0}, Incorrect Password", model.Email));
+		}
+	}
+	
+	...
+```
+
+Logging levels for ILogger are listed below, in order of high to low importance:
+
+### Monitoring
+
+Monitoring allow us to validate the performance and health of a running system through key performance indicators.
+
+In .NET a great option to add monitoring capabilities is [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-asp-net-core). 
+
+More information about Logging and Monitoring can be found [here](https://microsoft.github.io/code-with-engineering-playbook/Engineering/DevOpsLoggingDetailsCSharp.html).
+
+# OWASP 2013
+
+Below is vulnerability not discussed in OWASP 2017
 
 ## A10 Unvalidated redirects and forwards
 
@@ -544,6 +811,7 @@ Other advice:
 - Protect against Clickjacking and man in the middle attack from capturing an initial Non-TLS request, set the `X-Frame-Options` and `Strict-Transport-Security` (HSTS) headers. Full details [here](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs)
 - Protect against a man in the middle attack for a user who has never been to your site before. Register for [HSTS preload](https://hstspreload.org/)
 - Maintain security testing and analysis on Web API services. They are hidden inside MEV sites, and are public parts of a site that will be found by an attacker. All of the MVC guidance and much of the WCF guidance applies to the Web API.
+- [Unvalidated Redirects and Forwards Cheat Sheet](Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md).
 
 More information:
 

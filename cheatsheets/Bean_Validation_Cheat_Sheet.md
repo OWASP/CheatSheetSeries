@@ -213,7 +213,7 @@ public class CustomerController  {
 
 **Use**: 
 
-Checks if the annotated element’s size is between min and max (inclusive)
+Checks if the annotated element's size is between min and max (inclusive)
 
 **Reference**:
 
