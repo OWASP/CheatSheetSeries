@@ -204,7 +204,6 @@ If maintaining the state for CSRF token at server side is problematic, an altern
 **This technique works as long as you are sure that your subdomains are fully secured and only accept HTTPS connections** 
 The problem of "trusting of sub domains and proper configuration of whole site in general to accept HTTPS connections only". The [Blackhat talk](https://media.blackhat.com/eu-13/briefings/Lundeen/bh-eu-13-deputies-still-confused-lundeen-wp.pdf) by Rich Lundeen references these drawbacks.
 
-
 "*With double submit, if an attacker can write a cookie they can obviously defeat the protection. And again, writing cookies is significantly easier then reading them. The fact that cookies can be written is difficult for many people to understand. After all, doesn't the same origin policy specify that one domain cannot access cookies from another domain? However, there are two common scenarios where writing cookies across domains is possible:*
 
 *a)   While it's true that hellokitty.marketing.example.com cannot read cookies or access the DOM from secure.example.com because of the same origin policy, hellokitty.marketing.example.com can write cookies to the parent domain (example.com), and these cookies are then consumed by secure.example.com (secure.example.com has no good way to distinguish which site set the cookie). Additionally, there are methods of forcing secure.example.com to always accept your cookie first. What this means is that XSS in hellokitty.marketing.example.com is able to overwrite cookies in secure.example.com.*
