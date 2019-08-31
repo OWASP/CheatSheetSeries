@@ -10,7 +10,7 @@ This cheatsheet covers defences against two common types of authentication-relat
 
 # Multi-Factor Authentication
 
-Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacking, including credential stuffing and password spraying, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however depending on the audience of the application it may not be practical or feasible to enforce the use of MFA.
+Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including credential stuffing and password spraying, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
 
 In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor only in specific circumstances where there is reason to suspect that the login attempt may not be legitimate, such as a login from:
 
@@ -25,7 +25,7 @@ Additionally, for enterprise applications, known trusted IP ranges could be adde
 
 # Alternative Defenses
 
-Where it is not possible to implement MFA, there are a number of alternative defenses that can be used to protect against credential stuffing and password spraying. In isolation none of these are as effective as MFA, however if multiple defenses are implemented in a layered approach, they can provide a reasonable degree of protection. In many cases, these mechanisms will also protect against brute-force or password spraying attacks.
+Where it is not possible to implement MFA, there are many alternative defenses that can be used to protect against credential stuffing and password spraying. In isolation none of these are as effective as MFA, however if multiple defenses are implemented in a layered approach, they can provide a reasonable degree of protection. In many cases, these mechanisms will also protect against brute-force or password spraying attacks.
 
 Where an application has multiple user roles, it may be appropriate to implement different defenses for different roles. For example, it may not be feasible to enforce MFA for all users, but it should be possible to require that all administrators use it.
 
@@ -49,7 +49,7 @@ To improve usability, it may be desirable to only require the user solve a CAPTC
 
 Less sophisticated attacks will often use a relatively small number of IP addresses, which can be blacklisted after a number of failed login attempts. These failures should be tracked separately to the per-user failures, which are intended to protect against brute-force attacks. The blacklist should be temporary, in order to reduce the likelihood of permanently blocking legitimate users.
 
-Additionally, there are a number of publicly available blacklists of known bad IP addresses which are collected by websites such as [AbuseIPDB](https://www.abuseipdb.com) based on abuse reports from users.
+Additionally, there are publicly available blacklists of known bad IP addresses which are collected by websites such as [AbuseIPDB](https://www.abuseipdb.com) based on abuse reports from users.
 
 Consider storing the last IP address which successfully logged in to each account, and if this IP address is added to a blacklist, then taking appropriate action such as locking the account and notifying the user, as it likely that their account has been compromised.
 
