@@ -35,7 +35,7 @@ As well as requiring a user to enter their password when authentication, they ca
 
 - A PIN
 - Specific characters from a secondary passwords or memorable word
-- Answers to security questions
+- Answers to [security questions](Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
 
 It must be emphasised that this **does not** constitute multi-factor authentication (as both factors are the same - something you know). However, it can still provide a useful layer of protection against both credential stuffing and password spraying where proper MFA can't be implemented.
 
