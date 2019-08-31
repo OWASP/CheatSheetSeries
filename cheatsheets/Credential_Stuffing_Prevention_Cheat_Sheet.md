@@ -6,7 +6,7 @@ This cheatsheet covers defences against two common types of authentication-relat
 |-------------|-------------|
 | Brute Force | Testing multiple passwords from dictionary or other source against a single account. |
 | Credential Stuffing | Testing username/password pairs obtained from the breach of another site. |
-| Password Spraying | Testing a single weak password against a large number of different accounts.
+| Password Spraying | Testing a single weak password against a large number of different accounts.|
 
 # Multi-Factor Authentication
 
@@ -27,7 +27,7 @@ Additionally, for enterprise applications, known trusted IP ranges could be adde
 
 Where it is not possible to implement MFA, there are a number of alternative defenses that can be used to protect against credential stuffing and password spraying. In isolation none of these are as effective as MFA, however if multiple defenses are implemented in a layered approach, they can provide a reasonable degree of protection. In many cases, these mechanisms will also protect against brute-force or password spraying attacks.
 
-Where an application has multiple user roles, it may be appropriate to implement difference defenses for different roles. For example, it may not be feasible to enforce MFA for all users, but it should be possible to require that all administrators use it.
+Where an application has multiple user roles, it may be appropriate to implement different defenses for different roles. For example, it may not be feasible to enforce MFA for all users, but it should be possible to require that all administrators use it.
 
 ## Secondary Passwords, PINs and Security Questions
 
@@ -55,7 +55,7 @@ Consider storing the last IP address which successfully logged in to each accoun
 
 ## Device Fingerprinting
 
-Aside from the IP address, There are a number of different factors that can be used to attempt to fingerprint a device. Some of these can be obtained passively by the server from the HTTP headers (particularly the "User-Agent" header), including:
+Aside from the IP address, there are a number of different factors that can be used to attempt to fingerprint a device. Some of these can be obtained passively by the server from the HTTP headers (particularly the "User-Agent" header), including:
 
 - Operating system
 - Browser
@@ -71,11 +71,13 @@ Using these various attributes, it is possible to create a fingerprint of the de
 
 The [fingerprintjs2](https://github.com/Valve/fingerprintjs2) JavaScript library can be used to carry out client-side fingerprinting.
 
+It should be noted that as all this information is provided by the client, it can potentially be spoofed by an attacker. In some cases spoofing these attributes is trivial (such as the "User-Agent") header, but in other cases it may be more difficult to modify these attributes.
+
 ## Require Unpredictable Usernames
 
 Credential stuffing attacks rely on not just the re-use of passwords between multiple sites, but also the re-use of usernames. A significant number of websites use the email address as the username, and as most users will have a single email address they use for all their accounts, this makes the combination of an email address and password very effective for credential stuffing attacks.
 
-Requiring users to create their own username when registering on the website makes it harder for an attacker to obtain valid username and password pairs for credential stuffing, as many of the available credential lists only include email addresses. Providing the user with generated username can provide a higher degree of protection (as users are likely to choose the same username on most websites), but is user friendly. Additionally, care needs to be taken to ensure that any generated usernames are not predictable (such as being based on the user's full name, or sequential numeric IDs), as this could make enumerating valid usernames for a password spraying attack easier.
+Requiring users to create their own username when registering on the website makes it harder for an attacker to obtain valid username and password pairs for credential stuffing, as many of the available credential lists only include email addresses. Providing the user with a generated username can provide a higher degree of protection (as users are likely to choose the same username on most websites), but is user friendly. Additionally, care needs to be taken to ensure that the generated username is not predictable (such as being based on the user's full name, or sequential numeric IDs), as this could make enumerating valid usernames for a password spraying attack easier.
 
 # Defense in Depth
 
@@ -87,13 +89,13 @@ The majority of off-the-shelf tools are designed for a single step login process
 
 ## Require JavaScript and Block Headless Browsers
 
-Most tools used for these types of attacks will make direct POST requests to the server and read the responses, but will not download or execute JavaScript that was contained in them. By requiring the attacker to evaluate JavaScript in the response (for example to generate a valid token that must be submitted with the request), this forces the attacker to either use a real browser with an automation framework like Selenium or Headless Chrome, or to implement JavaScript parsing with another tool such as PhantomJS. Additionally, there are a number of techniques that can be used to [Headless Chrome](https://antoinevastel.com/bot%20detection/2018/01/17/detect-chrome-headless-v2.html) or [PhantomJS](https://blog.shapesecurity.com/2015/01/22/detecting-phantomjs-based-visitors/).
+Most tools used for these types of attacks will make direct POST requests to the server and read the responses, but will not download or execute JavaScript that was contained in them. By requiring the attacker to evaluate JavaScript in the response (for example to generate a valid token that must be submitted with the request), this forces the attacker to either use a real browser with an automation framework like Selenium or Headless Chrome, or to implement JavaScript parsing with another tool such as PhantomJS. Additionally, there are a number of techniques that can be used to identify [Headless Chrome](https://antoinevastel.com/bot%20detection/2018/01/17/detect-chrome-headless-v2.html) or [PhantomJS](https://blog.shapesecurity.com/2015/01/22/detecting-phantomjs-based-visitors/).
 
 Please note that blocking visitors who have JavaScript disabled will reduce the accessibility of the website, especially to visitors who use screen readers. In certain jurisdictions this may be in breach of equalities legislation.
 
 ## Identifying Leaked Password
 
-When a user sets a new password on the application, as well as checking it against a list of known weak passwords, it can also be checked against passwords that have previously been breached. The most well known public service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords) by Troy Hunt. You can host a copy the application yourself, or use the [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
+When a user sets a new password on the application, as well as checking it against a list of known weak passwords, it can also be checked against passwords that have previously been breached. The most well known public service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host a copy the application yourself, or use the [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
 
 In order to protect the value of the source password being searched for, Pwned Passwords implements a [k-Anonymity model](https://en.wikipedia.org/wiki/K-anonymity) that allows a password to be searched for by partial hash. This allows the first 5 characters of a SHA-1 password hash to be passed to the API.
 
