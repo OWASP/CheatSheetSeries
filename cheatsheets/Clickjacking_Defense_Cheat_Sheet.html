@@ -1012,8 +1012,14 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>This cheat sheet is focused on providing developer guidance on <a href="https://www.owasp.org/index.php/Clickjacking" target="_blank">Clickjack/UI Redress</a> attack prevention.</p>
-<p>The most popular way to defend against Clickjacking is to include some sort of &quot;frame-breaking&quot; functionality which prevents other web pages from framing the site you wish to defend. This cheat sheet will discuss two methods of implementing frame-breaking: first is X-Frame-Options headers (used if the browser supports the functionality); and second is javascript frame-breaking code.</p>
+<p>This cheat sheet is intended to provide guidance for developers on how to defend against <a href="https://www.owasp.org/index.php/Clickjacking" target="_blank">Clickjacking</a>, also known as UI redress attacks.</p>
+<p>There are three main mechanisms that can be used to defend against these attacks:</p>
+<ul>
+<li>Preventing the browser from loading the page in frame using the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options" target="_blank">X-Frame-Options</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors" target="_blank">Content Security Policy (frame-ancestors)</a> HTTP headers.</li>
+<li>Preventing session cookies from being included when the page is loaded in a frame using the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives" target="_blank">SameSite</a> cookie attribute.</li>
+<li>Implementing JavaScript code in the page to attempt to prevent it being loaded in a frame (known as a &quot;frame-buster&quot;).</li>
+</ul>
+<p>Note that these mechanisms are all independent of each other, and where possible more than one of them should be implemented in order to provide defense in depth.</p>
 <h1 id="defending-with-content-security-policy-csp-frame-ancestors-directive"><a name="defending-with-content-security-policy-csp-frame-ancestors-directive" class="plugin-anchor" href="#defending-with-content-security-policy-csp-frame-ancestors-directive"><i class="fa fa-link" aria-hidden="true"></i></a>Defending with Content Security Policy (CSP) frame-ancestors directive</h1>
 <p>The <code>frame-ancestors</code> directive can be used in a Content-Security-Policy HTTP response header to indicate whether or not a browser should be allowed to render a page in a <code>&lt;frame&gt;</code> or <code>&lt;iframe&gt;</code>. Sites can use this to avoid Clickjacking attacks by ensuring that their content is not embedded into other sites.</p>
 <p><code>frame-ancestors</code> allows a site to authorize multiple domains using the normal Content Security Policy semantics.</p>
@@ -1051,8 +1057,8 @@
 <ul>
 <li><strong>DENY</strong>, which prevents any domain from framing the content. The &quot;DENY&quot; setting is recommended unless a specific need has been identified for framing.</li>
 <li><strong>SAMEORIGIN</strong>, which only allows the current site to frame the content.</li>
-<li><strong>ALLOW-FROM uri</strong>, which permits the specified &apos;uri&apos; to frame this page. (e.g., <code>ALLOW-FROM http://www.example.com</code>). <ul>
-<li>Check limitations below because this will fail open if the browser does not support it. </li>
+<li><strong>ALLOW-FROM uri</strong>, which permits the specified &apos;uri&apos; to frame this page. (e.g., <code>ALLOW-FROM http://www.example.com</code>).<ul>
+<li>Check limitations below because this will fail open if the browser does not support it.</li>
 <li>Other browsers support the new <a href="https://w3c.github.io/webappsec-csp/#directive-frame-ancestors" target="_blank">CSP frame-ancestors directive</a> instead. A few support both.</li>
 </ul>
 </li>
@@ -1082,6 +1088,14 @@
 <li><strong>X-Frame-Options Deprecated</strong> While the X-Frame-Options header is supported by the major browsers, it was never standardized and has been deprecated in favour of the frame-ancestors directive from the CSP Level 2 specification.</li>
 <li><strong>Proxies</strong> Web proxies are notorious for adding and stripping headers. If a web proxy strips the X-Frame-Options header then the site loses its framing protection.</li>
 </ul>
+<h1 id="defending-with-samesite-cookies"><a name="defending-with-samesite-cookies" class="plugin-anchor" href="#defending-with-samesite-cookies"><i class="fa fa-link" aria-hidden="true"></i></a>Defending with SameSite Cookies</h1>
+<p>The <code>SameSite</code> cookie attribute defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7" target="_blank">RFC 6265bis</a> is primarily intended to defend against <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute">cross-site request forgery (CSRF)</a>; however it can also provide protection against Clickjacking attacks.</p>
+<p>Cookies with a <code>SameSite</code> attribute of either <code>strict</code> or <code>lax</code> will not be included in requests made to a page within an <code>&lt;iframe&gt;</code>. This means that if the session cookies are marked as <code>SameSite</code>, any Clickjacking attack that requires the victim to be authenticated will not work, as the cookie will not be sent. An article on the <a href="https://www.netsparker.com/blog/web-security/same-site-cookie-attribute-prevent-cross-site-request-forgery/" target="_blank">Netsparker blog</a> provides further details on which types of requests cookies are sent for with the different SameSite policies.</p>
+<p>This approach is discussed on the <a href="https://javascript.info/clickjacking#samesite-cookie-attribute" target="_blank">JavaScript.info website</a>.</p>
+<h2 id="limitations"><a name="limitations" class="plugin-anchor" href="#limitations"><i class="fa fa-link" aria-hidden="true"></i></a>Limitations</h2>
+<p>If the Clickjacking attack does not require the user to be authenticated, this attribute will not provide any protection.</p>
+<p>Additionally, while <code>SameSite</code> attribute is supported by <a href="https://caniuse.com/#feat=same-site-cookie-attribute" target="_blank">most modern browsers</a>, there are still many users (approximately 12% as of August 2019) with browsers that do not support it.</p>
+<p>The use of this attribute should be considered as part of a defence-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.</p>
 <h1 id="best-for-now-legacy-browser-frame-breaking-script"><a name="best-for-now-legacy-browser-frame-breaking-script" class="plugin-anchor" href="#best-for-now-legacy-browser-frame-breaking-script"><i class="fa fa-link" aria-hidden="true"></i></a>Best-for-now Legacy Browser Frame Breaking Script</h1>
 <p>One way to defend against clickjacking is to include a &quot;frame-breaker&quot; script in each page that should not be framed. The following methodology will prevent a webpage from being framed even in legacy browsers, that do not support the X-Frame-Options-Header.</p>
 <p>In the document HEAD element, add the following:</p>
@@ -1101,7 +1115,7 @@
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
 <p>This way, everything can be in the document HEAD and you only need one method/taglib in your API.</p>
-<p>Reference: </p>
+<p>Reference:</p>
 <ul>
 <li><a href="http://web.archive.org/web/20170430064506/https://www.codemagi.com/blog/post/194" target="_blank">https://www.codemagi.com/blog/post/194</a></li>
 </ul>
@@ -1188,7 +1202,7 @@ setInterval( <span class="hljs-function"><span class="hljs-keyword">function</sp
 <span class="hljs-tag">&lt;<span class="hljs-name">iframe</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://www.victim.com&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span>
 </code></pre>
 <p><strong>Safari 4.0.4</strong></p>
-<p>We observed that although location is kept immutable in most circumstances, when a custom location setter is defined via <code>defineSetter</code> (through window) the object location becomes undefined. </p>
+<p>We observed that although location is kept immutable in most circumstances, when a custom location setter is defined via <code>defineSetter</code> (through window) the object location becomes undefined.</p>
 <p>The framing page simply does:</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
     <span class="hljs-built_in">window</span>.defineSetter(<span class="hljs-string">&quot;location&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{});
@@ -1250,7 +1264,7 @@ setInterval( <span class="hljs-function"><span class="hljs-keyword">function</sp
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Clickjacking Defense ","level":"1.15","depth":1,"next":{"title":"Content Security Policy ","level":"1.16","depth":1,"path":"cheatsheets/Content_Security_Policy_Cheat_Sheet.md","ref":"cheatsheets/Content_Security_Policy_Cheat_Sheet.md","articles":[]},"previous":{"title":"Choosing and Using Security Questions ","level":"1.14","depth":1,"path":"cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md","ref":"cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","mtime":"2019-08-29T06:54:29.823Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-29T06:54:49.523Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Clickjacking Defense ","level":"1.15","depth":1,"next":{"title":"Content Security Policy ","level":"1.16","depth":1,"path":"cheatsheets/Content_Security_Policy_Cheat_Sheet.md","ref":"cheatsheets/Content_Security_Policy_Cheat_Sheet.md","articles":[]},"previous":{"title":"Choosing and Using Security Questions ","level":"1.14","depth":1,"path":"cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md","ref":"cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","mtime":"2019-08-31T17:38:12.260Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-31T17:38:40.784Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
