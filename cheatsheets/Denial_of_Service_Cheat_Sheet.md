@@ -97,7 +97,7 @@ Application layer attacks focus on rendering applications unavailable by exhaust
 
 Rate limiting is the process of controlling traffic rate from and to a server or component. It can be implemented on infrastructure as well as on an application level. Rate limiting can be based on (offending) IPs, on IP blacklists, on geolocation, etc.
 
-- **Define a minimum ingress data rate limit**, and drop all connections below that rate. Note that of the rate limit is set too low, this could impact clients. Inspect the logs to establish a baseline of genuine traffic rate. (Protection against slow HTTP attacks)
+- **Define a minimum ingress data rate limit**, and drop all connections below that rate. Note that if the rate limit is set too low, this could impact clients. Inspect the logs to establish a baseline of genuine traffic rate. (Protection against slow HTTP attacks)
 - **Define an absolute connection timeout**
 - **Define a maximum ingress data rate limit**, and drop all connections above that rate.
 - **Define a total bandwidth size limit** to prevent bandwidth exhaustion
