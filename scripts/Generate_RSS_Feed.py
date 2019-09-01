@@ -22,12 +22,12 @@ PR_API = "https://api.github.com/repos/OWASP/CheatSheetSeries/pulls?page=1&per_p
 print("[+] Grab the list of closed PR via the GitHub API...")
 response = requests.get(PR_API)
 if response.status_code != 200:
-    print(f"Cannot load the list of PR content: HTTP {response.status_code} received!")
+    print("Cannot load the list of PR content: HTTP %s received!" %  response.status_code)
     sys.exit(1)
 pull_requests = response.json()
 
 # Process the obtained list and generate the feed in memory
-print(f"[+] Process the obtained list and generate the feed in memory ({len(pull_requests)} items)...")
+print("[+] Process the obtained list and generate the feed in memory (%s) items)..." % len(pull_requests))
 feed_generator = FeedGenerator()
 current_date = datetime.utcnow().strftime("%a, %d %B %Y %H:%M:%S GMT")  # Sun, 19 May 2002 15:21:36 GMT
 feed_generator.id("https://cheatsheetseries.owasp.org")
@@ -55,7 +55,7 @@ for pull_request in pull_requests:
     feed_entry.updated(merge_date_dst)
     contributors = []
     for assignee in pull_request["assignees"]:
-        contributors.append({"name": assignee["login"], "uri": f"https://github.com/{assignee['login']}"})
+        contributors.append({"name": assignee["login"], "uri": "https://github.com/%s" % assignee['login']})
     feed_entry.contributor(contributors)
 
 # Save the feed to a XML file

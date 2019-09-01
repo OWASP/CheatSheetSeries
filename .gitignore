@@ -8,3 +8,4 @@ node_modules/
 site/
 generated/
 .DS_Store
+news.xml
