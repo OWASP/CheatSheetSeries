@@ -38,7 +38,6 @@ At a minimum, the following types of ciphers should always be disabled:
 
 See the [TLS Cipher String Cheat Sheet](TLS_Cipher_String_Cheat_Sheet.md) for full details on securely configuring ciphers.
 
-
 ## Use Strong Diffie-Hellman Parameters
 
 Where ciphers that use the ephemeral Diffie-Hellman key exchange are in use (signified by the "DHE" or "EDH" strings in the cipher name) sufficiently secure Diffie-Hellman parameters (at least 2048 bits) should be used
