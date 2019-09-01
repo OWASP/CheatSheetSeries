@@ -2,7 +2,8 @@ language: node_js
 node_js:
   - "node"
 before_script:
-  - sudo apt-get install python3.5
+  - sudo apt-get install python3.5 python3-pip
+  - pip3 install requests feedgen
   - npm install -g markdownlint-cli
   - npm install -g markdown-link-check
   - npm install -g gitbook-cli
