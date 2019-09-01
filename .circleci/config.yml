@@ -12,8 +12,8 @@ jobs:
         fingerprints:
           - "b3:87:ac:df:0d:3a:8f:fd:e1:0a:ab:e4:27:c0:83:87"        
     - checkout
-    - run: 'sudo apt-get install -y python3.5 python3-pip python3-setuptools'
-    - run: 'sudo pip3 install requests feedgen wheel'
+    - run: 'sudo apt-get install -y python3.5 python3-pip python3-setuptools python3-wheel'
+    - run: 'sudo pip3 install requests feedgen'
     - run: 'sudo npm install -g markdownlint-cli'
     - run: 'sudo npm install -g markdown-link-check'
     - run: 'sudo npm install -g gitbook-cli'
