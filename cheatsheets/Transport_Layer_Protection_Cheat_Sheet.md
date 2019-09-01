@@ -97,6 +97,7 @@ The domain name (or subject) of the certificate must match the fully qualified n
 
 Additionally, when creating the certificate, the following should be taken into account:
 
+- Consider whether the "www." subdomain should also be included
 - Do not include non-qualified hostnames
 - Do not include IP addresses
 - Do not include internal domain names on externally facing certificates
