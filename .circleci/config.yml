@@ -5,6 +5,17 @@ executors:
       - image: 'circleci/node:10-stretch'
     working_directory: ~/repo
 jobs:
+  identify-old-issues-and-pr:
+    executor: my-executor
+    steps:
+    - add_ssh_keys:
+        fingerprints:
+          - "b3:87:ac:df:0d:3a:8f:fd:e1:0a:ab:e4:27:c0:83:87"     
+    - checkout
+    - run: 'sudo apt-get install -y python3.5 python3-pip python3-setuptools python3-wheel'
+    - run: 'sudo pip3 install requests'  
+    - run: 'chmod +x scripts/Identify_Old_Issue_And_PR.py'
+    - run: 'cd scripts;python3.5 Identify_Old_Issue_And_PR.py'
   build-offline-website:
     executor: my-executor
     steps:
@@ -58,6 +69,15 @@ jobs:
     - run: 'git push'    
 workflows:
   version: 2
+  old-issues-and-pr-identification:
+    triggers:
+      - schedule:
+          cron: "0 0 6 ? * SUN *"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - identify-old-issues-and-pr
   build-publish-deploy:
     jobs:
       - build-offline-website:
