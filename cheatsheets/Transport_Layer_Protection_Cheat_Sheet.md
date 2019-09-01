@@ -10,7 +10,7 @@ This cheat sheet provides guidance on how to implement transport layer protectio
 TLS is used by many other protocols to provide encryption and integrity, and can be used in a number of different ways. This cheatsheet is primarily focused how to use TLS to protect clients connecting to a web application over HTTPS; although much of the guidance is also applicable to other uses of TLS.
 
 ## SSL vs TLS
-The Secure Socket Layer (SSL) was the original protocol that was used to provide encryption for HTTP traffic, in the form of HTTPS. There were two publicly released versions of SSL - versions 2 and 3. Both of these have serious cryptographic weaknesses and should no longer be used.
+Secure Socket Layer (SSL) was the original protocol that was used to provide encryption for HTTP traffic, in the form of HTTPS. There were two publicly released versions of SSL - versions 2 and 3. Both of these have serious cryptographic weaknesses and should no longer be used.
 
 For [various reasons](http://tim.dierks.org/2014/05/security-standards-and-name-changes-in.html) the next version of the protocol (effectively SSL 3.1) was named Transport Layer Security (TLS) version 1.0. Subsequently TLS versions 1.1, 1.2 and 1.3 have been released.
 
@@ -20,11 +20,11 @@ The terms "SSL", "SSL/TLS" and "TLS" are frequently used interchangeably, and in
 
 ## Only Support Strong Protocols
 
-As discussed above, the SSL protocols have a large number of weaknesses, and should not be used in any circumstances. General purpose web applications should only support TLS 1.2 and TLS 1.3, with all other protocols disabled. Where it is known that a web server must support legacy clients with unsupported an insecure browsers (such as Internet Explorer 10), it may be necessary to enable TLS 1.0 to provide support.
+The SSL protocols have a large number of weaknesses, and should not be used in any circumstances. General purpose web applications should only support TLS 1.2 and TLS 1.3, with all other protocols disabled. Where it is known that a web server must support legacy clients with unsupported an insecure browsers (such as Internet Explorer 10), it may be necessary to enable TLS 1.0 to provide support.
 
 Where legacy protocols are required, the "TLS_FALLBACK_SCSV" extension should be enabled in order to prevent downgrade attacks against clients.
 
-Note that PCI-DSS [forbids the use of legacy protocols such as TLS 1.0](https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf).
+Note that PCI DSS [forbids the use of legacy protocols such as TLS 1.0](https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf).
 
 ## Only Support Strong Ciphers
 
@@ -36,14 +36,14 @@ At a minimum, the following types of ciphers should always be disabled:
 - Anonymous ciphers
 - EXPORT ciphers
 
-See the [TLS Cipher String Cheat Sheet](TLS_Cipher_String_Cheat_Sheet.md) for full details how securely configuring ciphers.
+See the [TLS Cipher String Cheat Sheet](TLS_Cipher_String_Cheat_Sheet.md) for full details on securely configuring ciphers.
 
 
-## Prefer Ephemeral Key Exchanges
+## Use Strong Diffie-Hellman Parameters
 
 Where ciphers that use the ephemeral Diffie-Hellman key exchange are in use (signified by the "DHE" or "EDH" strings in the cipher name) sufficiently secure Diffie-Hellman parameters (at least 2048 bits) should be used
 
-The following command can be used to generated 2048 bit parameters:
+The following command can be used to generate 2048 bit parameters:
 
 ```bash
 $ openssl dhparam 2048 -out dhparam2048.pem 
@@ -51,17 +51,13 @@ $ openssl dhparam 2048 -out dhparam2048.pem
 
 The [Weak DH](https://weakdh.org/sysadmin.html) website provides guidance on how various web servers can be configured to use these generated parameters.
 
-If you have a server farm and are providing [forward secrecy](https://scotthelme.co.uk/perfect-forward-secrecy/), then you might have to disable session resumption. For example, Apache writes the session IDs and master secrets to disk so all servers in the farm can participate in resuming a session (there is currently no in-memory mechanism to achieve the sharing). 
-
-Writing the session id and master secret to disk undermines [forward secrecy](https://scotthelme.co.uk/perfect-forward-secrecy/).
-
 ## Disable Compression
 
 TLS compression should be disabled in order to protect against a vulnerability (nicknamed CRIME) which could potentially allow sensitive information such as session cookies to be recovered by an attacker. 
 
 ## Patch Cryptographic Libraries
 
-As well as the vulnerabilities in the SSL and TLS protocols, there have also been a large number of history vulnerability in SSL and TLS libraries, with [Heartbleed](http://heartbleed.com) being the most well known. As such, it is important to ensure that these libraries are kept up to date with the latest security patches.
+As well as the vulnerabilities in the SSL and TLS protocols, there have also been a large number of historic vulnerability in SSL and TLS libraries, with [Heartbleed](http://heartbleed.com) being the most well known. As such, it is important to ensure that these libraries are kept up to date with the latest security patches.
 
 ## Test the Server Configuration
 
@@ -83,25 +79,25 @@ Additionally, there are a number of offline tools that can be used:
 
 ## Use Strong Keys and Protect Them
 
-The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits. Additional information on key lifetimes and comparable key strengths can be found [here](http://www.keylength.com/en/compare/) and here [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf).
+The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits. Additional information on key lifetimes and comparable key strengths can be found [here](http://www.keylength.com/en/compare/) and in [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf).
 
 The private key should also be protected from unauthorised access using filesystem permissions and other technical and administrative controls.
 
 ## Use Strong Cryptographic Hashing Algorithms
 
-Certificates should use SHA-256 for the hashing algorithm, rather than the older MD5 and SHA-1 algorithms. These have a number of cryptographic weaknesses,and are not trusted by modern browsers.
+Certificates should use SHA-256 for the hashing algorithm, rather than the older MD5 and SHA-1 algorithms. These have a number of cryptographic weaknesses, and are not trusted by modern browsers.
 
 ## Use Correct Domain Names
 
-The domain name (or subject) of the certificate must match the fully qualified name of the server that presents the certificate. Historically this was stored in the commonName (CN) attribute of the certificate. However, modern versions of Chrome ignore the CN attribute, and require that the FQDN is in the subjectAlternativeName (SAN) attribute. For compatibility reasons, certificates should have the primary FQDN in the CN, and the full list of FQDNs in the SAN.
+The domain name (or subject) of the certificate must match the fully qualified name of the server that presents the certificate. Historically this was stored in the `commonName` (CN) attribute of the certificate. However, modern versions of Chrome ignore the CN attribute, and require that the FQDN is in the `subjectAlternativeName` (SAN) attribute. For compatibility reasons, certificates should have the primary FQDN in the CN, and the full list of FQDNs in the SAN.
 
 Additionally, when creating the certificate, the following should be taken into account:
 
-- Consider whether the "www." subdomain should also be included
-- Do not include non-qualified hostnames
-- Do not include IP addresses
-- Do not include internal domain names on externally facing certificates
-    - If a server is accessible using both internal and external FQDNs, configure it with multiple certificates
+- Consider whether the "www" subdomain should also be included.
+- Do not include non-qualified hostnames.
+- Do not include IP addresses.
+- Do not include internal domain names on externally facing certificates.
+    - If a server is accessible using both internal and external FQDNs, configure it with multiple certificates.
 
 ## Carefully Consider the use of Wildcard Certificates
 
@@ -112,23 +108,27 @@ The issues around the use of wildcard certificates are complicated, and there ar
 When risk assessing the use of wildcard certificates, the following areas should be considered:
 
 - Only use wildcard certificates where there is a genuine need, rather than for convenience.
-    - Consider the use of the [ACME](https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment) to allow systems to automatically request and update their own certificates.
-- Never use a wildcard certificates for systems at different trust levels
+    - Consider the use of the [ACME](https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment) to allow systems to automatically request and update their own certificates instead.
+- Never use a wildcard certificates for systems at different trust levels.
     - Two VPN gateways could use a shared wildcard certificate.
     - Multiple instances of a web application could share a certificate.
     - A VPN gateway and a public webserver **should not** share a wildcard certificate.
     - A public webserver and an internal server **should not** share a wildcard certificate.
-- Consider the use of a reverse proxy server where performs TLS termination, so that the wildcard private key is only present on one system.
+- Consider the use of a reverse proxy server which performs TLS termination, so that the wildcard private key is only present on one system.
 - A list of all systems sharing a certificate should be maintained to allow them all to be updated if the certificate expires or is compromised.
-- Limit the scope of a wildcard certificate by issuing it for a subdomain (such as *.foo.example.org), or a for a separate domain.
+- Limit the scope of a wildcard certificate by issuing it for a subdomain (such as `*.foo.example.org`), or a for a separate domain.
 
 ## Use an Appropriate Certification Authority for the Application's User Base
 
 In order to be trusted by users, certificates must be signed by a trusted certificate authority (CA). For Internet facing applications, this should be one of the CAs which are well-known and automatically trusted by operating systems and browsers.
 
-In the case of internal applications, an internal CA can be used. This means that the FQDN of the certificate will not be exposed (either to an external CA, or publicly in certificate transparency lists). However, the certificate will only be trusted by users who have imported and trusted the internal CA certificate that was used to sign them.
-
 The [LetsEncrypt](https://letsencrypt.org) CA provides free domain validated SSL certificates, which are trusted by all major browsers. As such, consider whether there are any benefits to purchasing a certificate from a CA.
+
+For internal applications, an internal CA can be used. This means that the FQDN of the certificate will not be exposed (either to an external CA, or publicly in certificate transparency lists). However, the certificate will only be trusted by users who have imported and trusted the internal CA certificate that was used to sign them.
+
+## Use CAA Records to Restrict Which CAs can Issue Certificates
+
+Certification Authority Authorization (CAA) DNS records can be used to define which CAs are permitted to issue certificates for a domain. The records contains a list of CAs, and any CA who is not included in that list should refuse to issue a certificate for the domain. This can help to prevent an attacker from obtaining unauthorised certificates for a domain through a less-reputable CA. Where it is applied to all subdomains, it can also be useful from an administrative perspective by limiting which CAs administrators or developers are able to use, and by preventing them from obtaining unauthorised wildcard certificates.
 
 ## Always Provide All Needed Certificates
 
@@ -136,9 +136,9 @@ In order to validate the authenticity of a certificate, the user's browser must 
 
 If the user does not know or trust this intermediate CA then the certificate validation will fail, even if the user trusts the ultimate root CA, as they cannot establish a chain of trust between the certificate and the root. In order to avoid this, any intermediate certificates should be provided alongside the main certificate.
 
-## Consider Using Extended Validation Certificates
+## Consider the use of Extended Validation Certificates
 
-Extended validation (EV) certificates claim to provide a higher level of verification of the entity, as they perform checks that the requestor is a legitimate legal entity, rather than just verifying the ownership of the domain name like normal (or "Domain Validated") certificates. 
+Extended validation (EV) certificates claim to provide a higher level of verification of the entity, as they perform checks that the requestor is a legitimate legal entity, rather than just verifying the ownership of the domain name like normal (or "Domain Validated") certificates. This can effectively be viewed as the difference between "This site is really run by Example Company Inc." vs "This domain is really example.org".
 
 Historically these displayed differently in the browser, often showing the company name or a green icon or background in the address bar. However, as of 2019 both [Chrome](https://groups.google.com/a/chromium.org/forum/m/#!msg/security-dev/h1bTcoTpfeI/jUTk1z7VAAAJ) and [Firefox](https://groups.google.com/forum/m/?fromgroups&hl=en#!topic/firefox-dev/6wAg_PpnlY4) have announced that they will be removing these indicators, as they do not believe that EV certificates provide any additional protection.
 
@@ -158,7 +158,7 @@ A page that is available over TLS should not include any resources (such as Java
 
 ## Use the "Secure" Cookie Flag
 
-All cookies should be marked with the "Secure" attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed webserver on port 80 to the user, in order to steal their cookie.
+All cookies should be marked with the "Secure" attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed webserver on port 80 to the user in order to steal their cookie.
 
 ## Prevent Caching of Sensitive Data
 
