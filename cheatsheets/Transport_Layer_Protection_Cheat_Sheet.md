@@ -178,7 +178,7 @@ HTTP Strict Transport Security (HSTS) instructs the user's browser to always req
 
 ## Use Public Key Pinning
 
-HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the [Certificate and Public Key Pinning cheat sheet](Pinning_Cheat_Sheet.md) for further information in implementing HPKP.
+HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the [Certificate and Public Key Pinning article](https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning) for further information in implementing HPKP.
 
 ## Consider the use of Client-Side Certificates
 
