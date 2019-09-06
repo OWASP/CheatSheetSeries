@@ -209,7 +209,7 @@ So, unless you are sure that your subdomains are fully secured and only accept H
 
 Scenarios a and b mentioned above are possible only if the CSRF token is not derived/tied to the session in which case an attacker can overwrite the token in the parent domain cookie with XSS in child domain. A variant of how this can be mitigated by linking token and session/auth cookie is explained below.
 
-Including the token in an encrypted cookie - often within the authentication cookie - and then at the server side matching it (after decrypting authentication cookie) with the token in hidden form field or parameter/header for ajax calls mitigates both the issues mentioned above. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.
+Including the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side matching it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for ajax calls mitigates both the issues mentioned above. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.
 
 ## Samesite Cookie Attribute
 
