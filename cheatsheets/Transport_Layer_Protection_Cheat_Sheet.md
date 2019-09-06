@@ -176,9 +176,11 @@ Expires: 0
 
 HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS, and also prevents the user from bypassing certificate warnings. See the [HTTP Strict Transport Security cheatsheet](https://www.owasp.org/index.php/HTTP_Strict_Transport_Security) for further information on implementing HSTS.
 
-## Use Public Key Pinning
+## Consider Using Public Key Pinning
 
-HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the [Certificate and Public Key Pinning article](https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning) for further information in implementing HPKP.
+HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the [Certificate and Public Key Pinning article](https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#HTTP_pinning) for further information in implementing HPKP.
+
+HPKP is controversial, and that while it is currently supported in Firefox and some other browsers, it has been removed from [Chrome](https://www.chromestatus.com/feature/5903385005916160), and is considered deprecated by [Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins). As such, careful consideration of the risk should be made before implementing it.
 
 ## Consider the use of Client-Side Certificates
 
