@@ -7,7 +7,7 @@ This cheat sheet provides guidance on how to implement transport layer protectio
 - Replay prevention - protection against an attacker replaying requests against the server.
 - Authentication - allowing the client to verify that they are connected to the real server (note that the identity of the *client* is not verified unless client certificates are used).
 
-TLS is used by many other protocols to provide encryption and integrity, and can be used in a number of different ways. This cheatsheet is primarily focused how to use TLS to protect clients connecting to a web application over HTTPS; although much of the guidance is also applicable to other uses of TLS.
+TLS is used by many other protocols to provide encryption and integrity, and can be used in a number of different ways. This cheatsheet is primarily focused on how to use TLS to protect clients connecting to a web application over HTTPS; although much of the guidance is also applicable to other uses of TLS.
 
 ## SSL vs TLS
 
@@ -23,7 +23,7 @@ The terms "SSL", "SSL/TLS" and "TLS" are frequently used interchangeably, and in
 
 The SSL protocols have a large number of weaknesses, and should not be used in any circumstances. General purpose web applications should only support TLS 1.2 and TLS 1.3, with all other protocols disabled. Where it is known that a web server must support legacy clients with unsupported an insecure browsers (such as Internet Explorer 10), it may be necessary to enable TLS 1.0 to provide support.
 
-Where legacy protocols are required, the "TLS_FALLBACK_SCSV" extension should be enabled in order to prevent downgrade attacks against clients.
+Where legacy protocols are required, the ["TLS_FALLBACK_SCSV" extension](https://tools.ietf.org/html/rfc7507) should be enabled in order to prevent downgrade attacks against clients.
 
 Note that PCI DSS [forbids the use of legacy protocols such as TLS 1.0](https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf).
 
@@ -46,14 +46,14 @@ Where ciphers that use the ephemeral Diffie-Hellman key exchange are in use (sig
 The following command can be used to generate 2048 bit parameters:
 
 ```bash
-$ openssl dhparam 2048 -out dhparam2048.pem 
+$ openssl dhparam 2048 -out dhparam2048.pem
 ```
 
 The [Weak DH](https://weakdh.org/sysadmin.html) website provides guidance on how various web servers can be configured to use these generated parameters.
 
 ## Disable Compression
 
-TLS compression should be disabled in order to protect against a vulnerability (nicknamed CRIME) which could potentially allow sensitive information such as session cookies to be recovered by an attacker. 
+TLS compression should be disabled in order to protect against a vulnerability (nicknamed [CRIME](https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/)) which could potentially allow sensitive information such as session cookies to be recovered by an attacker.
 
 ## Patch Cryptographic Libraries
 
@@ -132,7 +132,7 @@ Certification Authority Authorization (CAA) DNS records can be used to define wh
 
 ## Always Provide All Needed Certificates
 
-In order to validate the authenticity of a certificate, the user's browser must examine the certificate that was used to sign it and compare it to the list of CAs trusted by their system. In many cases the certificate is not directly signed by a trusted CA, but is instead signed by an intermediate CA, which is in turn signed by the root CA.
+In order to validate the authenticity of a certificate, the user's browser must examine the certificate that was used to sign it and compare it to the list of CAs trusted by their system. In many cases the certificate is not directly signed by a root CA, but is instead signed by an intermediate CA, which is in turn signed by the root CA.
 
 If the user does not know or trust this intermediate CA then the certificate validation will fail, even if the user trusts the ultimate root CA, as they cannot establish a chain of trust between the certificate and the root. In order to avoid this, any intermediate certificates should be provided alongside the main certificate.
 
@@ -150,7 +150,7 @@ There is no security downside to the use of EV certificates. However, as they ar
 
 TLS should be used for all pages, not just those that are considered sensitive such as the login page. If there are any pages that do not enforce the use of TLS, these could give an attacker an opportunity to sniff sensitive information such as session tokens, or to inject malicious JavaScript into the responses to carry out other attacks against the user.
 
-For public facing applications, it may be appropriate to have the web server listening for unencrypted HTTP connections on port 80, and then immediately redirecting them with a permanent redirect (HTTP 301) in order to provide a better experience to users who manually type in the domain name. This should then be supported with the HTTP Strict Transport Security (HSTS) header to prevent them accessing the site over HTTP in the future.
+For public facing applications, it may be appropriate to have the web server listening for unencrypted HTTP connections on port 80, and then immediately redirecting them with a permanent redirect (HTTP 301) in order to provide a better experience to users who manually type in the domain name. This should then be supported with the [HTTP Strict Transport Security (HSTS)](#use-http-strict-transport-security) header to prevent them accessing the site over HTTP in the future.
 
 ## Do Not Mix TLS and Non-TLS Content
 
@@ -158,7 +158,7 @@ A page that is available over TLS should not include any resources (such as Java
 
 ## Use the "Secure" Cookie Flag
 
-All cookies should be marked with the "Secure" attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed webserver on port 80 to the user in order to steal their cookie.
+All cookies should be marked with the "[Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies)" attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed webserver on port 80 to the user in order to steal their cookie.
 
 ## Prevent Caching of Sensitive Data
 
@@ -178,7 +178,7 @@ HTTP Strict Transport Security (HSTS) instructs the user's browser to always req
 
 ## Use Public Key Pinning
 
-HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the [Certificate and Public Key Pinning cheatsheet](https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning) for further information in implementing HPKP.
+HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the [Certificate and Public Key Pinning cheat sheet](Pinning_Cheat_Sheet.md) for further information in implementing HPKP.
 
 ## Consider the use of Client-Side Certificates
 
