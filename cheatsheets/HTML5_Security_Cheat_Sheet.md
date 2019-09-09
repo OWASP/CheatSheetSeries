@@ -132,7 +132,7 @@ It is possible to have a [fine-grained control](https://html.spec.whatwg.org/mul
 
 - Protect the input values from being cached by the browser. 
 
-Example: access a financial account from a public computer. Even though one is logged-off, the next person who uses the machine can log-in because the browser autocomplete functionality. To mitigate this, we tell the input fields not to assist in any way.
+> Access a financial account from a public computer. Even though one is logged-off, the next person who uses the machine can log-in because the browser autocomplete functionality. To mitigate this, we tell the input fields not to assist in any way.
 
 ```html
 <input type="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></input>
