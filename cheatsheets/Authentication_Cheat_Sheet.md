@@ -27,7 +27,7 @@ A key concern when using passwords for authentication is password strength. A "s
     - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
     - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters. It is important to set a maximum password length to prevent [long password Denial of Service attacks](https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/).
 
-      When selecting maximum password length, limitation of hashing algorithm that will be used for hashing passwords, should be taken into consideration because some of them [have a maximum password length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851).
+      When selecting a maximum password length consider whether the hashing algorithm to be used has any limitations because some [have a maximum password length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851).
 
 - Do not truncate passwords. Make sure that every character the user types in is actually included in the password.
 
