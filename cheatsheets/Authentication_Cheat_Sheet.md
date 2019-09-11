@@ -29,7 +29,7 @@ A key concern when using passwords for authentication is password strength. A "s
 
       When selecting maximum password length, limitation of hashing algorithm that will be used for hashing passwords, should be taken into consideration because some of them [have a maximum password length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851).
 
-- Do do not truncate passwords. Make sure that every character the user types in is actually included in the password.
+- Do not truncate passwords. Make sure that every character the user types in is actually included in the password.
 
 - Allow usage of **all** characters including unicode and whitespaces. There should be no password composition rules limiting the type of characters permitted.
 
