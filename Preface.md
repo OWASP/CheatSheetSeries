@@ -17,6 +17,7 @@ Project leaders:
 Core team:
 - [Elie Saad](https://github.com/ThunderSon).
 - [Jakub Maćkowski](https://github.com/mackowski).
+- [Robin Bailey](https://github.com/rbsec).
 - [Dominique Righetto](https://github.com/righettod).
 - [Jim Manico](https://github.com/jmanico).
 
