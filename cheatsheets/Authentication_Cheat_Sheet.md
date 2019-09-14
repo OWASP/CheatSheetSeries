@@ -132,7 +132,7 @@ This code will go through the same process no matter what the user or the passwo
 
 The problem with returning a generic error message for the user is a User Experience (UX) matter. A legitimate user might feel confused with the generic messages, thus making it hard for them to use the application, and might after several retries, leave the application because of its complexity. The decision to return a *generic error message* can be determined based on the criticality of the application and its data. For example, for critical applications, the team can decide that under the failure scenario, a user will always be redirected to the support page and a *generic error message* will be returned.
 
-Regarding the user enumeration itself, protection against [brute-force attack](Authentication_Cheat_Sheet.md#prevent-brute-force-attacks) are also effective because they prevent an attacker to apply the enumeration at scale. Usage of [CAPTCHA](https://en.wikipedia.org/wiki/CAPTCHA) can be applied on a feature for which a *generic error message* cannot be returned because the *user experience* must be preserved.
+Regarding the user enumeration itself, protection against [brute-force attack](#protect-against-automated-attacks) are also effective because they prevent an attacker to apply the enumeration at scale. Usage of [CAPTCHA](https://en.wikipedia.org/wiki/CAPTCHA) can be applied on a feature for which a *generic error message* cannot be returned because the *user experience* must be preserved.
 
 #### Incorrect and correct response examples
 
@@ -145,7 +145,7 @@ Incorrect response examples:
 - "Login failed; this user is not active"
 
 Correct response example:
-- "Login failed; Invalid userID or password"
+- "Login failed; Invalid user ID or password"
 
 ##### Password recovery
 
@@ -185,7 +185,7 @@ Various different protection mechanisms can be implemented to protect against th
 
 The follow sections will focus primarily on preventing brute-force attacks, although these controls can also be effective against other types of attacks. For a further guidance on defending against credential stuffing and password spraying, see the [Credential Stuffing Cheat Sheet](Credential_Stuffing_Prevention_Cheat_Sheet.md).
 
-# Multi-Factor Authentication
+### Multi-Factor Authentication
 
 Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
 
@@ -202,13 +202,13 @@ Additionally, for enterprise applications, known trusted IP ranges could be adde
 
 ### Account Lockout
 
-The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed login attempts.
+The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.
 
 The counter of failed logins should be associated with the account itself, rather then the source IP address, in order to prevent an attacker making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:
 
-- The number of failed attempts before the account is locked out (lockout threshold)
-- The time period that these attempts must occur within (observation window)
-- How long the account is locked out for (lockout duration)
+- The number of failed attempts before the account is locked out (lockout threshold).
+- The time period that these attempts must occur within (observation window).
+- How long the account is locked out for (lockout duration).
 
 Rather than implementing a fixed lockout duration (e.g, ten minutes), some applications use and exponential lockout, where the lockout duration starts as a very short period (e.g, one second), but doubles after each failed login attempt.
 
