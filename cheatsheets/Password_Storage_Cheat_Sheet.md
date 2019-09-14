@@ -12,11 +12,11 @@ Some organizations restrict the 1) types of special characters and 2) length of 
 
 Do not allow short or no-length passwords and do not apply character set, or encoding restrictions on the entry or storage of credentials. Continue applying encoding, escaping, masking, outright omission, and other best practices to eliminate injection risks.
 
-A reasonable long password length is 160. Very long password policies can [lead to DOS in certain circumstances](http://arstechnica.com/security/2013/09/long-passwords-are-good-but-too-much-length-can-be-bad-for-security/).
+A reasonable long password length is 160. Very long password policies can [lead to DoS in certain circumstances](http://arstechnica.com/security/2013/09/long-passwords-are-good-but-too-much-length-can-be-bad-for-security/).
 
 ## Hash the password as one of several steps
 
-Very large passwords can be a performance bottleneck or a DOS situation when users utilize very long passwords. Also, some implementations of some of the adaptive algorithms suggested below, such as bcrypt, truncate long passwords making them less effective. By hashing the passwords with a hash such as SHA-512, even giant passwords are reduced to 512 bits, solving both problems.
+Very large passwords can be a performance bottleneck or a DoS situation when users utilize very long passwords. Also, some implementations of some of the adaptive algorithms suggested below, such as bcrypt, truncate long passwords making them less effective. By first hashing the passwords with a fast hash such as SHA-512, and then hashing the output with a slower and more secure hash such as bcrypt, even giant passwords are reduced to 512 bits, solving both problems.
 
 ## Use a cryptographically strong credential-specific salt
 
