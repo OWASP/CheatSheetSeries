@@ -15,7 +15,7 @@ jobs:
     - run: 'sudo apt-get install -y python3.5 python3-pip python3-setuptools python3-wheel'
     - run: 'sudo pip3 install requests'  
     - run: 'chmod +x scripts/Identify_Old_Issue_And_PR.py'
-    - run: 'cd scripts;python3.5 Identify_Old_Issue_And_PR.py'
+    - run: 'cd scripts;python3.5 Identify_Old_Issue_And_PR.py ${SLACK_WEBHOOK}'
   build-offline-website:
     executor: my-executor
     steps:

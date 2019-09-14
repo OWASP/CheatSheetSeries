@@ -50,7 +50,7 @@ def is_old_pull_request(issue):
     return has_waiting_for_update_label
 
 # Grab the list of open Issues/PR
-print("[+] Grab the list of open Issues/PR via the GitHub API...")
+buffer = "Grab the list of open Issues/PR via the GitHub API...\n"
 response = requests.get(ISSUE_API)
 if response.status_code != 200:
     print("Cannot load the list of Issues/PR content: HTTP %s received!" % response.status_code)
@@ -58,7 +58,7 @@ if response.status_code != 200:
 issues = response.json()
 
 # Process the obtained list
-print("[+] Process the obtained list (%s items)..." % len(issues))
+buffer += "Process the obtained list (%s items)...\n" % len(issues)
 issues = response.json()
 old_issues = {"PR":[], "ISSUE":[]}
 for issue in issues:
@@ -73,13 +73,25 @@ for issue in issues:
             old_issues["ISSUE"].append(id)
 
 # Render the result
-return_code = len(old_issues["PR"]) + len(old_issues["ISSUE"])
-if return_code != 0:
-    print("[+] State:")
+if (len(old_issues["PR"]) + len(old_issues["ISSUE"])) != 0:
+    buffer += "State:\n"
     if len(old_issues["PR"]) > 0:
-        print("Old pull request identified (%s items): %s" % (len(old_issues["PR"]), " / ".join(old_issues["PR"])))
+        buffer += "Old pull request identified (%s items): %s\n" % (len(old_issues["PR"]), " / ".join(old_issues["PR"]))
     if len(old_issues["ISSUE"]) > 0:
-        print("Old issue identified (%s items): %s" % (len(old_issues["ISSUE"]), " / ".join(old_issues["ISSUE"])))
+        buffer += "Old issue identified (%s items): %s\n" % (len(old_issues["ISSUE"]), " / ".join(old_issues["ISSUE"]))
 else:
-    print("[+] State: Nothing identified.")
-sys.exit(return_code)
+    buffer += "State: Nothing identified!"
+print(buffer)
+
+# Send notification the project management channel on Slack if the url of the webhook is passed as unique first parameter
+if len(sys.argv) == 2:
+    if (len(old_issues["PR"]) + len(old_issues["ISSUE"])) == 0:
+        color = "good"
+    else:
+        color = "warning"
+    message = "{\"text\": \"Old PR and Issue identification watchdog\",\"attachments\": [ {\"fallback\": \"%s\",\"color\":\"%s\",\"title\": \"Status\",\"text\": \"%s\"}]}" % (color, buffer, buffer)
+    request_headers = {"Content-Type": "application/json"}
+    response = requests.post(sys.argv[1], headers=request_headers, data=message)
+    if response.status_code != 200:
+        print("Cannot send notification to slack: HTTP %s received!" % response.status_code)
+        sys.exit(2)
