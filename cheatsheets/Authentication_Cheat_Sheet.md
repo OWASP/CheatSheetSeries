@@ -1,6 +1,6 @@
 # Introduction
 
-**Authentication** is the process of verification that an individual, entity or website is who it claims to be. Authentication in the context of web applications is commonly performed by submitting a user name or ID and one or more items of private information that only a given user should know.
+**Authentication** is the process of verification that an individual, entity or website is who it claims to be. Authentication in the context of web applications is commonly performed by submitting a username or ID and one or more items of private information that only a given user should know.
 
 **Session Management** is a process by which a server maintains the state of an entity interacting with it. This is required for a server to remember how to react to subsequent requests throughout a transaction. Sessions are maintained on the server by a session identifier which can be passed back and forward between the client and server when transmitting and receiving requests. Sessions should be unique per user and computationally very difficult to predict.
 
@@ -8,7 +8,7 @@
 
 ## User IDs
 
-Make sure your usernames/userids are case insensitive. User 'smith' and user 'Smith' should be the same user. User names should also be unique. For high security applications usernames could be assigned and secret instead of user-defined public data.
+Make sure your usernames/userids are case insensitive. User 'smith' and user 'Smith' should be the same user. Usernames should also be unique. For high security applications usernames could be assigned and secret instead of user-defined public data.
 
 ### Email address as a User ID
 
@@ -27,9 +27,9 @@ A key concern when using passwords for authentication is password strength. A "s
     - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
     - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters. It is important to set a maximum password length to prevent [long password Denial of Service attacks](https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/).
 
-      When selecting maximum password length, limitation of hashing algorithm that will be used for hashing passwords, should be taken into consideration because some of them [have a maximum password length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851).
+      When selecting a maximum password length consider whether the hashing algorithm to be used has any limitations because some [have a maximum password length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851).
 
-- Do do not truncate passwords. Make sure that every character the user types in is actually included in the password.
+- Do not truncate passwords. Make sure that every character the user types in is actually included in the password.
 
 - Allow usage of **all** characters including unicode and whitespaces. There should be no password composition rules limiting the type of characters permitted.
 
