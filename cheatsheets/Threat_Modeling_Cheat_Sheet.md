@@ -2,10 +2,10 @@
 
 Objective of the Threat Modelling Control Cheat Sheet – To provide guidance to architects, designers and reviewers, on deriving threat models for applications.
 
-Audience:
+Audience for this cheat sheet
 
 1.  Designers and Architects.
-2.  Assessors: Threat Modeling SMEs or Security Assessors who are responsible for analyzing the security of the entire applications' components.
+2.  Threat Modeling SMEs or Security Assessors who are responsible for analyzing the security of the entire applications’ components.
 
 This cheat sheet provides guidance to assess existing apps as well as new apps. The instructions in here will help designer and architects address applications risks in an early stage of the development life cycle to help developers consider these risks while writing the code. It will also help assessors to look at risks from a comprehensive perspective.
 
@@ -17,25 +17,23 @@ Following the guidance in this cheat sheet, the assessors will list all possible
 
 Understand the Relation between Risk, Threats, and Vulnerabilities.
 
-## Understand Threat Modeling Terminologies
+## Threat Modeling Terminologies
 
-### Asset, Threat Agent, Attack Surface, Likelihood, Impact, Control, Mitigation, Tractability Matrix
+*Information Asset*, a body of knowledge that is organized and managed as a single entity. Like any other corporate asset, an organization's information assets have financial value.
 
-Information Asset: is a body of knowledge that is organized and managed as a single entity. Like any other corporate asset, an organization's information assets have financial value.
+*Threat Agent*, an individual or group that can manifest a threat. It is fundamental to identify who would want to exploit the assets of a company, and how they might use them against the company. 
 
-Threat Agent: The term Threat Agent is used to indicate an individual or group that can manifest a threat. It is fundamental to identify who would want to exploit the assets of a company, and how they might use them against the company. 
+*Attack Surface*, the sum of the different points (the "attack vectors") where an unauthorized user (the "attacker") can try to enter data to or extract data from an environment.
 
-Attack Surface: The attack surface of a software environment is the sum of the different points (the "attack vectors") where an unauthorized user (the "attacker") can try to enter data to or extract data from an environment.
+*Likelihood*, the possibility of a a threat event occuring where a threat actor will exploit a weakness. The likelihood of threat events resulting in adverse impacts estimates the possibility that a threat event would result in an actual outcome. The combined analysis of both threat assessment vectors impacts established an overall threat likelihood.
 
-Likelihood: Likelihood of threat event initiation or occurrence represents the degree to which a threat actor will carry out a threat. The likelihood of threat events resulting in adverse impacts estimates the possibility that a threat event would result in an actual outcome. The combined analysis of both threat assessment vectors impacts established an overall threat likelihood.
+*Impact*, the potential damage (physical, logical, monitary loss, etc) of a threat event.
 
-`Impact`: the damage potential, such as the number of components that are affected by a threat.
+*Control* a safeguard or countermeasure to avoid, detect, counteract, or minimize security risks to information, computer systems, or other assets.
 
-`Control`: the safeguard or countermeasure to avoid, detect, counteract, or minimize security risks to information, computer systems, or other assets.
+*Mitigation* A systematic reduction of risk or likelihood's impact to an asset.
 
-`Mitigation`: A systematic reduction in the extent of exposure to a risk and/or the likelihood of its occurrence.
-
-`Tractability Matrix`: a grid that allows documentation and easy viewing of what is required for a system's security.
+*Tractability Matrix*, a grid that allows documentation and easy viewing of what is required for a system's security.
 
 ## Define Objectives
 
@@ -123,7 +121,7 @@ Assets involved in the information flow should be defined and evaluated accordin
 
 ### Consider Data in transit and Data at rest
 
-Data protection in transit is the protection of this data while it's traveling from network to network or being transferred from a local storage device to a cloud storage device – wherever data is moving, effective data protection measures for in-transit data are critical as data is often considered less secure while in motion.
+Data protection in transit is the protection of this data while it’s traveling from network to network or being transferred from a local storage device to a cloud storage device – wherever data is moving, effective data protection measures for in-transit data are critical as data is often considered less secure while in motion.
 
 While data at rest is sometimes considered to be less vulnerable than data in transit, attackers often find data at rest a more valuable target than data in motion.
 
@@ -141,7 +139,7 @@ In this step, Data Flow Diagram should be divided in the context of Model, View,
 
 ### Use tools to draw your diagram
 
-If you don't like to manually draw your DFD; there are several tools available that could be used:
+If you don’t like to manually draw your DFD; there are several tools available that could be used:
 
 #### Poirot
 
@@ -165,7 +163,7 @@ Define access rights that the application will grant to external entities and in
 
 ## Highlight Authorization per user role over the DFD
 
-Highlight Authorization per user role, for example, defining app users' role, admins' role, anonymous visitors' role...etc.
+Highlight Authorization per user role, for example, defining app users’ role, admins’ role, anonymous visitors’ role...etc.
 
 ## Define Application Entry points
 
@@ -180,7 +178,7 @@ Identify Possible Attackers threat agents that could exist within the Target of 
 Work on minimizing the number of threat agents by:
 
 - Treating them as equivalent classes.
-- Considering the attacker's motivation when evaluating likelihood.
+- Considering the attacker’s motivation when evaluating likelihood.
 - Consider insider Threats
 
 The user of this cheat can depend on the following list of risks and threat libraries sources to define the possible threats an application might be facing:
@@ -208,7 +206,7 @@ TODO
 
 ## Re-Define attack vectors
 
-In most cases after defining the attack vectors, the compromised user role could lead to further attacks into the application. For example, assuming that an internet banking user credentials could be compromised, the user of this cheat sheet has to then redefine the attack vectors that could result from compromising the user's credentials and so on.
+In most cases after defining the attack vectors, the compromised user role could lead to further attacks into the application. For example, assuming that an internet banking user credentials could be compromised, the user of this cheat sheet has to then redefine the attack vectors that could result from compromising the user’s credentials and so on.
 
 # Write your Threat traceability matrix
 
@@ -226,7 +224,7 @@ Here we will highlight two risk methodology that could be used:
 
 ### DREAD
 
-[DREAD](https://en.wikipedia.org/wiki/DREAD_%28risk_assessment_model%29), is about evaluating each existing vulnerability using a mathematical formula to retrieve the vulnerability's corresponding risk. The **DREAD** formula is divided into 5 main categories:
+[DREAD](https://en.wikipedia.org/wiki/DREAD_%28risk_assessment_model%29), is about evaluating each existing vulnerability using a mathematical formula to retrieve the vulnerability’s corresponding risk. The **DREAD** formula is divided into 5 main categories:
 
 - **D**amage - how bad would an attack be?
 - **R**eproducibility - how easy it is to reproduce the attack?
@@ -307,5 +305,7 @@ After applying the mitigation and measuring the new risk value, the user of this
 TODO
 
 # Appendix
+
+TODO: *Sample Design for Implementation View in 4+1 Model*
 
 TODO: *Sample Design for Implementation View in 4+1 Model*
