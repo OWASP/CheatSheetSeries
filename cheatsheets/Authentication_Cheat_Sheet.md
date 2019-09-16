@@ -181,15 +181,15 @@ There are a number of different types of automated attacks that attackers can us
 | Credential Stuffing | Testing username/password pairs obtained from the breach of another site. |
 | Password Spraying | Testing a single weak password against a large number of different accounts.|
 
-Various different protection mechanisms can be implemented to protect against them. In many cases these defences do not provide complete protection, but when a number of them are implemented in a defence-in-depth approach, a reasonable level of protection can be achieved.
+Different protection mechanisms can be implemented to protect against these attacks. In many cases these defences do not provide complete protection, but when a number of them are implemented in a defence-in-depth approach, a reasonable level of protection can be achieved.
 
-The follow sections will focus primarily on preventing brute-force attacks, although these controls can also be effective against other types of attacks. For a further guidance on defending against credential stuffing and password spraying, see the [Credential Stuffing Cheat Sheet](Credential_Stuffing_Prevention_Cheat_Sheet.md).
+The following sections will focus primarily on preventing brute-force attacks, although these controls can also be effective against other types of attacks. For further guidance on defending against credential stuffing and password spraying, see the [Credential Stuffing Cheat Sheet](Credential_Stuffing_Prevention_Cheat_Sheet.md).
 
 ### Multi-Factor Authentication
 
 Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
 
-In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor only in specific circumstances where there is reason to suspect that the login attempt may not be legitimate, such as a login from:
+In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor when performing sensitive actions (such as adding a new payment destination), or in specific circumstances where there is reason to suspect that the login attempt may not be legitimate, such as a login from:
 
 - A new browser/device or IP address.
 - An unusual country or location.
@@ -204,13 +204,13 @@ Additionally, for enterprise applications, known trusted IP ranges could be adde
 
 The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.
 
-The counter of failed logins should be associated with the account itself, rather then the source IP address, in order to prevent an attacker making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:
+The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:
 
 - The number of failed attempts before the account is locked out (lockout threshold).
 - The time period that these attempts must occur within (observation window).
 - How long the account is locked out for (lockout duration).
 
-Rather than implementing a fixed lockout duration (e.g, ten minutes), some applications use and exponential lockout, where the lockout duration starts as a very short period (e.g, one second), but doubles after each failed login attempt.
+Rather than implementing a fixed lockout duration (e.g, ten minutes), some applications use an exponential lockout, where the lockout duration starts as a very short period (e.g, one second), but doubles after each failed login attempt.
 
 When designing an account lockout system, care must be taken to prevent it being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the user of the forgotten password functionality to login, even if the account is locked out.
 
@@ -222,7 +222,7 @@ It may be more user-friendly to only require a CAPTCHA be solved after a small n
 
 ### Security Questions and Memorable Words
 
-The additional of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does **not** constitute multi-factor authentication, as both factors are the same (something you know).
+The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does **not** constitute multi-factor authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so must be carefully chosen. The [Choosing and Using Security Questions cheat sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) contains further guidance on this.
 
 # Logging and Monitoring
 
