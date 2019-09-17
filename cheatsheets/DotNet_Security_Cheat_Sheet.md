@@ -563,8 +563,11 @@ e.g Startup.cs in the Configure()
 
 ### Cross-site request forgery
 
+DO NOT: Send sensitive data without validating Anti-Forgery-Tokens.
+
 DO: Send the anti-forgery token with every POST/PUT request:
 
+#### Using the full .NET-Framework :
 ```csharp
 using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", 
                         @class = "pull-right" }))
@@ -609,9 +612,21 @@ public void RemoveAntiForgeryCookie(Controller controller)
 }
 ```
 
-NB: You will need to attach the anti-forgery token to Ajax requests.
 
-After .NET Core 2.0 it is possible to automatically generate and verify the antiforgery token. Forms must have the requisite helper as seen here:
+#### Using .NET Core 2.0 or later:
+
+After .NET Core 2.0 it is possible to automatically generate and verify the antiforgery token.
+
+If you are using tag-helpers - what is the default for most web project templates - all forms will automatically send the anti-forgery token.
+You can check if tag-helpers are enabled by checking if your main `_ViewImports.cshtml`- file contains:
+
+```csharp
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+```
+
+`IHtmlHelper.BeginForm` also sends anti-forgery-tokens automatically.
+
+If you are not using tag-helpers or `IHtmlHelper.BeginForm`, forms must have the requisite helper as seen here:
 
 ```html
 <form action="RelevantAction" >
@@ -619,9 +634,32 @@ After .NET Core 2.0 it is possible to automatically generate and verify the anti
 </form>
 ```
 
-And then add the `[AutoValidateAntiforgeryToken]` attribute to the action result.
+And then add the `[AutoValidateAntiforgeryToken]` attribute to the action method. This will validate the token for all HTTP methods other than GET, HEAD, OPTIONS and TRACE.
+
+#### Using .Net Core 2.0 or full .NET-Framework with AJAX
+
+You will need to attach the anti-forgery token to Ajax requests.
+
+If you are using jQuery in an ASP .NET Core MVC view this can be achieved using this snippet:
+```javascript
+@inject  Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgeryProvider
+$.ajax(
+{
+    type: "POST",
+    url: '@Url.Action("Action", "Controller")',
+    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+    data: {
+        id: id,
+        '__RequestVerificationToken': '@antiforgeryProvider.GetAndStoreTokens(this.Context).RequestToken'
+    }
+})
+```
+
+If you are using the full .NET-Framework you can find some snippets [here](https://docs.microsoft.com/de-de/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks#anti-csrf-and-ajax).
 
 More information can be found [here](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) for Cross-Site Request Forgery.
+
+More information about Anti-Forgery-Tokens can be found [here](https://github.com/aspnet/AspNetCore.Docs/blob/master/aspnetcore/security/anti-request-forgery.md#aspnet-core-antiforgery-configuration) for .NET Core and [here](https://docs.microsoft.com/de-de/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks) for the full .NET-Framework.
 
 ## A7 Cross-Site Scripting (XSS)
 
