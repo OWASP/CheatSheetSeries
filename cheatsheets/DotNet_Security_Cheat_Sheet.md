@@ -568,6 +568,7 @@ DO NOT: Send sensitive data without validating Anti-Forgery-Tokens.
 DO: Send the anti-forgery token with every POST/PUT request:
 
 #### Using the full .NET-Framework :
+
 ```csharp
 using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", 
                         @class = "pull-right" }))
@@ -612,7 +613,6 @@ public void RemoveAntiForgeryCookie(Controller controller)
 }
 ```
 
-
 #### Using .NET Core 2.0 or later:
 
 After .NET Core 2.0 it is possible to automatically generate and verify the antiforgery token.
@@ -641,6 +641,7 @@ And then add the `[AutoValidateAntiforgeryToken]` attribute to the action method
 You will need to attach the anti-forgery token to Ajax requests.
 
 If you are using jQuery in an ASP .NET Core MVC view this can be achieved using this snippet:
+
 ```javascript
 @inject  Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgeryProvider
 $.ajax(
