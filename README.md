@@ -234,8 +234,9 @@ See [here](CONTRIBUTING.md#how-to-contribute).
 
 A special thanks you to the following peoples for the help provided during the migration:
 
-- [ThunderSon](https://github.com/ThunderSon): Deeply help about updating the OWASP wiki links for all the migrated cheat sheets.
-- [mackowski](https://github.com/mackowski): Deeply help about updating the OWASP wiki links for all the migrated cheat sheets.
+* [Dominique Righetto](https://github.com/righettod): For his special leadership and guidance.
+* [Elie Saad](https://github.com/ThunderSon): Deeply help about updating the OWASP wiki links for all the migrated cheat sheets.
+* [Jakub Maćkowski](https://github.com/mackowski): Deeply help about updating the OWASP wiki links for all the migrated cheat sheets.
 
 # License
 
