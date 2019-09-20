@@ -58,7 +58,6 @@ The official website provide a search bar (top left corner) that can be used.
 
 # Project leaders
 
-* [Dominique Righetto](https://github.com/righettod).
 * [Jim Manico](https://github.com/jmanico).
 
 # Core team
@@ -76,7 +75,6 @@ Members:
 * [Elie Saad](https://github.com/ThunderSon).
 * [Jakub Maćkowski](https://github.com/mackowski).
 * [Robin Bailey](https://github.com/rbsec).
-* [Dominique Righetto](https://github.com/righettod).
 * [Jim Manico](https://github.com/jmanico).
 
 # PR usage for core commiters
