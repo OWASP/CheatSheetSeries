@@ -303,7 +303,7 @@ if (string.IsNullOrEmpty(address))
  
 ### LDAP injection
 
-Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash `\` escape character. A table showing which characters that should be escaped for Active Directory can be found at the in the LDAP_Injection_Prevention_Cheat_Sheet.
+Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash `\` escape character. A table showing which characters that should be escaped for Active Directory can be found at the in the [LDAP_Injection_Prevention_Cheat_Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md#introduction). 
 
 NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.
 
