@@ -4,10 +4,10 @@
 
 | Factor | Examples | 
 |--------|----------|
-| Something You Know | Passwords, PINs and Security Questions. |
-| Something You Have | Hardware or software tokens, certificates, SMS or phone calls. |
-| Something You Are | Fingerprints, facial recognition, iris scans, handprint scans. |
-| Location | Source IP ranges. |
+| Something You Know | Passwords, PINs and security questions. |
+| Something You Have | Hardware or software tokens, certificates, email, SMS and phone calls. |
+| Something You Are | Fingerprints, facial recognition, iris scans and handprint scans. |
+| Location | Source IP ranges and geolocation |
 
 - What is **not** MFA
   - Password + PIN/Security Question
@@ -125,6 +125,21 @@
 - Don't work properly with SSL decrypting proxies
 - Stored on computer, so easily stolen in compromise
 
+## Email
+
+### Pros
+
+- Easiest to implement
+- No additional requirements for user
+
+### Cons
+
+- Lack of security for email account
+  - Passwords re-use
+  - Email forwarding
+  - No protection if email already compromised
+- Email usually on same device as login attempt
+
 ## SMS Messages and Phone Calls
 
 ### Pros
@@ -169,3 +184,14 @@
 - Doesn't protect against rouge insiders
 - Doesn't protect against a system compromise
 - Wireless network may allow access to corporate ranges
+
+## Geolocation
+
+### Pros
+
+- Easy for users
+- Effective against untargeted attacks
+
+### Cons
+
+- Easy for an attacker to bypass
