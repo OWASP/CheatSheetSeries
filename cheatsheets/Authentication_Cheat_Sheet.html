@@ -1108,7 +1108,7 @@ IF NOT IS_VALID THEN
 ENDIF
 </code></pre><p>This code will go through the same process no matter what the user or the password is, allowing the application to return in approximately the same response time.</p>
 <p>The problem with returning a generic error message for the user is a User Experience (UX) matter. A legitimate user might feel confused with the generic messages, thus making it hard for them to use the application, and might after several retries, leave the application because of its complexity. The decision to return a <em>generic error message</em> can be determined based on the criticality of the application and its data. For example, for critical applications, the team can decide that under the failure scenario, a user will always be redirected to the support page and a <em>generic error message</em> will be returned.</p>
-<p>Regarding the user enumeration itself, protection against <a href="Authentication_Cheat_Sheet.html#prevent-brute-force-attacks">brute-force attack</a> are also effective because they prevent an attacker to apply the enumeration at scale. Usage of <a href="https://en.wikipedia.org/wiki/CAPTCHA" target="_blank">CAPTCHA</a> can be applied on a feature for which a <em>generic error message</em> cannot be returned because the <em>user experience</em> must be preserved.</p>
+<p>Regarding the user enumeration itself, protection against <a href="#protect-against-automated-attacks">brute-force attack</a> are also effective because they prevent an attacker to apply the enumeration at scale. Usage of <a href="https://en.wikipedia.org/wiki/CAPTCHA" target="_blank">CAPTCHA</a> can be applied on a feature for which a <em>generic error message</em> cannot be returned because the <em>user experience</em> must be preserved.</p>
 <h4 id="incorrect-and-correct-response-examples"><a name="incorrect-and-correct-response-examples" class="plugin-anchor" href="#incorrect-and-correct-response-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Incorrect and correct response examples</h4>
 <h5 id="login"><a name="login" class="plugin-anchor" href="#login"><i class="fa fa-link" aria-hidden="true"></i></a>Login</h5>
 <p>Incorrect response examples:</p>
@@ -1120,7 +1120,7 @@ ENDIF
 </ul>
 <p>Correct response example:</p>
 <ul>
-<li>&quot;Login failed; Invalid userID or password&quot;</li>
+<li>&quot;Login failed; Invalid user ID or password&quot;</li>
 </ul>
 <h5 id="password-recovery"><a name="password-recovery" class="plugin-anchor" href="#password-recovery"><i class="fa fa-link" aria-hidden="true"></i></a>Password recovery</h5>
 <p>Incorrect response examples:</p>
@@ -1145,9 +1145,59 @@ ENDIF
 <h4 id="error-codes-and-urls"><a name="error-codes-and-urls" class="plugin-anchor" href="#error-codes-and-urls"><i class="fa fa-link" aria-hidden="true"></i></a>Error Codes and URLs</h4>
 <p>The application may return a different <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" target="_blank">HTTP Error code</a> depending on the authentication attempt response. It may respond with a 200 for a positive result and a 403 for a negative result. Even though a generic error page is shown to a user, the HTTP response code may differ which can leak information about whether the account is valid or not.</p>
 <p>Error disclosure can also be used as a discrepancy factor, consult the <a href="Error_Handling_Cheat_Sheet.html">error handling cheat sheet</a> regarding the global handling of different errors in an application.</p>
-<h2 id="prevent-brute-force-attacks"><a name="prevent-brute-force-attacks" class="plugin-anchor" href="#prevent-brute-force-attacks"><i class="fa fa-link" aria-hidden="true"></i></a>Prevent Brute-Force Attacks</h2>
-<p>If an attacker is able to guess passwords without the account becoming disabled due to failed authentication attempts, the attacker has an opportunity to continue with a brute force attack until the account is compromised. Automating brute-force/password guessing attacks on web applications is a trivial challenge. Password lockout mechanisms should be employed that lock out an account if more than a preset number of unsuccessful login attempts are made. Password lockout mechanisms have a logical weakness. An attacker that undertakes a large number of authentication attempts on known account names can produce a result that locks out entire blocks of user accounts. Given that the intent of a password lockout system is to protect from brute-force attacks, a sensible strategy is to lockout accounts for a period of time (e.g., 20 minutes). This significantly slows down attackers, while allowing the accounts to reopen automatically for legitimate users.</p>
-<p>Also, multi-factor authentication is a very powerful deterrent when trying to prevent brute force attacks since the credentials are a moving target. When multi-factor is implemented and active, account lockout may no longer be necessary.</p>
+<h2 id="protect-against-automated-attacks"><a name="protect-against-automated-attacks" class="plugin-anchor" href="#protect-against-automated-attacks"><i class="fa fa-link" aria-hidden="true"></i></a>Protect Against Automated Attacks</h2>
+<p>There are a number of different types of automated attacks that attackers can use to try and compromise user accounts. The most common types are listed below:</p>
+<table>
+<thead>
+<tr>
+<th>Attack Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Brute Force</td>
+<td>Testing multiple passwords from dictionary or other source against a single account.</td>
+</tr>
+<tr>
+<td>Credential Stuffing</td>
+<td>Testing username/password pairs obtained from the breach of another site.</td>
+</tr>
+<tr>
+<td>Password Spraying</td>
+<td>Testing a single weak password against a large number of different accounts.</td>
+</tr>
+</tbody>
+</table>
+<p>Different protection mechanisms can be implemented to protect against these attacks. In many cases these defences do not provide complete protection, but when a number of them are implemented in a defence-in-depth approach, a reasonable level of protection can be achieved.</p>
+<p>The following sections will focus primarily on preventing brute-force attacks, although these controls can also be effective against other types of attacks. For further guidance on defending against credential stuffing and password spraying, see the <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">Credential Stuffing Cheat Sheet</a>.</p>
+<h3 id="multi-factor-authentication"><a name="multi-factor-authentication" class="plugin-anchor" href="#multi-factor-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>Multi-Factor Authentication</h3>
+<p>Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984" target="_blank">99.9% of account compromises</a>. As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.</p>
+<p>In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor when performing sensitive actions (such as adding a new payment destination), or in specific circumstances where there is reason to suspect that the login attempt may not be legitimate, such as a login from:</p>
+<ul>
+<li>A new browser/device or IP address.</li>
+<li>An unusual country or location.</li>
+<li>Specific countries that are considered untrusted.</li>
+<li>An IP address that appears on known blacklists.</li>
+<li>An IP address that has tried to login to multiple accounts.</li>
+<li>A login attempt that appears to be scripted rather than manual.</li>
+</ul>
+<p>Additionally, for enterprise applications, known trusted IP ranges could be added to a whitelist so that MFA is not required when users connect from these ranges.</p>
+<h3 id="account-lockout"><a name="account-lockout" class="plugin-anchor" href="#account-lockout"><i class="fa fa-link" aria-hidden="true"></i></a>Account Lockout</h3>
+<p>The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.</p>
+<p>The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:</p>
+<ul>
+<li>The number of failed attempts before the account is locked out (lockout threshold).</li>
+<li>The time period that these attempts must occur within (observation window).</li>
+<li>How long the account is locked out for (lockout duration).</li>
+</ul>
+<p>Rather than implementing a fixed lockout duration (e.g, ten minutes), some applications use an exponential lockout, where the lockout duration starts as a very short period (e.g, one second), but doubles after each failed login attempt.</p>
+<p>When designing an account lockout system, care must be taken to prevent it being used to cause a denial of service by locking out other users&apos; accounts. One way this could be performed is to allow the user of the forgotten password functionality to login, even if the account is locked out.</p>
+<h3 id="captcha"><a name="captcha" class="plugin-anchor" href="#captcha"><i class="fa fa-link" aria-hidden="true"></i></a>CAPTCHA</h3>
+<p>The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques, or can be outsourced to services which can solve them. As such, the use of CAPTCHA should be viewed as a defence-in-depth control to make brute-force attacks more time consuming and expensive, rather than as a preventative.</p>
+<p>It may be more user-friendly to only require a CAPTCHA be solved after a small number of failed login attempts, rather than requiring it from the very first login.</p>
+<h3 id="security-questions-and-memorable-words"><a name="security-questions-and-memorable-words" class="plugin-anchor" href="#security-questions-and-memorable-words"><i class="fa fa-link" aria-hidden="true"></i></a>Security Questions and Memorable Words</h3>
+<p>The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does <strong>not</strong> constitute multi-factor authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so must be carefully chosen. The <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">Choosing and Using Security Questions cheat sheet</a> contains further guidance on this.</p>
 <h1 id="logging-and-monitoring"><a name="logging-and-monitoring" class="plugin-anchor" href="#logging-and-monitoring"><i class="fa fa-link" aria-hidden="true"></i></a>Logging and Monitoring</h1>
 <p>Enable logging and monitoring of authentication functions to detect attacks / failures on a real time basis</p>
 <ul>
@@ -1229,7 +1279,7 @@ ENDIF
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Authentication ","level":"1.9","depth":1,"next":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"previous":{"title":"Attack Surface Analysis ","level":"1.8","depth":1,"path":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","ref":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authentication_Cheat_Sheet.md","mtime":"2019-09-22T16:21:03.946Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-09-22T16:21:29.119Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Authentication ","level":"1.9","depth":1,"next":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"previous":{"title":"Attack Surface Analysis ","level":"1.8","depth":1,"path":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","ref":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authentication_Cheat_Sheet.md","mtime":"2019-09-23T06:20:09.690Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-09-23T06:20:33.493Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
