@@ -108,7 +108,7 @@ app.use(helmet.hpkp({
 app.use(helmet.hidePoweredBy());
 ```
 
-Also you can lie about the technologies used with this header. For example, even if your application does not use PHP, you can set X-Powered-By header to seem so.
+Also, you can lie about the technologies used with this header. For example, even if your application does not use PHP, you can set X-Powered-By header to seem so.
 
 ```JavaScript
 app.use(helmet.hidePoweredBy({ setTo: ‘PHP 4.2.0’ }));
@@ -157,7 +157,7 @@ Generally, session information is sent over cookies in web applications. However
 var session = require(‘express-session’);
 app.use(session({
     secret: ‘your-secret-key’,
-    key: ‘cookineName’,
+    key: ‘cookieName’,
     cookie: { secure: true, httpOnly: true, path: ‘/user’, sameSite: true}
 }));
 ```
@@ -222,7 +222,7 @@ fs.unlinkSync(‘/file.txt’);
 
 In the above example, unlinkSync function may run before the callback, which will delete the file before the desired actions on the file content is done. Such race conditions can also impact the security of your application. An example would be a scenario where authentication is performed in callback and authenticated actions are run synchronously. In order to eliminate such race conditions, you can write all operations that rely on each other in a single non-blocking function. By doing so, you can guarantee that all operations are executed in the correct order.
 
-## Prevent HTTP Paremeter Pollution
+## Prevent HTTP Parameter Pollution
 
 HTTP Parameter Pollution(HPP) is an attack in which attackers send multiple HTTP parameters with the same name and this causes your application to interpret them in an unpredictable way. When multiple parameter values are sent, Express populates them in an array. In order to solve this issue, you can use hpp module. This module puts array parameters in req.query and/or req.body aside and just selects the last parameter value. You can use it as follows:
 
@@ -233,7 +233,7 @@ app.use(hpp());
 
 ## Prefer certified modules
 
-Security of a Node.js application depends on security of packages it makes use of. Therefore, packages should be chosen after a careful inspection. Because, a vulnerability in one of these packages may make your application open to any attacker. In order to use packages securely, you first need to know which packages you need to use and see if there is other packages installed apart from them. You should do this periodically, since your code changes in time and that may make some previously required packages unnecessary. Also it is important to check if the package you are about to use is commonly used within Node.js developers. If a package is preferred by most developers, chance to find a security whole in the package and fix it also increases. You can use the download rate of packages, which can be seen using npm-stat.com, to decide whether to use them or not. Another indication for a good package candidate is the last time it was updated. The more often a package is updated, the more secure it becomes.  
+Security of a Node.js application depends on security of packages it makes use of. Therefore, packages should be chosen after a careful inspection. Because, a vulnerability in one of these packages may make your application open to any attacker. In order to use packages securely, you first need to know which packages you need to use and see if there are other packages installed apart from them. You should do this periodically, since your code changes in time and that may make some previously required packages unnecessary. Also, it is important to check if the package you are about to use is commonly used within Node.js developers. If a package is preferred by most developers, chance to find a security whole in the package and fix it also increases. You can use the download rate of packages, which can be seen using npm-stat.com, to decide whether to use them or not. Another indication for a good package candidate is the last time it was updated. The more often a package is updated, the more secure it becomes.  
 
 A better way to ensure security of your packages is to use certified modules. [NodeSource](https://github.com/nodesource/certified) provides packages that are monitored for security vulnerabilities. It provides a trust score for each package. This can be a good strategy when choosing third-party packages.
 
@@ -247,7 +247,7 @@ Asynchronous callback functions are one of the strongest features of Node.js. Ho
 
 ## Return sanitized user objects
 
-Information about the users of an application is among the most critical information about the application. Therefore, user information should be stored on a different database. User tables generally include fields like id, username, full name, email address, birth date, credit card number and in some cases social security numbers. Therefore, when querying and using user objects, you need to return only needed fields as it may be vulnerable to personal information disclosure. This is also correct for other objects stored on the database. If you just need a certain field of an object, you should never return it with all of its fields. As an example you can use a function like the following whenever you need to get information on a user. By doing so, you can only return the fields that are needed for your specific operation. In other words, if you only need to list names of the users available, you are not returning their email addresses or credit card numbers in addition to their full names.
+Information about the users of an application is among the most critical information about the application. Therefore, user information should be stored on a different database. User tables generally include fields like id, username, full name, email address, birth date, credit card number and in some cases social security numbers. Therefore, when querying and using user objects, you need to return only needed fields as it may be vulnerable to personal information disclosure. This is also correct for other objects stored on the database. If you just need a certain field of an object, you should never return it with all of its fields. As an example, you can use a function like the following whenever you need to get information on a user. By doing so, you can only return the fields that are needed for your specific operation. In other words, if you only need to list names of the users available, you are not returning their email addresses or credit card numbers in addition to their full names.
 
 ```JavaScript
 exports.sanitizeUser = function(user) {
@@ -364,7 +364,7 @@ Also, you can provide different transports so that you can save errors to a sepa
 
 ## Perform input validation
 
-Input validation is a crucial part of application security. Input validation failures can results in many different types of application attacks. These include SQL Injection, Cross-Site Scripting, Command Injection, Local/Remote File Inclusion, Denial of Service, Directory Traversal, LDAP Injection and many other injection attacks. In order to avoid these attacks, input to your application should be sanitized first. The best input validation technique is to use a white list of accepted inputs. However, if this is not possible, input should be first checked against expected input scheme and dangerous inputs should be escaped. In order to ease input validation in Node.js applications, there are some modules like validator and mongo-express-sanitize. Also, you should escape all HTML and JavaScript content shown to users via application. You can use [escape-html](https://github.com/component/escape-html) or [node-esapi](https://github.com/ESAPI/node-esapi) libraries to perform output escaping.
+Input validation is a crucial part of application security. Input validation failures can result in many different types of application attacks. These include SQL Injection, Cross-Site Scripting, Command Injection, Local/Remote File Inclusion, Denial of Service, Directory Traversal, LDAP Injection and many other injection attacks. In order to avoid these attacks, input to your application should be sanitized first. The best input validation technique is to use a white list of accepted inputs. However, if this is not possible, input should be first checked against expected input scheme and dangerous inputs should be escaped. In order to ease input validation in Node.js applications, there are some modules like validator and mongo-express-sanitize. Also, you should escape all HTML and JavaScript content shown to users via application. You can use [escape-html](https://github.com/component/escape-html) or [node-esapi](https://github.com/ESAPI/node-esapi) libraries to perform output escaping.
 
 ## Adhere to general application security principles
 
