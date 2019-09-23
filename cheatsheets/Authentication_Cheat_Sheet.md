@@ -132,7 +132,7 @@ This code will go through the same process no matter what the user or the passwo
 
 The problem with returning a generic error message for the user is a User Experience (UX) matter. A legitimate user might feel confused with the generic messages, thus making it hard for them to use the application, and might after several retries, leave the application because of its complexity. The decision to return a *generic error message* can be determined based on the criticality of the application and its data. For example, for critical applications, the team can decide that under the failure scenario, a user will always be redirected to the support page and a *generic error message* will be returned.
 
-Regarding the user enumeration itself, protection against [brute-force attack](Authentication_Cheat_Sheet.md#prevent-brute-force-attacks) are also effective because they prevent an attacker to apply the enumeration at scale. Usage of [CAPTCHA](https://en.wikipedia.org/wiki/CAPTCHA) can be applied on a feature for which a *generic error message* cannot be returned because the *user experience* must be preserved.
+Regarding the user enumeration itself, protection against [brute-force attack](#protect-against-automated-attacks) are also effective because they prevent an attacker to apply the enumeration at scale. Usage of [CAPTCHA](https://en.wikipedia.org/wiki/CAPTCHA) can be applied on a feature for which a *generic error message* cannot be returned because the *user experience* must be preserved.
 
 #### Incorrect and correct response examples
 
@@ -145,7 +145,7 @@ Incorrect response examples:
 - "Login failed; this user is not active"
 
 Correct response example:
-- "Login failed; Invalid userID or password"
+- "Login failed; Invalid user ID or password"
 
 ##### Password recovery
 
@@ -171,11 +171,58 @@ The application may return a different [HTTP Error code](https://developer.mozil
 
 Error disclosure can also be used as a discrepancy factor, consult the [error handling cheat sheet](Error_Handling_Cheat_Sheet.md) regarding the global handling of different errors in an application.
 
-## Prevent Brute-Force Attacks
+## Protect Against Automated Attacks
 
-If an attacker is able to guess passwords without the account becoming disabled due to failed authentication attempts, the attacker has an opportunity to continue with a brute force attack until the account is compromised. Automating brute-force/password guessing attacks on web applications is a trivial challenge. Password lockout mechanisms should be employed that lock out an account if more than a preset number of unsuccessful login attempts are made. Password lockout mechanisms have a logical weakness. An attacker that undertakes a large number of authentication attempts on known account names can produce a result that locks out entire blocks of user accounts. Given that the intent of a password lockout system is to protect from brute-force attacks, a sensible strategy is to lockout accounts for a period of time (e.g., 20 minutes). This significantly slows down attackers, while allowing the accounts to reopen automatically for legitimate users.
+There are a number of different types of automated attacks that attackers can use to try and compromise user accounts. The most common types are listed below:
 
-Also, multi-factor authentication is a very powerful deterrent when trying to prevent brute force attacks since the credentials are a moving target. When multi-factor is implemented and active, account lockout may no longer be necessary.
+| Attack Type | Description |
+|-------------|-------------|
+| Brute Force | Testing multiple passwords from dictionary or other source against a single account. |
+| Credential Stuffing | Testing username/password pairs obtained from the breach of another site. |
+| Password Spraying | Testing a single weak password against a large number of different accounts.|
+
+Different protection mechanisms can be implemented to protect against these attacks. In many cases these defences do not provide complete protection, but when a number of them are implemented in a defence-in-depth approach, a reasonable level of protection can be achieved.
+
+The following sections will focus primarily on preventing brute-force attacks, although these controls can also be effective against other types of attacks. For further guidance on defending against credential stuffing and password spraying, see the [Credential Stuffing Cheat Sheet](Credential_Stuffing_Prevention_Cheat_Sheet.md).
+
+### Multi-Factor Authentication
+
+Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
+
+In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor when performing sensitive actions (such as adding a new payment destination), or in specific circumstances where there is reason to suspect that the login attempt may not be legitimate, such as a login from:
+
+- A new browser/device or IP address.
+- An unusual country or location.
+- Specific countries that are considered untrusted.
+- An IP address that appears on known blacklists.
+- An IP address that has tried to login to multiple accounts.
+- A login attempt that appears to be scripted rather than manual.
+
+Additionally, for enterprise applications, known trusted IP ranges could be added to a whitelist so that MFA is not required when users connect from these ranges.
+
+### Account Lockout
+
+The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.
+
+The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:
+
+- The number of failed attempts before the account is locked out (lockout threshold).
+- The time period that these attempts must occur within (observation window).
+- How long the account is locked out for (lockout duration).
+
+Rather than implementing a fixed lockout duration (e.g, ten minutes), some applications use an exponential lockout, where the lockout duration starts as a very short period (e.g, one second), but doubles after each failed login attempt.
+
+When designing an account lockout system, care must be taken to prevent it being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the user of the forgotten password functionality to login, even if the account is locked out.
+
+### CAPTCHA
+
+The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques, or can be outsourced to services which can solve them. As such, the use of CAPTCHA should be viewed as a defence-in-depth control to make brute-force attacks more time consuming and expensive, rather than as a preventative.
+
+It may be more user-friendly to only require a CAPTCHA be solved after a small number of failed login attempts, rather than requiring it from the very first login.
+
+### Security Questions and Memorable Words
+
+The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does **not** constitute multi-factor authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so must be carefully chosen. The [Choosing and Using Security Questions cheat sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) contains further guidance on this.
 
 # Logging and Monitoring
 
