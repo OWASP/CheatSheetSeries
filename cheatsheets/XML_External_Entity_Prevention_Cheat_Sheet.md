@@ -316,7 +316,7 @@ Since [JDK-8010393](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8010393
 
 ## XPathExpression
 
-A `javax.xml.xpath.XPathExpression` is similar to an Unmarshaller where it can't be configured securely by itself, so the untrusted data must be parsed through another securable XML parser first.
+A `javax.xml.xpath.XPathExpression` can not be configured securely by itself, so the untrusted data must be parsed through another securable XML parser first.
 
 For example:
 
