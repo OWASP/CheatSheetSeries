@@ -403,7 +403,18 @@ However, it should be noted that attackers can change content type of the reques
 
 ## Use strict mode
 
-JavaScript has some unsafe features that lies within the language itself. In order to remove these features, ES5 included a strict mode for developers. With this mode, errors that were silent previously are thrown. It also restricted optimizations for JavaScript engines. With strict mode, previously accepted bad syntax causes real errors. use "use strict". Because of these improvements, you should always use strict mode in your application. In order to enable strict mode, you just need to write `use strict;` on top of your code.
+JavaScript has a number of unsafe and dangerous legacy features that should not be used. In order to remove these features, ES5 included a strict mode for developers. With this mode, errors that were silent previously are thrown. It also helps JavaScript engines perform optimizations. With strict mode, previously accepted bad syntax causes real errors. Because of these improvements, you should always use strict mode in your application. In order to enable strict mode, you just need to write `"use strict";` on top of your code.
+
+The following code will generate a `ReferenceError: Can't find variable: y` on the console which will not be displayed unless strict mode is used.
+
+```JavaScript
+"use strict";
+
+func();
+function func() {
+  y = 3.14;   // This will cause an error (y is not defined)
+}
+```
 
 ## Use object property descriptors
 
