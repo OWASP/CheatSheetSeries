@@ -399,6 +399,8 @@ app.use(express.multipart({ limit:"10mb" }));
 app.use(express.limit("5kb")); // this will be valid for every other content type
 ```
 
+However, it should be noted that attackers can change content type of the request and bypass request size limits. Therefore, before processing the request, data contained in the request should be validated against the content type stated in the request headers. If content type validation for each request affects the performance severely, you can only validate specific content types or request larger than a predetermined size.
+
 ## Use strict mode
 
 JavaScript has some unsafe features that lies within the language itself. In order to remove these features, ES5 included a strict mode for developers. With this mode, errors that were silent previously are thrown. It also restricted optimizations for JavaScript engines. With strict mode, previously accepted bad syntax causes real errors. use "use strict". Because of these improvements, you should always use strict mode in your application. In order to enable strict mode, you just need to write `use strict;` on top of your code.
