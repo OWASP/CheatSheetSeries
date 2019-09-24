@@ -92,7 +92,7 @@ app.use(expectCt({ enforce: true, maxAge: 123 }));
 app.use(expectCt({ enforce: true, maxAge: 123, reportUri: ‘http://example.com’}));
 ```
 
-- **Public-Key-Pins:** This header increases the security of HTTPS. With this header, a specific cryptographic public key is associated with a specific web server. If the server does not use the pinned keys in future, the browser regards the responses as illegitimate. It has 2 optional (reportUri, includeSubDomains) and 2 required (pin-sha256, max-age) directives. These can be used as follows:
+- **Public-Key-Pins:** This header increases the security of HTTPS. With this header, a specific cryptographic public key is associated with a specific web server. If the server does not use the pinned keys in future, the browser regards the responses as illegitimate. It has 2 optional (`reportUri`, `includeSubDomains`) and 2 required (`pin-sha256`, `max-age`) directives. These can be used as follows:
 
 ```JavaScript
 app.use(helmet.hpkp({
@@ -102,6 +102,8 @@ app.use(helmet.hpkp({
     includeSubDomains: true
 }));
 ```
+
+As discussed in [Transport Layer Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html#consider-using-public-key-pinning), the decision to use public key pinning should be made with careful consideration, since it may cause locking out users for a long time if used incorrectly.
 
 - **X-Powered-By:** X-Powered-By header is used to inform what technology is used in the server side. This is an unnecessary header causing information leakage, so it should be removed from your application. To do so, you can use the hidePoweredBy as follows:
 
