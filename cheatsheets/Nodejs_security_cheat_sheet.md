@@ -502,7 +502,7 @@ var logger = new (Winston.Logger) ({
 });
 ```
 
-Also, you can provide different transports so that you can save errors to a separate log file and general application logs to a different log file.
+Also, you can provide different transports so that you can save errors to a separate log file and general application logs to a different log file. Additional information on security logging can be found in [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html).
 
 ## Perform input validation
 
