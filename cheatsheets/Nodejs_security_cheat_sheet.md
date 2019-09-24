@@ -260,7 +260,7 @@ In the above code, call to unlink the file and other file operations are within 
 
 ## Prevent HTTP Parameter Pollution
 
-HTTP Parameter Pollution(HPP) is an attack in which attackers send multiple HTTP parameters with the same name and this causes your application to interpret them in an unpredictable way. When multiple parameter values are sent, Express populates them in an array. In order to solve this issue, you can use hpp module. This module puts array parameters in req.query and/or req.body aside and just selects the last parameter value. You can use it as follows:
+HTTP Parameter Pollution(HPP) is an attack in which attackers send multiple HTTP parameters with the same name and this causes your application to interpret them in an unpredictable way. When multiple parameter values are sent, Express populates them in an array. In order to solve this issue, you can use [hpp](https://www.npmjs.com/package/hpp) module. When used, this module will ignore all values submitted for a parameter in `req.query` and/or `req.body` and just select the last parameter value submitted. You can use it as follows:
 
 ```JavaScript
 var hpp = require('hpp');
