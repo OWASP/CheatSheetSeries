@@ -105,7 +105,7 @@ app.use(helmet.hpkp({
 
 As discussed in [Transport Layer Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html#consider-using-public-key-pinning), the decision to use public key pinning should be made with careful consideration, since it may cause locking out users for a long time if used incorrectly.
 
-- **X-Powered-By:** X-Powered-By header is used to inform what technology is used in the server side. This is an unnecessary header causing information leakage, so it should be removed from your application. To do so, you can use the hidePoweredBy as follows:
+- **X-Powered-By:** X-Powered-By header is used to inform what technology is used in the server side. This is an unnecessary header causing information leakage, so it should be removed from your application. To do so, you can use the `hidePoweredBy` as follows:
 
 ```JavaScript
 app.use(helmet.hidePoweredBy());
