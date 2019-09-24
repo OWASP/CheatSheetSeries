@@ -440,7 +440,7 @@ Errors in these callbacks can be propagated as many times as possible. Each call
 
 ## Listen to errors when using EventEmitter
 
-When using EventEmitter, errors can occur anywhere in the event chain. Normally, if an error occurs in an EventEmitter object, an error event with an Error object as its argument is called. However, if there are no attached listeners to that error event, the Error object that is sent as argument is thrown and becomes an uncaught exception. In short, if you do not handle errors within an EventEmitter object properly, these unhandled errors may crash your application. Therefore, you should always listen to error events when using EventEmitter objects.
+When using EventEmitter, errors can occur anywhere in the event chain. Normally, if an error occurs in an EventEmitter object, an error event which has an Error object as an argument is called. However, if there are no attached listeners to that error event, the Error object that is sent as an argument is thrown and becomes an uncaught exception. In short, if you do not handle errors within an EventEmitter object properly, these unhandled errors may crash your application. Therefore, you should always listen to error events when using EventEmitter objects.
 
 ```JavaScript
 var events = require('events');
