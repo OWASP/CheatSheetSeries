@@ -40,7 +40,7 @@ helmet.xframe(‘sameorigin’); // SAMEORIGIN
 helmet.xframe(‘allow-from’, ‘http://alloweduri.com’); //ALLOW-FROM uri
 ```
 
-- **X-XSS-Protection:** This header enables browsers to stop loading pages when browsers detect reflected cross-site scripting attacks. In order to implement this header in your application, you can use the following code:
+- **X-XSS-Protection:** As described in [XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#bonus-rule-4-use-the-x-xss-protection-response-header), this header enables browsers to stop loading pages when browsers detect reflected cross-site scripting attacks. In order to implement this header in your application, you can use the following code:
 
 ```JavaScript
 var xssFilter = require('x-xss-protection');
