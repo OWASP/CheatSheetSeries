@@ -273,7 +273,106 @@ When developing code, keeping all security tips in mind can be really difficult.
 
 ## Use flat Promise chains
 
-Asynchronous callback functions are one of the strongest features of Node.js. However, increasing layers of nesting within callback functions can become a problem. Any multistage process can become nested 10 or more levels deep. This problem is called as Pyramid of Doom or Callback Hell. In such a code, the errors and results get lost within the callback. Promises are a good way to write asynchronous code without getting into nested pyramids. Promises provide top-down execution while being asynchronous by delivering errors and results to next .then function. Another advantage of Promises is the way Promises handle the errors. If an error occurs in a Promise class, it skips over the .then functions and invokes the first .catch function it finds. This way Promises bring a higher assurance of capturing and handling errors. As a principle, you can make all your asynchronous code(apart from emitters) return promises. However, it should be noted that Promise calls can also become a pyramid. In order to completely stay away from callback hells, flat Promise chains should be used. If the module you are using does not support Promises, you can convert base object to a Promise by using Promise.promisifyAll() function.
+Asynchronous callback functions are one of the strongest features of Node.js. However, increasing layers of nesting within callback functions can become a problem. Any multistage process can become nested 10 or more levels deep. This problem is called as Pyramid of Doom or Callback Hell. In such a code, the errors and results get lost within the callback. Promises are a good way to write asynchronous code without getting into nested pyramids. Promises provide top-down execution while being asynchronous by delivering errors and results to next `.then` function.
+
+Another advantage of Promises is the way Promises handle the errors. If an error occurs in a Promise class, it skips over the `.then` functions and invokes the first `.catch` function it finds. This way Promises bring a higher assurance of capturing and handling errors. As a principle, you can make all your asynchronous code(apart from emitters) return promises. However, it should be noted that Promise calls can also become a pyramid. In order to completely stay away from callback hells, flat Promise chains should be used. If the module you are using does not support Promises, you can convert base object to a Promise by using `Promise.promisifyAll()` function.
+
+The following code snippet is an example of callback hell.
+
+```JavaScript
+function func1(name, callback) {
+   setTimeout(function() {
+      // operations
+   }, 500);
+}
+function func2(name, callback) {
+   setTimeout(function() {
+      // operations
+   }, 100);
+}
+function func3(name, callback) {
+   setTimeout(function() {
+      // operations
+   }, 900);
+}
+function func4(name, callback) {
+   setTimeout(function() {
+      // operations
+   }, 3000);
+}
+
+func1("input1", function(err, result1){
+   if(err){
+      // error operations
+   }
+   else {
+      //some operations
+      func2("input2", function(err, result2){
+         if(err){
+            //error operations
+         }
+         else{
+            //some operations
+            func3("input3", function(err, result3){
+               if(err){
+                  //error operations
+               }
+               else{
+                  // some operations
+                  func4("input 4", function(err, result4){
+                     if(err){
+                        // error operations
+                     }
+                     else {
+                        // some operations
+                     }
+                  });
+               }
+            });
+         }
+      });
+   }
+});
+```
+
+Above code can be securely written as follows using flat Promise chain:
+
+```JavaScript
+function func1(name, callback) {
+   setTimeout(function() {
+      // operations
+   }, 500);
+}
+function func2(name, callback) {
+   setTimeout(function() {
+      // operations
+   }, 100);
+}
+function func3(name, callback) {
+   setTimeout(function() {
+      // operations
+   }, 900);
+}
+function func4(name, callback) {
+   setTimeout(function() {
+      // operations
+   }, 3000);
+}
+
+func1("input1")
+   .then(function (result){
+      return func2("input2");
+   })
+   .then(function (result){
+      return func3("input3");
+   })
+   .then(function (result){
+      return func4("input4");
+   })
+   .catch(function (error) {
+      // error operations
+   });
+```
 
 ## Return sanitized user objects
 
