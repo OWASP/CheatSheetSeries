@@ -211,9 +211,11 @@ For detailed information on cross-site request forgery (CSRF) attacks and preven
 
 ## Do not use dangerous functions
 
-There are some JavaScript functions that are too dangerous to use. To the fullest possible extent, use of such functions and modules should be avoided. The first example is the eval() function. This function takes a string argument and executes it as any other JavaScript source code. This behavior inherently leads to remote code execution vulnerability. Similarly, calls to child_process.exec are also very dangerous. This function acts as a bash interpreter and sends its arguments to /bin/sh. By injecting input to this function, attackers can execute arbitrary commands on the server. Therefore, its use is highly discouraged.
+There are some JavaScript functions that are dangerous and should only be used where absolutely necessary. To the fullest possible extent, use of such functions and modules should be avoided. The first example is the `eval()` function. This function takes a string argument and executes it as any other JavaScript source code. Combined with user input, this behavior inherently leads to remote code execution vulnerability. Similarly, calls to `child_process.exec` are also very dangerous. This function acts as a bash interpreter and sends its arguments to /bin/sh. By injecting input to this function, attackers can execute arbitrary commands on the server.
 
-In addition to these functions, there are some modules that require special attention when being used. As an example, fs module handles filesystem operations. However, if improperly sanitized user input is fed into this module, your server's content can be tampered. Similarly, vm module provides APIs for compiling and running code within V8 Virtual Machine contexts. Since it can perform dangerous actions by nature, it should be used within a sandbox.
+In addition to these functions, there are some modules that require special attention when being used. As an example, `fs` module handles filesystem operations. However, if improperly sanitized user input is fed into this module, your server's content can be tampered. Similarly, `vm` module provides APIs for compiling and running code within V8 Virtual Machine contexts. Since it can perform dangerous actions by nature, it should be used within a sandbox.
+
+It would be fair to say that these functions and modules should not be used whatsoever, however, they should be used carefully especially when they use with user input.
 
 ## Stay away from evil regexes
 
