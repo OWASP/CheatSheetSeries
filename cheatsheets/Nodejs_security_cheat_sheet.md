@@ -472,10 +472,10 @@ process.on("uncaughtException", function(err) {
 
 ## Monitor the event loop
 
-When your application server is under heavy network traffic, it may not be able to serve its users. This is essentially a type of Denial of Service (DoS) attack. Toobusy module allows you to monitor the event loop. It keeps track of lags and when it goes beyond a certain threshold, this module can indicate your server is too busy. In that case, you can stop processing incoming requests and send them 503 Server Too Busy message so that your application stay responsive. Sample use of toobusy module is shown here:
+When your application server is under heavy network traffic, it may not be able to serve its users. This is essentially a type of Denial of Service (DoS) attack. The [toobusy-js](https://www.npmjs.com/package/toobusy-js) module allows you to monitor the event loop. It keeps track of the response time, and when it goes beyond a certain threshold, this module can indicate your server is too busy. In that case, you can stop processing incoming requests and send them 503 Server Too Busy message so that your application stay responsive. Example use of the [toobusy-js](https://www.npmjs.com/package/toobusy-js) module is shown here:
 
 ```JavaScript
-var toobusy = require('toobusy');
+var toobusy = require('toobusy-js');
 var express = require('express');
 var app = express();
 app.use(function(req, res, next) {
