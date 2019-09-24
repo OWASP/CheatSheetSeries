@@ -418,7 +418,7 @@ function func() {
 
 ## Use object property descriptors
 
-Object properties include 3 hidden attributes: writable (if false, property value cannot be changed), enumerable (if false, property cannot be used in for loops) and configurable (if false, property cannot be deleted). When defining an object property through assignment, these three hidden attributes are set to true by default. These properties can be set as follows:
+Object properties include 3 hidden attributes: `writable` (if false, property value cannot be changed), `enumerable` (if false, property cannot be used in for loops) and `configurable` (if false, property cannot be deleted). When defining an object property through assignment, these three hidden attributes are set to true by default. These properties can be set as follows:
 
 ```JavaScript
 var o = {};
@@ -430,7 +430,7 @@ Object.defineProperty(o, "a", {
 });
 ```
 
-Apart from these, there are some special functions for object attributes. Object.preventExtensions() prevents new properties from being added to the object.
+Apart from these, there are some special functions for object attributes. `Object.preventExtensions()` prevents new properties from being added to the object.
 
 ## Handle errors in asynchronous calls
 
