@@ -37,7 +37,7 @@ app.use(helmet.hsts("<max-age>", "<includeSubdomains>")); // custom configuratio
 ```JavaScript
 app.use(hemlet.xframe()); // default behavior (DENY)
 helmet.xframe('sameorigin'); // SAMEORIGIN
-helmet.xframe('allow-from', ‘http://alloweduri.com'); //ALLOW-FROM uri
+helmet.xframe('allow-from', 'http://alloweduri.com'); //ALLOW-FROM uri
 ```
 
 - **X-XSS-Protection:** As described in [XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#bonus-rule-4-use-the-x-xss-protection-response-header), this header enables browsers to stop loading pages when browsers detect reflected cross-site scripting attacks. In order to implement this header in your application, you can use the following code:
@@ -77,7 +77,7 @@ app.use(helmet.noCache());
 
 The above code sets Cache-Control, Surrogate-Control, Pragma and Expires headers accordingly.
 
-- **X-Download-Options:** This header prevents Internet Explorer from executing downloaded files in the site’s context. This is achieved with noopen directive. You can do so with the following piece of code:
+- **X-Download-Options:** This header prevents Internet Explorer from executing downloaded files in the site's context. This is achieved with noopen directive. You can do so with the following piece of code:
 
 ```JavaScript
 app.use(helmet.ieNoOpen());
@@ -126,10 +126,10 @@ var bouncer = require('express-bouncer');
 bouncer.whitelist.push('127.0.0.1'); // whitelist an IP address
 // give a custom error message
 bouncer.blocked = function (req, res, next, remaining) {
-    res.send(429, “Too many requests have been made. Please wait “ + remaining/1000 + “ seconds.”);
+    res.send(429, "Too many requests have been made. Please wait " + remaining/1000 + " seconds.");
 };
 // route to protect
-app.post(“/login”, bouncer.block, function(req, res) {
+app.post("/login", bouncer.block, function(req, res) {
     if (LoginFailed){  }
     else {
         bouncer.reset( req );
@@ -194,7 +194,7 @@ In addition to these functions, there are some modules that require special atte
 
 ## Stay away from evil regexes
 
-Denial of Service (DoS) attack aims to make one or more of an application's resources or services unavailable for its legitimate users. Some Regular Expression (Regex) implementations cause extreme situations that makes the application very slow. Attackers can use such regex implementations to cause application to get into these extreme situations and hang for a long time.  Such regexes are called evil if application can be stuck on crafted input.  Generally, these regexes are exploited by grouping with repetition and alternation with overlapping. (a+)+, (a|a?)+ are some examples of evil regexes. Fortunately, there is a Node.js module that can be used to check if a specific regex is evil or not. However, as it is stated in the module's Github page, you cannot “be absolutely sure that this module will catch all exponential-time cases”. Its usage is as simple as follows:
+Denial of Service (DoS) attack aims to make one or more of an application's resources or services unavailable for its legitimate users. Some Regular Expression (Regex) implementations cause extreme situations that makes the application very slow. Attackers can use such regex implementations to cause application to get into these extreme situations and hang for a long time.  Such regexes are called evil if application can be stuck on crafted input.  Generally, these regexes are exploited by grouping with repetition and alternation with overlapping. (a+)+, (a|a?)+ are some examples of evil regexes. Fortunately, there is a Node.js module that can be used to check if a specific regex is evil or not. However, as it is stated in the module's Github page, you cannot "be absolutely sure that this module will catch all exponential-time cases". Its usage is as simple as follows:
 
 ```JavaScript
 node safe.js <regex>
@@ -267,10 +267,10 @@ exports.sanitizeUser = function(user) {
 Buffering and parsing of request bodies can be cumbersome for the server. If there is no limit on the size of requests, attackers can send request with large request bodies so that they can exhaust server memory or fill disk space. However, fixing a request size limit for all requests may not be the correct behavior, since some requests like those for uploading a file to the server have more content to carry on the request body. Also, input with a JSON type is more dangerous than a multipart input, since parsing JSON is a blocking operation. Therefore, you should set request size limits for different content types. You can accomplish this very easily with express middlewares as follows:
 
 ```JavaScript
-app.use(express.urlencoded({ limit: “1kb” }));
-app.use(express.json({ limit: “1kb” }));
-app.use(express.multipart({ limit:”10mb” }));
-app.use(express.limit(“5kb”)); // this will be valid for every other content type
+app.use(express.urlencoded({ limit: "1kb" }));
+app.use(express.json({ limit: "1kb" }));
+app.use(express.multipart({ limit:"10mb" }));
+app.use(express.limit("5kb")); // this will be valid for every other content type
 ```
 
 ## Use strict mode
@@ -283,11 +283,11 @@ Object properties include 3 hidden attributes: writable (if false, property valu
 
 ```JavaScript
 var o = {};
-Object.defineProperty(o, “a”, {
+Object.defineProperty(o, "a", {
     writable: true,
     enumerable: true,
     configurable: true,
-    value: “A”
+    value: "A"
 });
 ```
 
@@ -304,27 +304,27 @@ Errors in these callbacks can be propagated as many times as possible. Each call
 When using EventEmitter, errors can occur anywhere in the event chain. Normally, if an error occurs in an EventEmitter object, an error event with an Error object as its argument is called. However, if there are no attached listeners to that error event, the Error object that is sent as argument is thrown and becomes an uncaught exception. In short, if you do not handle errors within an EventEmitter object properly, these unhandled errors may crash your application. Therefore, you should always listen to error events when using EventEmitter objects.
 
 ```JavaScript
-var events = require(‘events’);
+var events = require('events');
 var myEventEmitter = function(){
     events.EventEmitter.call(this);
 }
-require(‘util’).inherits(myEventEmitter, events.EventEmitter);
+require('util').inherits(myEventEmitter, events.EventEmitter);
 myEventEmitter.prototype.someFunction = function(param1, param2) {
     //in case of an error
-    this.emit(‘error’, err);
+    this.emit('error', err);
 }
 var emitter = new myEventEmitter();
-emitter.on(‘error’, function(err){
+emitter.on('error', function(err){
     //Perform necessary error handling here
 });
 ```
 
 ## Handle uncaughtException
 
-Node.js behavior for uncaught exceptions is to print current stack trace and then terminate the thread. However, Node.js allows customization of this behavior. It provides a global object named process which is available to all Node.js applications. It is an EventEmitter object  and in case of an uncaught exception, “uncaughtException” event gets emitted and it is brought up to the main event loop. In order to provide a custom behavior for uncaught exceptions, you can bind to this event. However, resuming the application after such an uncaught exception can lead to further problems. Therefore, if you do not want to miss any uncaught exception, you should bind to uncaughtException event and cleanup any allocated resources like file descriptors, handles and similar before shutting down the process. Resuming the application is strongly discouraged as the application will be in an unknown state.
+Node.js behavior for uncaught exceptions is to print current stack trace and then terminate the thread. However, Node.js allows customization of this behavior. It provides a global object named process which is available to all Node.js applications. It is an EventEmitter object  and in case of an uncaught exception, uncaughtException event gets emitted and it is brought up to the main event loop. In order to provide a custom behavior for uncaught exceptions, you can bind to this event. However, resuming the application after such an uncaught exception can lead to further problems. Therefore, if you do not want to miss any uncaught exception, you should bind to uncaughtException event and cleanup any allocated resources like file descriptors, handles and similar before shutting down the process. Resuming the application is strongly discouraged as the application will be in an unknown state.
 
 ```JavaScript
-process.on(“uncaughtException”, function(err) {
+process.on("uncaughtException", function(err) {
     // clean up allocated resources
     // log necessary error details to log files
     process.exit(); // exit the process to avoid unknown state
@@ -336,13 +336,13 @@ process.on(“uncaughtException”, function(err) {
 When your application server is under heavy network traffic, it may not be able to serve its users. This is essentially a type of Denial of Service (DoS) attack. Toobusy module allows you to monitor the event loop. It keeps track of lags and when it goes beyond a certain threshold, this module can indicate your server is too busy. In that case, you can stop processing incoming requests and send them 503 Server Too Busy message so that your application stay responsive. Sample use of toobusy module is shown here:
 
 ```JavaScript
-var toobusy = require(‘toobusy’);
-var express = require(‘express’);
+var toobusy = require('toobusy');
+var express = require('express');
 var app = express();
 app.use(function(req, res, next) {
     if (toobusy()) {
         // log if you see necessary
-        res.send(503, “Server Too Busy”);
+        res.send(503, "Server Too Busy");
     } else {
     next();
     }
@@ -357,9 +357,9 @@ Logging application activity is an encouraged good practice. It makes it easier 
 var logger = new (Winston.Logger) ({
     transports: [
         new (winston.transports.Console)(),
-        new (winston.transports.File)({ filename: ‘application.log’ })
+        new (winston.transports.File)({ filename: 'application.log' })
     ],
-    level: ‘verbose’
+    level: 'verbose'
 });
 ```
 
