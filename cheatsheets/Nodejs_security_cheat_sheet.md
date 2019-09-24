@@ -244,7 +244,19 @@ fs.readFile('/file.txt', (err, data) => {
 fs.unlinkSync('/file.txt');
 ```
 
-In the above example, unlinkSync function may run before the callback, which will delete the file before the desired actions on the file content is done. Such race conditions can also impact the security of your application. An example would be a scenario where authentication is performed in callback and authenticated actions are run synchronously. In order to eliminate such race conditions, you can write all operations that rely on each other in a single non-blocking function. By doing so, you can guarantee that all operations are executed in the correct order.
+In the above example, `unlinkSync` function may run before the callback, which will delete the file before the desired actions on the file content is done. Such race conditions can also impact the security of your application. An example would be a scenario where authentication is performed in callback and authenticated actions are run synchronously. In order to eliminate such race conditions, you can write all operations that rely on each other in a single non-blocking function. By doing so, you can guarantee that all operations are executed in the correct order. For example, above code example can be written in a non-blocking way as follows:
+
+```JavaScript
+const fs = require('fs');
+fs.readFile('/file.txt', (err, data) => {
+  // perform actions on file content
+  fs.unlink('/file.txt', (err) => {
+    if (err) throw err;
+  });
+});
+```
+
+In the above code, call to unlink the file and other file operations are within the same callback. This provides the correct order of operations.
 
 ## Prevent HTTP Parameter Pollution
 
