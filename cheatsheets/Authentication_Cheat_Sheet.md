@@ -96,7 +96,7 @@ Using any of the authentication mechanisms (login, password reset or password re
 
 The account registration feature should also be taken into consideration, and the same approach of generic error message can be applied regarding the case in which the user exists.
 
-The objective is to prevent the creation of a [discrepancy factor](https://cwe.mitre.org/data/definitions/204.html) allowing an attacker to mount a user enumeration action against the application.
+The objective is to prevent the creation of a [discrepancy factor](https://cwe.mitre.org/data/definitions/204.html) allowing an attacker to mount a user enumeration action against the application (that lead into indirect data breach).
 
 It is interesting to note that the business logic itself can bring a discrepancy factor related to the processing time taken. Indeed, depending on the implementation, the processing time can be significantly different according to the case (success vs failure) allowing an attacker to mount a [time-based attack](https://en.wikipedia.org/wiki/Timing_attack) (delta of some seconds for example).
 
