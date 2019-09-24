@@ -119,7 +119,8 @@ app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
 
 ## Take precautions against brute-forcing
 
-Brute-forcing is a common threat to all web applications. Attackers can use brute-forcing as a password guessing attack to obtain account passwords. Therefore, application developers should take precautions against brute-force attacks especially in login pages.  Node.js has several modules available for this purpose. [Express bouncer](https://libraries.io/npm/express-bouncer), [express brute](https://libraries.io/npm/express-brute) and [rate-limiter](https://libraries.io/npm/rate-limiter) are just some examples. Based on your needs and requirements, you should choose one or more of these modules and use accordingly. [Express bouncer](https://libraries.io/npm/express-bouncer) and [express brute](https://libraries.io/npm/express-brute) modules work very similar and they both increase the delay with each failed request. They can both be arranged for a specific route. These modules can be used as follows:
+[Brute-forcing](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#protect-against-automated-attacks
+) is a common threat to all web applications. Attackers can use brute-forcing as a password guessing attack to obtain account passwords. Therefore, application developers should take precautions against brute-force attacks especially in login pages.  Node.js has several modules available for this purpose. [Express bouncer](https://libraries.io/npm/express-bouncer), [express brute](https://libraries.io/npm/express-brute) and [rate-limiter](https://libraries.io/npm/rate-limiter) are just some examples. Based on your needs and requirements, you should choose one or more of these modules and use accordingly. [Express bouncer](https://libraries.io/npm/express-bouncer) and [express brute](https://libraries.io/npm/express-brute) modules work very similar and they both increase the delay with each failed request. They can both be arranged for a specific route. These modules can be used as follows:
 
 ```JavaScript
 var bouncer = require('express-bouncer');
@@ -158,7 +159,7 @@ var limiter = new RateLimiter();
 limiter.addLimit('/login', 'GET', 5, 500); // login page can be requested 5 times at max within 500 seconds 
 ```
 
-CAPTCHA usage is also another common mechanism used against brute-forcing. There are modules developed for Node.js CAPTCHAs. A common module used in Node.js applications is [svg-captcha](https://www.npmjs.com/package/svg-captcha). It can be used as follows:
+[CAPTCHA usage](https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html#captcha) is also another common mechanism used against brute-forcing. There are modules developed for Node.js CAPTCHAs. A common module used in Node.js applications is [svg-captcha](https://www.npmjs.com/package/svg-captcha). It can be used as follows:
 
 ```JavaScript
 var svgCaptcha = require('svg-captcha');
