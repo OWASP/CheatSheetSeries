@@ -53,7 +53,7 @@ app.use(xssFilter());
 app.use(helmet.noSniff());
 ```
 
-- **Content-Security-Policy:** Content Security Policy is developed to reduce the risk of attacks like XSS and Clickjacking. Basically, it allows content from a whitelist you decide. Other contents from different sources are not accepted if Content-Security-Policy headers are set correctly. It has several directives each of which prohibits loading specific type of a content. These are `connect-src`, `font-src`, `frame-src`, `img-src`, `media-src`, `object-src`, `script-src`, `style-src` and `default-src`. These can be assigned to self, none, unsafe-inline or unsafe-eval. You can implement these settings in your application as follows:
+- **Content-Security-Policy:** Content Security Policy is developed to reduce the risk of attacks like XSS and Clickjacking. Basically, it allows content from a whitelist you decide. Other content from different sources is not accepted if Content-Security-Policy headers are set correctly. It has several directives each of which prohibits loading specific type of a content. These are `connect-src`, `font-src`, `frame-src`, `img-src`, `media-src`, `object-src`, `script-src`, `style-src` and `default-src`. These can be assigned to self, none, unsafe-inline or unsafe-eval. You can implement these settings in your application as follows:
 
 ```JavaScript
 const csp = require('helmet-csp')
@@ -66,6 +66,8 @@ app.use(csp({
     }
 }))
 ```
+
+Also for further information on the usage of CSP directives, you can always refer to the [Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
 
 - **Cache-Control and Pragma:** Cache-Control header can be used to prevent browsers from caching the given responses. It is desired for pages which contains sensitive information about either the user or the application. However, when implemented, it can raise serious performance issues. Therefore, the choice to use it or not should be considered thoroughly. It can be used easily by the following code:
 
