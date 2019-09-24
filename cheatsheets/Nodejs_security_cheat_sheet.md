@@ -36,8 +36,8 @@ app.use(helmet.hsts("<max-age>", "<includeSubdomains>")); // custom configuratio
 
 ```JavaScript
 app.use(hemlet.xframe()); // default behavior (DENY)
-helmet.xframe(‘sameorigin’); // SAMEORIGIN
-helmet.xframe(‘allow-from’, ‘http://alloweduri.com’); //ALLOW-FROM uri
+helmet.xframe('sameorigin'); // SAMEORIGIN
+helmet.xframe('allow-from', ‘http://alloweduri.com'); //ALLOW-FROM uri
 ```
 
 - **X-XSS-Protection:** As described in [XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#bonus-rule-4-use-the-x-xss-protection-response-header), this header enables browsers to stop loading pages when browsers detect reflected cross-site scripting attacks. In order to implement this header in your application, you can use the following code:
@@ -86,10 +86,10 @@ app.use(helmet.ieNoOpen());
 - **Expect-CT:** Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. It has three directives. The `enforce` directive dictates if the policy should be enforced or be used in report-only mode. The `max-age` directive specifies how long this setting will be valid. Finally, the `report-uri` directive specifies where the browser should send invalid CT information reports. These can be implemented in your application as follows:
 
 ```JavaScript
-var expectCt = require(‘expect-ct’);
+var expectCt = require('expect-ct');
 app.use(expectCt({ maxAge: 123 }));
 app.use(expectCt({ enforce: true, maxAge: 123 }));
-app.use(expectCt({ enforce: true, maxAge: 123, reportUri: ‘http://example.com’}));
+app.use(expectCt({ enforce: true, maxAge: 123, reportUri: 'http://example.com'}));
 ```
 
 - **Public-Key-Pins:** This header increases the security of HTTPS. With this header, a specific cryptographic public key is associated with a specific web server. If the server does not use the pinned keys in future, the browser regards the responses as illegitimate. It has 2 optional (`reportUri`, `includeSubDomains`) and 2 required (`pin-sha256`, `max-age`) directives. These can be used as follows:
@@ -97,8 +97,8 @@ app.use(expectCt({ enforce: true, maxAge: 123, reportUri: ‘http://example.com�
 ```JavaScript
 app.use(helmet.hpkp({
     maxAge: 123,
-    sha256s: [‘Ab3Ef123=’, ‘ZyxawuV45=’],
-    reportUri: ‘http://example.com’,
+    sha256s: ['Ab3Ef123=', 'ZyxawuV45='],
+    reportUri: 'http://example.com',
     includeSubDomains: true
 }));
 ```
@@ -114,7 +114,7 @@ app.use(helmet.hidePoweredBy());
 Also, you can lie about the technologies used with this header. For example, even if your application does not use PHP, you can set X-Powered-By header to seem so.
 
 ```JavaScript
-app.use(helmet.hidePoweredBy({ setTo: ‘PHP 4.2.0’ }));
+app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
 ```
 
 ## Take precautions against brute-forcing
@@ -122,8 +122,8 @@ app.use(helmet.hidePoweredBy({ setTo: ‘PHP 4.2.0’ }));
 Brute-forcing is a common threat to all web applications. Attackers can use brute-forcing as a password guessing attack to obtain account passwords. Therefore, application developers should take precautions against brute-force attacks especially in login pages.  Node.js has several modules available for this purpose. Here is the express-bouncer module and its simple usage:
 
 ```JavaScript
-var bouncer = require(‘express-bouncer’);
-bouncer.whitelist.push(‘127.0.0.1’); // whitelist an IP address
+var bouncer = require('express-bouncer');
+bouncer.whitelist.push('127.0.0.1'); // whitelist an IP address
 // give a custom error message
 bouncer.blocked = function (req, res, next, remaining) {
     res.send(429, “Too many requests have been made. Please wait “ + remaining/1000 + “ seconds.”);
@@ -141,11 +141,11 @@ Apart from express-bouncer modules, there are several other modules that aims to
 CAPTCHA usage is also another common mechanism used against brute-forcing. There are modules developed for Node.js CAPTCHAs. A common module used in Node.js applications is svg-captcha. It can be used as follows:
 
 ```JavaScript
-var svgCaptcha = require(‘svg-captcha’);
-app.get(‘/captcha’, function (req, res) {
+var svgCaptcha = require('svg-captcha');
+app.get('/captcha', function (req, res) {
     var captcha = svgCaptcha.create();
     req.session.captcha = captcha.text;
-    res.type(‘svg’);
+    res.type('svg');
     res.status(200).send(captcha.data);
 });
 ```
@@ -157,11 +157,11 @@ Also, account lockout is a recommended solution to keep attackers away from your
 Generally, session information is sent over cookies in web applications. However, the usage of cookies can eliminate some attack vectors related to session management. There are some flags that can be set for each cookie. For session cookies, httpOnly, Secure and SameSite flags are very important. httpOnly flag prevents the cookie from being accessed by client-side JavaScript. This is an effective counter-measure for XSS attacks. Secure flag lets the cookie to be sent only if the communication is over HTTPS. SameSite flag can prevent cookies from being sent in cross-site requests which helps protect against Cross-Site Request Forgery (CSRF) attacks. Apart from these, there are other flags like domain, path and expires. Setting these flags appropriately is encouraged, but they are mostly related to cookie scope not the cookie security. Sample usage of these flags is given in the following example:
 
 ```JavaScript
-var session = require(‘express-session’);
+var session = require('express-session');
 app.use(session({
-    secret: ‘your-secret-key’,
-    key: ‘cookieName’,
-    cookie: { secure: true, httpOnly: true, path: ‘/user’, sameSite: true}
+    secret: 'your-secret-key',
+    key: 'cookieName',
+    cookie: { secure: true, httpOnly: true, path: '/user', sameSite: true}
 }));
 ```
 
@@ -170,31 +170,31 @@ app.use(session({
 Cross-Site Request Forgery (CSRF) aims to perform authorized actions on behalf of an authenticated user, while the user is unaware of this action. CSRF attacks are generally performed for state-changing requests like password change, adding users or placing orders. Csurf is an express middleware that can be used to mitigate CSRF attacks. It can be used as follows:
 
 ```JavaScript
-var csrf = require(‘csurf’);
+var csrf = require('csurf');
 csrfProtection = csrf({ cookie: true });
-app.get(‘/form’, csrfProtection, function(req, res) {
-    res.render(‘send’, { csrfToken: req.csrfToken() })
+app.get('/form', csrfProtection, function(req, res) {
+    res.render('send', { csrfToken: req.csrfToken() })
 })
-app.post(‘/process’, parseForm, csrfProtection, function(req, res) {
-    res.send(‘data is being processed’);
+app.post('/process', parseForm, csrfProtection, function(req, res) {
+    res.send('data is being processed');
 });
 ```
 
 After writing this code, you also need to add csrfToken to your HTML form, which can be easily done as follows:
 
 ```JavaScript
-<input type=”hidden” name=”_csrf” value=”{{ csrfToken }}”>
+<input type="hidden" name="_csrf" value="{{ csrfToken }}">
 ```
 
 ## Do not use dangerous functions
 
 There are some JavaScript functions that are too dangerous to use. To the fullest possible extent, use of such functions and modules should be avoided. The first example is the eval() function. This function takes a string argument and executes it as any other JavaScript source code. This behavior inherently leads to remote code execution vulnerability. Similarly, calls to child_process.exec are also very dangerous. This function acts as a bash interpreter and sends its arguments to /bin/sh. By injecting input to this function, attackers can execute arbitrary commands on the server. Therefore, its use is highly discouraged.
 
-In addition to these functions, there are some modules that require special attention when being used. As an example, fs module handles filesystem operations. However, if improperly sanitized user input is fed into this module, your server’s content can be tampered. Similarly, vm module provides APIs for compiling and running code within V8 Virtual Machine contexts. Since it can perform dangerous actions by nature, it should be used within a sandbox.
+In addition to these functions, there are some modules that require special attention when being used. As an example, fs module handles filesystem operations. However, if improperly sanitized user input is fed into this module, your server's content can be tampered. Similarly, vm module provides APIs for compiling and running code within V8 Virtual Machine contexts. Since it can perform dangerous actions by nature, it should be used within a sandbox.
 
 ## Stay away from evil regexes
 
-Denial of Service (DoS) attack aims to make one or more of an application’s resources or services unavailable for its legitimate users. Some Regular Expression (Regex) implementations cause extreme situations that makes the application very slow. Attackers can use such regex implementations to cause application to get into these extreme situations and hang for a long time.  Such regexes are called evil if application can be stuck on crafted input.  Generally, these regexes are exploited by grouping with repetition and alternation with overlapping. (a+)+, (a|a?)+ are some examples of evil regexes. Fortunately, there is a Node.js module that can be used to check if a specific regex is evil or not. However, as it is stated in the module’s Github page, you cannot “be absolutely sure that this module will catch all exponential-time cases”. Its usage is as simple as follows:
+Denial of Service (DoS) attack aims to make one or more of an application's resources or services unavailable for its legitimate users. Some Regular Expression (Regex) implementations cause extreme situations that makes the application very slow. Attackers can use such regex implementations to cause application to get into these extreme situations and hang for a long time.  Such regexes are called evil if application can be stuck on crafted input.  Generally, these regexes are exploited by grouping with repetition and alternation with overlapping. (a+)+, (a|a?)+ are some examples of evil regexes. Fortunately, there is a Node.js module that can be used to check if a specific regex is evil or not. However, as it is stated in the module's Github page, you cannot “be absolutely sure that this module will catch all exponential-time cases”. Its usage is as simple as follows:
 
 ```JavaScript
 node safe.js <regex>
@@ -216,11 +216,11 @@ Node.js is very different from common application platforms that use threads. No
 Even if you perform blocking operations asynchronously, it is still possible that your application may not serve as expected. This happens if there is a code outside the callback which relies on the code within the callback to run first. For example, consider the following code:
 
 ```JavaScript
-const fs = require(‘fs’);
-fs.readFile(‘/file.txt’, (err, data) => {
+const fs = require('fs');
+fs.readFile('/file.txt', (err, data) => {
   // perform actions on file content
 });
-fs.unlinkSync(‘/file.txt’);
+fs.unlinkSync('/file.txt');
 ```
 
 In the above example, unlinkSync function may run before the callback, which will delete the file before the desired actions on the file content is done. Such race conditions can also impact the security of your application. An example would be a scenario where authentication is performed in callback and authenticated actions are run synchronously. In order to eliminate such race conditions, you can write all operations that rely on each other in a single non-blocking function. By doing so, you can guarantee that all operations are executed in the correct order.
@@ -275,7 +275,7 @@ app.use(express.limit(“5kb”)); // this will be valid for every other content
 
 ## Use strict mode
 
-JavaScript has some unsafe features that lies within the language itself. In order to remove these features, ES5 included a strict mode for developers. With this mode, errors that were silent previously are thrown. It also restricted optimizations for JavaScript engines. With strict mode, previously accepted bad syntax causes real errors. use "use strict". Because of these improvements, you should always use strict mode in your application. In order to enable strict mode, you just need to write _‘use strict’;_ on top of your code.
+JavaScript has some unsafe features that lies within the language itself. In order to remove these features, ES5 included a strict mode for developers. With this mode, errors that were silent previously are thrown. It also restricted optimizations for JavaScript engines. With strict mode, previously accepted bad syntax causes real errors. use "use strict". Because of these improvements, you should always use strict mode in your application. In order to enable strict mode, you just need to write `use strict;` on top of your code.
 
 ## Use object property descriptors
 
