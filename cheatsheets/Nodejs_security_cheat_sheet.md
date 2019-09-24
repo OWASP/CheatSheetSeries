@@ -188,7 +188,7 @@ app.use(session({
 
 ## Use Anti-CSRF tokens
 
-Cross-Site Request Forgery (CSRF) aims to perform authorized actions on behalf of an authenticated user, while the user is unaware of this action. CSRF attacks are generally performed for state-changing requests like password change, adding users or placing orders. Csurf is an express middleware that can be used to mitigate CSRF attacks. It can be used as follows:
+Cross-Site Request Forgery (CSRF) aims to perform authorized actions on behalf of an authenticated user, while the user is unaware of this action. CSRF attacks are generally performed for state-changing requests like changing a password, adding users or placing orders. `Csurf` is an express middleware that can be used to mitigate CSRF attacks. It can be used as follows:
 
 ```JavaScript
 var csrf = require('csurf');
@@ -201,11 +201,13 @@ app.post('/process', parseForm, csrfProtection, function(req, res) {
 });
 ```
 
-After writing this code, you also need to add csrfToken to your HTML form, which can be easily done as follows:
+After writing this code, you also need to add `csrfToken` to your HTML form, which can be easily done as follows:
 
 ```JavaScript
 <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 ```
+
+For detailed information on cross-site request forgery (CSRF) attacks and prevention methods, you can refer to [Cross-Site Request Forgery Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
 
 ## Do not use dangerous functions
 
