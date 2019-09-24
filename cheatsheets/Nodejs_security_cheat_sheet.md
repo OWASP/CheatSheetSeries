@@ -83,7 +83,7 @@ The above code sets Cache-Control, Surrogate-Control, Pragma and Expires headers
 app.use(helmet.ieNoOpen());
 ```
 
-- **Expect-CT:** Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. It has three directives. Enforce directive dictates if the policy should be enforced or be used in report-only mode. Max-age directive specifies how long this setting will be valid. Report-uri directive specifies where the browser should send invalid CT information reports. These can be implemented in your application as follows:
+- **Expect-CT:** Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. It has three directives. The `enforce` directive dictates if the policy should be enforced or be used in report-only mode. The `max-age` directive specifies how long this setting will be valid. Finally, the `report-uri` directive specifies where the browser should send invalid CT information reports. These can be implemented in your application as follows:
 
 ```JavaScript
 var expectCt = require(‘expect-ct’);
