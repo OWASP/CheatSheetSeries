@@ -224,7 +224,7 @@ A Denial of Service (DoS) attack aims to make one or more of an application's re
 
 ## Remove unnecessary routes
 
-A web application should not contain any page that is not used by users. Leaving such pages on the website can bring advantage to attackers. Such pages may increase the attack surface of the application. This principle is also valid for Node.js applications. All unused API routes should be disabled in Node.js applications. This occurs especially in frameworks like Sails and Feathers, as they automatically generate REST API endpoints. For example, in Sails, if a URL does not match a custom route, it may match one of the automatic routes and still generate a response. This situation may lead to results ranging from information leakage to arbitrary command execution. Therefore, before using such frameworks and modules, it is important to know the routes they automatically generate and remove or disable these routes.
+A web application should not contain any page that is not used by users, as it may increase the attack surface of the application. Therefore, all unused API routes should be disabled in Node.js applications. This occurs especially in frameworks like `Sails` and `Feathers`, as they automatically generate REST API endpoints. For example, in `Sails`, if a URL does not match a custom route, it may match one of the automatic routes and still generate a response. This situation may lead to results ranging from information leakage to arbitrary command execution. Therefore, before using such frameworks and modules, it is important to know the routes they automatically generate and remove or disable these routes.
 
 ## Check authorization at each step
 
