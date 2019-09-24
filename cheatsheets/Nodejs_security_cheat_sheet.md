@@ -390,7 +390,7 @@ exports.sanitizeUser = function(user) {
 
 ## Set request size limits
 
-Buffering and parsing of request bodies can be cumbersome for the server. If there is no limit on the size of requests, attackers can send request with large request bodies so that they can exhaust server memory or fill disk space. However, fixing a request size limit for all requests may not be the correct behavior, since some requests like those for uploading a file to the server have more content to carry on the request body. Also, input with a JSON type is more dangerous than a multipart input, since parsing JSON is a blocking operation. Therefore, you should set request size limits for different content types. You can accomplish this very easily with express middlewares as follows:
+Buffering and parsing of request bodies can be resource intensive for the server. If there is no limit on the size of requests, attackers can send request with large request bodies so that they can exhaust server memory or fill disk space. However, fixing a request size limit for all requests may not be the correct behavior, since some requests like those for uploading a file to the server have more content to carry on the request body. Also, input with a JSON type is more dangerous than a multipart input, since parsing JSON is a blocking operation. Therefore, you should set request size limits for different content types. You can accomplish this very easily with express middlewares as follows:
 
 ```JavaScript
 app.use(express.urlencoded({ limit: "1kb" }));
