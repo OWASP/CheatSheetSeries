@@ -69,7 +69,7 @@ app.use(csp({
 
 Also for further information on the usage of CSP directives, you can always refer to the [Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
 
-- **Cache-Control and Pragma:** Cache-Control header can be used to prevent browsers from caching the given responses. It is desired for pages which contains sensitive information about either the user or the application. However, when implemented, it can raise serious performance issues. Therefore, the choice to use it or not should be considered thoroughly. It can be used easily by the following code:
+- **Cache-Control and Pragma:** Cache-Control header can be used to prevent browsers from caching the given responses. This should be done for pages which contains sensitive information about either the user or the application. However, disabling caching for pages that do not contain sensitive information may seriously affect the performance of the application. Therefore, caching should only be disabled for pages that return sensitive information. Appropriate caching controls and headers can be used easily by the following code:
 
 ```JavaScript
 app.use(helmet.noCache());
