@@ -226,9 +226,9 @@ A Denial of Service (DoS) attack aims to make one or more of an application's re
 
 A web application should not contain any page that is not used by users, as it may increase the attack surface of the application. Therefore, all unused API routes should be disabled in Node.js applications. This occurs especially in frameworks like `Sails` and `Feathers`, as they automatically generate REST API endpoints. For example, in `Sails`, if a URL does not match a custom route, it may match one of the automatic routes and still generate a response. This situation may lead to results ranging from information leakage to arbitrary command execution. Therefore, before using such frameworks and modules, it is important to know the routes they automatically generate and remove or disable these routes.
 
-## Check authorization at each step
+## Use access control lists
 
-Authentication does not suffice to say an application is secure. Malicious users can still go through authentication and perform malicious activities in the application. In every application, principle of least privilege should be followed and regarding roles and users must be determined. Each user role should have access to the resources they must use. For your Node.js applications, you can use acl module to provide ACL (access control list) implementation. With this module, you can create roles and assign users to these roles.
+Authorization prevents users from acting outside of their intended permissions. In order to do so, users and their roles should be determined with consideration of the principle of least privilege. Each user role should only have access to the resources they must use. For your Node.js applications, you can use [acl](https://www.npmjs.com/package/acl) module to provide ACL (access control list) implementation. With this module, you can create roles and assign users to these roles.
 
 ## Do not block the event loop
 
