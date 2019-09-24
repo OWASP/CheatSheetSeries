@@ -25,14 +25,14 @@ retire
 
 There are several different HTTP headers that can help you prevent some common attack vectors. These are listed below:
 
-* __Strict-Transport-Security__: [HTTP Strict Transport Security (HSTS)](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html) dictates browsers that the application can only be accessed via HTTPS connections. This header takes two parameters: max-age to determine how long this configuration will be valid and includeSubDomains to state if subdomains are to be treated in the same way. In order to use it in your application, add the following codes:
+- **Strict-Transport-Security**: [HTTP Strict Transport Security (HSTS)](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html) dictates browsers that the application can only be accessed via HTTPS connections. This header takes two parameters:  `max-age` to determine how long this configuration will be valid and `includeSubDomains` to state if subdomains are to be treated in the same way. In order to use it in your application, add the following codes:
 
 ```JavaScript
 app.use(helmet.hsts()); // default configuration
 app.use(helmet.hsts("<max-age>", "<includeSubdomains>")); // custom configuration
 ```
 
-* __X-Frame-Options:__ It determines if a page can be loaded via a \<frame> or an \<iframe> element. Allowing to do so may result in clickjacking attacks which aims to deceive users to click on something different than they perceive to be clicking on. This header has 3 directives: DENY to never allow framing, SAMEORIGIN to only allow framing within the same origin and ALLOW-FROM to only allow framing from specified URIs. These behaviors can be achieved with helmet module as follows:
+- **X-Frame-Options:** It determines if a page can be loaded via a \<frame> or an \<iframe> element. Allowing to do so may result in clickjacking attacks which aims to deceive users to click on something different than they perceive to be clicking on. This header has 3 directives: DENY to never allow framing, SAMEORIGIN to only allow framing within the same origin and ALLOW-FROM to only allow framing from specified URIs. These behaviors can be achieved with helmet module as follows:
 
 ```JavaScript
 app.use(hemlet.xframe()); // default behavior (DENY)
@@ -40,20 +40,20 @@ helmet.xframe(‘sameorigin’); // SAMEORIGIN
 helmet.xframe(‘allow-from’, ‘http://alloweduri.com’); //ALLOW-FROM uri
 ```
 
-* __X-XSS-Protection:__ This header enables browsers to stop loading pages when browsers detect reflected cross-site scripting attacks. In order to implement this header in your application, you can use the following code:
+- **X-XSS-Protection:** This header enables browsers to stop loading pages when browsers detect reflected cross-site scripting attacks. In order to implement this header in your application, you can use the following code:
 
 ```JavaScript
 var xssFilter = require('x-xss-protection');
 app.use(xssFilter());
 ```
 
-* __X-Content-Type-Options:__ Even if the server sets a valid Content-Type header in the response, browsers may try to sniff the MIME type of the requested resource. This header is a way to stop this behavior and tell the browser not to change MIME types specified in Content-Type header. It can be configured in the following way:
+- **X-Content-Type-Options:** Even if the server sets a valid Content-Type header in the response, browsers may try to sniff the MIME type of the requested resource. This header is a way to stop this behavior and tell the browser not to change MIME types specified in Content-Type header. It can be configured in the following way:
 
 ```JavaScript
 app.use(helmet.noSniff());
 ```
 
-* __Content-Security-Policy:__ Content Security Policy is developed to reduce the risk of attacks like XSS and Clickjacking. Basically, it allows content from a whitelist you decide. Other contents from different sources are not accepted if Content-Security-Policy headers are set correctly. It has several directives each of which prohibits loading specific type of a content. These are connect-src, font-src, frame-src, img-src, media-src, object-src, script-src, style-src and default-src. These can be assigned to self, none, unsafe-inline or unsafe-eval. You can implement these settings in your application as follows:
+- **Content-Security-Policy:** Content Security Policy is developed to reduce the risk of attacks like XSS and Clickjacking. Basically, it allows content from a whitelist you decide. Other contents from different sources are not accepted if Content-Security-Policy headers are set correctly. It has several directives each of which prohibits loading specific type of a content. These are `connect-src`, `font-src`, `frame-src`, `img-src`, `media-src`, `object-src`, `script-src`, `style-src` and `default-src`. These can be assigned to self, none, unsafe-inline or unsafe-eval. You can implement these settings in your application as follows:
 
 ```JavaScript
 const csp = require('helmet-csp')
@@ -67,7 +67,7 @@ app.use(csp({
 }))
 ```
 
-* __Cache-Control and Pragma:__ Cache-Control header can be used to prevent browsers from caching the given responses. It is desired for pages which contains sensitive information about either the user or the application. However, when implemented, it can raise serious performance issues. Therefore, the choice to use it or not should be considered thoroughly. It can be used easily by the following code:
+- **Cache-Control and Pragma:** Cache-Control header can be used to prevent browsers from caching the given responses. It is desired for pages which contains sensitive information about either the user or the application. However, when implemented, it can raise serious performance issues. Therefore, the choice to use it or not should be considered thoroughly. It can be used easily by the following code:
 
 ```JavaScript
 app.use(helmet.noCache());
@@ -75,13 +75,13 @@ app.use(helmet.noCache());
 
 The above code sets Cache-Control, Surrogate-Control, Pragma and Expires headers accordingly.
 
-* __x-Download-Options:__ This header prevents Internet Explorer from executing downloaded files in the site’s context. This is achieved with noopen directive. You can do so with the following piece of code:
+- **X-Download-Options:** This header prevents Internet Explorer from executing downloaded files in the site’s context. This is achieved with noopen directive. You can do so with the following piece of code:
 
 ```JavaScript
 app.use(helmet.ieNoOpen());
 ```
 
-* __Expect-CT:__ Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. It has three directives. Enforce directive dictates if the policy should be enforced or be used in report-only mode. Max-age directive specifies how long this setting will be valid. Report-uri directive specifies where the browser should send invalid CT information reports. These can be implemented in your application as follows:
+- **Expect-CT:** Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. It has three directives. Enforce directive dictates if the policy should be enforced or be used in report-only mode. Max-age directive specifies how long this setting will be valid. Report-uri directive specifies where the browser should send invalid CT information reports. These can be implemented in your application as follows:
 
 ```JavaScript
 var expectCt = require(‘expect-ct’);
@@ -90,7 +90,7 @@ app.use(expectCt({ enforce: true, maxAge: 123 }));
 app.use(expectCt({ enforce: true, maxAge: 123, reportUri: ‘http://example.com’}));
 ```
 
-* __Public-Key-Pins:__ This header increases the security of HTTPS. With this header, a specific cryptographic public key is associated with a specific web server. If the server does not use the pinned keys in future, the browser regards the responses as illegitimate. It has 2 optional (reportUri, includeSubDomains) and 2 required (pin-sha256, max-age) directives. These can be used as follows:
+- **Public-Key-Pins:** This header increases the security of HTTPS. With this header, a specific cryptographic public key is associated with a specific web server. If the server does not use the pinned keys in future, the browser regards the responses as illegitimate. It has 2 optional (reportUri, includeSubDomains) and 2 required (pin-sha256, max-age) directives. These can be used as follows:
 
 ```JavaScript
 app.use(helmet.hpkp({
@@ -101,7 +101,7 @@ app.use(helmet.hpkp({
 }));
 ```
 
-* __X-Powered-By:__ X-Powered-By header is used to inform what technology is used in the server side. This is an unnecessary header causing information leakage, so it should be removed from your application. To do so, you can use the hidePoweredBy as follows:
+- **X-Powered-By:** X-Powered-By header is used to inform what technology is used in the server side. This is an unnecessary header causing information leakage, so it should be removed from your application. To do so, you can use the hidePoweredBy as follows:
 
 ```JavaScript
 app.use(helmet.hidePoweredBy());
