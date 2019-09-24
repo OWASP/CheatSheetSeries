@@ -10,7 +10,7 @@ Node.js applications are increasing in number and they are no different from oth
 
 This cheat sheet aims to provide a list of best practices to follow during development of Node.js applications.
 
-# Proposition
+# Recommendations
 
 ## Keep your packages up-to-date
 
@@ -156,7 +156,7 @@ Apart from [express bouncer](https://libraries.io/npm/express-bouncer) and [expr
 
 ```JavaScript
 var limiter = new RateLimiter();
-limiter.addLimit('/login', 'GET', 5, 500); // login page can be requested 5 times at max within 500 seconds 
+limiter.addLimit('/login', 'GET', 5, 500); // login page can be requested 5 times at max within 500 seconds
 ```
 
 [CAPTCHA usage](https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html#captcha) is also another common mechanism used against brute-forcing. There are modules developed for Node.js CAPTCHAs. A common module used in Node.js applications is [svg-captcha](https://www.npmjs.com/package/svg-captcha). It can be used as follows:
@@ -220,7 +220,6 @@ It would be fair to say that these functions and modules should not be used what
 ## Stay away from evil regexes
 
 A Denial of Service (DoS) attack aims to make one or more of an application's resources or services unavailable for its legitimate users. Some Regular Expression (Regex) implementations cause extreme situations that makes the application very slow. Attackers can use such regex implementations to cause application to get into these extreme situations and hang for a long time.  Such regexes are called evil if application can be stuck on crafted input.  Generally, these regexes are exploited by grouping with repetition and alternation with overlapping. `(a+)+`, `(a|a?)+` are some examples of evil regexes. There are some tools to check if a regex has a potential for causing denial of service. One example is [vuln-regex-detector](https://github.com/davisjam/vuln-regex-detector).
-
 
 ## Remove unnecessary routes
 
