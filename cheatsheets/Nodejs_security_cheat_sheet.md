@@ -8,19 +8,18 @@ Node.js applications are increasing in number and they are no different from oth
 
 # Objective
 
-This cheat sheet aims to provide a list of best practices to follow during development of Node.js applications. [Node Security Platform (nsp)](https://github.com/nodesecurity/nsp) provides a CLI tool to identify packages that have known vulnerabilities. You can install it easily with the following command:
-
-```bash
-npm install -g nsp
-```
-
-Then you can check your projects by going to the directory where your package.json file is and executing nsp check command. In addition to nsp, you can also use [Snyk](https://snyk.io) to keep your packages safe.
+This cheat sheet aims to provide a list of best practices to follow during development of Node.js applications.
 
 # Proposition
 
 ## Keep your packages up-to-date
 
-Security of your application depends directly on how secure the third-party packages you use in your application are. Therefore, it is important to keep your packages up-to-date.
+Security of your application depends directly on how secure the third-party packages you use in your application are. Therefore, it is important to keep your packages up-to-date. It should be noted that [Using Components with Known Vulnerabilities](https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities) is still in the OWASP Top 10. You can use [OWASP Dependency-Check](https://jeremylong.github.io/DependencyCheck/analyzers/nodejs.html) to see if any of the packages used in the project has a knwon vulnerability. Also you can use [Retire.js](https://github.com/retirejs/retire.js/) to check JavaScript libraries with known vulnerabilities. In order to use it, you can run the following commands in the source code folder of your application:
+
+```bash
+npm install -g retire
+retire
+```
 
 ## Use appropriate security headers
 
