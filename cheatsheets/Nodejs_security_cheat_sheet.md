@@ -219,12 +219,8 @@ It would be fair to say that these functions and modules should not be used what
 
 ## Stay away from evil regexes
 
-A Denial of Service (DoS) attack aims to make one or more of an application's resources or services unavailable for its legitimate users. Some Regular Expression (Regex) implementations cause extreme situations that makes the application very slow. Attackers can use such regex implementations to cause application to get into these extreme situations and hang for a long time.  Such regexes are called evil if application can be stuck on crafted input.  Generally, these regexes are exploited by grouping with repetition and alternation with overlapping. `(a+)+`, `(a|a?)+` are some examples of evil regexes. Fortunately, there is a Node.js module that can be used to check if a specific regex is evil or not. However, as it is stated in the module's Github page, you cannot "be absolutely sure that this module will catch all exponential-time cases". Its usage is as simple as follows:
+A Denial of Service (DoS) attack aims to make one or more of an application's resources or services unavailable for its legitimate users. Some Regular Expression (Regex) implementations cause extreme situations that makes the application very slow. Attackers can use such regex implementations to cause application to get into these extreme situations and hang for a long time.  Such regexes are called evil if application can be stuck on crafted input.  Generally, these regexes are exploited by grouping with repetition and alternation with overlapping. `(a+)+`, `(a|a?)+` are some examples of evil regexes. There are some tools to check if a regex has a potential for causing denial of service. One example is [vuln-regex-detector](https://github.com/davisjam/vuln-regex-detector).
 
-```bash
-node safe.js <regex>
-node safe.js '(x+x+)+y'
-```
 
 ## Remove unnecessary routes
 
