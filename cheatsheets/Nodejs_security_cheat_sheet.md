@@ -203,7 +203,7 @@ app.post('/process', parseForm, csrfProtection, function(req, res) {
 
 After writing this code, you also need to add `csrfToken` to your HTML form, which can be easily done as follows:
 
-```JavaScript
+```HTML
 <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 ```
 
