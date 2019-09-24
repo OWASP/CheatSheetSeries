@@ -267,12 +267,6 @@ var hpp = require('hpp');
 app.use(hpp());
 ```
 
-## Prefer certified modules
-
-Security of a Node.js application depends on security of packages it makes use of. Therefore, packages should be chosen after a careful inspection. Because, a vulnerability in one of these packages may make your application open to any attacker. In order to use packages securely, you first need to know which packages you need to use and see if there are other packages installed apart from them. You should do this periodically, since your code changes in time and that may make some previously required packages unnecessary. Also, it is important to check if the package you are about to use is commonly used within Node.js developers. If a package is preferred by most developers, chance to find a security whole in the package and fix it also increases. You can use the download rate of packages, which can be seen using npm-stat.com, to decide whether to use them or not. Another indication for a good package candidate is the last time it was updated. The more often a package is updated, the more secure it becomes.  
-
-A better way to ensure security of your packages is to use certified modules. [NodeSource](https://github.com/nodesource/certified) provides packages that are monitored for security vulnerabilities. It provides a trust score for each package. This can be a good strategy when choosing third-party packages.
-
 ## Run security linters periodically
 
 When developing code, keeping all security tips in mind can be really difficult. Also keeping all team members obey these rules is nearly impossible. This is why there are Static Analysis Security Testing (SAST) tools. These tools do not execute your code, but they simply look for patterns that can contain security risks. As JavaScript is a dynamic and loosely-typed language, linting tools are really essential in the software development life cycle. These tools should be run periodically and the findings should be audited. Another advantage of these tools is the feature that you can add custom rules for patterns that you may see dangerous. [ESLint](https://eslint.org/) and [JSHint](http://jshint.com/) are commonly used SAST tools for JavaScript linting.
