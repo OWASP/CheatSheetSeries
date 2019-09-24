@@ -25,7 +25,7 @@ retire
 
 There are several different HTTP headers that can help you prevent some common attack vectors. These are listed below:
 
-* __Strict-Transport-Security__: HTTP Strict Transport Security (HSTS) dictates browsers that the application can only be accessed via HTTPS connections. This header takes two parameters: max-age to determine how long this configuration will be valid and includeSubDomains to state if subdomains are to be treated in the same way. In order to use it in your application, add the following codes:
+* __Strict-Transport-Security__: [HTTP Strict Transport Security (HSTS)](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html) dictates browsers that the application can only be accessed via HTTPS connections. This header takes two parameters: max-age to determine how long this configuration will be valid and includeSubDomains to state if subdomains are to be treated in the same way. In order to use it in your application, add the following codes:
 
 ```JavaScript
 app.use(helmet.hsts()); // default configuration
