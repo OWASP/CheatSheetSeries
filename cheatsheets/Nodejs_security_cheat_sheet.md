@@ -32,7 +32,7 @@ app.use(helmet.hsts()); // default configuration
 app.use(helmet.hsts("<max-age>", "<includeSubdomains>")); // custom configuration
 ```
 
-- **X-Frame-Options:** It determines if a page can be loaded via a \<frame> or an \<iframe> element. Allowing to do so may result in clickjacking attacks which aims to deceive users to click on something different than they perceive to be clicking on. This header has 3 directives: DENY to never allow framing, SAMEORIGIN to only allow framing within the same origin and ALLOW-FROM to only allow framing from specified URIs. These behaviors can be achieved with helmet module as follows:
+- **X-Frame-Options:** determines if a page can be loaded via a \<frame> or an \<iframe> element. Allowing the page to be framed may result in clickjacking attacks which aims to manipulate users into clicking on a different element instead of the one they intend to. This header has 3 directives: DENY to never allow framing, SAMEORIGIN to only allow framing within the same origin and ALLOW-FROM to only allow framing from specified URIs. These behaviors can be achieved with helmet module as follows:
 
 ```JavaScript
 app.use(hemlet.xframe()); // default behavior (DENY)
