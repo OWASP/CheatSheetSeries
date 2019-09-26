@@ -44,16 +44,26 @@ However, the following recommendations are generally appropriate for most applic
 
 ## When to Require MFA
 
-- Logins
-- Password changes
-- Sensitive actions
+The most important place to require MFA on an application is when the user logs in. However, depending on the functionality available, it may also be appropriate to require MFA for performing sensitive actions, such as:
+
+- Changing passwords or security questions.
+- Changing the email address associated with the account.
+- Disabling MFA.
+- Elevating a user session to an administrative session.
+
+If the application provides multiple ways for a user to authenticate these should all require MFA, or have other protections implemented. A common area that is missed is if the application provides a separate API that can be used to login, or has an associated mobile application.
 
 ## Improving Usability
 
-- Remembering MFA
-- Whitelisting corporate IP ranges
-  - Insider threat
-- Using standard TOTP rather than custom apps
+Having to frequently login with MFA creates an additional burden for users, and may cause them to disable MFA on the application. A number of mechanisms can be used to try and reduce the level of annoyance that MFA causes. However, these types of measures do decrease the security provided by MFA, so need to be risk assessed to find a reasonable balance of security and usability for the application.
+
+- Remembering the user's browser so they don't need to use MFA every time.
+  - This can either be permanent, or for a period of a few days.
+  - This needs to be done with more than just a cookie, which could be stolen by an attacker.
+- Whitelisting corporate IP ranges (or, more strictly, using location as a second factor).
+  - This doesn't protect against malicious insiders, or a user's workstation being compromised.
+- Only requiring MFA for sensitive actions, not for the initial login.
+  - This will depend heavily on the functionality in the application.
 
 ## Resetting MFA
 
