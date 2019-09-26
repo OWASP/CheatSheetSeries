@@ -67,8 +67,23 @@ Having to frequently login with MFA creates an additional burden for users, and 
 
 ## Resetting MFA
 
-- What to do when users reset/lose MFA
-- Balance between usability and security
+One of the biggest challenges with implementing MFA is handling users who forget or lose their second factors. There are many ways this could happen, such as:
+
+- Re-installing a workstation without backing up digital certificates.
+- Wiping or losing a phone without backing up OTP codes.
+- Changing mobile numbers.
+
+In order to prevent users from being locked out of the application, there needs to be a mechanism for them to regain access to their account if they can't use their existing MFA; however it is also crucial that this doesn't provide an attacker with a way to bypass MFA and hijack there account.
+
+There is no definitive "best way" to do this, and what is appropriate will vary hugely based on the security of the application, and also the level of control over the users. Solutions that work for a corporate application where all the staff know each other are unlikely to be feasible for a publicly available application with thousands of users all over the world. Every recovery methods has its own advantages and disadvantages, and these need to be evaluated in the context of the application.
+
+Some suggestions of possible methods include:
+
+- Providing the user with a number of single-use recovery codes when they first setup MFA.
+- Requiring the user to setup multiple types of MFA (such as a digital certificate, OTP core and phone number for SMS), so that they are unlikely to lose access to all of them at once.
+- Posting a one-use recovery code (or new hardware token) to the user.
+- Requiring the user contact the support team and having a rigorous process in place to verify their identity.
+- Requiring another trusted user to vouch for them.
 
 # Something You Know
 
