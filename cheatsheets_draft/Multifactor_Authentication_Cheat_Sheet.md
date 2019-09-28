@@ -184,44 +184,55 @@ Hardware U2F tokens communicate with the users workstation over USB or NFC, and 
 
 ## Certificates
 
-### Pros
+Digital certificates are files that are stored on the user's device which are automatically provided alongside the user's password when authenticating. The most common type is X.509 certificates (discussed in the [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md#consider-the-use-of-client-side-certificates)), more commonly known as client certificates.
 
-- Free
-- Ease of use once installed
-
-### Cons
-
-- Complex for users to install
-- Don't work properly with SSL decrypting proxies
-- Stored on computer, so easily stolen in compromise
-
-## Email
+Certificates are supported by all major web browsers, and once installed require no further interaction from the user. The certificates should be linked to an individual's user account in order to prevent users from trying to authenticate against other accounts.
 
 ### Pros
 
-- Easiest to implement
-- No additional requirements for user
+- There is no need to purchase and manage hardware tokens.
+- Once installed, certificates are very simple for users.
+- Certificates can be centrally managed and revoked.
 
 ### Cons
 
-- Lack of security for email account
-  - Passwords re-use
-  - Email forwarding
-  - No protection if email already compromised
-- Email usually on same device as login attempt
+- Using digital certificates requires backend PKI infrastructure.
+- Installing certificates can be difficult for users, particularly in a highly restricted environment.
+- Enterprise proxy servers which perform SSL decryption will prevent he use of certificates.
+- The certificates are stored on the user's workstation, and as such can be stolen if their system is compromised.
 
 ## SMS Messages and Phone Calls
 
+SMS messages or phone calls can be used to provide users with a single-use code that they must submit as a second factor.
+
 ### Pros
 
-- Can be used to verify user's identity
+- Relatively simple to implement.
+- Requires user to link their account to a mobile number.
 
 ### Cons
 
-- Require user to have mobile device
-- Require user to have signal
-- Cost of messages or calls
-- Various attacks
+- Requires the user to have a mobile device or landline.
+- Require user to have signal to receive the call or message.
+- Calls and SMS messages may cost money to send (need to protect against attackers requesting a large number of messages to exhaust funds.
+- A number of attacks against SMS or mobile numbers have been demonstrated and exploited in the past.
+- SMS messages may be received on the same device the user is authenticating from.
+
+## Email
+
+Email verification requires that the user enters a code or clicks  a link send to their email address. There is some debate as to whether email constitutes a form of MFA, because if the user does not have MFA configured on their email account, it simply requires knowledge of the user's email password (which is often the same as their application password). However, it is included here for completeness.
+
+### Pros
+
+- Very easy to implement.
+- No requirements for separate hardware or a mobile device.
+
+### Cons
+
+- Relies entirely on the security of the email account, which often lacks MFA.
+- Email passwords are commonly the same as application passwords.
+- Provides no protection if the user's email is compromised first.
+- Email may be received by the same device the user is authenticating from.
 
 # Something You Are
 
