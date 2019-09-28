@@ -124,43 +124,63 @@ Security questions require the user to choose (or create) a number of questions 
 
 # Something You Have
 
+The second factor is something that the users possesses. This could be a physical item (such as a hardware token), a digital item (such as a certificate or private key), or based on the ownership of a mobile phone (such as SMS or a software token installed on the phone).
+
+If properly implemented then this can be significantly more difficult  for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.
+
+The requirement to have a second factor can also limit certain types of users' ability to access a service. For example, if a user does not have access to a mobile phone, many types of MFA will not be available for them.
+
 ## Hardware OTP Tokens
 
-- Hardware tokens which generate changing random numbers
+Physical hardware OTP tokens can be used which generate constantly changing numeric codes, which must be submitted when authentication on the application. Most most well-known of these is the [RSA SecureID](https://en.wikipedia.org/wiki/RSA_SecurID), which generates a six digit number that changes every 60 seconds.
 
 ### Pros
 
-- Hard to attack
-- Time-limited codes
+- As the tokens are separate physical devices, they are almost impossible for an attacker to compromise remotely.
+- Tokens can be used without requiring the user to have a mobile phone or other device.
 
 ### Cons
 
-- Expensive
-- Administrative complexity
-- Can be lost or stolen
+- Deploying physical tokens to users is expensive and complicated.
+- If a user loses their token it could take a significant amount of time to purchase and ship them a new one.
+- Some implementations require a backend server, which can introduce new vulnerabilities as well as a single point of failure.
+- Stolen tokens can be used without a PIN or device unlock code.
 
-## Software OTP Tokens
+## Software TOTP Tokens
+
+A cheaper and easier alternative to hardware tokens is using software to generate Time-based One Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.
+
+Most websites use standardised TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.
 
 ### Pros
 
-- Free
+- The absence of physical tokens greatly reduces the cost and administrative overhead of implementing the system.
+- When users lose access to their TOTP app, a new one can be configured without needing to ship a physical token to them.
+- TOTP is widely used, and many users will already have at least one TOTP app installed.
+- As long as the user has a screen lock on their phone, an attacker will be unable to use the code if they still the phone.
 
 ### Cons
 
-- Require a mobile device
-- Insecure storage of backup keys
+- TOTP apps are usually installed on mobile devices, which are vulnerable to compromise.
+- The TOTP app may be installed on the same mobile device (or workstation) that is used to authenticate.
+- Users may store the backup seeds insecurely.
+- Not all users have mobile devices to use with TOTP.
+- If the users mobile device is lost, stolen or out of battery, they will be unable to authenticate.
 
 ## Hardware U2F Tokens
 
+Hardware U2F tokens communicate with the users workstation over USB or NFC, and implement challenge-response based authentication, rather than requiring the user to manually enter the code. This would typically be done by the user pressing a button on the token, or tapping it against their NFC reader.
+
 ### Pros
 
-- Ease of use
+- Longer codes can be used, which may provide a higher level of security.
+- Users can simply press a button rather than typing in a code.
 
 ### Cons
 
-- Expensive
-- Administrative complexity
-- Can be lost or stolen
+- As with hardware OTP tokens, the use of physical tokens introduces significant costs and administrative overheads.
+- Stolen tokens can be used without a PIN or device unlock code.
+- As the tokens are usually connected to the workstation via USB, users are more likely to forget them.
 
 ## Certificates
 
