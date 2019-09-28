@@ -275,25 +275,35 @@ The are a number of common types of biometrics that are used, including:
 
 # Location
 
+The use of location as a fourth factor for MFA is not fully accepted;  however, it is increasingly be used for authentication. It is sometimes argued that location is used when deciding whether or not to require MFA (as discussed [above](#when-to-require-mfa)) however this is effectively the same as considering it to be a factor in its own right. Two prominent examples of this are the [Conditional Access Policies](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/overview) available in Microsoft Azure, and the [Network Unlock](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock) functionality in BitLocker.
+
+When talking about location, access to the application that the user is authenticating against is not usually considered (as this would always be the case, and as such is relatively meaningless).
+
 ## Source IP Ranges
+
+The source IP address the user is connecting from can be used as a factor, typically in a white-list based approach. This could either be based on a static white-list (such as corporate office ranges) or a dynamic white-list (such as previous IP addresses the user has authenticated from).
 
 ### Pros
 
-- Easy for users
+- Very easy for users.
+- Requires minimal configuration and management from administrative staff.
 
 ### Cons
 
-- Doesn't protect against rouge insiders
-- Doesn't protect against a system compromise
-- Wireless network may allow access to corporate ranges
+- Doesn't provide any protection if the user's system is compromised.
+- Doesn't provide any protection against rouge insiders.
+- Trusted IP addresses must be carefully restricted (for example, if the open guest WiFi uses the main corporate IP range).
 
 ## Geolocation
 
+Rather than using the exact IP address of the user, the geographic location that the IP address is registered to can be used. This is less precise, but may be more feasible to implement in environments where IP addresses are not static. A common usage would be to require additional authentication factors when an authentication attempt is made from outside of the user's normal country.
+
 ### Pros
 
-- Easy for users
-- Effective against untargeted attacks
+- Very easy for users
 
 ### Cons
 
-- Easy for an attacker to bypass
+- Doesn't provide any protection if the user's system is compromised.
+- Doesn't provide any protection against rouge insiders.
+- Easy for an attacker to bypass by obtaining IP addresses in the trusted country or location.
