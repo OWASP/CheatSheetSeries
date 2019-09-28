@@ -236,21 +236,26 @@ Email verification requires that the user enters a code or clicks  a link send t
 
 # Something You Are
 
+The final factor in the traditional view of MFA is something you are - which is physical attributes of the users (often called biometrics). Biometrics are rarely used in web applications due to the requirement for users to have specific hardware.
+
 ## Biometrics
 
-- Fingerprints
-- Face recognition
-- Handprint and iris scans
+The are a number of common types of biometrics that are used, including:
+
+- Fingerprint scans
+- Facial recognition
+- Iris scans
+- Handprint scans
 
 ### Pros
 
-- Hard to spoof
+- Well-implemented biometrics are hard to spoof, and require a targeted attack.
 
 ### Cons
 
-- Expensive to implement
-- Often require custom hardware
-- Usually impractical for web applications
+- Require manual enrolment of the user's physical attributes.
+- Custom (sometimes expensive) hardware is often required to read biometrics.
+- Modern browsers do not have native support, so custom client-side software is required.
 
 # Location
 
