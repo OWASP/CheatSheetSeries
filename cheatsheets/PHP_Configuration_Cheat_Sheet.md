@@ -8,20 +8,6 @@ For general PHP codebase security please refer to the two following great guides
 - [Paragonie's 2018 PHP Security Guide](https://paragonie.com/blog/2017/12/2018-guide-building-secure-php-software)
 - [Awesome PHP Security](https://github.com/guardrailsio/awesome-php-security)
 
-# Web Server Configuration
-
-## Apache 
-
-[suPHP](http://suphp.org/) makes every php script run as its file owner. This way you are allowed to upload and modify files in your folders without needing to `chmod 777` any folder, which is very bad security practice and will let to your files be compromised easily. Install and configure it on your web server. 
-
-## NGINX
-
-TODO
-
-## CADDY
-
-TODO
-
 # PHP Configuration and Deployment
 
 ## Suhosin
@@ -32,7 +18,7 @@ Consider using [Suhosin](http://www.hardened-php.net/suhosin/index.html) if you 
 
 Some of following settings need to be adapted to your system, in particular `session.save_path`, `session.cookie_path` (e.g. `/var/www/mysite`), and `session.cookie_domain` (e.g. `ExampleSite.com`). 
 
-You should also be runninng PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the [PHP Manual](http://www.php.net/manual/ini.core.php) for a complete reference on every value in the php.ini configuration file.
+You should also be running PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the [PHP Manual](http://www.php.net/manual/ini.core.php) for a complete reference on every value in the php.ini configuration file.
 
 You can find a copy of the following values in a ready-to-go php.ini file [here](https://github.com/danehrlich1/very-secure-php-ini).
 
