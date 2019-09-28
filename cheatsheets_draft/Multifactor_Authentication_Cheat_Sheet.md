@@ -87,28 +87,40 @@ Some suggestions of possible methods include:
 
 # Something You Know
 
+The most common type of authentication is based on something the users knows - typically a password. The biggest advantage of this factor is that it has very low requirements for both the developers and the end user, as it does not require any special hardware, or integration with other services.
+
 ## Passwords and PINs
+
+Passwords and PINs are the most common form of authentication due to the simplicity of implementing them. The [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls) has guidance on how to implement a strong password policy, and the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) has guidance on how to securely store passwords.
+
+Most multifactor authentication systems make use of a password, as well as at least one other factor.
+
+It should be noted that PINs, "secret words" and other similar type of information are all effectively the same as passwords. Using two different types of passwords **does not constitute MFA**.
 
 ### Pros
 
-- Simple and well understood
+- Simple and well understood.
+- Native support in every authentication framework.
+- Easy to implement.
 
 ### Cons
 
-- Usually weak
-- Hard to remember
-- Frequently re-used
+- Users are prone to choosing weak passwords.
+- Passwords are commonly re-used between systems.
 
 ## Security Questions
 
+Security questions require the user to choose (or create) a number of questions that only they will know the answer to. These are effectively the same as passwords, although they are generally considered weaker. The [Choosing and Using Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) contains further guidance on how to implement these securely.
+
 ### Pros
 
-- Simple
+- Simple and well understood.
 
 ### Cons
 
-- Usually weak
-- Link to Security Questions CS
+- Questions often have easily guessable answers.
+- Answers to questions can often be obtained from social media or other sources.
+- Questions must be carefully chosen so that users will remember answers years later.
 
 # Something You Have
 
