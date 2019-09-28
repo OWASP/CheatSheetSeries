@@ -196,10 +196,26 @@ Certificates are supported by all major web browsers, and once installed require
 
 ### Cons
 
-- Using digital certificates requires backend PKI infrastructure.
+- Using digital certificates requires backend PKI system.
 - Installing certificates can be difficult for users, particularly in a highly restricted environment.
 - Enterprise proxy servers which perform SSL decryption will prevent he use of certificates.
 - The certificates are stored on the user's workstation, and as such can be stolen if their system is compromised.
+
+## Smartcards
+
+Smartcards are credit-card size cards with a chip containing a digital certificate for the user, which is unlocked with a PIN. They are commonly used for operating system authentication, but are rarely used in web applications.
+
+### Pros
+
+- Stolen smartcards cannot be used without the PIN.
+- Smartcards can be users across multiple applications and systems.
+
+### Cons
+
+- Managing and distributing smartcards has the same costs and overheads as hardware tokens.
+- Smartcards are not natively supported by modern browsers, so require third party software.
+- Although most business-class laptops have smartcard readers built in, home systems often do not.
+- The use of smartcards requires functioning backend PKI systems.
 
 ## SMS Messages and Phone Calls
 
