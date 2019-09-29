@@ -67,6 +67,22 @@ Having to frequently login with MFA creates an additional burden for users, and 
 - Only requiring MFA for sensitive actions, not for the initial login.
   - This will depend heavily on the functionality in the application.
 
+## Failed Login Attempts
+
+When a user enters their password, but fails to authenticate using a second factor, this could mean one of two things:
+
+- The user has lost their second factor, or doesn't have it available (for example, they don't have their mobile phone, or have no signal).
+- The user's password has been compromised.
+
+There are a number of steps that should be taken when this occurs:
+
+- Prompt the user to try another form of MFA
+  - For example, an SMS code rather than using their hardware OTP token.
+- Allow the user to attempt to [reset their MFA](#resetting-mfa).
+- Notify the user of the failed login attempt, and encourage them to change their password if they don't recognise it.
+  - The notification should include the time, browser and geographic location of the login attempt.
+  - This should be displayed next time they login, and optionally emailed to them as well.
+
 ## Resetting MFA
 
 One of the biggest challenges with implementing MFA is handling users who forget or lose their second factors. There are many ways this could happen, such as:
