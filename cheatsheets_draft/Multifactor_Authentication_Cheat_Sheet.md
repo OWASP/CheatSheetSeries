@@ -62,6 +62,7 @@ Having to frequently login with MFA creates an additional burden for users, and 
 - Remembering the user's browser so they don't need to use MFA every time.
   - This can either be permanent, or for a period of a few days.
   - This needs to be done with more than just a cookie, which could be stolen by an attacker.
+    - For example, a cookie matched to the previous IP address the cookie was issued for.
 - Whitelisting corporate IP ranges (or, more strictly, using location as a second factor).
   - This doesn't protect against malicious insiders, or a user's workstation being compromised.
 - Only requiring MFA for sensitive actions, not for the initial login.
@@ -142,7 +143,7 @@ Security questions require the user to choose (or create) a number of questions 
 
 # Something You Have
 
-The second factor is something that the users possesses. This could be a physical item (such as a hardware token), a digital item (such as a certificate or private key), or based on the ownership of a mobile phone (such as SMS or a software token installed on the phone).
+The second factor is something that the users possesses. This could be a physical item (such as a hardware token), a digital item (such as a certificate or private key), or based on the ownership of a mobile phone or email address (such as SMS or a software token installed on the phone, or an email with a single-use verification code).
 
 If properly implemented then this can be significantly more difficult  for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.
 
