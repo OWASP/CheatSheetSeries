@@ -45,13 +45,11 @@ Cookies can be manipulated from sub-domains, so omitting the `includeSubDomains`
 
 # Browser Support
 
-See the browsers support matrix [here](https://caniuse.com/#feat=stricttransportsecurity).
-
-There is also a [TLS Browser Test Page](https://badssl.com/) to check whether your current browser supports HSTS.
+As of September 2019 HSTS is supported by [all modern browsers](https://caniuse.com/#feat=stricttransportsecurity), with the only notable exception being Opera Mini.
 
 # References
 
-- [Chromium Projects/HSTS](http://dev.chromium.org/sts)
+- [Chromium Projects/HSTS](https://www.chromium.org/hsts/)
 - [OWASP TLS Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)
 - [Moxie Marlinspike's Black Hat 2009 talk on sslstrip, that demonstrates why you need HSTS](https://moxie.org/software/sslstrip/)
 - [AppSecTutorial Series - Episode 4](https://www.youtube.com/watch?v=zEV3HOuM_Vw)
