@@ -6,16 +6,13 @@ This article brings forth a way to integrate the `defense in depth` concept to t
 
 The increase in XSS and clickjacking vulnerabilities demands a more `defense in depth` security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.
 
-# Avoid CSP
+# Defense in Depth
 
-As mentioned in the [w3c specifications](https://www.w3.org/TR/CSP3/#intro):
-> CSP is not intended as a first line of defense against content injection vulnerabilities. Instead, CSP is best used as defense-in-depth. It reduces the harm that a malicious injection can cause, but it is not a replacement for careful input validation and output encoding.
+A strong CSP provides an effective second layer of protection against various types of vulnerabilities, including XSS. Although it may not be possible to fully mitigate these issues, a CSP can make it significantly harder for an attacker to actually exploit them.
 
-If you are a developer of any of the applications mentioned below, CSP will barely provide or improve their security:
-- Single page applications with no cookies or authentication and that serve static content (the application does not use input to generate content).
-- Applications that are already vulnerable to XSS vulnerabilities and chose not to remediate them. CSP is not the first line of defense.
+Even on a fully static website, which does not accept any user input, a CSP can be used to enforce the use of [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity). This can help prevent malicious code being loaded on the website if one of the third party sites hosting JavaScript files (such as analytics scripts) is compromised.
 
-*Note:* Despite CSP not being a first line of defense, using CSP to protect the user inside the browser from a vulnerability that is not going to be fixed, is under work, or under the case where the first security mechanism fails **is recommended**.
+However, CSP **should not** be relied upon as the only defensive mechanism on a website. It is still vital that other protective controls are implemented, such as those discussed in the [Cross-Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
 # Policy Delivery
 
