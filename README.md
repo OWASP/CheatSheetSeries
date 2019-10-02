@@ -1,272 +1,412 @@
-[![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)
-![CSCounterBadge](https://img.shields.io/badge/cheat_sheets_available-63-orange.svg)
-![LicenseBadge](https://img.shields.io/badge/license-C_C-blue.svg)
-[![PushAndPullRequestIntegrityCheck](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
-[![OfflineWebsiteBuild](https://circleci.com/gh/OWASP/CheatSheetSeries/tree/master.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries/tree/master)
+[![NuGet Stats](https://img.shields.io/nuget/v/reactiveui.svg)](https://www.nuget.org/packages/reactiveui) [![Build Status](https://dev.azure.com/dotnet/ReactiveUI/_apis/build/status/ReactiveUI-CI)](https://dev.azure.com/dotnet/ReactiveUI/_build/latest?definitionId=11) 
+ [![Code Coverage](https://codecov.io/gh/reactiveui/ReactiveUI/branch/master/graph/badge.svg)](https://codecov.io/gh/reactiveui/ReactiveUI) [![#yourfirstpr](https://img.shields.io/badge/first--timers--only-friendly-blue.svg)](https://reactiveui.net/contribute) 
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=reactiveui/ReactiveUI)](https://dependabot.com)
+<br>
+<a href="https://www.nuget.org/packages/reactiveui">
+        <img src="https://img.shields.io/nuget/dt/reactiveui.svg">
+</a>
+<a>
+  Added something here
+</a>
+<a href="#backers">
+        <img src="https://opencollective.com/reactiveui/backers/badge.svg">
+</a>
+<a href="#sponsors">
+        <img src="https://opencollective.com/reactiveui/sponsors/badge.svg">
+</a>
+<a href="https://reactiveui.net/slack">
+        <img src="https://img.shields.io/badge/chat-slack-blue.svg">
+</a>
+<br>
+<br>
+<a href="https://github.com/reactiveui/reactiveui">
+  <img width="160" heigth="160" src="https://raw.githubusercontent.com/reactiveui/styleguide/master/logo/main.png">
+</a>
+<br>
+<h1>What is ReactiveUI?</h1>
 
-![OWASPHeader](assets/Preface_Cheatsheet_Header.png)
+<a href="https://reactiveui.net/">ReactiveUI</a> is a composable, cross-platform model-view-viewmodel framework for all .NET platforms that is inspired by functional reactive programming which is a paradigm that allows you to <a href="https://www.youtube.com/watch?v=3HwEytvngXk">abstract mutable state away from your user interfaces and express the idea around a feature in one readable place</a> and improve the testability of your application. 
 
-![ProjectLogoOfficial](assets/Preface_Cheatsheet_Logo.png)
+<a href="https://reactiveui.net/docs/getting-started/">🔨 Get Started</a> <a href="https://reactiveui.net/docs/getting-started/installation/">🛍 Install Packages</a> <a href="https://reactiveui.net/docs/resources/videos">🎞 Watch Videos</a> <a href="https://reactiveui.net/docs/resources/samples/">🎓 View Samples</a> <a href="https://reactiveui.net/slack">🎤 Discuss ReactiveUI</a>
 
-# Welcome to OWASP Cheat Sheet Series V2
+<h2>Book</h2>
+There has been an excellent <a href="https://kent-boogaart.com/you-i-and-reactiveui/">book</a> written by our Alumni maintainer Kent Boogart.
+ 
+<h2>Introduction to Reactive Programming</h2>
 
-This repository contains all the cheat sheets of the project and represent the V2 of the **OWASP Cheat Sheet Series** project.
+Long ago, when computer programming first came to be, machines had to be programmed quite manually. If the technician entered the correct sequence of machine codes in the correct order, then the resulting program behavior would satisfy the business requirements. Instead of telling a computer how to do its job, which error-prone and relies too heavily on the infallibility of the programmer, why don't we just tell it what it's job is and let it figure the rest out?
 
-Links:
-* [OWASP home page of the project](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series)
-* [Official website](https://cheatsheetseries.owasp.org)
-* [Github repository](https://github.com/OWASP/CheatSheetSeries)
+ReactiveUI is inspired by the paradigm of Functional Reactive Programming, which allows you to model user input as a function that changes over time. This is super cool because it allows you to abstract mutable state away from your user interfaces and express the idea around a feature in one readable place whilst improving application testability. Reactive programming can look scary and complex at first glance, but the best way to describe reactive programming is to think of a spreadsheet:
 
-# Table of Contents
+![](https://reactiveui.net/docs/frp-excel.gif)
 
-- [Reference to the Cheat Sheets](#reference-to-the-cheat-sheets)
-- [Cheat Sheets index](#cheat-sheets-index)
-- [Special thanks](#special-thanks)
-- [Editor & validation policy](#editor--validation-policy)
-- [Conversion rules](#conversion-rules)
-- [How to setup my contributor environment?](#how-to-setup-my-contributor-environment)
-- [How to contribute?](#how-to-contribute)
-- [Contributors](#contributors)
-- [Offline website](#offline-website)
-- [Project leaders](#project-leaders)
-- [Core team](#core-team)
-- [PR usage for core commiters](#pr-usage-for-core-commiters)
-- [Project logo](#project-logo)
-- [Folders](#folders)
-- [License](#license)
-- [Code of conduct](CODE_OF_CONDUCT.md)
-- [DNS configuration for the website](#dns-configuration-for-the-website)
-- [Flagship graduation](#flagship-graduation)
+* Three cells, A, B, and C.
+* C is defined as the sum of A and B.
+* Whenever A or B changes, C reacts to update itself.
 
-# Reference to the Cheat Sheets
+That's reactive programming: changes propagate throughout a system automatically. Welcome to the peanut butter and jelly of programming paradigms. For further information please watch the this video from the Xamarin Evolve conference - [Why You Should Be Building Better Mobile Apps with Reactive Programming](http://www.youtube.com/watch?v=DYEbUF4xs1Q) by Michael Stonis.
 
-When a reference to a cheat sheet need to be created then a link pointing to the project (generated) official web site hosted on **https://cheatsheetseries.owasp.org** must be used.
+<h2>NuGet Packages</h2>
 
-:triangular_flag_on_post: Markdown files are the working sources and are not intended to be referenced in any external documentation/book/website/etc.
+Install the following packages to start building your own ReactiveUI app. <b>Note:</b> some of the platform-specific packages are required. This means your app won't perform as expected until you install the packages properly. See the <a href="https://reactiveui.net/docs/getting-started/installation/">Installation</a> docs page for more info.
 
-# Cheat Sheets index
+| Platform          | ReactiveUI Package                  | NuGet                | [Events][EventsDocs] Package            |
+| ----------------- | ----------------------------------- | -------------------- | --------------------------------------- |
+| .NET Standard     | [ReactiveUI][CoreDoc]               | [![CoreBadge]][Core] | None                                    |
+|                   | [ReactiveUI.Fody][FodyDoc]          | [![FodyBadge]][Fody] | None                                    |
+| Unit Testing      | [ReactiveUI.Testing][TestDoc]       | [![TestBadge]][Test] | None                                    |
+| Universal Windows | [ReactiveUI][UniDoc]                | [![CoreBadge]][Core] | [ReactiveUI.Events][CoreEvents]         |
+| WPF               | [ReactiveUI.WPF][WpfDoc]            | [![WpfBadge]][Wpf]   | [ReactiveUI.Events.WPF][WpfEvents]      |
+| Windows Forms     | [ReactiveUI.WinForms][WinDoc]       | [![WinBadge]][Win]   | [ReactiveUI.Events.WinForms][WinEvents] |
+| Xamarin.Forms     | [ReactiveUI.XamForms][XamDoc]       | [![XamBadge]][Xam]   | [ReactiveUI.Events.XamForms][XamEvents] |
+| Xamarin.Essentials| [ReactiveUI][XamDoc]                | [![CoreBadge]][Core] | [ReactiveUI.Events.XamEssentials][XamE] |
+| Xamarin.Android   | [ReactiveUI.AndroidSupport][DroDoc] | [![DroBadge]][Dro]   | [ReactiveUI.Events][CoreEvents]         |
+| Xamarin.iOS       | [ReactiveUI][IosDoc]                | [![CoreBadge]][Core] | [ReactiveUI.Events][CoreEvents]         |
+| Xamarin.Mac       | [ReactiveUI][MacDoc]                | [![CoreBadge]][Core] | [ReactiveUI.Events][CoreEvents]         |
+| Tizen             | [ReactiveUI][CoreDoc]               | [![CoreBadge]][Core] | [ReactiveUI.Events][CoreEvents]         |
+| Platform Uno      | ReactiveUI.Uno                      | [![UnoBadge]][Uno]  | None                                     |
+| Avalonia          | [Avalonia.ReactiveUI][AvaDoc]       | [![AvaBadge]][Ava]   | None                                    |
+| Any               | [ReactiveUI.Validation][ValidationsDocs]    | [![ValidationsBadge]][ValidationsCore] | None
 
-The following indexes are provided:
-* This [index](Index.md) reference all released cheat sheets sorted alphabetically.
-    * This index is automatically generated by this [script](scripts/Update_CheatSheets_Index.py).
-* This [index](IndexASVS.md) reference all released cheat sheets using the [OWASP ASVS](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project) project as reading source.
-    * This index is manually managed in order to allow contribution along custom content.
-* This [index](IndexProactiveControls.md) reference all released cheat sheets using the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) project as reading source.
-    * This index is manually managed in order to allow contribution along custom content.
+[Core]: https://www.nuget.org/packages/ReactiveUI/
+[CoreEvents]: https://www.nuget.org/packages/ReactiveUI.Events/
+[CoreBadge]: https://img.shields.io/nuget/v/ReactiveUI.svg
+[CoreDoc]: https://reactiveui.net/docs/getting-started/installation/
 
-The official website provide a search bar (top left corner) that can be used.
+[Fody]: https://www.nuget.org/packages/ReactiveUI.Fody/
+[FodyDoc]: https://reactiveui.net/docs/handbook/view-models/#managing-boilerplate-code
+[FodyBadge]: https://img.shields.io/nuget/v/ReactiveUI.Fody.svg
 
-# Project leaders
+[Test]: https://www.nuget.org/packages/ReactiveUI.Testing/
+[TestBadge]: https://img.shields.io/nuget/v/ReactiveUI.Testing.svg
+[TestDoc]: https://reactiveui.net/docs/handbook/testing/
 
-* [Jim Manico](https://github.com/jmanico).
+[UniDoc]: https://reactiveui.net/docs/getting-started/installation/universal-windows-platform
 
-# Core team
+[Wpf]: https://www.nuget.org/packages/ReactiveUI.WPF/
+[WpfEvents]: https://www.nuget.org/packages/ReactiveUI.Events.WPF/
+[WpfBadge]: https://img.shields.io/nuget/v/ReactiveUI.WPF.svg
+[WpfDoc]: https://reactiveui.net/docs/getting-started/installation/windows-presentation-foundation
 
-**Any GitHub member is free to add a comment on any Proposal (issue) or PR.**
+[Win]: https://www.nuget.org/packages/ReactiveUI.WinForms/
+[WinEvents]: https://www.nuget.org/packages/ReactiveUI.Events.WinForms/
+[WinBadge]: https://img.shields.io/nuget/v/ReactiveUI.WinForms.svg
+[WinDoc]: https://reactiveui.net/docs/getting-started/installation/windows-forms
 
-However, we have created an official core team (core commiters) in order to:
-* Review all PR/Proposal in a consistent/regular way using [GitHub's review feature](https://help.github.com/en/articles/reviewing-proposed-changes-in-a-pull-request).
-* Extend the field of technologies known by the review team.
-* Allow several technical opinions on a Proposal/PR, all exchanges are public because we use the GitHub comment feature.
+[Xam]: https://www.nuget.org/packages/ReactiveUI.XamForms/
+[XamEvents]: https://www.nuget.org/packages/ReactiveUI.Events.XamForms/
+[XamBadge]: https://img.shields.io/nuget/v/ReactiveUI.XamForms.svg
+[XamDoc]: https://reactiveui.net/docs/getting-started/installation/xamarin-forms
+[XamE]: https://www.nuget.org/packages/ReactiveUI.Events.XamEssentials/
 
-Decision of the core team have the same weight than the projet leaders, so, if a core team member reject a PR (*rejection must be technically documented and explained*) then project leaders will apply the global decision.
+[Dro]: https://www.nuget.org/packages/ReactiveUI.AndroidSupport/
+[DroBadge]: https://img.shields.io/nuget/v/ReactiveUI.AndroidSupport.svg
+[DroDoc]: https://reactiveui.net/docs/getting-started/installation/xamarin-android
 
-Members:
-* [Elie Saad](https://github.com/ThunderSon).
-* [Jakub Maćkowski](https://github.com/mackowski).
-* [Robin Bailey](https://github.com/rbsec).
-* [Jim Manico](https://github.com/jmanico).
+[MacDoc]: https://reactiveui.net/docs/getting-started/installation/xamarin-mac
+[IosDoc]: https://reactiveui.net/docs/getting-started/installation/xamarin-ios
 
-# PR usage for core commiters
+[Uno]: https://www.nuget.org/packages/ReactiveUI.Uno/
+[UnoBadge]: https://img.shields.io/nuget/v/ReactiveUI.Uno.svg
+[UnoDoc]: https://reactiveui.net/docs/getting-started/installation/uno-platform
 
-For the following kind of modifications, the PR system will be used by the core commiters in order to allow peer review using the GitHub PR review system:
-* Addition of a new cheat sheet.
-* Deep modification of an existing cheat sheet.
 
-Below are the steps to properly submit a PR:
-1. Clone the project.
-2. Move on to the `master` branch: 
-    > `git checkout master`
-3. Ensure that you have the latest files:
-    > `git pull`
-4. Create a branch named `CSS-[ID]` where **[ID]** is the number of the linked issue opened prior to the PR to follow the contribution process:
-    > `git checkout -b CSS-[ID]`
-5. Switch to this new branch (normally it's already the case):
-    > `git checkout CSS-[ID]`
-6. Do the expected work.
-7. Push the new branch:
-    > `git push origin CSS-[ID]`   
-8. When the work is ready for the review, create a pull request by visiting this link:
-    > `https://github.com/OWASP/CheatSheetSeries/pull/new/CSS-[ID]`
-9. Implement the modifications requested by the reviewers. Once the reviewers approve the PR, it is then merged to the `master` branch.
-10. Once merged, delete the branch using this [GitHub feature](https://help.github.com/en/articles/creating-and-deleting-branches-within-your-repository#deleting-a-branch).
+[Ava]: https://www.nuget.org/packages/Avalonia.ReactiveUI/
+[AvaBadge]: https://img.shields.io/nuget/v/Avalonia.ReactiveUI.svg
+[AvaDoc]: https://reactiveui.net/docs/getting-started/installation/avalonia
+[EventsDocs]: https://reactiveui.net/docs/handbook/events/
 
-See project current [branches](https://github.com/OWASP/CheatSheetSeries/branches).
+[ValidationsCore]: https://www.nuget.org/packages/ReactiveUI.Validation/
+[ValidationsBadge]: https://img.shields.io/nuget/v/ReactiveUI.Validation.svg
+[ValidationsDocs]: https://reactiveui.net/docs/handbook/user-input-validation/
 
-# Project logo
+<h2>A Compelling Example</h2>
 
-Project's official logo files are hosted [here](https://github.com/OWASP/owasp-swag/tree/master/projects/cheat-sheet-series).
+Let’s say you have a text field, and whenever the user types something into it, you want to make a network request which searches for that query.
 
-# Folders
+![](http://i.giphy.com/xTka02wR2HiFOFACoE.gif)
 
-**cheatsheets_excluded**:
-* Contains the cheat sheets markdown files converted with PANDOC and for which a discussion must be made in order to decide if we include them into the V2 of the project due to the content has not been updated since a long time or is not relevant anymore. See this [discussion](https://github.com/OWASP/CheatSheetSeries/issues/13). 
-
-**cheatsheets**: 
-* Contains the final cheat sheets files. 
-* Any `.md` file present into this folder is considered released.
-
-**assets**: 
-* Contains the assets used by the cheat sheets (images, pdf, zip...).
-    * Naming convention is `[CHEAT_CHEET_MARKDOWN_FILE_NAME]_[IDENTIFIER].[EXTENSION]`
-    * Use `PNG` format for the images.
-
-**scripts**:
-* Contains all the utility scripts used to operate the project (markdown linter audit, dead link identification...).    
-
-**templates**:
-* Contains templates used for different kinds of files (cheatsheet...).
-
-**.github**:
-* Contains materials used to configure different behaviors of GitHub.
-
-**.circleci** / **.travis.yml** (file):
-* Contains the definition of the integration jobs used to control the integrity and consistency of the whole project:
-    * **[TravisCI](https://travis-ci.org/OWASP/CheatSheetSeries)** is used to perform compliance check actions at each Push/Pull Request. **It must be/stay the fastest possible** (currently inferior to 2 minutes) in order to provide a rapid compliance feedback about the Push/Pull Request.
-    * **[CircleCI](https://circleci.com/gh/OWASP/CheatSheetSeries)** is used to perform operations taking *longer time* like build, publish and deploy actions.
-
-# Offline website
-
-Unfortunately, a PDF file generation is not possible because the content is cut in some cheat sheets like for example the abuse case one.
-
-However, to propose the possibility the consult, in a full offline mode, the collection of all cheat sheets, a script to generate a offline site using [GitBook](https://toolchain.gitbook.com/) has been created. The script is [here](scripts/Generate_Site.sh).
-
-* **book.json**: Gitbook configuration file.
-* **Preface.md**: Project preface description applied on the generated site.
-
-:information_source: It is this generated content that is hosted of the [official web site](https://cheatsheetseries.owasp.org) of the project.
-
-## Automated build
-
-This [link](https://cheatsheetseries.owasp.org/bundle.zip) allow you to download a build (zip archive) of the offline website.
-
-## Manual build
-
-Use the commands below to generate the site:
-
-```bash
-# Your python version must be >= 3.5
-$ python --version
-Python 3.5.3
-# Dependencies:
-#  sudo apt install -y nodejs
-#  sudo npm install gitbook-cli -g
-$ cd scripts
-$ bash Generate_Site.sh
-Generate a offline portable website with all the cheat sheets...
-Step 1/5: Init work folder.
-Step 2/5: Generate the summary markdown page.
-Index updated.
-Summary markdown page generated.
-Step 3/5: Create the expected GitBook folder structure.
-Step 4/5: Generate the site.
-info: found 45 pages
-info: found 86 asset files
-info: >> generation finished with success in 14.2s !
-Step 5/5: Cleanup.
-Generation finished to the folder: ../generated/site
-$ cd ../generated/site/
-$ ls -l
-drwxr-xr-x 1 Feb  3 11:05 assets
-drwxr-xr-x 1 Feb  3 11:05 cheatsheets
-drwxr-xr-x 1 Feb  3 11:05 gitbook
--rw-r--r-- 1 Feb  3 11:05 index.html
--rw-r--r-- 1 Feb  3 11:05 search_index.json
+```csharp
+public interface ISearchViewModel
+{
+    string SearchQuery { get; set; }	 
+    ReactiveCommand<string, IEnumerable<SearchResult>> Search { get; }
+    IEnumerable<SearchResult> SearchResults { get; }
+}
 ```
 
-# Conversion rules
+<h3>Define under what conditions a network request will be made</h3>
 
-* Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).
-* Use this [sheet](https://gist.github.com/molomby/9bc092e4a125f529ae362de7e46e8176) for Superscript and Subscript characters.
-* Use this [sheet](https://meta.askubuntu.com/a/7383) for Arrows (left, right, top, down) characters.
-* Store all assets in the **assets** folder and use the following syntax:
-    * `![ALTERNATE_NAME](../assets/ASSET_NAME.png)` for the insertion of an image. Use `PNG` format for the images (this [software](https://www.gimp.org/downloads/) can be used to handle format conversion).
-    * `[ALTERNATE_NAME](../assets/ASSET_NAME.EXT)` for the insertion of other kinds of media (pdf, zip...).
-* Use ATX style (`#` syntax) for section head. 
-* Use `**bold**` syntax for **bold** text.
-* Use `*italic*` syntax for *italic* text.
-* Use `TAB` for nested lists and not spaces.
-* Use [code fencing syntax along syntax highlighting](https://help.github.com/articles/creating-and-highlighting-code-blocks/) for code snippet (prevent when possible horizontal scrollbar).
-* If you use `{{` or `}}` pattern in code fencing then add a space between the both curly braces (ex: `{ {`) otherwise it break GitBook generation process.
-* Same remark about the cheat sheet file name, only the following syntax is allowed: `[a-zA-Z_]+`.
-* No HTML code is allowed, only markdown syntax is allowed!
-* Use this [site](https://www.tablesgenerator.com/markdown_tables) for generation of tables.
-* Use a single new line between a section head and the beginning of its content.
+We're describing here, in a *declarative way*, the conditions in which the Search command is enabled. Now our Command IsEnabled is perfectly efficient, because we're only updating the UI in the scenario when it should change.
 
-# Editor & validation policy
-
-[Visual Studio Code](https://code.visualstudio.com/) is used for the work on the markdown files. It is also used for the work on the scripts.
-
-The file **Project.code-workspace** is the workspace file in order to open the project in VSCode.
-
-The following [plugin](https://github.com/DavidAnson/vscode-markdownlint) is used to validate the markdown content.
-
-The file **.markdownlint.json** define the central validation policy applied at VSCode (IDE) and TravisCI (CI) levels.
-
-Details about rules is [here](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md).
-
-The file **.markdownlinkcheck.json** define the configuration used to validate using this [tool](https://github.com/tcort/markdown-link-check), at TravisCI level, all web and relatives links used in cheat sheets.
-
-# How to setup my contributor environment?
-
-See [here](CONTRIBUTING.md#how-to-setup-my-contributor-environment).
-
-# How to contribute?
-
-See [here](CONTRIBUTING.md#how-to-contribute).
-
-# Contributors
-
-* **From 2014 to 2018:** [V1](CONTRIBUTOR-V1.md) - Initial version of the project hosted on the [OWASP WIKI](https://www.owasp.org).
-* **From 2019:** [V2](https://github.com/OWASP/CheatSheetSeries/graphs/contributors) - Hosted on [GitHub](https://github.com/OWASP/CheatSheetSeries).
-
-# Special thanks
-
-A special thanks you to the following peoples for the help provided during the migration:
-
-* [Dominique Righetto](https://github.com/righettod): For his special leadership and guidance.
-* [Elie Saad](https://github.com/ThunderSon): Deeply help about updating the OWASP wiki links for all the migrated cheat sheets.
-* [Jakub Maćkowski](https://github.com/mackowski): Deeply help about updating the OWASP wiki links for all the migrated cheat sheets.
-
-# License
-
-See [here](LICENSE.md).
-
-# DNS configuration for the website
-
-```shell
-$ dig cheatsheetseries.owasp.org
-
-;; global options: +cmd
-;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 58806
-;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1
-
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 4096
-;; QUESTION SECTION:
-;cheatsheetseries.owasp.org.	IN	A
-
-;; ANSWER SECTION:
-cheatsheetseries.owasp.org. 300	IN	CNAME	owasp.github.io.
-owasp.github.io.	3600	IN	A	185.199.110.153
-owasp.github.io.	3600	IN	A	185.199.111.153
-owasp.github.io.	3600	IN	A	185.199.109.153
-owasp.github.io.	3600	IN	A	185.199.108.153
+```csharp
+var canSearch = this.WhenAnyValue(x => x.SearchQuery, query => !string.IsNullOrWhiteSpace(query));
 ```
 
-As well as this final configuration [action](https://help.github.com/en/articles/setting-up-a-custom-subdomain).
+<h3>Make the network connection</h3>
 
-# Flagship graduation
+ReactiveCommand has built-in support for background operations and guarantees that this block will only run exactly once at a time, and that the CanExecute will auto-disable and that property IsExecuting will be set accordingly whilst it is running.
 
-The result of the project review, by the foundation, is available [here](assets/README_FlagshipCombinedReviews.pdf).
+```csharp
+Search = ReactiveCommand.CreateFromTask(_ => searchService.Search(this.SearchQuery), canSearch);
+```
+
+<h3>Update the user interface</h3>
+
+ReactiveCommands are themselves `IObservables`, whose values are the results from the async method, guaranteed to arrive on the UI thread. We're going to take the list of search results that the background operation loaded, and turn them into our SearchResults property declared as [`ObservableAsPropertyHelper<T>`](https://reactiveui.net/docs/handbook/oaph/#example).
+
+```csharp
+_searchResults = Search.ToProperty(this, x => x.SearchResults);
+```
+
+<h3>Handling failures</h3>
+
+Any exception thrown from the [`ReactiveCommand.CreateFromTask`](https://reactiveui.net/docs/handbook/commands/) gets piped to the `ThrownExceptions` Observable. Subscribing to this allows you to handle errors on the UI thread.
+
+```csharp
+Search.ThrownExceptions.Subscribe(error => { /* Handle exceptions. */ });
+```
+
+<h3>Throttling network requests and automatic search execution behaviour</h3>
+
+Whenever the Search query changes, we're going to wait for one second of "dead airtime", then automatically invoke the subscribe command.
+
+```csharp
+this.WhenAnyValue(x => x.SearchQuery)
+    .Throttle(TimeSpan.FromSeconds(1), RxApp.MainThreadScheduler)
+    .InvokeCommand(Search);
+```
+
+<h3>Binding our ViewModel to the platform-specific UI</h3>
+
+ReactiveUI fully supports XAML markup bindings, but we have more to offer. [ReactiveUI Bindings](https://reactiveui.net/docs/handbook/data-binding/) work on **all platforms**, including Xamarin Native and Windows Forms, and operate the same. Those bindings are strongly typed, and renaming a ViewModel property, or a control in the UI layout without updating the binding, the build will fail.
+
+```csharp
+this.WhenActivated(cleanup => 
+{
+    this.Bind(ViewModel, x => x.SearchQuery, x => x.TextBox)
+        .DisposeWith(cleanup);
+    this.OneWayBind(ViewModel, x => x.SearchResults, x => x.ListView)
+        .DisposeWith(cleanup);
+    this.BindCommand(ViewModel, x => x.Search, x => x.Button)
+        .DisposeWith(cleanup);
+});
+```
+
+<h3>Forget about INotifyPropertyChanged boilerplate code</h3>
+
+[ReactiveUI.Fody](https://www.nuget.org/packages/ReactiveUI.Fody/) package allows you to decorate read-write properties with `Reactive` attribute — and code responsible for property change notifications will get injected into your property setters automatically at compile time. We use [Fody](https://github.com/Fody/Fody) tooling to make this magic work.
+
+```csharp
+public class ReactiveViewModel : ReactiveObject
+{
+    [Reactive] 
+    public string SearchQuery { get; set; }
+}
+```
+
+The code above gets compiled into the following code:
+
+```csharp
+public class ReactiveViewModel : ReactiveObject
+{
+    private string searchQuery;
+    public string SearchQuery 
+    {
+        get => searchQuery;
+        set => this.RaiseAndSetIfChanged(ref searchQuery, value);
+    }
+}
+```
+
+<h3>Validate user input on the fly</h3>
+
+[ReactiveUI.Validation](https://github.com/reactiveui/ReactiveUI.Validation) provides a subset of functions to create validations, functioning in a reactive way. For those ViewModels which need validation, implement `ISupportsValidation`, then add validation rules to the ViewModel and finally bind to the validation rules in the View! See [documentation](https://reactiveui.net/docs/handbook/user-input-validation/) for more info. This package was created based on [jcmm33 work](https://github.com/jcmm33/ReactiveUI.Validation) and maintained by [alexmartinezm](https://github.com/alexmartinezm).
+
+```csharp
+// # ViewModel
+// Search query must not be empty. The selector is the property 
+// name and the line below is a single property validator.
+this.ValidationRule(
+    vm => vm.SearchQuery,
+    query => !string.IsNullOrWhiteSpace(query),
+    "Please, provide a non-empty search query!");
+
+// # View
+// Bind any validations which reference the SearchQuery property 
+// to the text of the QueryValidation UI control!
+this.BindValidation(ViewModel, vm => vm.SearchQuery, view => view.QueryValidation.Text);
+```
+
+<h3>Add view model-based routing to your XAML views</h3>
+
+View model-based routing is supported for Xamarin.Forms, WinRT, UWP, Windows Forms, WPF and Avalonia Desktop applications. Create an [`IScreen`](https://reactiveui.net/api/reactiveui/iscreen/), register views for view models and navigate to your [`IRoutableViewModel`](https://reactiveui.net/api/reactiveui/iroutableviewmodel/)s by calling `Router.Navigate`. Then, bind the [`RoutingState`](https://reactiveui.net/api/reactiveui/routingstate/) to the platform-specific routed view host. See [routing documentation](https://reactiveui.net/docs/handbook/routing/) for a getting started guide.
+
+```xml
+<rxui:ReactiveWindow
+    xmlns:rxui="http://reactiveui.net" 
+    x:Class="ReactiveRouting.MainWindow"
+    x:TypeArguments="vm:MainViewModel"
+    xmlns:vm="clr-namespace:ReactiveRouting"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <rxui:RoutedViewHost
+        Router="{Binding Router}"
+        HorizontalContentAlignment="Stretch"
+        VerticalContentAlignment="Stretch" />
+</rxui:ReactiveWindow>
+```
+
+<h2>Support</h2>
+
+If you have a question, please see if any discussions in our [GitHub issues](https://github.com/reactiveui/ReactiveUI/issues) or [Stack Overflow](https://stackoverflow.com/questions/tagged/reactiveui) have already answered it.
+
+If you want to discuss something or just need help, here is our [Slack room](https://reactiveui.net/slack) where there are always individuals looking to help out!
+
+If you are twitter savvy you can tweet #reactiveui with your question and someone should be able to reach out and help also.
+
+If you have discovered a 🐜 or have a feature suggestion, feel free to create an issue on GitHub.
+
+<h2>Contribute</h2>
+
+ReactiveUI is developed under an OSI-approved open source license, making it freely usable and distributable, even for commercial use. Because of our Open Collective model for funding and transparency, we are able to funnel support and funds through to our contributors and community. We ❤ the people who are involved in this project, and we’d love to have you on board, especially if you are just getting started or have never contributed to open-source before.
+
+So here's to you, lovely person who wants to join us — this is how you can support us:
+
+* [Responding to questions on StackOverflow](https://stackoverflow.com/questions/tagged/reactiveui)
+* [Passing on knowledge and teaching the next generation of developers](http://ericsink.com/entries/dont_use_rxui.html)
+* [Donations](https://reactiveui.net/donate) and [Corporate Sponsorships](https://reactiveui.net/sponsorship)
+* [Submitting documentation updates where you see fit or lacking](https://reactiveui.net/docs)
+* [Making contributions to the code base](https://reactiveui.net/contribute/)
+* [Asking your employer to reciprocate and contribute to open-source](https://github.com/github/balanced-employee-ip-agreement)
+
+We're also looking for people to assist with code reviews of ReactiveUI contributions. Please join us on <a href="https://reactiveui.net/slack">Slack</a> to discuss how.
+<!--
+ - [Android reviewers](https://github.com/orgs/reactiveui/teams/android-team)
+ - [Apple TV reviewers](https://github.com/orgs/reactiveui/teams/tvos-team)
+ - [Dot Net Core](https://github.com/orgs/reactiveui/teams/dotnetcore-team)
+ - [Fody reviewers](https://github.com/orgs/reactiveui/teams/fody-team)
+ - [iOS reviewers](https://github.com/orgs/reactiveui/teams/ios-team)
+ - [Learning Team reviewers](https://github.com/orgs/reactiveui/teams/learning-team)
+ - [Mac reviewers](https://github.com/orgs/reactiveui/teams/mac-team)
+ - [ReactiveUI Core reviewers](https://github.com/orgs/reactiveui/teams/core-team)
+ - [Tizen](https://github.com/orgs/reactiveui/teams/tizen-team)
+ - [UWP reviewers](https://github.com/orgs/reactiveui/teams/uwp-team)
+ - [Web Assembly](https://github.com/orgs/reactiveui/teams/webassembly-team)
+ - [WinForms reviewers](https://github.com/orgs/reactiveui/teams/winforms-team)
+ - [WPF reviewers](https://github.com/orgs/reactiveui/teams/wpf-team) 
+ - [Xamarin Forms reviewers](https://github.com/orgs/reactiveui/teams/xamarin-forms-team)
+ -->
+
+<h2>.NET Foundation</h2>
+
+ReactiveUI is part of the [.NET Foundation](https://www.dotnetfoundation.org/). Other projects that are associated with the foundation include the Microsoft .NET Compiler Platform ("Roslyn") as well as the Microsoft ASP.NET family of projects, Microsoft .NET Core & Xamarin Forms.
+
+<h2>Core Team</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top">
+        <img width="100" height="100" src="https://github.com/glennawatson.png?s=150">
+        <br>
+        <a href="https://github.com/glennawatson">Glenn Watson</a>
+        <p>Melbourne, Australia</p>
+      </td>
+      <td align="center" valign="top">
+        <img width="100" height="100" src="https://github.com/rlittlesii.png?s=150">
+        <br>
+        <a href="https://github.com/rlittlesii">Rodney Littles II</a>
+        <p>Texas, USA</p>
+      </td>
+      <td align="center" valign="top">
+        <img width="100" height="100" src="https://github.com/worldbeater.png?s=150">
+        <br>
+        <a href="https://github.com/worldbeater">Artyom Gorchakov</a>
+        <p>Moscow, Russia</p>
+      </td>
+      <td align="center" valign="top">
+        <img width="100" height="100" src="https://github.com/cabauman.png?s=150">
+        <br>
+        <a href="https://github.com/cabauman">Colt Bauman</a>
+        <p>South Korea</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Alumni Core Team</h2>
+
+The following have been core team members in the past.
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top">
+        <img width="100" height="100" src="https://github.com/ghuntley.png?s=150">
+        <br>
+        <a href="https://github.com/ghuntley">Geoffrey Huntley</a>
+        <p>Sydney, Australia</p>
+      </td>
+      <td align="center" valign="top">
+        <img width="100" height="100" src="https://github.com/kentcb.png?s=150">
+        <br>
+        <a href="https://github.com/kentcb">Kent Boogaart</a>
+        <p>Brisbane, Australia</p>
+      </td>
+      <td align="center" valign="top">
+        <img width="100" height="100" src="https://github.com/olevett.png?s=150">
+        <br>
+        <a href="https://github.com/olevett">Olly Levett</a>
+        <p>London, United Kingdom</p>
+      </td>
+      <td align="center" valign="top">
+        <img width="100" height="100" src="https://github.com/anaisbetts.png?s=150">
+        <br>
+        <a href="https://github.com/anaisbetts">Anaïs Betts</a>
+        <p>San Francisco, USA</p>
+      </td>
+      <td align="center" valign="top">
+        <img width="100" height="100" src="https://github.com/shiftkey.png?s=150">
+        <br>
+        <a href="https://github.com/shiftkey">Brendan Forster</a>
+        <p>Melbourne, Australia</p>
+      </td>
+      <td align="center" valign="top">
+        <img width="120" height="100" src="https://github.com/onovotny.png?s=150">
+        <br>
+        <a href="https://github.com/onovotny">Oren Novotny</a>
+        <p>New York, USA</p>
+      </td>
+     </tr>
+  </tbody>
+</table>
+
+<h2>Contributors</h2>
+This project exists thanks to all the people who have contributed to the code base.
+<a href="https://github.com/ReactiveUI/ReactiveUI/graphs/contributors"><img src="https://opencollective.com/ReactiveUI/contributors.svg?width=890&button=false" /></a>
+
+<h2>Sponsorship</h2>
+
+The core team members, ReactiveUI contributors and contributors in the ecosystem do this open source work in their free time. If you use ReactiveUI a serious task, and you'd like us to invest more time on it, please donate. This project increases your income/productivity too. It makes development and applications faster and it reduces the required bandwidth.
+
+This is how we use the donations:
+
+* Allow the core team to work on ReactiveUI
+* Thank contributors if they invested a large amount of time in contributing
+* Support projects in the ecosystem that are of great value for users
+* Support projects that are voted most (work in progress)
+* Infrastructure cost
+* Fees for money handling
+
+<h2>Sponsors</h2>
+
+[Become a sponsor](https://opencollective.com/reactiveui#sponsor) and get your logo on our README on Github with a link to your site.
+
+<a href="https://opencollective.com/reactiveui#sponsor"><img src="https://opencollective.com/reactiveui/sponsor.svg?width=890&avatarHeight=50&button=false"></a>
+
+<h2>Backers</h2>
+
+[Become a backer](https://opencollective.com/reactiveui#backer) and get your image on our README on Github with a link to your site.
+
+<a href="https://opencollective.com/reactiveui#backer"><img src="https://opencollective.com/reactiveui/backer.svg?width=890&avatarHeight=50&button=false"></a>
