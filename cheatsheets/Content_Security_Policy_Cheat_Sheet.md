@@ -8,7 +8,7 @@ The increase in XSS and clickjacking vulnerabilities demands a more `defense in 
 
 # Defense in Depth
 
-A strong CSP provides an effective second layer of protection against various different types of vulnerabilities, including XSS. Although it may not be possible to fully mitigate these issues, a CSP can make it significantly harder for an attacker to actually exploit them.
+A strong CSP provides an effective second layer of protection against various types of vulnerabilities, including XSS. Although it may not be possible to fully mitigate these issues, a CSP can make it significantly harder for an attacker to actually exploit them.
 
 Even on a fully static website, which does not accept any user input, a CSP can be used to enforce the use of [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity). This can help prevent malicious code being loaded on the website if one of the third party sites hosting JavaScript files (such as analytics scripts) is compromised.
 
