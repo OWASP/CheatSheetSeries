@@ -108,13 +108,10 @@ track_errors            = Off
 html_errors             = Off
 ```
 
-
 ## Suhosin (only usable in 5.X branch and should not be used in prod now as 5.X is EOL)
 
 Consider using [Suhosin](https://suhosin.org/) if you want to patch many custom security flaws in various parts of PHP. 
 
-
 ## Snuggleupagus (7.X Series, beta product use with caution)
 
 [Snuggleupagus](https://github.com/nbs-system/snuffleupagus) is continuing what [Suhosin started](https://github.com/sektioneins/suhosin7#php-73-support-and-snufflepagus). It allows you to control PHP behaviour at a deeper level. [Detailed documentation is available here](https://snuffleupagus.readthedocs.io/)
-
