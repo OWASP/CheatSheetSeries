@@ -4,7 +4,7 @@ This article is focused on providing clear, simple, actionable guidance for prov
 
 ## What is Access Control / Authorization?
 
-Authorization is the process where requests to access a particular resource should be granted or denied. It should be noted that authorization is not equivalent to authentication - as these terms and their definitions are frequently confused. Authentication is providing and validating identity. The authorization includes the execution rules that determine what functionality and data the user (or Principal) may access, ensuring the proper allocation of access rights after authentication is successful.
+Authorization is the process where requests to access a particular resource should be granted or denied. It should be noted that authorization is not equivalent to authentication - as these terms and their definitions are frequently confused. Authentication is providing and validating identity.Authorization includes the execution rules that determine what functionality and data the user (or Principal) may access, ensuring the proper allocation of access rights after authentication is successful.
 
 Web applications need access controls to allow users (with varying privileges) to use the application. They also need administrators to manage the applications access control rules and the granting of permissions or entitlements to users and other entities. Various access control design methodologies are available. To choose the most appropriate one, a risk assessment needs to be performed to identify threats and vulnerabilities specific to your application, so that the proper access control methodology is appropriate for your application.
 
@@ -53,7 +53,7 @@ The advantages of using this model are:
 
 - Easy to use
 - Easy to administer
-- It aligns to the principle of least privileges.
+- Aligns to the principle of least privileges.
 - Object owner has total control over access granted
 
 Problems that can be encountered while using this methodology:
