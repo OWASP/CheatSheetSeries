@@ -26,21 +26,9 @@ cp -r ../assets $WORK/cheatsheets/assets
 cp ../Index.md $WORK/cheatsheets/cheatsheets/Index.md
 cp ../IndexASVS.md $WORK/cheatsheets/cheatsheets/IndexASVS.md
 cp ../IndexProactiveControls.md $WORK/cheatsheets/cheatsheets/IndexProactiveControls.md
-
-#sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/Index.md
-#sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/IndexASVS.md
-#sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/IndexProactiveControls.md
-
-# In case you want to keep adding more markdowns in the future...
-function sed_i_stuff{
-    sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/$MDOWN
-}
-
-for i in "Index.md" "IndexASVS.md" "IndexProactiveControls.md"; do
-    MDOWN=$i
-    sed_i_stuff
-done
-
+sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/Index.md
+sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/IndexASVS.md
+sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/IndexProactiveControls.md
 sed -i 's/cheatsheets\///g' $WORK/cheatsheets/cheatsheets/Index.md
 sed -i 's/cheatsheets\///g' $WORK/cheatsheets/cheatsheets/IndexASVS.md
 sed -i 's/cheatsheets\///g' $WORK/cheatsheets/cheatsheets/IndexProactiveControls.md
