@@ -40,7 +40,7 @@ Links:
 
 # Reference to the Cheat Sheets
 
-When a reference to a cheat sheet need to be created then a link pointing to the project (generated) official web site hosted on **https://cheatsheetseries.owasp.org** must be used.
+When a reference to a cheat sheet needs to be created, then a link pointing to the project (generated) official web site hosted on **https://cheatsheetseries.owasp.org** must be used.
 
 :triangular_flag_on_post: Markdown files are the working sources and are not intended to be referenced in any external documentation/book/website/etc.
 
