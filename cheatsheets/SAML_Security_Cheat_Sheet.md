@@ -4,7 +4,7 @@ The **S**ecurity **A**ssertion **M**arkup **L**anguage ([SAML](https://en.wikipe
 
 # Validate Message Confidentiality and Integrity
 
-[TLS 1.2](Transport_Layer_Protection_Cheat_Sheet.md) is the most common solution to guarantee message confidentiality and integrity during transportation. Refer to [SAML Security (section 4.2.1)](https://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) for additional information. This step will help counter the following attacks:
+[TLS 1.2](Transport_Layer_Protection_Cheat_Sheet.md) is the most common solution to guarantee message confidentiality and integrity at the transport layer. Refer to [SAML Security (section 4.2.1)](https://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) for additional information. This step will help counter the following attacks:
 - Eavesdropping 7.1.1.1
 - Theft of User Authentication Information 7.1.1.2
 - Theft of the Bearer Token 7.1.1.3
@@ -89,12 +89,14 @@ Need an architectural diagram? The [SAML technical overview](https://www.oasis-o
 
 # Unsolicited Response (ie. IdP Initiated SSO) Considerations for Service Providers
 
-Unsolicited Response is inherently less secure by design due to the lack of [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery) type protection. However, it is supported by many due to the backwards compatibility feature of SAML 1.1. The general security recommendation is to not support this type of authentication, but if it must be enabled, the following steps (in additional to everything mentioned above) should help you secure this flow:
+Unsolicited Response is inherently [less secure](https://www.identityserver.com/articles/the-dangers-of-saml-idp-initiated-sso) by design due to the lack of [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery) protection. However, it is supported by many due to the backwards compatibility feature of SAML 1.1. The general security recommendation is to not support this type of authentication, but if it must be enabled, the following steps (in additional to everything mentioned above) should help you secure this flow:
 - Follow the validation process mentioned in [SAML Profiles (section 4.1.5)](https://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf). This step will help counter the following attacks:
     - Replay (6.1.2)
     - Message Insertion (6.1.3)
-- If the contract of the `RelayState` parameter is a URL, make sure the URL is validated and whitelisted. This step prevents:
+- If the contract of the `RelayState` parameter is a URL, make sure the URL is validated and whitelisted. This step will help counter the following attack:
     - [Open Redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html)
+- Implement proper replay detection either at the response or assertion level. This will help counter the following attack:
+    - Replay (6.1.2)
 
 # Identity Provider and Service Provider Considerations
 
