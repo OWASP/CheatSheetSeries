@@ -111,7 +111,7 @@ html_errors             = Off
 ## Suhosin (PHP 5.X)
 
 Consider using [Suhosin](https://suhosin.org/) if you want to patch many custom security flaws in various parts of PHP. 
-Note: only usable in 5.X branch and should not be used in prod now as 5.X is EOL.
+> **Suhosin is only usable on the 5.X branch and should not be used on production servers as 5.X reached EOL.**
 
 ## Snuggleupagus (PHP 7.X)
 
