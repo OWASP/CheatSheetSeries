@@ -270,6 +270,21 @@ UAF takes advantage of existing security technologies present on devices for aut
 
 U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides **protection against phishing** by using the URL of the website to lookup the stored authentication key.
 
+## Autonomous TOTP
+
+The Time-based One-Time Password algorithm (TOTP) is an extension of the HMAC-based One-time Password algorithm (HOTP) generating a one-time password by instead taking uniqueness from the current time. It has been adopted as Internet Engineering Task Force[1] standard RFC 6238, is the cornerstone of Initiative For Open Authentication (OATH), and is used in a number of [two-factor authentication](https://en.wikipedia.org/wiki/Two-factor_authentication) systems.
+
+A server is needed to generating token for TOTP Value, the client must have same logic with their authentication server, so *authorized client* should be always send a valid TOTP Value
+
+Autonomous TOTP must meet several requirements, namely:
+
+1. token are created by machine dynamically (autonomously), otherwise you need to store primary token safely
+2. connection with low latency is needed
+3. secure connection is forced to transfer the token
+4. do not ever only use token that are transferred to generate a valid TOTP Value, developer must be generate a new token based on transferred token
+
+Autonomous TOTP makes request replication is more harder for hacker, even though the hacker gets a token to create a TOTP Value, he may not be able to generate a valid TOTP Value.
+
 # Session Management General Guidelines
 
 Session management is directly related to authentication. The **Session Management General Guidelines** previously available on this OWASP Authentication Cheat Sheet have been integrated into the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
