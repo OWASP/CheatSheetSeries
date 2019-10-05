@@ -69,7 +69,7 @@ However, we have created an official core team (core commiters) in order to:
 * Extend the field of technologies known by the review team.
 * Allow several technical opinions on a Proposal/PR, all exchanges are public because we use the GitHub comment feature.
 
-Decision of the core team has the same weight than the projet leaders, so, if a core team member rejects a PR (*rejection must be technically documented and explained*) then project leaders will apply the global decision.
+A decision from a member of the core team has the same weight to those of the project leaders, so if a core team member rejects a PR (*rejection must be technically documented and explained*) then project leaders will apply the global decision.
 
 Members:
 * [Elie Saad](https://github.com/ThunderSon).
