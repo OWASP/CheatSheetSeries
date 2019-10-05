@@ -549,6 +549,20 @@ libxml_disable_entity_loader(true);
 
 A description of how to abuse this in PHP is presented in a good [SensePost article](https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/) describing a cool PHP based XXE vulnerability that was fixed in Facebook.
 
+# Python
+The following information for XXE injection in python is directly from this [official python documentation page](https://docs.python.org/2/library/xml.html#xml-vulnerabilities).
+
+The below table gives an overview of various modules in python used for xml parsing and whether they are vulnearble or not.
+| kind                      | sax        | etree      | minidom    | pulldom    | xmlrpc     |
+|---------------------------|------------|------------|------------|------------|------------|
+| billion laughs            | Vulnerable | Vulnerable | Vulnerable | Vulnerable | Vulnerable |
+| quadratic blowup          | Vulnerable | Vulnerable | Vulnerable | Vulnerable | Vulnerable |
+| external entity expansion | Vulnerable | Safe (1)   | Safe (2)   | Vulnerable | Safe (3)   |
+| DTD retrieval             | Vulnerable | Safe       | Safe       | Vulnerable | Safe       |
+| decompression bomb        | Safe       | Safe       | Safe       | Safe       | Vulnerable |
+
+Currently there are no explict methods available for above mentioned python modules to mitigate the vulnerablity. Hence sanitizes input prior to processing using the above libraires. 
+
 # References
 
 - [XXE by InfoSecInstitute](https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/)
