@@ -54,7 +54,7 @@ The following indexes are provided:
 * This [index](IndexProactiveControls.md) reference all released cheat sheets using the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) project as reading source.
     * This index is manually managed in order to allow contribution along custom content.
 
-The official website provide a search bar (top left corner) that can be used.
+The official website provides a search bar (top left corner) that can be used.
 
 # Project leaders
 
@@ -69,7 +69,7 @@ However, we have created an official core team (core commiters) in order to:
 * Extend the field of technologies known by the review team.
 * Allow several technical opinions on a Proposal/PR, all exchanges are public because we use the GitHub comment feature.
 
-Decision of the core team have the same weight than the projet leaders, so, if a core team member reject a PR (*rejection must be technically documented and explained*) then project leaders will apply the global decision.
+Decision of the core team has the same weight than the projet leaders, so, if a core team member rejects a PR (*rejection must be technically documented and explained*) then project leaders will apply the global decision.
 
 Members:
 * [Elie Saad](https://github.com/ThunderSon).
@@ -77,9 +77,9 @@ Members:
 * [Robin Bailey](https://github.com/rbsec).
 * [Jim Manico](https://github.com/jmanico).
 
-# PR usage for core commiters
+# PR usage for core committers
 
-For the following kind of modifications, the PR system will be used by the core commiters in order to allow peer review using the GitHub PR review system:
+For the following kind of modifications, the PR system will be used by the core committers in order to allow peer review using the GitHub PR review system:
 * Addition of a new cheat sheet.
 * Deep modification of an existing cheat sheet.
 
@@ -139,7 +139,7 @@ Project's official logo files are hosted [here](https://github.com/OWASP/owasp-s
 
 Unfortunately, a PDF file generation is not possible because the content is cut in some cheat sheets like for example the abuse case one.
 
-However, to propose the possibility the consult, in a full offline mode, the collection of all cheat sheets, a script to generate a offline site using [GitBook](https://toolchain.gitbook.com/) has been created. The script is [here](scripts/Generate_Site.sh).
+However, to propose the possibility the consult, in a full offline mode, the collection of all cheat sheets, a script to generate an offline site using [GitBook](https://toolchain.gitbook.com/) has been created. The script is [here](scripts/Generate_Site.sh).
 
 * **book.json**: Gitbook configuration file.
 * **Preface.md**: Project preface description applied on the generated site.
