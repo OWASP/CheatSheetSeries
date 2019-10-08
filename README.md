@@ -64,7 +64,7 @@ The official website provides a search bar (top left corner) that can be used.
 
 **Any GitHub member is free to add a comment on any Proposal (issue) or PR.**
 
-However, we have created an official core team (core commiters) in order to:
+However, we have created an official core team (core committers) in order to:
 * Review all PR/Proposal in a consistent/regular way using [GitHub's review feature](https://help.github.com/en/articles/reviewing-proposed-changes-in-a-pull-request).
 * Extend the field of technologies known by the review team.
 * Allow several technical opinions on a Proposal/PR, all exchanges are public because we use the GitHub comment feature.
