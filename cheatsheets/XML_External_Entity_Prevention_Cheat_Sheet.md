@@ -557,11 +557,11 @@ The below table gives an overview of various modules in PYTHON 3 used for XML pa
 
 | Attack Type               | sax        | etree      | minidom    | pulldom    | xmlrpc     |
 |---------------------------|------------|------------|------------|------------|------------|
-| billion laughs            | Vulnerable | Vulnerable | Vulnerable | Vulnerable | Vulnerable |
-| quadratic blowup          | Vulnerable | Vulnerable | Vulnerable | Vulnerable | Vulnerable |
-| external entity expansion | Safe       | Safe       | Safe       | Safe       | Safe       |
-| DTD retrieval             | Safe       | Safe       | Safe       | Safe       | Safe       |
-| decompression bomb        | Safe       | Safe       | Safe       | Safe       | Vulnerable |
+| Billion Laughs            | Vulnerable | Vulnerable | Vulnerable | Vulnerable | Vulnerable |
+| Quadratic Blowup          | Vulnerable | Vulnerable | Vulnerable | Vulnerable | Vulnerable |
+| External Entity Expansion | Safe       | Safe       | Safe       | Safe       | Safe       |
+| DTD Retrieval             | Safe       | Safe       | Safe       | Safe       | Safe       |
+| Decompression Bomb        | Safe       | Safe       | Safe       | Safe       | Vulnerable |
 
 For details on PYTHON 2, refer this [official PYTHON 2 documentation page](https://docs.python.org/2/library/xml.html#xml-vulnerabilities). Kindly note that PYTHON 2 End of Life has been announced for January 1st 2020. After that PYTHON 2 will become obsolete and no official support will be available.
 
