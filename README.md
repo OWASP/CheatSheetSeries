@@ -105,7 +105,7 @@ See project current [branches](https://github.com/OWASP/CheatSheetSeries/branche
 
 # Project logo
 
-THe project's official logo files are hosted [here](https://github.com/OWASP/owasp-swag/tree/master/projects/cheat-sheet-series).
+The project's official logo files are hosted [here](https://github.com/OWASP/owasp-swag/tree/master/projects/cheat-sheet-series).
 
 # Folders
 
