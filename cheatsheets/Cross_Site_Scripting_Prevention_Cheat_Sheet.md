@@ -392,6 +392,13 @@ For Angular (2+) remember to build Angular templates with `-prod` parameter (`ng
 
 And also remember to update your framework to the newest version, with all possible bug fixes, as soon as possible. 
 
+## Bonus Rule \#6: Use Trusted Types
+
+[Trusted Types](https://developers.google.com/web/updates/2019/02/trusted-types) are a new API in Chrome that essentially provides taint analysis. In other words, it ensures that you don't use
+untrusted, user-submitted data where you shouldn't.
+
+Trusted Types is experimental in Chrome.
+
 # XSS Prevention Rules Summary
 
 | Data Type | Context                                  | Code Sample                                                                                                        | Defense                                                                                                                                                                                        |
