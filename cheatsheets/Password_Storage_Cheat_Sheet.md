@@ -116,7 +116,18 @@ The above guidance describes how to do password hashing correctly/safely. Howeve
     2. Prompt user for credential change, apologize, & conduct out-of-band confirmation
     3. Convert stored credentials to new scheme as user successfully log in
 
-# General Guidance
+# Encryption
+
+## When to Encrypt Passwords
+
+* When the clear text passwords are needed for other systems
+* To allow individual characters to be checked
+
+## How to Encrypt Passwords
+
+* See [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md)
+
+# Other Guidance
 
 ## Maximum Password Lengths
 
