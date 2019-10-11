@@ -17,7 +17,7 @@ Links:
 * [Official website](https://cheatsheetseries.owasp.org)
 * [Github repository](https://github.com/OWASP/CheatSheetSeries)
 
-# Table of Contents
+## Table of Contents
 
 - [Reference to the Cheat Sheets](#reference-to-the-cheat-sheets)
 - [Cheat Sheets index](#cheat-sheets-index)
