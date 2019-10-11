@@ -4,19 +4,20 @@ Media covers the theft of large collections of passwords on an almost daily basi
 
 Specific guidance herein protects against stored credential theft but the bulk of guidance aims to prevent credential compromise. That is, this guidance helps designs resist revealing users' credentials or allowing system access in the event threats steal protected credential information. For more information and a thorough treatment of this topic, refer to the Secure Password Storage Threat Model [here](https://docs.google.com/document/d/1R6c9NW6wtoEoT3CS4UVmthw1a6Ex6TGSBaEqDay5U7g).
 
-# Guidance
+## Hashing vs Encryption
 
-## Do not limit the character set and set long max lengths for credentials
+* Difference
+* When to hash
+* When to encrypt
 
-Some organizations restrict the 1) types of special characters and 2) length of credentials accepted by systems because of their inability to prevent SQL Injection, Cross-site scripting, command-injection and other forms of injection attacks. These restrictions, while well-intentioned, facilitate certain simple attacks such as brute force.
+# Hashing
 
-Do not allow short or no-length passwords and do not apply character set, or encoding restrictions on the entry or storage of credentials. Continue applying encoding, escaping, masking, outright omission, and other best practices to eliminate injection risks.
+## Salting
 
-A reasonable long password length is 160. Very long password policies can [lead to DoS in certain circumstances](http://arstechnica.com/security/2013/09/long-passwords-are-good-but-too-much-length-can-be-bad-for-security/).
-
-## Hash the password as one of several steps
-
-Very large passwords can be a performance bottleneck or a DoS situation when users utilize very long passwords. Also, some implementations of some of the adaptive algorithms suggested below, such as bcrypt, truncate long passwords making them less effective. By first hashing the passwords with a fast hash such as SHA-512, and then hashing the output with a slower and more secure hash such as bcrypt, even giant passwords are reduced to 512 bits, solving both problems.
+* Purpose
+* Recommended implementations
+  * Good algorithms do this for you
+  * Generating salts for legacy algorithms
 
 ## Use a cryptographically strong credential-specific salt
 
@@ -39,13 +40,30 @@ Salts serve two purposes:
 1. prevent the protected form from revealing two identical credentials and 
 2. augment entropy fed to protecting function without relying on credential complexity. The second aims to make [pre-computed lookup attacks](Password_Storage_Cheat_Sheet.md#ref2) on an individual credential and time-based attacks on a population intractable.
 
-## Impose infeasible verification on attacker
+## Peppers
 
-The function used to protect stored credentials should balance attacker and defender verification. The defender needs an acceptable response time for verification of users' credentials during peak use. However, the time required to map `<credential> → <protected form>` must remain beyond threats' hardware (GPU, FPGA) and technique (dictionary-based, brute force, etc) capabilities.
+* Purpose
+* Recommended implementations
 
-Two approaches facilitate this, each imperfectly.
+## Work Factors
 
-### Leverage an adaptive one-way function
+* Purpose
+* Choosing a work factor
+* Upgrading a work factor
+
+Since resources are normally considered limited, a common rule of thumb for tuning the work factor (or cost) is to make `protect()` run as slow as possible without affecting the users' experience and without increasing the need for extra hardware over budget. So, if the registration and authentication's cases accept `protect()` taking up to 1 second, you can tune the cost so that it takes 1 second to run on your hardware. This way, it shouldn't be so slow that your users become affected, but it should also affect the attackers' attempt as much as possible.
+
+While there is a minimum number of iterations recommended to ensure data safety, this value changes every year as technology improves and then require to be reviewed on a regular basis or after an hardware upgrade. 
+
+However, it is critical to understand that a single work factor does not fit all designs, [experimentation is important](Password_Storage_Cheat_Sheet.md#ref6).
+
+Upholding security improvement over (solely) salted schemes relies on proper key management.
+
+## Modern Algorithms
+
+* PBKDF2
+* Bcrypt and Scrypt
+* Argon2
 
 Adaptive one-way functions compute a one-way (irreversible) transform. Each function allows configuration of 'work factor'. Underlying mechanisms used to achieve irreversibility and govern work factors (such as time, space, and parallelism) vary between functions and remain unimportant to this discussion.
 
@@ -69,23 +87,22 @@ Designers select one-way adaptive functions to implement `protect()` because the
 
 Additionally, adaptive one-way functions do not effectively prevent reversal of common dictionary-based credentials (users with password 'password') regardless of user population size or salt usage.
 
-#### Work Factor
+## Legacy Algorithms
 
-Since resources are normally considered limited, a common rule of thumb for tuning the work factor (or cost) is to make `protect()` run as slow as possible without affecting the users' experience and without increasing the need for extra hardware over budget. So, if the registration and authentication's cases accept `protect()` taking up to 1 second, you can tune the cost so that it takes 1 second to run on your hardware. This way, it shouldn't be so slow that your users become affected, but it should also affect the attackers' attempt as much as possible.
+* MD5
+* SHA-1 and SHA-256 and
 
-While there is a minimum number of iterations recommended to ensure data safety, this value changes every year as technology improves and then require to be reviewed on a regular basis or after an hardware upgrade. 
+## Custom Algorithms
 
-However, it is critical to understand that a single work factor does not fit all designs, [experimentation is important](Password_Storage_Cheat_Sheet.md#ref6).
+* Don't do this
 
-Upholding security improvement over (solely) salted schemes relies on proper key management.
+## Upgrading Legacy Hashes
 
-## Design password storage assuming eventual compromise
+* Update on password change
+* Stacked algorithms
+* Resetting user passwords
 
-The frequency and ease with which threats steal protected credentials demands "design for failure". Having detected theft, a credential storage scheme must support continued operation by marking credential data as compromised. It's also critical to engage alternative credential validation workflows as follows:
-
-1. Protect the user's account
-    1. Invalidate authentication 'shortcuts' by disallowing login without 2nd factors, secret questions or some other form of strong authentication.
-    2. Disallow changes to user accounts such as editing secret questions and changing account multi-factor configuration settings.
+The above guidance describes how to do password hashing correctly/safely. However, it is very likely you'll be in a situation where you have an existing solution you want to upgrade. This [article](https://veggiespam.com/painless-password-hash-upgrades/) provides some good guidance on how to accomplish an upgrade in place without adversely affecting existing user accounts and future proofing your upgrade so you can seamlessly upgrade again (which you eventually will need to do).
 
 2. Load and use new protection scheme
     1. Load a new, stronger credential protection scheme (See next section on: Upgrading your existing password hashing solution)
@@ -99,20 +116,23 @@ The frequency and ease with which threats steal protected credentials demands "d
     2. Prompt user for credential change, apologize, & conduct out-of-band confirmation
     3. Convert stored credentials to new scheme as user successfully log in
 
-## Upgrading your existing password hashing solution
+# General Guidance
 
-The above guidance describes how to do password hashing correctly/safely. However, it is very likely you'll be in a situation where you have an existing solution you want to upgrade. This [article](https://veggiespam.com/painless-password-hash-upgrades/) provides some good guidance on how to accomplish an upgrade in place without adversely affecting existing user accounts and future proofing your upgrade so you can seamlessly upgrade again (which you eventually will need to do).
+## Maximum Password Lengths
 
+### Do not limit the character set and set long max lengths for credentials
 
-## Input password size
+Some organizations restrict the 1) types of special characters and 2) length of credentials accepted by systems because of their inability to prevent SQL Injection, Cross-site scripting, command-injection and other forms of injection attacks. These restrictions, while well-intentioned, facilitate certain simple attacks such as brute force.
 
-In order to prevent any DOS attack using a very big password, it's recommended to define a higher size limit for the password choosen by the user.
+Do not allow short or no-length passwords and do not apply character set, or encoding restrictions on the entry or storage of credentials. Continue applying encoding, escaping, masking, outright omission, and other best practices to eliminate injection risks.
 
-A limit of **1000 characters** is sufficient to let the user choose a very big password without impacting the system.
+A reasonable long password length is 160. Very long password policies can [lead to DoS in certain circumstances](http://arstechnica.com/security/2013/09/long-passwords-are-good-but-too-much-length-can-be-bad-for-security/).
 
-# Argon2 usage proposal in PHP
+### Hash the password as one of several steps
 
-The objective is to propose a example of secure usage/integration of the Argon2 algorithm in PHP application to protect password when stored.
+Very large passwords can be a performance bottleneck or a DoS situation when users utilize very long passwords. Also, some implementations of some of the adaptive algorithms suggested below, such as bcrypt, truncate long passwords making them less effective. By first hashing the passwords with a fast hash such as SHA-512, and then hashing the output with a slower and more secure hash such as bcrypt, even giant passwords are reduced to 512 bits, solving both problems.
+
+## Use Built-in Libraries and Functions
 
 From PHP version 7.2, [Argon2 is supported](https://wiki.php.net/rfc/argon2_password_hash) in built-in password hashing related functions:
 
