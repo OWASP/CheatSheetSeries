@@ -19,8 +19,6 @@ Specific guidance herein protects against stored credential theft but the bulk o
   * Good algorithms do this for you
   * Generating salts for legacy algorithms
 
-## Use a cryptographically strong credential-specific salt
-
 A salt is fixed-length cryptographically-strong random value. Append credential data to the salt and use this as input to a protective function. 
 
 Store the protected form appended to the salt as follows:
