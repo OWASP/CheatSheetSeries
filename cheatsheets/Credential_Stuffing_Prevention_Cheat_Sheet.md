@@ -31,7 +31,7 @@ Where an application has multiple user roles, it may be appropriate to implement
 
 ## Secondary Passwords, PINs and Security Questions
 
-As well as requiring a user to enter their password when authentication, they can also be prompted to provide additional security information such as:
+As well as requiring a user to enter their password when authenticating, they can also be prompted to provide additional security information such as:
 
 - A PIN
 - Specific characters from a secondary passwords or memorable word
