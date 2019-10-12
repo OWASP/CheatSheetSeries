@@ -23,9 +23,9 @@ A salt is fixed-length cryptographically-strong random value. Append credential 
 
 Store the protected form appended to the salt as follows:
 
-```text
+```
 [protected form] = [salt] + protect([protection func], [salt] + [credential]);
-``` 
+```
 
 Follow these practices to properly implement credential-specific salts:
 
@@ -38,10 +38,28 @@ Salts serve two purposes:
 1. prevent the protected form from revealing two identical credentials and 
 2. augment entropy fed to protecting function without relying on credential complexity. The second aims to make [pre-computed lookup attacks](Password_Storage_Cheat_Sheet.md#ref2) on an individual credential and time-based attacks on a population intractable.
 
-## Peppers
+## Peppering
 
-* Purpose
-* Recommended implementations
+A [pepper](https://en.wikipedia.org/wiki/Pepper_(cryptography)) can be used in additional to salting to provide an additional layer of protection. It is similar to a salt, but has two key differences:
+
+* The pepper is shared between all stored passwords, rather than being unique like a salt.
+* The pepper is stored separately from the hashes (i.e, not in the database).
+
+The purpose of the pepper is to prevent an attacker from being able to crack any of the hashes if they only have access to the database, for example if they have exploited a SQL injection vulnerability or obtained a backup of the database.
+
+The pepper should be at least 32 characters long, and should be randomly generated. It should be stored in an application configuration file (protected with appropriate permissions), using the secure storage APIs provided by the operating system, or in a HSM.
+
+The pepper is used in a similar way to a salt, but concatenating it with the password prior to hashing, using a construct such as:
+
+```
+hash(pepper . password)
+```
+
+### Disadvantages
+
+The main issues with peppers is their long term maintenance. Changing the pepper in use will invalidate all of the existing passwords stored in the database, which means that it can't easily be changed in the event of the pepper being compromised.
+
+One solution to this is to store the ID of the pepper in the database alongside the associated password hashes. When the pepper needs to be updated, this ID can updated for hashes using the new pepper. Although the application will need to store all of the peppers that are currently in use, this does provide a way to replace a compromised pepper.
 
 ## Work Factors
 
