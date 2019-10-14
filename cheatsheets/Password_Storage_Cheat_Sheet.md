@@ -19,7 +19,7 @@ Specific guidance herein protects against stored credential theft but the bulk o
   * Good algorithms do this for you
   * Generating salts for legacy algorithms
 
-A salt is fixed-length cryptographically-strong random value. Append credential data to the salt and use this as input to a protective function. 
+A salt is fixed-length cryptographically-strong random value. Append credential data to the salt and use this as input to a protective function.
 
 Store the protected form appended to the salt as follows:
 
@@ -34,8 +34,8 @@ Follow these practices to properly implement credential-specific salts:
 - As storage permits, use a `32 byte` or `64 byte` salt (actual size dependent on protection function);
 - Scheme security does not depend on hiding, splitting, or otherwise obscuring the salt.
 
-Salts serve two purposes: 
-1. prevent the protected form from revealing two identical credentials and 
+Salts serve two purposes:
+1. prevent the protected form from revealing two identical credentials and
 2. augment entropy fed to protecting function without relying on credential complexity. The second aims to make [pre-computed lookup attacks](Password_Storage_Cheat_Sheet.md#ref2) on an individual credential and time-based attacks on a population intractable.
 
 ## Peppering
@@ -63,17 +63,19 @@ One solution to this is to store the ID of the pepper in the database alongside 
 
 ## Work Factors
 
-* Purpose
-* Choosing a work factor
-* Upgrading a work factor
+The work factor is essentially the number of iterations of the hashing algorithm that are performed for each passwords (usually it's actually `2^work` iterations). The purpose of the work factor is to make calculating the hash more computationally expensive, which in turn reduces the speed at which an attacker can attempt to crack the password hash.
 
-Since resources are normally considered limited, a common rule of thumb for tuning the work factor (or cost) is to make `protect()` run as slow as possible without affecting the users' experience and without increasing the need for extra hardware over budget. So, if the registration and authentication's cases accept `protect()` taking up to 1 second, you can tune the cost so that it takes 1 second to run on your hardware. This way, it shouldn't be so slow that your users become affected, but it should also affect the attackers' attempt as much as possible.
+When choosing a work factor, a balance needs to be struck between security and performance. Higher work factors will make the hashes more difficult for an attacker to crack, but will also make the process of verifying a login attempt slower. If the work factor is too high, this may degrade the performance of the application, and could also be used by an attacker to carry out a denial of service attack by making a large number of login attempts to exhaust server's CPU.
 
-While there is a minimum number of iterations recommended to ensure data safety, this value changes every year as technology improves and then require to be reviewed on a regular basis or after an hardware upgrade. 
+There is no golden rule for the ideal work factor - it will depend on the performance of the server and the number of users on the application. Determining the optimal work factor will require experimentation on the specific server(s) used by the application. As a general rule, the calculating a hash should take less than one second, although on higher traffic sites it should be significantly less than this.
 
-However, it is critical to understand that a single work factor does not fit all designs, [experimentation is important](Password_Storage_Cheat_Sheet.md#ref6).
+## Upgrading the Work Factor
 
-Upholding security improvement over (solely) salted schemes relies on proper key management.
+One key advantage of having a work factor is that it can be increased over time as hardware becomes more powerful and cheaper. Taking Moore's Law (i.e, that computational power at a given price point doubles every eighteen months) as a rough approximation, this means that the work factor should be increased by 1 every eighteen months.
+
+The most common approach to upgrading the work factor is to wait until the user next authenticates, and then to re-hash their password with the new work factor. This means that different hashes will have different work factors, and may result in hashes never being upgraded if the user doesn't log back in to the application. In some cases, it may be appropriate to remove the older password hashes and require users to reset their passwords next time they need to login, in order to avoid storing older and less secure hashes.
+
+In some cases, it may be possible to increase the work factor of the hashes without the original password, although this is not supported by common hashing algorithms such as Bcrypt and PBKDF2
 
 ## Modern Algorithms
 
@@ -96,8 +98,8 @@ Example `protect()` pseudo-code follows:
 return [salt] + pbkdf2([salt], [credential], c=[iteration_count]);
 ```
 
-In the example above, as PBKDF2 computation time depend on the target system, **iteration_count** must have a number implying that the computation time on the target system must take at least 1 second.  
-500.000 is a good example, but please note that, as PBKDF2 is **not** time constant, this configuration is highly dependant on the target machine and you should probably [test the appropriate number for your specific situation](../assets/Password_Storage_Cheat_Sheet_Test_PBKDF2_Iterations.java). 
+In the example above, as PBKDF2 computation time depend on the target system, **iteration_count** must have a number implying that the computation time on the target system must take at least 1 second.
+500.000 is a good example, but please note that, as PBKDF2 is **not** time constant, this configuration is highly dependant on the target machine and you should probably [test the appropriate number for your specific situation](../assets/Password_Storage_Cheat_Sheet_Test_PBKDF2_Iterations.java).
 
 Designers select one-way adaptive functions to implement `protect()` because these functions can be configured to cost (linearly or exponentially) more than a hash function to execute. Defenders adjust work factor to keep pace with threats' increasing hardware capabilities. Those implementing adaptive one-way functions must tune work factors so as to impede attackers while providing acceptable user experience and scale.
 
