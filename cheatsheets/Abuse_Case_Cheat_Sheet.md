@@ -3,7 +3,7 @@
 Often when the security level of an application is mentioned in requirements, the following *expressions* are met:
 
 - *The application must be secure*.
-- *The application must defend against all attacks targeting this category of application*.
+- *The application must defend against all attacks targeting the category of application*.
 - *The application must defend against attacks from the OWASP TOP 10*
 - ...
 
