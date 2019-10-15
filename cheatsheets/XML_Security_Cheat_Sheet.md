@@ -516,10 +516,10 @@ public class parseDocument {
        Element firstNmElement = (Element) firstNmElementLst.item(0);
        NodeList firstNm = firstNmElement.getChildNodes();
        System.out.println("First Name: "  + ((Node) firstNm.item(0)).getNodeValue());
-       NodeList lstNmElementLst = firstElement.getElementsByTagName("lastname");
-       Element lstNmElement = (Element) lstNmElementLst.item(0);
-       NodeList lstNm = lstNmElement.getChildNodes();
-       System.out.println("Last Name: " + ((Node) lstNm.item(0)).getNodeValue());
+       NodeList lastNmElementLst = firstElement.getElementsByTagName("lastname");
+       Element lastNmElement = (Element) lastNmElementLst.item(0);
+       NodeList lastNm = lastNmElement.getChildNodes();
+       System.out.println("Last Name: " + ((Node) lastNm.item(0)).getNodeValue());
      }
     }
   } catch (Exception e) {
