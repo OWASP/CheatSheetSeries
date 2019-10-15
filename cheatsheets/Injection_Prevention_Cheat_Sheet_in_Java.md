@@ -113,7 +113,7 @@ try {
     /* Get a ref on EntityManager to access DB */
     entityManager = Persistence.createEntityManagerFactory("testJPA").createEntityManager();
 
-    /* Define parametrized query prototype using named parameter to enhance readability */
+    /* Define parameterized query prototype using named parameter to enhance readability */
     String queryPrototype = "select c from Color c where c.friendlyName = :colorName";
 
     /* Create the query, set the named parameter and execute the query */
