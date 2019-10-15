@@ -55,7 +55,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 - A single [Cross Site Scripting](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29) can be used to steal all the data in these objects, so again it's recommended not to store sensitive information in local storage.
 - A single [Cross Site Scripting](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29) can be used to load malicious data into these objects too, so don't consider objects in these to be trusted.
 - Pay extra attention to "localStorage.getItem" and "setItem" calls implemented in HTML5 page. It helps in detecting when developers build solutions that put sensitive information in local storage, which is a bad practice.
-- Do not store session identifiers in local storage as the data is always accesible by JavaScript. Cookies can mitigate this risk using the `httpOnly` flag.
+- Do not store session identifiers in local storage as the data is always accessible by JavaScript. Cookies can mitigate this risk using the `httpOnly` flag.
 - There is no way to restrict the visibility of an object to a specific path like with the attribute path of HTTP Cookies, every object is shared within an origin and protected with the Same Origin Policy. Avoid host multiple applications on the same origin, all of them would share the same localStorage object, use different subdomains instead.
 
 ## Client-side databases
