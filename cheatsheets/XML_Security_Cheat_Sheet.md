@@ -512,14 +512,14 @@ public class parseDocument {
      Node firstNode = nodeLst.item(s);
      if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
        Element firstElement = (Element) firstNode;
-       NodeList firstNmElementLst = firstElement.getElementsByTagName("firstname");
-       Element firstNmElement = (Element) firstNmElementLst.item(0);
-       NodeList firstNm = firstNmElement.getChildNodes();
-       System.out.println("First Name: "  + ((Node) firstNm.item(0)).getNodeValue());
-       NodeList lastNmElementLst = firstElement.getElementsByTagName("lastname");
-       Element lastNmElement = (Element) lastNmElementLst.item(0);
-       NodeList lastNm = lastNmElement.getChildNodes();
-       System.out.println("Last Name: " + ((Node) lastNm.item(0)).getNodeValue());
+       NodeList firstNameElementLst = firstElement.getElementsByTagName("firstname");
+       Element firstNameElement = (Element) firstNameElementLst.item(0);
+       NodeList firstName = firstNameElement.getChildNodes();
+       System.out.println("First Name: "  + ((Node) firstName.item(0)).getNodeValue());
+       NodeList lastNameElementLst = firstElement.getElementsByTagName("lastname");
+       Element lastNameElement = (Element) lastNameElementLst.item(0);
+       NodeList lastName = lastNameElement.getChildNodes();
+       System.out.println("Last Name: " + ((Node) lastName.item(0)).getNodeValue());
      }
     }
   } catch (Exception e) {
