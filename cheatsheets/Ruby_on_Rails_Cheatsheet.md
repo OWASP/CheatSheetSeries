@@ -493,7 +493,7 @@ There are emerging tools that can be used to track security issues in dependency
 
 Another area of tooling is the security testing tool [Gauntlt](http://gauntlt.org) which is built on cucumber and uses gherkin syntax to define attack files.
 
-Launched in May 2013 and very similiar to brakeman scanner, the [dawnscanner](https://github.com/thesp0nge/dawnscanner) rubygem is a static analyzer for security issues that work with Rails, Sinatra and Padrino web applications. Version 0.60 has more than 30 ruby specific CVE security checks and future releases custom checks against Cross Site Scripting and SQL Injections will be added.
+Launched in May 2013 and very similar to brakeman scanner, the [dawnscanner](https://github.com/thesp0nge/dawnscanner) rubygem is a static analyzer for security issues that work with Rails, Sinatra and Padrino web applications. Version 0.60 has more than 30 ruby specific CVE security checks and future releases custom checks against Cross Site Scripting and SQL Injections will be added.
 
 # Related Articles and References
 
