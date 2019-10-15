@@ -41,7 +41,7 @@ The following recommendations were proposed in response ([Secure SAML validation
 - Securely validate the digital signature:
     - If you expect only one signing key, use `StaticKeySelector`. Obtain the key directly from the identity provider, store it in local file and ignore any `KeyInfo` elements in the document.
     - If you expect more than one signing key, use `X509KeySelector` (the JKS variant). Obtain these keys directly form the identity providers, store them in local JKS and ignore any `KeyInfo` elements in the document.
-    - If you expect a heterogenous signed documents (many certificates from many identity providers, multi­level validation paths), implement full trust establishment model based on PKIX and trusted root certificates.
+    - If you expect a heterogeneous signed documents (many certificates from many identity providers, multi­level validation paths), implement full trust establishment model based on PKIX and trusted root certificates.
 - Avoid signature-wrapping attacks.
     - Never use `getElementsByTagName` to select security related elements in an XML document without prior validation.
     - Always use absolute XPath expressions to select elements, unless a hardened schema is used for validation.
