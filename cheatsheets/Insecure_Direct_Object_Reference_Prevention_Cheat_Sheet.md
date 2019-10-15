@@ -8,7 +8,7 @@ IDOR is referenced in element [A4](https://www.owasp.org/index.php/Top_10_2013-A
 
 IDOR do not bring a direct security issue because, by itself, it reveals only the format/pattern used for the object identifier. IDOR bring, depending on the format/pattern in place, a capacity for the attacker to mount a enumeration attack in order to try to probe access to the associated objects.
 
-Enumeration attack can be described in the way in which the attacker build a collection of valid identifiers using the disovered format/pattern and test them against the application.
+Enumeration attack can be described in the way in which the attacker build a collection of valid identifiers using the discovered format/pattern and test them against the application.
 
 **For example:**
 
