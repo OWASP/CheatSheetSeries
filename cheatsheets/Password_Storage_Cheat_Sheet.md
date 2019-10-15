@@ -154,7 +154,7 @@ Always name the compiled library with this format to simplify integration with t
 
 Integration in company projects can use the following approach:
 
-1. Create a internal shared java utility library that embeed your compiled version of the Argon2 library.
+1. Create a internal shared java utility library that embed your compiled version of the Argon2 library.
 2. Use this shared java library in the different projects in order to:
     1. Prevent to embed a version of the Argon2 library in all your project.
     2. Centralize and unify the version of the Argon2 library used (important for upgrade process).
