@@ -231,7 +231,7 @@ It's important to ensure, during the selection process of a vulnerable dependenc
         * Full support: Java, .Net.
         * Experimental support: Python, Ruby, PHP (composer), NodeJS, C, C++.
     * [NPM Audit](https://docs.npmjs.com/cli/audit)
-        * Full support: NodeJS, Javascript.
+        * Full support: NodeJS, JavaScript.
         * HTML report available via this [module](https://www.npmjs.com/package/npm-audit-html).
     * To manage the vulnerable dependencies in a transversal way in an organization the [OWASP Dependency Track](https://dependencytrack.org/) project can be used.
 * Commercial

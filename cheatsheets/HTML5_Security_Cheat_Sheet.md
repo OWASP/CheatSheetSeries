@@ -73,7 +73,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 - Web Workers are allowed to use `XMLHttpRequest` object to perform in-domain and Cross Origin Resource Sharing requests. See relevant section of this Cheat Sheet to ensure CORS security.
 - While Web Workers don't have access to DOM of the calling page, malicious Web Workers can use excessive CPU for computation, leading to Denial of Service condition or abuse Cross Origin Resource Sharing for further exploitation. Ensure code in all Web Workers scripts is not malevolent. Don't allow creating Web Worker scripts from user supplied input.
-- Validate messages exchanged with a Web Worker. Do not try to exchange snippets of Javascript for evaluation e.g. via `eval()` as that could introduce a [DOM Based XSS](DOM_based_XSS_Prevention_Cheat_Sheet.md) vulnerability.
+- Validate messages exchanged with a Web Worker. Do not try to exchange snippets of JavaScript for evaluation e.g. via `eval()` as that could introduce a [DOM Based XSS](DOM_based_XSS_Prevention_Cheat_Sheet.md) vulnerability.
 
 # Tabnabbing
 
@@ -94,7 +94,7 @@ Cut the back link between the parent and the child pages:
 As the behavior using the elements above is different between the browsers, either use html link or javascript to open a window (or tab), then use this configuration to maximize the cross supports:
 
 - For html link, add the attribute `rel="noopener noreferrer"` to every link.
-- For Javascript, use this function to open a window (or tab):
+- For JavaScript, use this function to open a window (or tab):
 
 ``` javascript
 function openPopup(url, name, windowFeatures){

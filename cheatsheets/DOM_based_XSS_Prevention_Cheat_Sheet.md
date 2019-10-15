@@ -281,7 +281,7 @@ The guidelines below are an attempt to provide guidelines for developers when de
 
 Avoid treating untrusted data as code or markup within JavaScript code.
 
-## GUIDELINE \#2 - Always JavaScript encode and delimit untrusted data as quoted strings when entering the application when building templated Javascript
+## GUIDELINE \#2 - Always JavaScript encode and delimit untrusted data as quoted strings when entering the application when building templated JavaScript
 
 Always JavaScript encode and delimit untrusted data as quoted strings when entering the application as illustrated in the following example.
 
