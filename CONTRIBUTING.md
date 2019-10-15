@@ -37,7 +37,7 @@ Follow these steps:
 2. Ensure that the markdown file you have created/modified do not have any deadlinks. You can verify that by using this [plugin](https://www.npmjs.com/package/markdown-link-check), if you cannot use this plugin then, at least, verify that all the links are valid before to push:
     1. Install [NodeJS](https://nodejs.org/en/download/) to install NPM.
     2. Install the validation plugin via the command `npm install -g markdown-link-check`
-    3. Use this commmand (from the repository root folder) on your markdown file to verify the presence of any deadlinks: 
+    3. Use this command (from the repository root folder) on your markdown file to verify the presence of any deadlinks: 
 
 ```bash
 $ markdown-link-check -c .markdownlinkcheck.json [MD_FILE]
