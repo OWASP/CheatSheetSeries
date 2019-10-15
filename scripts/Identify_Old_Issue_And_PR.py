@@ -105,9 +105,9 @@ if len(sys.argv) == 2:
         color = "good"
     else:
         color = "warning"
-    message = "{\"text\": \"Old PR and Issue identification watchdog\",\
+    message = '{\"text\": \"Old PR and Issue identification watchdog\",\
                 "attachments\": [ {\"fallback\": \"%s\",\"color\":\"%s\",\
-                "title\": \"Status\",\"text\": \"%s\"}]}" % (
+                "title\": \"Status\",\"text\": \"%s\"}]}' % (
                     color, buffer, buffer)
     request_headers = {"Content-Type": "application/json"}
     response = requests.post(sys.argv[1],
