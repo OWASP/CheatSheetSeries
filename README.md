@@ -30,7 +30,7 @@ Links:
 - [Offline website](#offline-website)
 - [Project leaders](#project-leaders)
 - [Core team](#core-team)
-- [PR usage for core commiters](#pr-usage-for-core-commiters)
+- [PR usage for core committers](#pr-usage-for-core-committers)
 - [Project logo](#project-logo)
 - [Folders](#folders)
 - [License](#license)
