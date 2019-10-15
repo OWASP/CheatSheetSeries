@@ -54,7 +54,7 @@ Using a hash allow the following properties:
 - Do not require to maintain a mapping table (real ID vs front end ID) in user session or application level cache.
 - Makes creation of a collection a enumeration values more difficult to achieve because, even if attacker can guess the hash algorithm from the ID size, it cannot reproduce value due to the salt that is not tied to the hidden value.
 
-This is the implementation of the utility class that generate the identifer to use for exchange with the front end side:
+This is the implementation of the utility class that generate the identifier to use for exchange with the front end side:
 
 ``` java
 import javax.xml.bind.DatatypeConverter;
