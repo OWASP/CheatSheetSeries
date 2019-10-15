@@ -40,13 +40,13 @@ If there are available libraries or APIs for the language you used, this is the 
 
 For examples, see [escapeshellarg()](http://php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](http://php.net/manual/en/function.escapeshellcmd.php) in PHP.
 
-## Defense option 3: Parametrization in conjunction with Input Validation
+## Defense option 3: Parameterization in conjunction with Input Validation
 
 If it is considered unavoidable the call to a system command incorporated with user-supplied, the following two layers of defense should be used within software in order to prevent attacks
 
 ### Layer 1
 
-**Parametrization:** If available, use structured mechanisms that automatically enforce the separation between data and command. These mechanisms can help to provide the relevant quoting, encoding.
+**Parameterization:** If available, use structured mechanisms that automatically enforce the separation between data and command. These mechanisms can help to provide the relevant quoting, encoding.
 
 ### Layer 2
 
