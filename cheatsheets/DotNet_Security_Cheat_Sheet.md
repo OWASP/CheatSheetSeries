@@ -471,7 +471,7 @@ DO NOT: Roll your own authentication or session management, use the one provided
 
 DO NOT: Tell someone if the account exists on LogOn, Registration or Password reset. Say something like 'Either the username or password was incorrect', or 'If this account exists then a reset token will be sent to the registered email address'. This protects against account enumeration. 
 
-The feedback to the user should be identical whether or not the account exists, both in terms of content and behaviour: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
+The feedback to the user should be identical whether or not the account exists, both in terms of content and behavior: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
 
 ### Missing function-level access control
 
