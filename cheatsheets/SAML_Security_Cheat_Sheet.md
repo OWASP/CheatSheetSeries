@@ -69,7 +69,7 @@ Processing a SAML response is an expensive operation but all steps must be valid
 
 Revisit each security threat that exists within the [SAML Security](http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) document and assert you have applied the appropriate countermeasures for threats that may exist for your particular implementation. 
 
-Additional countermeasures considererd should include:
+Additional countermeasures considered should include:
 
 - Prefer IP Filtering when appropriate. For example, this countermeasure could have prevented Google's initial security flaw if Google provided each trusted partner with a separate endpoint and setup an IP filter for each endpoint. This step will help counter the following attacks:
     - Stolen Assertion (6.4.1)
