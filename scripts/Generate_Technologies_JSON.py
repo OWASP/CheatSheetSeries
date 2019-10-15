@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Python3 script to generate a JSON structure with the list of 
-all cheatcheets classified by the technology used in the samples 
+Python3 script to generate a JSON structure with the list of
+all cheatcheets classified by the technology used in the samples
 of code provided using the alphabetical index as source:
 https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/Index.md
 
@@ -39,7 +39,8 @@ else:
                 if technology_name not in data:
                     data[technology_name] = []
                 data[technology_name].append(
-                    {"CS_NAME": cs_name, "CS_URL": CS_BASE_URL % cs_name.replace(" ", "_")})
+                    {"CS_NAME": cs_name, "CS_URL": CS_BASE_URL % cs_name
+                     .replace(" ", "_")})
     # Display the built structure and formatted JSON
     print(json.dumps(data, sort_keys=True, indent=1))
     sys.exit(0)
