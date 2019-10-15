@@ -209,7 +209,7 @@ def check():
     """
     error_detected = False
     for domain in DOMAINS_WHITELIST:    
-        # Get the IPs of the curent domain
+        # Get the IPs of the current domain
         # See https://en.wikipedia.org/wiki/List_of_DNS_record_types
         try:
             # A = IPv4 address record        
