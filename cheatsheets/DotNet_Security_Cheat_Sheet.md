@@ -668,7 +668,7 @@ Malicious users are able to use objects like cookies to insert malicious informa
 DO: Prevent Deserialization of Domain Objects
 
 DO: Run the Deserialization Code with Limited Access Permissions
-If a desterilized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
+If a deserialized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
 
 More information can be found here: [Deserialization Cheat Sheet](Deserialization_Cheat_Sheet.md#net-csharp)
 
