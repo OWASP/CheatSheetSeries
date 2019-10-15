@@ -455,7 +455,7 @@ String token = tokenCipher.decipherToken(cipheredToken, this.keyCiphering);
 
 ### Symptom
 
-This occurs when an application stores the token in a manner exibiting the following behavior:
+This occurs when an application stores the token in a manner exhibiting the following behavior:
 
 - Automatically sent by the browser (*Cookie* storage).
 - Retrieved even if the browser is restarted (Use of browser *localStorage* container).
