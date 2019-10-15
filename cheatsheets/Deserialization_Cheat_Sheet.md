@@ -60,7 +60,7 @@ Implementation advices:
 
 ### WhiteBox Review
 
-Be aware of the following Java API uses for potential serilization vulnerability.
+Be aware of the following Java API uses for potential serialization vulnerability.
 
 1. `XMLdecoder` with external user defined parameters
 
