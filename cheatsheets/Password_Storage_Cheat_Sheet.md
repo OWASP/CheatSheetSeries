@@ -283,7 +283,7 @@ Proposed configuration options for Argon2 are based on the following source of r
 - [PHC project](https://github.com/P-H-C/phc-winner-argon2/issues/59).
 - Section 9 of the Argon2 [specifications document](https://github.com/P-H-C/phc-winner-argon2/blob/master/argon2-specs.pdf).
 
-Documented configuration is the following, increase the number of the **ITERATIONS** parameter if the computing of a hash take less than 2 seconds on your environement:
+Documented configuration is the following, increase the number of the **ITERATIONS** parameter if the computing of a hash take less than 2 seconds on your environment:
 
 ``` bash
 # Configuration to define Argon2 options
