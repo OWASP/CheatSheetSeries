@@ -13,7 +13,7 @@ Please make sure that for your contribution:
 - [ ] You verified/tested the effectiveness of your contribution (e.g.: the defensive code proposed is really an effective remediation? Please verify it works!).
 - [ ] The CI build of your PR pass, see the build status [here](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests).
 
-If your PR is related to an issue. Please end your PR text with the following line:
+If your PR is related to an issue, please finish your PR text with the following line:
 
 This PR covers issue #<insert number here>.
 
