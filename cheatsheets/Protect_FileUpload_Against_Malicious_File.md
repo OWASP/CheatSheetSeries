@@ -25,7 +25,7 @@ Based on this context, the goals here are:
 
 Remarks:
 
-- It's technically possible to perform sanitizing on Word/Excel/PowerPoint/PDF documents but we have chosen here the option to block them in order to avoid the risk of missing any evasion technics and then let pass one evil document. The following [site](https://www.greyhathacker.net/?p=872) show how many way exists to embed Macro into a Microsoft Office documents.
+- It's technically possible to perform sanitizing on Word/Excel/PowerPoint/PDF documents but we have chosen here the option to block them in order to avoid the risk of missing any evasion techniques and then let pass one evil document. The following [site](https://www.greyhathacker.net/?p=872) show how many way exists to embed Macro into a Microsoft Office documents.
 - The other reason why we have chosen the blocking way is that for Word/Excel/PowerPoint, changing document format (for example by saving any document to `DOCX/XSLX/PPTX/PPSX` formats in order to be sure that no Macro can be executed) can have impacts or cause issues on document structure/rendering depending on the API used.
 
 # Cases
