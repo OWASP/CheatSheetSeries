@@ -24,7 +24,7 @@ The objective is to provide starting ideas/hints in order to create a tailored w
 
 # Proposition
 
-In order to achieve the full automation of the evaluation of the *authorization matrix*, the folowing actions has been performed:
+In order to achieve the full automation of the evaluation of the *authorization matrix*, the following actions has been performed:
 
 1.  Formalize the authorization matrix in a pivot format file allowing:
     1.  The processing by a program in a easy way.
