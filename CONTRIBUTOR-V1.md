@@ -79,7 +79,7 @@ Sorting applied on the name is an alphabetical one.
 **[Cross Site Scripting Prevention Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)**
 * Jeff Williams - jeff.williams@contrastsecurity.com
 * Jim Manico - jim@owasp.org
-* Neil Mattatall - neil@owasp.org
+* Neil Matatall - neil@owasp.org
 
 **[Cryptographic Storage Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)**
 * David Rook - david.a.rook@gmail.com
@@ -224,7 +224,7 @@ Sorting applied on the name is an alphabetical one.
 **[Query Parameterization Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Query_Parameterization_Cheat_Sheet.md)**
 * Dave Wichers - dave.wichers@owasp.org
 * Jim Manico - jim@owasp.org
-* Neil Matatal - neil@owasp.org
+* Neil Matatall - neil@owasp.org
 
 **[REST Assessment Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/REST_Assessment_Cheat_Sheet.md)**
 * Ofer Shezaf - ofer@shezaf.com
