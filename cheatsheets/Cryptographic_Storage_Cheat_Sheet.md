@@ -126,7 +126,7 @@ If the keys are stored with the data then any compromise of the data will easily
 
 #### Rule - Use independent keys when multiple keys are required
 
-Ensure that key material is independent. That is, do not choose a second key which is easily related to the first (or any preceeding) keys.
+Ensure that key material is independent. That is, do not choose a second key which is easily related to the first (or any preceding) keys.
 
 #### Rule - Protect keys in a key vault
 
