@@ -165,7 +165,7 @@ HTTP defines [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_cod
 
 Here is a non-exhaustive selection of security related REST API **status codes**. Use it to ensure you return the correct code.
 
-| Code | Message                | Decription                                                                                                                                                                                                           |
+| Code | Message                | Description                                                                                                                                                                                                          |
 |-------------|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 200         | OK                     |  Response to a successful REST API action. The HTTP method can be GET, POST, PUT, PATCH or DELETE.                                                                                                                  |
 | 201         | Created                |  The request has been fulfilled and resource created. A URI for the created resource is returned in the Location header.                                                                                            |
