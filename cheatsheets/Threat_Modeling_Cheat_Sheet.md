@@ -27,7 +27,7 @@ Understand the Relation between Risk, Threats, and Vulnerabilities.
 
 *Likelihood*, the possibility of a a threat event occuring where a threat actor will exploit a weakness. The likelihood of threat events resulting in adverse impacts estimates the possibility that a threat event would result in an actual outcome. The combined analysis of both threat assessment vectors impacts established an overall threat likelihood.
 
-*Impact*, the potential damage (physical, logical, monitary loss, etc) of a threat event.
+*Impact*, the potential damage (physical, logical, monetary loss, etc) of a threat event.
 
 *Control* a safeguard or countermeasure to avoid, detect, counteract, or minimize security risks to information, computer systems, or other assets.
 
