@@ -71,7 +71,7 @@ Patched version of the component has been released by the provider.
 
 ### Ideal condition of application of the approach
 
-Set of automated unit or integration or functionnal or security tests exist for the features of the application using the impacted dependency allowing to validate that the feature is operational.
+Set of automated unit or integration or functional or security tests exist for the features of the application using the impacted dependency allowing to validate that the feature is operational.
 
 ### Approach
 
@@ -134,7 +134,7 @@ If the provider has provided nothing about the vulnerability, [Case 3](#-case-3)
 
 If the provider has provided the team with the exploitation code, and the team made a security wrapper around the vulnerable library/code, execute the exploitation code in order to ensure that the library is now secure and doesn't affect the application.
 
-If you have a set of automated unit or integration or functionnal or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.
+If you have a set of automated unit or integration or functional or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.
 
 Add a comment in the project *README* explaining that the issue (specify the related [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures)) is handled during the waiting time of a patched version because the detection tool will continue to raise an alert on this dependency. 
 
@@ -194,7 +194,7 @@ Based on these information, the team determines that the necessary patching will
 
 If possible, create a unit test that mimics the vulnerability in order to ensure that the patch is effective and have a way to continuously ensure that the patch is in place during the evolution of the project.
 
-If you have a set of automated unit or integration or functionnal or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.
+If you have a set of automated unit or integration or functional or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.
 
 ## Case 4
 
