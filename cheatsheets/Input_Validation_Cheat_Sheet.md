@@ -52,7 +52,7 @@ It's also free-form text input that highlights the importance of proper context-
 The primary means of input validation for free-form text input should be:
 
 - **Normalization:** Ensure canonical encoding is used across all the text and no invalid characters are present.
-- **Character category whitelisting:** Unicode allows whitelisting categories such as "decimal digits" or "letters" which not only covers the Latin alphabet but also various other scripts used globally (e.g. Arabic, Cyryllic, CJK ideographs etc).
+- **Character category whitelisting:** Unicode allows whitelisting categories such as "decimal digits" or "letters" which not only covers the Latin alphabet but also various other scripts used globally (e.g. Arabic, Cyrillic, CJK ideographs etc).
 - **Individual character whitelisting:** If you allow letters and ideographs in names and also want to allow apostrophe `'` for Irish names, but don't want to allow the whole punctuation category.
 
 References: 
