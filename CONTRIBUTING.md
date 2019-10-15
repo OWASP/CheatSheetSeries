@@ -11,7 +11,7 @@ Follow these steps:
 1. Create an new [Issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using either:
    - The `new_cheatsheet_proposal` template if you want to propose a new cheat sheet.
    - The `update_cheatsheet_proposal` template if you want to modify a existing cheat sheet.
-2. After a discution on the topic/update and if the proposal is accepted by the project leaders then:
+2. After a discussion on the topic/update and if the proposal is accepted by the project leaders then:
     1. Clone this GitHub repository.
     2. Either:
       - Create the cheat sheet using the dedicated [template](templates/New_CheatSheet.md) in case of a new cheat sheet.
