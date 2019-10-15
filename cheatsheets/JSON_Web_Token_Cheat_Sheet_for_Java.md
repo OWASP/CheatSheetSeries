@@ -313,7 +313,7 @@ This attack occur when a attacker access to a token (or a set of tokens) and ext
 
 ### How to prevent
 
-A way to protect, is to cipher the token using for example a symetric algorithm.
+A way to protect, is to cipher the token using for example a symmetric algorithm.
 
 It's also important to protect the ciphered data against attack like [Padding Oracle](https://www.owasp.org/index.php/Testing_for_Padding_Oracle_%28OTG-CRYPST-002%29) or any other attack using cryptanalysis.
 
