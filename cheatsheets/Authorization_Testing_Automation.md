@@ -18,7 +18,7 @@ During a test of an authorization, a **Logical Role** is also called a **Point O
 
 This article describe a proposition of implementation in order to automate the tests of an *authorization matrix*.
 
-This article use the assumption that 2 dimensions are used to represents an authorization for the technical proposition decribed and take as example a application exposing REST services.
+This article use the assumption that 2 dimensions are used to represents an authorization for the technical proposition described and take as example a application exposing REST services.
 
 The objective is to provide starting ideas/hints in order to create a tailored way of testing of the authorization matrix for the target application.
 
