@@ -1,4 +1,4 @@
-# Contributors to the intial version of the project
+# Contributors to the initial version of the project
 
 If you want to modify something regarding the mention made to you (typo/link to your profile/etc), feel free to submit a PR with the expected content. Same approach if you think that we have forgotten someone.
 
