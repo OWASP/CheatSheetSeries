@@ -18,7 +18,7 @@ The recommended cipher strings are based on different scenarios:
 
 **OWASP Cipher String 'A'** (Advanced, wide browser compatibility, e.g. to most newer browser versions):
 
-* Recommended if you control the server and the clients (e.g. by approval), make sure to check the compatibility before using it.
+* Recommended if you control the server and the clients. Make sure to check the compatibility before using it.
 * Includes solely the strongest [Perfect Forward Secrecy (PFS)](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers.
 * Protocols: `TLSv1.3`, `TLSv1.2` (and newer or better).
 * Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 32/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7 + MS14-066, Java8b132, OpenSSL 1.0.1e, Safari 9/iOS 9, Yahoo Slurp Jun 2014, YandexBot Sep 2014.
