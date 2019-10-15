@@ -688,7 +688,7 @@ DO: Establish effective monitoring and alerting so suspicious activities are det
 
 DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was thrown");``` rather log the stack trace, error message and user Id who caused the error.
 
-DO NOT: Log sesnsitive data such as user's passwords.
+DO NOT: Log sensitive data such as user's passwords.
 
 ### Logging
 
