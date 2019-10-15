@@ -5,7 +5,7 @@ Thank you for submitting a Pull Request (PR) to the Cheat Sheet Series.
 Please make sure that for your contribution:
 
 - [ ] In case of a new Cheat Sheet, you have used the [Cheat Sheet template](https://github.com/OWASP/CheatSheetSeries/blob/master/templates/New_CheatSheet.md).
-- [ ] All the markdown files do not raise any validation policy violation, see the policy [here](https://github.com/OWASP/CheatSheetSeries#editor--validation-policy).
+- [ ] All the markdown files do not raise any validation policy violation, see the [policy](https://github.com/OWASP/CheatSheetSeries#editor--validation-policy).
 - [ ] All the markdown files follow these [format rules](https://github.com/OWASP/CheatSheetSeries#conversion-rules).
 - [ ] All your assets are stored in the **assets** folder.
 - [ ] All the images used are in the **PNG** format.
