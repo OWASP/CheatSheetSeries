@@ -53,7 +53,7 @@ Normalization of a `CDATA` section is not a common rule among parsers. Libxml co
 </element>
 ```
 
-## Coersive Parsing
+## Coercive Parsing
 
 A coercive attack in XML involves parsing deeply nested XML documents without their corresponding ending tags. The idea is to make the victim use up -and eventually deplete- the machine's resources and cause a denial of service on the target. Reports of a DoS attack in Firefox 3.67 included the use of 30,000 open XML elements without their corresponding ending tags. Removing the closing tags simplified the attack since it requires only half of the size of a well-formed document to accomplish the same results. The number of tags being processed eventually caused a stack overflow. A simplified version of such a document would look like this:
 
