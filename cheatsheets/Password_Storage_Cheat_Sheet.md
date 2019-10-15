@@ -536,7 +536,7 @@ The entire source code of the POC is available [here](https://github.com/righett
 
 ## Ref2 
 
-- [Space-based (Lookup) attacks: Space-time Tradeoff: Hellman, M., Crypanalytic Time-Memory Trade-Off, Transactions of Information Theory, Vol. IT-26, No. 4, July, 1980](http://www-ee.stanford.edu/~hellman/publications/36.pdf)
+- [Space-based (Lookup) attacks: Space-time Tradeoff: Hellman, M., Cryptanalytic Time-Memory Trade-Off, Transactions of Information Theory, Vol. IT-26, No. 4, July, 1980](http://www-ee.stanford.edu/~hellman/publications/36.pdf)
 - [Rainbow Tables](http://ophcrack.sourceforge.net/tables.php).
 
 ## Ref3
