@@ -509,14 +509,14 @@ public class parseDocument {
    Document doc = builder.parse(new InputSource("contacts.xml"));
    NodeList nodeLst = doc.getElementsByTagName("contact");
    for (int s = 0; s < nodeLst.getLength(); s++) {
-     Node fstNode = nodeLst.item(s);
-     if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
-       Element fstElement = (Element) fstNode;
-       NodeList fstNmElementLst = fstElement.getElementsByTagName("firstname");
-       Element fstNmElement = (Element) fstNmElementLst.item(0);
-       NodeList fstNm = fstNmElement.getChildNodes();
-       System.out.println("First Name: "  + ((Node) fstNm.item(0)).getNodeValue());
-       NodeList lstNmElementLst = fstElement.getElementsByTagName("lastname");
+     Node firstNode = nodeLst.item(s);
+     if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+       Element firstElement = (Element) firstNode;
+       NodeList firstNmElementLst = firstElement.getElementsByTagName("firstname");
+       Element firstNmElement = (Element) firstNmElementLst.item(0);
+       NodeList firstNm = firstNmElement.getChildNodes();
+       System.out.println("First Name: "  + ((Node) firstNm.item(0)).getNodeValue());
+       NodeList lstNmElementLst = firstElement.getElementsByTagName("lastname");
        Element lstNmElement = (Element) lstNmElementLst.item(0);
        NodeList lstNm = lstNmElement.getChildNodes();
        System.out.println("Last Name: " + ((Node) lstNm.item(0)).getNodeValue());
