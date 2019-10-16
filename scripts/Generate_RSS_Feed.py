@@ -41,7 +41,7 @@ feed_generator.icon("https://cheatsheetseries.owasp.org/gitbook/images/favicon.i
 feed_generator.pubDate(current_date)
 feed_generator.lastBuildDate(current_date)
 for pull_request in pull_requests:
-    # Take only merged PR
+    # Take only merged PullRequests
     if pull_request["merged_at"] is None:
         continue
     # Convert merge date from 2019-08-25T06:36:35Z To Sun, 19 May 2002 15:21:36 GMT
