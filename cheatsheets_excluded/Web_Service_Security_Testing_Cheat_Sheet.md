@@ -139,7 +139,7 @@ Checklist
     \*\* Improper Boundary Checking
     \*\* XML Bomb (DoS)
     \*\* Basic Authentication
-    \*\* SSL/TLS Failback
+    \*\* SSL/TLS Fallback
 
 Testing REST Based Web Services
 -------------------------------

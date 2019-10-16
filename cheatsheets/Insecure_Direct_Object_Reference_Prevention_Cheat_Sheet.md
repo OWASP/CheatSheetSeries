@@ -1,6 +1,6 @@
 # Introduction
 
-**I**nsecure **D**irect **O**bject **R**eference (called **IDOR** from here) occurs when a application exposes a reference to an internal implementation object. Using this way, it reveals the real identifier and format/pattern used of the element in the storage backend side. The most common example of it (altrough is not limited to this one) is a record identifier in a storage system (database, filesystem and so on).
+**I**nsecure **D**irect **O**bject **R**eference (called **IDOR** from here) occurs when a application exposes a reference to an internal implementation object. Using this way, it reveals the real identifier and format/pattern used of the element in the storage backend side. The most common example of it (although is not limited to this one) is a record identifier in a storage system (database, filesystem and so on).
 
 IDOR is referenced in element [A4](https://www.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References) of the OWASP Top 10 in the 2013 edition.
 
@@ -8,7 +8,7 @@ IDOR is referenced in element [A4](https://www.owasp.org/index.php/Top_10_2013-A
 
 IDOR do not bring a direct security issue because, by itself, it reveals only the format/pattern used for the object identifier. IDOR bring, depending on the format/pattern in place, a capacity for the attacker to mount a enumeration attack in order to try to probe access to the associated objects.
 
-Enumeration attack can be described in the way in which the attacker build a collection of valid identifiers using the disovered format/pattern and test them against the application.
+Enumeration attack can be described in the way in which the attacker build a collection of valid identifiers using the discovered format/pattern and test them against the application.
 
 **For example:**
 
@@ -54,7 +54,7 @@ Using a hash allow the following properties:
 - Do not require to maintain a mapping table (real ID vs front end ID) in user session or application level cache.
 - Makes creation of a collection a enumeration values more difficult to achieve because, even if attacker can guess the hash algorithm from the ID size, it cannot reproduce value due to the salt that is not tied to the hidden value.
 
-This is the implementation of the utility class that generate the identifer to use for exchange with the front end side:
+This is the implementation of the utility class that generate the identifier to use for exchange with the front end side:
 
 ``` java
 import javax.xml.bind.DatatypeConverter;

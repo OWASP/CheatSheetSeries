@@ -154,7 +154,7 @@ Always name the compiled library with this format to simplify integration with t
 
 Integration in company projects can use the following approach:
 
-1. Create a internal shared java utility library that embeed your compiled version of the Argon2 library.
+1. Create a internal shared java utility library that embed your compiled version of the Argon2 library.
 2. Use this shared java library in the different projects in order to:
     1. Prevent to embed a version of the Argon2 library in all your project.
     2. Centralize and unify the version of the Argon2 library used (important for upgrade process).
@@ -283,7 +283,7 @@ Proposed configuration options for Argon2 are based on the following source of r
 - [PHC project](https://github.com/P-H-C/phc-winner-argon2/issues/59).
 - Section 9 of the Argon2 [specifications document](https://github.com/P-H-C/phc-winner-argon2/blob/master/argon2-specs.pdf).
 
-Documented configuration is the following, increase the number of the **ITERATIONS** parameter if the computing of a hash take less than 2 seconds on your environement:
+Documented configuration is the following, increase the number of the **ITERATIONS** parameter if the computing of a hash take less than 2 seconds on your environment:
 
 ``` bash
 # Configuration to define Argon2 options
@@ -313,7 +313,7 @@ PARALLELISM=4
 
 ## Input password size
 
-In order to prevent any DOS attack using a very big password, it's recommended to define a higher size limit for the password choosen by the user.
+In order to prevent any DOS attack using a very big password, it's recommended to define a higher size limit for the password chosen by the user.
 
 A limit of **1000 characters** is sufficient to let the user choose a very big password without impacting the system.
 
@@ -536,7 +536,7 @@ The entire source code of the POC is available [here](https://github.com/righett
 
 ## Ref2 
 
-- [Space-based (Lookup) attacks: Space-time Tradeoff: Hellman, M., Crypanalytic Time-Memory Trade-Off, Transactions of Information Theory, Vol. IT-26, No. 4, July, 1980](http://www-ee.stanford.edu/~hellman/publications/36.pdf)
+- [Space-based (Lookup) attacks: Space-time Tradeoff: Hellman, M., Cryptanalytic Time-Memory Trade-Off, Transactions of Information Theory, Vol. IT-26, No. 4, July, 1980](http://www-ee.stanford.edu/~hellman/publications/36.pdf)
 - [Rainbow Tables](http://ophcrack.sourceforge.net/tables.php).
 
 ## Ref3

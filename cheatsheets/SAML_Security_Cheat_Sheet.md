@@ -41,7 +41,7 @@ The following recommendations were proposed in response ([Secure SAML validation
 - Securely validate the digital signature:
     - If you expect only one signing key, use `StaticKeySelector`. Obtain the key directly from the identity provider, store it in local file and ignore any `KeyInfo` elements in the document.
     - If you expect more than one signing key, use `X509KeySelector` (the JKS variant). Obtain these keys directly form the identity providers, store them in local JKS and ignore any `KeyInfo` elements in the document.
-    - If you expect a heterogenous signed documents (many certificates from many identity providers, multi­level validation paths), implement full trust establishment model based on PKIX and trusted root certificates.
+    - If you expect a heterogeneous signed documents (many certificates from many identity providers, multi­level validation paths), implement full trust establishment model based on PKIX and trusted root certificates.
 - Avoid signature-wrapping attacks.
     - Never use `getElementsByTagName` to select security related elements in an XML document without prior validation.
     - Always use absolute XPath expressions to select elements, unless a hardened schema is used for validation.
@@ -69,7 +69,7 @@ Processing a SAML response is an expensive operation but all steps must be valid
 
 Revisit each security threat that exists within the [SAML Security](http://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) document and assert you have applied the appropriate countermeasures for threats that may exist for your particular implementation. 
 
-Additional countermeasures considererd should include:
+Additional countermeasures considered should include:
 
 - Prefer IP Filtering when appropriate. For example, this countermeasure could have prevented Google's initial security flaw if Google provided each trusted partner with a separate endpoint and setup an IP filter for each endpoint. This step will help counter the following attacks:
     - Stolen Assertion (6.4.1)

@@ -4,7 +4,7 @@ Error handling is a part of the overall security of an application. Except in mo
 
 Unhandled errors can assist an attacker in this initial phase, which is very important for the rest the attack.
 
-The following [link](http://blog.cipher.com/the-6-primary-phases-of-penetration-testing) provides a description of the different phases of an attack.
+The following [link](http://blog.cipher.com/the-6-primary-phases-of-penetration-/) provides a description of the different phases of an attack.
 
 # Context
 
@@ -44,7 +44,7 @@ note: The full stack trace of the root cause is available in the Apache Tomcat/7
 Below is an example of disclosure of a SQL query error, along the site installation path, that is useful to identify an injection point:
 
 ```text
-Warning: odbc_fetch_array() expects parameter 1 to be resource, boolean given 
+Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given 
 in D:\app\index_new.php on line 188
 ```    
 

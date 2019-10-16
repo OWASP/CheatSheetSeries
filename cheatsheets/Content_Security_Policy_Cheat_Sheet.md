@@ -92,7 +92,7 @@ Reporting directives deliver violations of prevented behaviors to specified loca
 - `report-uri` directive is deprecated by `report-to`, which is a URI that the reports are sent to.
   - Goes by the format of: `Content-Security-Policy: report-uri https://example.com/csp-reports`
 
-In order to ensure backward compatibility, use the 2 directives in conjonction. Whenever a browser supports `report-to`, it will ignore `report-uri`. Otherwise, `report-uri` will be used.
+In order to ensure backward compatibility, use the 2 directives in conjunction. Whenever a browser supports `report-to`, it will ignore `report-uri`. Otherwise, `report-uri` will be used.
 
 ## Special Directive Sources
 

@@ -18,7 +18,7 @@ This aspect is referenced in the following projects:
 * [OWASP TOP 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_2017_Project) under the point *[A9 - Using Components with Known Vulnerabilities](https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities)*.
 * [OWASP Application Security Verification Standard Project](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project) under the section *V14.2 Dependency*.
 
-Based on this context, it's important for a project to ensure that all the third-party dependencies implemented are clean of any security issue, and if they happen to contain any security issues, the developmment team needs to be aware of it and apply the required mitigation measures to secure the affected application.
+Based on this context, it's important for a project to ensure that all the third-party dependencies implemented are clean of any security issue, and if they happen to contain any security issues, the development team needs to be aware of it and apply the required mitigation measures to secure the affected application.
 
 It's highly recommended to perform automated analysis of the dependencies from the birth of the project. Indeed, if this task is added at the middle or end of the project, it can imply a huge amount of work to handle all the issues identified and that will in turn impose a huge burden on the development team and might to blocking the advancement of the project at hand.
 
@@ -61,7 +61,7 @@ When a security issue is detected, the development team can meet one of the situ
 
 If the vulnerably impact a [transitive dependency](https://en.wikipedia.org/wiki/Transitive_dependency) then the action will be taken on the direct dependency of the project because acting on a transitive dependency often impact the stability of the application. 
 
-Acting on a on a transitive dependency require the developmement team to fully understand the complete relation/communication/usage from the project first level dependency until the dependency impacted by the security vulnerability, this task is very time consuming.
+Acting on a on a transitive dependency require the development team to fully understand the complete relation/communication/usage from the project first level dependency until the dependency impacted by the security vulnerability, this task is very time consuming.
 
 ## Case 1
 
@@ -71,7 +71,7 @@ Patched version of the component has been released by the provider.
 
 ### Ideal condition of application of the approach
 
-Set of automated unit or integration or functionnal or security tests exist for the features of the application using the impacted dependency allowing to validate that the feature is operational.
+Set of automated unit or integration or functional or security tests exist for the features of the application using the impacted dependency allowing to validate that the feature is operational.
 
 ### Approach
 
@@ -134,7 +134,7 @@ If the provider has provided nothing about the vulnerability, [Case 3](#-case-3)
 
 If the provider has provided the team with the exploitation code, and the team made a security wrapper around the vulnerable library/code, execute the exploitation code in order to ensure that the library is now secure and doesn't affect the application.
 
-If you have a set of automated unit or integration or functionnal or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.
+If you have a set of automated unit or integration or functional or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.
 
 Add a comment in the project *README* explaining that the issue (specify the related [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures)) is handled during the waiting time of a patched version because the detection tool will continue to raise an alert on this dependency. 
 
@@ -194,7 +194,7 @@ Based on these information, the team determines that the necessary patching will
 
 If possible, create a unit test that mimics the vulnerability in order to ensure that the patch is effective and have a way to continuously ensure that the patch is in place during the evolution of the project.
 
-If you have a set of automated unit or integration or functionnal or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.
+If you have a set of automated unit or integration or functional or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.
 
 ## Case 4
 
@@ -231,9 +231,9 @@ It's important to ensure, during the selection process of a vulnerable dependenc
         * Full support: Java, .Net.
         * Experimental support: Python, Ruby, PHP (composer), NodeJS, C, C++.
     * [NPM Audit](https://docs.npmjs.com/cli/audit)
-        * Full support: NodeJS, Javascript.
+        * Full support: NodeJS, JavaScript.
         * HTML report available via this [module](https://www.npmjs.com/package/npm-audit-html).
-    * To manage the vulnerable dependencies in a transversal way in an organization the [OWASP Dependency Track](https://dependencytrack.org/) project can be used.
+    * [OWASP Dependency Track](https://dependencytrack.org/) can be used to manage vulnerable dependencies across an organization.
 * Commercial
     * [Snyk](https://snyk.io/) (open source and free option available):
         * [Full support](https://snyk.io/docs/) for many languages and package manager. 
