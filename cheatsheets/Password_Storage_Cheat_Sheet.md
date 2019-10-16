@@ -14,29 +14,19 @@ Specific guidance herein protects against stored credential theft but the bulk o
 
 ## Salting
 
-* Purpose
-* Recommended implementations
-  * Good algorithms do this for you
-  * Generating salts for legacy algorithms
+A salt is a unique, randomly generated string that is added to each password as part of the hashing process. As the salt is unique for every user, an attacker has to crack hashes one at a time using the respective salt, rather than being able to calculate a hash once and compare it against every stored hash. This makes cracking large numbers of hashes significantly harder, as the time required grows in direct proportion to the number of hashes.
 
-A salt is fixed-length cryptographically-strong random value. Append credential data to the salt and use this as input to a protective function.
+Salting also provides protection against an attacker pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is not possible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.
 
-Store the protected form appended to the salt as follows:
+Modern hashing algorithms such as Bcrypt or Argon2 automatically salt  the passwords, so no additional steps are required when using them. However, if you are using a [legacy password hashing algorithm](FIXMEXrefToSection) then salting needs to be implemented manually. The basic steps to perform this are:
 
-```
-[protected form] = [salt] + protect([protection func], [salt] + [credential]);
-```
-
-Follow these practices to properly implement credential-specific salts:
-
-- Generate a unique salt upon creation of each stored credential (not just per user or system wide);
-- Use [cryptographically-strong random](Password_Storage_Cheat_Sheet.md#ref3) data;
-- As storage permits, use a `32 byte` or `64 byte` salt (actual size dependent on protection function);
-- Scheme security does not depend on hiding, splitting, or otherwise obscuring the salt.
-
-Salts serve two purposes:
-1. prevent the protected form from revealing two identical credentials and
-2. augment entropy fed to protecting function without relying on credential complexity. The second aims to make [pre-computed lookup attacks](Password_Storage_Cheat_Sheet.md#ref2) on an individual credential and time-based attacks on a population intractable.
+* Generate a salt using a [cryptographically secure function](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
+  * The salt should be at least 16 characters long.
+  * Encode the salt into a safe character set such as hexadecimal or base64.
+* Combine the salt with the password.
+  * This can be done using simple concatenation, or a construct such as a HMAC.
+* Hash the combined password and salt.
+* Store the salt and the password hash.
 
 ## Peppering
 
