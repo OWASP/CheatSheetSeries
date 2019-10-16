@@ -209,7 +209,7 @@ def check():
     """
     error_detected = False
     for domain in DOMAINS_WHITELIST:    
-        # Get the IPs of the curent domain
+        # Get the IPs of the current domain
         # See https://en.wikipedia.org/wiki/List_of_DNS_record_types
         try:
             # A = IPv4 address record        
@@ -240,7 +240,7 @@ if __name__== "__main__":
 
 Do not accept complete URLs from the user because URL are difficult to validate and the parser can be abused depending on the technology used as showcased by the following [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf) of [Orange Tsai](https://twitter.com/orange_8361). 
 
-If network related information is really nedded then only accept a valid IP address or domain name.
+If network related information is really needed then only accept a valid IP address or domain name.
 
 #### Network layer
 

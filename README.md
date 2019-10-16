@@ -30,7 +30,7 @@ Links:
 - [Offline website](#offline-website)
 - [Project leaders](#project-leaders)
 - [Core team](#core-team)
-- [PR usage for core commiters](#pr-usage-for-core-commiters)
+- [PR usage for core committers](#pr-usage-for-core-committers)
 - [Project logo](#project-logo)
 - [Folders](#folders)
 - [License](#license)
@@ -118,7 +118,7 @@ The project's official logo files are hosted [here](https://github.com/OWASP/owa
 
 **assets**: 
 * Contains the assets used by the cheat sheets (images, PDF's, ZIP files etc.).
-    * Naming convention is `[CHEAT_CHEET_MARKDOWN_FILE_NAME]_[IDENTIFIER].[EXTENSION]`
+    * Naming convention is `[CHEAT_SHEET_MARKDOWN_FILE_NAME]_[IDENTIFIER].[EXTENSION]`
     * Use `PNG` format for the images.
 
 **scripts**:

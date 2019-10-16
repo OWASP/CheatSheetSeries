@@ -1,6 +1,6 @@
 ---
 name: update_cheatsheet_proposal
-about: Used to create a proposal to update/refactor a exsiting cheat sheet
+about: Used to create a proposal to update/refactor a existing cheat sheet
 title: 'Cheat sheet update/refactor proposal: [PUT_TARGET_CS_NAME_HERE]'
 labels: ACK_WAITING, UPDATE_CS, HELP_WANTED
 assignees: ''
