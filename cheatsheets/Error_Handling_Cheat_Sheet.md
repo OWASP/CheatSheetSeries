@@ -1,16 +1,16 @@
 # Introduction
 
-Error handling is a part of the overall security of an application. Except in movies, an attack always begin by a **Reconnaissance** phase in which the attacker will try to gather as many technical information (often *name* and *version* properties) as possible about the target like for example the application server, the technologies, the frameworks, the libraries...
+Error handling is a part of the overall security of an application. Except in movies, an attack always begin by a **Reconnaissance** phase in which the attacker will try to gather as much technical information (often *name* and *version* properties) as possible about the target like, for example, the application server, the technologies, the frameworks, the libraries...
 
-So, if errors are not well handled then it can highly facilitate the work for an attacker into this initial phase that is very important for the rest of the whole attack.
+Unhandled errors facilitate the work for an attacker in this initial phase, which is very important for the rest the attack.
 
-The following [link](http://blog.cipher.com/the-6-primary-phases-of-penetration-testing) provide an example of description of the differents phases of an attack.
+The following [link](http://blog.cipher.com/the-6-primary-phases-of-penetration-testing) provides a description of the different phases of an attack.
 
 # Context
 
-Issues at error handling level can reveal many information about the target and can be also used to identify injection point into the target's features.
+Issues at the error handling level can reveal a lot of information about the target and can also be used to identify injection points in the target's features.
 
-Below is an example of disclosure of technologies stack, here Struts2 and Tomcat version, via an exception rendered to the user:
+Below is an example of the disclosure of a technology stack, here Struts2 and Tomcat version, via an exception rendered to the user:
 
 ```text
 HTTP Status 500 - For input string: "null"
@@ -41,24 +41,24 @@ java.lang.NumberFormatException: For input string: "null"
 note: The full stack trace of the root cause is available in the Apache Tomcat/7.0.56 logs.
 ```
 
-Below is an example of disclosure of SQL query error, along the site installation path, that is useful to identify injection point:
+Below is an example of disclosure of a SQL query error, along the site installation path, that is useful to identify an injection point:
 
 ```text
 Warning: odbc_fetch_array() expects parameter 1 to be resource, boolean given 
 in D:\app\index_new.php on line 188
 ```    
 
-The [OWASP Testing Guide](https://www.owasp.org/index.php/Testing_Information_Gathering) provide differents technics to obtains technical informations from an application.
+The [OWASP Testing Guide](https://www.owasp.org/index.php/Testing_Information_Gathering) provides different techniques to obtain technical information from an application.
 
 # Objective
 
-The article show how to configure a global error handler at configuration level when possible otherwise at code level, in differents technologies, in order to ensure that if an unexpected error occur then a generic response is returned by the application but the error is traced on server side for investigation.
+The article shows how to configure a global error handler at the configuration level when possible, otherwise at code level, in differents technologies, in order to ensure that if an unexpected error occurs then a generic response is returned by the application but the error is traced on server side for investigation.
 
-The following schema show the target approach:
+The following schema shows the target approach:
 
 ![Overview](../assets/Error_Handling_Cheat_Sheet_Overview.png)
 
-As most of the recent application topology are *API based*, we assume in this article that the backend expose only a REST API and do not contains any user interface content.
+As most of the recent application topology are *API based*, we assume in this article that the backend exposes only a REST API and does not contain any user interface content.
 
 About the error logging operation itself, the [logging cheat sheet](Logging_Cheat_Sheet.md) should be used, this article will focus on the error handling part.
 
@@ -68,7 +68,7 @@ For each technology, a setup will be proposed with configuration and code snippe
 
 ## Java classic web application
 
-For this kind of application, a global error handler can be configured at **web.xml** deployment descriptor level.
+For this kind of application, a global error handler can be configured at the **web.xml** deployment descriptor level.
 
 We propose here a configuration that can be used from Servlet specification *version 2.5* and above.
 
@@ -111,7 +111,7 @@ response.setStatus(200);
 
 With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](http://spring.io/projects/spring-boot), you can define a global error handler by simply implementing this kind of class into your project.
 
-We indicate to the handler, via the annotation [@ExceptionHandler](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html), to act when any exception extending the class *java.lang.Exception* is throwed by the application.
+We indicate to the handler, via the annotation [@ExceptionHandler](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html), to act when any exception extending the class *java.lang.Exception* is thrown by the application.
 
 ``` java
 import net.minidev.json.JSONObject;
@@ -372,4 +372,4 @@ References:
 
 # Sources of the prototype
 
-The source code of all the sandbox projects created to find the right setup to use is stored into this [GitHub repository](https://github.com/righettod/poc-error-handling).
+The source code of all the sandbox projects created to find the right setup to use is stored in this [GitHub repository](https://github.com/righettod/poc-error-handling).
