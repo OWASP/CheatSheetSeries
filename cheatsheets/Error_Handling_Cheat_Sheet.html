@@ -1012,12 +1012,12 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>Error handling is a part of the overall security of an application. Except in movies, an attack always begin by a <strong>Reconnaissance</strong> phase in which the attacker will try to gather as many technical information (often <em>name</em> and <em>version</em> properties) as possible about the target like for example the application server, the technologies, the frameworks, the libraries...</p>
-<p>So, if errors are not well handled then it can highly facilitate the work for an attacker into this initial phase that is very important for the rest of the whole attack.</p>
-<p>The following <a href="http://blog.cipher.com/the-6-primary-phases-of-penetration-testing" target="_blank">link</a> provide an example of description of the differents phases of an attack.</p>
+<p>Error handling is a part of the overall security of an application. Except in movies, an attack always begin by a <strong>Reconnaissance</strong> phase in which the attacker will try to gather as much technical information (often <em>name</em> and <em>version</em> properties) as possible about the target, such as the application server, frameworks, libraries, etc.</p>
+<p>Unhandled errors can assist an attacker in this initial phase, which is very important for the rest the attack.</p>
+<p>The following <a href="http://blog.cipher.com/the-6-primary-phases-of-penetration-/" target="_blank">link</a> provides a description of the different phases of an attack.</p>
 <h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
-<p>Issues at error handling level can reveal many information about the target and can be also used to identify injection point into the target&apos;s features.</p>
-<p>Below is an example of disclosure of technologies stack, here Struts2 and Tomcat version, via an exception rendered to the user:</p>
+<p>Issues at the error handling level can reveal a lot of information about the target and can also be used to identify injection points in the target&apos;s features.</p>
+<p>Below is an example of the disclosure of a technology stack, here Struts2 and Tomcat version, via an exception rendered to the user:</p>
 <pre><code class="lang-text">HTTP Status 500 - For input string: &quot;null&quot;
 
 type Exception report
@@ -1045,21 +1045,21 @@ java.lang.NumberFormatException: For input string: &quot;null&quot;
 
 note: The full stack trace of the root cause is available in the Apache Tomcat/7.0.56 logs.
 </code></pre>
-<p>Below is an example of disclosure of SQL query error, along the site installation path, that is useful to identify injection point:</p>
-<pre><code class="lang-text">Warning: odbc_fetch_array() expects parameter 1 to be resource, boolean given 
+<p>Below is an example of disclosure of a SQL query error, along the site installation path, that is useful to identify an injection point:</p>
+<pre><code class="lang-text">Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given 
 in D:\app\index_new.php on line 188
 </code></pre>
-<p>The <a href="https://www.owasp.org/index.php/Testing_Information_Gathering" target="_blank">OWASP Testing Guide</a> provide differents techniques to obtains technical informations from an application.</p>
+<p>The <a href="https://www.owasp.org/index.php/Testing_Information_Gathering" target="_blank">OWASP Testing Guide</a> provides different techniques to obtain technical information from an application.</p>
 <h1 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h1>
-<p>The article show how to configure a global error handler at configuration level when possible otherwise at code level, in differents technologies, in order to ensure that if an unexpected error occur then a generic response is returned by the application but the error is traced on server side for investigation.</p>
-<p>The following schema show the target approach:</p>
+<p>The article shows how to configure a global error handler at the configuration level when possible, otherwise at code level, in differents technologies, in order to ensure that if an unexpected error occurs then a generic response is returned by the application but the error is traced on server side for investigation.</p>
+<p>The following schema shows the target approach:</p>
 <p><img src="../assets/Error_Handling_Cheat_Sheet_Overview.png" alt="Overview"></p>
-<p>As most of the recent application topology are <em>API based</em>, we assume in this article that the backend expose only a REST API and do not contains any user interface content.</p>
+<p>As most of the recent application topology are <em>API based</em>, we assume in this article that the backend exposes only a REST API and does not contain any user interface content.</p>
 <p>About the error logging operation itself, the <a href="Logging_Cheat_Sheet.html">logging cheat sheet</a> should be used, this article will focus on the error handling part.</p>
 <h1 id="proposition"><a name="proposition" class="plugin-anchor" href="#proposition"><i class="fa fa-link" aria-hidden="true"></i></a>Proposition</h1>
 <p>For each technology, a setup will be proposed with configuration and code snippet.</p>
 <h2 id="java-classic-web-application"><a name="java-classic-web-application" class="plugin-anchor" href="#java-classic-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>Java classic web application</h2>
-<p>For this kind of application, a global error handler can be configured at <strong>web.xml</strong> deployment descriptor level.</p>
+<p>For this kind of application, a global error handler can be configured at the <strong>web.xml</strong> deployment descriptor level.</p>
 <p>We propose here a configuration that can be used from Servlet specification <em>version 2.5</em> and above.</p>
 <p>With this configuration, any unexpected error will cause a redirection to the page <strong>error.jsp</strong> in which the error will be traced and a generic response will be returned.</p>
 <p>Configuration of the redirection into the <strong>web.xml</strong> file:</p>
@@ -1091,7 +1091,7 @@ response.setStatus(<span class="hljs-number">200</span>);
 </code></pre>
 <h2 id="java-springmvcspringboot-web-application"><a name="java-springmvcspringboot-web-application" class="plugin-anchor" href="#java-springmvcspringboot-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>Java SpringMVC/SpringBoot web application</h2>
 <p>With <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html" target="_blank">SpringMVC</a> or <a href="http://spring.io/projects/spring-boot" target="_blank">SpringBoot</a>, you can define a global error handler by simply implementing this kind of class into your project.</p>
-<p>We indicate to the handler, via the annotation <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html" target="_blank">@ExceptionHandler</a>, to act when any exception extending the class <em>java.lang.Exception</em> is throwed by the application.</p>
+<p>We indicate to the handler, via the annotation <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html" target="_blank">@ExceptionHandler</a>, to act when any exception extending the class <em>java.lang.Exception</em> is thrown by the application.</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> net.minidev.json.JSONObject;
 <span class="hljs-keyword">import</span> org.springframework.http.HttpHeaders;
 <span class="hljs-keyword">import</span> org.springframework.http.HttpStatus;
@@ -1329,7 +1329,7 @@ response.setStatus(<span class="hljs-number">200</span>);
 <li><a href="https://exceptionnotfound.net/the-asp-net-web-api-exception-handling-pipeline-a-guided-tour/" target="_blank">Exception handling with ASP.Net Web API</a></li>
 </ul>
 <h1 id="sources-of-the-prototype"><a name="sources-of-the-prototype" class="plugin-anchor" href="#sources-of-the-prototype"><i class="fa fa-link" aria-hidden="true"></i></a>Sources of the prototype</h1>
-<p>The source code of all the sandbox projects created to find the right setup to use is stored into this <a href="https://github.com/righettod/poc-error-handling" target="_blank">GitHub repository</a>.</p>
+<p>The source code of all the sandbox projects created to find the right setup to use is stored in this <a href="https://github.com/righettod/poc-error-handling" target="_blank">GitHub repository</a>.</p>
 
                                 
                                 </section>
@@ -1373,7 +1373,7 @@ response.setStatus(<span class="hljs-number">200</span>);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Error Handling ","level":"1.26","depth":1,"next":{"title":"Forgot Password ","level":"1.27","depth":1,"path":"cheatsheets/Forgot_Password_Cheat_Sheet.md","ref":"cheatsheets/Forgot_Password_Cheat_Sheet.md","articles":[]},"previous":{"title":"DotNet Security ","level":"1.25","depth":1,"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","ref":"cheatsheets/DotNet_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","mtime":"2019-10-16T17:02:37.300Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-16T17:02:59.362Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Error Handling ","level":"1.26","depth":1,"next":{"title":"Forgot Password ","level":"1.27","depth":1,"path":"cheatsheets/Forgot_Password_Cheat_Sheet.md","ref":"cheatsheets/Forgot_Password_Cheat_Sheet.md","articles":[]},"previous":{"title":"DotNet Security ","level":"1.25","depth":1,"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","ref":"cheatsheets/DotNet_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","mtime":"2019-10-16T20:41:05.700Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-16T20:41:32.955Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
