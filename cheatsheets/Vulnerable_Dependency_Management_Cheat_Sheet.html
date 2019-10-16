@@ -1024,7 +1024,7 @@
 <li><a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_2017_Project" target="_blank">OWASP TOP 10</a> under the point <em><a href="https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities" target="_blank">A9 - Using Components with Known Vulnerabilities</a></em>.</li>
 <li><a href="https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project" target="_blank">OWASP Application Security Verification Standard Project</a> under the section <em>V14.2 Dependency</em>.</li>
 </ul>
-<p>Based on this context, it&apos;s important for a project to ensure that all the third-party dependencies implemented are clean of any security issue, and if they happen to contain any security issues, the developmment team needs to be aware of it and apply the required mitigation measures to secure the affected application.</p>
+<p>Based on this context, it&apos;s important for a project to ensure that all the third-party dependencies implemented are clean of any security issue, and if they happen to contain any security issues, the development team needs to be aware of it and apply the required mitigation measures to secure the affected application.</p>
 <p>It&apos;s highly recommended to perform automated analysis of the dependencies from the birth of the project. Indeed, if this task is added at the middle or end of the project, it can imply a huge amount of work to handle all the issues identified and that will in turn impose a huge burden on the development team and might to blocking the advancement of the project at hand.</p>
 <p><strong>Note:</strong> </p>
 <p>In the rest of the cheat sheet, when we refer to <em>development team</em> then we assume that the team contains a member with the required application security skills or can refer to someone in the company having these kind of skills to analyse the vulnerability impacting the dependency.</p>
@@ -1048,12 +1048,12 @@
 <h1 id="cases"><a name="cases" class="plugin-anchor" href="#cases"><i class="fa fa-link" aria-hidden="true"></i></a>Cases</h1>
 <p>When a security issue is detected, the development team can meet one of the situations (named <em>Case</em> in the rest of the cheat sheet) presented in the sub sections below.</p>
 <p>If the vulnerably impact a <a href="https://en.wikipedia.org/wiki/Transitive_dependency" target="_blank">transitive dependency</a> then the action will be taken on the direct dependency of the project because acting on a transitive dependency often impact the stability of the application. </p>
-<p>Acting on a on a transitive dependency require the developmement team to fully understand the complete relation/communication/usage from the project first level dependency until the dependency impacted by the security vulnerability, this task is very time consuming.</p>
+<p>Acting on a on a transitive dependency require the development team to fully understand the complete relation/communication/usage from the project first level dependency until the dependency impacted by the security vulnerability, this task is very time consuming.</p>
 <h2 id="case-1"><a name="case-1" class="plugin-anchor" href="#case-1"><i class="fa fa-link" aria-hidden="true"></i></a>Case 1</h2>
 <h3 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h3>
 <p>Patched version of the component has been released by the provider.</p>
 <h3 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h3>
-<p>Set of automated unit or integration or functionnal or security tests exist for the features of the application using the impacted dependency allowing to validate that the feature is operational.</p>
+<p>Set of automated unit or integration or functional or security tests exist for the features of the application using the impacted dependency allowing to validate that the feature is operational.</p>
 <h3 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h3>
 <p><strong>Step 1:</strong></p>
 <p>Update the version of the dependency in the project on a testing environment.</p>
@@ -1102,7 +1102,7 @@
 <p>If the provider has provided nothing about the vulnerability, <a href="#-case-3">Case 3</a> can be applied skipping the <em>step 2</em> of this case. We assume here that, at least, the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a> has been provided.</p>
 <p><strong>Step 2:</strong></p>
 <p>If the provider has provided the team with the exploitation code, and the team made a security wrapper around the vulnerable library/code, execute the exploitation code in order to ensure that the library is now secure and doesn&apos;t affect the application.</p>
-<p>If you have a set of automated unit or integration or functionnal or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.</p>
+<p>If you have a set of automated unit or integration or functional or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.</p>
 <p>Add a comment in the project <em>README</em> explaining that the issue (specify the related <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a>) is handled during the waiting time of a patched version because the detection tool will continue to raise an alert on this dependency. </p>
 <p><strong>Note:</strong> You can add the dependency to the ignore list but the ignore scope for this dependency must only cover the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a> related to the vulnerability because a dependency can be impacted by several vulnerabilities having each one its own <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a>.</p>
 <h2 id="case-3"><a name="case-3" class="plugin-anchor" href="#case-3"><i class="fa fa-link" aria-hidden="true"></i></a>Case 3</h2>
@@ -1138,7 +1138,7 @@
 <p>Based on these information, the team determines that the necessary patching will be to add a <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">pre-validation of any XML data</a> passed to the Jakson API to prevent <a href="https://www.acunetix.com/blog/articles/xml-external-entity-xxe-vulnerabilities/" target="_blank">XML external entity (XXE)</a> vulnerability.</p>
 <p><strong>Step 3:</strong></p>
 <p>If possible, create a unit test that mimics the vulnerability in order to ensure that the patch is effective and have a way to continuously ensure that the patch is in place during the evolution of the project.</p>
-<p>If you have a set of automated unit or integration or functionnal or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.</p>
+<p>If you have a set of automated unit or integration or functional or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.</p>
 <h2 id="case-4"><a name="case-4" class="plugin-anchor" href="#case-4"><i class="fa fa-link" aria-hidden="true"></i></a>Case 4</h2>
 <h3 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h3>
 <p>The vulnerable dependency is found during one of the following situation in which the provider is not aware of the vulnerability:</p>
@@ -1168,11 +1168,11 @@
 </ul>
 </li>
 <li><a href="https://docs.npmjs.com/cli/audit" target="_blank">NPM Audit</a><ul>
-<li>Full support: NodeJS, Javascript.</li>
+<li>Full support: NodeJS, JavaScript.</li>
 <li>HTML report available via this <a href="https://www.npmjs.com/package/npm-audit-html" target="_blank">module</a>.</li>
 </ul>
 </li>
-<li>To manage the vulnerable dependencies in a transversal way in an organization the <a href="https://dependencytrack.org/" target="_blank">OWASP Dependency Track</a> project can be used.</li>
+<li><a href="https://dependencytrack.org/" target="_blank">OWASP Dependency Track</a> can be used to manage vulnerable dependencies across an organization.</li>
 </ul>
 </li>
 <li>Commercial<ul>
@@ -1238,7 +1238,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Vulnerable Dependency Management ","level":"1.64","depth":1,"next":{"title":"Web Service Security ","level":"1.65","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Vulnerability Disclosure ","level":"1.63","depth":1,"path":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","ref":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md","mtime":"2019-10-15T11:23:39.064Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-15T11:24:05.267Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Vulnerable Dependency Management ","level":"1.64","depth":1,"next":{"title":"Web Service Security ","level":"1.65","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Vulnerability Disclosure ","level":"1.63","depth":1,"path":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","ref":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md","mtime":"2019-10-16T17:02:37.300Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-16T17:02:59.362Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

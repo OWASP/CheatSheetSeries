@@ -1043,7 +1043,7 @@
  &amp;lt;script&amp;gt;a=1;&amp;lt;/script&amp;gt;
 <span class="hljs-tag">&lt;/<span class="hljs-name">element</span>&gt;</span>
 </code></pre>
-<h2 id="coersive-parsing"><a name="coersive-parsing" class="plugin-anchor" href="#coersive-parsing"><i class="fa fa-link" aria-hidden="true"></i></a>Coersive Parsing</h2>
+<h2 id="coercive-parsing"><a name="coercive-parsing" class="plugin-anchor" href="#coercive-parsing"><i class="fa fa-link" aria-hidden="true"></i></a>Coercive Parsing</h2>
 <p>A coercive attack in XML involves parsing deeply nested XML documents without their corresponding ending tags. The idea is to make the victim use up -and eventually deplete- the machine&apos;s resources and cause a denial of service on the target. Reports of a DoS attack in Firefox 3.67 included the use of 30,000 open XML elements without their corresponding ending tags. Removing the closing tags simplified the attack since it requires only half of the size of a well-formed document to accomplish the same results. The number of tags being processed eventually caused a stack overflow. A simplified version of such a document would look like this:</p>
 <pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">A1</span>&gt;</span>
  <span class="hljs-tag">&lt;<span class="hljs-name">A2</span>&gt;</span> 
@@ -1236,7 +1236,7 @@
  <span class="hljs-tag">&lt;/<span class="hljs-name">xs:element</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">xs:schema</span>&gt;</span>
 </code></pre>
-<p>The previous schema includes a root element named <code>operation</code>, which can contain an unlimited (<code>unbounded</code>) amount of buy elements. This is a common finding, since developers do not normally want to restrict maximum numbers of ocurrences. Applications using limitless occurrences should test what happens when they receive an extremely large amount of elements to be processed. Since computational resources are limited, the consequences should be analyzed and eventually a maximum number ought to be used instead of an <code>unbounded</code> value.</p>
+<p>The previous schema includes a root element named <code>operation</code>, which can contain an unlimited (<code>unbounded</code>) amount of buy elements. This is a common finding, since developers do not normally want to restrict maximum numbers of occurrences. Applications using limitless occurrences should test what happens when they receive an extremely large amount of elements to be processed. Since computational resources are limited, the consequences should be analyzed and eventually a maximum number ought to be used instead of an <code>unbounded</code> value.</p>
 <h2 id="jumbo-payloads"><a name="jumbo-payloads" class="plugin-anchor" href="#jumbo-payloads"><i class="fa fa-link" aria-hidden="true"></i></a>Jumbo Payloads</h2>
 <p>Sending an XML document of 1GB requires only a second of server processing and might not be worth consideration as an attack. Instead, an attacker would look for a way to minimize the CPU and traffic used to generate this type of attack, compared to the overall amount of server CPU or traffic used to handle the requests.</p>
 <h3 id="traditional-jumbo-payloads"><a name="traditional-jumbo-payloads" class="plugin-anchor" href="#traditional-jumbo-payloads"><i class="fa fa-link" aria-hidden="true"></i></a>Traditional Jumbo Payloads</h3>
@@ -1361,19 +1361,19 @@ example.com has address 2.2.2.2
    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
    DocumentBuilder builder = factory.newDocumentBuilder();
    Document doc = builder.parse(<span class="hljs-keyword">new</span> InputSource(<span class="hljs-string">&quot;contacts.xml&quot;</span>));
-   NodeList nodeLst = doc.getElementsByTagName(<span class="hljs-string">&quot;contact&quot;</span>);
-   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> s = <span class="hljs-number">0</span>; s &lt; nodeLst.getLength(); s++) {
-     Node fstNode = nodeLst.item(s);
-     <span class="hljs-keyword">if</span> (fstNode.getNodeType() == Node.ELEMENT_NODE) {
-       Element fstElmnt = (Element) fstNode;
-       NodeList fstNmElmntLst = fstElmnt.getElementsByTagName(<span class="hljs-string">&quot;firstname&quot;</span>);
-       Element fstNmElmnt = (Element) fstNmElmntLst.item(<span class="hljs-number">0</span>);
-       NodeList fstNm = fstNmElmnt.getChildNodes();
-       System.out.println(<span class="hljs-string">&quot;First Name: &quot;</span>  + ((Node) fstNm.item(<span class="hljs-number">0</span>)).getNodeValue());
-       NodeList lstNmElmntLst = fstElmnt.getElementsByTagName(<span class="hljs-string">&quot;lastname&quot;</span>);
-       Element lstNmElmnt = (Element) lstNmElmntLst.item(<span class="hljs-number">0</span>);
-       NodeList lstNm = lstNmElmnt.getChildNodes();
-       System.out.println(<span class="hljs-string">&quot;Last Name: &quot;</span> + ((Node) lstNm.item(<span class="hljs-number">0</span>)).getNodeValue());
+   NodeList nodeList = doc.getElementsByTagName(<span class="hljs-string">&quot;contact&quot;</span>);
+   <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> s = <span class="hljs-number">0</span>; s &lt; nodeList.getLength(); s++) {
+     Node firstNode = nodeList.item(s);
+     <span class="hljs-keyword">if</span> (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+       Element firstElement = (Element) firstNode;
+       NodeList firstNameElementList = firstElement.getElementsByTagName(<span class="hljs-string">&quot;firstname&quot;</span>);
+       Element firstNameElement = (Element) firstNameElementList.item(<span class="hljs-number">0</span>);
+       NodeList firstName = firstNameElement.getChildNodes();
+       System.out.println(<span class="hljs-string">&quot;First Name: &quot;</span>  + ((Node) firstName.item(<span class="hljs-number">0</span>)).getNodeValue());
+       NodeList lastNameElementList = firstElement.getElementsByTagName(<span class="hljs-string">&quot;lastname&quot;</span>);
+       Element lastNameElement = (Element) lastNameElementList.item(<span class="hljs-number">0</span>);
+       NodeList lastName = lastNameElement.getChildNodes();
+       System.out.println(<span class="hljs-string">&quot;Last Name: &quot;</span> + ((Node) lastName.item(<span class="hljs-number">0</span>)).getNodeValue());
      }
     }
   } <span class="hljs-keyword">catch</span> (Exception e) {
@@ -1657,7 +1657,7 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"XML Security ","level":"1.67","depth":1,"previous":{"title":"XML External Entity Prevention ","level":"1.66","depth":1,"path":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","ref":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/XML_Security_Cheat_Sheet.md","mtime":"2019-10-15T11:23:39.064Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-15T11:24:05.267Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"XML Security ","level":"1.67","depth":1,"previous":{"title":"XML External Entity Prevention ","level":"1.66","depth":1,"path":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","ref":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/XML_Security_Cheat_Sheet.md","mtime":"2019-10-16T17:02:37.304Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-16T17:02:59.362Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

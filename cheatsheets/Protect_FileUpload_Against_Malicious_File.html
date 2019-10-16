@@ -1019,20 +1019,20 @@
 <p>Usually, when an application expect his user to upload a document, the application expect to receive a document for which the intended use will be for reading/printing/archiving. The document should not alter is content at opening time and should be in a final rendered state.</p>
 <p>The most common file types used to transmit <em>malicious code</em> into file upload feature are the following:</p>
 <ul>
-<li>Microsoft Office document: Word/Excel/Powerpoint using <a href="https://en.wikipedia.org/wiki/Visual_Basic_for_Applications" target="_blank">VBA Macro</a> and <a href="https://en.wikipedia.org/wiki/Object_Linking_and_Embedding" target="_blank">OLE package</a>.</li>
+<li>Microsoft Office document: Word/Excel/PowerPoint using <a href="https://en.wikipedia.org/wiki/Visual_Basic_for_Applications" target="_blank">VBA Macro</a> and <a href="https://en.wikipedia.org/wiki/Object_Linking_and_Embedding" target="_blank">OLE package</a>.</li>
 <li>Adobe PDF document: Insert malicious code as attachment.</li>
 <li>Images: Malicious code embedded into the file or use of binary file with image file extension.</li>
 </ul>
 <h1 id="approaches"><a name="approaches" class="plugin-anchor" href="#approaches"><i class="fa fa-link" aria-hidden="true"></i></a>Approaches</h1>
 <p>Based on this context, the goals here are:</p>
 <ul>
-<li>For Word/Excel/Powerpoint/Pdf documents: Detect when a document contains &quot;code&quot;/OLE package, if it&apos;s the case then block the upload process.</li>
+<li>For Word/Excel/PowerPoint/Pdf documents: Detect when a document contains &quot;code&quot;/OLE package, if it&apos;s the case then block the upload process.</li>
 <li>For Images document: Sanitize incoming image using re-writing approach and then disable/remove any &quot;code&quot; present (this approach also handle case in which the file sent is not an image).</li>
 </ul>
 <p>Remarks:</p>
 <ul>
-<li>It&apos;s technically possible to perform sanitizing on Word/Excel/Powerpoint/PDF documents but we have choosen here the option to block them in order to avoid the risk of missing any evasion technics and then let pass one evil document. The following <a href="https://www.greyhathacker.net/?p=872" target="_blank">site</a> show how many way exists to embed Macro into a Microsoft Office documents.</li>
-<li>The other reason why we have choosen the blocking way is that for Word/Excel/Powerpoint, changing document format (for example by saving any document to <code>DOCX/XSLX/PPTX/PPSX</code> formats in order to be sure that no Macro can be executed) can have impacts or cause issues on document structure/rendering depending on the API used.</li>
+<li>It&apos;s technically possible to perform sanitizing on Word/Excel/PowerPoint/PDF documents but we have chosen here the option to block them in order to avoid the risk of missing any evasion techniques and then let pass one evil document. The following <a href="https://www.greyhathacker.net/?p=872" target="_blank">site</a> show how many way exists to embed Macro into a Microsoft Office documents.</li>
+<li>The other reason why we have chosen the blocking way is that for Word/Excel/PowerPoint, changing document format (for example by saving any document to <code>DOCX/XSLX/PPTX/PPSX</code> formats in order to be sure that no Macro can be executed) can have impacts or cause issues on document structure/rendering depending on the API used.</li>
 </ul>
 <h1 id="cases"><a name="cases" class="plugin-anchor" href="#cases"><i class="fa fa-link" aria-hidden="true"></i></a>Cases</h1>
 <h2 id="common-codes"><a name="common-codes" class="plugin-anchor" href="#common-codes"><i class="fa fa-link" aria-hidden="true"></i></a>Common codes</h2>
@@ -1079,7 +1079,7 @@
     <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">madeSafe</span><span class="hljs-params">(File f)</span></span>;
 }
 </code></pre>
-<h2 id="case-n&#xB0;1-word--excel--powerpoint"><a name="case-n&#xB0;1-word--excel--powerpoint" class="plugin-anchor" href="#case-n&#xB0;1-word--excel--powerpoint"><i class="fa fa-link" aria-hidden="true"></i></a>Case n&#xB0;1: Word / Excel / Powerpoint</h2>
+<h2 id="case-n&#xB0;1-word--excel--powerpoint"><a name="case-n&#xB0;1-word--excel--powerpoint" class="plugin-anchor" href="#case-n&#xB0;1-word--excel--powerpoint"><i class="fa fa-link" aria-hidden="true"></i></a>Case n&#xB0;1: Word / Excel / PowerPoint</h2>
 <p>The reason why Aspose API have been used here are the following:</p>
 <ul>
 <li>There many way to embed Macro into a Microsoft Office document and, instead of manually support all the way that exists on the wild (they evolve every days), we prefer to use features from a company that perform R&amp;D on these formats, precisely DOC/XLS/PPT native formats that are proprietary.</li>
@@ -1259,7 +1259,7 @@
 
 }
 </code></pre>
-<p>Detector for Powerpoint document:</p>
+<p>Detector for PowerPoint document:</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> com.aspose.slides.IOleObjectFrame;
 <span class="hljs-keyword">import</span> com.aspose.slides.IShape;
 <span class="hljs-keyword">import</span> com.aspose.slides.ISlide;
@@ -1270,16 +1270,16 @@
 <span class="hljs-keyword">import</span> java.io.File;
 
 <span class="hljs-comment">/**
- * Implementation of the detector for Microsoft Powerpoint document.
+ * Implementation of the detector for Microsoft PowerPoint document.
  *
  *
  */</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PowerpointDocumentDetectorImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">DocumentDetector</span> </span>{
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PowerPointDocumentDetectorImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">DocumentDetector</span> </span>{
 
     <span class="hljs-comment">/**
      * LOGGER
      */</span>
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Logger LOG = LoggerFactory.getLogger(PowerpointDocumentDetectorImpl.class);
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Logger LOG = LoggerFactory.getLogger(PowerPointDocumentDetectorImpl.class);
 
     <span class="hljs-comment">/**
      * {<span class="hljs-doctag">@inheritDoc</span>}
@@ -1290,9 +1290,9 @@
         <span class="hljs-keyword">boolean</span> safeState = <span class="hljs-keyword">false</span>;
         <span class="hljs-keyword">try</span> {
             <span class="hljs-keyword">if</span> ((f != <span class="hljs-keyword">null</span>) &amp;&amp; f.exists() &amp;&amp; f.canRead()) {
-                <span class="hljs-comment">// Load the file into the Powerpoint document parser</span>
+                <span class="hljs-comment">// Load the file into the PowerPoint document parser</span>
                 Presentation presentation = <span class="hljs-keyword">new</span> Presentation(f.getAbsolutePath());
-                <span class="hljs-comment">// First check on Powerpoint format skipped because:</span>
+                <span class="hljs-comment">// First check on PowerPoint format skipped because:</span>
                 <span class="hljs-comment">// FileFormatInfo class is not provided for Aspose Slides API</span>
                 <span class="hljs-comment">// PresentationFactory.getInstance().getPresentationInfo() can be used </span>
                 <span class="hljs-comment">// but the LoadFormat class miss format like POT or PPT XML</span>
@@ -1320,7 +1320,7 @@
             }
         } <span class="hljs-keyword">catch</span> (Exception e) {
             safeState = <span class="hljs-keyword">false</span>;
-            LOG.warn(<span class="hljs-string">&quot;Error during Powerpoint file analysis !&quot;</span>, e);
+            LOG.warn(<span class="hljs-string">&quot;Error during PowerPoint file analysis !&quot;</span>, e);
         }
         <span class="hljs-keyword">return</span> safeState;
     }
@@ -1615,7 +1615,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Protect FileUpload Against Malicious File","level":"1.45","depth":1,"next":{"title":"Query Parameterization ","level":"1.46","depth":1,"path":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","ref":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","articles":[]},"previous":{"title":"Pinning ","level":"1.44","depth":1,"path":"cheatsheets/Pinning_Cheat_Sheet.md","ref":"cheatsheets/Pinning_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Protect_FileUpload_Against_Malicious_File.md","mtime":"2019-10-15T11:23:39.064Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-15T11:24:05.267Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Protect FileUpload Against Malicious File","level":"1.45","depth":1,"next":{"title":"Query Parameterization ","level":"1.46","depth":1,"path":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","ref":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","articles":[]},"previous":{"title":"Pinning ","level":"1.44","depth":1,"path":"cheatsheets/Pinning_Cheat_Sheet.md","ref":"cheatsheets/Pinning_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Protect_FileUpload_Against_Malicious_File.md","mtime":"2019-10-16T17:02:37.300Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-16T17:02:59.362Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
