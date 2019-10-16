@@ -1,8 +1,8 @@
 # Introduction
 
-Error handling is a part of the overall security of an application. Except in movies, an attack always begin by a **Reconnaissance** phase in which the attacker will try to gather as much technical information (often *name* and *version* properties) as possible about the target like, for example, the application server, the technologies, the frameworks, the libraries...
+Error handling is a part of the overall security of an application. Except in movies, an attack always begin by a **Reconnaissance** phase in which the attacker will try to gather as much technical information (often *name* and *version* properties) as possible about the target, such as the application server, frameworks, libraries, etc.
 
-Unhandled errors facilitate the work for an attacker in this initial phase, which is very important for the rest the attack.
+Unhandled errors can assist an attacker in this initial phase, which is very important for the rest the attack.
 
 The following [link](http://blog.cipher.com/the-6-primary-phases-of-penetration-testing) provides a description of the different phases of an attack.
 
