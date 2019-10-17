@@ -12,7 +12,7 @@ Usually, when an application expect his user to upload a document, the applicati
 
 The most common file types used to transmit *malicious code* into file upload feature are the following:
 
-- Microsoft Office document: Word/Excel/Powerpoint using [VBA Macro](https://en.wikipedia.org/wiki/Visual_Basic_for_Applications) and [OLE package](https://en.wikipedia.org/wiki/Object_Linking_and_Embedding).
+- Microsoft Office document: Word/Excel/PowerPoint using [VBA Macro](https://en.wikipedia.org/wiki/Visual_Basic_for_Applications) and [OLE package](https://en.wikipedia.org/wiki/Object_Linking_and_Embedding).
 - Adobe PDF document: Insert malicious code as attachment.
 - Images: Malicious code embedded into the file or use of binary file with image file extension.
 
@@ -20,13 +20,13 @@ The most common file types used to transmit *malicious code* into file upload fe
 
 Based on this context, the goals here are:
 
-- For Word/Excel/Powerpoint/Pdf documents: Detect when a document contains "code"/OLE package, if it's the case then block the upload process.
+- For Word/Excel/PowerPoint/Pdf documents: Detect when a document contains "code"/OLE package, if it's the case then block the upload process.
 - For Images document: Sanitize incoming image using re-writing approach and then disable/remove any "code" present (this approach also handle case in which the file sent is not an image).
 
 Remarks:
 
-- It's technically possible to perform sanitizing on Word/Excel/Powerpoint/PDF documents but we have choosen here the option to block them in order to avoid the risk of missing any evasion technics and then let pass one evil document. The following [site](https://www.greyhathacker.net/?p=872) show how many way exists to embed Macro into a Microsoft Office documents.
-- The other reason why we have choosen the blocking way is that for Word/Excel/Powerpoint, changing document format (for example by saving any document to `DOCX/XSLX/PPTX/PPSX` formats in order to be sure that no Macro can be executed) can have impacts or cause issues on document structure/rendering depending on the API used.
+- It's technically possible to perform sanitizing on Word/Excel/PowerPoint/PDF documents but we have chosen here the option to block them in order to avoid the risk of missing any evasion techniques and then let pass one evil document. The following [site](https://www.greyhathacker.net/?p=872) show how many way exists to embed Macro into a Microsoft Office documents.
+- The other reason why we have chosen the blocking way is that for Word/Excel/PowerPoint, changing document format (for example by saving any document to `DOCX/XSLX/PPTX/PPSX` formats in order to be sure that no Macro can be executed) can have impacts or cause issues on document structure/rendering depending on the API used.
 
 # Cases
 
@@ -83,7 +83,7 @@ public interface DocumentSanitizer {
 }
 ```
 
-## Case n°1: Word / Excel / Powerpoint
+## Case n°1: Word / Excel / PowerPoint
 
 The reason why Aspose API have been used here are the following:
 
@@ -270,7 +270,7 @@ public class ExcelDocumentDetectorImpl implements DocumentDetector {
 }
 ```
 
-Detector for Powerpoint document:
+Detector for PowerPoint document:
 
 ``` java
 import com.aspose.slides.IOleObjectFrame;
@@ -283,16 +283,16 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 /**
- * Implementation of the detector for Microsoft Powerpoint document.
+ * Implementation of the detector for Microsoft PowerPoint document.
  *
  *
  */
-public class PowerpointDocumentDetectorImpl implements DocumentDetector {
+public class PowerPointDocumentDetectorImpl implements DocumentDetector {
 
     /**
      * LOGGER
      */
-    private static final Logger LOG = LoggerFactory.getLogger(PowerpointDocumentDetectorImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PowerPointDocumentDetectorImpl.class);
 
     /**
      * {@inheritDoc}
@@ -303,9 +303,9 @@ public class PowerpointDocumentDetectorImpl implements DocumentDetector {
         boolean safeState = false;
         try {
             if ((f != null) && f.exists() && f.canRead()) {
-                // Load the file into the Powerpoint document parser
+                // Load the file into the PowerPoint document parser
                 Presentation presentation = new Presentation(f.getAbsolutePath());
-                // First check on Powerpoint format skipped because:
+                // First check on PowerPoint format skipped because:
                 // FileFormatInfo class is not provided for Aspose Slides API
                 // PresentationFactory.getInstance().getPresentationInfo() can be used 
                 // but the LoadFormat class miss format like POT or PPT XML
@@ -333,7 +333,7 @@ public class PowerpointDocumentDetectorImpl implements DocumentDetector {
             }
         } catch (Exception e) {
             safeState = false;
-            LOG.warn("Error during Powerpoint file analysis !", e);
+            LOG.warn("Error during PowerPoint file analysis !", e);
         }
         return safeState;
     }

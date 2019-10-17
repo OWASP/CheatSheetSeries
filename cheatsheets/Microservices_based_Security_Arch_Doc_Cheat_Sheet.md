@@ -100,7 +100,7 @@ Collect information on the parameters listed below related to each "service-to-s
 | :--- | :--- |
 | Caller service name (ID) | Specify caller service name (ID) defined above
 | Called service name (ID) | Specify called service name (ID) defined above
-| Protocol/framework used| Specify protocol/framework used for communication, e.g. HTTP (REST, SOAP), Apache Thrif, gRPC
+| Protocol/framework used| Specify protocol/framework used for communication, e.g. HTTP (REST, SOAP), Apache Thrift, gRPC
 | Short description | Shortly describe the purpose of communication (requests for query of information or request/commands for a state-changing business function) and data passed between services (if possible, in therms of assets defined above)
 
 ### Identify "service-to-service" asynchronous communications

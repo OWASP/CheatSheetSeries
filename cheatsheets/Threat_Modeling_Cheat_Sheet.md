@@ -25,9 +25,9 @@ Understand the Relation between Risk, Threats, and Vulnerabilities.
 
 *Attack Surface*, the sum of the different points (the "attack vectors") where an unauthorized user (the "attacker") can try to enter data to or extract data from an environment.
 
-*Likelihood*, the possibility of a a threat event occuring where a threat actor will exploit a weakness. The likelihood of threat events resulting in adverse impacts estimates the possibility that a threat event would result in an actual outcome. The combined analysis of both threat assessment vectors impacts established an overall threat likelihood.
+*Likelihood*, the possibility of a a threat event occurring where a threat actor will exploit a weakness. The likelihood of threat events resulting in adverse impacts estimates the possibility that a threat event would result in an actual outcome. The combined analysis of both threat assessment vectors impacts established an overall threat likelihood.
 
-*Impact*, the potential damage (physical, logical, monitary loss, etc) of a threat event.
+*Impact*, the potential damage (physical, logical, monetary loss, etc) of a threat event.
 
 *Control* a safeguard or countermeasure to avoid, detect, counteract, or minimize security risks to information, computer systems, or other assets.
 
@@ -258,7 +258,7 @@ For more details [about PASTA](https://www.owasp.org/images/a/aa/AppSecEU2012_PA
 
 ## Rank Risks
 
-Using risk matrix rank risks from most severe to least severe based on Means, Motive & Opportunity. Below is a sample risk matrix table, depending on your risk approach you can define deferent risk ranking matrix:
+Using risk matrix rank risks from most severe to least severe based on Means, Motive & Opportunity. Below is a sample risk matrix table, depending on your risk approach you can define different risk ranking matrix:
 
 - Risk Value: 01 to 12 &rarr; Risk Level: **Notice**
 - Risk Value: 13 to 18 &rarr; Risk Level: **Low**
