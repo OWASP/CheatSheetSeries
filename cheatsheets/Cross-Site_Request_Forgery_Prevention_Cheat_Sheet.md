@@ -219,6 +219,8 @@ Scenarios a and b mentioned above are possible only if the CSRF token is not der
 
 Including the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side matching it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for ajax calls mitigates both the issues mentioned above. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.
 
+A simpler alternative to an encrypted cookie is to hash the token with a secret salt known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a salted-hash is used, an attacker won't be able to recreate the cookie value from the plain token without knowledge of the server secrets.
+
 **Note about Triple Submit Cookie** 
 
 This mitigation is proposed by John Wilander in 2012 at OWASP Appsec Research. This technique adds an additional step to double submit cookie approach by verifying if the request contains two cookies with same name (please note, attacker need to write an additional cookie to bypass double submit cookie mitigation). Though it mitigates the issues discussed in bypass of double submit cookie, it introduces new problems such as cookie jar overflow (in-details and more issue details [here](https://media.blackhat.com/eu-13/briefings/Lundeen/bh-eu-13-deputies-still-confused-lundeen-wp.pdf) and [here](https://webstersprodigy.net/2012/08/03/analysis-of-john-wilanders-triple-submit-cookies/)
