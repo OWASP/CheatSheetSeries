@@ -393,14 +393,14 @@ app.use(session({
 
 There are several different [HTTP security headers](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Best_Practices) that can help you prevent some common attack vectors. These are listed below:
 
-- **[Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)**: [HTTP Strict Transport Security (HSTS)](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html) dictates browsers that the application can only be accessed via HTTPS connections. This header takes two parameters:  `max-age` to determine how long this configuration will be valid and `includeSubDomains` to state if subdomains are to be treated in the same way. In order to use it in your application, add the following codes:
+- **[Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)**: [HTTP Strict Transport Security (HSTS)](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html) dictates browsers that the application can only be accessed via HTTPS connections. In order to use it in your application, add the following codes:
 
 ```JavaScript
 app.use(helmet.hsts()); // default configuration
 app.use(helmet.hsts("<max-age>", "<includeSubdomains>")); // custom configuration
 ```
 
-- **[X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options):** determines if a page can be loaded via a \<frame> or an \<iframe> element. Allowing the page to be framed may result in clickjacking attacks which aims to manipulate users into clicking on a different element instead of the one they intend to. This header has 3 directives: DENY to never allow framing, SAMEORIGIN to only allow framing within the same origin and ALLOW-FROM to only allow framing from specified URIs. These behaviors can be achieved with helmet module as follows:
+- **[X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options):** determines if a page can be loaded via a \<frame> or an \<iframe> element. Allowing the page to be framed may result in [Clickjacking](https://www.owasp.org/index.php/Clickjacking) attacks. This header can be used with [helmet](https://www.npmjs.com/package/helmet) module as follows:
 
 ```JavaScript
 app.use(hemlet.xframe()); // default behavior (DENY)
@@ -415,13 +415,13 @@ var xssFilter = require('x-xss-protection');
 app.use(xssFilter());
 ```
 
-- **[X-Content-Type-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options):** Even if the server sets a valid Content-Type header in the response, browsers may try to sniff the MIME type of the requested resource. This header is a way to stop this behavior and tell the browser not to change MIME types specified in Content-Type header. It can be configured in the following way:
+- **[X-Content-Type-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options):** Even if the server sets a valid `Content-Type` header in the response, browsers may try to sniff the MIME type of the requested resource. This header is a way to stop this behavior and tell the browser not to change MIME types specified in `Content-Type` header. It can be configured in the following way:
 
 ```JavaScript
 app.use(helmet.noSniff());
 ```
 
-- **[Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy):** Content Security Policy is developed to reduce the risk of attacks like XSS and Clickjacking. Basically, it allows content from a whitelist you decide. Other content from different sources is not accepted if Content-Security-Policy headers are set correctly. It has several directives each of which prohibits loading specific type of a content. You can refer to [Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) for detailed explanation of each directive and how to use it. You can implement these settings in your application as follows:
+- **[Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy):** Content Security Policy is developed to reduce the risk of attacks like [Cross-Site Scripting (XSS)](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)) and [Clickjacking](https://www.owasp.org/index.php/Clickjacking). Basically, it allows content from a whitelist you decide. It has several directives each of which prohibits loading specific type of a content. You can refer to [Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) for detailed explanation of each directive and how to use it. You can implement these settings in your application as follows:
 
 ```JavaScript
 const csp = require('helmet-csp')
@@ -450,7 +450,7 @@ The above code sets Cache-Control, Surrogate-Control, Pragma and Expires headers
 app.use(helmet.ieNoOpen());
 ```
 
-- **[Expect-CT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT):** Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. It has three directives. The `enforce` directive dictates if the policy should be enforced or be used in report-only mode. The `max-age` directive specifies how long this setting will be valid. Finally, the `report-uri` directive specifies where the browser should send invalid CT information reports. These can be implemented in your application as follows:
+- **[Expect-CT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT):** Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. Expect-CT header may enforce certificate transparency requirements. It can be implemented in your application as follows:
 
 ```JavaScript
 var expectCt = require('expect-ct');
@@ -459,7 +459,7 @@ app.use(expectCt({ enforce: true, maxAge: 123 }));
 app.use(expectCt({ enforce: true, maxAge: 123, reportUri: 'http://example.com'}));
 ```
 
-- **[Public-Key-Pins](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins):** This header increases the security of HTTPS. With this header, a specific cryptographic public key is associated with a specific web server. If the server does not use the pinned keys in future, the browser regards the responses as illegitimate. It has 2 optional (`reportUri`, `includeSubDomains`) and 2 required (`pin-sha256`, `max-age`) directives. These can be used as follows:
+- **[Public-Key-Pins](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins):** This header increases the security of HTTPS. With this header, a specific cryptographic public key is associated with a specific web server. If the server does not use the pinned keys in future, the browser regards the responses as illegitimate. It can be used as follows:
 
 ```JavaScript
 app.use(helmet.hpkp({
