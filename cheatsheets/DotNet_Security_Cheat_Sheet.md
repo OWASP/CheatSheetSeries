@@ -615,9 +615,9 @@ public void RemoveAntiForgeryCookie(Controller controller)
 
 #### Using .NET Core 2.0 or later:
 
-After .NET Core 2.0 it is possible to [automatically generate and verify the antiforgery token](https://github.com/aspnet/AspNetCore.Docs/blob/master/aspnetcore/security/anti-request-forgery.md#aspnet-core-antiforgery-configuration).
+Starting with .NET Core 2.0 it is possible to [automatically generate and verify the antiforgery token](https://github.com/aspnet/AspNetCore.Docs/blob/master/aspnetcore/security/anti-request-forgery.md#aspnet-core-antiforgery-configuration).
 
-If you are using [tag-helpers](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro) - which is the default for most web project templates - all forms will automatically send the anti-forgery token.
+If you are using [tag-helpers](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro), which is the default for most web project templates, then all forms will automatically send the anti-forgery token.
 You can check if tag-helpers are enabled by checking if your main `_ViewImports.cshtml` file contains:
 
 ```csharp
@@ -626,7 +626,7 @@ You can check if tag-helpers are enabled by checking if your main `_ViewImports.
 
 `IHtmlHelper.BeginForm` also sends anti-forgery-tokens automatically.
 
-If you are not using tag-helpers or `IHtmlHelper.BeginForm`, forms must have the requisite helper as seen here:
+Unless you are using tag-helpers or `IHtmlHelper.BeginForm`, you must use the requisite helper on forms as seen here:
 
 ```html
 <form action="RelevantAction" >
@@ -643,11 +643,27 @@ services.AddMvc(options =>
 });
 ```
 
-If you need to disable the attribute validation for a specific method you can add the [IgnoreAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.ignoreantiforgerytokenattribute?view=aspnetcore-2.2) attribute to this action method. 
+If you need to disable the attribute validation for a specific method you can add the [IgnoreAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.ignoreantiforgerytokenattribute?view=aspnetcore-2.2) attribute to this action method: 
 
-If you need to also validate the token on GET, HEAD, OPTIONS or TRACE - requests you can add the [ValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the action method or parent class.
+```csharp
+[IgnoreAntiforgeryToken]
+public IActionResult OnPostAsync()
+```
 
-In case you can't use a global action filter, add the [AutoValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to your controller classes.
+If you need to also validate the token on GET, HEAD, OPTIONS or TRACE - requests you can add the [ValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the action method or parent class:
+
+```csharp
+[HttpGet]
+[ValidateAntiforgeryToken]
+public IActionResult DoSomethingDangerous()
+```
+
+In case you can't use a global action filter, add the [AutoValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to your controller classes:
+
+```csharp
+[AutoValidateAntiforgeryToken]
+public class UserController
+```
 
 #### Using .Net Core 2.0 or .NET Framework with AJAX
 
