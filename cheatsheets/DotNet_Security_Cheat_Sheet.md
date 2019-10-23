@@ -286,7 +286,7 @@ if (string.IsNullOrEmpty(address))
 	// Create an instance of IPAddress for the specified address string (in 
 	// dotted-quad, or colon-hexadecimal notation).
 	if IPAddress.TryParse(ipAddress, out var address)
-
+	{
 		// Display the address in standard notation.
 		return address.ToString();
 	}
