@@ -643,14 +643,20 @@ services.AddMvc(options =>
 });
 ```
 
-If you need to disable the attribute validation for a specific method you can add the [IgnoreAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.ignoreantiforgerytokenattribute?view=aspnetcore-2.2) attribute to this action method: 
+If you need to disable the attribute validation for a specific method on a controller you can add the [IgnoreAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.ignoreantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the controller method (for MVC controllers) or parent class (for Razor pages): 
 
 ```csharp
 [IgnoreAntiforgeryToken]
-public IActionResult OnPostAsync()
+[HttpDelete]
+public IActionResult Delete()
 ```
 
-If you need to also validate the token on GET, HEAD, OPTIONS or TRACE - requests you can add the [ValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the action method or parent class:
+```csharp
+[IgnoreAntiforgeryToken]
+public class UnsafeModel : PageModel
+```
+
+If you need to also validate the token on GET, HEAD, OPTIONS or TRACE - requests you can add the [ValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the controller method (for MVC controllers) or parent class (for Razor pages):
 
 ```csharp
 [HttpGet]
@@ -658,11 +664,22 @@ If you need to also validate the token on GET, HEAD, OPTIONS or TRACE - requests
 public IActionResult DoSomethingDangerous()
 ```
 
-In case you can't use a global action filter, add the [AutoValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to your controller classes:
+```csharp
+[HttpGet]
+[ValidateAntiforgeryToken]
+public class SafeModel : PageModel
+```
+
+In case you can't use a global action filter, add the [AutoValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to your controller classes or razor page models:
 
 ```csharp
 [AutoValidateAntiforgeryToken]
 public class UserController
+```
+
+```csharp
+[AutoValidateAntiforgeryToken]
+public class SafeModel : PageModel
 ```
 
 #### Using .Net Core 2.0 or .NET Framework with AJAX
