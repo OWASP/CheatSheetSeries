@@ -278,7 +278,7 @@ e.g Validating user input using [IPAddress.TryParse Method](https://docs.microso
 
 ``` csharp
 //User input
-string ipaddress = "127.0.0.1";
+string ipAddress = "127.0.0.1";
  
 //check to make sure an ip address was provided    
 if (string.IsNullOrEmpty(address))  
@@ -292,7 +292,7 @@ if (string.IsNullOrEmpty(address))
 	}
 	else
 	{
-		//ipaddress is not of type IPaddress
+		//ipAddress is not of type IPAddress
 		...
 	}
     ...
