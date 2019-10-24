@@ -82,6 +82,40 @@ Measure the adoption and effectiveness of implemented improvements by analyzing 
 
 As part of a quick start effort, the first four phases (preparation, assess, setting the target and defining the plan) can be executed by a single person in a limited amount of time (1 to 2 days). Making sure that this is supported in the organization, as well as the implementation and roll-out phases typically require much more time to execute.
 
+**Manage receivables**
+If you sell on credit, it’s critical to keep an eye on your receivables. If a customer doesn’t pay by the due date, it’s important to send a reminder and ask for your payment.
+
+Your accounting system should be able to give you an accounts receivable aging report. You can use this to call or email the clients who have missed their payment date. Furthermore, if an account becomes uncollectible, you have to write off the amount to get a tax deduction.
+
+Seriously, it’s very important to monitor this aspect of your business closely. If your “days sales outstanding” shows a rising trend, it’s definitely time to take corrective action. You may need to review your credit policy and offer credit only to those customers who have a good payment record in order to get out of this hole!
+
+**Manage inventory**
+If your business maintains an inventory of the products that you sell, you must have:
+
+The right products
+An adequate quantity of stock
+The ability to make the stock available at the right time
+How will you ensure that you meet these requirements at all times? You can keep track of your inventory manually or, if your business is large enough, you can use inventory management software. Remember: it’s crucial to periodically audit your stock and match your physical inventory with your accounting records.
+
+Understand depreciation of long-term assets
+Many of the assets that you use in your business decrease in value over time. This decrease is referred to as depreciation, and in specific instances, it could provide you with a tax advantage.
+
+The IRS permits you to depreciate assets that meet the following criteria:
+
+You must own the asset.
+It must be used in your business.
+The asset or property should have a “determinable useful life.”
+It should last more than one year.
+
+**Review balance sheets**
+Your balance sheet provides a snapshot of your assets and liabilities on a specific date. The balance sheet formula explains the source and application of funds like so:
+
+Assets = Liabilities + Shareholders’ Equity
+
+When you carry out a review, keep an eye out for the changes that have taken place between the latest statement and the statement made on an earlier date. What can this review tell you?
+
+Consider an example where you see that your inventory levels have increased. Is this because you have recently stocked up for the holiday season, or is the increase in inventory because your stock is slow moving/obsolete? While the former situation is favorable, the latter could mean that you may soon have to write off a part of your inventory.
+
 Final Notes
 ===========
 
