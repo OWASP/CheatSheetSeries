@@ -379,7 +379,6 @@ This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/He
 Note that Firefox never supported X-XSS-Protection and Chrome and Edge are
 removing support for it now:
 
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
 
 ## Bonus Rule \#5: Properly use modern JS frameworks like Angular (2+) or ReactJS
 
