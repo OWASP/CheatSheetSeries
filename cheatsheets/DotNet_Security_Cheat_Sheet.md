@@ -281,11 +281,11 @@ e.g Validating user input using [IPAddress.TryParse Method](https://docs.microso
 string ipAddress = "127.0.0.1";
  
 //check to make sure an ip address was provided    
-if (string.IsNullOrEmpty(address))  
+if (string.IsNullOrEmpty(ipAddress))  
 {
 	// Create an instance of IPAddress for the specified address string (in 
 	// dotted-quad, or colon-hexadecimal notation).
-	if IPAddress.TryParse(ipAddress, out var address)
+	if (IPAddress.TryParse(ipAddress, out var address))
 	{
 		// Display the address in standard notation.
 		return address.ToString();
