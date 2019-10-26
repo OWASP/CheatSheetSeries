@@ -126,6 +126,7 @@ It should be noted that PINs, "secret words" and other similar type of informati
 
 - Users are prone to choosing weak passwords.
 - Passwords are commonly re-used between systems.
+- Susceptible to phishing.
 
 ## Security Questions
 
@@ -140,6 +141,7 @@ Security questions require the user to choose (or create) a number of questions 
 - Questions often have easily guessable answers.
 - Answers to questions can often be obtained from social media or other sources.
 - Questions must be carefully chosen so that users will remember answers years later.
+- Susceptible to phishing.
 
 # Something You Have
 
@@ -164,6 +166,7 @@ Physical hardware OTP tokens can be used which generate constantly changing nume
 - If a user loses their token it could take a significant amount of time to purchase and ship them a new one.
 - Some implementations require a backend server, which can introduce new vulnerabilities as well as a single point of failure.
 - Stolen tokens can be used without a PIN or device unlock code.
+- Susceptible to phishing (although short-lived).
 
 ## Software TOTP Tokens
 
@@ -185,6 +188,7 @@ Most websites use standardised TOTP tokens, allowing the user to install any aut
 - Users may store the backup seeds insecurely.
 - Not all users have mobile devices to use with TOTP.
 - If the users mobile device is lost, stolen or out of battery, they will be unable to authenticate.
+- Susceptible to phishing (although short-lived).
 
 ## Hardware U2F Tokens
 
@@ -194,6 +198,7 @@ Hardware U2F tokens communicate with the users workstation over USB or NFC, and 
 
 - Longer codes can be used, which may provide a higher level of security.
 - Users can simply press a button rather than typing in a code.
+- Resistant to phishing.
 
 ### Cons
 
@@ -212,6 +217,7 @@ Certificates are supported by all major web browsers, and once installed require
 - There is no need to purchase and manage hardware tokens.
 - Once installed, certificates are very simple for users.
 - Certificates can be centrally managed and revoked.
+- Resistant to phishing.
 
 ### Cons
 
@@ -235,6 +241,7 @@ Smartcards are credit-card size cards with a chip containing a digital certifica
 - Smartcards are not natively supported by modern browsers, so require third party software.
 - Although most business-class laptops have smartcard readers built in, home systems often do not.
 - The use of smartcards requires functioning backend PKI systems.
+- Resistant to phishing.
 
 ## SMS Messages and Phone Calls
 
@@ -252,6 +259,7 @@ SMS messages or phone calls can be used to provide users with a single-use code 
 - Calls and SMS messages may cost money to send (need to protect against attackers requesting a large number of messages to exhaust funds.
 - A number of attacks against SMS or mobile numbers have been demonstrated and exploited in the past.
 - SMS messages may be received on the same device the user is authenticating from.
+- Susceptible to phishing.
 
 ## Email
 
@@ -268,6 +276,7 @@ Email verification requires that the user enters a code or clicks  a link send t
 - Email passwords are commonly the same as application passwords.
 - Provides no protection if the user's email is compromised first.
 - Email may be received by the same device the user is authenticating from.
+- Susceptible to phishing.
 
 # Something You Are
 
