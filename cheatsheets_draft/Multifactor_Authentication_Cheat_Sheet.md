@@ -36,7 +36,7 @@ Exactly when and how MFA is implemented in an application will vary on a number 
 
 However, the following recommendations are generally appropriate for most applications, and provide an initial starting point to consider.
 
-- Provide the option for users to enable MFA on their accounts using [TOTP](#software-otp-tokens).
+- Provide the option for users to enable MFA on their accounts using [TOTP](#software-totp-tokens).
 - Require MFA for administrative or other high privileged users.
 - Consider whitelisting corporate IP ranges so that MFA is not required from them.
 - Allow the user to remember the use of MFA in their browser, so they are not prompted every time they login.
