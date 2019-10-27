@@ -240,32 +240,19 @@ A special thank you to the following people for their help provided during the m
 
 # License
 
-See [here](LICENSE.md).
+The entire project content is under the **[Creative Commons v3.0](https://creativecommons.org/licenses/by-sa/3.0/)** license.
 
 # DNS configuration for the website
 
-```shell
-$ dig cheatsheetseries.owasp.org
+| Type | Record | Value |
+|------|--------|-------|
+| CNAME | cheatsheetseries.owasp.org | owasp.github.io |
+| A | owasp.github.io | 185.199.108.153 |
+| A | owasp.github.io | 185.199.109.153 |
+| A | owasp.github.io | 185.199.110.153 |
+| A | owasp.github.io | 185.199.111.153 |
 
-;; global options: +cmd
-;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 58806
-;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1
-
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 4096
-;; QUESTION SECTION:
-;cheatsheetseries.owasp.org.	IN	A
-
-;; ANSWER SECTION:
-cheatsheetseries.owasp.org. 300	IN	CNAME	owasp.github.io.
-owasp.github.io.	3600	IN	A	185.199.110.153
-owasp.github.io.	3600	IN	A	185.199.111.153
-owasp.github.io.	3600	IN	A	185.199.109.153
-owasp.github.io.	3600	IN	A	185.199.108.153
-```
-
-As well as this final configuration [action](https://help.github.com/en/articles/setting-up-a-custom-subdomain).
+The custom subdomain then needs to be [configured on GitHub](https://help.github.com/en/github/working-with-github-pages/about-custom-domains-and-github-pages).
 
 # Flagship graduation
 
