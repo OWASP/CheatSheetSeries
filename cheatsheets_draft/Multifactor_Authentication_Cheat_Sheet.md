@@ -234,6 +234,7 @@ Smartcards are credit-card size cards with a chip containing a digital certifica
 
 - Stolen smartcards cannot be used without the PIN.
 - Smartcards can be users across multiple applications and systems.
+- Resistant to phishing.
 
 ### Cons
 
@@ -241,7 +242,6 @@ Smartcards are credit-card size cards with a chip containing a digital certifica
 - Smartcards are not natively supported by modern browsers, so require third party software.
 - Although most business-class laptops have smartcard readers built in, home systems often do not.
 - The use of smartcards requires functioning backend PKI systems.
-- Resistant to phishing.
 
 ## SMS Messages and Phone Calls
 
