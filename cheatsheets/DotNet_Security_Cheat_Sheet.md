@@ -563,7 +563,7 @@ e.g Startup.cs in the Configure()
 
 ### Cross-site request forgery
 
-DO NOT: Send sensitive data without validating Anti-Forgery-Tokens ([.NET](https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks) / [.NET Core](https://github.com/aspnet/AspNetCore.Docs/blob/master/aspnetcore/security/anti-request-forgery.md#aspnet-core-antiforgery-configuration)).
+DO NOT: Send sensitive data without validating Anti-Forgery-Tokens ([.NET](https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks) / [.NET Core](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration)).
 
 DO: Send the anti-forgery token with every POST/PUT request:
 
@@ -615,10 +615,9 @@ public void RemoveAntiForgeryCookie(Controller controller)
 
 #### Using .NET Core 2.0 or later:
 
-Starting with .NET Core 2.0 it is possible to [automatically generate and verify the antiforgery token](https://github.com/aspnet/AspNetCore.Docs/blob/master/aspnetcore/security/anti-request-forgery.md#aspnet-core-antiforgery-configuration).
+Starting with .NET Core 2.0 it is possible to [automatically generate and verify the antiforgery token](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration).
 
-If you are using [tag-helpers](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro), which is the default for most web project templates, then all forms will automatically send the anti-forgery token.
-You can check if tag-helpers are enabled by checking if your main `_ViewImports.cshtml` file contains:
+If you are using [tag-helpers](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro), which is the default for most web project templates, then all forms will automatically send the anti-forgery token. You can check if tag-helpers are enabled by checking if your main `_ViewImports.cshtml` file contains:
 
 ```csharp
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
