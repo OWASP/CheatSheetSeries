@@ -52,6 +52,14 @@ It is common for an application to have a mechanism that provides a means for a 
 
 It is critical for a application to store a password using the right cryptographic technique. Please see [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) for details on this feature.
 
+## Compare Password Hashes Using Safe Functions
+
+Where possible, the user-supplied password should be compared to the stored password hash using a secure password comparison function provided by the language or framework, such as the [password_verify()](https://www.php.net/manual/en/function.password-verify.php) function in PHP. Where this is not possible, ensure that the comparison function:
+
+- Has a maximum input length, to protect against denial of service attacks with very long inputs.
+- Explicitly sets the type of both variable, to protect against type confusion attacks such as [Magic Hashes](https://www.whitehatsec.com/blog/magic-hashes/) in PHP.
+- Returns in constant time, to protect against timing attacks.
+
 ## Transmit Passwords Only Over TLS or Other Strong Transport
 
 See: [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)
