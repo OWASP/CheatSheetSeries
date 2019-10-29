@@ -341,6 +341,7 @@ The `SanitizeHelper` module provides a set of methods for scrubbing text of unde
 **Other libraries that provide HTML Sanitization include:**
 - [HTML sanitizer](https://github.com/google/closure-library/blob/master/closure/goog/html/sanitizer/htmlsanitizer.js) from [Google Closure Library](https://developers.google.com/closure/library/) (JavaScript/Node.js, [docs](https://google.github.io/closure-library/api/goog.html.sanitizer.HtmlSanitizer.html))
 - [DOMPurify](https://github.com/cure53/DOMPurify) (JavaScript, requires [jsdom](https://github.com/jsdom/jsdom) for Node.js)
+- [sanitize-html](https://github.com/apostrophecms/sanitize-html) (JavaScript/Node.js)
 - [PHP HTML Purifier](http://htmlpurifier.org/)
 - [Python Bleach](https://pypi.python.org/pypi/bleach)
 
@@ -376,16 +377,29 @@ Many web application frameworks provide automatic contextual escaping functional
 
 This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) enables the Cross-site scripting (XSS) filter built into some modern web browsers. This header is usually enabled by default anyway, so the role of this header is to re-enable the filter for this particular website if it was disabled by the user.
 
-## Bonus Rule \#5: Properly use modern JS frameworks like Angular (2+) or ReactJS
+## Bonus Rule \#5: Properly use modern JS frameworks
 
-Modern javascript frameworks have pretty good XSS protection built in. It is important to use them properly to benefit from it.
+Modern JavaScript frameworks have pretty good XSS protection built in. It is important to use them properly to benefit from it.
 
-When using ReactJS, *do not use [the function `dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)*. When using Angular (2+), *do not use [functions with the pattern `bypassSecurityTrust{something}`](https://angular.io/guide/security#bypass-security-apis)* (i.e. `bypassSecurityTrustHtml`, `bypassSecurityTrustStyle`, etc).  
-If you really, really really have to use these functions remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.
+### Angular (2+)
 
-For Angular (2+) remember to build Angular templates with `-prod` parameter (`ng build --prod`) in order to avoid template injection.
+Do not use [bypassSecurityTrust methods](https://angular.io/guide/security#bypass-security-apis) (i.e. `bypassSecurityTrustHtml`, `bypassSecurityTrustStyle`, etc). Avoid template injection by building with `-prod` parameter (`ng build --prod`).
 
-And also remember to update your framework to the newest version, with all possible bug fixes, as soon as possible. 
+### React
+
+Do not use [`dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml) function.
+
+### Vue.js (2+)
+
+Do not use [`v-html`](https://ru.vuejs.org/v2/api/#v-html) directive.
+
+### Svelte
+
+Do not use [`{@html ...}`](https://svelte.dev/docs#html) tag.
+
+If you *really* have to use these functions remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.
+
+Remember to keep your framework updated to the latest version with all possible bug fixes. 
 
 # XSS Prevention Rules Summary
 
