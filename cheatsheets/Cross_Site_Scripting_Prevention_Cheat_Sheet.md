@@ -379,27 +379,22 @@ This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/He
 
 ## Bonus Rule \#5: Properly use modern JS frameworks
 
-Modern JavaScript frameworks have pretty good XSS protection built in. It is important to use them properly to benefit from it.
+Modern JavaScript frameworks have pretty good XSS protection built in.
+Usually framework API allows bypassing that protection in order to render unescaped HTML or include executable code.
 
-### Angular (2+)
+The following API methods and props in the table below are considered dangerous and by using them you are potentially exposing your users to an XSS vulnerability.
+If you **really** have to use them remember that now all the data must be [sanitized](#rule-6---sanitize-html-markup-with-a-library-designed-for-the-job) by yourself.
 
-Do not use [bypassSecurityTrust methods](https://angular.io/guide/security#bypass-security-apis) (i.e. `bypassSecurityTrustHtml`, `bypassSecurityTrustStyle`, etc). Avoid template injection by building with `-prod` parameter (`ng build --prod`).
+| JavaScript framework | Dangerous methods / props                                                                     |
+|----------------------|------------------------------------------------------------------------------------------------|
+| Angular (2+)         | [bypassSecurityTrust](https://angular.io/guide/security#bypass-security-apis)                  |       
+| React                | [`dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)|   
+| Svelte               | [`{@html ...}`](https://svelte.dev/docs#html)                                                  |
+| Vue (2+)             | [`v-html`](https://vuejs.org/v2/api/#v-html)                                                   |
 
-### React
+Avoid template injection in Angular by building with `--prod` parameter (`ng build --prod`).
 
-Do not use [`dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml) function.
-
-### Vue.js (2+)
-
-Do not use [`v-html`](https://ru.vuejs.org/v2/api/#v-html) directive.
-
-### Svelte
-
-Do not use [`{@html ...}`](https://svelte.dev/docs#html) tag.
-
-If you *really* have to use these functions remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.
-
-Remember to keep your framework updated to the latest version with all possible bug fixes. 
+Also remember to keep your framework updated to the latest version with all possible bug fixes. 
 
 # XSS Prevention Rules Summary
 
