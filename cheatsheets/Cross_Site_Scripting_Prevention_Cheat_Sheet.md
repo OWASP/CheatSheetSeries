@@ -341,7 +341,6 @@ The `SanitizeHelper` module provides a set of methods for scrubbing text of unde
 **Other libraries that provide HTML Sanitization include:**
 - [HTML sanitizer](https://github.com/google/closure-library/blob/master/closure/goog/html/sanitizer/htmlsanitizer.js) from [Google Closure Library](https://developers.google.com/closure/library/) (JavaScript/Node.js, [docs](https://google.github.io/closure-library/api/goog.html.sanitizer.HtmlSanitizer.html))
 - [DOMPurify](https://github.com/cure53/DOMPurify) (JavaScript, requires [jsdom](https://github.com/jsdom/jsdom) for Node.js)
-- [sanitize-html](https://github.com/apostrophecms/sanitize-html) (JavaScript/Node.js)
 - [PHP HTML Purifier](http://htmlpurifier.org/)
 - [Python Bleach](https://pypi.python.org/pypi/bleach)
 
