@@ -376,16 +376,24 @@ Many web application frameworks provide automatic contextual escaping functional
 
 This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) enables the Cross-site scripting (XSS) filter built into some modern web browsers. This header is usually enabled by default anyway, so the role of this header is to re-enable the filter for this particular website if it was disabled by the user.
 
-## Bonus Rule \#5: Properly use modern JS frameworks like Angular (2+) or ReactJS
+## Bonus Rule \#5: Properly use modern JS frameworks
 
-Modern javascript frameworks have pretty good XSS protection built in. It is important to use them properly to benefit from it.
+Modern JavaScript frameworks have pretty good XSS protection built in.
+Usually framework API allows bypassing that protection in order to render unescaped HTML or include executable code.
 
-When using ReactJS, *do not use [the function `dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)*. When using Angular (2+), *do not use [functions with the pattern `bypassSecurityTrust{something}`](https://angular.io/guide/security#bypass-security-apis)* (i.e. `bypassSecurityTrustHtml`, `bypassSecurityTrustStyle`, etc).  
-If you really, really really have to use these functions remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.
+The following API methods and props in the table below are considered dangerous and by using them you are potentially exposing your users to an XSS vulnerability.
+If you **really** have to use them remember that now all the data must be [sanitized](#rule-6---sanitize-html-markup-with-a-library-designed-for-the-job) by yourself.
 
-For Angular (2+) remember to build Angular templates with `-prod` parameter (`ng build --prod`) in order to avoid template injection.
+| JavaScript framework | Dangerous methods / props                                                                     |
+|----------------------|------------------------------------------------------------------------------------------------|
+| Angular (2+)         | [bypassSecurityTrust](https://angular.io/guide/security#bypass-security-apis)                  |       
+| React                | [`dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)|   
+| Svelte               | [`{@html ...}`](https://svelte.dev/docs#html)                                                  |
+| Vue (2+)             | [`v-html`](https://vuejs.org/v2/api/#v-html)                                                   |
 
-And also remember to update your framework to the newest version, with all possible bug fixes, as soon as possible. 
+Avoid template injection in Angular by building with `--prod` parameter (`ng build --prod`).
+
+Also remember to keep your framework updated to the latest version with all possible bug fixes. 
 
 # XSS Prevention Rules Summary
 
