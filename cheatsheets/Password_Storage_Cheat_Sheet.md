@@ -130,23 +130,11 @@ Writing custom cryptographic code such as a hashing algorithm is **really hard**
 
 ## Upgrading Legacy Hashes
 
-* Update on password change
-* Stacked algorithms
-* Resetting user passwords
+For older applications that were built using less secure password hashing algorithms such as MD5 or SHA-1, there are a number of different methods that can be undertaken to upgrade the password hashes into a more secure algorithm.
 
-The above guidance describes how to do password hashing correctly/safely. However, it is very likely you'll be in a situation where you have an existing solution you want to upgrade. This [article](https://veggiespam.com/painless-password-hash-upgrades/) provides some good guidance on how to accomplish an upgrade in place without adversely affecting existing user accounts and future proofing your upgrade so you can seamlessly upgrade again (which you eventually will need to do).
+The simplest way to do this is to use the existing password hashes as inputs for a more secure algorithm. For example if the application originally stored passwords as `md5(password)`, this could be easily upgraded to `argon2(md5(password))`. Stacking the hashes in this manner avoids the need to known the original password, and can also solve potential issues related to [password length](XREFFixMe).
 
-2. Load and use new protection scheme
-    1. Load a new, stronger credential protection scheme (See next section on: Upgrading your existing password hashing solution)
-    2. Include version information stored with form
-    3. Set 'tainted'/'compromised' bit until user resets credentials
-    4. Rotate any keys and/or adjust protection function parameters such as work factor or salt
-    5. Increment scheme version number
-
-3. When user logs in:
-    1. Validate credentials based on stored version (old or new); if older compromised version is still active for user, demand 2nd factor or secret answers until the new method is implemented or activated for that user
-    2. Prompt user for credential change, apologize, & conduct out-of-band confirmation
-    3. Convert stored credentials to new scheme as user successfully log in
+An alternative approach is to wait until the user enters their password (by authenticating on the application), and then replacing their old password hash with a new one using a modern algorithm. The downside of this is that old, weak hashes will remain in the database until the users next login, which could mean that they are never replaced if users are inactive. One way to solve this is to expire and delete the password hashes of users who have been inactive for a long period, and require them to reset their passwords to login again. This approach also requires more complicated authentication code, which needs to determine the type of hash stored, compare securely against it, and then overwrite it. There are a number of [articles](https://veggiespam.com/painless-password-hash-upgrades/) that discuss these issues and other potential approaches.
 
 # Other Guidance
 
