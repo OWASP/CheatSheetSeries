@@ -6,7 +6,7 @@ Specific guidance herein protects against stored credential theft but the bulk o
 
 ## Hashing vs Encryption
 
-Hashing and encrypted are two terms that are often confused or used incorrectly. The key difference between them is that hashing is a **one way** function (i.e, it is not possible to "decrypt" a hash and obtain the original value), whereas encryption is a two-way function. 
+Hashing and encrypted are two terms that are often confused or used incorrectly. The key difference between them is that hashing is a **one way** function (i.e, it is not possible to "decrypt" a hash and obtain the original value), whereas encryption is a two-way function.
 
 In almost all circumstances passwords should be hashed, rather than encrypted, as this makes it difficult or impossible for an attacker to obtain the original passwords from the hashes.
 
@@ -16,6 +16,8 @@ Encryption should only be used in edge cases where it is necessary to be able to
 - If it is necessary to retrieve individual characters from the password.
 
 The ability to decrypt passwords represents a serious security risk, so should be fully risk assessed. Where possible an alternative architecture should be used to avoid the need to store passwords in an encrypted form.
+
+This Cheat Sheet is focused on password hashing - for further guidance on encrypting passwords see the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md).
 
 ## How Attackers Crack Password Hashes
 
@@ -53,7 +55,7 @@ Modern hashing algorithms such as Bcrypt or Argon2 automatically salt  the passw
 
 * Generate a salt using a [cryptographically secure function](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
   * The salt should be at least 16 characters long.
-  * Encode the salt into a safe character set such as hexadecimal or base64.
+  * Encode the salt into a safe character set such as hexadecimal or Base64.
 * Combine the salt with the password.
   * This can be done using simple concatenation, or a construct such as a HMAC.
 * Hash the combined password and salt.
@@ -145,17 +147,6 @@ The above guidance describes how to do password hashing correctly/safely. Howeve
     1. Validate credentials based on stored version (old or new); if older compromised version is still active for user, demand 2nd factor or secret answers until the new method is implemented or activated for that user
     2. Prompt user for credential change, apologize, & conduct out-of-band confirmation
     3. Convert stored credentials to new scheme as user successfully log in
-
-# Encryption
-
-## When to Encrypt Passwords
-
-* When the clear text passwords are needed for other systems
-* To allow individual characters to be checked
-
-## How to Encrypt Passwords
-
-* See [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md)
 
 # Other Guidance
 
