@@ -1,10 +1,8 @@
 # Introduction
 
-Media covers the theft of large collections of passwords on an almost daily basis. Media coverage of password theft discloses the password storage scheme, the weakness of that scheme, and often discloses a large population of compromised credentials that can affect multiple web sites or other applications. This article provides guidance on properly storing passwords, secret question responses, and similar credential information. Proper storage helps prevent theft, compromise, and malicious use of credentials. Information systems store passwords and other credentials in a variety of protected forms. Common vulnerabilities allow the theft of protected passwords through attack vectors such as SQL Injection. Protected passwords can also be stolen from artefacts such as logs, dumps, and backups.
+As the majority of users will re-use passwords between different applications, it is important to store passwords in a way that that prevents them from being obtained by an attacker, even if the application or database is compromised. As with most areas of cryptography, there are a many different areas that need to be considered, but happily, the majority of modern languages and frameworks provide built-in functionality to help store passwords, which handles much of the complexity for you.
 
-Specific guidance herein protects against stored credential theft but the bulk of guidance aims to prevent credential compromise. That is, this guidance helps designs resist revealing users' credentials or allowing system access in the event threats steal protected credential information. For more information and a thorough treatment of this topic, refer to the Secure Password Storage Threat Model [here](https://docs.google.com/document/d/1R6c9NW6wtoEoT3CS4UVmthw1a6Ex6TGSBaEqDay5U7g).
-
-## Summary
+This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
 - Use Argon2 if your library supports it.
   - If it doesn't, use Scrypt, PBKDF2 or Bcrypt
