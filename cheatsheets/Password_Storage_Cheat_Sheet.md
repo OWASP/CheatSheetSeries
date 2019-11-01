@@ -100,31 +100,14 @@ In some cases, it may be possible to increase the work factor of the hashes with
 
 ## Modern Algorithms
 
-* PBKDF2
-* Bcrypt and Scrypt
-* Argon2
+There are four main algorithms that should be considered for hashing passwords in modern applications. All of these algorithms support an iteration count of [work factor](#work-factors), which should be adjusted based on the system they are being used with.
 
-Adaptive one-way functions compute a one-way (irreversible) transform. Each function allows configuration of 'work factor'. Underlying mechanisms used to achieve irreversibility and govern work factors (such as time, space, and parallelism) vary between functions and remain unimportant to this discussion.
+- [Argon2](https://github.com/P-H-C/phc-winner-argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net), and should be used as the first choice when it is available. It has strong resistance to both GPU and ASIC based attacks.
+- [Scrypt](https://en.wikipedia.org/wiki/Scrypt) is designed to resist GPU based attacks, but is less widely supported.
+- [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver), and should be used when FIPS compliance is required. It requires that 
+- [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is the oldest of the algorithms, and is more susceptible to GPU based attacks. However, due to its age it is widely supported across most languages.
 
-Select:
-
-- **[Argon2](Password_Storage_Cheat_Sheet.md#ref7)** is the winner of the [password hashing competition](https://password-hashing.net/) and should **be considered as your first choice** for new applications;
-- **[PBKDF2](Password_Storage_Cheat_Sheet.md#ref4)** when FIPS certification or enterprise support on many platforms is required;
-- **[Scrypt](Password_Storage_Cheat_Sheet.md#ref5)** where resisting any/all hardware accelerated attacks is necessary but support isn't.
-- **[Bcrypt](https://auth0.com/blog/hashing-in-action-understanding-bcrypt/)** where PBKDF2 or Scrypt support is not available.
-
-Example `protect()` pseudo-code follows:
-
-```text
-return [salt] + pbkdf2([salt], [credential], c=[iteration_count]);
-```
-
-In the example above, as PBKDF2 computation time depend on the target system, **iteration_count** must have a number implying that the computation time on the target system must take at least 1 second.
-500.000 is a good example, but please note that, as PBKDF2 is **not** time constant, this configuration is highly dependant on the target machine and you should probably [test the appropriate number for your specific situation](../assets/Password_Storage_Cheat_Sheet_Test_PBKDF2_Iterations.java).
-
-Designers select one-way adaptive functions to implement `protect()` because these functions can be configured to cost (linearly or exponentially) more than a hash function to execute. Defenders adjust work factor to keep pace with threats' increasing hardware capabilities. Those implementing adaptive one-way functions must tune work factors so as to impede attackers while providing acceptable user experience and scale.
-
-Additionally, adaptive one-way functions do not effectively prevent reversal of common dictionary-based credentials (users with password 'password') regardless of user population size or salt usage.
+It should be stressed that even though Bcrypt is considered comparatively weak compared to newer algorithms such as Scrypt or Argon2, it is still substantially stronger than legacy algorithms such as MD5 and SHA-1. Although exact cracking speeds will vary based on the hardware, to give an idea of context, a benchmark using [8 Nvidia GRX 1080 GPUs](https://gist.github.com/epixoip/a83d38f412b4737e99bbef804a270c40) showed Bcrypt hashes to be approximately 2 million times harder to crack than MD5.
 
 ## Legacy Algorithms
 
