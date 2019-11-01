@@ -107,7 +107,7 @@ There are four main algorithms that should be considered for hashing passwords i
 - [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver), and should be used when FIPS compliance is required. It requires that 
 - [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is the oldest of the algorithms, and is more susceptible to GPU based attacks. However, due to its age it is widely supported across most languages.
 
-It should be stressed that even though Bcrypt is considered comparatively weak compared to newer algorithms such as Scrypt or Argon2, it is still substantially stronger than legacy algorithms such as MD5 and SHA-1. Although exact cracking speeds will vary based on the hardware, to give an idea of context, a benchmark using [8 Nvidia GRX 1080 GPUs](https://gist.github.com/epixoip/a83d38f412b4737e99bbef804a270c40) showed Bcrypt hashes to be approximately 2 million times harder to crack than MD5.
+It should be stressed that even though Bcrypt is considered comparatively weak compared to newer algorithms such as Scrypt or Argon2, it is still substantially stronger than legacy algorithms such as MD5 and SHA-1. Although exact cracking speeds will vary based on the hardware, to give an idea of context, a benchmark using [8 Nvidia GTX 1080 GPUs](https://gist.github.com/epixoip/a83d38f412b4737e99bbef804a270c40) showed Bcrypt hashes to be approximately 2 million times harder to crack than MD5.
 
 ## Legacy Algorithms
 
