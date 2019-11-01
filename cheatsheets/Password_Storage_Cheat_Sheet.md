@@ -4,10 +4,10 @@ As the majority of users will re-use passwords between different applications, i
 
 This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
-- Use Argon2 if your library supports it.
-  - If it doesn't, use Scrypt, PBKDF2 or Bcrypt
-- Set a reasonable [work factor](#work-factors) for you system.
-- Use a [pepper](#peppering).
+- **Use Argon2 if your library supports it.**
+  - **If it doesn't, use Scrypt, PBKDF2 or Bcrypt.**
+- **Set a reasonable [work factor](#work-factors) for you system.**
+- **Use a [pepper](#peppering).**
 
 ## Hashing vs Encryption
 
