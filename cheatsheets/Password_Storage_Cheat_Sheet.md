@@ -98,7 +98,18 @@ One key advantage of having a work factor is that it can be increased over time 
 
 The most common approach to upgrading the work factor is to wait until the user next authenticates, and then to re-hash their password with the new work factor. This means that different hashes will have different work factors, and may result in hashes never being upgraded if the user doesn't log back in to the application. In some cases, it may be appropriate to remove the older password hashes and require users to reset their passwords next time they need to login, in order to avoid storing older and less secure hashes.
 
-In some cases, it may be possible to increase the work factor of the hashes without the original password, although this is not supported by common hashing algorithms such as Bcrypt and PBKDF2
+In some cases, it may be possible to increase the work factor of the hashes without the original password, although this is not supported by common hashing algorithms such as Bcrypt and PBKDF2.
+
+## Maximum Password Lengths
+
+Some hashing algorithms such as Bcrypt have a maximum length for the input, which can [vary between different implementations](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) of the algorithm. Where Bcrypt is used, a maximum length of 50 characters should be enforced on the input to cover all known implementations.
+
+Additionally, due to how computationally expensive modern hashing functions are, if a user can supply very long passwords then there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013.
+
+In order to protect against both of these issues, a maximum password length should be enforced. This should be 50 characters for Bcrypt, and at least 64 characters for other algorithms. There are two main ways that this can be done:
+
+- Restrict the maximum length in a password policy.
+- Hash the password with another algorithm such as SHA-1 (which produces a 40 character output) or SHA-256 (64 characters) before hashing it with the modern algorithm.
 
 ## Modern Algorithms
 
@@ -135,27 +146,3 @@ For older applications that were built using less secure password hashing algori
 The simplest way to do this is to use the existing password hashes as inputs for a more secure algorithm. For example if the application originally stored passwords as `md5(password)`, this could be easily upgraded to `argon2(md5(password))`. Stacking the hashes in this manner avoids the need to known the original password, and can also solve potential issues related to [password length](XREFFixMe).
 
 An alternative approach is to wait until the user enters their password (by authenticating on the application), and then replacing their old password hash with a new one using a modern algorithm. The downside of this is that old, weak hashes will remain in the database until the users next login, which could mean that they are never replaced if users are inactive. One way to solve this is to expire and delete the password hashes of users who have been inactive for a long period, and require them to reset their passwords to login again. This approach also requires more complicated authentication code, which needs to determine the type of hash stored, compare securely against it, and then overwrite it. There are a number of [articles](https://veggiespam.com/painless-password-hash-upgrades/) that discuss these issues and other potential approaches.
-
-# Other Guidance
-
-## Maximum Password Lengths
-
-### Do not limit the character set and set long max lengths for credentials
-
-Some organizations restrict the 1) types of special characters and 2) length of credentials accepted by systems because of their inability to prevent SQL Injection, Cross-site scripting, command-injection and other forms of injection attacks. These restrictions, while well-intentioned, facilitate certain simple attacks such as brute force.
-
-Do not allow short or no-length passwords and do not apply character set, or encoding restrictions on the entry or storage of credentials. Continue applying encoding, escaping, masking, outright omission, and other best practices to eliminate injection risks.
-
-A reasonable long password length is 160. Very long password policies can [lead to DoS in certain circumstances](http://arstechnica.com/security/2013/09/long-passwords-are-good-but-too-much-length-can-be-bad-for-security/).
-
-### Hash the password as one of several steps
-
-Very large passwords can be a performance bottleneck or a DoS situation when users utilize very long passwords. Also, some implementations of some of the adaptive algorithms suggested below, such as bcrypt, truncate long passwords making them less effective. By first hashing the passwords with a fast hash such as SHA-512, and then hashing the output with a slower and more secure hash such as bcrypt, even giant passwords are reduced to 512 bits, solving both problems.
-
-## Use Built-in Libraries and Functions
-
-From PHP version 7.2, [Argon2 is supported](https://wiki.php.net/rfc/argon2_password_hash) in built-in password hashing related functions:
-
-- **password_hash()**
-- **password_verify()**
-- **password_get_info()**
