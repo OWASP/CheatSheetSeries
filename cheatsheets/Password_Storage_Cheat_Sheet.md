@@ -4,6 +4,12 @@ Media covers the theft of large collections of passwords on an almost daily basi
 
 Specific guidance herein protects against stored credential theft but the bulk of guidance aims to prevent credential compromise. That is, this guidance helps designs resist revealing users' credentials or allowing system access in the event threats steal protected credential information. For more information and a thorough treatment of this topic, refer to the Secure Password Storage Threat Model [here](https://docs.google.com/document/d/1R6c9NW6wtoEoT3CS4UVmthw1a6Ex6TGSBaEqDay5U7g).
 
+## Summary
+
+- Use Argon2 if your library supports it.
+  - If it doesn't, use Scrypt, PBKDF2 or Bcrypt
+- Use a [pepper](#peppering)
+
 ## Hashing vs Encryption
 
 Hashing and encrypted are two terms that are often confused or used incorrectly. The key difference between them is that hashing is a **one way** function (i.e, it is not possible to "decrypt" a hash and obtain the original value), whereas encryption is a two-way function.
@@ -72,11 +78,7 @@ The purpose of the pepper is to prevent an attacker from being able to crack any
 
 The pepper should be at least 32 characters long, and should be randomly generated. It should be stored in an application configuration file (protected with appropriate permissions), using the secure storage APIs provided by the operating system, or in a HSM.
 
-The pepper is used in a similar way to a salt, but concatenating it with the password prior to hashing, using a construct such as:
-
-```
-hash(pepper . password)
-```
+The pepper is used in a similar way to a salt, but concatenating it with the password prior to hashing, using a construct such as `hash(pepper . password)`.
 
 ### Disadvantages
 
