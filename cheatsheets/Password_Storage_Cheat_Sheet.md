@@ -43,7 +43,7 @@ The cracking process is not guaranteed to be successful, and will depend on a nu
 
 Strong passwords stored with modern hashing algorithms should be effectively impossible for an attacker to crack.
 
-# Hashing
+# Hashing Concepts
 
 ## Salting
 
@@ -111,6 +111,8 @@ In order to protect against both of these issues, a maximum password length shou
 - Restrict the maximum length in a password policy.
 - Hash the password with another algorithm such as SHA-1 (which produces a 40 character output) or SHA-256 (64 characters) before hashing it with the modern algorithm.
 
+# Hashing Algorithms
+
 ## Modern Algorithms
 
 There are four main algorithms that should be considered for hashing passwords in modern applications. All of these algorithms support an iteration count of [work factor](#work-factors), which should be adjusted based on the system they are being used with.
@@ -133,12 +135,6 @@ In some circumstances it is not possible to use [modern hashing algorithms](#mod
 
 It should be emphasised that these steps **are not as good as using a  modern hashing algorithm**, and that this approach should only be taken where no other options are available.
 
-## Custom Algorithms
-
-Writing custom cryptographic code such as a hashing algorithm is **really hard** and should **never be done** outside of an academic exercise. Any potential benefit that you might have from using an unknown or bespoke algorithm will be vastly overshadowed by the weaknesses that exist in it.
-
-**Do not do this.**
-
 ## Upgrading Legacy Hashes
 
 For older applications that were built using less secure password hashing algorithms such as MD5 or SHA-1, there are a number of different methods that can be undertaken to upgrade the password hashes into a more secure algorithm.
@@ -146,3 +142,9 @@ For older applications that were built using less secure password hashing algori
 The simplest way to do this is to use the existing password hashes as inputs for a more secure algorithm. For example if the application originally stored passwords as `md5(password)`, this could be easily upgraded to `argon2(md5(password))`. Stacking the hashes in this manner avoids the need to known the original password, and can also solve potential issues related to [password length](XREFFixMe).
 
 An alternative approach is to wait until the user enters their password (by authenticating on the application), and then replacing their old password hash with a new one using a modern algorithm. The downside of this is that old, weak hashes will remain in the database until the users next login, which could mean that they are never replaced if users are inactive. One way to solve this is to expire and delete the password hashes of users who have been inactive for a long period, and require them to reset their passwords to login again. This approach also requires more complicated authentication code, which needs to determine the type of hash stored, compare securely against it, and then overwrite it. There are a number of [articles](https://veggiespam.com/painless-password-hash-upgrades/) that discuss these issues and other potential approaches.
+
+## Custom Algorithms
+
+Writing custom cryptographic code such as a hashing algorithm is **really hard** and should **never be done** outside of an academic exercise. Any potential benefit that you might have from using an unknown or bespoke algorithm will be vastly overshadowed by the weaknesses that exist in it.
+
+**Do not do this.**
