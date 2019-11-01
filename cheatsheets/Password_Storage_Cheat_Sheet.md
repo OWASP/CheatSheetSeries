@@ -6,9 +6,40 @@ Specific guidance herein protects against stored credential theft but the bulk o
 
 ## Hashing vs Encryption
 
-* Difference
-* When to hash
-* When to encrypt
+Hashing and encrypted are two terms that are often confused or used incorrectly. The key difference between them is that hashing is a **one way** function (i.e, it is not possible to "decrypt" a hash and obtain the original value), whereas encryption is a two-way function. 
+
+In almost all circumstances passwords should be hashed, rather than encrypted, as this makes it difficult or impossible for an attacker to obtain the original passwords from the hashes.
+
+Encryption should only be used in edge cases where it is necessary to be able to obtain the original password. Some examples of where this might be necessary are:
+
+- If the application needs to use the password to authenticate against an external legacy system that doesn't support SSO.
+- If it is necessary to retrieve individual characters from the password.
+
+The ability to decrypt passwords represents a serious security risk, so should be fully risk assessed. Where possible an alternative architecture should be used to avoid the need to store passwords in an encrypted form.
+
+## How Attackers Crack Password Hashes
+
+Although it is not possible to "decrypt" password hashes to obtain the original passwords, in some circumstances it is possible to "crack" the hashes. The basic steps are:
+
+- Select a likely candidate (such as "password").
+- Calculate the hash of the input.
+- Compare it to the target hash.
+
+This process is then repeated for a large number of potential candidate passwords until a match is found. There are a large number of different methods that can be used to select candidate passwords, including:
+
+- Brute force (trying every possible candidate).
+- Dictionaries or wordlists of common passwords
+- Lists of passwords obtained from other compromised sites.
+- More sophisticated algorithms such as [Markov chains](https://github.com/magnumripper/JohnTheRipper/blob/bleeding-jumbo/doc/MARKOV) or [PRINCE](https://github.com/hashcat/princeprocessor)
+- Patterns or masks (such as "1 capital letter, 6 lowercase letters, 1 number").
+
+The cracking process is not guaranteed to be successful, and will depend on a number of factors:
+
+- The strength of the password.
+- The speed of the algorithm (or work factor for modern algorithms).
+- The number of passwords being targeted (assuming they have unique salts).
+
+Strong passwords stored with modern hashing algorithms should be effectively impossible for an attacker to crack.
 
 # Hashing
 
