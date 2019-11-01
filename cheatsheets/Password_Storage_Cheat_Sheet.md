@@ -111,12 +111,20 @@ It should be stressed that even though Bcrypt is considered comparatively weak c
 
 ## Legacy Algorithms
 
-* MD5
-* SHA-1 and SHA-256 and
+In some circumstances it is not possible to use [modern hashing algorithms](#modern-algorithms), usually due tot he use of legacy language or environments. Where possible, third party libraries should be used to provide these algorithms. However, if the only algorithms available are legacy ones such as MD5 and SHA-1, then there are a number of steps that can be taken to improve the security of stored passwords.
+
+- Use the strongest algorithm available (SHA-512 > SHA-256 > SHA-1 > MD5).
+- Use a [pepper](#peppering).
+- Use a unique [salt](#salting) for each password, generated using a [cryptographically secure random number generator](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
+- Use a very large number of iterations of the algorithm (at least 10,000, and possibly significantly more depending on the speed of the hardware).
+
+It should be emphasised that these steps **are not as good as using a  modern hashing algorithm**, and that this approach should only be taken where no other options are available.
 
 ## Custom Algorithms
 
-* Don't do this
+Writing custom cryptographic code such as a hashing algorithm is **really hard** and should **never be done** outside of an academic exercise. Any potential benefit that you might have from using an unknown or bespoke algorithm will be vastly overshadowed by the weaknesses that exist in it.
+
+**Do not do this.**
 
 ## Upgrading Legacy Hashes
 
