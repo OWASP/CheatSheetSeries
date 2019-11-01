@@ -8,7 +8,8 @@ Specific guidance herein protects against stored credential theft but the bulk o
 
 - Use Argon2 if your library supports it.
   - If it doesn't, use Scrypt, PBKDF2 or Bcrypt
-- Use a [pepper](#peppering)
+- Set a reasonable [work factor](#work-factors) for you system.
+- Use a [pepper](#peppering).
 
 ## Hashing vs Encryption
 
@@ -57,7 +58,7 @@ A salt is a unique, randomly generated string that is added to each password as 
 
 Salting also provides protection against an attacker pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is not possible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.
 
-Modern hashing algorithms such as Bcrypt or Argon2 automatically salt  the passwords, so no additional steps are required when using them. However, if you are using a [legacy password hashing algorithm](FIXMEXrefToSection) then salting needs to be implemented manually. The basic steps to perform this are:
+Modern hashing algorithms such as Bcrypt or Argon2 automatically salt  the passwords, so no additional steps are required when using them. However, if you are using a [legacy password hashing algorithm](#legacy-algorithms) then salting needs to be implemented manually. The basic steps to perform this are:
 
 * Generate a salt using a [cryptographically secure function](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
   * The salt should be at least 16 characters long.
@@ -141,7 +142,7 @@ It should be emphasised that these steps **are not as good as using a  modern ha
 
 For older applications that were built using less secure password hashing algorithms such as MD5 or SHA-1, there are a number of different methods that can be undertaken to upgrade the password hashes into a more secure algorithm.
 
-The simplest way to do this is to use the existing password hashes as inputs for a more secure algorithm. For example if the application originally stored passwords as `md5(password)`, this could be easily upgraded to `argon2(md5(password))`. Stacking the hashes in this manner avoids the need to known the original password, and can also solve potential issues related to [password length](XREFFixMe).
+The simplest way to do this is to use the existing password hashes as inputs for a more secure algorithm. For example if the application originally stored passwords as `md5(password)`, this could be easily upgraded to `argon2(md5(password))`. Stacking the hashes in this manner avoids the need to known the original password, and can also solve potential issues related to [password length](#maximum-password-lengths).
 
 An alternative approach is to wait until the user enters their password (by authenticating on the application), and then replacing their old password hash with a new one using a modern algorithm. The downside of this is that old, weak hashes will remain in the database until the users next login, which could mean that they are never replaced if users are inactive. One way to solve this is to expire and delete the password hashes of users who have been inactive for a long period, and require them to reset their passwords to login again. This approach also requires more complicated authentication code, which needs to determine the type of hash stored, compare securely against it, and then overwrite it. There are a number of [articles](https://veggiespam.com/painless-password-hash-upgrades/) that discuss these issues and other potential approaches.
 
