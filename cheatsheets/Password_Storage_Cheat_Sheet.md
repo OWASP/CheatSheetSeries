@@ -7,7 +7,7 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 - **Use Argon2 if your library supports it.**
   - **If it doesn't, use Scrypt, PBKDF2 or Bcrypt.**
 - **Set a reasonable [work factor](#work-factors) for you system.**
-- **Use a [pepper](#peppering).**
+- **Consider using a pepper to provide an additional layer of security.**
 
 ## Hashing vs Encryption
 
@@ -77,7 +77,9 @@ The purpose of the pepper is to prevent an attacker from being able to crack any
 
 The pepper should be at least 32 characters long, and should be randomly generated. It should be stored in an application configuration file (protected with appropriate permissions), using the secure storage APIs provided by the operating system, or in a HSM.
 
-The pepper is used in a similar way to a salt, but concatenating it with the password prior to hashing, using a construct such as `hash(pepper . password)`.
+The pepper is traditionally used in a similar way to a salt, but concatenating it with the password prior to hashing, using a construct such as `hash(pepper . password)`.
+
+An alternative approach is to hash the passwords as usual, and then encrypt the stored hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper. This avoids some of the issues with the traditional approach to peppering, and allows for much easier rotation of the pepper if it is believed to be compromised.
 
 ### Disadvantages
 
