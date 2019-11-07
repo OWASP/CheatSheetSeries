@@ -1,7 +1,7 @@
 ---
 name: New Cheat Sheet Proposal
 about: Used to create a proposal to add a new cheat sheet to the project.
-title: New cheat sheet proposal
+title: New cheat sheet proposal: [PUT_TARGET_CS_NAME_HERE]
 labels: ACK_WAITING, HELP_WANTED, NEW_CS
 assignees: ''
 ---
