@@ -274,27 +274,25 @@ process.Start();
 
 DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-e.g Validating user input using [IPAddress.Parse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.parse?view=netframework-4.8)
+e.g Validating user input using [IPAddress.TryParse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8)
 
 ``` csharp
 //User input
-string ipaddress = "127.0.0.1";
+string ipAddress = "127.0.0.1";
  
 //check to make sure an ip address was provided    
-if (string.IsNullOrEmpty(address))  
-{   
-	try
+if (string.IsNullOrEmpty(ipAddress))  
+{
+	// Create an instance of IPAddress for the specified address string (in 
+	// dotted-quad, or colon-hexadecimal notation).
+	if (IPAddress.TryParse(ipAddress, out var address))
 	{
-		// Create an instance of IPAddress for the specified address string (in 
-		// dotted-quad, or colon-hexadecimal notation).
-		IPAddress address = IPAddress.Parse(ipAddress);
-
 		// Display the address in standard notation.
 		return address.ToString();
 	}
-	catch(FormatException e)
+	else
 	{
-		//ipaddress is not of type IPaddress
+		//ipAddress is not of type IPAddress
 		...
 	}
     ...
