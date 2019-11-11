@@ -1264,25 +1264,23 @@ process.StartInfo = startInfo;
 process.Start();
 </code></pre>
 <p>DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
-<p>e.g Validating user input using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.parse?view=netframework-4.8" target="_blank">IPAddress.Parse Method</a></p>
+<p>e.g Validating user input using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8" target="_blank">IPAddress.TryParse Method</a></p>
 <pre><code class="lang-csharp"><span class="hljs-comment">//User input</span>
-<span class="hljs-keyword">string</span> ipaddress = <span class="hljs-string">&quot;127.0.0.1&quot;</span>;
+<span class="hljs-keyword">string</span> ipAddress = <span class="hljs-string">&quot;127.0.0.1&quot;</span>;
 
 <span class="hljs-comment">//check to make sure an ip address was provided    </span>
-<span class="hljs-keyword">if</span> (<span class="hljs-keyword">string</span>.IsNullOrEmpty(address))  
-{   
-    <span class="hljs-keyword">try</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-keyword">string</span>.IsNullOrEmpty(ipAddress))  
+{
+    <span class="hljs-comment">// Create an instance of IPAddress for the specified address string (in </span>
+    <span class="hljs-comment">// dotted-quad, or colon-hexadecimal notation).</span>
+    <span class="hljs-keyword">if</span> (IPAddress.TryParse(ipAddress, <span class="hljs-keyword">out</span> <span class="hljs-keyword">var</span> address))
     {
-        <span class="hljs-comment">// Create an instance of IPAddress for the specified address string (in </span>
-        <span class="hljs-comment">// dotted-quad, or colon-hexadecimal notation).</span>
-        IPAddress address = IPAddress.Parse(ipAddress);
-
         <span class="hljs-comment">// Display the address in standard notation.</span>
         <span class="hljs-keyword">return</span> address.ToString();
     }
-    <span class="hljs-keyword">catch</span>(FormatException e)
+    <span class="hljs-keyword">else</span>
     {
-        <span class="hljs-comment">//ipaddress is not of type IPaddress</span>
+        <span class="hljs-comment">//ipAddress is not of type IPAddress</span>
         ...
     }
     ...
@@ -1717,7 +1715,7 @@ If a deserialized hostile object tries to initiate a system processes or access 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"DotNet Security ","level":"1.25","depth":1,"next":{"title":"Error Handling ","level":"1.26","depth":1,"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","ref":"cheatsheets/Error_Handling_Cheat_Sheet.md","articles":[]},"previous":{"title":"Docker Security ","level":"1.24","depth":1,"path":"cheatsheets/Docker_Security_Cheat_Sheet.md","ref":"cheatsheets/Docker_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","mtime":"2019-11-05T15:03:09.667Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-05T15:03:30.050Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"DotNet Security ","level":"1.25","depth":1,"next":{"title":"Error Handling ","level":"1.26","depth":1,"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","ref":"cheatsheets/Error_Handling_Cheat_Sheet.md","articles":[]},"previous":{"title":"Docker Security ","level":"1.24","depth":1,"path":"cheatsheets/Docker_Security_Cheat_Sheet.md","ref":"cheatsheets/Docker_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","mtime":"2019-11-11T16:02:37.969Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-11T16:04:20.362Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
