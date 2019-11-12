@@ -1,0 +1,1432 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Multifactor Authentication  · OWASP Cheat Sheet Series</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Nodejs_security_cheat_sheet.html" />
+    
+    
+    <link rel="prev" href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Cheatsheets</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Index.html">
+            
+                <a href="Index.html">
+            
+                    
+                    Index Alphabetical
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
+            
+                <a href="IndexASVS.html">
+            
+                    
+                    Index ASVS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
+            
+                <a href="IndexProactiveControls.html">
+            
+                    
+                    Index Proactive Controls
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
+            
+                <a href="AJAX_Security_Cheat_Sheet.html">
+            
+                    
+                    AJAX Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
+            
+                <a href="Abuse_Case_Cheat_Sheet.html">
+            
+                    
+                    Abuse Case 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
+            
+                <a href="Access_Control_Cheat_Sheet.html">
+            
+                    
+                    Access Control 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
+            
+                    
+                    Attack Surface Analysis 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
+            
+                <a href="Authentication_Cheat_Sheet.html">
+            
+                    
+                    Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
+            
+                <a href="Authorization_Testing_Automation.html">
+            
+                    
+                    Authorization Testing Automation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
+            
+                <a href="Bean_Validation_Cheat_Sheet.html">
+            
+                    
+                    Bean Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
+            
+                <a href="C-Based_Toolchain_Hardening.html">
+            
+                    
+                    C-Based Toolchain Hardening
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+            
+                    
+                    C-Based Toolchain Hardening 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+            
+                    
+                    Choosing and Using Security Questions 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                <a href="Clickjacking_Defense_Cheat_Sheet.html">
+            
+                    
+                    Clickjacking Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
+            
+                <a href="Content_Security_Policy_Cheat_Sheet.html">
+            
+                    
+                    Content Security Policy 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Credential Stuffing Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross-Site Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Cross Site Scripting Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                <a href="Cryptographic_Storage_Cheat_Sheet.html">
+            
+                    
+                    Cryptographic Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+            
+                    
+                    DOM based XSS Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.22" data-path="Denial_of_Service_Cheat_Sheet.html">
+            
+                <a href="Denial_of_Service_Cheat_Sheet.html">
+            
+                    
+                    Denial of Service 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.23" data-path="Deserialization_Cheat_Sheet.html">
+            
+                <a href="Deserialization_Cheat_Sheet.html">
+            
+                    
+                    Deserialization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.24" data-path="Docker_Security_Cheat_Sheet.html">
+            
+                <a href="Docker_Security_Cheat_Sheet.html">
+            
+                    
+                    Docker Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.25" data-path="DotNet_Security_Cheat_Sheet.html">
+            
+                <a href="DotNet_Security_Cheat_Sheet.html">
+            
+                    
+                    DotNet Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.26" data-path="Error_Handling_Cheat_Sheet.html">
+            
+                <a href="Error_Handling_Cheat_Sheet.html">
+            
+                    
+                    Error Handling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.27" data-path="Forgot_Password_Cheat_Sheet.html">
+            
+                <a href="Forgot_Password_Cheat_Sheet.html">
+            
+                    
+                    Forgot Password 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.28" data-path="HTML5_Security_Cheat_Sheet.html">
+            
+                <a href="HTML5_Security_Cheat_Sheet.html">
+            
+                    
+                    HTML5 Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.29" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+            
+                    
+                    HTTP Strict Transport Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.30" data-path="Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.31" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
+            
+                    
+                    Injection Prevention  in Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.32" data-path="Input_Validation_Cheat_Sheet.html">
+            
+                <a href="Input_Validation_Cheat_Sheet.html">
+            
+                    
+                    Input Validation 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.33" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Insecure Direct Object Reference Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.34" data-path="JAAS_Cheat_Sheet.html">
+            
+                <a href="JAAS_Cheat_Sheet.html">
+            
+                    
+                    JAAS 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.35" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
+            
+                    
+                    JSON Web Token  for Java
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.36" data-path="Key_Management_Cheat_Sheet.html">
+            
+                <a href="Key_Management_Cheat_Sheet.html">
+            
+                    
+                    Key Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.37" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    LDAP Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.38" data-path="Logging_Cheat_Sheet.html">
+            
+                <a href="Logging_Cheat_Sheet.html">
+            
+                    
+                    Logging 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.39" data-path="Mass_Assignment_Cheat_Sheet.html">
+            
+                <a href="Mass_Assignment_Cheat_Sheet.html">
+            
+                    
+                    Mass Assignment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.40" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
+            
+                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
+            
+                    
+                    Microservices based Security Arch Doc 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.41" data-path="Multifactor_Authentication_Cheat_Sheet.html">
+            
+                <a href="Multifactor_Authentication_Cheat_Sheet.html">
+            
+                    
+                    Multifactor Authentication 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.42" data-path="Nodejs_security_cheat_sheet.html">
+            
+                <a href="Nodejs_security_cheat_sheet.html">
+            
+                    
+                    Nodejs security cheat sheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.43" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+            
+                    
+                    OS Command Injection Defense 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.44" data-path="PHP_Configuration_Cheat_Sheet.html">
+            
+                <a href="PHP_Configuration_Cheat_Sheet.html">
+            
+                    
+                    PHP Configuration 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.45" data-path="Password_Storage_Cheat_Sheet.html">
+            
+                <a href="Password_Storage_Cheat_Sheet.html">
+            
+                    
+                    Password Storage 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.46" data-path="Pinning_Cheat_Sheet.html">
+            
+                <a href="Pinning_Cheat_Sheet.html">
+            
+                    
+                    Pinning 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.47" data-path="Protect_FileUpload_Against_Malicious_File.html">
+            
+                <a href="Protect_FileUpload_Against_Malicious_File.html">
+            
+                    
+                    Protect FileUpload Against Malicious File
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.48" data-path="Query_Parameterization_Cheat_Sheet.html">
+            
+                <a href="Query_Parameterization_Cheat_Sheet.html">
+            
+                    
+                    Query Parameterization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.49" data-path="REST_Assessment_Cheat_Sheet.html">
+            
+                <a href="REST_Assessment_Cheat_Sheet.html">
+            
+                    
+                    REST Assessment 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.50" data-path="REST_Security_Cheat_Sheet.html">
+            
+                <a href="REST_Security_Cheat_Sheet.html">
+            
+                    
+                    REST Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.51" data-path="Ruby_on_Rails_Cheatsheet.html">
+            
+                <a href="Ruby_on_Rails_Cheatsheet.html">
+            
+                    
+                    Ruby on Rails Cheatsheet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.52" data-path="SAML_Security_Cheat_Sheet.html">
+            
+                <a href="SAML_Security_Cheat_Sheet.html">
+            
+                    
+                    SAML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.53" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
+            
+                    
+                    SQL Injection Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.54" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+            
+                    
+                    Securing Cascading Style Sheets 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.55" data-path="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
+            
+                    
+                    Server Side Request Forgery Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.56" data-path="Session_Management_Cheat_Sheet.html">
+            
+                <a href="Session_Management_Cheat_Sheet.html">
+            
+                    
+                    Session Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.57" data-path="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                <a href="TLS_Cipher_String_Cheat_Sheet.html">
+            
+                    
+                    TLS Cipher String 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.58" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+            
+                    
+                    Third Party Javascript Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.59" data-path="Threat_Modeling_Cheat_Sheet.html">
+            
+                <a href="Threat_Modeling_Cheat_Sheet.html">
+            
+                    
+                    Threat Modeling 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.60" data-path="Transaction_Authorization_Cheat_Sheet.html">
+            
+                <a href="Transaction_Authorization_Cheat_Sheet.html">
+            
+                    
+                    Transaction Authorization 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.61" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
+            
+                    
+                    Transport Layer Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.62" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+            
+                    
+                    Unvalidated Redirects and Forwards 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.63" data-path="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                <a href="User_Privacy_Protection_Cheat_Sheet.html">
+            
+                    
+                    User Privacy Protection 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.64" data-path="Virtual_Patching_Cheat_Sheet.html">
+            
+                <a href="Virtual_Patching_Cheat_Sheet.html">
+            
+                    
+                    Virtual Patching 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.65" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
+            
+                    
+                    Vulnerability Disclosure 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.66" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
+            
+                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
+            
+                    
+                    Vulnerable Dependency Management 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.67" data-path="Web_Service_Security_Cheat_Sheet.html">
+            
+                <a href="Web_Service_Security_Cheat_Sheet.html">
+            
+                    
+                    Web Service Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.68" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+            
+                    
+                    XML External Entity Prevention 
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.69" data-path="XML_Security_Cheat_Sheet.html">
+            
+                <a href="XML_Security_Cheat_Sheet.html">
+            
+                    
+                    XML Security 
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Multifactor Authentication </a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+<p>Multifactor authentication (MFA), or Two-Factor Authentication (2FA) is when a user is required to present more than one type of evidence in order to authenticate on a system. There are four different types of evidence (or factors) that can be used, listed in the table below:</p>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Something You Know</td>
+<td>Passwords, PINs and security questions.</td>
+</tr>
+<tr>
+<td>Something You Have</td>
+<td>Hardware or software tokens, certificates, email, SMS and phone calls.</td>
+</tr>
+<tr>
+<td>Something You Are</td>
+<td>Fingerprints, facial recognition, iris scans and handprint scans.</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>Source IP ranges and geolocation</td>
+</tr>
+</tbody>
+</table>
+<p>It should be emphasised that while requiring multiple examples of a single factor (such as needing both a password and a PIN) <strong>does not constitute MFA</strong>, although it may provide some security benefits over a simple password.</p>
+<p>Additionally, while the following sections discuss the disadvantage and weaknesses of various different types of MFA, in many cases these are only relevant against targeted attacks. <strong>Any MFA is better than no MFA</strong>.</p>
+<h1 id="advantages"><a name="advantages" class="plugin-anchor" href="#advantages"><i class="fa fa-link" aria-hidden="true"></i></a>Advantages</h1>
+<p>The most common way that user accounts get compromised on applications is through weak, re-used or stolen passwords. Despite any technical security controls implemented on the application, users are liable to choose weak passwords, or to use the same password on different applications. As developers or system administrators, it should be assumed that users&apos; passwords will be compromised as some point, and the system should be designed in order to defend against this.</p>
+<p>Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force, <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">credential stuffing</a> and password spraying, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984" target="_blank">99.9% of account compromises</a>.</p>
+<h1 id="disadvantages"><a name="disadvantages" class="plugin-anchor" href="#disadvantages"><i class="fa fa-link" aria-hidden="true"></i></a>Disadvantages</h1>
+<p>The biggest disadvantage of MFA is the increase in management complexity for both administrators and end users. Many less technical users may find it difficult to configure and use MFA. Additionally, there are a number of other common issues encountered:</p>
+<ul>
+<li>Types of MFA that require users to have specific hardware can introduce significant costs and administrative overheads.</li>
+<li>Users may become locked out of their accounts if they lose or are unable to use their other factors.</li>
+<li>MFA introduces additional complexity into the application.</li>
+<li>Many MFA solutions add external dependencies to systems, which can introduce security vulnerabilities or single points of failure.</li>
+<li>Processes implemented to allow users to bypass or reset MFA may be exploitable by attackers.</li>
+<li>Requiring MFA may prevent some users from accessing the application.</li>
+</ul>
+<h1 id="quick-recommendations"><a name="quick-recommendations" class="plugin-anchor" href="#quick-recommendations"><i class="fa fa-link" aria-hidden="true"></i></a>Quick Recommendations</h1>
+<p>Exactly when and how MFA is implemented in an application will vary on a number of different factors, including the threat model of the application, the technical level of the users, and the level of administrative control over the users. These need to be considered on a per-application basis.</p>
+<p>However, the following recommendations are generally appropriate for most applications, and provide an initial starting point to consider.</p>
+<ul>
+<li>Provide the option for users to enable MFA on their accounts using <a href="#software-totp-tokens">TOTP</a>.</li>
+<li>Require MFA for administrative or other high privileged users.</li>
+<li>Consider whitelisting corporate IP ranges so that MFA is not required from them.</li>
+<li>Allow the user to remember the use of MFA in their browser, so they are not prompted every time they login.</li>
+<li>Implement a secure process to allow users to reset their MFA.</li>
+</ul>
+<h1 id="implementing-mfa"><a name="implementing-mfa" class="plugin-anchor" href="#implementing-mfa"><i class="fa fa-link" aria-hidden="true"></i></a>Implementing MFA</h1>
+<h2 id="when-to-require-mfa"><a name="when-to-require-mfa" class="plugin-anchor" href="#when-to-require-mfa"><i class="fa fa-link" aria-hidden="true"></i></a>When to Require MFA</h2>
+<p>The most important place to require MFA on an application is when the user logs in. However, depending on the functionality available, it may also be appropriate to require MFA for performing sensitive actions, such as:</p>
+<ul>
+<li>Changing passwords or security questions.</li>
+<li>Changing the email address associated with the account.</li>
+<li>Disabling MFA.</li>
+<li>Elevating a user session to an administrative session.</li>
+</ul>
+<p>If the application provides multiple ways for a user to authenticate these should all require MFA, or have other protections implemented. A common area that is missed is if the application provides a separate API that can be used to login, or has an associated mobile application.</p>
+<h2 id="improving-usability"><a name="improving-usability" class="plugin-anchor" href="#improving-usability"><i class="fa fa-link" aria-hidden="true"></i></a>Improving Usability</h2>
+<p>Having to frequently login with MFA creates an additional burden for users, and may cause them to disable MFA on the application. A number of mechanisms can be used to try and reduce the level of annoyance that MFA causes. However, these types of measures do decrease the security provided by MFA, so need to be risk assessed to find a reasonable balance of security and usability for the application.</p>
+<ul>
+<li>Remembering the user&apos;s browser so they don&apos;t need to use MFA every time.<ul>
+<li>This can either be permanent, or for a period of a few days.</li>
+<li>This needs to be done with more than just a cookie, which could be stolen by an attacker.<ul>
+<li>For example, a cookie matched to the previous IP address the cookie was issued for.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Whitelisting corporate IP ranges (or, more strictly, using location as a second factor).<ul>
+<li>This doesn&apos;t protect against malicious insiders, or a user&apos;s workstation being compromised.</li>
+</ul>
+</li>
+<li>Only requiring MFA for sensitive actions, not for the initial login.<ul>
+<li>This will depend heavily on the functionality in the application.</li>
+</ul>
+</li>
+</ul>
+<h2 id="failed-login-attempts"><a name="failed-login-attempts" class="plugin-anchor" href="#failed-login-attempts"><i class="fa fa-link" aria-hidden="true"></i></a>Failed Login Attempts</h2>
+<p>When a user enters their password, but fails to authenticate using a second factor, this could mean one of two things:</p>
+<ul>
+<li>The user has lost their second factor, or doesn&apos;t have it available (for example, they don&apos;t have their mobile phone, or have no signal).</li>
+<li>The user&apos;s password has been compromised.</li>
+</ul>
+<p>There are a number of steps that should be taken when this occurs:</p>
+<ul>
+<li>Prompt the user to try another form of MFA<ul>
+<li>For example, an SMS code rather than using their hardware OTP token.</li>
+</ul>
+</li>
+<li>Allow the user to attempt to <a href="#resetting-mfa">reset their MFA</a>.</li>
+<li>Notify the user of the failed login attempt, and encourage them to change their password if they don&apos;t recognise it.<ul>
+<li>The notification should include the time, browser and geographic location of the login attempt.</li>
+<li>This should be displayed next time they login, and optionally emailed to them as well.</li>
+</ul>
+</li>
+</ul>
+<h2 id="resetting-mfa"><a name="resetting-mfa" class="plugin-anchor" href="#resetting-mfa"><i class="fa fa-link" aria-hidden="true"></i></a>Resetting MFA</h2>
+<p>One of the biggest challenges with implementing MFA is handling users who forget or lose their second factors. There are many ways this could happen, such as:</p>
+<ul>
+<li>Re-installing a workstation without backing up digital certificates.</li>
+<li>Wiping or losing a phone without backing up OTP codes.</li>
+<li>Changing mobile numbers.</li>
+</ul>
+<p>In order to prevent users from being locked out of the application, there needs to be a mechanism for them to regain access to their account if they can&apos;t use their existing MFA; however it is also crucial that this doesn&apos;t provide an attacker with a way to bypass MFA and hijack there account.</p>
+<p>There is no definitive &quot;best way&quot; to do this, and what is appropriate will vary hugely based on the security of the application, and also the level of control over the users. Solutions that work for a corporate application where all the staff know each other are unlikely to be feasible for a publicly available application with thousands of users all over the world. Every recovery methods has its own advantages and disadvantages, and these need to be evaluated in the context of the application.</p>
+<p>Some suggestions of possible methods include:</p>
+<ul>
+<li>Providing the user with a number of single-use recovery codes when they first setup MFA.</li>
+<li>Requiring the user to setup multiple types of MFA (such as a digital certificate, OTP core and phone number for SMS), so that they are unlikely to lose access to all of them at once.</li>
+<li>Posting a one-use recovery code (or new hardware token) to the user.</li>
+<li>Requiring the user contact the support team and having a rigorous process in place to verify their identity.</li>
+<li>Requiring another trusted user to vouch for them.</li>
+</ul>
+<h1 id="something-you-know"><a name="something-you-know" class="plugin-anchor" href="#something-you-know"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Know</h1>
+<p>The most common type of authentication is based on something the users knows - typically a password. The biggest advantage of this factor is that it has very low requirements for both the developers and the end user, as it does not require any special hardware, or integration with other services.</p>
+<h2 id="passwords-and-pins"><a name="passwords-and-pins" class="plugin-anchor" href="#passwords-and-pins"><i class="fa fa-link" aria-hidden="true"></i></a>Passwords and PINs</h2>
+<p>Passwords and PINs are the most common form of authentication due to the simplicity of implementing them. The <a href="Authentication_Cheat_Sheet.html#implement-proper-password-strength-controls">Authentication Cheat Sheet</a> has guidance on how to implement a strong password policy, and the <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> has guidance on how to securely store passwords.</p>
+<p>Most multifactor authentication systems make use of a password, as well as at least one other factor.</p>
+<p>It should be noted that PINs, &quot;secret words&quot; and other similar type of information are all effectively the same as passwords. Using two different types of passwords <strong>does not constitute MFA</strong>.</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>Simple and well understood.</li>
+<li>Native support in every authentication framework.</li>
+<li>Easy to implement.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>Users are prone to choosing weak passwords.</li>
+<li>Passwords are commonly re-used between systems.</li>
+<li>Susceptible to phishing.</li>
+</ul>
+<h2 id="security-questions"><a name="security-questions" class="plugin-anchor" href="#security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Security Questions</h2>
+<p>Security questions require the user to choose (or create) a number of questions that only they will know the answer to. These are effectively the same as passwords, although they are generally considered weaker. The <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">Choosing and Using Security Questions Cheat Sheet</a> contains further guidance on how to implement these securely.</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>Simple and well understood.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>Questions often have easily guessable answers.</li>
+<li>Answers to questions can often be obtained from social media or other sources.</li>
+<li>Questions must be carefully chosen so that users will remember answers years later.</li>
+<li>Susceptible to phishing.</li>
+</ul>
+<h1 id="something-you-have"><a name="something-you-have" class="plugin-anchor" href="#something-you-have"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Have</h1>
+<p>The second factor is something that the users possesses. This could be a physical item (such as a hardware token), a digital item (such as a certificate or private key), or based on the ownership of a mobile phone or email address (such as SMS or a software token installed on the phone, or an email with a single-use verification code).</p>
+<p>If properly implemented then this can be significantly more difficult  for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.</p>
+<p>The requirement to have a second factor can also limit certain types of users&apos; ability to access a service. For example, if a user does not have access to a mobile phone, many types of MFA will not be available for them.</p>
+<h2 id="hardware-otp-tokens"><a name="hardware-otp-tokens" class="plugin-anchor" href="#hardware-otp-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Hardware OTP Tokens</h2>
+<p>Physical hardware OTP tokens can be used which generate constantly changing numeric codes, which must be submitted when authentication on the application. Most most well-known of these is the <a href="https://en.wikipedia.org/wiki/RSA_SecurID" target="_blank">RSA SecureID</a>, which generates a six digit number that changes every 60 seconds.</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>As the tokens are separate physical devices, they are almost impossible for an attacker to compromise remotely.</li>
+<li>Tokens can be used without requiring the user to have a mobile phone or other device.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>Deploying physical tokens to users is expensive and complicated.</li>
+<li>If a user loses their token it could take a significant amount of time to purchase and ship them a new one.</li>
+<li>Some implementations require a backend server, which can introduce new vulnerabilities as well as a single point of failure.</li>
+<li>Stolen tokens can be used without a PIN or device unlock code.</li>
+<li>Susceptible to phishing (although short-lived).</li>
+</ul>
+<h2 id="software-totp-tokens"><a name="software-totp-tokens" class="plugin-anchor" href="#software-totp-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Software TOTP Tokens</h2>
+<p>A cheaper and easier alternative to hardware tokens is using software to generate Time-based One Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.</p>
+<p>Most websites use standardised TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>The absence of physical tokens greatly reduces the cost and administrative overhead of implementing the system.</li>
+<li>When users lose access to their TOTP app, a new one can be configured without needing to ship a physical token to them.</li>
+<li>TOTP is widely used, and many users will already have at least one TOTP app installed.</li>
+<li>As long as the user has a screen lock on their phone, an attacker will be unable to use the code if they still the phone.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>TOTP apps are usually installed on mobile devices, which are vulnerable to compromise.</li>
+<li>The TOTP app may be installed on the same mobile device (or workstation) that is used to authenticate.</li>
+<li>Users may store the backup seeds insecurely.</li>
+<li>Not all users have mobile devices to use with TOTP.</li>
+<li>If the users mobile device is lost, stolen or out of battery, they will be unable to authenticate.</li>
+<li>Susceptible to phishing (although short-lived).</li>
+</ul>
+<h2 id="hardware-u2f-tokens"><a name="hardware-u2f-tokens" class="plugin-anchor" href="#hardware-u2f-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Hardware U2F Tokens</h2>
+<p>Hardware U2F tokens communicate with the users workstation over USB or NFC, and implement challenge-response based authentication, rather than requiring the user to manually enter the code. This would typically be done by the user pressing a button on the token, or tapping it against their NFC reader.</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>Longer codes can be used, which may provide a higher level of security.</li>
+<li>Users can simply press a button rather than typing in a code.</li>
+<li>Resistant to phishing.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>As with hardware OTP tokens, the use of physical tokens introduces significant costs and administrative overheads.</li>
+<li>Stolen tokens can be used without a PIN or device unlock code.</li>
+<li>As the tokens are usually connected to the workstation via USB, users are more likely to forget them.</li>
+</ul>
+<h2 id="certificates"><a name="certificates" class="plugin-anchor" href="#certificates"><i class="fa fa-link" aria-hidden="true"></i></a>Certificates</h2>
+<p>Digital certificates are files that are stored on the user&apos;s device which are automatically provided alongside the user&apos;s password when authenticating. The most common type is X.509 certificates (discussed in the <a href="Transport_Layer_Protection_Cheat_Sheet.html#consider-the-use-of-client-side-certificates">Transport Layer Protection Cheat Sheet</a>), more commonly known as client certificates.</p>
+<p>Certificates are supported by all major web browsers, and once installed require no further interaction from the user. The certificates should be linked to an individual&apos;s user account in order to prevent users from trying to authenticate against other accounts.</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>There is no need to purchase and manage hardware tokens.</li>
+<li>Once installed, certificates are very simple for users.</li>
+<li>Certificates can be centrally managed and revoked.</li>
+<li>Resistant to phishing.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>Using digital certificates requires backend PKI system.</li>
+<li>Installing certificates can be difficult for users, particularly in a highly restricted environment.</li>
+<li>Enterprise proxy servers which perform SSL decryption will prevent he use of certificates.</li>
+<li>The certificates are stored on the user&apos;s workstation, and as such can be stolen if their system is compromised.</li>
+</ul>
+<h2 id="smartcards"><a name="smartcards" class="plugin-anchor" href="#smartcards"><i class="fa fa-link" aria-hidden="true"></i></a>Smartcards</h2>
+<p>Smartcards are credit-card size cards with a chip containing a digital certificate for the user, which is unlocked with a PIN. They are commonly used for operating system authentication, but are rarely used in web applications.</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>Stolen smartcards cannot be used without the PIN.</li>
+<li>Smartcards can be users across multiple applications and systems.</li>
+<li>Resistant to phishing.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>Managing and distributing smartcards has the same costs and overheads as hardware tokens.</li>
+<li>Smartcards are not natively supported by modern browsers, so require third party software.</li>
+<li>Although most business-class laptops have smartcard readers built in, home systems often do not.</li>
+<li>The use of smartcards requires functioning backend PKI systems.</li>
+</ul>
+<h2 id="sms-messages-and-phone-calls"><a name="sms-messages-and-phone-calls" class="plugin-anchor" href="#sms-messages-and-phone-calls"><i class="fa fa-link" aria-hidden="true"></i></a>SMS Messages and Phone Calls</h2>
+<p>SMS messages or phone calls can be used to provide users with a single-use code that they must submit as a second factor.</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>Relatively simple to implement.</li>
+<li>Requires user to link their account to a mobile number.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>Requires the user to have a mobile device or landline.</li>
+<li>Require user to have signal to receive the call or message.</li>
+<li>Calls and SMS messages may cost money to send (need to protect against attackers requesting a large number of messages to exhaust funds.</li>
+<li>A number of attacks against SMS or mobile numbers have been demonstrated and exploited in the past.</li>
+<li>SMS messages may be received on the same device the user is authenticating from.</li>
+<li>Susceptible to phishing.</li>
+</ul>
+<h2 id="email"><a name="email" class="plugin-anchor" href="#email"><i class="fa fa-link" aria-hidden="true"></i></a>Email</h2>
+<p>Email verification requires that the user enters a code or clicks  a link send to their email address. There is some debate as to whether email constitutes a form of MFA, because if the user does not have MFA configured on their email account, it simply requires knowledge of the user&apos;s email password (which is often the same as their application password). However, it is included here for completeness.</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>Very easy to implement.</li>
+<li>No requirements for separate hardware or a mobile device.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>Relies entirely on the security of the email account, which often lacks MFA.</li>
+<li>Email passwords are commonly the same as application passwords.</li>
+<li>Provides no protection if the user&apos;s email is compromised first.</li>
+<li>Email may be received by the same device the user is authenticating from.</li>
+<li>Susceptible to phishing.</li>
+</ul>
+<h1 id="something-you-are"><a name="something-you-are" class="plugin-anchor" href="#something-you-are"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Are</h1>
+<p>The final factor in the traditional view of MFA is something you are - which is physical attributes of the users (often called biometrics). Biometrics are rarely used in web applications due to the requirement for users to have specific hardware.</p>
+<h2 id="biometrics"><a name="biometrics" class="plugin-anchor" href="#biometrics"><i class="fa fa-link" aria-hidden="true"></i></a>Biometrics</h2>
+<p>The are a number of common types of biometrics that are used, including:</p>
+<ul>
+<li>Fingerprint scans</li>
+<li>Facial recognition</li>
+<li>Iris scans</li>
+<li>Handprint scans</li>
+</ul>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>Well-implemented biometrics are hard to spoof, and require a targeted attack.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>Require manual enrolment of the user&apos;s physical attributes.</li>
+<li>Custom (sometimes expensive) hardware is often required to read biometrics.</li>
+<li>Modern browsers do not have native support, so custom client-side software is required.</li>
+</ul>
+<h1 id="location"><a name="location" class="plugin-anchor" href="#location"><i class="fa fa-link" aria-hidden="true"></i></a>Location</h1>
+<p>The use of location as a fourth factor for MFA is not fully accepted;  however, it is increasingly be used for authentication. It is sometimes argued that location is used when deciding whether or not to require MFA (as discussed <a href="#when-to-require-mfa">above</a>) however this is effectively the same as considering it to be a factor in its own right. Two prominent examples of this are the <a href="https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/overview" target="_blank">Conditional Access Policies</a> available in Microsoft Azure, and the <a href="https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock" target="_blank">Network Unlock</a> functionality in BitLocker.</p>
+<p>When talking about location, access to the application that the user is authenticating against is not usually considered (as this would always be the case, and as such is relatively meaningless).</p>
+<h2 id="source-ip-ranges"><a name="source-ip-ranges" class="plugin-anchor" href="#source-ip-ranges"><i class="fa fa-link" aria-hidden="true"></i></a>Source IP Ranges</h2>
+<p>The source IP address the user is connecting from can be used as a factor, typically in a white-list based approach. This could either be based on a static white-list (such as corporate office ranges) or a dynamic white-list (such as previous IP addresses the user has authenticated from).</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>Very easy for users.</li>
+<li>Requires minimal configuration and management from administrative staff.</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>Doesn&apos;t provide any protection if the user&apos;s system is compromised.</li>
+<li>Doesn&apos;t provide any protection against rouge insiders.</li>
+<li>Trusted IP addresses must be carefully restricted (for example, if the open guest WiFi uses the main corporate IP range).</li>
+</ul>
+<h2 id="geolocation"><a name="geolocation" class="plugin-anchor" href="#geolocation"><i class="fa fa-link" aria-hidden="true"></i></a>Geolocation</h2>
+<p>Rather than using the exact IP address of the user, the geographic location that the IP address is registered to can be used. This is less precise, but may be more feasible to implement in environments where IP addresses are not static. A common usage would be to require additional authentication factors when an authentication attempt is made from outside of the user&apos;s normal country.</p>
+<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<ul>
+<li>Very easy for users</li>
+</ul>
+<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<ul>
+<li>Doesn&apos;t provide any protection if the user&apos;s system is compromised.</li>
+<li>Doesn&apos;t provide any protection against rouge insiders.</li>
+<li>Easy for an attacker to bypass by obtaining IP addresses in the trusted country or location.</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Microservices based Security Arch Doc ">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Nodejs_security_cheat_sheet.html" class="navigation navigation-next " aria-label="Next page: Nodejs security cheat sheet">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Multifactor Authentication ","level":"1.41","depth":1,"next":{"title":"Nodejs security cheat sheet","level":"1.42","depth":1,"path":"cheatsheets/Nodejs_security_cheat_sheet.md","ref":"cheatsheets/Nodejs_security_cheat_sheet.md","articles":[]},"previous":{"title":"Microservices based Security Arch Doc ","level":"1.40","depth":1,"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","ref":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Multifactor_Authentication_Cheat_Sheet.md","mtime":"2019-11-12T17:19:58.574Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-12T17:20:34.576Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
