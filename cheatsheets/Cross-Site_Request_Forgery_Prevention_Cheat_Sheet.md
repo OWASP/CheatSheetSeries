@@ -31,7 +31,7 @@ As a defense-in-depth measure, consider implementing one mitigation from Defense
 
 ## Token Based Mitigation
 
-This defense is one of the most popular and recommended methods to mitigate CSRF. It can be achieved either with state (synchronizer token pattern) or stateless (encrypted/hash based token pattern). See section 4.3 on how to mitigate login CSRF in your applications. For all the mitigation's, it is implicit that general security principles should be adhered
+This defense is one of the most popular and recommended methods to mitigate CSRF. It can be achieved either with state (synchronizer token pattern) or stateless (encrypted/hash based token pattern). See section 4.3 on how to mitigate login CSRF in your applications. For all the mitigations, it is implicit that general security principles should be adhered
 
 - Strong encryption/HMAC functions should be adhered to.
 
