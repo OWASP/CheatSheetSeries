@@ -142,6 +142,16 @@ public class LookAheadObjectInputStream extends ObjectInputStream {
 }
 ```   
 
+One other solution is to use the [Apache Commons IO classes](https://commons.apache.org/proper/commons-io/javadocs/api-2.5/org/apache/commons/io/serialization/ValidatingObjectInputStream.html)
+
+```java
+   ValidatingObjectInputStream ois = new ValidatingObjectInputStream(myUntrustedObjectStream);
+   ois.accept(MyTrustedClass.class);
+   MyTrustedClassObject obj = (MyTrustedClassObject) ois.readObject();
+   ois.close();
+```
+
+
 More complete implementations of this approach have been proposed by various community members:
 
 - [NibbleSec](https://github.com/ikkisoft/SerialKiller) - a library that allows whitelisting and blacklisting of classes that are allowed to be deserialized
