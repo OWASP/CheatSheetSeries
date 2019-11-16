@@ -354,7 +354,7 @@ For details on what DOM-based XSS is, and defenses against this type of XSS flaw
 
 ## Bonus Rule \#1: Use HTTPOnly cookie flag
 
-Preventing all XSS flaws in an application is hard, as you can see. To help mitigate the impact of an XSS flaw on your site, OWASP also recommends you set the HTTPOnly flag on your session cookie and any custom cookies you have that are not accessed by any Javascript you wrote. This cookie flag is typically on by default in .NET apps, but in other languages you have to set it manually. For more details on the HTTPOnly cookie flag, including what it does, and how to use it, see the OWASP article on [HTTPOnly](https://www.owasp.org/index.php/HTTPOnly).
+Preventing all XSS flaws in an application is hard, as you can see. To help mitigate the impact of an XSS flaw on your site, OWASP also recommends you set the HTTPOnly flag on your session cookie and any custom cookies you have that are not accessed by any JavaScript you wrote. This cookie flag is typically on by default in .NET apps, but in other languages you have to set it manually. For more details on the HTTPOnly cookie flag, including what it does, and how to use it, see the OWASP article on [HTTPOnly](https://www.owasp.org/index.php/HTTPOnly).
 
 ## Bonus Rule \#2: Implement Content Security Policy
 
@@ -366,7 +366,7 @@ For example this CSP:
 Content-Security-Policy: default-src: 'self'; script-src: 'self' static.domain.tld
 ```
 
-Will instruct web browser to load all resources only from the page's origin and JavaScript source code files additionaly from `static.domain.tld`. For more details on Content Security Policy, including what it does, and how to use it, see this article on [Content Security Policy](https://content-security-policy.com).
+Will instruct web browser to load all resources only from the page's origin and JavaScript source code files additionally from `static.domain.tld`. For more details on Content Security Policy, including what it does, and how to use it, see this article on [Content Security Policy](https://content-security-policy.com).
 
 ## Bonus Rule \#3: Use an Auto-Escaping Template System
 
@@ -378,16 +378,24 @@ This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/He
 
 Note that Firefox never supported X-XSS-Protection and Chrome and Edge have announced they are dropping support for it.
 
-## Bonus Rule \#5: Properly use modern JS frameworks like Angular (2+) or ReactJS
+## Bonus Rule \#5: Properly use modern JS frameworks
 
-Modern javascript frameworks have pretty good XSS protection built in. It is important to use them properly to benefit from it.
+Modern JavaScript frameworks have pretty good XSS protection built in.
+Usually framework API allows bypassing that protection in order to render unescaped HTML or include executable code.
 
-When using ReactJS, *do not use [the function `dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)*. When using Angular (2+), *do not use [functions with the pattern `bypassSecurityTrust{something}`](https://angular.io/guide/security#bypass-security-apis)* (i.e. `bypassSecurityTrustHtml`, `bypassSecurityTrustStyle`, etc).  
-If you really, really really have to use these functions remember that now all framework protections are turned off and you have to escape or sanitize all the data by yourself.
+The following API methods and props in the table below are considered dangerous and by using them you are potentially exposing your users to an XSS vulnerability.
+If you **really** have to use them remember that now all the data must be [sanitized](#rule-6---sanitize-html-markup-with-a-library-designed-for-the-job) by yourself.
 
-For Angular (2+) remember to build Angular templates with `-prod` parameter (`ng build --prod`) in order to avoid template injection.
+| JavaScript framework | Dangerous methods / props                                                                     |
+|----------------------|------------------------------------------------------------------------------------------------|
+| Angular (2+)         | [bypassSecurityTrust](https://angular.io/guide/security#bypass-security-apis)                  |       
+| React                | [`dangerouslySetInnerHTML`](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml)|   
+| Svelte               | [`{@html ...}`](https://svelte.dev/docs#html)                                                  |
+| Vue (2+)             | [`v-html`](https://vuejs.org/v2/api/#v-html)                                                   |
 
-And also remember to update your framework to the newest version, with all possible bug fixes, as soon as possible. 
+Avoid template injection in Angular by building with `--prod` parameter (`ng build --prod`).
+
+Also remember to keep your framework updated to the latest version with all possible bug fixes. 
 
 # XSS Prevention Rules Summary
 
@@ -398,7 +406,7 @@ And also remember to update your framework to the newest version, with all possi
 | String    | GET Parameter                            | `<a href="/site/search?value=UNTRUSTED DATA ">clickme</a>`                                               | URL Encoding (rule \#5).                                                                                                                                                                       |
 | String    | Untrusted URL in a SRC or HREF attribute | `<a href="UNTRUSTED URL ">clickme</a> <iframe src="UNTRUSTED URL " />`                                   | Canonicalize input, URL Validation, Safe URL verification, Whitelist http and https URL's only (Avoid the JavaScript Protocol to Open a new Window), Attribute encoder.                        |
 | String    | CSS Value                                | `html <div style="width: UNTRUSTED DATA ;">Selection</div>`                                                   | Strict structural validation (rule \#4), CSS Hex encoding, Good design of CSS Features.                                                                                                        |
-| String    | Javascript Variable                      | `<script>var currentValue='UNTRUSTED DATA ';</script> <script>someFunction('UNTRUSTED DATA ');</script>` | Ensure JavaScript variables are quoted, JavaScript Hex Encoding, JavaScript Unicode Encoding, Avoid backslash encoding (`\"` or `\'` or `\\`).                                                 |
+| String    | JavaScript Variable                      | `<script>var currentValue='UNTRUSTED DATA ';</script> <script>someFunction('UNTRUSTED DATA ');</script>` | Ensure JavaScript variables are quoted, JavaScript Hex Encoding, JavaScript Unicode Encoding, Avoid backslash encoding (`\"` or `\'` or `\\`).                                                 |
 | HTML      | HTML Body                                | `<div>UNTRUSTED HTML</div>`                                                                             | HTML Validation (JSoup, AntiSamy, HTML Sanitizer...).                                                                                                                                          |
 | String    | DOM XSS                                  | `<script>document.write("UNTRUSTED INPUT: " + document.location.hash );<script/>`                        | [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)                                                                                                                |
 

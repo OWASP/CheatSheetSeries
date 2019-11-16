@@ -215,7 +215,7 @@ HTML encoded example to highlight a fundamental difference with JavaScript encod
 <&#x61; href=...>
 ```
 
-If HTML encoding followed the same semantics as JavaScript encoding. The line above could have possibily worked to render a link. This difference makes JavaScript encoding a less viable weapon in our fight against XSS.
+If HTML encoding followed the same semantics as JavaScript encoding. The line above could have possibly worked to render a link. This difference makes JavaScript encoding a less viable weapon in our fight against XSS.
 
 # RULE \#4 - JavaScript Escape Before Inserting Untrusted Data into the CSS Attribute Subcontext within the Execution Context
 
@@ -281,7 +281,7 @@ The guidelines below are an attempt to provide guidelines for developers when de
 
 Avoid treating untrusted data as code or markup within JavaScript code.
 
-## GUIDELINE \#2 - Always JavaScript encode and delimit untrusted data as quoted strings when entering the application when building templated Javascript
+## GUIDELINE \#2 - Always JavaScript encode and delimit untrusted data as quoted strings when entering the application when building templated JavaScript
 
 Always JavaScript encode and delimit untrusted data as quoted strings when entering the application as illustrated in the following example.
 

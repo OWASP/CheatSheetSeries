@@ -52,7 +52,7 @@ It's also free-form text input that highlights the importance of proper context-
 The primary means of input validation for free-form text input should be:
 
 - **Normalization:** Ensure canonical encoding is used across all the text and no invalid characters are present.
-- **Character category whitelisting:** Unicode allows whitelisting categories such as "decimal digits" or "letters" which not only covers the Latin alphabet but also various other scripts used globally (e.g. Arabic, Cyryllic, CJK ideographs etc).
+- **Character category whitelisting:** Unicode allows whitelisting categories such as "decimal digits" or "letters" which not only covers the Latin alphabet but also various other scripts used globally (e.g. Arabic, Cyrillic, CJK ideographs etc).
 - **Individual character whitelisting:** If you allow letters and ideographs in names and also want to allow apostrophe `'` for Irish names, but don't want to allow the whole punctuation category.
 
 References: 
@@ -143,7 +143,7 @@ Additional information on upload protection here: [File Upload Protection Cheat 
 ## Upload Storage
 
 - Use a new filename to store the file on the OS. Do not use any user controlled text for this filename or for the temporary filename.
-- When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is *test.JPG*, rename it to *JAI1287uaisdjhf.JPG* with a random file name. The purpose of doing it to prevent the risks of direct file access and ambigious filename to evalide the filter, such as `test.jpg;.asp or /../../../../../test.jpg`.
+- When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is *test.JPG*, rename it to *JAI1287uaisdjhf.JPG* with a random file name. The purpose of doing it to prevent the risks of direct file access and ambiguous filename to evalide the filter, such as `test.jpg;.asp or /../../../../../test.jpg`.
 - Uploaded files should be analyzed for malicious content (anti-malware, static analysis, etc).
 - The file path should not be able to specify by client side. It's decided by server side.
 

@@ -47,7 +47,7 @@ USER myuser
 
 3. Enable user namespace support (`--userns-remap=default`) in [Docker daemon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
 
-More informatrion about this topic can be found in [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/)
+More information about this topic can be found in [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/)
 
 In kubernetes this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `runAsNonRoot` field e.g.:
 

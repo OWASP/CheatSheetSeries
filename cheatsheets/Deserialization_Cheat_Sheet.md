@@ -60,7 +60,7 @@ Implementation advices:
 
 ### WhiteBox Review
 
-Be aware of the following Java API uses for potential serilization vulnerability.
+Be aware of the following Java API uses for potential serialization vulnerability.
 
 1. `XMLdecoder` with external user defined parameters
 
@@ -236,11 +236,11 @@ if (suspectObject is SomeDangerousObjectType)
 }
 ```    
 
-For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of white list control useing a custom `SerializationBinder`.
+For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of white list control using a custom `SerializationBinder`.
 
 Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. **A deserializer can only instantiate types that it knows about**. 
 
-Try to keep any code that might create potential gagdets separate from any code that has internet connectivity. As an example `System.Windows.Data.ObjectDataProvider` used in WPF applications is a known gadget that allows arbitrary method invocation. It would be risky to have this a reference to this assembly in a REST service project that deserializes untrusted data.
+Try to keep any code that might create potential gadgets separate from any code that has internet connectivity. As an example `System.Windows.Data.ObjectDataProvider` used in WPF applications is a known gadget that allows arbitrary method invocation. It would be risky to have this a reference to this assembly in a REST service project that deserializes untrusted data.
 
 ### Known .NET RCE Gadgets
 

@@ -274,27 +274,25 @@ process.Start();
 
 DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-e.g Validating user input using [IPAddress.Parse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.parse?view=netframework-4.8)
+e.g Validating user input using [IPAddress.TryParse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8)
 
 ``` csharp
 //User input
-string ipaddress = "127.0.0.1";
+string ipAddress = "127.0.0.1";
  
 //check to make sure an ip address was provided    
-if (string.IsNullOrEmpty(address))  
-{   
-	try
+if (string.IsNullOrEmpty(ipAddress))  
+{
+	// Create an instance of IPAddress for the specified address string (in 
+	// dotted-quad, or colon-hexadecimal notation).
+	if (IPAddress.TryParse(ipAddress, out var address))
 	{
-		// Create an instance of IPAddress for the specified address string (in 
-		// dotted-quad, or colon-hexadecimal notation).
-		IPAddress address = IPAddress.Parse(ipAddress);
-
 		// Display the address in standard notation.
 		return address.ToString();
 	}
-	catch(FormatException e)
+	else
 	{
-		//ipaddress is not of type IPaddress
+		//ipAddress is not of type IPAddress
 		...
 	}
     ...
@@ -471,7 +469,7 @@ DO NOT: Roll your own authentication or session management, use the one provided
 
 DO NOT: Tell someone if the account exists on LogOn, Registration or Password reset. Say something like 'Either the username or password was incorrect', or 'If this account exists then a reset token will be sent to the registered email address'. This protects against account enumeration. 
 
-The feedback to the user should be identical whether or not the account exists, both in terms of content and behaviour: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
+The feedback to the user should be identical whether or not the account exists, both in terms of content and behavior: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
 
 ### Missing function-level access control
 
@@ -668,7 +666,7 @@ Malicious users are able to use objects like cookies to insert malicious informa
 DO: Prevent Deserialization of Domain Objects
 
 DO: Run the Deserialization Code with Limited Access Permissions
-If a desterilized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
+If a deserialized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
 
 More information can be found here: [Deserialization Cheat Sheet](Deserialization_Cheat_Sheet.md#net-csharp)
 
@@ -688,7 +686,7 @@ DO: Establish effective monitoring and alerting so suspicious activities are det
 
 DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was thrown");``` rather log the stack trace, error message and user Id who caused the error.
 
-DO NOT: Log sesnsitive data such as user's passwords.
+DO NOT: Log sensitive data such as user's passwords.
 
 ### Logging
 
@@ -725,7 +723,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 }
 ```
 
-e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers).  The belwo exaple shows logging of all unsucessful log in attempts.
+e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers).  The below example shows logging of all unsuccessful log in attempts.
 
 ``` csharp
 public class AccountsController : Controller
