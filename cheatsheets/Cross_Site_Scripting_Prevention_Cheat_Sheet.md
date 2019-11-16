@@ -376,6 +376,8 @@ Many web application frameworks provide automatic contextual escaping functional
 
 This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) enables the Cross-site scripting (XSS) filter built into some modern web browsers. This header is usually enabled by default anyway, so the role of this header is to re-enable the filter for this particular website if it was disabled by the user.
 
+Note that Firefox never supported X-XSS-Protection and Chrome and Edge have announced they are dropping support for it.
+
 ## Bonus Rule \#5: Properly use modern JS frameworks
 
 Modern JavaScript frameworks have pretty good XSS protection built in.
