@@ -197,16 +197,7 @@ The following sections will focus primarily on preventing brute-force attacks, a
 
 Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
 
-In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor when performing sensitive actions (such as adding a new payment destination), or in specific circumstances where there is reason to suspect that the login attempt may not be legitimate, such as a login from:
-
-- A new browser/device or IP address.
-- An unusual country or location.
-- Specific countries that are considered untrusted.
-- An IP address that appears on known blacklists.
-- An IP address that has tried to login to multiple accounts.
-- A login attempt that appears to be scripted rather than manual.
-
-Additionally, for enterprise applications, known trusted IP ranges could be added to a whitelist so that MFA is not required when users connect from these ranges.
+The [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md) contains further guidance on implementing MFA.
 
 ### Account Lockout
 
