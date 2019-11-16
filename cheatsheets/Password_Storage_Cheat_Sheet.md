@@ -7,6 +7,7 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 - **Use Argon2 if your library supports it.**
   - **If it doesn't, use Scrypt, PBKDF2 or Bcrypt.**
 - **Set a reasonable [work factor](#work-factors) for you system.**
+- **Use a salt (modern algorithms do this for you automatically).**
 - **Consider using a pepper to provide an additional layer of security.**
 
 ## Hashing vs Encryption
@@ -56,15 +57,15 @@ A salt is a unique, randomly generated string that is added to each password as 
 
 Salting also provides protection against an attacker pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is not possible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.
 
-Modern hashing algorithms such as Bcrypt or Argon2 automatically salt  the passwords, so no additional steps are required when using them. However, if you are using a [legacy password hashing algorithm](#legacy-algorithms) then salting needs to be implemented manually. The basic steps to perform this are:
+[Modern hashing algorithms](#modern-algorithms) such as Argon2 or scrypt automatically salt the passwords, so no additional steps are required when using them. However, if you are using a [legacy password hashing algorithm](#legacy-algorithms) then salting needs to be implemented manually. The basic steps to perform this are:
 
-* Generate a salt using a [cryptographically secure function](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
-  * The salt should be at least 16 characters long.
-  * Encode the salt into a safe character set such as hexadecimal or Base64.
-* Combine the salt with the password.
-  * This can be done using simple concatenation, or a construct such as a HMAC.
-* Hash the combined password and salt.
-* Store the salt and the password hash.
+- Generate a salt using a [cryptographically secure function](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
+  - The salt should be at least 16 characters long.
+  - Encode the salt into a safe character set such as hexadecimal or Base64.
+- Combine the salt with the password.
+  - This can be done using simple concatenation, or a construct such as a HMAC.
+- Hash the combined password and salt.
+- Store the salt and the password hash.
 
 ## Peppering
 
@@ -89,7 +90,7 @@ One solution to this is to store the ID of the pepper in the database alongside 
 
 ## Work Factors
 
-The work factor is essentially the number of iterations of the hashing algorithm that are performed for each passwords (usually it's actually `2^work` iterations). The purpose of the work factor is to make calculating the hash more computationally expensive, which in turn reduces the speed at which an attacker can attempt to crack the password hash.
+The work factor is essentially the number of iterations of the hashing algorithm that are performed for each passwords (usually it's actually `2^work` iterations). The purpose of the work factor is to make calculating the hash more computationally expensive, which in turn reduces the speed at which an attacker can attempt to crack the password hash. The work factor is typically stored in the hash output.
 
 When choosing a work factor, a balance needs to be struck between security and performance. Higher work factors will make the hashes more difficult for an attacker to crack, but will also make the process of verifying a login attempt slower. If the work factor is too high, this may degrade the performance of the application, and could also be used by an attacker to carry out a denial of service attack by making a large number of login attempts to exhaust server's CPU.
 
@@ -112,9 +113,9 @@ Additionally, due to how computationally expensive modern hashing functions are,
 In order to protect against both of these issues, a maximum password length should be enforced. This should be 50 characters for Bcrypt, and at least 64 characters for other algorithms. There are two main ways that this can be done:
 
 - Restrict the maximum length in a password policy.
-- Hash the password with another algorithm such as SHA-1 (which produces a 40 character output) or SHA-256 (64 characters) before hashing it with the modern algorithm.
+- Hash the password with another algorithm such as SHA-1 (which produces a 40 character output) or SHA-256 (64 characters) before hashing it with the modern algorithm. This is known as pre-hashing.
 
-# Hashing Algorithms
+# Password Hashing Algorithms
 
 ## Modern Algorithms
 
@@ -122,7 +123,7 @@ There are four main algorithms that should be considered for hashing passwords i
 
 - [Argon2](https://github.com/P-H-C/phc-winner-argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net), and should be used as the first choice when it is available. It has strong resistance to both GPU and ASIC based attacks.
 - [Scrypt](https://en.wikipedia.org/wiki/Scrypt) is designed to resist GPU based attacks, but is less widely supported.
-- [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver), and should be used when FIPS compliance is required. It requires that 
+- [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver), and should be used when FIPS compliance is required.
 - [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is the oldest of the algorithms, and is more susceptible to GPU based attacks. However, due to its age it is widely supported across most languages.
 
 It should be stressed that even though Bcrypt is considered comparatively weak compared to newer algorithms such as Scrypt or Argon2, it is still substantially stronger than legacy algorithms such as MD5 and SHA-1. Although exact cracking speeds will vary based on the hardware, to give an idea of context, a benchmark using [8 Nvidia GTX 1080 GPUs](https://gist.github.com/epixoip/a83d38f412b4737e99bbef804a270c40) showed Bcrypt hashes to be approximately 2 million times harder to crack than MD5.
