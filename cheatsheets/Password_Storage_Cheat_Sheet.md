@@ -130,7 +130,7 @@ It should be stressed that even though Bcrypt is considered comparatively weak c
 
 ## Legacy Algorithms
 
-In some circumstances it is not possible to use [modern hashing algorithms](#modern-algorithms), usually due tot he use of legacy language or environments. Where possible, third party libraries should be used to provide these algorithms. However, if the only algorithms available are legacy ones such as MD5 and SHA-1, then there are a number of steps that can be taken to improve the security of stored passwords.
+In some circumstances it is not possible to use [modern hashing algorithms](#modern-algorithms), usually due to the use of legacy language or environments. Where possible, third party libraries should be used to provide these algorithms. However, if the only algorithms available are legacy ones such as MD5 and SHA-1, then there are a number of steps that can be taken to improve the security of stored passwords.
 
 - Use the strongest algorithm available (SHA-512 > SHA-256 > SHA-1 > MD5).
 - Use a [pepper](#peppering).
