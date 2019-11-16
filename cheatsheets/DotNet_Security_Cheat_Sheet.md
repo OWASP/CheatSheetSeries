@@ -561,7 +561,11 @@ e.g Startup.cs in the Configure()
 
 ### Cross-site request forgery
 
+DO NOT: Send sensitive data without validating Anti-Forgery-Tokens ([.NET](https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks) / [.NET Core](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration)).
+
 DO: Send the anti-forgery token with every POST/PUT request:
+
+#### Using .NET Framework:
 
 ```csharp
 using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", 
@@ -607,9 +611,19 @@ public void RemoveAntiForgeryCookie(Controller controller)
 }
 ```
 
-NB: You will need to attach the anti-forgery token to Ajax requests.
+#### Using .NET Core 2.0 or later:
 
-After .NET Core 2.0 it is possible to automatically generate and verify the antiforgery token. Forms must have the requisite helper as seen here:
+Starting with .NET Core 2.0 it is possible to [automatically generate and verify the antiforgery token](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration).
+
+If you are using [tag-helpers](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro), which is the default for most web project templates, then all forms will automatically send the anti-forgery token. You can check if tag-helpers are enabled by checking if your main `_ViewImports.cshtml` file contains:
+
+```csharp
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+```
+
+`IHtmlHelper.BeginForm` also sends anti-forgery-tokens automatically.
+
+Unless you are using tag-helpers or `IHtmlHelper.BeginForm`, you must use the requisite helper on forms as seen here:
 
 ```html
 <form action="RelevantAction" >
@@ -617,7 +631,75 @@ After .NET Core 2.0 it is possible to automatically generate and verify the anti
 </form>
 ```
 
-And then add the `[AutoValidateAntiforgeryToken]` attribute to the action result.
+To automatically validate all requests other than GET, HEAD, OPTIONS and TRACE you need to add a global action filter with the [AutoValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2) attribute inside your `Startup.cs` as mentioned in the following [article](https://andrewlock.net/automatically-validating-anti-forgery-tokens-in-asp-net-core-with-the-autovalidateantiforgerytokenattribute/):
+
+```csharp
+services.AddMvc(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
+```
+
+If you need to disable the attribute validation for a specific method on a controller you can add the [IgnoreAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.ignoreantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the controller method (for MVC controllers) or parent class (for Razor pages): 
+
+```csharp
+[IgnoreAntiforgeryToken]
+[HttpDelete]
+public IActionResult Delete()
+```
+
+```csharp
+[IgnoreAntiforgeryToken]
+public class UnsafeModel : PageModel
+```
+
+If you need to also validate the token on GET, HEAD, OPTIONS or TRACE - requests you can add the [ValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the controller method (for MVC controllers) or parent class (for Razor pages):
+
+```csharp
+[HttpGet]
+[ValidateAntiforgeryToken]
+public IActionResult DoSomethingDangerous()
+```
+
+```csharp
+[HttpGet]
+[ValidateAntiforgeryToken]
+public class SafeModel : PageModel
+```
+
+In case you can't use a global action filter, add the [AutoValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to your controller classes or razor page models:
+
+```csharp
+[AutoValidateAntiforgeryToken]
+public class UserController
+```
+
+```csharp
+[AutoValidateAntiforgeryToken]
+public class SafeModel : PageModel
+```
+
+#### Using .Net Core 2.0 or .NET Framework with AJAX
+
+You will need to attach the anti-forgery token to AJAX requests.
+
+If you are using jQuery in an ASP.NET Core MVC view this can be achieved using this snippet:
+
+```javascript
+@inject  Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgeryProvider
+$.ajax(
+{
+    type: "POST",
+    url: '@Url.Action("Action", "Controller")',
+    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+    data: {
+        id: id,
+        '__RequestVerificationToken': '@antiforgeryProvider.GetAndStoreTokens(this.Context).RequestToken'
+    }
+})
+```
+
+If you are using the .NET Framework, you can find some code snippets [here](https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks#anti-csrf-and-ajax).
 
 More information can be found [here](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) for Cross-Site Request Forgery.
 
