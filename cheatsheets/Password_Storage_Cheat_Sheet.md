@@ -8,7 +8,7 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
   - **If it doesn't, use Scrypt, PBKDF2 or Bcrypt (in order of preference).**
 - **Set a reasonable [work factor](#work-factors) for you system.**
 - **Use a [salt](#salting) (modern algorithms do this for you automatically).**
-- **Consider using a [pepper](#peppering] to provide an additional layer of security.**
+- **Consider using a [pepper](#peppering) to provide an additional layer of security.**
 
 ## Hashing vs Encryption
 
