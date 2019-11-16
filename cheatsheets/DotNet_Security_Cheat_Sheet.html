@@ -1481,7 +1481,9 @@ Requests = <span class="hljs-number">3</span>, Seconds = <span class="hljs-numbe
 <pre><code class="lang-csharp">  app.UseHttpsRedirection();
 </code></pre>
 <h3 id="cross-site-request-forgery"><a name="cross-site-request-forgery" class="plugin-anchor" href="#cross-site-request-forgery"><i class="fa fa-link" aria-hidden="true"></i></a>Cross-site request forgery</h3>
+<p>DO NOT: Send sensitive data without validating Anti-Forgery-Tokens (<a href="https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks" target="_blank">.NET</a> / <a href="https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration" target="_blank">.NET Core</a>).</p>
 <p>DO: Send the anti-forgery token with every POST/PUT request:</p>
+<h4 id="using-net-framework"><a name="using-net-framework" class="plugin-anchor" href="#using-net-framework"><i class="fa fa-link" aria-hidden="true"></i></a>Using .NET Framework:</h4>
 <pre><code class="lang-csharp"><span class="hljs-keyword">using</span> (Html.BeginForm(<span class="hljs-string">&quot;LogOff&quot;</span>, <span class="hljs-string">&quot;Account&quot;</span>, FormMethod.Post, <span class="hljs-keyword">new</span> { id = <span class="hljs-string">&quot;logoutForm&quot;</span>, 
                         @<span class="hljs-keyword">class</span> = <span class="hljs-string">&quot;pull-right&quot;</span> }))
 {
@@ -1518,13 +1520,63 @@ Requests = <span class="hljs-number">3</span>, Seconds = <span class="hljs-numbe
     }
 }
 </code></pre>
-<p>NB: You will need to attach the anti-forgery token to Ajax requests.</p>
-<p>After .NET Core 2.0 it is possible to automatically generate and verify the antiforgery token. Forms must have the requisite helper as seen here:</p>
+<h4 id="using-net-core-20-or-later"><a name="using-net-core-20-or-later" class="plugin-anchor" href="#using-net-core-20-or-later"><i class="fa fa-link" aria-hidden="true"></i></a>Using .NET Core 2.0 or later:</h4>
+<p>Starting with .NET Core 2.0 it is possible to <a href="https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration" target="_blank">automatically generate and verify the antiforgery token</a>.</p>
+<p>If you are using <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro" target="_blank">tag-helpers</a>, which is the default for most web project templates, then all forms will automatically send the anti-forgery token. You can check if tag-helpers are enabled by checking if your main <code>_ViewImports.cshtml</code> file contains:</p>
+<pre><code class="lang-csharp">@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+</code></pre>
+<p><code>IHtmlHelper.BeginForm</code> also sends anti-forgery-tokens automatically.</p>
+<p>Unless you are using tag-helpers or <code>IHtmlHelper.BeginForm</code>, you must use the requisite helper on forms as seen here:</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;RelevantAction&quot;</span> &gt;</span>
 @Html.AntiForgeryToken()
 <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
 </code></pre>
-<p>And then add the <code>[AutoValidateAntiforgeryToken]</code> attribute to the action result.</p>
+<p>To automatically validate all requests other than GET, HEAD, OPTIONS and TRACE you need to add a global action filter with the <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2" target="_blank">AutoValidateAntiforgeryToken</a> attribute inside your <code>Startup.cs</code> as mentioned in the following <a href="https://andrewlock.net/automatically-validating-anti-forgery-tokens-in-asp-net-core-with-the-autovalidateantiforgerytokenattribute/" target="_blank">article</a>:</p>
+<pre><code class="lang-csharp">services.AddMvc(options =&gt;
+{
+    options.Filters.Add(<span class="hljs-keyword">new</span> AutoValidateAntiforgeryTokenAttribute());
+});
+</code></pre>
+<p>If you need to disable the attribute validation for a specific method on a controller you can add the <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.ignoreantiforgerytokenattribute?view=aspnetcore-2.2" target="_blank">IgnoreAntiforgeryToken</a> attribute to the controller method (for MVC controllers) or parent class (for Razor pages): </p>
+<pre><code class="lang-csharp">[IgnoreAntiforgeryToken]
+[HttpDelete]
+<span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">Delete</span>(<span class="hljs-params"></span>)
+</span></code></pre>
+<pre><code class="lang-csharp">[IgnoreAntiforgeryToken]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">UnsafeModel</span> : <span class="hljs-title">PageModel</span>
+</code></pre>
+<p>If you need to also validate the token on GET, HEAD, OPTIONS or TRACE - requests you can add the <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validateantiforgerytokenattribute?view=aspnetcore-2.2" target="_blank">ValidateAntiforgeryToken</a> attribute to the controller method (for MVC controllers) or parent class (for Razor pages):</p>
+<pre><code class="lang-csharp">[HttpGet]
+[ValidateAntiforgeryToken]
+<span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">DoSomethingDangerous</span>(<span class="hljs-params"></span>)
+</span></code></pre>
+<pre><code class="lang-csharp">[HttpGet]
+[ValidateAntiforgeryToken]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SafeModel</span> : <span class="hljs-title">PageModel</span>
+</code></pre>
+<p>In case you can&apos;t use a global action filter, add the <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2" target="_blank">AutoValidateAntiforgeryToken</a> attribute to your controller classes or razor page models:</p>
+<pre><code class="lang-csharp">[AutoValidateAntiforgeryToken]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span>
+</code></pre>
+<pre><code class="lang-csharp">[AutoValidateAntiforgeryToken]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SafeModel</span> : <span class="hljs-title">PageModel</span>
+</code></pre>
+<h4 id="using-net-core-20-or-net-framework-with-ajax"><a name="using-net-core-20-or-net-framework-with-ajax" class="plugin-anchor" href="#using-net-core-20-or-net-framework-with-ajax"><i class="fa fa-link" aria-hidden="true"></i></a>Using .Net Core 2.0 or .NET Framework with AJAX</h4>
+<p>You will need to attach the anti-forgery token to AJAX requests.</p>
+<p>If you are using jQuery in an ASP.NET Core MVC view this can be achieved using this snippet:</p>
+<pre><code class="lang-javascript">@inject  Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgeryProvider
+$.ajax(
+{
+    type: <span class="hljs-string">&quot;POST&quot;</span>,
+    url: <span class="hljs-string">&apos;@Url.Action(&quot;Action&quot;, &quot;Controller&quot;)&apos;</span>,
+    contentType: <span class="hljs-string">&quot;application/x-www-form-urlencoded; charset=utf-8&quot;</span>,
+    data: {
+        id: id,
+        <span class="hljs-string">&apos;__RequestVerificationToken&apos;</span>: <span class="hljs-string">&apos;@antiforgeryProvider.GetAndStoreTokens(this.Context).RequestToken&apos;</span>
+    }
+})
+</code></pre>
+<p>If you are using the .NET Framework, you can find some code snippets <a href="https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks#anti-csrf-and-ajax" target="_blank">here</a>.</p>
 <p>More information can be found <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">here</a> for Cross-Site Request Forgery.</p>
 <h2 id="a7-cross-site-scripting-xss"><a name="a7-cross-site-scripting-xss" class="plugin-anchor" href="#a7-cross-site-scripting-xss"><i class="fa fa-link" aria-hidden="true"></i></a>A7 Cross-Site Scripting (XSS)</h2>
 <p>DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists</p>
@@ -1728,7 +1780,7 @@ If a deserialized hostile object tries to initiate a system processes or access 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"DotNet Security ","level":"1.25","depth":1,"next":{"title":"Error Handling ","level":"1.26","depth":1,"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","ref":"cheatsheets/Error_Handling_Cheat_Sheet.md","articles":[]},"previous":{"title":"Docker Security ","level":"1.24","depth":1,"path":"cheatsheets/Docker_Security_Cheat_Sheet.md","ref":"cheatsheets/Docker_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","mtime":"2019-11-16T14:23:23.382Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-16T14:23:43.212Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"DotNet Security ","level":"1.25","depth":1,"next":{"title":"Error Handling ","level":"1.26","depth":1,"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","ref":"cheatsheets/Error_Handling_Cheat_Sheet.md","articles":[]},"previous":{"title":"Docker Security ","level":"1.24","depth":1,"path":"cheatsheets/Docker_Security_Cheat_Sheet.md","ref":"cheatsheets/Docker_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","mtime":"2019-11-16T15:45:08.932Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-16T15:45:39.482Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
