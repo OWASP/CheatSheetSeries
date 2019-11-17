@@ -4,15 +4,11 @@ node_js:
 before_script:
   - sudo apt-get install python3.5 python3-pip python3-setuptools python3-wheel
   - pip3 install requests feedgen wheel
-  - npm install -g markdownlint-cli
   - npm install -g markdown-link-check
   - npm install -g gitbook-cli
-  - chmod +x scripts/Apply_Linter_Check.sh
   - chmod +x scripts/Generate_Site.sh
 script:
   - cd scripts
-  - echo "Apply linter check..."
-  - bash Apply_Linter_Check.sh
   - echo "Try to generate the offline website..."
   - sed -i 's/python/python3\.5/g' Generate_Site.sh
   - bash Generate_Site.sh
