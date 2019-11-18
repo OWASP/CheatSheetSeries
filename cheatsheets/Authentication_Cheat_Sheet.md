@@ -2,13 +2,13 @@
 
 **Authentication** is the process of verifying that an individual, entity or website is who it claims to be. Authentication in the context of web applications is commonly performed by submitting a username or ID and one or more items of private information that only a given user should know.
 
-**Session Management** is a process by which a server maintains the state of an entity interacting with it. This is required for a server to remember how to react to subsequent requests throughout a transaction. Sessions are maintained on the server by a session identifier which can be passed back and forward between the client and server when transmitting and receiving requests. Sessions should be unique per user and computationally very difficult to predict.
+**Session Management** is a process by which a server maintains the state of an entity interacting with it. This is required for a server to remember how to react to subsequent requests throughout a transaction. Sessions are maintained on the server by a session identifier which can be passed back and forward between the client and server when transmitting and receiving requests. Sessions should be unique per user and computationally very difficult to predict. The [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md) contains further guidance on the best practices in this area.
 
 # Authentication General Guidelines
 
 ## User IDs
 
-Make sure your usernames/userids are case insensitive. User 'smith' and user 'Smith' should be the same user. Usernames should also be unique. For high security applications usernames could be assigned and secret instead of user-defined public data.
+Make sure your usernames or user IDs are case insensitive. User 'smith' and user 'Smith' should be the same user. Usernames should also be unique. For high security applications usernames could be assigned and secret instead of user-defined public data.
 
 ### Email address as a User ID
 
@@ -31,7 +31,7 @@ A key concern when using passwords for authentication is password strength. A "s
 
 - Do not truncate passwords. Make sure that every character the user types in is actually included in the password.
 
-- Allow usage of **all** characters including unicode and whitespaces. There should be no password composition rules limiting the type of characters permitted.
+- Allow usage of **all** characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted.
 
 - Ensure credential rotation when a password leak, or at the time of compromise identification.
 
@@ -269,19 +269,15 @@ UAF takes advantage of existing security technologies present on devices for aut
 
 U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides **protection against phishing** by using the URL of the website to lookup the stored authentication key.
 
-# Session Management General Guidelines
-
-Session management is directly related to authentication. The **Session Management General Guidelines** previously available on this OWASP Authentication Cheat Sheet have been integrated into the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
-
 # Password Managers
 
-Password managers are programs, browser plugins or web services that automate management of large number of different credentials, including memorizing and filling-in, generating random passwords on different sites etc.
+Password managers are programs, browser plugins or web services that automate management of large number of different credentials. Most password managed have functionality to allow users to easily use them on websites, either by pasting the passwords into the login form, or by simulating the user typing them in.
 
 Web applications should at least not make password managers job more difficult than necessary by observing the following recommendations:
 
-- use standard HTML forms for username and password input with appropriate `type` attributes,
-- do not artificially limit user passwords to a length "reasonable for humans" and allow passwords lengths up to 128 characters,
-- do not artificially prevent copy and paste on username and password fields,
-- avoid plugin-based login pages (Flash, Silverlight etc)
-
-As of 2017 [Credential Management Level 1](https://w3c.github.io/webappsec-credential-management/) standard for web browsers is being developed that may further facilitate interaction between password managers and complex log-in schemes (e.g. single sign-on).
+- Use standard HTML forms for username and password input with appropriate `type` attributes.
+  - Avoid plugin-based login pages (such as Flash or Silverlight).
+- Allow long passwords (at least 64 characters).
+- Allow any printable characters to be used in passwords.
+- Allow users to to paste into the username and password fields.
+- Allow users to navigate between the username and password field with a single press of the `Tab` key.
