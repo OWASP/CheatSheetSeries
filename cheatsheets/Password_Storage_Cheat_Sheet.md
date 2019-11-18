@@ -110,7 +110,7 @@ Some hashing algorithms such as Bcrypt have a maximum length for the input, whic
 
 Additionally, due to how computationally expensive modern hashing functions are, if a user can supply very long passwords then there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013.
 
-In order to protect against both of these issues, a maximum password length should be enforced. This should be 64 characters for Bcrypt (due to limitations in the algorithm and implementations), and between 64 and 128 characters for other algorithms. The easiest way to achirve this is a simple limit on the maximum length of the password.
+In order to protect against both of these issues, a maximum password length should be enforced. This should be 64 characters for Bcrypt (due to limitations in the algorithm and implementations), and between 64 and 128 characters for other algorithms. The easiest way to achieve this is a simple limit on the maximum length of the password.
 
 ### Pre-Hashing Passwords
 
