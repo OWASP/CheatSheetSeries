@@ -106,14 +106,21 @@ In some cases, it may be possible to increase the work factor of the hashes with
 
 ## Maximum Password Lengths
 
-Some hashing algorithms such as Bcrypt have a maximum length for the input, which can [vary between different implementations](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) of the algorithm. Where Bcrypt is used, a maximum length of 50 characters should be enforced on the input to cover all known implementations.
+Some hashing algorithms such as Bcrypt have a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where Bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues, and not revealing that the application uses Bcrypt.
 
 Additionally, due to how computationally expensive modern hashing functions are, if a user can supply very long passwords then there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013.
 
-In order to protect against both of these issues, a maximum password length should be enforced. This should be 50 characters for Bcrypt (due to limitations in the algorithm and implementations), and between 64 and 128 characters for other algorithms. There are two main ways that this can be done:
+In order to protect against both of these issues, a maximum password length should be enforced. This should be 64 characters for Bcrypt (due to limitations in the algorithm and implementations), and between 64 and 128 characters for other algorithms. The easiest way to achirve this is a simple limit on the maximum length of the password.
 
-- Restrict the maximum length in a password policy.
-- Hash the password with another algorithm such as SHA-1 (which produces a 40 character output) or SHA-256 (64 characters) before hashing it with the modern algorithm. This is known as pre-hashing.
+### Pre-Hashing Passwords
+
+An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-256, and then to hash the resultant hash with a more secure algorithm such as Bcrypt (i.e, `bcrypt(sha256($password))`). While this approach solves the problem of arbitrary length user inputs to slower hashing algorithms, it also introduces some vulnerabilities that could allow attackers to crack hashes more easily.
+
+If an attacker is able to obtain password hashes from two different sources, one of which is storing passwords with `bcrypt(sha256($password))` and the other of which is storing them as plain `sha256($password)`, and attacker can use uncracked SHA-256 hashes from the second site as candidate passwords to try and crack the hashes from the first (more secure) site. If passwords are re-used between the two sites, this can effectively allow the attacker to strip off the Bcrypt layer, and to crack the much easier SHA-256 passwords.
+
+Pre-hashing with SHA-256 also means that the keyspace for an attacker to brute-force the hashes is `2^256`, rather than `2^420` for passwords capped at 64 characters (although both of these are big enough to make no practical difference).
+
+As such, the preferred option should generally be to limit the maximum password length. Pre-hashing of passwords should only be performed where there is a specific requirement to do so, and appropriate steps have been taking to mitigate the issues discussed above.
 
 # Password Hashing Algorithms
 
