@@ -126,14 +126,29 @@ As such, the preferred option should generally be to limit the maximum password 
 
 ## Modern Algorithms
 
-There are four main algorithms that should be considered for hashing passwords in modern applications. All of these algorithms support an iteration count of [work factor](#work-factors), which should be adjusted based on the system they are being used with.
+There are a number of modern hashing algorithms that have been specifically designed for securely storing passwords. This means that they should be slow (unlike algorithms such as MD5 and SHA-1 which were designed to be fast), and how slow they are can be configured by changing the [work factor](#work-factors).
 
-- [Argon2](https://github.com/P-H-C/phc-winner-argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net), and should be used as the first choice when it is available. Although newer, it is supported with [most languages](https://github.com/P-H-C/phc-winner-argon2#bindings). It has strong resistance to both GPU and ASIC based attacks.
-- [Scrypt](https://en.wikipedia.org/wiki/Scrypt) is designed to resist GPU based attacks, but is less widely supported.
-- [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver), and should be used when FIPS compliance is required.
-- [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is the oldest of the algorithms, and is more susceptible to GPU based attacks. However, due to its age it is widely supported across most languages.
+The main three algorithms that should be considered as listed below.
 
-It should be stressed that even though Bcrypt is considered comparatively weak compared to newer algorithms such as Scrypt or Argon2, it is still substantially stronger than legacy algorithms such as MD5 and SHA-1. Although exact cracking speeds will vary based on the hardware, to give an idea of context, a benchmark using [8 Nvidia GTX 1080 GPUs](https://gist.github.com/epixoip/a83d38f412b4737e99bbef804a270c40) showed Bcrypt hashes to be approximately 2 million times harder to crack than MD5.
+### Argon2id
+
+[Argon2](https://en.wikipedia.org/wiki/Argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net). There are three different versions of the algorithm, and the Argon2**id** variant should be used where available, as it provides a balanced approach to resisting both side channel and GPU-based attacks.
+
+Rather than a simple work factor like other algorithms, Argon2 has three different parameters that can be configured, meaning that it's more complicated to correctly tune for the environment. The specification contains [guidance on choosing appropriate parameters](https://password-hashing.net/argon2-specs.pdf), however if you're not in a position to properly tune it then a simpler algorithm such as [Bcrypt](#bcrypt) may be a better choice.
+
+### PBKDF2
+
+[PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver), and has FIPS-140 validated implementations, so should be the preferred algorithm when these are required. Additionally, it is supported out of the box in the .NET framework, so is commonly used in ASP.NET applications.
+
+PBKDF2 can be used with a HMACs based on a number of different hashing algorithms. HMAC-SHA-256 is widely supported, and is recommended by NIST.
+
+The work factor  for PBKDF2 is implemented through the iteration count, which should be at least 10,000 (although values of up to 100,000 may be appropriate in higher security environments).
+
+### Bcrypt
+
+[Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is the most widely supported of the algorithms, and should be the default choice unless there are specific requirements for PBKDF2, or appropriate knowledge to tune Argon2.
+
+The default work factor for Bcrypt is 10, and this should generally be raised to 12 unless operating on older or lower-powered systems.
 
 ## Legacy Algorithms
 
