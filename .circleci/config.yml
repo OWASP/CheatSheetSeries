@@ -31,7 +31,6 @@ jobs:
     - run: 'chmod +x scripts/Apply_Linter_Check.sh'
     - run: 'chmod +x scripts/Generate_Site.sh'
     - run: 'sed -i "s/python/python3\.5/g" scripts/Generate_Site.sh'
-    - run: 'cd scripts;bash Apply_Linter_Check.sh'
     - run: 'cd scripts;bash Generate_Site.sh'
     - run: 'ls -l generated/site/'
     - run: 'cd generated;zip -r ../bundle.zip site'
