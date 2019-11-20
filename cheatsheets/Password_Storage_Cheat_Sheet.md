@@ -4,8 +4,7 @@ As the majority of users will re-use passwords between different applications, i
 
 This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
-- **Use [Argon2](#modern-algorithms) if your library supports it.**
-  - **If it doesn't, use Scrypt, PBKDF2 or Bcrypt (in order of preference).**
+- **Use [Bcrypt](#modern-algorithms) unless you have a good reason not to.**
 - **Set a reasonable [work factor](#work-factors) for you system.**
 - **Use a [salt](#salting) (modern algorithms do this for you automatically).**
 - **Consider using a [pepper](#peppering) to provide an additional layer of security.**
@@ -71,12 +70,12 @@ Salting also provides protection against an attacker pre-computing hashes using 
 
 A [pepper](https://en.wikipedia.org/wiki/Pepper_(cryptography)) can be used in additional to salting to provide an additional layer of protection. It is similar to a salt, but has two key differences:
 
-* The pepper is shared between all stored passwords, rather than being unique like a salt.
-* The pepper is stored separately from the hashes (i.e, not in the database).
+- The pepper is shared between all stored passwords, rather than being unique like a salt.
+- The pepper is **not stored in the database**, unlike the salts.
 
 The purpose of the pepper is to prevent an attacker from being able to crack any of the hashes if they only have access to the database, for example if they have exploited a SQL injection vulnerability or obtained a backup of the database.
 
-The pepper should be at least 32 characters long, and should be randomly generated. It should be stored in an application configuration file (protected with appropriate permissions), using the secure storage APIs provided by the operating system, or in a HSM.
+The pepper should be at least 32 characters long, and should be randomly generated. It should be stored in an application configuration file (protected with appropriate permissions), using the secure storage APIs provided by the operating system, or in a Hardware Security Module (HSM).
 
 The pepper is traditionally used in a similar way to a salt, but concatenating it with the password prior to hashing, using a construct such as `hash(pepper . password)`.
 
@@ -110,7 +109,7 @@ Some hashing algorithms such as Bcrypt have a maximum length for the input, whic
 
 Additionally, due to how computationally expensive modern hashing functions are, if a user can supply very long passwords then there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013.
 
-In order to protect against both of these issues, a maximum password length should be enforced. This should be 64 characters for Bcrypt (due to limitations in the algorithm and implementations), and between 64 and 128 characters for other algorithms. The easiest way to achieve this is a simple limit on the maximum length of the password.
+In order to protect against both of these issues, a maximum password length should be enforced. This should be 64 characters for Bcrypt (due to limitations in the algorithm and implementations), and between 64 and 128 characters for other algorithms.
 
 ### Pre-Hashing Passwords
 
