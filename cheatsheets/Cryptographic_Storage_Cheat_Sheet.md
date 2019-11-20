@@ -57,7 +57,7 @@ In general, you should not use AES, DES or other symmetric cipher primitives dir
 
 #### Rule - Use cryptographically secure pseudo random number generators (CSPRNG)
 
-When generating random bits in the context of sofware security, use the available Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) library or module available on the programming language you are using.
+When generating random bits in the context of software security, use the available Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) library or module available on the programming language you are using.
 
 Do not use Pseudo-Random Number Generators (PRNG) since they are not secure and will produce deterministic results. The chosen numbers are not completely random because a mathematical algorithm is used to select them, but they are sufficiently random for practical purposes. 
 
@@ -126,7 +126,7 @@ If the keys are stored with the data then any compromise of the data will easily
 
 #### Rule - Use independent keys when multiple keys are required
 
-Ensure that key material is independent. That is, do not choose a second key which is easily related to the first (or any preceeding) keys.
+Ensure that key material is independent. That is, do not choose a second key which is easily related to the first (or any preceding) keys.
 
 #### Rule - Protect keys in a key vault
 

@@ -1,6 +1,6 @@
 # Introduction
 
-Authorizations definition and implementation is one of the important protection measure of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to go live, the most signicant number of issues related to authorization came in the maintenance lifetime of the application.
+Authorizations definition and implementation is one of the important protection measure of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to go live, the most significant number of issues related to authorization came in the maintenance lifetime of the application.
 
 This situation is often explained by the fact that features are added/modified and no review of the authorizations was performed on the application before the publishing of the new release, for cost or time issue reason.
 
@@ -18,13 +18,13 @@ During a test of an authorization, a **Logical Role** is also called a **Point O
 
 This article describe a proposition of implementation in order to automate the tests of an *authorization matrix*.
 
-This article use the assumption that 2 dimensions are used to represents an authorization for the technical proposition decribed and take as example a application exposing REST services.
+This article use the assumption that 2 dimensions are used to represents an authorization for the technical proposition described and take as example a application exposing REST services.
 
 The objective is to provide starting ideas/hints in order to create a tailored way of testing of the authorization matrix for the target application.
 
 # Proposition
 
-In order to achieve the full automation of the evaluation of the *authorization matrix*, the folowing actions has been performed:
+In order to achieve the full automation of the evaluation of the *authorization matrix*, the following actions has been performed:
 
 1.  Formalize the authorization matrix in a pivot format file allowing:
     1.  The processing by a program in a easy way.
@@ -126,7 +126,7 @@ This is an example of the XML used to represents the authorization:
 
 ## Integration tests
 
-Integration tests are implemented using a maximum of factorized code and one test case by **Point Of View (POV)** has been created in order to group the verifications by profile of access level (logical role) and faciliate the rendering/identification of the errors.
+Integration tests are implemented using a maximum of factorized code and one test case by **Point Of View (POV)** has been created in order to group the verifications by profile of access level (logical role) and facilitate the rendering/identification of the errors.
 
 Parsing, object mapping and access to the authorization matrix information has been implemented using XML marshalling/unmarshalling built-in features provided by the technology used to implements the tests (JAXB here) in order to limit the code to the one in charge of performing the tests.
 
@@ -396,7 +396,7 @@ Access issues detected using the BASIC USER point of view:
 
 # Rendering of the authorization matrix for audit / review
 
-Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discution about the authorization matrix in order to spot potential inconsistencies.
+Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.
 
 The Following XSL stylesheet can be used:
 

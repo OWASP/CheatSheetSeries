@@ -11,7 +11,7 @@ Follow these steps:
 1. Create an new [Issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using either:
    - The `new_cheatsheet_proposal` template if you want to propose a new cheat sheet.
    - The `update_cheatsheet_proposal` template if you want to modify a existing cheat sheet.
-2. After a discution on the topic/update and if the proposal is accepted by the project leaders then:
+2. After a discussion on the topic/update and if the proposal is accepted by the project leaders then:
     1. Clone this GitHub repository.
     2. Either:
       - Create the cheat sheet using the dedicated [template](templates/New_CheatSheet.md) in case of a new cheat sheet.
@@ -37,7 +37,7 @@ Follow these steps:
 2. Ensure that the markdown file you have created/modified do not have any deadlinks. You can verify that by using this [plugin](https://www.npmjs.com/package/markdown-link-check), if you cannot use this plugin then, at least, verify that all the links are valid before to push:
     1. Install [NodeJS](https://nodejs.org/en/download/) to install NPM.
     2. Install the validation plugin via the command `npm install -g markdown-link-check`
-    3. Use this commmand (from the repository root folder) on your markdown file to verify the presence of any deadlinks: 
+    3. Use this command (from the repository root folder) on your markdown file to verify the presence of any deadlinks: 
 
 ```bash
 $ markdown-link-check -c .markdownlinkcheck.json [MD_FILE]

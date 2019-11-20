@@ -30,7 +30,7 @@ This example is useful if all present and future subdomains will be HTTPS. In th
 `Strict-Transport-Security: max-age=86400; includeSubDomains`
 
 **Recommended:** 
-- If the site owner would like their domain to be included in the [HSTS preload list](https://hstspreload.appspot.com/) maintained by Chrome (and used by Firefox and Safari), then use the header below. 
+- If the site owner would like their domain to be included in the [HSTS preload list](https://hstspreload.org) maintained by Chrome (and used by Firefox and Safari), then use the header below.
 - Sending the `preload` directive from your site can have **PERMANENT CONSEQUENCES** and prevent users from accessing your site and any of its subdomains if you find you need to switch back to HTTP. Please read the details at [preload removal](https://hstspreload.org/#removal) before sending the header with `preload`.
 
 `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`

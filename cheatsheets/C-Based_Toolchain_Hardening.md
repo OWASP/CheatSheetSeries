@@ -54,7 +54,7 @@ Debug build should also define `DEBUG`, and ensure `NDEBUG` is not defined. `NDE
 
 In addition, you should use other relevant flags, such as `-fno-omit-frame-pointer`. Ensuring a frame pointer exists makes it easier to decode stack traces. Since debug builds are not shipped, its OK to leave symbols in the executable. Programs with debug information do not suffer performance hits. See, for example, [How does the gcc -g option affect performance?](http://gcc.gnu.org/ml/gcc-help/2005-03/msg00032.html)
 
-Finally, you should ensure your project includes additional diagnostic libraries, such as `dmalloc` and [Address Sanitizer](http://code.google.com/p/address-sanitizer/). A comparison of some memory checking tools can be found at [Comparison Of Memory Tools](http://code.google.com/p/address-sanitizer/wiki/ComparisonOfMemoryTools). If you don't include additional diagostics in debug builds, then you should start using them sinces its OK to find errors you are not looking for.
+Finally, you should ensure your project includes additional diagnostic libraries, such as `dmalloc` and [Address Sanitizer](http://code.google.com/p/address-sanitizer/). A comparison of some memory checking tools can be found at [Comparison Of Memory Tools](http://code.google.com/p/address-sanitizer/wiki/ComparisonOfMemoryTools). If you don't include additional diagnostics in debug builds, then you should start using them sinces its OK to find errors you are not looking for.
 
 ### Release Builds
 

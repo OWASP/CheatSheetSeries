@@ -31,7 +31,7 @@ Where an application has multiple user roles, it may be appropriate to implement
 
 ## Secondary Passwords, PINs and Security Questions
 
-As well as requiring a user to enter their password when authentication, they can also be prompted to provide additional security information such as:
+As well as requiring a user to enter their password when authenticating, they can also be prompted to provide additional security information such as:
 
 - A PIN
 - Specific characters from a secondary passwords or memorable word
@@ -101,7 +101,7 @@ In order to protect the value of the source password being searched for, Pwned P
 
 ## Notify users about unusual security events
 
-When suspicious or unusal activity is detected, it may be appropriate to notify or warn the user. However, care should be taken that the user does not get overwhelmed with a large number of notifiations that are not important to them, or they will just start to ignore or delete them.
+When suspicious or unusual activity is detected, it may be appropriate to notify or warn the user. However, care should be taken that the user does not get overwhelmed with a large number of notifications that are not important to them, or they will just start to ignore or delete them.
 
 For example, it would generally not be appropriate to notify a user that there had been an attempt to login to their account with an incorrect password. However, if there had been a login with the correct password, but which had then failed the subsequent MFA check, the user should be notified so that they can change their password.
 

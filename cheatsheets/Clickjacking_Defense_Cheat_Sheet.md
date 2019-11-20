@@ -166,7 +166,7 @@ Some frame busting techniques navigate to the correct page by assigning a value 
 **Victim frame busting code:**
 
 ```javascript
-if(top.location != self.locaton) {
+if(top.location != self.location) {
     parent.location = self.location;
 }
 ```

@@ -274,27 +274,25 @@ process.Start();
 
 DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-e.g Validating user input using [IPAddress.Parse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.parse?view=netframework-4.8)
+e.g Validating user input using [IPAddress.TryParse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8)
 
 ``` csharp
 //User input
-string ipaddress = "127.0.0.1";
+string ipAddress = "127.0.0.1";
  
 //check to make sure an ip address was provided    
-if (string.IsNullOrEmpty(address))  
-{   
-	try
+if (string.IsNullOrEmpty(ipAddress))  
+{
+	// Create an instance of IPAddress for the specified address string (in 
+	// dotted-quad, or colon-hexadecimal notation).
+	if (IPAddress.TryParse(ipAddress, out var address))
 	{
-		// Create an instance of IPAddress for the specified address string (in 
-		// dotted-quad, or colon-hexadecimal notation).
-		IPAddress address = IPAddress.Parse(ipAddress);
-
 		// Display the address in standard notation.
 		return address.ToString();
 	}
-	catch(FormatException e)
+	else
 	{
-		//ipaddress is not of type IPaddress
+		//ipAddress is not of type IPAddress
 		...
 	}
     ...
@@ -471,7 +469,7 @@ DO NOT: Roll your own authentication or session management, use the one provided
 
 DO NOT: Tell someone if the account exists on LogOn, Registration or Password reset. Say something like 'Either the username or password was incorrect', or 'If this account exists then a reset token will be sent to the registered email address'. This protects against account enumeration. 
 
-The feedback to the user should be identical whether or not the account exists, both in terms of content and behaviour: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
+The feedback to the user should be identical whether or not the account exists, both in terms of content and behavior: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
 
 ### Missing function-level access control
 
@@ -563,7 +561,11 @@ e.g Startup.cs in the Configure()
 
 ### Cross-site request forgery
 
+DO NOT: Send sensitive data without validating Anti-Forgery-Tokens ([.NET](https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks) / [.NET Core](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration)).
+
 DO: Send the anti-forgery token with every POST/PUT request:
+
+#### Using .NET Framework:
 
 ```csharp
 using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", 
@@ -609,9 +611,19 @@ public void RemoveAntiForgeryCookie(Controller controller)
 }
 ```
 
-NB: You will need to attach the anti-forgery token to Ajax requests.
+#### Using .NET Core 2.0 or later:
 
-After .NET Core 2.0 it is possible to automatically generate and verify the antiforgery token. Forms must have the requisite helper as seen here:
+Starting with .NET Core 2.0 it is possible to [automatically generate and verify the antiforgery token](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration).
+
+If you are using [tag-helpers](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro), which is the default for most web project templates, then all forms will automatically send the anti-forgery token. You can check if tag-helpers are enabled by checking if your main `_ViewImports.cshtml` file contains:
+
+```csharp
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+```
+
+`IHtmlHelper.BeginForm` also sends anti-forgery-tokens automatically.
+
+Unless you are using tag-helpers or `IHtmlHelper.BeginForm`, you must use the requisite helper on forms as seen here:
 
 ```html
 <form action="RelevantAction" >
@@ -619,7 +631,75 @@ After .NET Core 2.0 it is possible to automatically generate and verify the anti
 </form>
 ```
 
-And then add the `[AutoValidateAntiforgeryToken]` attribute to the action result.
+To automatically validate all requests other than GET, HEAD, OPTIONS and TRACE you need to add a global action filter with the [AutoValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2) attribute inside your `Startup.cs` as mentioned in the following [article](https://andrewlock.net/automatically-validating-anti-forgery-tokens-in-asp-net-core-with-the-autovalidateantiforgerytokenattribute/):
+
+```csharp
+services.AddMvc(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
+```
+
+If you need to disable the attribute validation for a specific method on a controller you can add the [IgnoreAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.ignoreantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the controller method (for MVC controllers) or parent class (for Razor pages): 
+
+```csharp
+[IgnoreAntiforgeryToken]
+[HttpDelete]
+public IActionResult Delete()
+```
+
+```csharp
+[IgnoreAntiforgeryToken]
+public class UnsafeModel : PageModel
+```
+
+If you need to also validate the token on GET, HEAD, OPTIONS or TRACE - requests you can add the [ValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the controller method (for MVC controllers) or parent class (for Razor pages):
+
+```csharp
+[HttpGet]
+[ValidateAntiforgeryToken]
+public IActionResult DoSomethingDangerous()
+```
+
+```csharp
+[HttpGet]
+[ValidateAntiforgeryToken]
+public class SafeModel : PageModel
+```
+
+In case you can't use a global action filter, add the [AutoValidateAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2) attribute to your controller classes or razor page models:
+
+```csharp
+[AutoValidateAntiforgeryToken]
+public class UserController
+```
+
+```csharp
+[AutoValidateAntiforgeryToken]
+public class SafeModel : PageModel
+```
+
+#### Using .Net Core 2.0 or .NET Framework with AJAX
+
+You will need to attach the anti-forgery token to AJAX requests.
+
+If you are using jQuery in an ASP.NET Core MVC view this can be achieved using this snippet:
+
+```javascript
+@inject  Microsoft.AspNetCore.Antiforgery.IAntiforgery antiforgeryProvider
+$.ajax(
+{
+    type: "POST",
+    url: '@Url.Action("Action", "Controller")',
+    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+    data: {
+        id: id,
+        '__RequestVerificationToken': '@antiforgeryProvider.GetAndStoreTokens(this.Context).RequestToken'
+    }
+})
+```
+
+If you are using the .NET Framework, you can find some code snippets [here](https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks#anti-csrf-and-ajax).
 
 More information can be found [here](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) for Cross-Site Request Forgery.
 
@@ -668,7 +748,7 @@ Malicious users are able to use objects like cookies to insert malicious informa
 DO: Prevent Deserialization of Domain Objects
 
 DO: Run the Deserialization Code with Limited Access Permissions
-If a desterilized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
+If a deserialized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
 
 More information can be found here: [Deserialization Cheat Sheet](Deserialization_Cheat_Sheet.md#net-csharp)
 
@@ -688,7 +768,7 @@ DO: Establish effective monitoring and alerting so suspicious activities are det
 
 DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was thrown");``` rather log the stack trace, error message and user Id who caused the error.
 
-DO NOT: Log sesnsitive data such as user's passwords.
+DO NOT: Log sensitive data such as user's passwords.
 
 ### Logging
 
@@ -725,7 +805,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 }
 ```
 
-e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers).  The belwo exaple shows logging of all unsucessful log in attempts.
+e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers).  The below example shows logging of all unsuccessful log in attempts.
 
 ``` csharp
 public class AccountsController : Controller
