@@ -1,3 +1,25 @@
+# Contents
+
+- [Introduction](#introduction)
+  - [Hashing vs Encryption](#hashing-vs-encryption)
+  - [How Attackers Crack Password Hashes](#how-attackers-crack-password-hashes)
+- [Hashing Concepts](#hashing-concepts)
+  - [Salting](#salting)
+  - [Peppering](#peppering)
+    - [Disadvantages](#disadvantages)
+  - [Work Factors](#work-factors)
+    - [Upgrading the Work Factor](#upgrading-the-work-factor)
+  - [Maximum Password Lengths](#maximum-password-lengths)
+    - [Pre-Hashing Passwords](#pre-hashing-passwords)
+- [Password Hashing Algorithms](#password-hashing-algorithms)
+  - [Modern Algorithms](#modern-algorithms)
+    - [Argon2id](#argon2id)
+    - [PBKDF2](#pbkdf2)
+    - [Bcrypt](#bcrypt)
+  - [Legacy Algorithms](#legacy-algorithms)
+  - [Upgrading Legacy Hashes](#upgrading-legacy-hashes)
+  - [Custom Algorithms](#custom-algorithms)
+
 # Introduction
 
 As the majority of users will re-use passwords between different applications, it is important to store passwords in a way that that prevents them from being obtained by an attacker, even if the application or database is compromised. As with most areas of cryptography, there are a many different factors that need to be considered, but happily, the majority of modern languages and frameworks provide built-in functionality to help store passwords, which handles much of the complexity.
