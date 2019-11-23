@@ -1,6 +1,17 @@
+# Introduction
+
+As the majority of users will re-use passwords between different applications, it is important to store passwords in a way that that prevents them from being obtained by an attacker, even if the application or database is compromised. As with most areas of cryptography, there are a many different factors that need to be considered, but happily, the majority of modern languages and frameworks provide built-in functionality to help store passwords, which handles much of the complexity.
+
+This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
+
+- **Use [Bcrypt](#modern-algorithms) unless you have a good reason not to.**
+- **Set a reasonable [work factor](#work-factors) for you system.**
+- **Use a [salt](#salting) (modern algorithms do this for you automatically).**
+- **Consider using a [pepper](#peppering) to provide an additional layer of security.**
+
 # Contents
 
-- [Introduction](#introduction)
+- [Background](#background)
   - [Hashing vs Encryption](#hashing-vs-encryption)
   - [How Attackers Crack Password Hashes](#how-attackers-crack-password-hashes)
 - [Hashing Concepts](#hashing-concepts)
@@ -20,16 +31,7 @@
   - [Upgrading Legacy Hashes](#upgrading-legacy-hashes)
   - [Custom Algorithms](#custom-algorithms)
 
-# Introduction
-
-As the majority of users will re-use passwords between different applications, it is important to store passwords in a way that that prevents them from being obtained by an attacker, even if the application or database is compromised. As with most areas of cryptography, there are a many different factors that need to be considered, but happily, the majority of modern languages and frameworks provide built-in functionality to help store passwords, which handles much of the complexity.
-
-This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
-
-- **Use [Bcrypt](#modern-algorithms) unless you have a good reason not to.**
-- **Set a reasonable [work factor](#work-factors) for you system.**
-- **Use a [salt](#salting) (modern algorithms do this for you automatically).**
-- **Consider using a [pepper](#peppering) to provide an additional layer of security.**
+# Background
 
 ## Hashing vs Encryption
 
