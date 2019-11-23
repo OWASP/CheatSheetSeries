@@ -4,6 +4,10 @@
 
 This cheat sheet provides guidance on securely configuring and using SQL databases. It is intended to be used by application developers when they are responsible for managing the databases, in the absence of a dedicated database administrator (DBA).
 
+## Contents
+
+FIXME
+
 ## Connecting to the Database
 
 - Do not expose the database to the internet.
