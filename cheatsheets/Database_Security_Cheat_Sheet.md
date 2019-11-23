@@ -4,8 +4,6 @@
 
 This cheat sheet provides guidance on securely configuring and using SQL databases. It is intended to be used by application developers when they are responsible for managing the databases, in the absence of a dedicated database administrator (DBA).
 
-It was primarily written with relational databases in mind, however many of the principles also apply to NoSQL databases.
-
 ## Connecting to the Database
 
 - Do not expose the database to the internet.
@@ -15,9 +13,14 @@ It was primarily written with relational databases in mind, however many of the 
 
 ### Transport Layer Protection
 
-- Use TLS.
-- Enable certificate checking.
-- See Transport Layer Security and TLS Cipher cheat sheets.
+Most databases will allow unencrypted network connections in their default configurations. Although some will encrypt the initial authentication (such as Microsoft SQL Server), the rest of the traffic will be unencrypted, meaning that all kinds of sensitive information will be sent across the network in clear text. The following steps should be taken to avoid this
+
+- Configure the database to only allow encrypted connections.
+- Install a trusted digital certificate on the server.
+- Configure the client application to connect using TLSv1.2 with modern (GCM) ciphers.
+- Configure the client application to verify that the digital certificate is correct.
+
+The [Transport Layer Protection](Transport_Layer_Protection_Cheat_Sheet.md) and [TLS Cipher String](TLS_Cipher_String_Cheat_Sheet.md) Cheat Sheets contain further guidance on securely configuring TLS.
 
 ## Authentication
 
