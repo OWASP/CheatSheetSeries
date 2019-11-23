@@ -168,7 +168,7 @@ The upload feature should be using a whitelist approach to only allow specific f
 
 ## Syntactic Validation
 
-The format of email addresses is defined by [RFC 5321](https://tools.ietf.org/html/rfc5321#section-4.1.2), and if far more complicated than most people realise. As an example, the following are all considered to be valid email addresses:
+The format of email addresses is defined by [RFC 5321](https://tools.ietf.org/html/rfc5321#section-4.1.2), and is far more complicated than most people realise. As an example, the following are all considered to be valid email addresses:
 
 - `"><script>alert(1);</script>"@example.org`
 - `user+subaddress@example.org`
@@ -182,7 +182,7 @@ The biggest caveat on this is that although the RFC defines a very flexible form
 As such, the best way to validate email addresses is to perform some basic initial validation, and then pass the address to the mail server and catch the exception if it rejects it. This means that any the application can be confident that its mail server can send emails to any addresses it accepts. The initial validation could be as simple as:
 
 - The email address contains two parts, separated with an `@` symbol.
-- The email address does not contain dangerous characters (such as backticks, single or double quotes, or null bytes
+- The email address does not contain dangerous characters (such as backticks, single or double quotes, or null bytes).
 - The domain part contains only letters, numbers, hyphens (`-`) and periods (`.`).
 
 ## Semantic Validation
@@ -204,7 +204,7 @@ After validating the ownership of the email address, the user should then be req
 
 ### Disposable Email Addresses
 
-In some cases, users will may not want to give their real email address when registering on the application, and will instead provide a disposable email address. These are publicly available addresses that do not require the user to authenticate, and are typically used to reduce the amount of spam received by users' primary email addresses.
+In some cases, users may not want to give their real email address when registering on the application, and will instead provide a disposable email address. These are publicly available addresses that do not require the user to authenticate, and are typically used to reduce the amount of spam received by users' primary email addresses.
 
 Blocking disposable email addresses is almost impossible, as there are a large number of websites offering these services, with new domains being created every day. There are a number of publicly available lists and commercial lists of known disposable domains, but these will always be incomplete.
 
