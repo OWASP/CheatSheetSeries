@@ -183,6 +183,7 @@ As such, the best way to validate email addresses is to perform some basic initi
 
 - The email address contains two parts, separated with an `@` symbol.
 - The email address does not contain dangerous characters (such as backticks, single or double quotes, or null bytes).
+  - Exactly which characters are dangerous will depend on how the address is going to be used (echoed in page, inserted into database, etc).
 - The domain part contains only letters, numbers, hyphens (`-`) and periods (`.`).
 
 ## Semantic Validation
