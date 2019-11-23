@@ -24,9 +24,30 @@ The [Transport Layer Protection](Transport_Layer_Protection_Cheat_Sheet.md) and 
 
 ## Authentication
 
-- Use strong and unique passwords.
-- Use integrated authentication where available.
-- Store credentials securely.
+The database should be configured to always require authentication, including connections from the local server. Database accounts should be :
+
+- Protected with strong and unique passwords.
+- Used by a single application or service.
+- Configured with the minimum permissions required (as discussed in the [permissions section below](#permissions).
+
+As with any system that has its own user accounts, the usual account management processes should be followed, including:
+
+- Regular reviews of the accounts to ensure that they are still required.
+- Regular reviews of permissions.
+- Removing user accounts when an application is decommissioned.
+- Changing the passwords when staff leave, or there is reason to believe that they may have been compromised.
+
+For Microsoft SQL Server, consider the use of [Windows or integrated authentication](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server), which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under.
+
+### Storing Database Credentials
+
+Database credentials should never be stored in the application source code, especially if they are unencrypted. Instead, they should be stored in a configuration file that:
+
+- Is outside of the webroot.
+- Has appropriate permissions so that it can only be read by the required user(s).
+- Is not checked into source code repositories.
+
+Where possible, these credentials should also be encrypted or otherwise protected using built in functionality, such as the `web.config` encryption available in [ASP.NET](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
 
 ## Permissions
 
