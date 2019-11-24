@@ -74,12 +74,6 @@ For more security-critical applications, it is possible to apply permissions are
 - Row-level permissions
 - Blocking access to the underlying tables, and requiring all access through restricted [views](https://en.wikipedia.org/wiki/View_(SQL)).
 
-### Advanced Permissions
-
-- Only allow required operations (read/write).
-- Use views to restrict access.
-- Use table, column and row level security.
-
 ## Database Configuration and Hardening
 
 - Install any required security updates and patches.
