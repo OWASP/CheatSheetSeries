@@ -1067,6 +1067,43 @@
 </table>
 <p>It should be emphasised that while requiring multiple examples of a single factor (such as needing both a password and a PIN) <strong>does not constitute MFA</strong>, although it may provide some security benefits over a simple password.</p>
 <p>Additionally, while the following sections discuss the disadvantage and weaknesses of various different types of MFA, in many cases these are only relevant against targeted attacks. <strong>Any MFA is better than no MFA</strong>.</p>
+<h1 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h1>
+<ul>
+<li><a href="#advantages">Advantages</a></li>
+<li><a href="#disadvantages">Disadvantages</a></li>
+<li><a href="#quick-recommendations">Quick Recommendations</a></li>
+<li><a href="#implementing-mfa">Implementing MFA</a><ul>
+<li><a href="#when-to-require-mfa">When to Require MFA</a></li>
+<li><a href="#improving-usability">Improving Usability</a></li>
+<li><a href="#failed-login-attempts">Failed Login Attempts</a></li>
+<li><a href="#resetting-mfa">Resetting MFA</a></li>
+</ul>
+</li>
+<li><a href="#something-you-know">Something You Know</a><ul>
+<li><a href="#passwords-and-pins">Passwords and PINs</a></li>
+<li><a href="#security-questions">Security Questions</a></li>
+</ul>
+</li>
+<li><a href="#something-you-have">Something You Have</a><ul>
+<li><a href="#hardware-otp-tokens">Hardware OTP Tokens</a></li>
+<li><a href="#software-totp-tokens">Software TOTP Tokens</a></li>
+<li><a href="#hardware-u2f-tokens">Hardware U2F Tokens</a></li>
+<li><a href="#certificates">Certificates</a></li>
+<li><a href="#smartcards">Smartcards</a></li>
+<li><a href="#sms-messages-and-phone-calls">SMS Messages and Phone Calls</a></li>
+<li><a href="#email">Email</a></li>
+</ul>
+</li>
+<li><a href="#something-you-are">Something You Are</a><ul>
+<li><a href="#biometrics">Biometrics</a></li>
+</ul>
+</li>
+<li><a href="#location">Location</a><ul>
+<li><a href="#source-ip-ranges">Source IP Ranges</a></li>
+<li><a href="#geolocation">Geolocation</a></li>
+</ul>
+</li>
+</ul>
 <h1 id="advantages"><a name="advantages" class="plugin-anchor" href="#advantages"><i class="fa fa-link" aria-hidden="true"></i></a>Advantages</h1>
 <p>The most common way that user accounts get compromised on applications is through weak, re-used or stolen passwords. Despite any technical security controls implemented on the application, users are liable to choose weak passwords, or to use the same password on different applications. As developers or system administrators, it should be assumed that users&apos; passwords will be compromised as some point, and the system should be designed in order to defend against this.</p>
 <p>Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force, <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">credential stuffing</a> and password spraying, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984" target="_blank">99.9% of account compromises</a>.</p>
@@ -1393,7 +1430,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Multifactor Authentication ","level":"1.41","depth":1,"next":{"title":"Nodejs security cheat sheet","level":"1.42","depth":1,"path":"cheatsheets/Nodejs_security_cheat_sheet.md","ref":"cheatsheets/Nodejs_security_cheat_sheet.md","articles":[]},"previous":{"title":"Microservices based Security Arch Doc ","level":"1.40","depth":1,"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","ref":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Multifactor_Authentication_Cheat_Sheet.md","mtime":"2019-11-20T13:19:13.690Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-20T13:19:41.139Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Multifactor Authentication ","level":"1.41","depth":1,"next":{"title":"Nodejs security cheat sheet","level":"1.42","depth":1,"path":"cheatsheets/Nodejs_security_cheat_sheet.md","ref":"cheatsheets/Nodejs_security_cheat_sheet.md","articles":[]},"previous":{"title":"Microservices based Security Arch Doc ","level":"1.40","depth":1,"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","ref":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Multifactor_Authentication_Cheat_Sheet.md","mtime":"2019-11-24T19:29:38.798Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-24T19:30:00.409Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
