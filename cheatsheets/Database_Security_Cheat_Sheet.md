@@ -10,10 +10,16 @@ FIXME
 
 ## Connecting to the Database
 
-- Do not expose the database to the internet.
-  - Connect over local sockets if network access is not required.
-- Don't connect to DB from thick client or user-side applications.
-- Restrict access to any web frontends such as phpMyAdmin.
+The backend database used by the application should be isolated as much as possible, in order to prevent malicious or undesirable users from being able to connect to it. Exactly how this is achieved will depend on the system and network architecture. The following options could be used to protect it:
+
+- Disabling network (TCP) access and requiring all access is over a local socket file or named pipe.
+- Configuring the database to only bind on localhost.
+- Restricting access to the network port to specific hosts with firewall rules.
+- Placing the database server in a separate DMZ isolated from the application server.
+
+Similar protection should be implemented to protect any web-based management tools used with the database, such as phpMyAdmin.
+
+Connections should never be allowed to the database from applications running on untrusted systems (such as a thick-client application that connects directly to the database, rather than using an API).
 
 ### Transport Layer Protection
 
