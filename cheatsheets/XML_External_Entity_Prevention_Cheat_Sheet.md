@@ -553,9 +553,9 @@ A description of how to abuse this in PHP is presented in a good [SensePost arti
 
 The Python 3 official documentation contains a section on [xml vulnerabilities](https://docs.python.org/3/library/xml.html#xml-vulnerabilities). For Python 2, you can refer to this [page](https://docs.Python.org/2/library/xml.html#xml-vulnerabilities). 
 
-> The end of life for Python 2 is expected for January 1st 2020.
+> The end of life for Python 2 is expected to be January 1st, 2020.
 
-The following table gives an overview of various modules in Python 3 used for XML parsing and whether they are vulnerable or not.
+The following table gives an overview of various modules in Python 3 used for XML parsing and whether or not they are vulnerable.
 
 | Attack Type               | sax        | etree      | minidom    | pulldom    | xmlrpc     |
 |---------------------------|------------|------------|------------|------------|------------|
@@ -565,7 +565,7 @@ The following table gives an overview of various modules in Python 3 used for XM
 | DTD Retrieval             | Safe       | Safe       | Safe       | Safe       | Safe       |
 | Decompression Bomb        | Safe       | Safe       | Safe       | Safe       | Vulnerable |
 
-In order to protect your application from the applicable attacks, [2 packages](https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages) exist in order to help you sanitize your input and protect your application against DDoS and remote attacks.
+To protect your application from the applicable attacks, [two packages](https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages) exist to help you sanitize your input and protect your application against DDoS and remote attacks.
 
 # References
 
