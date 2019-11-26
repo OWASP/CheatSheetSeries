@@ -551,9 +551,11 @@ A description of how to abuse this in PHP is presented in a good [SensePost arti
 
 # Python
 
-The following information for XXE injection in Python 3 is directly from this [official Python 3 documentation page](https://docs.python.org/3/library/xml.html#xml-vulnerabilities).
+The Python 3 official documentation contains a section on [xml vulnerabilities](https://docs.python.org/3/library/xml.html#xml-vulnerabilities). For Python 2, you can refer to this [page](https://docs.Python.org/2/library/xml.html#xml-vulnerabilities). 
 
-The below table gives an overview of various modules in Python 3 used for XML parsing and whether they are vulnerable or not.
+> The end of life for Python 2 is expected for January 1st 2020.
+
+The following table gives an overview of various modules in Python 3 used for XML parsing and whether they are vulnerable or not.
 
 | Attack Type               | sax        | etree      | minidom    | pulldom    | xmlrpc     |
 |---------------------------|------------|------------|------------|------------|------------|
@@ -563,9 +565,7 @@ The below table gives an overview of various modules in Python 3 used for XML pa
 | DTD Retrieval             | Safe       | Safe       | Safe       | Safe       | Safe       |
 | Decompression Bomb        | Safe       | Safe       | Safe       | Safe       | Vulnerable |
 
-For details on Python 2, refer this [official Python 2 documentation page](https://docs.Python.org/2/library/xml.html#xml-vulnerabilities). Kindly note that Python 2 End of Life has been announced for January 1st 2020. After that Python 2 will become obsolete and no official support will be available.
-
-Currently there are no explicit methods available for above mentioned Python modules to mitigate the vulnerability. Hence sanitizes input prior to processing using the above libraries. 
+In order to protect your application from the applicable attacks, [2 packages](https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages) exist in order to help you sanitize your input and protect your application against DDoS and remote attacks.
 
 # References
 
