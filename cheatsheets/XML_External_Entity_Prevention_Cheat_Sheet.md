@@ -549,11 +549,11 @@ libxml_disable_entity_loader(true);
 
 A description of how to abuse this in PHP is presented in a good [SensePost article](https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/) describing a cool PHP based XXE vulnerability that was fixed in Facebook.
 
-# PYTHON
+# Python
 
-The following information for XXE injection in PYTHON 3 is directly from this [official PYTHON 3 documentation page](https://docs.python.org/3/library/xml.html#xml-vulnerabilities).
+The following information for XXE injection in Python 3 is directly from this [official Python 3 documentation page](https://docs.python.org/3/library/xml.html#xml-vulnerabilities).
 
-The below table gives an overview of various modules in PYTHON 3 used for XML parsing and whether they are vulnerable or not.
+The below table gives an overview of various modules in Python 3 used for XML parsing and whether they are vulnerable or not.
 
 | Attack Type               | sax        | etree      | minidom    | pulldom    | xmlrpc     |
 |---------------------------|------------|------------|------------|------------|------------|
@@ -563,9 +563,9 @@ The below table gives an overview of various modules in PYTHON 3 used for XML pa
 | DTD Retrieval             | Safe       | Safe       | Safe       | Safe       | Safe       |
 | Decompression Bomb        | Safe       | Safe       | Safe       | Safe       | Vulnerable |
 
-For details on PYTHON 2, refer this [official PYTHON 2 documentation page](https://docs.python.org/2/library/xml.html#xml-vulnerabilities). Kindly note that PYTHON 2 End of Life has been announced for January 1st 2020. After that PYTHON 2 will become obsolete and no official support will be available.
+For details on Python 2, refer this [official Python 2 documentation page](https://docs.Python.org/2/library/xml.html#xml-vulnerabilities). Kindly note that Python 2 End of Life has been announced for January 1st 2020. After that Python 2 will become obsolete and no official support will be available.
 
-Currently there are no explicit methods available for above mentioned python modules to mitigate the vulnerability. Hence sanitizes input prior to processing using the above libraries. 
+Currently there are no explicit methods available for above mentioned Python modules to mitigate the vulnerability. Hence sanitizes input prior to processing using the above libraries. 
 
 # References
 
