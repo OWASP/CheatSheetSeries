@@ -18,6 +18,27 @@ In short, the following principles should be followed to reach a secure file upl
   - **In the case of public access to the files, ensure that proper permissions are set, file names are safe, and encoded**
 - **Run the file through an antivirus if available**
 
+## File Upload Threats
+
+In order to assess and know exactly what controls to implement, knowing what you're facing is essential to protect your assets. The following sections will hopefully showcase the risks accompanying the file upload functionality.
+
+### Malware Upload
+
+The attacker delivers a file for malicious intent, such as:
+
+1. Call the file to execute code (_e.g._ [ImageTrick Exploit](https://imagetragick.com/))
+2. Use the file for phishing (_e.g._ careers form)
+3. Send ZIP bombs, or simply huge files in a way to fill the server storage which hinders the server's availability
+4. Overwrite an existing file on the system
+5. Client-side active content that could lead to all types of client-side attacks if the file is publicly retrievable
+
+### Public File Retrieval
+
+If the file uploaded is publicly retrievable, additional threats can be addressed:
+
+1. Public disclosure of other files
+2. Initiate a DoS attack by requesting lots of files. Requests are small, yet responses are much larger
+
 # Context
 
 Into web applications, when we expect upload of working documents from users, we can expose the application to submission of documents that we can categorize as *malicious*.
