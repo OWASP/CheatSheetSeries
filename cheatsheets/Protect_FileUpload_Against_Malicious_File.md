@@ -69,6 +69,15 @@ for bad in blacklist:
         // raise exception
 ```
 
+### User Permissions
+
+Before any file upload service is accessed, proper validation should occur on two levels for the user uploading a file:
+
+- Authentication level
+  - The user should be a registered user, or an identifiable user, in order to set restrictions and limitations for their upload capabilities
+- Authorization level
+  - Make sure that the user's accesses allow them to upload a file, or multiple files for administrative cases.
+
 # Context
 
 Into web applications, when we expect upload of working documents from users, we can expose the application to submission of documents that we can categorize as *malicious*.
