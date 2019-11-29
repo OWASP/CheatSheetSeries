@@ -78,6 +78,14 @@ Before any file upload service is accessed, proper validation should occur on tw
 - Authorization level
   - Make sure that the user's accesses allow them to upload a file, or multiple files for administrative cases.
 
+### Content-Type Validation
+
+Other than defining the extension of the uploaded file, its MIME-type can be checked for a quick protection against simple file upload attacks.
+
+This can be done preferrably in a whitelist approach; otherwise, this can be done in a blacklist approach.
+
+> This should not be used on its own, as bypassing it is pretty common and easy.
+
 # Context
 
 Into web applications, when we expect upload of working documents from users, we can expose the application to submission of documents that we can categorize as *malicious*.
