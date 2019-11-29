@@ -16,7 +16,8 @@ In short, the following principles should be followed to reach a secure file upl
 - **Set a file size limit**
 - **Store the files on a different server. If that's not possible, store them in a private directory**
   - **In the case of public access to the files, ensure that proper permissions are set, file names are safe, and encoded**
-- **Run the file through an antivirus if available**
+- **Run the file through an antivirus or a sandbox if available to validate that it doesn't contain malicious or bogus data**
+- **Ensure the usage of secure and updated libraries for your needs**
 
 ## File Upload Threats
 
@@ -38,6 +39,10 @@ If the file uploaded is publicly retrievable, additional threats can be addresse
 
 1. Public disclosure of other files
 2. Initiate a DoS attack by requesting lots of files. Requests are small, yet responses are much larger
+
+## File Upload Protection
+
+### 
 
 # Context
 
