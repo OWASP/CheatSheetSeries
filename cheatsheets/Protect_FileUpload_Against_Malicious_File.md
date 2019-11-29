@@ -90,7 +90,7 @@ This can be done preferrably in a whitelist approach; otherwise, this can be don
 
 Multiple threats relate to the file-name, thus, it is essential to ensure that the file-name is stored in a secure fashion.
 
-This can be done by creating a **random string** as a file-name. If the file-name is required by the business needs, proper input validation should be done against client-side, and back-end side attack vectors.
+This can be done by creating a **random string** as a file-name. If the file-name is required by the business needs, proper input validation should be done for client-side (_e.g._ active content) and back-end side (_e.g._ special files overwrite or creation) attack vectors. File-name length limits should be taken into consideration based on the system storing the files, as each system has its own file name length limit.
 
 ### File Storage Location
 
