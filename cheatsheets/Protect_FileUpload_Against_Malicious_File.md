@@ -42,7 +42,32 @@ If the file uploaded is publicly retrievable, additional threats can be addresse
 
 ## File Upload Protection
 
-### 
+### Extension Validation
+
+Ensure that the validation occurs after decoding the file name, and that a proper filter is set in place (_e.g._ `\.png` vs `\.png\z`; etc.). Refer to the [Input Validation CS](Input_Validation_Cheat_Sheet.md) for more information.
+
+#### Whitelist Extensions
+
+Ensure the usage of *business-critical* extensions only, without allowing any type of *non-required* extensions. If the system requires:
+
+- image upload, allow one type that is agreed upon to fit the business requirement;
+- cv upload, allow `docx` and `pdf` extensions. Access files through a closed down machine.
+
+Based on the needs of the application, ensure the **least harmful** and the **lowest risk** file types to be used.
+
+#### Blacklist Extensions
+
+> This should be only used when the [whitelist approach](#whitelist-extensions) fails, and is in no way a replacement for it.
+
+In order to perform this validation, specifying and identifying which patterns that could should be rejected are used in order to protect the service.
+
+```python
+# This code snippet only serves as an example, and should not be used
+blacklist = ["php", "php5"]  # can be replaced with a regex pattern, but that would be even weaker, such as \.php$
+for bad in blacklist:
+    if "file.php".endswith(bad):
+        // raise exception
+```
 
 # Context
 
