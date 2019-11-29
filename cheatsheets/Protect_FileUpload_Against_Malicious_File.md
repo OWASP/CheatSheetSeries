@@ -86,6 +86,12 @@ This can be done preferrably in a whitelist approach; otherwise, this can be don
 
 > This should not be used on its own, as bypassing it is pretty common and easy.
 
+### File Name Sanitization
+
+Multiple threats relate to the file-name, thus, it is essential to ensure that the file-name is stored in a secure fashion.
+
+This can be done by creating a **random string** as a file-name. If the file-name is required by the business needs, proper input validation should be done against client-side, and back-end side attack vectors.
+
 # Context
 
 Into web applications, when we expect upload of working documents from users, we can expose the application to submission of documents that we can categorize as *malicious*.
