@@ -92,6 +92,16 @@ Multiple threats relate to the file-name, thus, it is essential to ensure that t
 
 This can be done by creating a **random string** as a file-name. If the file-name is required by the business needs, proper input validation should be done against client-side, and back-end side attack vectors.
 
+### File Storage Location
+
+All file uploaded will be stored in a location on the server. This location must be chosen based on security and business requirements. The following points are set by security priority, and are inclusive:
+
+1. Store the files on a **different host**, which allow for complete segragation of duties between the application serving the user, and the host handling file uploads and their storage.
+2. Store the files in a **private directory**, where only administrative access is allowed.
+3. Store the files on a **public directory**, and set them in write permissions only.
+
+> If read access is required, setting proper controls is a must (_e.g._ internal IP, authorized user, etc.)
+
 # Context
 
 Into web applications, when we expect upload of working documents from users, we can expose the application to submission of documents that we can categorize as *malicious*.
