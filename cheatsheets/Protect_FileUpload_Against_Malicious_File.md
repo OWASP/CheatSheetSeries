@@ -110,6 +110,12 @@ Files should be stored in a way that ensures:
 - Required modes only are set for the file
   - If execution is required, scanning the file before running it is required as a security best practice, to ensure that no macros or hidden scripts are available.
 
+### Upload and Download Limits
+
+The application should set proper size limits for the upload service in order to protect the file storage capacity. The file size limit should be considered after file decompression is conducted, and by using secure methods to calculate zip files size.
+
+It should set proper request limits as well for the download service if available to protect the server from DoS attacks.
+
 # Context
 
 Into web applications, when we expect upload of working documents from users, we can expose the application to submission of documents that we can categorize as *malicious*.
