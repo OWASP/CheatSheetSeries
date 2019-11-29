@@ -102,6 +102,14 @@ All file uploaded will be stored in a location on the server. This location must
 
 > If read access is required, setting proper controls is a must (_e.g._ internal IP, authorized user, etc.)
 
+### System Permissions
+
+Files should be stored in a way that ensures:
+
+- Allowed system users are the only ones capable of reading the files
+- Required modes only are set for the file
+  - If execution is required, scanning the file before running it is required as a security best practice, to ensure that no macros or hidden scripts are available.
+
 # Context
 
 Into web applications, when we expect upload of working documents from users, we can expose the application to submission of documents that we can categorize as *malicious*.
