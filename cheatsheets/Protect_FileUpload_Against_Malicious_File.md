@@ -19,6 +19,23 @@ In short, the following principles should be followed to reach a secure file upl
 - **Run the file through an antivirus or a sandbox if available to validate that it doesn't contain malicious or bogus data**
 - **Ensure the usage of secure and updated libraries for your needs**
 
+## Contents
+
+- [File Upload Threats](#file-upload-threats)
+    - [Malware Upload](#malware-upload)
+    - [Public File Retrieval](#public-file-retrieval)
+- [File Upload Protection](#file-upload-protection)
+    - [Extension Validation](#extension-validation)
+        - [Whitelist Extensions](#whitelist-extensions)
+        - [Blacklist Extensions](#blacklist-extensions)
+    - [User Permissions](#user-permissions)
+    - [Content-Type Validation](#content-type-validation)
+    - [File Name Sanitization](#file-name-sanitization)
+    - [File Storage Location](#file-storage-location)
+    - [System Permissions](#system-permissions)
+    - [Upload and Download Limits](#upload-and-download-limits)
+- [Java Code Snippets](#java-code-snippets)
+
 ## File Upload Threats
 
 In order to assess and know exactly what controls to implement, knowing what you're facing is essential to protect your assets. The following sections will hopefully showcase the risks accompanying the file upload functionality.
@@ -116,6 +133,6 @@ The application should set proper size limits for the upload service in order to
 
 It should set proper request limits as well for the download service if available to protect the server from DoS attacks.
 
-# Java Code Snippets
+## Java Code Snippets
 
 [Document Upload Protection](https://github.com/righettod/document-upload-protection) repository written by Dominique for certain document types in Java.
