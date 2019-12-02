@@ -1158,40 +1158,60 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 <li>Ensure the detected content type of the image is within a list of defined image types (jpg, png, etc)</li>
 </ul>
 <h1 id="email-address-validation"><a name="email-address-validation" class="plugin-anchor" href="#email-address-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Email Address Validation</h1>
-<h2 id="email-validation-basics"><a name="email-validation-basics" class="plugin-anchor" href="#email-validation-basics"><i class="fa fa-link" aria-hidden="true"></i></a>Email Validation Basics</h2>
-<p>Many web applications do not treat email addresses correctly due to common misconceptions about what constitutes a valid address. Specifically, it is completely valid to have an mailbox address which:</p>
+<h2 id="syntactic-validation"><a name="syntactic-validation" class="plugin-anchor" href="#syntactic-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Syntactic Validation</h2>
+<p>The format of email addresses is defined by <a href="https://tools.ietf.org/html/rfc5321#section-4.1.2" target="_blank">RFC 5321</a>, and is far more complicated than most people realise. As an example, the following are all considered to be valid email addresses:</p>
 <ul>
-<li>Is case sensitive in the local portion of the address (left of the rightmost <code>@</code> character).</li>
-<li>Has non-alphanumeric characters in the local-part (including <code>+</code> and <code>@</code>).</li>
-<li>Has zero or more labels.</li>
+<li><code>&quot;&gt;&lt;script&gt;alert(1);&lt;/script&gt;&quot;@example.org</code></li>
+<li><code>user+subaddress@example.org</code></li>
+<li><code>user@[IPv6:2001:db8::1]</code></li>
+<li><code>&quot; &quot;@example.org</code></li>
 </ul>
-<p>At the time of writing, <a href="https://tools.ietf.org/html/rfc5321" target="_blank">RFC 5321</a> is the current standard defining SMTP and what constitutes a valid mailbox address. Please note, email addresses should be considered to be public data.</p>
-<p>Many web applications contain computationally expensive and inaccurate regular expressions that attempt to validate email addresses. Recent changes to the landscape mean that the number of false-negatives will increase, particularly due to:</p>
+<p>Properly parsing email addresses for validity with regular expressions is very complicated, although there are a number of <a href="https://tools.ietf.org/id/draft-seantek-mail-regexen-03.html#rfc.section.3" target="_blank">publicly documents regex</a>.</p>
+<p>The biggest caveat on this is that although the RFC defines a very flexible format for email addresses, most real world implementations (such as mail servers) use a far more restricted address format, meaning that they will reject addresses that are <em>technically</em> valid.  Although they may be technically correct, these addresses are of little use if your application will not be able to actually send emails to them.</p>
+<p>As such, the best way to validate email addresses is to perform some basic initial validation, and then pass the address to the mail server and catch the exception if it rejects it. This means that any the application can be confident that its mail server can send emails to any addresses it accepts. The initial validation could be as simple as:</p>
 <ul>
-<li>Increased popularity of sub-addressing by providers such as Gmail (commonly using <code>+</code> as a token in the local-part to affect delivery)</li>
-<li>New <a href="https://en.wikipedia.org/wiki/Generic_top-level_domain" target="_blank">gTLDs</a> with long names (many regular expressions check the number and length of each label in the domain)</li>
+<li>The email address contains two parts, separated with an <code>@</code> symbol.</li>
+<li>The email address does not contain dangerous characters (such as backticks, single or double quotes, or null bytes).<ul>
+<li>Exactly which characters are dangerous will depend on how the address is going to be used (echoed in page, inserted into database, etc).</li>
 </ul>
-<p>Following <a href="https://tools.ietf.org/html/rfc5321" target="_blank">RFC 5321</a>, best practice for validating an email address would be to:</p>
+</li>
+<li>The domain part contains only letters, numbers, hyphens (<code>-</code>) and periods (<code>.</code>).</li>
+<li>The email address is a reasonable length:<ul>
+<li>The local part (before the <code>@</code>) should be no more than 63 characters.</li>
+<li>The total length should be no more than 254 characters.</li>
+</ul>
+</li>
+</ul>
+<h2 id="semantic-validation"><a name="semantic-validation" class="plugin-anchor" href="#semantic-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Semantic Validation</h2>
+<p>Semantic validation is about determining whether the email address is correct and legitimate. The most common way to do this is to send an email to the user, and require that they click a link in the email, or enter a code that has been sent to them. This provides a basic level of assurance that:</p>
 <ul>
-<li>Check for presence of at least one <code>@</code> symbol in the address.</li>
-<li>Ensure the local-part is no longer than <strong>64 octets</strong>.</li>
-<li>Ensure the domain is no longer than <strong>255 octets</strong>.</li>
-<li>Ensure the address <strong>is deliverable</strong>.</li>
+<li>The email address is correct.</li>
+<li>The application can successfully send emails to it.</li>
+<li>The user has access to the mailbox.</li>
 </ul>
-<p>Note that <a href="https://tools.ietf.org/html/rfc5321" target="_blank">RFC 5321</a> allows potentially dangerous characters in email addresses. For example, <code>&quot;&gt;&lt;script&gt;alert(1);&lt;/script&gt;&quot;@example.org</code> is a valid email address. As such, it should not be assumed that strings which are valid email addresses are safe to display unencoded or to include in SQL queries.</p>
-<p>To ensure an address is deliverable, the only way to check this is to send the user an email and have the user take action to confirm receipt. Beyond confirming that the email address is valid and deliverable, this also provides a positive acknowledgement that the user has access to the mailbox and is likely to be authorized to use it. </p>
-<p>This does not mean that other users cannot access this mailbox, for example when the user makes use of a service that generates a throw away email address.</p>
+<p>The links that are sent to users to prove ownership should contain a token that is:</p>
 <ul>
-<li>Email verification links should only satisfy the requirement of verify email address ownership and should not provide the user with an authenticated session (e.g. the user must still authenticate as normal to access the application).</li>
-<li>Email verification codes must expire after the first use or expire after 8 hours if not used.</li>
+<li>At least 32 characters long.</li>
+<li>Generated using a <a href="Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng">secure source of randomness</a>.</li>
+<li>Single use.</li>
+<li>Time limited (e.g, expiring after eight hours).</li>
 </ul>
-<h2 id="address-normalization"><a name="address-normalization" class="plugin-anchor" href="#address-normalization"><i class="fa fa-link" aria-hidden="true"></i></a>Address Normalization</h2>
-<p>As the local-part of email addresses are, in fact - case sensitive, it is important to store and compare email addresses correctly. To normalise an email address input, you would convert the domain part ONLY to lowercase.</p>
-<p>Unfortunately this does and will make input harder to normalise and correctly match to a users intent. It is reasonable to only accept one unique capitalisation of an otherwise identical address, however in this case it is critical to:</p>
+<p>After validating the ownership of the email address, the user should then be required to authenticate on the application through the usual mechanism.</p>
+<h3 id="disposable-email-addresses"><a name="disposable-email-addresses" class="plugin-anchor" href="#disposable-email-addresses"><i class="fa fa-link" aria-hidden="true"></i></a>Disposable Email Addresses</h3>
+<p>In some cases, users may not want to give their real email address when registering on the application, and will instead provide a disposable email address. These are publicly available addresses that do not require the user to authenticate, and are typically used to reduce the amount of spam received by users&apos; primary email addresses.</p>
+<p>Blocking disposable email addresses is almost impossible, as there are a large number of websites offering these services, with new domains being created every day. There are a number of publicly available lists and commercial lists of known disposable domains, but these will always be incomplete.</p>
+<p>If these lists are used to block the use of disposable email addresses then the user should be presented with a message explaining why they are blocked (although they are likely to simply search for another disposable provider rather than giving their legitimate address).</p>
+<p>If it is essential that disposable email addresses are blocked, then registrations should only be allowed from specifically whitelisted email providers. However, if this includes public providers such as Google or Yahoo, users can simply register their own disposable address with them.</p>
+<h3 id="sub-addressing"><a name="sub-addressing" class="plugin-anchor" href="#sub-addressing"><i class="fa fa-link" aria-hidden="true"></i></a>Sub-Addressing</h3>
+<p>Sub-addressing allows a user to specify a <em>tag</em> in the local part of the email address (before the <code>@</code> sign), which will be ignored by the mail server. For example, if that <code>example.org</code> domain supports sub-addressing, then the following email addresses are equivalent:</p>
 <ul>
-<li>Store the user-part as provided and verified by user verification.</li>
-<li>Perform comparisons by <code>lowercase(provided)==lowercase(persisted)</code>.</li>
+<li><code>user@example.org</code></li>
+<li><code>user+site1@example.org</code></li>
+<li><code>user+site2@example.org</code></li>
 </ul>
+<p>Many mail providers (such as Microsoft Exchange/Office 365) do not support sub-addressing. The most notable provider who does is Gmail, although there are many others that also do.</p>
+<p>Some users will use a different <em>tag</em> for each website they register on, so that if they start receiving spam to one of the sub-addresses they can identify which website leaked or sold their email address.</p>
+<p>Because it could allow users to register multiple accounts with a single email address, some sites may wish to block sub-addressing by stripping out everything between the <code>+</code> and <code>@</code> signs. This is not generally recommended, as it suggests that the website owner is either unaware of sub-addressing or wishes to prevent users from identifying them when they leak or sell email addresses. Additionally, it can be trivially bypassed by using <a href="#disposable-email-addresses">disposable email addresses</a>, or simply registering multiple email accounts with a trusted provider.</p>
 
                                 
                                 </section>
@@ -1235,7 +1255,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Input Validation ","level":"1.32","depth":1,"next":{"title":"Insecure Direct Object Reference Prevention ","level":"1.33","depth":1,"path":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Injection Prevention  in Java","level":"1.31","depth":1,"path":"cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md","ref":"cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Input_Validation_Cheat_Sheet.md","mtime":"2019-11-28T12:49:35.905Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-28T12:49:55.031Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Input Validation ","level":"1.32","depth":1,"next":{"title":"Insecure Direct Object Reference Prevention ","level":"1.33","depth":1,"path":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Injection Prevention  in Java","level":"1.31","depth":1,"path":"cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md","ref":"cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Input_Validation_Cheat_Sheet.md","mtime":"2019-12-02T08:44:58.882Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-12-02T08:45:21.243Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
