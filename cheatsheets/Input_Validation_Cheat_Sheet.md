@@ -166,42 +166,66 @@ The upload feature should be using a whitelist approach to only allow specific f
 
 # Email Address Validation
 
-## Email Validation Basics
+## Syntactic Validation
 
-Many web applications do not treat email addresses correctly due to common misconceptions about what constitutes a valid address. Specifically, it is completely valid to have an mailbox address which:
+The format of email addresses is defined by [RFC 5321](https://tools.ietf.org/html/rfc5321#section-4.1.2), and is far more complicated than most people realise. As an example, the following are all considered to be valid email addresses:
 
-- Is case sensitive in the local portion of the address (left of the rightmost `@` character).
-- Has non-alphanumeric characters in the local-part (including `+` and `@`).
-- Has zero or more labels.
+- `"><script>alert(1);</script>"@example.org`
+- `user+subaddress@example.org`
+- `user@[IPv6:2001:db8::1]`
+- `" "@example.org`
 
-At the time of writing, [RFC 5321](https://tools.ietf.org/html/rfc5321) is the current standard defining SMTP and what constitutes a valid mailbox address. Please note, email addresses should be considered to be public data.
+Properly parsing email addresses for validity with regular expressions is very complicated, although there are a number of [publicly documents regex](https://tools.ietf.org/id/draft-seantek-mail-regexen-03.html#rfc.section.3).
 
-Many web applications contain computationally expensive and inaccurate regular expressions that attempt to validate email addresses. Recent changes to the landscape mean that the number of false-negatives will increase, particularly due to:
+The biggest caveat on this is that although the RFC defines a very flexible format for email addresses, most real world implementations (such as mail servers) use a far more restricted address format, meaning that they will reject addresses that are *technically* valid.  Although they may be technically correct, these addresses are of little use if your application will not be able to actually send emails to them.
 
-- Increased popularity of sub-addressing by providers such as Gmail (commonly using `+` as a token in the local-part to affect delivery)
--  New [gTLDs](https://en.wikipedia.org/wiki/Generic_top-level_domain) with long names (many regular expressions check the number and length of each label in the domain)
+As such, the best way to validate email addresses is to perform some basic initial validation, and then pass the address to the mail server and catch the exception if it rejects it. This means that any the application can be confident that its mail server can send emails to any addresses it accepts. The initial validation could be as simple as:
 
-Following [RFC 5321](https://tools.ietf.org/html/rfc5321), best practice for validating an email address would be to:
+- The email address contains two parts, separated with an `@` symbol.
+- The email address does not contain dangerous characters (such as backticks, single or double quotes, or null bytes).
+  - Exactly which characters are dangerous will depend on how the address is going to be used (echoed in page, inserted into database, etc).
+- The domain part contains only letters, numbers, hyphens (`-`) and periods (`.`).
+- The email address is a reasonable length:
+  - The local part (before the `@`) should be no more than 63 characters.
+  - The total length should be no more than 254 characters.
 
-- Check for presence of at least one `@` symbol in the address.
-- Ensure the local-part is no longer than **64 octets**.
-- Ensure the domain is no longer than **255 octets**.
-- Ensure the address **is deliverable**.
+## Semantic Validation
 
-Note that [RFC 5321](https://tools.ietf.org/html/rfc5321) allows potentially dangerous characters in email addresses. For example, `"><script>alert(1);</script>"@example.org` is a valid email address. As such, it should not be assumed that strings which are valid email addresses are safe to display unencoded or to include in SQL queries.
+Semantic validation is about determining whether the email address is correct and legitimate. The most common way to do this is to send an email to the user, and require that they click a link in the email, or enter a code that has been sent to them. This provides a basic level of assurance that:
 
-To ensure an address is deliverable, the only way to check this is to send the user an email and have the user take action to confirm receipt. Beyond confirming that the email address is valid and deliverable, this also provides a positive acknowledgement that the user has access to the mailbox and is likely to be authorized to use it. 
+- The email address is correct.
+- The application can successfully send emails to it.
+- The user has access to the mailbox.
 
-This does not mean that other users cannot access this mailbox, for example when the user makes use of a service that generates a throw away email address.
+The links that are sent to users to prove ownership should contain a token that is:
 
-- Email verification links should only satisfy the requirement of verify email address ownership and should not provide the user with an authenticated session (e.g. the user must still authenticate as normal to access the application).
-- Email verification codes must expire after the first use or expire after 8 hours if not used.
+- At least 32 characters long.
+- Generated using a [secure source of randomness](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
+- Single use.
+- Time limited (e.g, expiring after eight hours).
 
-## Address Normalization
+After validating the ownership of the email address, the user should then be required to authenticate on the application through the usual mechanism.
 
-As the local-part of email addresses are, in fact - case sensitive, it is important to store and compare email addresses correctly. To normalise an email address input, you would convert the domain part ONLY to lowercase.
+### Disposable Email Addresses
 
-Unfortunately this does and will make input harder to normalise and correctly match to a users intent. It is reasonable to only accept one unique capitalisation of an otherwise identical address, however in this case it is critical to:
+In some cases, users may not want to give their real email address when registering on the application, and will instead provide a disposable email address. These are publicly available addresses that do not require the user to authenticate, and are typically used to reduce the amount of spam received by users' primary email addresses.
 
-- Store the user-part as provided and verified by user verification.
-- Perform comparisons by `lowercase(provided)==lowercase(persisted)`.
+Blocking disposable email addresses is almost impossible, as there are a large number of websites offering these services, with new domains being created every day. There are a number of publicly available lists and commercial lists of known disposable domains, but these will always be incomplete.
+
+If these lists are used to block the use of disposable email addresses then the user should be presented with a message explaining why they are blocked (although they are likely to simply search for another disposable provider rather than giving their legitimate address).
+
+If it is essential that disposable email addresses are blocked, then registrations should only be allowed from specifically whitelisted email providers. However, if this includes public providers such as Google or Yahoo, users can simply register their own disposable address with them.
+
+### Sub-Addressing
+
+Sub-addressing allows a user to specify a _tag_ in the local part of the email address (before the `@` sign), which will be ignored by the mail server. For example, if that `example.org` domain supports sub-addressing, then the following email addresses are equivalent:
+
+- `user@example.org`
+- `user+site1@example.org`
+- `user+site2@example.org`
+
+Many mail providers (such as Microsoft Exchange/Office 365) do not support sub-addressing. The most notable provider who does is Gmail, although there are many others that also do.
+
+Some users will use a different _tag_ for each website they register on, so that if they start receiving spam to one of the sub-addresses they can identify which website leaked or sold their email address.
+
+Because it could allow users to register multiple accounts with a single email address, some sites may wish to block sub-addressing by stripping out everything between the `+` and `@` signs. This is not generally recommended, as it suggests that the website owner is either unaware of sub-addressing or wishes to prevent users from identifying them when they leak or sell email addresses. Additionally, it can be trivially bypassed by using [disposable email addresses](#disposable-email-addresses), or simply registering multiple email accounts with a trusted provider.
