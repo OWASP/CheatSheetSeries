@@ -1467,6 +1467,67 @@ XPathNavigator nav = doc.CreateNavigator();
 <pre><code class="lang-php">libxml_disable_entity_loader(<span class="hljs-keyword">true</span>);
 </code></pre>
 <p>A description of how to abuse this in PHP is presented in a good <a href="https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/" target="_blank">SensePost article</a> describing a cool PHP based XXE vulnerability that was fixed in Facebook.</p>
+<h1 id="python"><a name="python" class="plugin-anchor" href="#python"><i class="fa fa-link" aria-hidden="true"></i></a>Python</h1>
+<p>The Python 3 official documentation contains a section on <a href="https://docs.python.org/3/library/xml.html#xml-vulnerabilities" target="_blank">xml vulnerabilities</a>. For Python 2, you can refer to this <a href="https://docs.Python.org/2/library/xml.html#xml-vulnerabilities" target="_blank">page</a>. </p>
+<blockquote>
+<p>The end of life for Python 2 is expected to be January 1st, 2020.</p>
+</blockquote>
+<p>The following table gives an overview of various modules in Python 3 used for XML parsing and whether or not they are vulnerable.</p>
+<table>
+<thead>
+<tr>
+<th>Attack Type</th>
+<th>sax</th>
+<th>etree</th>
+<th>minidom</th>
+<th>pulldom</th>
+<th>xmlrpc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Billion Laughs</td>
+<td>Vulnerable</td>
+<td>Vulnerable</td>
+<td>Vulnerable</td>
+<td>Vulnerable</td>
+<td>Vulnerable</td>
+</tr>
+<tr>
+<td>Quadratic Blowup</td>
+<td>Vulnerable</td>
+<td>Vulnerable</td>
+<td>Vulnerable</td>
+<td>Vulnerable</td>
+<td>Vulnerable</td>
+</tr>
+<tr>
+<td>External Entity Expansion</td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Safe</td>
+</tr>
+<tr>
+<td>DTD Retrieval</td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Safe</td>
+</tr>
+<tr>
+<td>Decompression Bomb</td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Safe</td>
+<td>Vulnerable</td>
+</tr>
+</tbody>
+</table>
+<p>To protect your application from the applicable attacks, <a href="https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages" target="_blank">two packages</a> exist to help you sanitize your input and protect your application against DDoS and remote attacks.</p>
 <h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
 <ul>
 <li><a href="https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/" target="_blank">XXE by InfoSecInstitute</a></li>
@@ -1519,7 +1580,7 @@ XPathNavigator nav = doc.CreateNavigator();
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"XML External Entity Prevention ","level":"1.68","depth":1,"next":{"title":"XML Security ","level":"1.69","depth":1,"path":"cheatsheets/XML_Security_Cheat_Sheet.md","ref":"cheatsheets/XML_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Web Service Security ","level":"1.67","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","mtime":"2019-12-04T08:05:22.641Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-12-04T08:05:44.179Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"XML External Entity Prevention ","level":"1.68","depth":1,"next":{"title":"XML Security ","level":"1.69","depth":1,"path":"cheatsheets/XML_Security_Cheat_Sheet.md","ref":"cheatsheets/XML_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Web Service Security ","level":"1.67","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","mtime":"2019-12-06T08:28:06.021Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-12-06T08:28:30.877Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
