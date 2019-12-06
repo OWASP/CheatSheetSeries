@@ -1464,59 +1464,15 @@ String token = tokenCipher.decipherToken(cipheredToken, <span class="hljs-keywor
      });
  }
 </code></pre>
-<h2 id="token-weak-secret"><a name="token-weak-secret" class="plugin-anchor" href="#token-weak-secret"><i class="fa fa-link" aria-hidden="true"></i></a>Token weak secret</h2>
+<h2 id="weak-token-secret"><a name="weak-token-secret" class="plugin-anchor" href="#weak-token-secret"><i class="fa fa-link" aria-hidden="true"></i></a>Weak Token Secret</h2>
 <h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
-<p>It&apos;s occur when the secret used in case of HMAC SHA256 algorithm used for the token signature is weak and can be bruteforced.</p>
-<p>The result is the capacity for an attacker to forge arbitrary valid token from a signature point of view.</p>
-<p>See <a href="https://www.notsosecure.com/crafting-way-json-web-tokens/" target="_blank">here</a> for an example.</p>
+<p>When the token is protected using a HMAC based algorithm, the security of the token is entirely dependent on the strength of the secret used with the HMAC. If an attacker can obtain a valid JWT they can then carry out an offline attack and attempt to crack the secret using tools such as <a href="https://github.com/magnumripper/JohnTheRipper" target="_blank">John the Ripper</a> or <a href="https://github.com/hashcat/hashcat" target="_blank">Hashcat</a>.</p>
+<p>If they are successful, they would then be able to modify the token and re-sign it with the key they had obtained. This could let them escalate their privileges, compromise other users accounts, or perform other actions depending on the contents of the JWT.</p>
+<p>There are a number of <a href="https://www.notsosecure.com/crafting-way-json-web-tokens/" target="_blank">guides</a> that document this process in greater detail.</p>
 <h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
-<p>Use a very strong secret: Alphanumeric (mixed case) + special characters.</p>
-<p>As it&apos;s a computer processing only, the size of the secret can be superior to 50 positions.</p>
-<p>Secret example:</p>
-<pre><code>A&amp;&apos;/}Z57M(2hNg=;LE?~]YtRMS5(yZ&lt;vcZTA3N-($&gt;2j:ZeX-BGftaVk`)jKP~q?,jk)EMbgt*kW&apos;(
-</code></pre><p>To evaluate the strength of the secret used for your token signature, you can apply a password dictionary attack on the token combined with the JWT API to facilitate the implementation of a breaker.</p>
-<p>Password dictionaries can be found for example <a href="https://wiki.skullsecurity.org/Passwords" target="_blank">here</a>.</p>
-<h3 id="implementation-example"><a name="implementation-example" class="plugin-anchor" href="#implementation-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation example</h3>
-<p>Code in charge of testing a secret against a JWT token test base.</p>
-<pre><code class="lang-java"> <span class="hljs-comment">/**
- * Test if a secret match the secret used to sign the token
- *
- * <span class="hljs-doctag">@param</span> token Source JWT token (test base)
- * <span class="hljs-doctag">@param</span> secret Secret to test
- * <span class="hljs-doctag">@return</span> The token decoded if the secret matche otherwise return null
- */</span>
-<span class="hljs-function"><span class="hljs-keyword">private</span> DecodedJWT <span class="hljs-title">checkSecret</span><span class="hljs-params">(String token, String secret)</span> </span>{
-     DecodedJWT t = <span class="hljs-keyword">null</span>;
-     <span class="hljs-keyword">try</span> {
-         Algorithm algorithm = Algorithm.HMAC256(secret);
-         JWTVerifier verifier = JWT.require(algorithm).build();
-         t = verifier.verify(token);
-     } <span class="hljs-keyword">catch</span> (JWTVerificationException | UnsupportedEncodingException e) {
-         <span class="hljs-comment">//ignore...</span>
-     }
-     <span class="hljs-keyword">return</span> t;
- }
-</code></pre>
-<p>Code snippet to evaluate the token test base on the secret dictionary.</p>
-<pre><code class="lang-java"><span class="hljs-keyword">final</span> String tokenTestBase = ...;
-<span class="hljs-keyword">final</span> String[] secret = <span class="hljs-keyword">new</span> String[<span class="hljs-number">1</span>];
-<span class="hljs-keyword">final</span> DecodedJWT[] decodedToken = <span class="hljs-keyword">new</span> DecodedJWT[<span class="hljs-number">1</span>];
-List&lt;String&gt; secrets = Files.readAllLines(Paths.get(<span class="hljs-string">&quot;secrets-dictionary.txt&quot;</span>));
-secrets.parallelStream().forEach(s -&gt; {
- DecodedJWT tentative = checkSecret(tokenTestBase, s);
- <span class="hljs-keyword">if</span> (tentative != <span class="hljs-keyword">null</span>) {
-   secret[<span class="hljs-number">0</span>] = s;
-   decodedToken[<span class="hljs-number">0</span>] = tentative;
- }
-});
-</code></pre>
-<h3 id="use-dedicated-tools"><a name="use-dedicated-tools" class="plugin-anchor" href="#use-dedicated-tools"><i class="fa fa-link" aria-hidden="true"></i></a>Use dedicated tools</h3>
-<p>You can also use:</p>
-<ul>
-<li><a href="https://github.com/hashcat/hashcat/issues/1057#issuecomment-279651700" target="_blank">JohnTheRipper</a> to perform the password dictionary attack.</li>
-<li><a href="https://hashcat.net/hashcat/" target="_blank">Hashcat</a>.</li>
-</ul>
-<h3 id="additional-reading"><a name="additional-reading" class="plugin-anchor" href="#additional-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Additional Reading</h3>
+<p>The simplest way to prevent this attack is to ensure that the secret used to sign the JWTs is strong and unique, in order to make it harder for an attacker to crack. As this secret would never need to be typed by a human, it should be at least 64 characters, and generated using a <a href="Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng">secure source of randomness</a>.</p>
+<p>Alternatively, consider the use of tokens that are signed with RSA rather than using a HMAC and secret key.</p>
+<h3 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h3>
 <ul>
 <li><a href="https://github.com/ticarpi/jwt_tool/wiki" target="_blank">{JWT}.{Attack}.Playbook</a> - A project documents the known attacks and potential security vulnerabilities and misconfigurations of JSON Web Tokens.</li>
 <li><a href="https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-bcp/" target="_blank">JWT Best Practices Internet Draft</a></li>
@@ -1564,7 +1520,7 @@ secrets.parallelStream().forEach(s -&gt; {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"JSON Web Token  for Java","level":"1.35","depth":1,"next":{"title":"Key Management ","level":"1.36","depth":1,"path":"cheatsheets/Key_Management_Cheat_Sheet.md","ref":"cheatsheets/Key_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"JAAS ","level":"1.34","depth":1,"path":"cheatsheets/JAAS_Cheat_Sheet.md","ref":"cheatsheets/JAAS_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","mtime":"2019-12-06T08:28:06.021Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-12-06T08:28:30.877Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"JSON Web Token  for Java","level":"1.35","depth":1,"next":{"title":"Key Management ","level":"1.36","depth":1,"path":"cheatsheets/Key_Management_Cheat_Sheet.md","ref":"cheatsheets/Key_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"JAAS ","level":"1.34","depth":1,"path":"cheatsheets/JAAS_Cheat_Sheet.md","ref":"cheatsheets/JAAS_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","mtime":"2019-12-06T19:52:14.745Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-12-06T19:52:35.419Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
