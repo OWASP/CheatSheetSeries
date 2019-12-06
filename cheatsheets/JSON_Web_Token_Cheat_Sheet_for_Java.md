@@ -530,80 +530,23 @@ JavaScript code to add the token as *Bearer* when calling a service, for example
  }
 ```
 
-## Token weak secret
+## Weak Token Secret
 
 ### Symptom
 
-It's occur when the secret used in case of HMAC SHA256 algorithm used for the token signature is weak and can be bruteforced.
+When the token is protected using a HMAC based algorithm, the security of the token is entirely dependent on the strength of the secret used with the HMAC. If an attacker can obtain a valid JWT they can then carry out an offline attack and attempt to crack the secret using tools such as [John the Ripper](https://github.com/magnumripper/JohnTheRipper) or [Hashcat](https://github.com/hashcat/hashcat).
 
-The result is the capacity for an attacker to forge arbitrary valid token from a signature point of view.
+If they are successful, they would then be able to modify the token and re-sign it with the key they had obtained. This could let them escalate their privileges, compromise other users accounts, or perform other actions depending on the contents of the JWT.
 
-See [here](https://www.notsosecure.com/crafting-way-json-web-tokens/) for an example.
+There are a number of [guides](https://www.notsosecure.com/crafting-way-json-web-tokens/) that document this process in greater detail.
 
 ### How to prevent
 
-Use a very strong secret: Alphanumeric (mixed case) + special characters.
+The simplest way to prevent this attack is to ensure that the secret used to sign the JWTs is strong and unique, in order to make it harder for an attacker to crack. As this secret would never need to be typed by a human, it should be at least 64 characters, and generated using a [secure source of randomness](Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
 
-As it's a computer processing only, the size of the secret can be superior to 50 positions.
+Alternatively, consider the use of tokens that are signed with RSA rather than using a HMAC and secret key.
 
-Secret example:
-
-```
-A&'/}Z57M(2hNg=;LE?~]YtRMS5(yZ<vcZTA3N-($>2j:ZeX-BGftaVk`)jKP~q?,jk)EMbgt*kW'(
-```
-
-To evaluate the strength of the secret used for your token signature, you can apply a password dictionary attack on the token combined with the JWT API to facilitate the implementation of a breaker.
-
-Password dictionaries can be found for example [here](https://wiki.skullsecurity.org/Passwords).
-
-### Implementation example
-
-Code in charge of testing a secret against a JWT token test base.
-
-``` java
- /**
- * Test if a secret match the secret used to sign the token
- *
- * @param token Source JWT token (test base)
- * @param secret Secret to test
- * @return The token decoded if the secret matche otherwise return null
- */
-private DecodedJWT checkSecret(String token, String secret) {
-     DecodedJWT t = null;
-     try {
-         Algorithm algorithm = Algorithm.HMAC256(secret);
-         JWTVerifier verifier = JWT.require(algorithm).build();
-         t = verifier.verify(token);
-     } catch (JWTVerificationException | UnsupportedEncodingException e) {
-         //ignore...
-     }
-     return t;
- }
-```
-
-Code snippet to evaluate the token test base on the secret dictionary.
-
-``` java
-final String tokenTestBase = ...;
-final String[] secret = new String[1];
-final DecodedJWT[] decodedToken = new DecodedJWT[1];
-List<String> secrets = Files.readAllLines(Paths.get("secrets-dictionary.txt"));
-secrets.parallelStream().forEach(s -> {
- DecodedJWT tentative = checkSecret(tokenTestBase, s);
- if (tentative != null) {
-   secret[0] = s;
-   decodedToken[0] = tentative;
- }
-});
-```
-
-### Use dedicated tools
-
-You can also use:
-- [JohnTheRipper](https://github.com/hashcat/hashcat/issues/1057#issuecomment-279651700) to perform the password dictionary attack.
-- [Hashcat](https://hashcat.net/hashcat/).
-
-### Additional Reading
+### Further Reading
 
 - [{JWT}.{Attack}.Playbook](https://github.com/ticarpi/jwt_tool/wiki) - A project documents the known attacks and potential security vulnerabilities and misconfigurations of JSON Web Tokens.
 - [JWT Best Practices Internet Draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-bcp/)
