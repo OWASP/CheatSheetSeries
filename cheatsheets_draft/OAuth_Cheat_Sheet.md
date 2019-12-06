@@ -4,19 +4,24 @@ This CS will handle concepts related to using OAuth in different ways and method
 
 ## Table of Contents
 
-1. [OAuth Cheat Sheet](#oauth-cheat-sheet)
-   1. [Table of Contents](#table-of-contents)
-   2. [Terminologies - Getting Started](#terminologies---getting-started)
-   3. [Access Tokens](#access-tokens)
-   4. [Refresh Tokens](#refresh-tokens)
-   5. [Tokens TTL](#tokens-ttl)
-   6. [Managing Tokens](#managing-tokens)
-   7. [Redirect URI](#redirect-uri)
-   8. [Use Cases](#use-cases)
-      1. [Classic Web Applicaiton](#classic-web-applicaiton)
-      2. [Single Page Application](#single-page-application)
-      3. [Mobile Application](#mobile-application)
-      4. [Backend Service](#backend-service)
+- [Terminologies - Getting Started](#terminologies---getting-started)
+- [Access Tokens](#access-tokens)
+- [Refresh Tokens](#refresh-tokens)
+- [Tokens TTL](#tokens-ttl)
+- [Managing Tokens](#managing-tokens)
+- [Redirect URI](#redirect-uri)
+- [Security Protective Measures](#security-protective-measures)
+   - [Client Credentials Protection](#client-credentials-protection)
+   - [CSRF Protection](#csrf-protection)
+   - [Referer Header Leaks Protection](#referer-header-leaks-protection)
+   - [Token Logging Protection](#token-logging-protection)
+   - [Authorization Server Mix-Up Protection](#authorization-server-mix-up-protection)
+   - [PKCE Considerations](#pkce-considerations)
+- [Use Cases](#use-cases)
+   - [Classic Web Applicaiton](#classic-web-applicaiton)
+   - [Single Page Application](#single-page-application)
+   - [Mobile Application](#mobile-application)
+   - [Backend Service](#backend-service)
 
 ## Terminologies - Getting Started
 
@@ -41,6 +46,32 @@ Best practices for managing tokens for client and authorization services
 ## Redirect URI
 
 Implementing redirect URI in a secure and safe manner
+
+## Security Protective Measures
+
+### Client Credentials Protection
+
+Implement `client_id` and `client_secret`
+
+### CSRF Protection
+
+Implement `state` parameter
+
+### Referer Header Leaks Protection
+
+How to avoid leaking the authorization code through the `Referer` Header
+
+### Token Logging Protection
+
+How to protect against logging the tokens in middlewares and server logs
+
+### Authorization Server Mix-Up Protection
+
+How to validate and target the proper authorization server
+
+### PKCE Considerations
+
+// Can be injected in the use cases as well.
 
 ## Use Cases
 
