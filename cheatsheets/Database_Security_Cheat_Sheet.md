@@ -99,14 +99,18 @@ The following section gives a number of key recommendation for specific database
 
 ## Database Specific Recommendations
 
-### MySQL
+The following section gives some further recommendations for specific database software, in addition to the more general recommendations given above.
 
-- Run the `mysql_secure_installation` script to clean up default databases and accounts.
+### MySQL and MariaDB
+
+- Run the `mysql_secure_installation` script to remove the default databases and accounts.
 - Disable the [FILE](https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_file) privilege for all users to prevent them reading or writing files.
-- See the [Oracle](https://dev.mysql.com/doc/refman/8.0/en/security-guidelines.html) and [CIS](FIXME) guidelines.
+- See the [Oracle MySQL](https://dev.mysql.com/doc/refman/8.0/en/security-guidelines.html) and [MariaDB](https://mariadb.com/kb/en/library/securing-mariadb/) hardening guides.
 
 ### Microsoft SQL Server
 
 - Disable `xp_cmdshell`.
 - Disable the SQL Browser service.
-- See the [Microsoft](https://docs.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server) and [CIS](FIXME) guidelines.
+- Disable [Mixed Mode Authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15) unless if it's not required.
+- Ensure that the sample [Northwind and AdventureWorks databases](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases) have been removed.
+- See the [Microsoft](https://docs.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server).
