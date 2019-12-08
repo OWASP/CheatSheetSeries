@@ -101,12 +101,6 @@ The following section gives a number of key recommendation for specific database
 
 The following section gives some further recommendations for specific database software, in addition to the more general recommendations given above.
 
-### MySQL and MariaDB
-
-- Run the `mysql_secure_installation` script to remove the default databases and accounts.
-- Disable the [FILE](https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_file) privilege for all users to prevent them reading or writing files.
-- See the [Oracle MySQL](https://dev.mysql.com/doc/refman/8.0/en/security-guidelines.html) and [MariaDB](https://mariadb.com/kb/en/library/securing-mariadb/) hardening guides.
-
 ### Microsoft SQL Server
 
 - Disable `xp_cmdshell`.
@@ -114,3 +108,21 @@ The following section gives some further recommendations for specific database s
 - Disable [Mixed Mode Authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15) unless if it's not required.
 - Ensure that the sample [Northwind and AdventureWorks databases](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases) have been removed.
 - See the [Microsoft](https://docs.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server).
+
+### MySQL and MariaDB
+
+- Run the `mysql_secure_installation` script to remove the default databases and accounts.
+- Disable the [FILE](https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_file) privilege for all users to prevent them reading or writing files.
+- See the [Oracle MySQL](https://dev.mysql.com/doc/refman/8.0/en/security-guidelines.html) and [MariaDB](https://mariadb.com/kb/en/library/securing-mariadb/) hardening guides.
+
+### PostgreSQL
+
+- See the [PostgreSQL Server Setup and Operation documentation](https://www.postgresql.org/docs/12/runtime.html) and the older [Security documentation](https://www.postgresql.org/docs/7.0/security.htm)
+
+### MongoDB
+
+- See the [MongoDB security checklist](https://docs.mongodb.com/manual/administration/security-checklist/).
+
+### Redis
+
+- See the [Redis security guide](https://redis.io/topics/security).
