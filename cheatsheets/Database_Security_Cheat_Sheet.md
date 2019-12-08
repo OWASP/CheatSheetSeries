@@ -84,10 +84,18 @@ For more security-critical applications, it is possible to apply permissions are
 
 ## Database Configuration and Hardening
 
+The underlying operating system for the database server should be hardened in the same way as any other server, based on an secure baseline such as the [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/) or the [Microsoft Security Baselines](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines).
+
+The database software should also be hardened. The following principles should apply to any database software and platform:
+
 - Install any required security updates and patches.
-- Don't run DB services under privileged accounts (root/SYSTEM).
-- Remove default accounts and databases.
-- Harden DB based on vendor guidelines or CIS benchmarks.
+- Configure the database services to run under a low privileged user account.
+- Remove any default accounts and databases.
+- Store any [transaction logs](https://en.wikipedia.org/wiki/Transaction_log) on a separate disk to the main database files.
+- Configure a regular back of the database.
+  - Ensure that the backups are protected with appropriate permissions, and ideally encrypted.
+
+The following section gives a number of key recommendation for specific database software. These should be considered alongside any vendor provided hardening guidelines, as well as third party guidelines such as the [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/).
 
 ## Database Specific Recommendations
 
