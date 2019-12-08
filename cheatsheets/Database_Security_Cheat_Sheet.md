@@ -72,6 +72,8 @@ The permissions assigned to database user accounts should be based on the princi
 - Only grant the required permissions on the databases.
   - Most applications would only need `SELECT`, `UPDATE` and `DELETE` permissions.
   - The account should not be the owner of the database as this can allow privilege escalation.
+- Avoid the use of database links or linked servers.
+  - Where they are required, use account with the minimum database, table and privileges required.
 
 For more security-critical applications, it is possible to apply permissions are more granular levels, including:
 
