@@ -14,7 +14,6 @@ This cheat sheet provides guidance on securely configuring and using SQL databas
   - [Storing Database Credentials](#storing-database-credentials)
 - [Permissions](#permissions)
 - [Database Configuration and Hardening](#database-configuration-and-hardening)
-- [Database Specific Recommendations](#database-specific-recommendations)
   - [Microsoft SQL Server](#microsoft-sql-server)
   - [MySQL and MariaDB](#mysql-and-mariadb)
   - [PostgreSQL](#postgresql)
@@ -108,11 +107,7 @@ The database software should also be hardened. The following principles should a
 - Configure a regular back of the database.
   - Ensure that the backups are protected with appropriate permissions, and ideally encrypted.
 
-The following section gives a number of key recommendation for specific database software. These should be considered alongside any vendor provided hardening guidelines, as well as third party guidelines such as the [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/).
-
-## Database Specific Recommendations
-
-The following section gives some further recommendations for specific database software, in addition to the more general recommendations given above.
+The following sections gives some further recommendations for specific database software, in addition to the more general recommendations given above.
 
 ### Microsoft SQL Server
 
