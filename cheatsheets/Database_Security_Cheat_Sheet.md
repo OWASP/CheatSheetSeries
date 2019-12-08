@@ -6,21 +6,20 @@ This cheat sheet provides guidance on securely configuring and using SQL databas
 
 ## Contents
 
-- [Database Security Cheat Sheet](#database-security-cheat-sheet)
-  - [Introduction](#introduction)
-  - [Contents](#contents)
-  - [Connecting to the Database](#connecting-to-the-database)
-    - [Transport Layer Protection](#transport-layer-protection)
-  - [Authentication](#authentication)
-    - [Storing Database Credentials](#storing-database-credentials)
-  - [Permissions](#permissions)
-  - [Database Configuration and Hardening](#database-configuration-and-hardening)
-  - [Database Specific Recommendations](#database-specific-recommendations)
-    - [Microsoft SQL Server](#microsoft-sql-server)
-    - [MySQL and MariaDB](#mysql-and-mariadb)
-    - [PostgreSQL](#postgresql)
-    - [MongoDB](#mongodb)
-    - [Redis](#redis)
+- [Introduction](#introduction)
+- [Contents](#contents)
+- [Connecting to the Database](#connecting-to-the-database)
+  - [Transport Layer Protection](#transport-layer-protection)
+- [Authentication](#authentication)
+  - [Storing Database Credentials](#storing-database-credentials)
+- [Permissions](#permissions)
+- [Database Configuration and Hardening](#database-configuration-and-hardening)
+- [Database Specific Recommendations](#database-specific-recommendations)
+  - [Microsoft SQL Server](#microsoft-sql-server)
+  - [MySQL and MariaDB](#mysql-and-mariadb)
+  - [PostgreSQL](#postgresql)
+  - [MongoDB](#mongodb)
+  - [Redis](#redis)
 
 ## Connecting to the Database
 
