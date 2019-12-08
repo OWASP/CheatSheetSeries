@@ -59,7 +59,7 @@ As with any system that has its own user accounts, the usual account management 
 - Removing user accounts when an application is decommissioned.
 - Changing the passwords when staff leave, or there is reason to believe that they may have been compromised.
 
-For Microsoft SQL Server, consider the use of [Windows or integrated authentication](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server), which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under.
+For Microsoft SQL Server, consider the use of [Windows or integrated authentication](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server), which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under. The [Windows Native Authentication Plugins](https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-windows-native.html) provides similar functionality for MySQL.
 
 ### Storing Database Credentials
 
