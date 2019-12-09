@@ -1,10 +1,10 @@
-# OAuth Cheat Sheet
+# Introduction
 
-This CS will handle concepts related to using OAuth in different ways and methods.
+Into blurb.
 
-## Table of Contents
+# Contents
 
-- [Terminologies - Getting Started](#terminologies---getting-started)
+- [Getting Started](#getting-started)
 - [Access Tokens](#access-tokens)
 - [Refresh Tokens](#refresh-tokens)
 - [Tokens TTL](#tokens-ttl)
@@ -23,9 +23,27 @@ This CS will handle concepts related to using OAuth in different ways and method
    - [Mobile Application](#mobile-application)
    - [Backend Service](#backend-service)
 
-## Terminologies - Getting Started
+## Getting Started
 
-Crucial terminologies required for the reader in order to properly grasp the concepts discussed.​
+RFC 6749 defines OAuth 2.0 as:
+
+```
+   The OAuth 2.0 authorization framework enables a third-party
+   application to obtain limited access to an HTTP service, either on
+   behalf of a resource owner by orchestrating an approval interaction
+   between the resource owner and the HTTP service, or by allowing the
+   third-party application to obtain access on its own behalf.
+```
+
+We can all agree this is pretty dry, so let's spice it up a bit and dive into a semi-realistic use case that OAuth 2.0 was designed for.
+
+### Here goes a silly sample
+
+Narrative...
+
+## Terminology
+
+Here go explanation of this, that, and the other term...
 
 ## Access Tokens
 
