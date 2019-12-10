@@ -1,8 +1,10 @@
-# Introduction
+# OAuth 2.0 Cheat Sheet
 
-Into blurb.
+## Introduction
 
-# Contents
+Intro blurb.
+
+## Contents
 
 - [Getting Started](#getting-started)
 - [Access Tokens](#access-tokens)
