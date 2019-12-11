@@ -81,7 +81,7 @@ Based on the needs of the application, ensure the **least harmful** and the **lo
 
 #### Blacklist Extensions
 
-> This should be only used when the [whitelist approach](#whitelist-extensions) fails, and is in no way a replacement for it.
+> Blacklisting extensions is a bad idea and is very dangerous. Don't do it unless you have no other choice!
 
 In order to perform this validation, specifying and identifying which patterns that could should be rejected are used in order to protect the service.
 
