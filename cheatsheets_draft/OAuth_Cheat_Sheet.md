@@ -2,7 +2,9 @@
 
 ## Introduction
 
-Intro blurb.
+With the growth of micro-services and interconnected applications, authorization requests rose, such as providing a statistics service to access your twitter information in order to analyze your top followers. In order to access your twitter information, OAuth was used to provide authorization to specific details in your account, where authentication was not required (_e.g._ the service doesn't ask for your password).
+
+OAuth is an open standard for access delegation, otherwise known as third-party authorization, where application users grant websites and services access to their information through the use of tokens, instead of credentials (username/password).
 
 ## Contents
 
