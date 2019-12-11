@@ -8,12 +8,12 @@ OAuth is an open standard for access delegation, otherwise known as third-party 
 
 ## Contents
 
-- [Getting Started](#getting-started)
-- [Access Tokens](#access-tokens)
-- [Refresh Tokens](#refresh-tokens)
-- [Tokens TTL](#tokens-ttl)
-- [Managing Tokens](#managing-tokens)
-- [Redirect URI](#redirect-uri)
+- [Terminology](#terminology)
+   - [Access Tokens](#access-tokens)
+   - [Refresh Tokens](#refresh-tokens)
+   - [Tokens TTL](#tokens-ttl)
+   - [Managing Tokens](#managing-tokens)
+   - [Redirect URI](#redirect-uri)
 - [Security Protective Measures](#security-protective-measures)
    - [Client Credentials Protection](#client-credentials-protection)
    - [CSRF Protection](#csrf-protection)
