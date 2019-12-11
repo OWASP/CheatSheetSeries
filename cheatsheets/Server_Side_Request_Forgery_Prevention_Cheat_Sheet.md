@@ -23,6 +23,7 @@ SSRF is an attack vector that abuses an application to interact with the interna
 * If the application is vulnerable to [XML eXternal Entity (XXE) injection](https://portswigger.net/web-security/xxe) then it can by exploited to perform a [SSRF attack](https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks), take a look at the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md) to learn how to prevent the exposure to XXE.
 
 ## Contents
+
 - [Cases](#cases)
   * [Case 1 - Application can send request only to identified and trusted applications](#case-1---application-can-send-request-only-to-identified-and-trusted-applications)
     + [Example](#example)
