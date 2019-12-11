@@ -56,6 +56,7 @@ If the file uploaded is publicly retrievable, additional threats can be addresse
 
 1. Public disclosure of other files
 2. Initiate a DoS attack by requesting lots of files. Requests are small, yet responses are much larger
+3. File content that could be deemed as illegal, offensive, or dangerous (_e.g._ personal data, copyrighted data, etc.) which will make you a host for such malicious files.
 
 ## File Upload Protection
 
