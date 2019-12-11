@@ -47,23 +47,23 @@ Narrative...
 
 Here go explanation of this, that, and the other term...
 
-## Access Tokens
+### Access Tokens
 
 Explain in brief access tokens and implementations best practices
 
-## Refresh Tokens
+### Refresh Tokens
 
 Explain in brief refresh tokens and implementations best practices
 
-## Tokens TTL
+### Tokens TTL
 
 Time to live recommendation and the need for this feature.
 
-## Managing Tokens
+### Managing Tokens
 
 Best practices for managing tokens for client and authorization services
 
-## Redirect URI
+### Redirect URI
 
 Implementing redirect URI in a secure and safe manner
 
