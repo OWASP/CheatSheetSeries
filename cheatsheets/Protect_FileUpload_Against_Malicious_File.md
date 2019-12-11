@@ -75,7 +75,7 @@ Refer to the [Input Validation CS](Input_Validation_Cheat_Sheet.md) to properly 
 Ensure the usage of *business-critical* extensions only, without allowing any type of *non-required* extensions. If the system requires:
 
 - image upload, allow one type that is agreed upon to fit the business requirement;
-- cv upload, allow `docx` and `pdf` extensions. Access files through a closed down machine.
+- cv upload, allow `docx` and `pdf` extensions.
 
 Based on the needs of the application, ensure the **least harmful** and the **lowest risk** file types to be used.
 
