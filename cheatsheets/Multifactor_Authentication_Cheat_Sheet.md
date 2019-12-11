@@ -13,6 +13,33 @@ It should be emphasised that while requiring multiple examples of a single facto
 
 Additionally, while the following sections discuss the disadvantage and weaknesses of various different types of MFA, in many cases these are only relevant against targeted attacks. **Any MFA is better than no MFA**.
 
+# Contents
+
+- [Advantages](#advantages)
+- [Disadvantages](#disadvantages)
+- [Quick Recommendations](#quick-recommendations)
+- [Implementing MFA](#implementing-mfa)
+  - [When to Require MFA](#when-to-require-mfa)
+  - [Improving Usability](#improving-usability)
+  - [Failed Login Attempts](#failed-login-attempts)
+  - [Resetting MFA](#resetting-mfa)
+- [Something You Know](#something-you-know)
+  - [Passwords and PINs](#passwords-and-pins)
+  - [Security Questions](#security-questions)
+- [Something You Have](#something-you-have)
+  - [Hardware OTP Tokens](#hardware-otp-tokens)
+  - [Software TOTP Tokens](#software-totp-tokens)
+  - [Hardware U2F Tokens](#hardware-u2f-tokens)
+  - [Certificates](#certificates)
+  - [Smartcards](#smartcards)
+  - [SMS Messages and Phone Calls](#sms-messages-and-phone-calls)
+  - [Email](#email)
+- [Something You Are](#something-you-are)
+  - [Biometrics](#biometrics)
+- [Location](#location)
+  - [Source IP Ranges](#source-ip-ranges)
+  - [Geolocation](#geolocation)
+
 # Advantages
 
 The most common way that user accounts get compromised on applications is through weak, re-used or stolen passwords. Despite any technical security controls implemented on the application, users are liable to choose weak passwords, or to use the same password on different applications. As developers or system administrators, it should be assumed that users' passwords will be compromised as some point, and the system should be designed in order to defend against this.

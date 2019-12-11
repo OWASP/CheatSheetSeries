@@ -30,7 +30,7 @@ Common uses of CSP frame-ancestors:
 Note that the single quotes are required around `self` and `none`, but may not occur around other source expressions.
 
 See the following documentation for further details and more complex examples:
-- https://w3c.github.io/webappsec-csp/document/#directive-frame-ancestors
+- https://w3c.github.io/webappsec-csp/#directive-frame-ancestors
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
 
 ## Limitations
