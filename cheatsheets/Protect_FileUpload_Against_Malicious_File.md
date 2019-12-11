@@ -40,13 +40,13 @@ In short, the following principles should be followed to reach a secure file upl
 
 In order to assess and know exactly what controls to implement, knowing what you're facing is essential to protect your assets. The following sections will hopefully showcase the risks accompanying the file upload functionality.
 
-### Malware Upload
+### Malicious Files
 
 The attacker delivers a file for malicious intent, such as:
 
-1. Call the file to execute code (_e.g._ [ImageTrick Exploit](https://imagetragick.com/))
+1. Exploit vulnerabilities in the file parser or processing module (_e.g._ [ImageTrick Exploit](https://imagetragick.com/), [XXE](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing))
 2. Use the file for phishing (_e.g._ careers form)
-3. Send ZIP bombs, or simply huge files in a way to fill the server storage which hinders the server's availability
+3. Send ZIP bombs, XML bombs (otherwise known as billion laughs attack), or simply huge files in a way to fill the server storage which hinders and damages the server's availability
 4. Overwrite an existing file on the system
 5. Client-side active content that could lead to all types of client-side attacks if the file is publicly retrievable
 
