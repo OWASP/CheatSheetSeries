@@ -62,7 +62,13 @@ If the file uploaded is publicly retrievable, additional threats can be addresse
 
 ### Extension Validation
 
-Ensure that the validation occurs after decoding the file name, and that a proper filter is set in place (_e.g._ `\.png` vs `\.png\z`; etc.). Refer to the [Input Validation CS](Input_Validation_Cheat_Sheet.md) for more information.
+Ensure that the validation occurs after decoding the file name, and that a proper filter is set in place in order to avoid certain known bypasses, such as the following:
+
+- Double extensions, _e.g._ `.jpg.php`, where it circumvents easily the regex `\.jpg`
+- Null bytes, _e.g._ `.php%00.jpg`, where `.jpg` gets truncated and `.php` becomes the new extension
+- Generic bad regex that isn't properly tested and well reviewed. Refrain from building your own logic unless you have enough knowledge on this topic.
+
+Refer to the [Input Validation CS](Input_Validation_Cheat_Sheet.md) to properly parse and process the extension.
 
 #### Whitelist Extensions
 
