@@ -85,14 +85,6 @@ Based on the needs of the application, ensure the **least harmful** and the **lo
 
 In order to perform this validation, specifying and identifying which patterns that could should be rejected are used in order to protect the service.
 
-```python
-# This code snippet only serves as an example, and should not be used
-blacklist = ["php", "php5"]  # can be replaced with a regex pattern, but that would be even weaker, such as \.php$
-for bad in blacklist:
-    if "file.php".endswith(bad):
-        // raise exception
-```
-
 ### User Permissions
 
 Before any file upload service is accessed, proper validation should occur on two levels for the user uploading a file:
