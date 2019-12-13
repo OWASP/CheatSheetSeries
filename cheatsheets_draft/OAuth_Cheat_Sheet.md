@@ -2,9 +2,9 @@
 
 ## Introduction
 
-With the growth of micro-services and interconnected applications, authorization requests rose, such as providing a statistics service to access your twitter information in order to analyze your top followers. In order to access your twitter information, OAuth was used to provide authorization to specific details in your account, where authentication was not required (_e.g._ the service does not ask for your password).
+OAuth 2.0 is an open standard that allows applications to get access to protected resources and APIs on behalf of users without accessing their credentials. OAuth 2.0 can be used in Web, mobile, and desktop applications and is widely supported by identity providers and API vendors. OAuth 2.0, along with related standards and recommendations, provides a versatile framework for addressing a diverse set of use cases. With this versatility comes complexity that often has security implications. Mistakes can lead to serious vulnerabilities.
 
-OAuth is an open standard for access delegation, otherwise known as third-party authorization, where application users grant websites and services access to their information through the use of tokens, instead of credentials (username/password).
+This Cheat Sheet provides guidance for application builders on how to deploy OAuth 2.0 and integrate with other participants of the OAuth 2.0 ecosystem in a secure manner.
 
 ## Contents
 
