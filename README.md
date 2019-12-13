@@ -59,6 +59,7 @@ The official website provides a search bar (top left corner) that can be used.
 # Project leaders
 
 * [Jim Manico](https://github.com/jmanico).
+* [Elie Saad](https://github.com/ThunderSon).
 
 # Core team
 
