@@ -9,6 +9,7 @@ This Cheat Sheet provides guidance for application builders on how to deploy OAu
 ## Contents
 
 - [Terminology](#terminology)
+   - [Roles](#roles)
    - [Access Tokens](#access-tokens)
    - [Refresh Tokens](#refresh-tokens)
    - [Tokens TTL](#tokens-ttl)
@@ -29,7 +30,23 @@ This Cheat Sheet provides guidance for application builders on how to deploy OAu
 
 ## Terminology
 
-Here go explanation of this, that, and the other term...
+In this section, the most important terms for OAuth 2.0 will be shortly explained:
+
+### Roles
+
+OAuth 2.0 defines these four most important roles:
+
+1. **Resource Owner**
+The Resource Owner is the person or entitiy that can grant access to a certain resource. Typically, this is the end-user of an application.
+
+2. **Resource Server**
+The Resource Server is the server hosting the protected resource and deciding whether access (with an OAuth 2.0 Access Token) is accepted or not. This is the application or API you want to access.
+
+3. **Client**
+The Client is the application that accesses a protected resource (on the Resoure Server) on behalf and with the authorization of a Resource Owner (end-user).
+
+4. **Authorization Server**
+The Authorization Server is the service that authenticates the Resource Owner and issues Access Tokens to the Client after authorization by the Resource Owner. This could be your central Single-Sign-On or Authorization Service.
 
 ### Access Tokens
 
