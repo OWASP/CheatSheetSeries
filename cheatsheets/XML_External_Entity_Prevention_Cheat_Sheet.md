@@ -378,6 +378,22 @@ marshaller.unmarshal(new StreamSource(new StringReader(some_string_containing_XM
 
 So, per the [Spring OXM CVE writeup](https://pivotal.io/security/cve-2013-4152), the above is now safe. But if you were to use a DOMSource or StAXSource instead, it would be up to you to configure those sources to be safe from XXE.
 
+### Castor
+
+Castor is a data binding framework for Java. It allows conversion between Java objects, XML and relational tables. The XML feaures can leave Castor vulnerable to XXE.
+
+The followind SAX 2 features should be enabled to remove DTD spport.
+
+org.exolab.castor.sax.features=\
+http://apache.org/xml/features/disallow-doctype-decl
+
+The following SAX 2 features that should be disabled for the default parser to remote external entity support.
+
+org.exolab.castor.sax.features-to-disable=\
+http://xml.org/sax/features/external-general-entities,\
+http://xml.org/sax/features/external-parameter-entities,\
+http://apache.org/xml/features/nonvalidating/load-external-dtd
+
 # .NET
 
 The following information for XXE injection in .NET is directly from this [web application of unit tests by Dean Fleming](https://github.com/deanf1/dotnet-security-unit-tests).
