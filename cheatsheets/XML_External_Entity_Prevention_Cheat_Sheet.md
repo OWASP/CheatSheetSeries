@@ -380,9 +380,9 @@ So, per the [Spring OXM CVE writeup](https://pivotal.io/security/cve-2013-4152),
 
 ### Castor
 
-Castor is a data binding framework for Java. It allows conversion between Java objects, XML and relational tables. The XML feaures can leave Castor vulnerable to XXE.
+Castor is a data binding framework for Java. It allows conversion between Java objects, XML and relational tables. The XML feaures in Castor can leave it vulnerable to XXE.
 
-The followind SAX 2 features should be enabled to remove DTD spport.
+The followind SAX 2 features should be enabled for the default parser to remove DTD spport.
 
 org.exolab.castor.sax.features=\
 http://apache.org/xml/features/disallow-doctype-decl
