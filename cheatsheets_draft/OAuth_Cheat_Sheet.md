@@ -50,11 +50,15 @@ The Authorization Server is the service that authenticates the Resource Owner an
 
 ### Access Tokens
 
-Explain in brief access tokens and implementations best practices
+Access tokens are credentials that the Client uses to obtain access to Protected Resources on behalf of the resource owner. Access tokens are issued to the Client by the Authorization Server after authorization (consent) from the Resource Owner, and need to be verified by the Resource Server.
+
+Access tokens are opaque. The Client does not have to parse or understand token structure to use it at the Resource Server.
 
 ### Refresh Tokens
 
-Explain in brief refresh tokens and implementations best practices
+Refresh tokens, on the other hand, are credentials that the Client uses to obtain access tokens. Refresh tokens are optionally issued to the Client in addition to the access token by the Authorization Server after authorization (consent) from the Resource Owner. The Client uses the refresh token to obtain a new access token after the old one has has expired or has been otherwise invalidated.
+
+Refresh tokens are also opaque. The Client only presents refresh tokens to the Authorization Server, and never to the Resource Server.
 
 ### Tokens TTL
 
