@@ -46,7 +46,7 @@ The Resource Server is the server hosting the protected resource and deciding wh
 The Client is the application that accesses a protected resource (on the Resoure Server) on behalf and with the authorization of a Resource Owner (end-user).
 
 4. **Authorization Server**
-The Authorization Server is the service that authenticates the Resource Owner and issues Access Tokens to the Client after authorization by the Resource Owner. This could be your central Single-Sign-On or Authorization Service.
+The Authorization Server is the service that authenticates the Resource Owner and issues Access Tokens to the Client after authorization by the Resource Owner. This could be your central Single Sign On (SSO) solution or other Identity Provider (IdP).
 
 ### Access Tokens
 
