@@ -36,29 +36,33 @@ In this section, the most important terms for OAuth 2.0 will be shortly explaine
 
 OAuth 2.0 defines these four most important roles:
 
-1. **Resource Owner**
-The Resource Owner is the person or entitiy that can grant access to a certain resource. Typically, this is the end-user of an application.
+#### Resource Owner
 
-2. **Resource Server**
+The Resource Owner is the person or entity that can grant access to a certain resource. Typically, this is the end-user of an application.
+
+#### Resource Server
+
 The Resource Server is the server hosting the protected resource and deciding whether access (with an OAuth 2.0 Access Token) is accepted or not. This is the application or API you want to access.
 
-3. **Client**
-The Client is the application that accesses a protected resource (on the Resoure Server) on behalf and with the authorization of a Resource Owner (end-user).
+#### Client
 
-4. **Authorization Server**
-The Authorization Server is the service that authenticates the Resource Owner and issues Access Tokens to the Client after authorization by the Resource Owner. This could be your central Single Sign On (SSO) solution or other Identity Provider (IdP).
+The Client is the application that accesses a protected resource (on the [Resource Server]) on behalf, and with the authorization of a [Resource Owner] (end-user).
+
+#### Authorization Server
+
+The Authorization Server is the service that authenticates the [Resource Owner] and issues [Access Tokens] to the [Client] after authorization by the [Resource Owner]. This could be your central Single Sign On (SSO) solution, or other Identity Provider (IdP).
 
 ### Access Tokens
 
-Access tokens are credentials that the Client uses to obtain access to Protected Resources on behalf of the resource owner. Access tokens are issued to the Client by the Authorization Server after authorization (consent) from the Resource Owner, and need to be verified by the Resource Server.
+Access tokens are credentials that the [Client] uses to obtain access to protected resources on behalf of the [Resource Owner]. Access tokens are issued to the [Client] by the [Authorization Server] after authorization (consent) from the [Resource Owner], and need to be verified by the [Resource Server].
 
-Access tokens are opaque. The Client does not have to parse or understand token structure to use it at the Resource Server.
+Access tokens are opaque. The [Client] does not have to parse or understand token structure to use it at the [Resource Server].
 
 ### Refresh Tokens
 
-Refresh tokens, on the other hand, are credentials that the Client uses to obtain access tokens. Refresh tokens are optionally issued to the Client in addition to the access token by the Authorization Server after authorization (consent) from the Resource Owner. The Client uses the refresh token to obtain a new access token after the old one has has expired or has been otherwise invalidated.
+Refresh tokens, on the other hand, are credentials that the [Client] uses to obtain access tokens. Refresh tokens are optionally issued to the [Client] in addition to the access token by the [Authorization Server] after authorization (consent) from the [Resource Owner]. The [Client] uses the refresh token to obtain a new access token after the old one has expired or has been otherwise invalidated.
 
-Refresh tokens are also opaque. The Client only presents refresh tokens to the Authorization Server, and never to the Resource Server.
+Refresh tokens are also opaque. The [Client] only presents refresh tokens to the [Authorization Server], and never to the Resource Server.
 
 ### Tokens TTL
 
@@ -107,3 +111,9 @@ How to validate and target the proper authorization server
 ### Mobile Application
 
 ### Backend Service
+
+[Resource Owner]: #resource-owner
+[Resource Server]: #resource-server
+[Client]: #client
+[Authorization Server]: #authorization-server
+[Access Tokens]: #access-tokens
