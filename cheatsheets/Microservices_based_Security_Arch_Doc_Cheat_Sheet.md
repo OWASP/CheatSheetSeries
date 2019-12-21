@@ -46,7 +46,6 @@ Infrastructure services including remote services may implement authentication, 
 
 | Parameter name | Description | 
 | :--- | :--- |
-Parameter name	| Parameter description
 |Service name (ID) | Unique service name or ID
 |Short description | Short description of functionality implemented by the service (e.g., authentication, authorization, service registration and discovery, logging, security monitoring, API gateway).
 |Link to source code repository | Specify a link to service source code repository (if applicable)
