@@ -108,6 +108,16 @@ Multiple threats relate to the file-name, thus, it is essential to ensure that t
 
 This can be done by creating a **random string** as a file-name. If the file-name is required by the business needs, proper input validation should be done for client-side (_e.g._ active content) and back-end side (_e.g._ special files overwrite or creation) attack vectors. File-name length limits should be taken into consideration based on the system storing the files, as each system has its own file name length limit.
 
+### File Content Safety
+
+As mentioned in the [Public File Retrieval](#public-file-retrieval) section, file content can contain unwelcomed data and information.
+
+The File Upload service should allow users to report illegal content, and copyright owners to report abuse.
+
+If there are enough resources, manual file review should be conducted in a sandboxed environment before releasing the files to the public.
+
+Adding some automation to the review could be helpful, by conducting keyword analysis, which should be a harsh process and well studied before its usage. Some services (_e.g._ Virus Total) provide APIs to scan files against well known malicious file hashes.
+
 ### File Storage Location
 
 All file uploaded will be stored in a location on the server. This location must be chosen based on security and business requirements. The following points are set by security priority, and are inclusive:
