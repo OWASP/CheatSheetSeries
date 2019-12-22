@@ -138,7 +138,7 @@ Files should be stored in a way that ensures:
 
 ### Upload and Download Limits
 
-The application should set proper size limits for the upload service in order to protect the file storage capacity. The file size limit should be considered after file decompression is conducted, and by using secure methods to calculate zip files size.
+The application should set proper size limits for the upload service in order to protect the file storage capacity. The file size limit should be considered after file decompression is conducted, and by using secure methods to calculate zip files size. For more on this, see how to [Safely extract files from ZipInputStream](https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream), Java's input stream to handle ZIP files.
 
 It should set proper request limits as well for the download service if available to protect the server from DoS attacks.
 
