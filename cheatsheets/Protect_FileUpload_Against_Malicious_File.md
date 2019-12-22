@@ -114,10 +114,10 @@ Adding some automation to the review could be helpful, by conducting keyword ana
 All file uploaded will be stored in a location on the server. This location must be chosen based on security and business requirements. The following points are set by security priority, and are inclusive:
 
 1. Store the files on a **different host**, which allow for complete segragation of duties between the application serving the user, and the host handling file uploads and their storage.
-2. Store the files in a **private directory**, where only administrative access is allowed.
-3. Store the files on a **public directory**, and set them in write permissions only.
-
-> If read access is required, setting proper controls is a must (_e.g._ internal IP, authorized user, etc.)
+2. Store the files **outside the webroot**, where only administrative access is allowed.
+3. Store the files **inside the webroot**, and set them in write permissions only.
+   - If read access is required, setting proper controls is a must (_e.g._ internal IP, authorized user, etc.)
+4. Store the files to a **database**, most preferrably as Blobs in a NoSQL database. The database should be chosen based on the application's requirements.
 
 ### User Permissions
 
