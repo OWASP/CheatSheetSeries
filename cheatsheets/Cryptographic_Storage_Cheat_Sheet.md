@@ -95,7 +95,7 @@ If these recommended [AE](http://en.wikipedia.org/wiki/Authenticated_encryption)
 - Combine encryption in [cipher-block chaining (CBC) mode](http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29) with post-encryption message authentication code, such as [HMAC](http://en.wikipedia.org/wiki/HMAC) or [CMAC](http://en.wikipedia.org/wiki/CMAC) i.e. Encrypt-then-MAC.
     - Note that Integrity and Authenticity are preferable to Integrity alone i.e. a MAC such as HMAC-SHA256 or HMAC-SHA512 is a better choice than SHA-256 or SHA-512.
 - Use 2 independent keys for these 2 independent operations.
-- Do not use ECB mode. CDC is preferred.
+- Do not use ECB mode. CBC is preferred.
 - Do not use [CBC MAC for variable length data](http://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages)
 - The [CAVP program](http://csrc.nist.gov/groups/STM/cavp/index.html) is a good default place to go for validation of cryptographic algorithms when one does not have AES or one of the authenticated encryption modes that provide confidentiality and authenticity (i.e., data origin authentication) such as CCM, EAX, CMAC, etc. For Java, if you are using SunJCE that will be the case. The cipher modes supported in JDK 1.5 and later are CBC, CFB, CFBx, CTR, CTS, ECB, OFB, OFBx, PCBC. None of these cipher modes are authenticated encryption modes. (That's why it is added explicitly.) If you are using an alternate JCE provider such as Bouncy Castle, RSA JSafe, IAIK, etc., then these authenticated encryption modes should be used.
 
