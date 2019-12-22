@@ -18,6 +18,7 @@ In short, the following principles should be followed to reach a secure file upl
   - **In the case of public access to the files, ensure that proper permissions are set, file names are safe, and encoded**
 - **Run the file through an antivirus or a sandbox if available to validate that it doesn't contain malicious or bogus data**
 - **Ensure the usage of secure and updated libraries for your needs**
+- **Add CSRF protection, as this is input being served from the user**
 
 ## Contents
 
@@ -49,6 +50,7 @@ The attacker delivers a file for malicious intent, such as:
 3. Send ZIP bombs, XML bombs (otherwise known as billion laughs attack), or simply huge files in a way to fill the server storage which hinders and damages the server's availability
 4. Overwrite an existing file on the system
 5. Client-side active content that could lead to all types of client-side attacks if the file is publicly retrievable
+6. Make the user upload a file without the user's consent, by crafting a Cross-Site Request Forgery attack (CSRF).
 
 ### Public File Retrieval
 
