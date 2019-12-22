@@ -85,15 +85,6 @@ Based on the needs of the application, ensure the **least harmful** and the **lo
 
 In order to perform this validation, specifying and identifying which patterns that could should be rejected are used in order to protect the service.
 
-### User Permissions
-
-Before any file upload service is accessed, proper validation should occur on two levels for the user uploading a file:
-
-- Authentication level
-  - The user should be a registered user, or an identifiable user, in order to set restrictions and limitations for their upload capabilities
-- Authorization level
-  - Make sure that the user's accesses allow them to upload a file, or multiple files for administrative cases.
-
 ### Content-Type Validation
 
 Other than defining the extension of the uploaded file, its MIME-type can be checked for a quick protection against simple file upload attacks.
@@ -127,6 +118,15 @@ All file uploaded will be stored in a location on the server. This location must
 3. Store the files on a **public directory**, and set them in write permissions only.
 
 > If read access is required, setting proper controls is a must (_e.g._ internal IP, authorized user, etc.)
+
+### User Permissions
+
+Before any file upload service is accessed, proper validation should occur on two levels for the user uploading a file:
+
+- Authentication level
+  - The user should be a registered user, or an identifiable user, in order to set restrictions and limitations for their upload capabilities
+- Authorization level
+  - Make sure that the user's accesses allow them to upload a file, or multiple files for administrative cases.
 
 ### System Permissions
 
