@@ -20,6 +20,27 @@ The best way to protect sensitive information is to not store it in the first pl
 
 ## Algorithms
 
+### Use strong approved cryptographic algorithms
+
+Do not implement an existing cryptographic algorithm on your own, no matter how easy it appears. Instead, use widely accepted algorithms and widely accepted implementations.
+
+Only use approved public algorithms such as AES, RSA public key cryptography, and SHA-256 or better for hashing. Do not use weak algorithms, such as MD5 or SHA1. Note that the classification of a "strong" cryptographic algorithm can change over time. See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) or ISO TR 14742 "Recommendations on Cryptographic Algorithms and their use" or [Algorithms, key size and parameters report – 2014](http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-size-and-parameters-report-2014/at_download/fullReport) from European Union Agency for Network and Information Security. E.g. [AES](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 128, [RSA](http://en.wikipedia.org/wiki/RSA_%28cryptosystem%29) 3072, [SHA](http://en.wikipedia.org/wiki/Secure_Hash_Algorithm) 256.
+
+Ensure that the implementation has (at minimum) had some cryptography experts involved in its creation. If possible, use an implementation that is FIPS 140-2 certified.
+
+See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) Table 2 "Comparable strengths" for the strength ("security bits") of different algorithms and key lengths, and how they compare to each other.
+
+- In general, where different algorithms are used, they should have comparable strengths e.g. if an AES-128 key is to be encrypted, an AES-128 key or greater, or RSA-3072 or greater could be used to encrypt it.
+- In general, hash lengths are twice as long as the security bits offered by the symmetric/asymmetric algorithm  e.g. SHA-224 for 3TDEA (112 security bits) (due to the [Birthday Attack](http://en.wikipedia.org/wiki/Birthday_attack))
+
+If a password is being used to protect keys then the [password strength](http://en.wikipedia.org/wiki/Password_strength) should be sufficient for the strength of the keys it is protecting.
+
+When 3DES is used, ensure `K1 != K2 != K3`, and the minimum key length must be `192 bits` .
+
+### Custom Algorithms
+
+Don't do this.
+
 ### Cipher Modes
 
 There are various [modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) that can be used to allow block ciphers (such as AES) to decrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them it outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.
@@ -51,27 +72,6 @@ If these recommended [AE](http://en.wikipedia.org/wiki/Authenticated_encryption)
 **Note:** 
 - [Disk encryption](http://en.wikipedia.org/wiki/Disk_encryption_theory) is a special case of [data at rest](http://en.wikipedia.org/wiki/Data_at_Rest) e.g. Encrypted File System on a Hard Disk Drive. 
 - [XTS-AES mode](http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf) is optimized for Disk encryption and is one of the [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html); it provides confidentiality and some protection against data manipulation (but not as strong as the [AE](http://en.wikipedia.org/wiki/Authenticated_encryption) [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html)). It is also specified in [IEEE P1619 Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices](http://en.wikipedia.org/wiki/IEEE_P1619)
-
-### Use strong approved cryptographic algorithms
-
-Do not implement an existing cryptographic algorithm on your own, no matter how easy it appears. Instead, use widely accepted algorithms and widely accepted implementations.
-
-Only use approved public algorithms such as AES, RSA public key cryptography, and SHA-256 or better for hashing. Do not use weak algorithms, such as MD5 or SHA1. Note that the classification of a "strong" cryptographic algorithm can change over time. See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) or ISO TR 14742 "Recommendations on Cryptographic Algorithms and their use" or [Algorithms, key size and parameters report – 2014](http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-size-and-parameters-report-2014/at_download/fullReport) from European Union Agency for Network and Information Security. E.g. [AES](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 128, [RSA](http://en.wikipedia.org/wiki/RSA_%28cryptosystem%29) 3072, [SHA](http://en.wikipedia.org/wiki/Secure_Hash_Algorithm) 256.
-
-Ensure that the implementation has (at minimum) had some cryptography experts involved in its creation. If possible, use an implementation that is FIPS 140-2 certified.
-
-See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) Table 2 "Comparable strengths" for the strength ("security bits") of different algorithms and key lengths, and how they compare to each other.
-
-- In general, where different algorithms are used, they should have comparable strengths e.g. if an AES-128 key is to be encrypted, an AES-128 key or greater, or RSA-3072 or greater could be used to encrypt it.
-- In general, hash lengths are twice as long as the security bits offered by the symmetric/asymmetric algorithm  e.g. SHA-224 for 3TDEA (112 security bits) (due to the [Birthday Attack](http://en.wikipedia.org/wiki/Birthday_attack))
-
-If a password is being used to protect keys then the [password strength](http://en.wikipedia.org/wiki/Password_strength) should be sufficient for the strength of the keys it is protecting.
-
-When 3DES is used, ensure `K1 != K2 != K3`, and the minimum key length must be `192 bits` .
-
-### Custom Algorithms
-
-Don't do this.
 
 ### Secure Random Number Generation
 
