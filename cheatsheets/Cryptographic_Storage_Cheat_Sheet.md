@@ -56,7 +56,7 @@ In general, you should not use AES, DES or other symmetric cipher primitives dir
 
 **Note:** Do not use [ECB mode](http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Electronic_codebook_.28ECB.29) for encrypting lots of data (the other modes are better because they chain the blocks of data together to improve the data security).
 
-### Use cryptographically secure pseudo random number generators (CSPRNG)
+### Secure Random Number Generation
 
 Random numbers (or strings) are needed for various security critical functionality, such as generating session IDs, CSRF tokens or password reset tokens. As such, it is important that these are generated securely, and that it is not possible for an attacker to guess and predict them.
 
