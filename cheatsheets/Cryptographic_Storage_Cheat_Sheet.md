@@ -58,13 +58,13 @@ In general, you should not use AES, DES or other symmetric cipher primitives dir
 
 ### Use cryptographically secure pseudo random number generators (CSPRNG)
 
-When generating random bits in the context of software security, use the available Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) library or module available on the programming language you are using.
+Random numbers (or strings) are needed for various security critical functionality, such as generating session IDs, CSRF tokens or password reset tokens. As such, it is important that these are generated securely, and that it is not possible for an attacker to guess and predict them.
 
-Do not use Pseudo-Random Number Generators (PRNG) since they are not secure and will produce deterministic results. The chosen numbers are not completely random because a mathematical algorithm is used to select them, but they are sufficiently random for practical purposes. 
+It is generally not possible for computers to generate truly random numbers (without special hardware), so most systems and languages provide two different types of randomness:
 
-PRNGs are primarily used for generating random-looking numbers in use cases such as modeling and simulation in software, while CSPRNGs are intended for generating random-looking numbers resistant to prediction for security use cases such as random passwords, CSRF tokens, session IDs, etc.
+Pseudo-Random Number Generators (PRNG) provide low-quality randomness that are much faster, and can be used for non-security related functionality (such as ordering results on a page, or randomising UI elements). However, they **must not** be used for anything security critical, as it is often possible for attackers to guess or predict the output.
 
-The use of CSPRNGs will ensure that all random numbers, especially those used for cryptographic parameters (keys, IVs, MAC tags), random file names, random GUIDs, and random strings are generated in a cryptographically strong fashion.
+Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness (more strictly, a greater amount of entropy), making them safe to use for security-sensitive functionality. However, they are slower and more CPU intensive, can end up blocking in some circumstances when large amounts of random data are requested. As such, if large amounts of non-security related randomness are needed, they may not be appropriate.
 
 The table below shows the recommended algorithms for each language, as well as insecure functions that should not be used.
 
@@ -80,8 +80,11 @@ The table below shows the recommended algorithms for each language, as well as i
 | Go       | `rand` using `math/rand` package, | [crypto.rand](https://golang.org/pkg/crypto/rand/) package |
 | Rust     | `rand::prng::XorShiftRng`, | [rand::prng::chacha::ChaChaRng](https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html) and the rest of the Rust library [CSPRNGs.](https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs) |
 
-References:
-- http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-22r1a.pdf
+#### UUIDs and GUIDs
+
+Universally unique identifiers (UUIDs or GUIDs) are sometimes used as a quick way to generate random strings. Although they can provide a reasonable source of randomness, this will depend on the [type or version](https://en.wikipedia.org/wiki/Universally_unique_identifier#Versions) of the UUID that is created.
+
+Specifically, version 1 UUIDs are comprised of a high precision timestamp and the MAC address of the system that generated them, so are **not random** (although they may be hard to guess, given the timestamp is to the nearest 100ns). Type 4 UUIDs are randomly generated, although whether this is done using a CSPRNG will depend on the implementation. Unless this is known to be secure in the specific language or framework, the randomness of UUIDs should not be relied upon.
 
 ### Use Authenticated Encryption of data
 
