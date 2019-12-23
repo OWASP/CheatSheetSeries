@@ -112,8 +112,61 @@ How to validate and target the proper authorization server
 
 ### Backend Service
 
+Backend services communicate between each other based on their needs, _e.g._ update database from a provider. In order to keep this communication secure and authorized, the client credentials grant is used, otherwise discussed as Machine to Machine (M2M) flow. This grant allows one service to be the [Client] and the [Resource Owner] at the same time. Authorization is then conducted by sending the Client ID and Secret to the [Authorization Server], and in return providing the service an access token.
+
+This allows for only trusted back-end services to access the [Resource Server] by tracking the client IDs and secrets.
+
+There are multiple ways to send the required fields to the Authorization server. The two most welcomed are by using POST parameters, or by using POST parameters in conjunction with the web Basic authentication.
+
+#### Client Credentials Request
+
+- POST parameters example:
+
+```http
+POST /oauth/accesstoken HTTP/1.1
+Host: authorization.server.org
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=<client_id>&client_secret=<client_secret>
+```
+
+- POST parameters in conjunction with the web Basic authentication:
+
+```http
+POST /oauth/accesstoken HTTP/<version>
+Host: authorization.server.org
+Authorization: Basic <base64(<client_id>:<client_secret>)>
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=<client_id>&client_secret=<client_secret>
+```
+
+The developer has the freedom to add scopes, and send them as a part of the request.
+
+#### Client Credentials Response
+
+The [Authorization Server] must return an access token, an expiry time, and a token type. A refresh token **should not** be returned in this flow!
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Cache-Control: no-store
+Pragma: no-cache
+ 
+{
+  "access_token":<access_token>,
+  "token_type":"bearer",
+  "expires_in":1800,
+}
+```
+
+The developer has the freedom to add scopes, and it is essential to return the scope to validate the scope sent from the client side.
+
+For more information on this flow, refer to [section 4.4](https://tools.ietf.org/html/rfc6749#section-4.4) from [RFC6749].
+
 [Resource Owner]: #resource-owner
 [Resource Server]: #resource-server
 [Client]: #client
 [Authorization Server]: #authorization-server
 [Access Tokens]: #access-tokens
+[RFC6749]: https://tools.ietf.org/html/rfc6749
