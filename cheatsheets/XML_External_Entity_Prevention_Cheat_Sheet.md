@@ -380,19 +380,7 @@ So, per the [Spring OXM CVE writeup](https://pivotal.io/security/cve-2013-4152),
 
 ### Castor
 
-Castor is a data binding framework for Java. It allows conversion between Java objects, XML and relational tables. The XML feaures in Castor can leave it vulnerable to XXE.
-
-The followind SAX 2 features should be enabled for the default parser to remove DTD spport.
-
-org.exolab.castor.sax.features=\
-http://apache.org/xml/features/disallow-doctype-decl
-
-The following SAX 2 features that should be disabled for the default parser to remote external entity support.
-
-org.exolab.castor.sax.features-to-disable=\
-http://xml.org/sax/features/external-general-entities,\
-http://xml.org/sax/features/external-parameter-entities,\
-http://apache.org/xml/features/nonvalidating/load-external-dtd
+Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor **prior to version 1.3.3** are vulnerable to XXE, and should be upgraded to the latest version. For additional information, check the official [XML configuration file](https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html)
 
 # .NET
 
