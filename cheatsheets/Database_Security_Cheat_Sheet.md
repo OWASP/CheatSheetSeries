@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This cheat sheet provides guidance on securely configuring and using SQL databases. It is intended to be used by application developers when they are responsible for managing the databases, in the absence of a dedicated database administrator (DBA). For details about protecting against SQL Injection attacks, see the [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md).
+This cheat sheet provides guidance on securely configuring and using the most used and known databases. It is intended to be used by application developers when they are responsible for managing the databases, in the absence of a dedicated database administrator (DBA). For details about protecting against SQL Injection attacks, see the [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md).
 
 ## Contents
 
@@ -35,7 +35,7 @@ Connections should never be allowed to the database from applications running on
 
 ### Transport Layer Protection
 
-Most databases will allow unencrypted network connections in their default configurations. Although some will encrypt the initial authentication (such as Microsoft SQL Server), the rest of the traffic will be unencrypted, meaning that all kinds of sensitive information will be sent across the network in clear text. The following steps should be taken to avoid this
+Most databases will allow unencrypted network connections in their default configurations. Although some will encrypt the initial authentication (such as Microsoft SQL Server), the rest of the traffic will be unencrypted, meaning that all kinds of sensitive information will be sent across the network in clear text. The following steps should be taken to prevent unencrypted traffic:
 
 - Configure the database to only allow encrypted connections.
 - Install a trusted digital certificate on the server.
@@ -46,11 +46,11 @@ The [Transport Layer Protection](Transport_Layer_Protection_Cheat_Sheet.md) and 
 
 ## Authentication
 
-The database should be configured to always require authentication, including connections from the local server. Database accounts should be :
+The database should be configured to always require authentication, including connections from the local server. Database accounts should be:
 
-- Protected with strong and unique passwords.
-- Used by a single application or service.
-- Configured with the minimum permissions required (as discussed in the [permissions section below](#permissions).
+- protected with strong and unique passwords.
+- used by a single application or service.
+- configured with the minimum permissions required as discussed in the [permissions section below](#permissions).
 
 As with any system that has its own user accounts, the usual account management processes should be followed, including:
 
@@ -59,15 +59,15 @@ As with any system that has its own user accounts, the usual account management 
 - Removing user accounts when an application is decommissioned.
 - Changing the passwords when staff leave, or there is reason to believe that they may have been compromised.
 
-For Microsoft SQL Server, consider the use of [Windows or integrated authentication](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server), which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under. The [Windows Native Authentication Plugins](https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-windows-native.html) provides similar functionality for MySQL.
+For Microsoft SQL Server, consider the use of [Windows or Integrated-Authentication](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server), which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under. The [Windows Native Authentication Plugins](https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-windows-native.html) provides similar functionality for MySQL.
 
 ### Storing Database Credentials
 
 Database credentials should never be stored in the application source code, especially if they are unencrypted. Instead, they should be stored in a configuration file that:
 
-- Is outside of the webroot.
-- Has appropriate permissions so that it can only be read by the required user(s).
-- Is not checked into source code repositories.
+- is outside of the webroot.
+- has appropriate permissions so that it can only be read by the required user(s).
+- is not checked into source code repositories.
 
 Where possible, these credentials should also be encrypted or otherwise protected using built in functionality, such as the `web.config` encryption available in [ASP.NET](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
 
@@ -83,9 +83,9 @@ The permissions assigned to database user accounts should be based on the princi
   - Development, UAT and Production environments should all use separate databases and accounts.
 - Only grant the required permissions on the databases.
   - Most applications would only need `SELECT`, `UPDATE` and `DELETE` permissions.
-  - The account should not be the owner of the database as this can allow privilege escalation.
-- Avoid the use of database links or linked servers.
-  - Where they are required, use account with the minimum database, table and privileges required.
+  - The account should not be the owner of the database as this can open up doors for privilege escalation.
+- Avoid the usage of database links or linked servers.
+  - Where they are required, use an account with the minimum databases, tables, and privileges required.
 
 For more security-critical applications, it is possible to apply permissions are more granular levels, including:
 
@@ -96,15 +96,15 @@ For more security-critical applications, it is possible to apply permissions are
 
 ## Database Configuration and Hardening
 
-The underlying operating system for the database server should be hardened in the same way as any other server, based on an secure baseline such as the [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/) or the [Microsoft Security Baselines](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines).
+The underlying operating system for the database server should be hardened in the same way as any other server, based on a secure baseline such as the [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/) or the [Microsoft Security Baselines](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines).
 
-The database software should also be hardened. The following principles should apply to any database software and platform:
+The database application should also be properly configured and hardened. The following principles should apply to any database application and platform:
 
 - Install any required security updates and patches.
 - Configure the database services to run under a low privileged user account.
 - Remove any default accounts and databases.
-- Store any [transaction logs](https://en.wikipedia.org/wiki/Transaction_log) on a separate disk to the main database files.
-- Configure a regular back of the database.
+- Store [transaction logs](https://en.wikipedia.org/wiki/Transaction_log) on a separate disk to the main database files.
+- Configure a regular backup of the database.
   - Ensure that the backups are protected with appropriate permissions, and ideally encrypted.
 
 The following sections gives some further recommendations for specific database software, in addition to the more general recommendations given above.
