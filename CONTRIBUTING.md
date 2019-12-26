@@ -25,7 +25,7 @@ The intended audience of the cheat sheets is developers, _not_ security experts.
 
 The purpose of the cheat sheets is to provide **useful, practical advice** that can be followed by developers. It is much better to give _good_ practices that can actually be followed than _best_ practices that are completely impractical
 
-The submitting changes in a PR, consider the following area:
+When submitting changes in a PR, consider the following areas:
 
 - The content should be useful to developers.
 - The contents should be factual and correct.
