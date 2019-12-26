@@ -19,6 +19,51 @@ Follow these steps:
     3. Submit your [Pull Request](https://help.github.com/articles/creating-a-pull-request/).
     4. Verify that the CI job [applied on your Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) do not fail!
 
+# Content Guidelines
+
+The intended audience of the cheat sheets is developers, _not_ security experts. As such, do not assume that the person reading the cheat sheet has a strong understanding of security topics. In depth or academic discussions are generally not appropriate in cheat sheets, and should be linked to as external references where appropriate.
+
+The purpose of the cheat sheets is to provide **useful, practical advice** that can be followed by developers. It is much better to give _good_ practices that can actually be followed than _best_ practices that are completely impractical
+
+When submitting changes in a PR, consider the following areas:
+
+- The content should be useful to developers.
+- The contents should be factual and correct.
+- Statements should be supported by authoritative references where possible.
+- Recommendations should be feasible for the majority of developers to implement.
+
+# Style Guidelines
+
+## Cheat Sheet Structure
+
+- Start with a H1 of the cheat sheet name
+- Generally the first two sections should be `Introduction` and `Contents`, followed by the body of the cheat sheet.
+- Headings should have a blank line after them.
+
+## Language
+
+- Use US English.
+  * Spell check before submitted a PR.
+- Try and keep the language relatively simple to make it easier for non-native speakers
+- Define any non-ubiquitous acronyms when they are first used.
+  * This is not necessary for extremely common acronyms such as "HTTP" or "URL".
+
+## Markdown Formatting
+
+- Nested lists should use different characters for each level. The characters should be (in order), `-`, `*` and `+`.
+- `**Bold**` and `_italic_` formatting can be used occasionally for emphasis.
+- Links should be inline with a useful description, such as `[Description](https://example.org)`.
+  * Always use HTTPS links where possible
+- Quotes from other articles should use quote syntax: `> Quote here`
+- Code snippets should be short and should be appropriately marked to provide syntax highlighting:
+
+```md
+    ```php
+    <?php
+    echo "Example code";
+    ```
+```
+
 # How to setup my contributor environment?
 
 Follow these steps:
