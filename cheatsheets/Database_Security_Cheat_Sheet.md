@@ -81,7 +81,7 @@ The permissions assigned to database user accounts should be based on the princi
   - Development, UAT and Production environments should all use separate databases and accounts.
 - Only grant the required permissions on the databases.
   - Most applications would only need `SELECT`, `UPDATE` and `DELETE` permissions.
-  - The account should not be the owner of the database as this lead to privilege escalation vulnerabilities.
+  - The account should not be the owner of the database as this can lead to privilege escalation vulnerabilities.
 - Avoid using database links or linked servers.
   - Where they are required, use an account that has been granted access to only the minimum databases, tables, and system privileges required.
 
