@@ -2,12 +2,10 @@
 
 ## Introduction
 
-This cheat sheet provides guidance on securely configuring and using the most used and known databases. It is intended to be used by application developers when they are responsible for managing the databases, in the absence of a dedicated database administrator (DBA). For details about protecting against SQL Injection attacks, see the [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md).
+This cheat sheet provides guidance on securely configuring and using the SQL and NoSQL databases. It is intended to be used by application developers when they are responsible for managing the databases, in the absence of a dedicated database administrator (DBA). For details about protecting against SQL Injection attacks, see the [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md).
 
 ## Contents
 
-- [Introduction](#introduction)
-- [Contents](#contents)
 - [Connecting to the Database](#connecting-to-the-database)
   - [Transport Layer Protection](#transport-layer-protection)
 - [Authentication](#authentication)
@@ -83,9 +81,9 @@ The permissions assigned to database user accounts should be based on the princi
   - Development, UAT and Production environments should all use separate databases and accounts.
 - Only grant the required permissions on the databases.
   - Most applications would only need `SELECT`, `UPDATE` and `DELETE` permissions.
-  - The account should not be the owner of the database as this can open up doors for privilege escalation.
-- Avoid the usage of database links or linked servers.
-  - Where they are required, use an account with the minimum databases, tables, and privileges required.
+  - The account should not be the owner of the database as this lead to privilege escalation vulnerabilities.
+- Avoid using database links or linked servers.
+  - Where they are required, use an account that has been granted access to only the minimum databases, tables, and system privileges required.
 
 For more security-critical applications, it is possible to apply permissions are more granular levels, including:
 
