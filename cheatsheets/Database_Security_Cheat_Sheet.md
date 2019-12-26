@@ -46,9 +46,9 @@ The [Transport Layer Protection](Transport_Layer_Protection_Cheat_Sheet.md) and 
 
 The database should be configured to always require authentication, including connections from the local server. Database accounts should be:
 
-- protected with strong and unique passwords.
-- used by a single application or service.
-- configured with the minimum permissions required as discussed in the [permissions section below](#permissions).
+- Protected with strong and unique passwords.
+- Used by a single application or service.
+- Configured with the minimum permissions required as discussed in the [permissions section below](#permissions).
 
 As with any system that has its own user accounts, the usual account management processes should be followed, including:
 
@@ -63,9 +63,9 @@ For Microsoft SQL Server, consider the use of [Windows or Integrated-Authenticat
 
 Database credentials should never be stored in the application source code, especially if they are unencrypted. Instead, they should be stored in a configuration file that:
 
-- is outside of the webroot.
-- has appropriate permissions so that it can only be read by the required user(s).
-- is not checked into source code repositories.
+- Is outside of the webroot.
+- Has appropriate permissions so that it can only be read by the required user(s).
+- Is not checked into source code repositories.
 
 Where possible, these credentials should also be encrypted or otherwise protected using built in functionality, such as the `web.config` encryption available in [ASP.NET](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
 
@@ -73,7 +73,7 @@ Where possible, these credentials should also be encrypted or otherwise protecte
 
 The permissions assigned to database user accounts should be based on the principle of least privilege (i.e, the accounts should only have the minimal permissions required for the application to function). This can be applied at a number of increasingly granular levels levels depending on the functionality available in the database. The following steps should be applicable to all environments:
 
-- Do not use the built in `root` or `sa` or `SYS` accounts.
+- Do not use the built in `root`, `sa` or `SYS` accounts.
 - Do not grant the account administrative rights over the database instance.
 - Only allow the account to connect from whitelisted hosts.
   - This would often be `localhost` or the address of the application server.
