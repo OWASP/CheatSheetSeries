@@ -29,7 +29,7 @@ The backend database used by the application should be isolated as much as possi
 
 Similar protection should be implemented to protect any web-based management tools used with the database, such as phpMyAdmin.
 
-Connections should never be allowed to the database from applications running on untrusted systems (such as a thick-client application that connects directly to the database, rather than using an API).
+When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should **never** be made from a thick client to the backend database.
 
 ### Transport Layer Protection
 
