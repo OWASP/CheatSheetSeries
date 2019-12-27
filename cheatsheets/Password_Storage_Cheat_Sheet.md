@@ -92,7 +92,7 @@ Salting also provides protection against an attacker pre-computing hashes using 
 
 ## Peppering
 
-A [pepper](https://en.wikipedia.org/wiki/Pepper_(cryptography)) can be used in additional to salting to provide an additional layer of protection. It is similar to a salt, but has two key differences:
+A [pepper](https://en.wikipedia.org/wiki/Pepper_%28cryptography%29) can be used in additional to salting to provide an additional layer of protection. It is similar to a salt, but has two key differences:
 
 - The pepper is shared between all stored passwords, rather than being unique like a salt.
 - The pepper is **not stored in the database**, unlike the salts.
