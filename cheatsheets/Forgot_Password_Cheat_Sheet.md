@@ -13,11 +13,23 @@ The following short guidelines can be used as a quick reference to protect the f
 - **Use a side-channel to communicate the method to reset their password.**
 - **For critical services and applications, MFA should be used.**
 
-# The Problem
+## Methods
 
-There is no industry standard for implementing a **Forgot Password** feature. The result is that you see applications forcing users to jump through myriad hoops involving emails, special URLs, temporary passwords, personal security questions, and so on. In the end you have to reset it to a new value.
+In order to allow a user to request a password reset, you will need to have some way to identify the user, or a mean to reach out to them through a side-channel.
 
-# Steps
+This can be done through any of the following methods:
+
+- OTP (TOTP, or HOTP).
+- Email.
+  - A token, pin, or a URL (with a token) can be sent.
+- Phone number.
+  - A token, pin, or a URL (with a token) can be sent.
+- Security Questions.
+- Pin codes on registration process, where the user stores them offline.
+
+## Implementation
+
+In order to implement the forgot password service, the developer needs to choose one of the proposed [methods](#methods).
 
 ## Step 1) Gather Identity Data or Security Questions
 
