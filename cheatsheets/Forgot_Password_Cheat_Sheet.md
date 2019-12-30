@@ -1,6 +1,17 @@
-# Introduction
+# Forgot Password Cheat Sheet
 
-This article provides a simple model to follow when implementing a *forgot password* web application feature.
+## Introduction
+
+In order to implement a proper user management system, almost all systems integrate a **Forgot Password?** service, which allows the user to request a reset to their password whenever they forget their password, or if their account ever gets breached.
+
+As much as is this functionality looks straight-forward and easy to implement, the details of its implementations make it a sweet spot for security attacks, such as the renowned [user enumeration attack](https://www.owasp.org/index.php/Testing_for_User_Enumeration_and_Guessable_User_Account_%28OWASP-AT-002%29).
+
+The following short guidelines can be used as a quick reference to protect the forgot password service:
+
+- **Unified user message, whether the user exists or not.**
+- **Ensure that the time taken for the user response message is uniform.**
+- **Use a side-channel to communicate the method to reset their password.**
+- **For critical services and applications, MFA should be used.**
 
 # The Problem
 
