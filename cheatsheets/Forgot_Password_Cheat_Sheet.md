@@ -19,17 +19,22 @@ In order to allow a user to request a password reset, you will need to have some
 
 This can be done through any of the following methods:
 
-- OTP (TOTP, or HOTP).
-- Email.
-  - A token, pin, or a URL (with a token) can be sent.
-- Phone number.
-  - A token, pin, or a URL (with a token) can be sent.
+- One Time Password (OTP).
+- A token, pin, or a URL (with a token) can be sent.
 - Security Questions.
 - Pin codes on registration process, where the user stores them offline.
 
 ## Implementation
 
 In order to implement the forgot password service, the developer needs to choose one of the proposed [methods](#methods).
+
+### OTP
+
+OTP is the best method in order to implement a secure forgot password service, as it triggers as a 2FA functionality.
+
+The two most famous methods are Time-OTP ([TOTP](https://tools.ietf.org/html/rfc6238)), or HMAC-OTP ([HOTP](https://tools.ietf.org/html/rfc4226)). The main difference is in the counter, where TOTP focuses on the Unix time, and HOTP has a counter that gets incremented on every user call to generate the OTP.
+
+TOTP is a favorite candidate over HOTP, since you don't have to worry about the counter, and it gets refreshed between 30 or 60 seconds in most implementations. One implementation can be found over for [Authy](https://www.twilio.com/docs/authy/tutorials/two-factor-authentication-python-flask). If you don't want to rely on applications (such as Authy, Google/Microsoft Authenticator, etc.), you can generate QR codes and send them from the server for the user to scan using their device. The following python library, [pyotp](https://github.com/pyauth/pyotp), helps the developer implement any of the methods discussed in this section.
 
 ## Step 1) Gather Identity Data or Security Questions
 
