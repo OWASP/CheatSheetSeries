@@ -1050,10 +1050,46 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="server-side-request-forgery-cheat-sheet"><a name="server-side-request-forgery-cheat-sheet" class="plugin-anchor" href="#server-side-request-forgery-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Server-Side Request Forgery Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>The objective of the cheat sheet is to provide advices regarding the protection against <a href="https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/" target="_blank">Server Side Request Forgery</a> (SSRF) attack.</p>
 <p>This cheat sheet will focus on the defensive point of view and will not explain how to perform this attack. This <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a> from the security researcher <a href="https://twitter.com/orange_8361" target="_blank">Orange Tsai</a> as well as this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a> provide techniques on how to perform this kind of attack.</p>
-<h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
+<h2 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h2>
+<ul>
+<li><a href="#context">Context</a></li>
+<li><a href="#overview-of-a-ssrf-common-flow">Overview of a SSRF common flow</a></li>
+<li><a href="#cases">Cases</a><ul>
+<li><a href="#case-1---application-can-send-request-only-to-identified-and-trusted-applications">Case 1 - Application can send request only to identified and trusted applications</a><ul>
+<li><a href="#example">Example</a></li>
+<li><a href="#available-protections">Available protections</a><ul>
+<li><a href="#application-layer">Application layer</a><ul>
+<li><a href="#string">String</a></li>
+<li><a href="#ip-address">IP address</a></li>
+<li><a href="#domain-name">Domain name</a></li>
+<li><a href="#url">URL</a></li>
+</ul>
+</li>
+<li><a href="#network-layer">Network layer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name">Case 2 - Application can send requests to ANY external IP address or domain name</a><ul>
+<li><a href="#challenges-in-blocking-urls-at-application-layer">Challenges in blocking URLs at application layer</a></li>
+<li><a href="#available-protections-1">Available protections</a><ul>
+<li><a href="#application-layer-1">Application layer</a></li>
+<li><a href="#network-layer-1">Network layer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#imdsv2-in-aws">IMDSv2 in AWS</a></li>
+<li><a href="#references">References</a></li>
+<li><a href="#tools-and-code-used-for-schemas">Tools and code used for schemas</a></li>
+</ul>
+<h2 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h2>
 <p>SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples: </p>
 <ul>
 <li>Image on external server (<em>e.g.</em> user enters image URL of their avatar for the application to download and use).</li>
@@ -1067,25 +1103,25 @@
 <li>SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (<em>e.g.</em> FTP, SMB, SMTP, etc.) and schemes (<em>e.g.</em> <code>file://</code>, <code>phar://</code>, <code>gopher://</code>, <code>data://</code>, <code>dict://</code>, etc.). The protocol/scheme usage is highly dependent on the application&apos;s requirements.</li>
 <li>If the application is vulnerable to <a href="https://portswigger.net/web-security/xxe" target="_blank">XML eXternal Entity (XXE) injection</a> then it can by exploited to perform a <a href="https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks" target="_blank">SSRF attack</a>, take a look at the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a> to learn how to prevent the exposure to XXE.</li>
 </ul>
-<h1 id="cases"><a name="cases" class="plugin-anchor" href="#cases"><i class="fa fa-link" aria-hidden="true"></i></a>Cases</h1>
+<h2 id="cases"><a name="cases" class="plugin-anchor" href="#cases"><i class="fa fa-link" aria-hidden="true"></i></a>Cases</h2>
 <p>Depending on the application&apos;s functionality and requirements, there are two basic cases in which SSRF can happen:</p>
 <ul>
 <li>Application can send request only to <strong>identified and trusted applications</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting" target="_blank">whitelist</a> approach is available.</li>
 <li>Application can send requests to <strong>ANY external IP address or domain name</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting" target="_blank">whitelist</a> approach is not available.</li>
 </ul>
 <p>Because these two cases are very different, this cheat sheet will describe defences against them separately.</p>
-<h2 id="case-1---application-can-send-request-only-to-identified-and-trusted-applications"><a name="case-1---application-can-send-request-only-to-identified-and-trusted-applications" class="plugin-anchor" href="#case-1---application-can-send-request-only-to-identified-and-trusted-applications"><i class="fa fa-link" aria-hidden="true"></i></a>Case 1 - Application can send request only to identified and trusted applications</h2>
+<h3 id="case-1---application-can-send-request-only-to-identified-and-trusted-applications"><a name="case-1---application-can-send-request-only-to-identified-and-trusted-applications" class="plugin-anchor" href="#case-1---application-can-send-request-only-to-identified-and-trusted-applications"><i class="fa fa-link" aria-hidden="true"></i></a>Case 1 - Application can send request only to identified and trusted applications</h3>
 <p>Sometimes, an application need to perform request to another application, often located on another network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.</p>
-<h3 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h3>
+<h4 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h4>
 <blockquote>
 <p>Take the example of a web application that receives and uses personal information from a user, such as their firstname/lastname/birthdate to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands in order to process that data.</p>
 <p>Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system. </p>
 <p>The user leverages the web application as a proxy to the HR system.</p>
 </blockquote>
 <p>The whitelist approach is a viable option in this case since the internal application called by the <em>VulnerableApplication</em> is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.</p>
-<h3 id="available-protections"><a name="available-protections" class="plugin-anchor" href="#available-protections"><i class="fa fa-link" aria-hidden="true"></i></a>Available protections</h3>
+<h4 id="available-protections"><a name="available-protections" class="plugin-anchor" href="#available-protections"><i class="fa fa-link" aria-hidden="true"></i></a>Available protections</h4>
 <p>Several protective measures are possible at the <strong>Application</strong> and <strong>Network</strong> layers. In order to apply the <strong>defense in depth</strong> principle, both layers will be hardened against such attacks.</p>
-<h4 id="application-layer"><a name="application-layer" class="plugin-anchor" href="#application-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Application layer</h4>
+<h5 id="application-layer"><a name="application-layer" class="plugin-anchor" href="#application-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Application layer</h5>
 <p>The first level of protection that comes to mind is <a href="Input_Validation_Cheat_Sheet.html">Input validation</a>. </p>
 <p>Based on that point, the following question comes to mind: <em>How to perform this input validation?</em></p>
 <p>As <a href="https://twitter.com/orange_8361" target="_blank">Orange Tsai</a> shows in his <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a>, depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the <a href="Input_Validation_Cheat_Sheet.html#whitelisting-vs-blacklisting">whitelisting approach</a> when input validation is used because, most of the time, the format of the information expected from the user is globally know.</p>
@@ -1097,7 +1133,7 @@
 <li>URL.</li>
 </ul>
 <p><strong>Note:</strong> Disable the support for the following of the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections" target="_blank">redirection</a> in your web client in order to prevent the bypass of the input validation described in the section <code>Exploitation tricks &gt; Bypassing restrictions &gt; Input validation &gt; Unsafe redirect</code> of this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>.</p>
-<h5 id="string"><a name="string" class="plugin-anchor" href="#string"><i class="fa fa-link" aria-hidden="true"></i></a>String</h5>
+<h6 id="string"><a name="string" class="plugin-anchor" href="#string"><i class="fa fa-link" aria-hidden="true"></i></a>String</h6>
 <p>In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected. </p>
 <p>A <a href="https://www.regular-expressions.info/" target="_blank">regex</a> can be used to ensure that data received is valid from a security point of view if the input data have a simple format (<em>e.g.</em> token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the <code>string</code> object because regex for complex formats are difficult to maintain and are highly error prone.</p>
 <p>User input is assumed to be non-network related and consists of the user&apos;s personal information.</p>
@@ -1109,7 +1145,7 @@
     <span class="hljs-comment">//Stop the processing and reject the request</span>
 }
 </code></pre>
-<h5 id="ip-address"><a name="ip-address" class="plugin-anchor" href="#ip-address"><i class="fa fa-link" aria-hidden="true"></i></a>IP address</h5>
+<h6 id="ip-address"><a name="ip-address" class="plugin-anchor" href="#ip-address"><i class="fa fa-link" aria-hidden="true"></i></a>IP address</h6>
 <p>In the context of SSRF, there are 2 possible validations to perform:</p>
 <ol>
 <li>Ensure that the data provided is a valid IP V4 or V6 address.</li>
@@ -1146,7 +1182,7 @@
 <p><strong>Use the output value of the method/library as the IP address to compare against the whitelist.</strong></p>
 </blockquote>
 <p>After ensuring the validity of the incoming IP address, the second layer of validation is applied. A whitelist is created after determining all the IP addresses (v4 and v6 in order to avoid bypasses) of the identified and trusted applications. The valid IP is cross checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).</p>
-<h5 id="domain-name"><a name="domain-name" class="plugin-anchor" href="#domain-name"><i class="fa fa-link" aria-hidden="true"></i></a>Domain name</h5>
+<h6 id="domain-name"><a name="domain-name" class="plugin-anchor" href="#domain-name"><i class="fa fa-link" aria-hidden="true"></i></a>Domain name</h6>
 <p>In the attempt of validating domain names, it is apparent to do a DNS resolution in order to verify the existence of the domain. In general, it is not a bad idea, yet it opens up the application to attacks depending on the configuration used regarding the DNS servers used for the domain name resolution:</p>
 <ul>
 <li>It can disclose information to external DNS resolvers.</li>
@@ -1272,16 +1308,16 @@ if __name__== &quot;__main__&quot;:
     else:
         exit(0)
 </code></pre>
-<h5 id="url"><a name="url" class="plugin-anchor" href="#url"><i class="fa fa-link" aria-hidden="true"></i></a>URL</h5>
+<h6 id="url"><a name="url" class="plugin-anchor" href="#url"><i class="fa fa-link" aria-hidden="true"></i></a>URL</h6>
 <p>Do not accept complete URLs from the user because URL are difficult to validate and the parser can be abused depending on the technology used as showcased by the following <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a> of <a href="https://twitter.com/orange_8361" target="_blank">Orange Tsai</a>. </p>
 <p>If network related information is really needed then only accept a valid IP address or domain name.</p>
-<h4 id="network-layer"><a name="network-layer" class="plugin-anchor" href="#network-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Network layer</h4>
+<h5 id="network-layer"><a name="network-layer" class="plugin-anchor" href="#network-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Network layer</h5>
 <p>The objective of the Network layer security is to prevent the <em>VulnerableApplication</em> from performing calls to arbitrary applications. Only allowed <em>routes</em> will be available for this application in order to limit its network access to only those that it should communicate with.</p>
 <p>The Firewall component, as a specific device or using the one provided within the operating system, will be used here to define the legitimate flows. </p>
 <p>In the schema below, a Firewall component is leveraged to limit the application&apos;s access, and in turn, limit the impact of an application vulnerable to SSRF:</p>
 <p><img src="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.png" alt="Case 1 for Network layer protection about flows that we want to prevent"></p>
 <p><a href="https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation" target="_blank">Network segregation</a> (see this set of <a href="https://www.cyber.gov.au/publications/network-segmentation-and-segregation" target="_blank">implementation advices</a>) can also be leveraged and <strong>is highly recommended in order to block illegitimate calls directly at network level itself</strong>.</p>
-<h2 id="case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name"><a name="case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name" class="plugin-anchor" href="#case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name"><i class="fa fa-link" aria-hidden="true"></i></a>Case 2 - Application can send requests to ANY external IP address or domain name</h2>
+<h3 id="case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name"><a name="case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name" class="plugin-anchor" href="#case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name"><i class="fa fa-link" aria-hidden="true"></i></a>Case 2 - Application can send requests to ANY external IP address or domain name</h3>
 <p>This case happens when a user can control an URL to an <strong>External</strong> resource and the application makes a request to this URL (e.g. in case of <a href="https://en.wikipedia.org/wiki/Webhook" target="_blank">WebHooks</a>). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing. </p>
 <p>In this scenario, <em>External</em> refers to any IP that doesn&apos;t belong to the internal network, and should be reached by going over the public internet.</p>
 <p>Thus, the call from the <em>Vulnerable Application</em>: </p>
@@ -1289,16 +1325,16 @@ if __name__== &quot;__main__&quot;:
 <li><strong>Is NOT</strong> targeting one of the IP/domain <em>located inside</em> the company&apos;s global network.</li>
 <li>Uses a convention defined between the <em>VulnerableApplication</em> and the expected IP/domain in order to <em>prove</em> that the call has been legitimately initiated.</li>
 </ul>
-<h3 id="challenges-in-blocking-urls-at-application-layer"><a name="challenges-in-blocking-urls-at-application-layer" class="plugin-anchor" href="#challenges-in-blocking-urls-at-application-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Challenges in blocking URLs at application layer</h3>
+<h4 id="challenges-in-blocking-urls-at-application-layer"><a name="challenges-in-blocking-urls-at-application-layer" class="plugin-anchor" href="#challenges-in-blocking-urls-at-application-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Challenges in blocking URLs at application layer</h4>
 <p>Based on the business requirements of the above mentioned applications, the whitelist approach is not a valid solution. Despite knowing that the blacklist approach is not an impenetrable wall, it is the best solution in this scenario. It is informing the application what it should <strong>not</strong> do.</p>
 <p>Here is why filtering URLs is hard at the Application layer:</p>
 <ul>
 <li>It implies that the application must be able to detect, at the code level, that the provided IP (V4 + V6) is not part of the official <a href="https://en.wikipedia.org/wiki/Private_network" target="_blank">private networks ranges</a> including also <em>localhost</em> and <em>IPv4/v6 Link-Local</em> addresses. Not every SDK provides a built-in feature for this kind of verification, and leaves the handling up to the developer to understand all of its pitfalls and possible values, which makes it a demanding task.</li>
 <li>Same remark for domain name: The company must maintain a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain names.</li>
 </ul>
-<h3 id="available-protections"><a name="available-protections" class="plugin-anchor" href="#available-protections"><i class="fa fa-link" aria-hidden="true"></i></a>Available protections</h3>
+<h4 id="available-protections"><a name="available-protections" class="plugin-anchor" href="#available-protections"><i class="fa fa-link" aria-hidden="true"></i></a>Available protections</h4>
 <p>Taking into consideration the same assumption in the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#example">example</a> for the following sections.</p>
-<h4 id="application-layer"><a name="application-layer" class="plugin-anchor" href="#application-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Application layer</h4>
+<h5 id="application-layer"><a name="application-layer" class="plugin-anchor" href="#application-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Application layer</h5>
 <p>Like for the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#case-1---application-can-send-request-only-to-identified-and-trusted-applications">n&#xB0;1</a>, it is assumed that the <code>IP Address</code> or <code>domain name</code> is required to create the request that will be sent to the <em>TargetApplication</em>.</p>
 <p>The first validation on the input data presented in the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">n&#xB0;1</a> on the 3 types of data will be the same for this case <strong>BUT the second validation will differ</strong>. Indeed, here we must use the blacklist approach.</p>
 <blockquote>
@@ -1381,13 +1417,18 @@ if __name__== &quot;__main__&quot;:
             <span class="hljs-keyword">break</span>
     <span class="hljs-keyword">return</span> is_private
 </code></pre>
-<h4 id="network-layer"><a name="network-layer" class="plugin-anchor" href="#network-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Network layer</h4>
+<h5 id="network-layer"><a name="network-layer" class="plugin-anchor" href="#network-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Network layer</h5>
 <p>Similar to the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#network-layer">section</a>.</p>
-<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<h2 id="imdsv2-in-aws"><a name="imdsv2-in-aws" class="plugin-anchor" href="#imdsv2-in-aws"><i class="fa fa-link" aria-hidden="true"></i></a>IMDSv2 in AWS</h2>
+<p>In cloud environments SSRF is often used to access and steal credentaials and access tokens from metadata services (e.g. AWS Instance Metadata Service, Azure Instance Metadata Service, GCP metadata server).</p>
+<p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/" target="_blank">IMDSv2</a> is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF. </p>
+<p>To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html" target="_blank">AWS documentation</a> for more details.</p>
+<h2 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h2>
 <p>Online version of the <a href="https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM" target="_blank">SSRF bible</a> (PDF version is used in this cheat sheet).</p>
 <p>Article about <a href="https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b" target="_blank">Bypassing SSRF Protection</a>.</p>
 <p>Articles about SSRF attacks: <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-1-the-basics-a42ba5cc244a" target="_blank">Part 1</a>, <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-2-fun-with-ipv4-addresses-eb51971e476d" target="_blank">part 2</a> and  <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-part-3-other-advanced-techniques-3f48cbcad27e" target="_blank">part 3</a>.</p>
-<h1 id="tools-and-code-used-for-schemas"><a name="tools-and-code-used-for-schemas" class="plugin-anchor" href="#tools-and-code-used-for-schemas"><i class="fa fa-link" aria-hidden="true"></i></a>Tools and code used for schemas</h1>
+<p>Article about <a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/" target="_blank">IMDSv2</a></p>
+<h2 id="tools-and-code-used-for-schemas"><a name="tools-and-code-used-for-schemas" class="plugin-anchor" href="#tools-and-code-used-for-schemas"><i class="fa fa-link" aria-hidden="true"></i></a>Tools and code used for schemas</h2>
 <ul>
 <li><a href="https://mermaidjs.github.io/mermaid-live-editor" target="_blank">Mermaid Online Editor</a> and <a href="https://mermaidjs.github.io/" target="_blank">Mermaid documentation</a>.</li>
 <li><a href="https://www.draw.io/" target="_blank">Draw.io Online Editor</a>.</li>
@@ -1447,7 +1488,7 @@ if __name__== &quot;__main__&quot;:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Server Side Request Forgery Prevention ","level":"1.56","depth":1,"next":{"title":"Session Management ","level":"1.57","depth":1,"path":"cheatsheets/Session_Management_Cheat_Sheet.md","ref":"cheatsheets/Session_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"Securing Cascading Style Sheets ","level":"1.55","depth":1,"path":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","ref":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md","mtime":"2019-12-31T09:21:30.996Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-12-31T09:21:53.499Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Server Side Request Forgery Prevention ","level":"1.56","depth":1,"next":{"title":"Session Management ","level":"1.57","depth":1,"path":"cheatsheets/Session_Management_Cheat_Sheet.md","ref":"cheatsheets/Session_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"Securing Cascading Style Sheets ","level":"1.55","depth":1,"path":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","ref":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md","mtime":"2019-12-31T09:22:29.080Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-12-31T09:22:53.741Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
