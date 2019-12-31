@@ -272,7 +272,7 @@ U2F augments password-based authentication using a hardware token (typically USB
 
 # Password Managers
 
-Password managers are programs, browser plugins or web services that automate management of large number of different credentials. Most password managed have functionality to allow users to easily use them on websites, either by pasting the passwords into the login form, or by simulating the user typing them in.
+Password managers are programs, browser plugins or web services that automate management of large number of different credentials. Most password managers have functionality to allow users to easily use them on websites, either by pasting the passwords into the login form, or by simulating the user typing them in.
 
 Web applications should at least not make password managers job more difficult than necessary by observing the following recommendations:
 
@@ -280,5 +280,5 @@ Web applications should at least not make password managers job more difficult t
   - Avoid plugin-based login pages (such as Flash or Silverlight).
 - Allow long passwords (at least 64 characters).
 - Allow any printable characters to be used in passwords.
-- Allow users to to paste into the username and password fields.
+- Allow users to paste into the username and password fields.
 - Allow users to navigate between the username and password field with a single press of the `Tab` key.
