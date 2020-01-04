@@ -8,7 +8,7 @@ The impact of a successful CSRF attack is limited to the capabilities exposed by
 
 In short, the following principles should be followed to defend against CSRF:
 
-- **Check if your framework has [built-in CSRF protection](#auto-csrf-mitigation-techniques) and use it**
+- **Check if your framework has [built-in CSRF protection](#use-build-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
   - **If framework does not have built-in CSRF protection add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on backend** 
 - **Always use [Samesite Cookie Attribute](#samesite-cookie-attribute) for session cookies**
 - **Implement at least one mitigation from [Defense in Depth Mitigations](#defense-in-depth-techniques) section**
@@ -23,36 +23,45 @@ In short, the following principles should be followed to defend against CSRF:
 
 ## Contents
 
-  * [Token Based Mitigation](#token-based-mitigation)
-    + [Synchronizer Token Pattern](#synchronizer-token-pattern)
-    + [Encryption based Token Pattern](#encryption-based-token-pattern)
-    + [HMAC Based Token Pattern](#hmac-based-token-pattern)
-  * [Auto CSRF Mitigation Techniques](#auto-csrf-mitigation-techniques)
-  * [Defense In Depth Techniques](#defense-in-depth-techniques)
-    + [Samesite Cookie Attribute](#samesite-cookie-attribute)
-    + [Verifying origin with standard headers](#verifying-origin-with-standard-headers)
-      - [Identifying Source Origin (via Origin/Referer header)](#identifying-source-origin--via-origin-referer-header-)
-      - [Identifying the Target Origin](#identifying-the-target-origin)
-    + [Double Submit Cookie](#double-submit-cookie)
-      - [Cookie with __Host- prefix](#cookie-with---host--prefix)
-    + [Use of Custom Request Headers](#use-of-custom-request-headers)
-    + [User Interaction Based CSRF Defense](#user-interaction-based-csrf-defense)
-  * [Login CSRF](#login-csrf)
-  * [Implementation reference example](#implementation-reference-example)
-  * [JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header](#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header)
-    + [Storing the CSRF Token Value in the DOM](#storing-the-csrf-token-value-in-the-dom)
-    + [Overriding Defaults to Set Custom Header](#overriding-defaults-to-set-custom-header)
-      - [XMLHttpRequest (Native JavaScript)](#xmlhttprequest--native-javascript-)
-      - [AngularJS](#angularjs)
-      - [Axios](#axios)
-      - [JQuery](#jquery)
-  * [References](#references)
-    + [CSRF](#csrf)
-    + [Cookie Prefixes](#cookie-prefixes)
+- [Token Based Mitigation](#token-based-mitigation)
+  * [Use Build-In Or Existing CSRF Implementations for CSRF Protection](#use-build-in-or-existing-csrf-implementations-for-csrf-protection)
+  * [Synchronizer Token Pattern](#synchronizer-token-pattern)
+  * [Encryption based Token Pattern](#encryption-based-token-pattern)
+  * [HMAC Based Token Pattern](#hmac-based-token-pattern)
+- [Defense In Depth Techniques](#defense-in-depth-techniques)
+  * [SameSite Cookie Attribute](#samesite-cookie-attribute)
+  * [Verifying Origin With Standard Headers](#verifying-origin-with-standard-headers)
+    + [Identifying Source Origin (via Origin/Referer header)](#identifying-source-origin--via-origin-referer-header-)
+    + [Identifying the Target Origin](#identifying-the-target-origin)
+  * [Double Submit Cookie](#double-submit-cookie)
+    + [Cookie with __Host- prefix](#cookie-with---host--prefix)
+  * [Use of Custom Request Headers](#use-of-custom-request-headers)
+  * [User Interaction Based CSRF Defense](#user-interaction-based-csrf-defense)
+- [Login CSRF](#login-csrf)
+- [Java Reference Example](#java-reference-example)
+- [JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header](#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header)
+  * [Storing the CSRF Token Value in the DOM](#storing-the-csrf-token-value-in-the-dom)
+  * [Overriding Defaults to Set Custom Header](#overriding-defaults-to-set-custom-header)
+    + [XMLHttpRequest (Native JavaScript)](#xmlhttprequest--native-javascript-)
+    + [AngularJS](#angularjs)
+    + [Axios](#axios)
+    + [JQuery](#jquery)
+- [References](#references)
+  * [CSRF](#csrf)
+  * [Cookie Prefixes](#cookie-prefixes)
 
 ## Token Based Mitigation
 
 This defense is one of the most popular and recommended methods to mitigate CSRF. It can be achieved either with state ([synchronizer token pattern](#synchronizer-token-pattern)) or stateless ([encrypted](#encryption-based-token-pattern) or [hashed](#hmac-based-token-pattern) based token pattern). 
+
+### Use Build-In Or Existing CSRF Implementations for CSRF Protection
+
+Synchronizer token defenses have been built into many frameworks. We strongly recommend researching if the framework you are using has an option to achieve CSRF protection by default before trying to build your custom token generating system. For example, .NET has [built-in protection](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1) that adds a token to CSRF vulnerable resources. You are responsible for proper configuration (such as key management and token management) before using these built-in CSRF protections that generate tokens to guard CSRF vulnerable resources.
+
+External components that add CSRF defenses to existing applications are also recommended. Examples:
+
+- For Java: OWASP [CSRF Guard](https://www.owasp.org/index.php/CSRF_Guard) or [Spring Security](https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html)
+- For PHP and Apache: [CSRFProtector Project](https://www.owasp.org/index.php/CSRFProtector_Project)
 
 ### Synchronizer Token Pattern
 
@@ -86,13 +95,6 @@ For example:
 
 Inserting the CSRF token in the custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because it adds [additional layer of security](#use-of-custom-request-headers).
 
-**Existing Synchronizer Implementations**
-
-Synchronizer token defenses have been built into many frameworks, so we strongly recommend using them first when they are available. External components that add CSRF defenses to existing applications are also recommended. OWASP has the following:
-
-- For Java: OWASP [CSRF Guard](https://www.owasp.org/index.php/CSRF_Guard)
-- For PHP and Apache: [CSRFProtector Project](https://www.owasp.org/index.php/CSRFProtector_Project)
-
 ### Encryption based Token Pattern
 
 The Encrypted Token Pattern leverages an encryption, rather than comparison method of Token-validation. It is most suitable for applications that do not want to maintain any state at server side. 
@@ -116,16 +118,6 @@ Include token in a hidden field for forms and in the request-header field/reques
 When the request is received at the server, re-generate the token with same key K (parameters are sessionID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.
    
 Refer [here](Key_Management_Cheat_Sheet.md#key-management-lifecycle-best-practices) to learn best practices about managing your HMAC key.
-     
-## Auto CSRF Mitigation Techniques
-
-We recommend researching if the framework you are using has an option to achieve CSRF protection by default before trying to build your custom token generating system. For example, .NET has [built-in protection](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1) that adds a token to CSRF vulnerable resources. You are responsible for proper configuration (such as key management and token management) before using these built-in CSRF protections that generate tokens to guard CSRF vulnerable resources.
-
-Though the technique of mitigating tokens is widely used (stateful with synchronizer token and stateless with encrypted/HMAC token), the major problem associated with these techniques is the human tendency to forget things at times. If a developer forgets to add the token to any state changing operation, they are making the application vulnerable to CSRF. To avoid this, you can try to automate the process of adding tokens to CSRF vulnerable resources (mentioned earlier in this document). You can achieve this by doing the following:
-
-- Write wrappers (that would auto add tokens when used) around default form tags/ajax calls and educate your developers to use those wrappers instead of standard tags. Though this approach is better than depending purely on developers to add tokens, it still is vulnerable to the issue of human tendency to forget things. [Spring Security](https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html) uses this technique to add CSRF tokens by default when a custom `<form:form>` tag is used, you can opt to use after verifying that its enabled and properly configured in the Spring Security version you are using.
-- Write a hook (that would capture the traffic and add tokens to CSRF vulnerable resources before rendering to customers) in your organizational web rendering frameworks. Because it is hard to analyze when a particular response is doing any state change (and thus needing a token), you might want to include tokens in all CSRF vulnerable resources (ex: include tokens in all POST responses). This is one recommended approach, but you need to consider the performance costs it might incur.
-- Get the tokens automatically added on the client side when the page is being rendered in user's browser, with help of a client side script (this approach is used by [CSRF Guard](https://www.owasp.org/index.php/CSRF_Guard)). You need to consider any possible JavaScript hijacking attacks.
 
 ## Defense In Depth Techniques
 
