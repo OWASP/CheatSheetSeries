@@ -56,7 +56,11 @@ This defense is one of the most popular and recommended methods to mitigate CSRF
 
 ### Synchronizer Token Pattern
 
-CSRF tokens should be generated on the server-side once per user session. After initial generation of this token, the value is stored in the session and is used for each subsequent request until the session expires. When a request is issued by the client, the server-side component must verify the existence and validity of the token in the request compared to the token found in the user session. If the token was not found within the request, or the value provided does not match the value within the user session, then the request should be aborted, session of the user terminated and the event logged as a potential CSRF attack in progress. 
+CSRF tokens should be generated on the server-side. They can be generated once per user session or for each request.
+Per-request tokens are more secure than per-session tokens as the time range for an attacker to exploit the stolen tokens is minimal. However, this may result in usability concerns. For example, the "Back" button browser capability is often hindered as the previous page may contain a token that is no longer valid. Interaction with this previous page will result in a CSRF false positive security event at the server. 
+In per-session token implementation after initial generation of token, the value is stored in the session and is used for each subsequent request until the session expires. 
+
+When a request is issued by the client, the server-side component must verify the existence and validity of the token in the request compared to the token found in the user session. If the token was not found within the request, or the value provided does not match the value within the user session, then the request should be aborted, session of the user terminated and the event logged as a potential CSRF attack in progress. 
 
 CSRF token should be: 
  - unique per user session, 
@@ -81,8 +85,6 @@ For example:
 ```
 
 Inserting the CSRF token in the custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because it adds [additional layer of security](#use-of-custom-request-headers).
-
-To further enhance the security, consider randomizing the CSRF token parameter name and/or value for each request. Implementing this approach results in the generation of per-request tokens as opposed to per-session tokens. This is more secure than per-session tokens as the time range for an attacker to exploit the stolen tokens is minimal. However, this may result in usability concerns. For example, the "Back" button browser capability is often hindered as the previous page may contain a token that is no longer valid. Interaction with this previous page will result in a CSRF false positive security event at the server. 
 
 **Existing Synchronizer Implementations**
 
