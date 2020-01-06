@@ -1,6 +1,6 @@
 # Introduction
 
-As the majority of users will re-use passwords between different applications, it is important to store passwords in a way that that prevents them from being obtained by an attacker, even if the application or database is compromised. As with most areas of cryptography, there are a many different factors that need to be considered, but happily, the majority of modern languages and frameworks provide built-in functionality to help store passwords, which handles much of the complexity.
+As the majority of users will re-use passwords between different applications, it is important to store passwords in a way that prevents them from being obtained by an attacker, even if the application or database is compromised. As with most areas of cryptography, there are many different factors that need to be considered, but fortunately, the majority of modern languages and frameworks provide built-in functionality to help store passwords, which handles much of the complexity.
 
 This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
@@ -35,16 +35,16 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 
 ## Hashing vs Encryption
 
-Hashing and encrypted are two terms that are often confused or used incorrectly. The key difference between them is that hashing is a **one way** function (i.e, it is not possible to "decrypt" a hash and obtain the original value), whereas encryption is a two-way function.
+Hashing and encryption are two terms that are often confused or used incorrectly. The key difference between them is that hashing is a **one way** function (i.e, it is not possible to "decrypt" a hash and obtain the original value), whereas encryption is a two-way function.
 
-In almost all circumstances passwords should be hashed, rather than encrypted, as this makes it difficult or impossible for an attacker to obtain the original passwords from the hashes.
+In almost all circumstances, passwords should be hashed rather than encrypted, as this makes it difficult or impossible for an attacker to obtain the original passwords from the hashes.
 
 Encryption should only be used in edge cases where it is necessary to be able to obtain the original password. Some examples of where this might be necessary are:
 
 - If the application needs to use the password to authenticate against an external legacy system that doesn't support SSO.
 - If it is necessary to retrieve individual characters from the password.
 
-The ability to decrypt passwords represents a serious security risk, so should be fully risk assessed. Where possible an alternative architecture should be used to avoid the need to store passwords in an encrypted form.
+The ability to decrypt passwords represents a serious security risk, so it should be fully risk assessed. Where possible, an alternative architecture should be used to avoid the need to store passwords in an encrypted form.
 
 This Cheat Sheet is focused on password hashing - for further guidance on encrypting passwords see the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md).
 
@@ -92,18 +92,18 @@ Salting also provides protection against an attacker pre-computing hashes using 
 
 ## Peppering
 
-A [pepper](https://en.wikipedia.org/wiki/Pepper_%28cryptography%29) can be used in additional to salting to provide an additional layer of protection. It is similar to a salt, but has two key differences:
+A [pepper](https://en.wikipedia.org/wiki/Pepper_%28cryptography%29) can be used in addition to salting to provide an additional layer of protection. It is similar to a salt but has two key differences:
 
 - The pepper is shared between all stored passwords, rather than being unique like a salt.
 - The pepper is **not stored in the database**, unlike the salts.
 
 The purpose of the pepper is to prevent an attacker from being able to crack any of the hashes if they only have access to the database, for example if they have exploited a SQL injection vulnerability or obtained a backup of the database.
 
-The pepper should be at least 32 characters long, and should be randomly generated. It should be stored in an application configuration file (protected with appropriate permissions), using the secure storage APIs provided by the operating system, or in a Hardware Security Module (HSM).
+The pepper should be at least 32 characters long and should be randomly generated. It should be stored in an application configuration file (protected with appropriate permissions) using the secure storage APIs provided by the operating system, or in a Hardware Security Module (HSM).
 
-The pepper is traditionally used in a similar way to a salt, by concatenating it with the password prior to hashing, using a construct such as `hash($pepper . $password)`.
+The pepper is traditionally used in a similar way to a salt by concatenating it with the password prior to hashing, using a construct such as `hash($pepper . $password)`.
 
-An alternative approach is to hash the passwords as usual, and then encrypt the stored hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper. This avoids some of the issues with the traditional approach to peppering, and allows for much easier rotation of the pepper if it is believed to be compromised.
+An alternative approach is to hash the passwords as usual and then encrypt the hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper. This avoids some of the issues with the traditional approach to peppering, and it allows for much easier rotation of the pepper if it is believed to be compromised.
 
 ### Disadvantages
 
@@ -117,7 +117,7 @@ The work factor is essentially the number of iterations of the hashing algorithm
 
 When choosing a work factor, a balance needs to be struck between security and performance. Higher work factors will make the hashes more difficult for an attacker to crack, but will also make the process of verifying a login attempt slower. If the work factor is too high, this may degrade the performance of the application, and could also be used by an attacker to carry out a denial of service attack by making a large number of login attempts to exhaust the server's CPU.
 
-There is no golden rule for the ideal work factor - it will depend on the performance of the server and the number of users on the application. Determining the optimal work factor will require experimentation on the specific server(s) used by the application. As a general rule, the calculating a hash should take less than one second, although on higher traffic sites it should be significantly less than this.
+There is no golden rule for the ideal work factor - it will depend on the performance of the server and the number of users on the application. Determining the optimal work factor will require experimentation on the specific server(s) used by the application. As a general rule, calculating a hash should take less than one second, although on higher traffic sites it should be significantly less than this.
 
 ### Upgrading the Work Factor
 
@@ -129,7 +129,7 @@ In some cases, it may be possible to increase the work factor of the hashes with
 
 ## Maximum Password Lengths
 
-Some hashing algorithms such as Bcrypt have a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where Bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues, and not revealing that the application uses Bcrypt.
+Some hashing algorithms such as Bcrypt have a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where Bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues and not revealing that the application uses Bcrypt.
 
 Additionally, due to how computationally expensive modern hashing functions are, if a user can supply very long passwords then there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013.
 
@@ -159,19 +159,19 @@ The main three algorithms that should be considered as listed below.
 
 [Argon2](https://en.wikipedia.org/wiki/Argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net). There are three different versions of the algorithm, and the Argon2**id** variant should be used where available, as it provides a balanced approach to resisting both side channel and GPU-based attacks.
 
-Rather than a simple work factor like other algorithms, Argon2 has three different parameters that can be configured, meaning that it's more complicated to correctly tune for the environment. The specification contains [guidance on choosing appropriate parameters](https://password-hashing.net/argon2-specs.pdf), and there are also some [other guides available](https://www.twelve21.io/how-to-choose-the-right-parameters-for-argon2/),  however if you're not in a position to properly tune it then a simpler algorithm such as [Bcrypt](#bcrypt) may be a better choice.
+Rather than a simple work factor like other algorithms, Argon2 has three different parameters that can be configured, meaning that it's more complicated to correctly tune for the environment. The specification contains [guidance on choosing appropriate parameters](https://password-hashing.net/argon2-specs.pdf), and there are also some [other guides available](https://www.twelve21.io/how-to-choose-the-right-parameters-for-argon2/), however, if you're not in a position to properly tune it, then a simpler algorithm such as [Bcrypt](#bcrypt) may be a better choice.
 
 ### PBKDF2
 
-[PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver), and has FIPS-140 validated implementations, so should be the preferred algorithm when these are required. Additionally, it is supported out of the box in the .NET framework, so is commonly used in ASP.NET applications.
+[PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver) and has FIPS-140 validated implementations. So, it should be the preferred algorithm when these are required. Additionally, it is supported out of the box in the .NET framework, so is commonly used in ASP.NET applications.
 
-PBKDF2 can be used with HMACs based on a number of different hashing algorithms. HMAC-SHA-256 is widely supported, and is recommended by NIST.
+PBKDF2 can be used with HMACs based on a number of different hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.
 
-The work factor  for PBKDF2 is implemented through the iteration count, which should be at least 10,000 (although values of up to 100,000 may be appropriate in higher security environments).
+The work factor for PBKDF2 is implemented through the iteration count, which should be at least 10,000 (although values of up to 100,000 may be appropriate in higher security environments).
 
 ### Bcrypt
 
-[Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is the most widely supported of the algorithms, and should be the default choice unless there are specific requirements for PBKDF2, or appropriate knowledge to tune Argon2.
+[Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is the most widely supported of the algorithms and should be the default choice unless there are specific requirements for PBKDF2, or appropriate knowledge to tune Argon2.
 
 The default work factor for Bcrypt is 10, and this should generally be raised to 12 unless operating on older or lower-powered systems.
 
@@ -184,13 +184,13 @@ In some circumstances it is not possible to use [modern hashing algorithms](#mod
 - Use a unique [salt](#salting) for each password, generated using a [cryptographically secure random number generator](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
 - Use a very large number of iterations of the algorithm (at least 10,000, and possibly significantly more depending on the speed of the hardware).
 
-It should be emphasised that these steps **are not as good as using a  modern hashing algorithm**, and that this approach should only be taken where no other options are available.
+It should be emphasised that these steps **are not as good as using a modern hashing algorithm**, and that this approach should only be taken where no other options are available.
 
 ## Upgrading Legacy Hashes
 
 For older applications that were built using less secure hashing algorithms such as MD5 or SHA-1, these hashes should be upgraded to more modern and secure ones. When the user next enters their password (usually by authenticating on the application), it should be re-hashed using the new algorithm. It would also be good practice to expire the users' current password and require them to enter a new one, so that any older (less secure) hashes of their password are no longer useful to an attacker.
 
-However, this approach means that old (less secure) password hashes will be stored in the database until the user next logs in, and may be stored indefinitely. There are two main approaches that can be taken to solve this.
+However, this approach means that old (less secure) password hashes will be stored in the database until the user next logs in and may be stored indefinitely. There are two main approaches that can be taken to solve this.
 
 One method is to expire and delete the password hashes of users who have been inactive for a long period, and require them to reset their passwords to login again. Although secure, this approach is not particularly user friendly, and expiring the passwords of a large number of users may cause issues for the support staff, or may be interpreted by users as an indication of a breach. However, if there is a reasonable delay between implementing the password hash upgrade code on login and removing old password hashes, most active users should have changed their passwords already.
 
