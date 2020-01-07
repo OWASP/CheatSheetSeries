@@ -30,6 +30,7 @@ In short, the following principles should be followed to reach a secure file upl
      - [Whitelist Extensions](#whitelist-extensions)
      - [Blacklist Extensions](#blacklist-extensions)
   - [Content-Type Validation](#content-type-validation)
+  - [Magic Number Validation](#magic-number-validation)
   - [File Name Sanitization](#file-name-sanitization)
   - [File Content Validation](#file-content-validation)
   - [File Storage Location](#file-storage-location)
