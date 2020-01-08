@@ -58,7 +58,9 @@ Use of `XercesDOMParser` do this to prevent XXE:
 XercesDOMParser *parser = new XercesDOMParser;
 parser->setCreateEntityReferenceNodes(true);
 ```
+
 Creating reference nodes prevents XXE coming from DTDs, local file inclusions as well as outbound http requests.
+
 NB: `true` is the default value so it is not mandatory to call this method.
 
 To go a bit further,
