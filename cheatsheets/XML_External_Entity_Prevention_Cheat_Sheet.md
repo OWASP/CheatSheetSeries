@@ -56,8 +56,14 @@ Use of `XercesDOMParser` do this to prevent XXE:
 
 ``` cpp
 XercesDOMParser *parser = new XercesDOMParser;
-parser->setCreateEntityReferenceNodes(false);
+parser->setCreateEntityReferenceNodes(true);
 ```
+Creating reference nodes prevents XXE coming from DTDs, local file inclusions as well as outbound http requests.
+NB: `true` is the default value so it is not mandatory to call this method.
+
+To go a bit further,
+- `setLoadExternalDTD` only applies to DTDs so this method does not fully protect against XXE. In addition to this, the behavior set by this method is ignored if the validation scheme (`setValidationScheme`) is equal to `XercesDOMParser::Val_Auto` or `XercesDOMParser::Val_Always`.
+- It is possible to implement and set to the parser your own entity resolver. In this case, be careful with what you do to not become vulnerable to XXE and be sure to call `parser->setDisableDefaultEntityResolution(true)` so that the parser will not try to resolve the external entity on its own if your customized entity resolver did not succeed.
 
 Use of SAXParser, do this to prevent XXE:
 
