@@ -18,7 +18,7 @@ In short, the following principles should be followed to reach a secure file upl
   - **In the case of public access to the files, ensure that proper permissions are set, file names are safe, and encoded**
 - **Run the file through an antivirus or a sandbox if available to validate that it doesn't contain malicious or bogus data**
 - **Ensure the usage of secure and updated libraries for your needs**
-- **Add CSRF protection, as this is input being served from the user**
+- **Add [CSRF protection](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md), as this is input being served from the user**
 
 ## Contents
 
