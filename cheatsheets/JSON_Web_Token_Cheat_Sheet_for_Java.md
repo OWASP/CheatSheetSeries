@@ -65,7 +65,7 @@ If your application does not need to be fully stateless, you can consider using 
 
 # Issues
 
-## `none` Hashing Algorithm
+## None Hashing Algorithm
 
 ### Symptom
 
@@ -101,14 +101,14 @@ This attack occurs when a token has been intercepted/stolen by an attacker and t
 
 ### How to Prevent
 
-A way to prevent it is to add an "user context" in the token. An user context will be composed of the following information:
+A way to prevent it is to add a "user context" in the token. A user context will be composed of the following information:
 
 - A random string that will be generated during the authentication phase. It will be sent to the client as an hardened cookie (flags: [HttpOnly + Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies) + [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies) + [cookie prefixes](https://googlechrome.github.io/samples/cookie-prefixes/)).
 - A SHA256 hash of the random string will be stored in the token (instead of the raw value) in order to prevent any XSS issues allowing the attacker to read the random string value and setting the expected cookie.
 
-IP address must not be used because there are some legitimate situations in which the IP address can change during the same session. For example, when an user accesses an application through their mobile device and the mobile operator changes during the exchange, then the IP address may (often) change. Moreover, using the IP address can potentially cause issues with [European GDPR](http://www.eugdpr.org/) compliancy.
+IP addresses should not be used because there are some legitimate situations in which the IP address can change during the same session. For example, when an user accesses an application through their mobile device and the mobile operator changes during the exchange, then the IP address may (often) change. Moreover, using the IP address can potentially cause issues with [European GDPR](http://www.eugdpr.org/) compliancy.
 
-During token validation, if the received token does not contain the right context, e.g., it is replayed, then it must be rejected.
+During token validation, if the received token does not contain the right context (for example, if it has been replayed), then it must be rejected.
 
 ### Implementation example
 
@@ -309,7 +309,7 @@ public class TokenRevoker {
 
 ### Symptom
 
-This attack occurs when an attacker has access to a token (or a set of tokens) and extracts information stored in it (JWT token information are base64 encoded at the basis) in order to obtain information about the system. Information can be for example the security roles, login format...
+This attack occurs when an attacker has access to a token (or a set of tokens) and extracts information stored in it (the contents of JWT tokens are base64 encoded, but is not encrypted by default) in order to obtain information about the system. Information can be for example the security roles, login format...
 
 ### How to Prevent
 
@@ -464,7 +464,6 @@ This occurs when an application stores the token in a manner exhibiting the foll
 ### How to Prevent
 
 1.  Store the token using the browser *sessionStorage* container.
-1.  Avoid storing token in a cookie. Use a hardened cookie if you must.
 1.  Add it as a *Bearer* HTTP `Authentication` header with JavaScript when calling services.
 1.  Add [fingerprint](JSON_Web_Token_Cheat_Sheet_for_Java.md#token-sidejacking) information to the token.
 
