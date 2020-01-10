@@ -1053,10 +1053,12 @@
                                 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
 <p>Many applications use <strong>JSON Web Tokens</strong> (JWT) to allow the client to indicate its identity for further exchange after authentication.</p>
 <p>From <a href="https://jwt.io/introduction" target="_blank">JWT.IO</a>:</p>
-<p><em>JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA.</em></p>
-<p>JSON Web Token is used to carry information related to the identity and characteristics (claims) of a client. This &quot;container&quot; is signed by the server in order to avoid that a client tamper it in order to change, for example, the identity or any characteristics (example: change the role from simple user to admin or change the client login).</p>
-<p>This token is created during authentication (is provided in case of successful authentication) and is verified by the server before any processing. It is used by an application to allow a client to present a token representing his &quot;identity card&quot; (container with all information about him) to server and allow the server to verify the validity and integrity of the token in a secure way, all of this in a stateless and portable approach (portable in the way that client and server technologies can be different including also the transport channel even if HTTP is the most often used).</p>
-<h1 id="token-structure"><a name="token-structure" class="plugin-anchor" href="#token-structure"><i class="fa fa-link" aria-hidden="true"></i></a>Token structure</h1>
+<blockquote>
+<p>JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA.</p>
+</blockquote>
+<p>JSON Web Token is used to carry information related to the identity and characteristics (claims) of a client. This information is signed by the server in order for it to detect whether it was tampered with after sending it to the client. This will prevent an attacker from changing the identity or any characteristics (for example, changing the role from simple user to admin or change the client login).</p>
+<p>This token is created during authentication (is provided in case of successful authentication) and is verified by the server before any processing. It is used by an application to allow a client to present a token representing the user&apos;s &quot;identity card&quot; to the server and allow the server to verify the validity and integrity of the token in a secure way, all of this in a stateless and portable approach (portable in the way that client and server technologies can be different including also the transport channel even if HTTP is the most often used).</p>
+<h1 id="token-structure"><a name="token-structure" class="plugin-anchor" href="#token-structure"><i class="fa fa-link" aria-hidden="true"></i></a>Token Structure</h1>
 <p>Token structure example taken from <a href="https://jwt.io/#debugger" target="_blank">JWT.IO</a>:</p>
 <p><code>[Base64(HEADER)].[Base64(PAYLOAD)].[Base64(SIGNATURE)]</code></p>
 <pre><code class="lang-text">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
@@ -1064,17 +1066,17 @@ eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.
 TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 </code></pre>
 <p>Chunk 1: <strong>Header</strong></p>
-<pre><code class="lang-json">    {
-     <span class="hljs-string">&quot;alg&quot;</span>: <span class="hljs-string">&quot;HS256&quot;</span>,
-     <span class="hljs-string">&quot;typ&quot;</span>: <span class="hljs-string">&quot;JWT&quot;</span>
-    }
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;alg&quot;</span>: <span class="hljs-string">&quot;HS256&quot;</span>,
+  <span class="hljs-string">&quot;typ&quot;</span>: <span class="hljs-string">&quot;JWT&quot;</span>
+}
 </code></pre>
 <p>Chunk 2: <strong>Payload</strong></p>
-<pre><code class="lang-json">    {
-     <span class="hljs-string">&quot;sub&quot;</span>: <span class="hljs-string">&quot;1234567890&quot;</span>,
-     <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;John Doe&quot;</span>,
-     <span class="hljs-string">&quot;admin&quot;</span>: <span class="hljs-literal">true</span>
-    }
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;sub&quot;</span>: <span class="hljs-string">&quot;1234567890&quot;</span>,
+  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;John Doe&quot;</span>,
+  <span class="hljs-string">&quot;admin&quot;</span>: <span class="hljs-literal">true</span>
+}
 </code></pre>
 <p>Chunk 3: <strong>Signature</strong></p>
 <pre><code class="lang-javascript">HMACSHA256( base64UrlEncode(header) + <span class="hljs-string">&quot;.&quot;</span> + base64UrlEncode(payload), KEY )
@@ -1083,18 +1085,18 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <p>This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT) with Java.</p>
 <p>The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens. </p>
 <p>You can find the Java project <a href="https://github.com/righettod/poc-jwt" target="_blank">here</a>, it uses the official <a href="https://jwt.io/#libraries" target="_blank">JWT library</a>.</p>
-<p>In the rest of the article, the term <strong>token</strong> refer to the <strong>JSON Web Tokens</strong> (JWT).</p>
-<h1 id="consideration-about-using-jwt"><a name="consideration-about-using-jwt" class="plugin-anchor" href="#consideration-about-using-jwt"><i class="fa fa-link" aria-hidden="true"></i></a>Consideration about using JWT</h1>
+<p>In the rest of the article, the term <strong>token</strong> refers to the <strong>JSON Web Tokens</strong> (JWT).</p>
+<h1 id="consideration-about-using-jwt"><a name="consideration-about-using-jwt" class="plugin-anchor" href="#consideration-about-using-jwt"><i class="fa fa-link" aria-hidden="true"></i></a>Consideration about Using JWT</h1>
 <p>Even if a JWT token is &quot;easy&quot; to use and allow to expose services (mostly REST style) in a stateless way, it&apos;s not the solution that fits for all applications because it comes with some caveats, like for example the question of the storage of the token (tackled in this cheatsheet) and others...</p>
-<p>If your application does not need to be fully stateless, you can consider using traditional session system provided by all web frameworks and follow the advice from the dedicated <a href="Session_Management_Cheat_Sheet.html">cheatsheet</a>. However, for stateless applications, when well implemented, it&apos;s a good candidate.</p>
+<p>If your application does not need to be fully stateless, you can consider using traditional session system provided by all web frameworks and follow the advice from the dedicated <a href="Session_Management_Cheat_Sheet.html">session management cheat sheet</a>. However, for stateless applications, when well implemented, it&apos;s a good candidate.</p>
 <h1 id="issues"><a name="issues" class="plugin-anchor" href="#issues"><i class="fa fa-link" aria-hidden="true"></i></a>Issues</h1>
-<h2 id="none-hashing-algorithm"><a name="none-hashing-algorithm" class="plugin-anchor" href="#none-hashing-algorithm"><i class="fa fa-link" aria-hidden="true"></i></a>NONE hashing algorithm</h2>
+<h2 id="none-hashing-algorithm"><a name="none-hashing-algorithm" class="plugin-anchor" href="#none-hashing-algorithm"><i class="fa fa-link" aria-hidden="true"></i></a>None Hashing Algorithm</h2>
 <h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
-<p>This attack, described <a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/" target="_blank">here</a> occur when a attacker alter the token and change the hashing algorithm to indicate, through, the <em>none</em> keyword, that the integrity of the token has already been verified. As explained in the link above <em>some libraries treated tokens signed with the none algorithm as a valid token with a verified signature</em>, so an attacker can alter the token claims and tkey will be trusted by the application.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
+<p>This attack, described <a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/" target="_blank">here</a> occurs when an attacker alters the token and changes the hashing algorithm to indicate, through, the <em>none</em> keyword, that the integrity of the token has already been verified. As explained in the link above <em>some libraries treated tokens signed with the none algorithm as a valid token with a verified signature</em>, so an attacker can alter the token claims and token will be trusted by the application.</p>
+<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to Prevent</h3>
 <p>First, use a JWT library that is not exposed to this vulnerability.</p>
 <p>Last, during token validation, explicitly request that the expected algorithm was used.</p>
-<h3 id="implementation-example"><a name="implementation-example" class="plugin-anchor" href="#implementation-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation example</h3>
+<h3 id="implementation-example"><a name="implementation-example" class="plugin-anchor" href="#implementation-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation Example</h3>
 <pre><code class="lang-java"><span class="hljs-comment">// HMAC key - Block serialization and storage as String in JVM memory</span>
 <span class="hljs-keyword">private</span> <span class="hljs-keyword">transient</span> <span class="hljs-keyword">byte</span>[] keyHMAC = ...;
 
@@ -1107,19 +1109,19 @@ JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyHMAC)).build();
 <span class="hljs-comment">//Verify the token, if the verification fail then a exception is throwed</span>
 DecodedJWT decodedToken = verifier.verify(token);
 </code></pre>
-<h2 id="token-sidejacking"><a name="token-sidejacking" class="plugin-anchor" href="#token-sidejacking"><i class="fa fa-link" aria-hidden="true"></i></a>Token sidejacking</h2>
+<h2 id="token-sidejacking"><a name="token-sidejacking" class="plugin-anchor" href="#token-sidejacking"><i class="fa fa-link" aria-hidden="true"></i></a>Token Sidejacking</h2>
 <h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
-<p>This attack occur when a token has been intercepted/stolen by a attacker and this one use it to gain access to the system using targeted user identity.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
-<p>A way to protect is to add &quot;user context&quot; in the token. User context will be composed by the following information:</p>
+<p>This attack occurs when a token has been intercepted/stolen by an attacker and they use it to gain access to the system using targeted user identity.</p>
+<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to Prevent</h3>
+<p>A way to prevent it is to add a &quot;user context&quot; in the token. A user context will be composed of the following information:</p>
 <ul>
-<li>A random string that will be generated during the authentication phase and will be included into the token and also send to the client as an hardened cookie (flags: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies" target="_blank">HttpOnly + Secure</a> + <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies" target="_blank">SameSite</a> + <a href="https://googlechrome.github.io/samples/cookie-prefixes/" target="_blank">cookie prefixes</a>).</li>
-<li>A SHA256 hash of the random string will be stored in the token (instead of the raw value) in order to prevent that any XSS issue allow the attacker to read the random string value and set the expected cookie.</li>
+<li>A random string that will be generated during the authentication phase. It will be sent to the client as an hardened cookie (flags: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies" target="_blank">HttpOnly + Secure</a> + <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies" target="_blank">SameSite</a> + <a href="https://googlechrome.github.io/samples/cookie-prefixes/" target="_blank">cookie prefixes</a>).</li>
+<li>A SHA256 hash of the random string will be stored in the token (instead of the raw value) in order to prevent any XSS issues allowing the attacker to read the random string value and setting the expected cookie.</li>
 </ul>
-<p>IP address will not be used because there some situation in which IP address can change during the same session like for example when a user access an application through his mobile and he change of mobile operator during the exchange then he change legitimately (often) is IP address. Moreover, using IP address can potentially cause issue at <a href="http://www.eugdpr.org/" target="_blank">European GDPR</a> compliance level.</p>
-<p>During token validation, if the received token do not contains the right context so, it is replayed and then it must be rejected.</p>
+<p>IP addresses should not be used because there are some legitimate situations in which the IP address can change during the same session. For example, when an user accesses an application through their mobile device and the mobile operator changes during the exchange, then the IP address may (often) change. Moreover, using the IP address can potentially cause issues with <a href="http://www.eugdpr.org/" target="_blank">European GDPR</a> compliancy.</p>
+<p>During token validation, if the received token does not contain the right context (for example, if it has been replayed), then it must be rejected.</p>
 <h3 id="implementation-example"><a name="implementation-example" class="plugin-anchor" href="#implementation-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation example</h3>
-<p>Code to create the token after success authentication.</p>
+<p>Code to create the token after successful authentication.</p>
 <pre><code class="lang-java"><span class="hljs-comment">// HMAC key - Block serialization and storage as String in JVM memory</span>
 <span class="hljs-keyword">private</span> <span class="hljs-keyword">transient</span> <span class="hljs-keyword">byte</span>[] keyHMAC = ...;
 <span class="hljs-comment">// Random data generator</span>
@@ -1191,26 +1193,26 @@ JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyHMAC))
                               .withClaim(<span class="hljs-string">&quot;userFingerprint&quot;</span>, userFingerprintHash)
                               .build();
 
-<span class="hljs-comment">//Verify the token, if the verification fail then a exception is throwed</span>
+<span class="hljs-comment">//Verify the token, if the verification fail then an exception is thrown</span>
 DecodedJWT decodedToken = verifier.verify(token);
 </code></pre>
-<h2 id="token-explicit-revocation-by-the-user"><a name="token-explicit-revocation-by-the-user" class="plugin-anchor" href="#token-explicit-revocation-by-the-user"><i class="fa fa-link" aria-hidden="true"></i></a>Token explicit revocation by the user</h2>
+<h2 id="no-built-in-token-revocation-by-the-user"><a name="no-built-in-token-revocation-by-the-user" class="plugin-anchor" href="#no-built-in-token-revocation-by-the-user"><i class="fa fa-link" aria-hidden="true"></i></a>No Built-In Token Revocation by the User</h2>
 <h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
-<p>This problem is inherent to JWT because a token become only invalid when it expires. The user has no built-in feature to explicitly revoke the validity of an token. This means that if it is stolen, a user cannot revoke the token itself and then block the attacker.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
-<p>A way to protect is to implement a token blacklist that will be used to mimic the &quot;logout&quot; feature that exists with traditional session system.</p>
-<p>The blacklist will keep a digest (SHA-256 encoded in HEX) of the token with a revokation date, this, for a duration that must be superior to the duration validity of a issued token.</p>
-<p>When the user want to &quot;logout&quot; then it call a dedicated service that will add the provided user token to the blacklist resulting in a immediate invalidation of the token for further usage in the application.</p>
-<h3 id="implementation-example"><a name="implementation-example" class="plugin-anchor" href="#implementation-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation example</h3>
-<h4 id="blacklist-storage"><a name="blacklist-storage" class="plugin-anchor" href="#blacklist-storage"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklist storage</h4>
-<p>A database table with the following structure will used as central blacklist storage.</p>
+<p>This problem is inherent to JWT because a token only becomes invalid when it expires. The user has no built-in feature to explicitly revoke the validity of a token. This means that if it is stolen, a user cannot revoke the token itself thereby blocking the attacker.</p>
+<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to Prevent</h3>
+<p>A way to protect against this is to implement a token blacklist that will be used to mimic the &quot;logout&quot; feature that exists with traditional session management system.</p>
+<p>The blacklist will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.</p>
+<p>When the user wants to &quot;logout&quot; then it call a dedicated service that will add the provided user token to the blacklist resulting in an immediate invalidation of the token for further usage in the application.</p>
+<h3 id="implementation-example"><a name="implementation-example" class="plugin-anchor" href="#implementation-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation Example</h3>
+<h4 id="blacklist-storage"><a name="blacklist-storage" class="plugin-anchor" href="#blacklist-storage"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklist Storage</h4>
+<p>A database table with the following structure will be used as the central blacklist storage.</p>
 <pre><code class="lang-sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">exists</span> revoked_token(jwt_token_digest <span class="hljs-built_in">varchar</span>(<span class="hljs-number">255</span>) primary <span class="hljs-keyword">key</span>, 
-revokation_date <span class="hljs-keyword">timestamp</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">now</span>());
+revocation_date <span class="hljs-keyword">timestamp</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">now</span>());
 </code></pre>
-<h4 id="token-revocation-management"><a name="token-revocation-management" class="plugin-anchor" href="#token-revocation-management"><i class="fa fa-link" aria-hidden="true"></i></a>Token revocation management</h4>
-<p>Code in charge of adding a token to the blacklist and check if a token is revoked.</p>
+<h4 id="token-revocation-management"><a name="token-revocation-management" class="plugin-anchor" href="#token-revocation-management"><i class="fa fa-link" aria-hidden="true"></i></a>Token Revocation Management</h4>
+<p>Code in charge of adding a token to the blacklist and checking if a token is revoked.</p>
 <pre><code class="lang-java"><span class="hljs-comment">/**
-* Handle the revokation of the token (logout).
+* Handle the revocation of the token (logout).
 * Use a DB in order to allow multiple instances to check for revoked token 
 * and allow cleanup at centralized DB level.
 */</span>
@@ -1222,7 +1224,7 @@ revokation_date <span class="hljs-keyword">timestamp</span> <span class="hljs-ke
 
  <span class="hljs-comment">/**
   * Verify if a digest encoded in HEX of the ciphered token is present 
-  * in the revokation table
+  * in the revocation table
   *
   * <span class="hljs-doctag">@param</span> jwtInHex Token encoded in HEX
   * <span class="hljs-doctag">@return</span> Presence flag
@@ -1256,7 +1258,7 @@ revokation_date <span class="hljs-keyword">timestamp</span> <span class="hljs-ke
 
 
  <span class="hljs-comment">/**
-  * Add a digest encoded in HEX of the ciphered token to the revokation token table
+  * Add a digest encoded in HEX of the ciphered token to the revocation token table
   *
   * <span class="hljs-doctag">@param</span> jwtInHex Token encoded in HEX
   * <span class="hljs-doctag">@throws</span> Exception If any issue occur during communication with DB
@@ -1290,13 +1292,13 @@ revokation_date <span class="hljs-keyword">timestamp</span> <span class="hljs-ke
      }
  }
 </code></pre>
-<h2 id="token-information-disclosure"><a name="token-information-disclosure" class="plugin-anchor" href="#token-information-disclosure"><i class="fa fa-link" aria-hidden="true"></i></a>Token information disclosure</h2>
+<h2 id="token-information-disclosure"><a name="token-information-disclosure" class="plugin-anchor" href="#token-information-disclosure"><i class="fa fa-link" aria-hidden="true"></i></a>Token Information Disclosure</h2>
 <h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
-<p>This attack occur when a attacker access to a token (or a set of tokens) and extract information stored into it (JWT token information are base64 encoded at the basis) in order to obtains information about the system. Information can be for example the security roles, login format...</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
-<p>A way to protect, is to cipher the token using for example a symmetric algorithm.</p>
+<p>This attack occurs when an attacker has access to a token (or a set of tokens) and extracts information stored in it (the contents of JWT tokens are base64 encoded, but is not encrypted by default) in order to obtain information about the system. Information can be for example the security roles, login format...</p>
+<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to Prevent</h3>
+<p>A way to protect against this attack is to cipher the token using, for example, a symmetric algorithm.</p>
 <p>It&apos;s also important to protect the ciphered data against attack like <a href="https://www.owasp.org/index.php/Testing_for_Padding_Oracle_%28OTG-CRYPST-002%29" target="_blank">Padding Oracle</a> or any other attack using cryptanalysis.</p>
-<p>In order to achieve all these goals, the algorithm <em>AES-<a href="https://en.wikipedia.org/wiki/Galois/Counter_Mode" target="_blank">GCM</a></em> is used, this one provide <em>Authenticated Encryption with Associated Data</em>.</p>
+<p>In order to achieve all these goals, the <em>AES-<a href="https://en.wikipedia.org/wiki/Galois/Counter_Mode" target="_blank">GCM</a></em> algorithm is used which provides <em>Authenticated Encryption with Associated Data</em>.</p>
 <p>More details from <a href="https://github.com/google/tink/blob/master/docs/PRIMITIVES.md#deterministic-authenticated-encryption-with-associated-data" target="_blank">here</a>:</p>
 <pre><code class="lang-text">AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric 
 authenticated encryption. 
@@ -1312,9 +1314,9 @@ integrity (ie. data has not been tampered with) of that data, but not its secrec
 See RFC5116: https://tools.ietf.org/html/rfc5116
 </code></pre>
 <p><strong>Note:</strong></p>
-<p>Here ciphering is added mainly to hide internal information but it&apos;s very important to remember that the first protection against tampering of the JWT token is the signature so, the token signature and is verification must be always in place.</p>
-<h3 id="implementation-example"><a name="implementation-example" class="plugin-anchor" href="#implementation-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation example</h3>
-<h4 id="token-ciphering"><a name="token-ciphering" class="plugin-anchor" href="#token-ciphering"><i class="fa fa-link" aria-hidden="true"></i></a>Token ciphering</h4>
+<p>Here ciphering is added mainly to hide internal information but it&apos;s very important to remember that the first protection against tampering of the JWT token is the signature. So, the token signature and its verification must be always in place.</p>
+<h3 id="implementation-example"><a name="implementation-example" class="plugin-anchor" href="#implementation-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation Example</h3>
+<h4 id="token-ciphering"><a name="token-ciphering" class="plugin-anchor" href="#token-ciphering"><i class="fa fa-link" aria-hidden="true"></i></a>Token Ciphering</h4>
 <p>Code in charge of managing the ciphering. <a href="https://github.com/google/tink" target="_blank">Google Tink</a> dedicated crypto library is used to handle ciphering operations in order to use built-in best practices provided by this library.</p>
 <pre><code class="lang-java"><span class="hljs-comment">/**
  * Handle ciphering and deciphering of the token using AES-GCM.
@@ -1343,7 +1345,7 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
     <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">cipherToken</span><span class="hljs-params">(String jwt, KeysetHandle keysetHandle)</span> <span class="hljs-keyword">throws</span> Exception </span>{
         <span class="hljs-comment">//Verify parameters</span>
         <span class="hljs-keyword">if</span> (jwt == <span class="hljs-keyword">null</span> || jwt.isEmpty() || keysetHandle == <span class="hljs-keyword">null</span>) {
-            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<span class="hljs-string">&quot;Both parameters must be specified !&quot;</span>);
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<span class="hljs-string">&quot;Both parameters must be specified!&quot;</span>);
         }
 
         <span class="hljs-comment">//Get the primitive</span>
@@ -1382,10 +1384,10 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
     }
 }
 </code></pre>
-<h4 id="creation--validation-of-the-token"><a name="creation--validation-of-the-token" class="plugin-anchor" href="#creation--validation-of-the-token"><i class="fa fa-link" aria-hidden="true"></i></a>Creation / Validation of the token</h4>
+<h4 id="creation--validation-of-the-token"><a name="creation--validation-of-the-token" class="plugin-anchor" href="#creation--validation-of-the-token"><i class="fa fa-link" aria-hidden="true"></i></a>Creation / Validation of the Token</h4>
 <p>Use the token ciphering handler during the creation and the validation of the token.</p>
 <p>Load keys (ciphering key was generated and stored using <a href="https://github.com/google/tink/blob/master/docs/JAVA-HOWTO.md#generating-new-keysets" target="_blank">Google Tink</a>) and setup cipher.</p>
-<pre><code class="lang-java"><span class="hljs-comment">//Load keys from configuration text/json files in order to avoid to store keys as String in JVM memory</span>
+<pre><code class="lang-java"><span class="hljs-comment">//Load keys from configuration text/json files in order to avoid to storing keys as a String in JVM memory</span>
 <span class="hljs-keyword">private</span> <span class="hljs-keyword">transient</span> <span class="hljs-keyword">byte</span>[] keyHMAC = Files.readAllBytes(Paths.get(<span class="hljs-string">&quot;src&quot;</span>, <span class="hljs-string">&quot;main&quot;</span>, <span class="hljs-string">&quot;conf&quot;</span>, <span class="hljs-string">&quot;key-hmac.txt&quot;</span>));
 <span class="hljs-keyword">private</span> <span class="hljs-keyword">transient</span> KeysetHandle keyCiphering = CleartextKeysetHandle.read(JsonKeysetReader.withFile(
 Paths.get(<span class="hljs-string">&quot;src&quot;</span>, <span class="hljs-string">&quot;main&quot;</span>, <span class="hljs-string">&quot;conf&quot;</span>, <span class="hljs-string">&quot;key-ciphering.json&quot;</span>).toFile()));
@@ -1408,7 +1410,7 @@ String token = tokenCipher.decipherToken(cipheredToken, <span class="hljs-keywor
 <span class="hljs-comment">//Verify the token using the JWT API...</span>
 <span class="hljs-comment">//Verify access...</span>
 </code></pre>
-<h2 id="token-storage-on-client-side"><a name="token-storage-on-client-side" class="plugin-anchor" href="#token-storage-on-client-side"><i class="fa fa-link" aria-hidden="true"></i></a>Token storage on client side</h2>
+<h2 id="token-storage-on-client-side"><a name="token-storage-on-client-side" class="plugin-anchor" href="#token-storage-on-client-side"><i class="fa fa-link" aria-hidden="true"></i></a>Token Storage on Client Side</h2>
 <h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
 <p>This occurs when an application stores the token in a manner exhibiting the following behavior:</p>
 <ul>
@@ -1416,75 +1418,76 @@ String token = tokenCipher.decipherToken(cipheredToken, <span class="hljs-keywor
 <li>Retrieved even if the browser is restarted (Use of browser <em>localStorage</em> container).</li>
 <li>Retrieved in case of <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS</a> issue (Cookie accessible to JavaScript code or Token stored in browser local/session storage).</li>
 </ul>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
+<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to Prevent</h3>
 <ol>
 <li>Store the token using the browser <em>sessionStorage</em> container.</li>
-<li>Add it as a <em>Bearer</em> with JavaScript when calling services.</li>
+<li>Add it as a <em>Bearer</em> HTTP <code>Authentication</code> header with JavaScript when calling services.</li>
 <li>Add <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html#token-sidejacking">fingerprint</a> information to the token.</li>
 </ol>
-<p>By storing the token in browser <em>sessionStorage</em> container it expose the token to being stolen by through an XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser <a href="https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#csp" target="_blank">Content Security Policy</a> to harden the execution context.</p>
+<p>By storing the token in browser <em>sessionStorage</em> container it exposes the token to being stolen through a XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser <a href="https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#csp" target="_blank">Content Security Policy</a> to harden the execution context.</p>
 <p><em>Note:</em></p>
 <ul>
-<li>The remaining case is when a attacker use the user browsing context as a proxy to use the target application through the legitimate user but the Content Security Policy can prevent communication with non expected domains.</li>
-<li>It&apos;s also possible to implements the authentication service in a way that the token is issued within a hardened cookie, but in this case, a protection against <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Cross-Site Request Forgery</a> attack must be implemented.</li>
+<li>The remaining case is when an attacker uses the user&apos;s browsing context as a proxy to use the target application through the legitimate user but the Content Security Policy can prevent communication with non expected domains.</li>
+<li>It&apos;s also possible to implement the authentication service in a way that the token is issued within a hardened cookie, but in this case, protection against a <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Cross-Site Request Forgery</a> attack must be implemented.</li>
 </ul>
-<h3 id="implementation-example"><a name="implementation-example" class="plugin-anchor" href="#implementation-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation example</h3>
+<h3 id="implementation-example"><a name="implementation-example" class="plugin-anchor" href="#implementation-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation Example</h3>
 <p>JavaScript code to store the token after authentication.</p>
-<pre><code class="lang-javascript"> <span class="hljs-comment">/* Handle request for JWT token and local storage*/</span>
- <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getToken</span>(<span class="hljs-params"></span>)</span>{
-     <span class="hljs-keyword">var</span> login = $(<span class="hljs-string">&quot;#login&quot;</span>).val();
-     <span class="hljs-keyword">var</span> postData = <span class="hljs-string">&quot;login=&quot;</span> + <span class="hljs-built_in">encodeURIComponent</span>(login) + <span class="hljs-string">&quot;&amp;password=test&quot;</span>;
+<pre><code class="lang-javascript"><span class="hljs-comment">/* Handle request for JWT token and local storage*/</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">authenticate</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">const</span> login = $(<span class="hljs-string">&quot;#login&quot;</span>).val();
+    <span class="hljs-keyword">const</span> postData = <span class="hljs-string">&quot;login=&quot;</span> + <span class="hljs-built_in">encodeURIComponent</span>(login) + <span class="hljs-string">&quot;&amp;password=test&quot;</span>;
 
-     $.post(<span class="hljs-string">&quot;/services/authenticate&quot;</span>, postData,<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>)</span>{
-         <span class="hljs-keyword">if</span>(data.status == <span class="hljs-string">&quot;Authentication successful !&quot;</span>){
-             ...
-             sessionStorage.setItem(<span class="hljs-string">&quot;token&quot;</span>, data.token);
-         }<span class="hljs-keyword">else</span>{
-             ...
-             sessionStorage.removeItem(<span class="hljs-string">&quot;token&quot;</span>);
-         }
-     })
-     .fail(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">jqXHR, textStatus, error</span>)</span>{
-             ...
-         sessionStorage.removeItem(<span class="hljs-string">&quot;token&quot;</span>);
-     });
- }
+    $.post(<span class="hljs-string">&quot;/services/authenticate&quot;</span>, postData, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-keyword">if</span> (data.status == <span class="hljs-string">&quot;Authentication successful!&quot;</span>) {
+            ...
+            sessionStorage.setItem(<span class="hljs-string">&quot;token&quot;</span>, data.token);
+        }
+        <span class="hljs-keyword">else</span> {
+            ...
+            sessionStorage.removeItem(<span class="hljs-string">&quot;token&quot;</span>);
+        }
+    })
+    .fail(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">jqXHR, textStatus, error</span>) </span>{
+        ...
+        sessionStorage.removeItem(<span class="hljs-string">&quot;token&quot;</span>);
+    });
+}
 </code></pre>
-<p>JavaScript code to add the token as <em>Bearer</em> when calling a service, for example a service to validate token here.</p>
-<pre><code class="lang-javascript"> <span class="hljs-comment">/* Handle request for JWT token validation */</span>
- <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validateToken</span>(<span class="hljs-params"></span>)</span>{
-     <span class="hljs-keyword">var</span> token = sessionStorage.getItem(<span class="hljs-string">&quot;token&quot;</span>);
+<p>JavaScript code to add the token as a <em>Bearer</em> HTTP Authentication header when calling a service, for example a service to validate token here.</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">/* Handle request for JWT token validation */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validateToken</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> token = sessionStorage.getItem(<span class="hljs-string">&quot;token&quot;</span>);
 
-     <span class="hljs-keyword">if</span>(token == <span class="hljs-literal">undefined</span> || token == <span class="hljs-string">&quot;&quot;</span>){
-         $(<span class="hljs-string">&quot;#infoZone&quot;</span>).removeClass();
-         $(<span class="hljs-string">&quot;#infoZone&quot;</span>).addClass(<span class="hljs-string">&quot;alert alert-warning&quot;</span>);
-         $(<span class="hljs-string">&quot;#infoZone&quot;</span>).text(<span class="hljs-string">&quot;Obtain a JWT token first :)&quot;</span>);
-         <span class="hljs-keyword">return</span>;
-     }
+    <span class="hljs-keyword">if</span> (token == <span class="hljs-literal">undefined</span> || token == <span class="hljs-string">&quot;&quot;</span>) {
+        $(<span class="hljs-string">&quot;#infoZone&quot;</span>).removeClass();
+        $(<span class="hljs-string">&quot;#infoZone&quot;</span>).addClass(<span class="hljs-string">&quot;alert alert-warning&quot;</span>);
+        $(<span class="hljs-string">&quot;#infoZone&quot;</span>).text(<span class="hljs-string">&quot;Obtain a JWT token first :)&quot;</span>);
+        <span class="hljs-keyword">return</span>;
+    }
 
-     $.ajax({
-         url: <span class="hljs-string">&quot;/services/validate&quot;</span>,
-         type: <span class="hljs-string">&quot;POST&quot;</span>,
-         beforeSend: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">xhr</span>) </span>{
-             xhr.setRequestHeader(<span class="hljs-string">&quot;Authorization&quot;</span>, <span class="hljs-string">&quot;bearer &quot;</span> + token);
-         },
-         success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
-           ...
-         },
-         error: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">jqXHR, textStatus, error</span>) </span>{
-           ...
-         },
-     });
- }
+    $.ajax({
+        url: <span class="hljs-string">&quot;/services/validate&quot;</span>,
+        type: <span class="hljs-string">&quot;POST&quot;</span>,
+        beforeSend: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">xhr</span>) </span>{
+            xhr.setRequestHeader(<span class="hljs-string">&quot;Authorization&quot;</span>, <span class="hljs-string">&quot;bearer &quot;</span> + token);
+        },
+        success: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>{
+            ...
+        },
+        error: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">jqXHR, textStatus, error</span>) </span>{
+            ...
+        },
+    });
+}
 </code></pre>
 <h2 id="weak-token-secret"><a name="weak-token-secret" class="plugin-anchor" href="#weak-token-secret"><i class="fa fa-link" aria-hidden="true"></i></a>Weak Token Secret</h2>
 <h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
-<p>When the token is protected using a HMAC based algorithm, the security of the token is entirely dependent on the strength of the secret used with the HMAC. If an attacker can obtain a valid JWT they can then carry out an offline attack and attempt to crack the secret using tools such as <a href="https://github.com/magnumripper/JohnTheRipper" target="_blank">John the Ripper</a> or <a href="https://github.com/hashcat/hashcat" target="_blank">Hashcat</a>.</p>
-<p>If they are successful, they would then be able to modify the token and re-sign it with the key they had obtained. This could let them escalate their privileges, compromise other users accounts, or perform other actions depending on the contents of the JWT.</p>
+<p>When the token is protected using an HMAC based algorithm, the security of the token is entirely dependent on the strength of the secret used with the HMAC. If an attacker can obtain a valid JWT, they can then carry out an offline attack and attempt to crack the secret using tools such as <a href="https://github.com/magnumripper/JohnTheRipper" target="_blank">John the Ripper</a> or <a href="https://github.com/hashcat/hashcat" target="_blank">Hashcat</a>.</p>
+<p>If they are successful, they would then be able to modify the token and re-sign it with the key they had obtained. This could let them escalate their privileges, compromise other users&apos; accounts, or perform other actions depending on the contents of the JWT.</p>
 <p>There are a number of <a href="https://www.notsosecure.com/crafting-way-json-web-tokens/" target="_blank">guides</a> that document this process in greater detail.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
-<p>The simplest way to prevent this attack is to ensure that the secret used to sign the JWTs is strong and unique, in order to make it harder for an attacker to crack. As this secret would never need to be typed by a human, it should be at least 64 characters, and generated using a <a href="Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng">secure source of randomness</a>.</p>
-<p>Alternatively, consider the use of tokens that are signed with RSA rather than using a HMAC and secret key.</p>
+<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to Prevent</h3>
+<p>The simplest way to prevent this attack is to ensure that the secret used to sign the JWTs is strong and unique, in order to make it harder for an attacker to crack. As this secret would never need to be typed by a human, it should be at least 64 characters and generated using a <a href="Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng">secure source of randomness</a>.</p>
+<p>Alternatively, consider the use of tokens that are signed with RSA rather than using an HMAC and secret key.</p>
 <h3 id="further-reading"><a name="further-reading" class="plugin-anchor" href="#further-reading"><i class="fa fa-link" aria-hidden="true"></i></a>Further Reading</h3>
 <ul>
 <li><a href="https://github.com/ticarpi/jwt_tool/wiki" target="_blank">{JWT}.{Attack}.Playbook</a> - A project documents the known attacks and potential security vulnerabilities and misconfigurations of JSON Web Tokens.</li>
@@ -1533,7 +1536,7 @@ String token = tokenCipher.decipherToken(cipheredToken, <span class="hljs-keywor
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"JSON Web Token  for Java","level":"1.36","depth":1,"next":{"title":"Key Management ","level":"1.37","depth":1,"path":"cheatsheets/Key_Management_Cheat_Sheet.md","ref":"cheatsheets/Key_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"JAAS ","level":"1.35","depth":1,"path":"cheatsheets/JAAS_Cheat_Sheet.md","ref":"cheatsheets/JAAS_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","mtime":"2020-01-10T17:51:47.581Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-01-10T17:52:12.238Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"JSON Web Token  for Java","level":"1.36","depth":1,"next":{"title":"Key Management ","level":"1.37","depth":1,"path":"cheatsheets/Key_Management_Cheat_Sheet.md","ref":"cheatsheets/Key_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"JAAS ","level":"1.35","depth":1,"path":"cheatsheets/JAAS_Cheat_Sheet.md","ref":"cheatsheets/JAAS_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","mtime":"2020-01-10T19:56:33.272Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-01-10T19:57:00.599Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
