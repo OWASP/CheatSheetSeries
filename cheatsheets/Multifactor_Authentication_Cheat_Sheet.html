@@ -1196,8 +1196,8 @@
 <li>Wiping or losing a phone without backing up OTP codes.</li>
 <li>Changing mobile numbers.</li>
 </ul>
-<p>In order to prevent users from being locked out of the application, there needs to be a mechanism for them to regain access to their account if they can&apos;t use their existing MFA; however it is also crucial that this doesn&apos;t provide an attacker with a way to bypass MFA and hijack there account.</p>
-<p>There is no definitive &quot;best way&quot; to do this, and what is appropriate will vary hugely based on the security of the application, and also the level of control over the users. Solutions that work for a corporate application where all the staff know each other are unlikely to be feasible for a publicly available application with thousands of users all over the world. Every recovery methods has its own advantages and disadvantages, and these need to be evaluated in the context of the application.</p>
+<p>In order to prevent users from being locked out of the application, there needs to be a mechanism for them to regain access to their account if they can&apos;t use their existing MFA; however it is also crucial that this doesn&apos;t provide an attacker with a way to bypass MFA and hijack their account.</p>
+<p>There is no definitive &quot;best way&quot; to do this, and what is appropriate will vary hugely based on the security of the application, and also the level of control over the users. Solutions that work for a corporate application where all the staff know each other are unlikely to be feasible for a publicly available application with thousands of users all over the world. Every recovery method has its own advantages and disadvantages, and these need to be evaluated in the context of the application.</p>
 <p>Some suggestions of possible methods include:</p>
 <ul>
 <li>Providing the user with a number of single-use recovery codes when they first setup MFA.</li>
@@ -1238,8 +1238,8 @@
 <li>Susceptible to phishing.</li>
 </ul>
 <h1 id="something-you-have"><a name="something-you-have" class="plugin-anchor" href="#something-you-have"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Have</h1>
-<p>The second factor is something that the users possesses. This could be a physical item (such as a hardware token), a digital item (such as a certificate or private key), or based on the ownership of a mobile phone or email address (such as SMS or a software token installed on the phone, or an email with a single-use verification code).</p>
-<p>If properly implemented then this can be significantly more difficult  for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.</p>
+<p>The second factor is something that the user possesses. This could be a physical item (such as a hardware token), a digital item (such as a certificate or private key), or based on the ownership of a mobile phone, phone number, or email address (such as SMS or a software token installed on the phone, or an email with a single-use verification code).</p>
+<p>If properly implemented then this can be significantly more difficult for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.</p>
 <p>The requirement to have a second factor can also limit certain types of users&apos; ability to access a service. For example, if a user does not have access to a mobile phone, many types of MFA will not be available for them.</p>
 <h2 id="hardware-otp-tokens"><a name="hardware-otp-tokens" class="plugin-anchor" href="#hardware-otp-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Hardware OTP Tokens</h2>
 <p>Physical hardware OTP tokens can be used which generate constantly changing numeric codes, which must be submitted when authentication on the application. Most most well-known of these is the <a href="https://en.wikipedia.org/wiki/RSA_SecurID" target="_blank">RSA SecureID</a>, which generates a six digit number that changes every 60 seconds.</p>
@@ -1264,7 +1264,7 @@
 <li>The absence of physical tokens greatly reduces the cost and administrative overhead of implementing the system.</li>
 <li>When users lose access to their TOTP app, a new one can be configured without needing to ship a physical token to them.</li>
 <li>TOTP is widely used, and many users will already have at least one TOTP app installed.</li>
-<li>As long as the user has a screen lock on their phone, an attacker will be unable to use the code if they still the phone.</li>
+<li>As long as the user has a screen lock on their phone, an attacker will be unable to use the code if they steal the phone.</li>
 </ul>
 <h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
 <ul>
@@ -1272,7 +1272,7 @@
 <li>The TOTP app may be installed on the same mobile device (or workstation) that is used to authenticate.</li>
 <li>Users may store the backup seeds insecurely.</li>
 <li>Not all users have mobile devices to use with TOTP.</li>
-<li>If the users mobile device is lost, stolen or out of battery, they will be unable to authenticate.</li>
+<li>If the user&apos;s mobile device is lost, stolen or out of battery, they will be unable to authenticate.</li>
 <li>Susceptible to phishing (although short-lived).</li>
 </ul>
 <h2 id="hardware-u2f-tokens"><a name="hardware-u2f-tokens" class="plugin-anchor" href="#hardware-u2f-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Hardware U2F Tokens</h2>
@@ -1311,7 +1311,7 @@
 <h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
 <ul>
 <li>Stolen smartcards cannot be used without the PIN.</li>
-<li>Smartcards can be users across multiple applications and systems.</li>
+<li>Smartcards can be used across multiple applications and systems.</li>
 <li>Resistant to phishing.</li>
 </ul>
 <h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
@@ -1338,7 +1338,7 @@
 <li>Susceptible to phishing.</li>
 </ul>
 <h2 id="email"><a name="email" class="plugin-anchor" href="#email"><i class="fa fa-link" aria-hidden="true"></i></a>Email</h2>
-<p>Email verification requires that the user enters a code or clicks  a link send to their email address. There is some debate as to whether email constitutes a form of MFA, because if the user does not have MFA configured on their email account, it simply requires knowledge of the user&apos;s email password (which is often the same as their application password). However, it is included here for completeness.</p>
+<p>Email verification requires that the user enters a code or clicks a link sent to their email address. There is some debate as to whether email constitutes a form of MFA, because if the user does not have MFA configured on their email account, it simply requires knowledge of the user&apos;s email password (which is often the same as their application password). However, it is included here for completeness.</p>
 <h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
 <ul>
 <li>Very easy to implement.</li>
@@ -1353,7 +1353,7 @@
 <li>Susceptible to phishing.</li>
 </ul>
 <h1 id="something-you-are"><a name="something-you-are" class="plugin-anchor" href="#something-you-are"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Are</h1>
-<p>The final factor in the traditional view of MFA is something you are - which is physical attributes of the users (often called biometrics). Biometrics are rarely used in web applications due to the requirement for users to have specific hardware.</p>
+<p>The final factor in the traditional view of MFA is something you are - which is one of the physical attributes of the users (often called biometrics). Biometrics are rarely used in web applications due to the requirement for users to have specific hardware.</p>
 <h2 id="biometrics"><a name="biometrics" class="plugin-anchor" href="#biometrics"><i class="fa fa-link" aria-hidden="true"></i></a>Biometrics</h2>
 <p>The are a number of common types of biometrics that are used, including:</p>
 <ul>
@@ -1371,6 +1371,7 @@
 <li>Require manual enrolment of the user&apos;s physical attributes.</li>
 <li>Custom (sometimes expensive) hardware is often required to read biometrics.</li>
 <li>Modern browsers do not have native support, so custom client-side software is required.</li>
+<li>If compromised, biometric data can be difficult to change.</li>
 </ul>
 <h1 id="location"><a name="location" class="plugin-anchor" href="#location"><i class="fa fa-link" aria-hidden="true"></i></a>Location</h1>
 <p>The use of location as a fourth factor for MFA is not fully accepted;  however, it is increasingly be used for authentication. It is sometimes argued that location is used when deciding whether or not to require MFA (as discussed <a href="#when-to-require-mfa">above</a>) however this is effectively the same as considering it to be a factor in its own right. Two prominent examples of this are the <a href="https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/overview" target="_blank">Conditional Access Policies</a> available in Microsoft Azure, and the <a href="https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock" target="_blank">Network Unlock</a> functionality in BitLocker.</p>
@@ -1385,7 +1386,7 @@
 <h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
 <ul>
 <li>Doesn&apos;t provide any protection if the user&apos;s system is compromised.</li>
-<li>Doesn&apos;t provide any protection against rouge insiders.</li>
+<li>Doesn&apos;t provide any protection against rogue insiders.</li>
 <li>Trusted IP addresses must be carefully restricted (for example, if the open guest WiFi uses the main corporate IP range).</li>
 </ul>
 <h2 id="geolocation"><a name="geolocation" class="plugin-anchor" href="#geolocation"><i class="fa fa-link" aria-hidden="true"></i></a>Geolocation</h2>
@@ -1397,7 +1398,7 @@
 <h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
 <ul>
 <li>Doesn&apos;t provide any protection if the user&apos;s system is compromised.</li>
-<li>Doesn&apos;t provide any protection against rouge insiders.</li>
+<li>Doesn&apos;t provide any protection against rogue insiders.</li>
 <li>Easy for an attacker to bypass by obtaining IP addresses in the trusted country or location.</li>
 </ul>
 
@@ -1443,7 +1444,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Multifactor Authentication ","level":"1.42","depth":1,"next":{"title":"Nodejs security cheat sheet","level":"1.43","depth":1,"path":"cheatsheets/Nodejs_security_cheat_sheet.md","ref":"cheatsheets/Nodejs_security_cheat_sheet.md","articles":[]},"previous":{"title":"Microservices based Security Arch Doc ","level":"1.41","depth":1,"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","ref":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Multifactor_Authentication_Cheat_Sheet.md","mtime":"2020-01-06T19:44:05.019Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-01-06T19:44:30.451Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Multifactor Authentication ","level":"1.42","depth":1,"next":{"title":"Nodejs security cheat sheet","level":"1.43","depth":1,"path":"cheatsheets/Nodejs_security_cheat_sheet.md","ref":"cheatsheets/Nodejs_security_cheat_sheet.md","articles":[]},"previous":{"title":"Microservices based Security Arch Doc ","level":"1.41","depth":1,"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","ref":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Multifactor_Authentication_Cheat_Sheet.md","mtime":"2020-01-10T17:51:47.581Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-01-10T17:52:12.238Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
