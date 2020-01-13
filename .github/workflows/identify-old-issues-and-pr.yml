@@ -1,10 +1,10 @@
-name: Identify old issues and pr
+name: Identify old issues and PR
 
 on: [push]
 
 jobs:
   build:
-    name: Identify old issues and pr
+    name: Identify old issues and PR
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -24,4 +24,4 @@ jobs:
     - name: Set Permission
       run: chmod +x scripts/Identify_Old_Issue_And_PR.py
     - name: Run Script
-      run: python Identify_Old_Issue_And_PR.py ${{ secrets.SLACK_WEBHOOK }}
+      run: python scripts/Identify_Old_Issue_And_PR.py ${{ secrets.SLACK_WEBHOOK }}
