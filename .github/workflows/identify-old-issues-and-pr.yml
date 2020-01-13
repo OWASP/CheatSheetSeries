@@ -1,6 +1,8 @@
 name: Identify old issues and PR
 
-on: [push]
+on:
+  schedule:
+    - cron: "0 0 * * 0"
 
 jobs:
   build:
