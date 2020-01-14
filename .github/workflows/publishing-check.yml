@@ -29,6 +29,6 @@ jobs:
     - name: Set Permission
       run: chmod +x scripts/Generate_Site.sh
     - name: Run Script
-      run: bash scripts/Generate_Site.sh
+      run: cd scripts && bash Generate_Site.sh
     - name: List generated files
       run: ls -l ../generated/site/
