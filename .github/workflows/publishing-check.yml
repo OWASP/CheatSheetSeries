@@ -31,4 +31,4 @@ jobs:
     - name: Run Script
       run: cd scripts && bash Generate_Site.sh
     - name: List generated files
-      run: ls -l ../generated/site/
+      run: ls -l generated/site/
