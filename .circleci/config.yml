@@ -5,23 +5,12 @@ executors:
       - image: 'circleci/node:10-stretch'
     working_directory: ~/repo
 jobs:
-  identify-old-issues-and-pr:
-    executor: my-executor
-    steps:
-    - add_ssh_keys:
-        fingerprints:
-          - "b3:87:ac:df:0d:3a:8f:fd:e1:0a:ab:e4:27:c0:83:87"     
-    - checkout
-    - run: 'sudo apt-get install -y python3.5 python3-pip python3-setuptools python3-wheel'
-    - run: 'sudo pip3 install requests'  
-    - run: 'chmod +x scripts/Identify_Old_Issue_And_PR.py'
-    - run: 'cd scripts;python3.5 Identify_Old_Issue_And_PR.py ${SLACK_WEBHOOK}'
   build-offline-website:
     executor: my-executor
     steps:
     - add_ssh_keys:
         fingerprints:
-          - "b3:87:ac:df:0d:3a:8f:fd:e1:0a:ab:e4:27:c0:83:87"        
+          - "b3:87:ac:df:0d:3a:8f:fd:e1:0a:ab:e4:27:c0:83:87"
     - checkout
     - run: 'sudo apt-get install -y python3.5 python3-pip python3-setuptools python3-wheel'
     - run: 'sudo pip3 install requests feedgen'
@@ -43,15 +32,15 @@ jobs:
     steps:
     - add_ssh_keys:
         fingerprints:
-          - "95:d7:48:7d:1f:8c:4c:5d:59:fe:7e:4f:b7:9a:a5:b2"    
+          - "95:d7:48:7d:1f:8c:4c:5d:59:fe:7e:4f:b7:9a:a5:b2"
     - attach_workspace:
-        at: /tmp/workspace          
+        at: /tmp/workspace
     - checkout
     - run: 'sudo apt-get install -y unzip zip'
     - run: 'git checkout gh-pages'
     - run: 'cp /tmp/workspace/bundle.zip .'
     - run: 'zip -T bundle.zip'
-    - run: 'unzip bundle.zip'    
+    - run: 'unzip bundle.zip'
     - run: 'rm -rf assets 1>/dev/null 2>&1'
     - run: 'rm -rf cheatsheets 1>/dev/null 2>&1'
     - run: 'rm -rf gitbook 1>/dev/null 2>&1'
@@ -64,24 +53,15 @@ jobs:
     - run: 'git config --global user.name "CircleCI-CheatSheetSeries"'
     - run: 'git add --all .'
     - run: 'git commit -a -m "Deploy the generated website via CircleCI pipeline."'
-    - run: 'git push'    
+    - run: 'git push'
 workflows:
   version: 2
-  old-issues-and-pr-identification:
-    triggers:
-      - schedule:
-          cron: "0 0 * * 0"
-          filters:
-            branches:
-              only: master
-    jobs:
-      - identify-old-issues-and-pr
   build-publish-deploy:
     jobs:
       - build-offline-website:
           filters:
             branches:
-              only: master      
+              only: master
       - deploy-offline-website:
           requires:
             - build-offline-website
