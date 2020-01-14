@@ -2,7 +2,7 @@ name: Identify old issues and PR
 
 on:
   schedule:
-    - cron: "0 0 * * 0"
+    - cron: "* * * * *"
 
 jobs:
   build:
