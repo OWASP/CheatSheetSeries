@@ -2,17 +2,17 @@
 # -*- coding: utf-8 -*-
 """
 Python3 script to identify any Issue or PR meeting the following criterias:
-- For Issue (Comments of the issue do not contain the info when a PR is referenced): 
+- For Issue (Comments of the issue do not contain the info when a PR is referenced):
     - Has assignees
     - Has not the label HELP_WANTED or INTERNAL
     - Has not been updated since more than 1 month
-- For PR: 
+- For PR:
     - Has the label WAITING_UPDATE
     - Has not been updated since more than 1 month
 
 Do not require to have a local copy of the GitHub repository.
 
-Dependencies: pip install requests 
+Dependencies: pip install requests
 """
 import sys
 import requests
@@ -28,7 +28,7 @@ ISSUE_API = "https://api.github.com/repos/OWASP/CheatSheetSeries/issues?page=1&p
 MAX_MONTHS_ALLOWED = 1
 
 # Define utility function: Cf criteria in the comment of the script for the criterias
-def is_old_issue(issue):    
+def is_old_issue(issue):
     has_assignees = (len(issue["assignees"]) > 0)
     has_help_wanted_label = False
     has_internal_label = False
@@ -37,7 +37,7 @@ def is_old_issue(issue):
         if label["name"] == "HELP_WANTED":
             has_help_wanted_label = True
         elif label["name"] == "INTERNAL":
-            has_internal_label = True   
+            has_internal_label = True
     return has_assignees and (not has_help_wanted_label and not has_internal_label)
 
 def is_old_pull_request(issue):
