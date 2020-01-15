@@ -16,11 +16,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - name: SetUp python
+    - name: Setup Python
       uses: actions/setup-python@v1
       with:
         python-version: '3.x'
-    - name: Install python dependencies
+    - name: Install Python dependencies
       run: pip install requests feedgen wheel
     - name: Install Node dependencies
       run: npm install -g markdownlint-cli markdown-link-check gitbook-cli
@@ -84,3 +84,4 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_PUSH_TOKEN }}
+        branch: gh-pages
