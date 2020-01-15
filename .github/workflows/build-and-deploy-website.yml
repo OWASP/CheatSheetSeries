@@ -59,7 +59,7 @@ jobs:
     - name: Replace the previous bundle with new bundle
       run: mv Bundle/bundle.zip bundle.zip
     - name: Remove previous version files
-    - run: |
+      run: |
         rm -rf Bundle 1>/dev/null 2>&1
         rm -rf assets 1>/dev/null 2>&1
         rm -rf cheatsheets 1>/dev/null 2>&1
