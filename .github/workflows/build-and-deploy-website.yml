@@ -26,7 +26,7 @@ jobs:
       run: npm install -g markdownlint-cli markdown-link-check gitbook-cli
     - name: Set Permission
       run: chmod +x scripts/Generate_Site.sh
-    - name: Run Script
+    - name: Run Build Script
       run: cd scripts && bash Generate_Site.sh
     - name: List generated files
       run: ls -al generated/site/
@@ -39,3 +39,20 @@ jobs:
       with:
         name: Bundle
         path: bundle.zip
+  deploy:
+    name: Deploy offline website
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+    - name: Setup Action
+      uses: actions/checkout@v1
+    - name: Install dependencies
+      run: sudo apt-get install -y unzip zip
+    - name: Download bundle from artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: Bundle
+    - name: Check status
+      run: git status
+
