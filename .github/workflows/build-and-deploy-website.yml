@@ -58,7 +58,27 @@ jobs:
         name: Bundle
     - name: Replace the previous bundle with new bundle
       run: mv Bundle/bundle.zip bundle.zip
-    - name: Check files
-      run: git status
-    - name: list files
-      run: ls -al
+    - name: Remove previous version files
+    - run: |
+        rm -rf Bundle 1>/dev/null 2>&1
+        rm -rf assets 1>/dev/null 2>&1
+        rm -rf cheatsheets 1>/dev/null 2>&1
+        rm -rf gitbook 1>/dev/null 2>&1
+        rm index.html 1>/dev/null 2>&1
+        rm search_index.json 1>/dev/null 2>&1
+    - name: Test new bundle
+      run: zip -T bundle.zip
+    - name: Extract new bundle
+      run: |
+        unzip bundle.zip
+        mv site/* .
+        upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md
+        rm -rf site
+    - name: Commit changes to gh-pages
+      run: |
+        git config --global user.email "OWASP-CheatSheetSeries@githubactions.com"
+        git config --global user.name "GithubActions-CheatSheetSeries"
+        git add --all .
+        git commit -a -m "Deploy the generated website via Github Actions"
+    - name: Publish the build to gh-pages
+      run: git push
