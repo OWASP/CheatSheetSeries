@@ -81,4 +81,6 @@ jobs:
         git add --all .
         git commit -a -m "Deploy the generated website via Github Actions"
     - name: Publish the build to gh-pages
-      run: git push
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_PUSH_TOKEN }}
