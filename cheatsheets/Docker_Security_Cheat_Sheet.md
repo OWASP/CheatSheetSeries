@@ -219,6 +219,7 @@ To detect containers with known vulnerabilities - scan images using static analy
 - Free
   - [Clair](https://github.com/coreos/clair)
   - [Trivy](https://github.com/knqyf263/trivy)
+  - [Terrier] (https://github.com/heroku/terrier)
 - Commercial
   - [Snyk](https://snyk.io/) **(open source and free option available)**
   - [anchore](https://anchore.com/opensource/) **(open source and free option available)**
