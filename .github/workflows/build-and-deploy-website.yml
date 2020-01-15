@@ -41,6 +41,7 @@ jobs:
         path: bundle.zip
   deploy:
     name: Deploy offline website
+    needs: build
     runs-on: ubuntu-latest
     env:
       CI: true
