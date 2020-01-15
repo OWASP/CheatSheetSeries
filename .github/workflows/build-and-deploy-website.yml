@@ -24,9 +24,9 @@ jobs:
       run: pip install requests feedgen wheel
     - name: Install Node dependencies
       run: npm install -g markdownlint-cli markdown-link-check gitbook-cli
-    - name: Set Permission
+    - name: Set permission for build script
       run: chmod +x scripts/Generate_Site.sh
-    - name: Run Build Script
+    - name: Run build script
       run: cd scripts && bash Generate_Site.sh
     - name: List generated files
       run: ls -al generated/site/
@@ -50,17 +50,17 @@ jobs:
       uses: actions/checkout@v1
     - name: Install dependencies
       run: sudo apt-get install -y unzip zip
-    - name: Swith to offline website branch
+    - name: Swith to offline website (gh-pages) branch
       run: git checkout gh-pages
     - name: Download bundle from artifact
       uses: actions/download-artifact@v1
       with:
         name: Bundle
-    - name: Replace the previous bundle with new bundle
-      run: mv Bundle/bundle.zip bundle.zip
+      run: |
+        mv Bundle/bundle.zip bundle.zip
+        rm -rf Bundle 1>/dev/null 2>&1
     - name: Remove previous version files
       run: |
-        rm -rf Bundle 1>/dev/null 2>&1
         rm -rf assets 1>/dev/null 2>&1
         rm -rf cheatsheets 1>/dev/null 2>&1
         rm -rf gitbook 1>/dev/null 2>&1
