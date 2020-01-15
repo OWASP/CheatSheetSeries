@@ -1,0 +1,41 @@
+name: Build and deploy offline website
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build offline website
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+    - name: Setup Action
+      uses: actions/checkout@v1
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: SetUp python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: Install python dependencies
+      run: pip install requests feedgen wheel
+    - name: Install Node dependencies
+      run: npm install -g markdownlint-cli markdown-link-check gitbook-cli
+    - name: Set Permission
+      run: chmod +x scripts/Generate_Site.sh
+    - name: Run Script
+      run: cd scripts && bash Generate_Site.sh
+    - name: List generated files
+      run: ls -al generated/site/
+    - name: Create bundle
+      run: cd generated && zip -r ../bundle.zip site
+    - name: Test bundle
+      run: zip -T bundle.zip
+    - name: Upload bundle as artifcact
+      uses: actions/upload-artifact@v1
+      with:
+        name: Bundle
+        path: bundle.zip
