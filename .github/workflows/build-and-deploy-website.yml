@@ -56,5 +56,9 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: Bundle
+    - name: Replace the previous bundle with new bundle
+      run: mv Bundle/bundle.zip bundle.zip
     - name: Check files
+      run: git status
+    - name: list files
       run: ls -al
