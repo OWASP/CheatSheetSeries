@@ -79,8 +79,8 @@ jobs:
         rm -rf site
     - name: Commit changes to gh-pages
       run: |
-        git config --global user.email "OWASP-CheatSheetSeries@githubactions.com"
-        git config --global user.name "GithubActions-CheatSheetSeries"
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
         git add --all .
         git commit -a -m "Deploy the generated website via Github Actions"
     - name: Publish the build to gh-pages
@@ -88,3 +88,13 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
+    - name: Send update to Slack
+      uses: innocarpe/actions-slack@v1
+      with:
+        status: ${{ job.status }}
+        success_text: 'Offline website deployment: **success**'
+        failure_text: 'Offline website deployment: **fail**'
+        cancelled_text: 'Offline website deployment **cancelled**'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
