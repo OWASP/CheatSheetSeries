@@ -3,7 +3,7 @@
 #  sudo apt install -y nodejs
 #  sudo npm install gitbook-cli -g
 # Note:
-#   PDF generation is not possible because the content is cut in 
+#   PDF generation is not possible because the content is cut in
 #   some CS like for example the abuse case one
 GENERATED_SITE=site
 WORK=../generated
