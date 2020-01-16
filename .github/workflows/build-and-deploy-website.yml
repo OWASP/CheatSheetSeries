@@ -2,6 +2,8 @@ name: Build and deploy offline website
 
 on:
   push:
+    branches:
+    - master
 
 jobs:
   build:
