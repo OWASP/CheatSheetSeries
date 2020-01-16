@@ -84,5 +84,5 @@ jobs:
     - name: Publish the build to gh-pages
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.GITHUB_PUSH_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
