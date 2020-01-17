@@ -1,0 +1,18 @@
+name: Markdown Link Check
+
+on:
+  push:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+    - name: Setup Action
+      uses: actions/checkout@v1
+    - name: Run link checker
+      uses: gaurav-nelson/github-action-markdown-link-check@0.4.0
