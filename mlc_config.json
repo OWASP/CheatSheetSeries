@@ -1,11 +1,15 @@
 {
     "ignorePatterns": [
     {
-        "pattern": "*.zip"
+        "pattern": "^bundle.zip"
 
     },
     {
-        "pattern": "*.zip"
+        "pattern": "^News.xml"
+
+    },
+    {
+        "pattern": "^\/"
 
     }
     ],
