@@ -1,5 +1,14 @@
 {
-    "ignorePatterns": [],
+    "ignorePatterns": [
+    {
+        "pattern": "*.zip"
+
+    },
+    {
+        "pattern": "*.zip"
+
+    }
+    ],
     "httpHeaders": [{
         "urls": [
             "https://", "http://"
