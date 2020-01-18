@@ -8,7 +8,8 @@
       "markdownlint-cli": "^0.19.0"
     },
     "scripts": {
-      "test": "markdownlint ./cheatsheets/ --ignore node_modules"
+      "test": "markdownlint ./cheatsheets/ --ignore node_modules",
+      "link-check" : "find  cheatsheets -name \\*.md -exec markdown-link-check -c mlc_config.json {} \\; 2> error.txt && if [ -e err.txt ] ; then if grep -q \"ERROR:\" err.txt; then exit 113 fi else echo -e \"All good!\" fi"
     },
     "repository": {
       "type": "git",

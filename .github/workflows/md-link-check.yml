@@ -1,4 +1,4 @@
-name: Markdown Link Check
+name: Markdown Lint Check
 
 on:
   push:
@@ -14,5 +14,11 @@ jobs:
     steps:
     - name: Setup Action
       uses: actions/checkout@v1
-    - name: Run link checker
-      uses: gaurav-nelson/github-action-markdown-link-check@0.4.0
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Install dependencies
+      run: npm install -g markdown-link-check
+    - name: Run link check
+      run: npm run-script link-check
