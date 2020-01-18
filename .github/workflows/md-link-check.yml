@@ -1,4 +1,4 @@
-name: Markdown Lint Check
+name: Markdown Link Check
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     - master
 
 jobs:
-  lint:
+  link-check:
     runs-on: ubuntu-latest
     env:
       CI: true
