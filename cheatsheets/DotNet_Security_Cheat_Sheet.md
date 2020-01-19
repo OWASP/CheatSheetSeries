@@ -367,7 +367,7 @@ DO: Use TLS 1.2 for your entire site. Get a free certificate [LetsEncrypt.org](h
 
 DO NOT: [Allow SSL, this is now obsolete](https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices#22-use-secure-protocols).
 
-DO: Have a strong TLS policy (see [SSL Best Practises](http://www.ssllabs.com/projects/best-practises/)), use TLS 1.2 wherever possible. Then check the configuration using [SSL Test](https://www.ssllabs.com/ssltest/) or [TestSSL](https://testssl.sh/).
+DO: Have a strong TLS policy (see [SSL Best Practises](https://www.ssllabs.com/projects/best-practices/index.html)), use TLS 1.2 wherever possible. Then check the configuration using [SSL Test](https://www.ssllabs.com/ssltest/) or [TestSSL](https://testssl.sh/).
 
 DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs) , [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/), disable via `web.config` or [startup.cs](https://medium.com/bugbountywriteup/security-headers-1c770105940b):
 
@@ -391,7 +391,7 @@ e.g Web.config
             <remove name="X-Powered-By"/>
         </customHeaders>
     </httpProtocol>
-</system.webServer>    
+</system.webServer>
 ```
 
 e.g Startup.cs
@@ -459,15 +459,15 @@ Protect LogOn, Registration and password reset methods against brute force attac
 [HttpPost]
 [AllowAnonymous]
 [ValidateAntiForgeryToken]
-[AllowXRequestsEveryXSecondsAttribute(Name = "LogOn", 
-Message = "You have performed this action more than {x} times in the last {n} seconds.", 
+[AllowXRequestsEveryXSecondsAttribute(Name = "LogOn",
+Message = "You have performed this action more than {x} times in the last {n} seconds.",
 Requests = 3, Seconds = 60)]
 public async Task<ActionResult> LogOn(LogOnViewModel model, string returnUrl)
 ```
 
 DO NOT: Roll your own authentication or session management, use the one provided by .Net
 
-DO NOT: Tell someone if the account exists on LogOn, Registration or Password reset. Say something like 'Either the username or password was incorrect', or 'If this account exists then a reset token will be sent to the registered email address'. This protects against account enumeration. 
+DO NOT: Tell someone if the account exists on LogOn, Registration or Password reset. Say something like 'Either the username or password was incorrect', or 'If this account exists then a reset token will be sent to the registered email address'. This protects against account enumeration.
 
 The feedback to the user should be identical whether or not the account exists, both in terms of content and behavior: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
 
@@ -715,9 +715,9 @@ Then set in config:
 
 ```xml
 <system.web>
-<httpRuntime targetFramework="4.5" 
-enableVersionHeader="false" 
-encoderType="Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary" 
+<httpRuntime targetFramework="4.5"
+enableVersionHeader="false"
+encoderType="Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary"
 maxRequestLength="4096" />
 ```
 
@@ -729,8 +729,8 @@ DO: Enable a [Content Security Policy](Content_Security_Policy_Cheat_Sheet.md#co
 <system.webServer>
     <httpProtocol>
         <customHeaders>
-            <add name="Content-Security-Policy" 
-                value="default-src 'none'; style-src 'self'; img-src 'self'; 
+            <add name="Content-Security-Policy"
+                value="default-src 'none'; style-src 'self'; img-src 'self';
                 font-src 'self'; script-src 'self'" />
 ```
 
@@ -743,12 +743,12 @@ Information about Insecure Deserialization can be found on this [cheat sheet](De
 DO NOT: Accept Serialized Objects from Untrusted Sources
 
 DO: Validate User Input
-Malicious users are able to use objects like cookies to insert malicious information to change user roles. In some cases, hackers are able to elevate their privileges to administrator rights by using a pre-existing or cached password hash from a previous session. 
+Malicious users are able to use objects like cookies to insert malicious information to change user roles. In some cases, hackers are able to elevate their privileges to administrator rights by using a pre-existing or cached password hash from a previous session.
 
 DO: Prevent Deserialization of Domain Objects
 
 DO: Run the Deserialization Code with Limited Access Permissions
-If a deserialized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server. 
+If a deserialized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server.
 
 More information can be found here: [Deserialization Cheat Sheet](Deserialization_Cheat_Sheet.md#net-csharp)
 
