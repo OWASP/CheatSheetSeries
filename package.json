@@ -9,7 +9,7 @@
     },
     "scripts": {
       "test": "markdownlint ./cheatsheets/ --ignore node_modules",
-      "link-check" : "find  cheatsheets -name \\*.md -exec markdown-link-check -c mlc_config.json {} \\; 2> err && if [ -e err ] && grep -q  \"ERROR:\" err ; then grep \"ERROR:\" err exit 113  ; else echo -e \"All good\"; fi"
+      "link-check" : "find  cheatsheets -name \\*.md -exec markdown-link-check -c mlc_config.json {} \\; 2> err && if [ -e err ] && grep -q  \"ERROR:\" err ; then exit 113  ; else echo -e \"All good\"; fi"
     },
     "repository": {
       "type": "git",
