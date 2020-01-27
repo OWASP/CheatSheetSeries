@@ -18,9 +18,15 @@ exec("os command here")
 open("\| os command here")
 ```
 
-While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, a whitelist of possible values should be used and any input should be validated as thoroughly as possible.
+While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, a whitelist of possible values should be used and any input should be validated as thoroughly as possible. When needed, you can escape a string to use it safely in a Bourne shell.
 
-The Ruby Security Reviewer's Guide has a [section on injection](http://code.google.com/p/ruby-security/wiki/Guide#Good_ol%27_shell_injection) and there are a number of OWASP references for it, starting at the top: [Command Injection](https://www.owasp.org/index.php/Command_Injection).
+```ruby
+require "shellwords"
+
+Shellwords.escape(str)
+```
+
+Check out the OWASP guide for more on [Command Injection](https://www.owasp.org/index.php/Command_Injection).
 
 ## SQL Injection
 
@@ -43,16 +49,16 @@ Use caution not to build SQL statements based on user controlled input. A list o
 
 ## Cross-site Scripting (XSS)
 
-By default, in Rails 3.0 and up protection against XSS comes as the default behavior. When string data is shown in views, it is escaped prior to being sent back to the browser. This goes a long way, but there are common cases where developers bypass this protection - for example to enable rich text editing. In the event that you want to pass variables to the front end with tags intact, it is tempting to do the following in your .erb file (ruby markup).
+By default, protection against XSS comes as the default behavior. When string data is shown in views, it is escaped prior to being sent back to the browser. This goes a long way, but there are common cases where developers bypass this protection - for example to enable rich text editing. In the event that you want to pass variables to the front end with tags intact, it is tempting to do the following in your .erb file (ruby markup).
 
 ``` ruby
-# Wrong! Older rails versions, do not do this!
+# Wrong! Do not do this!
 <%= raw @product.name %>
 
-# Wrong! Newer rails versions, do not do this!
+# Wrong! Do not do this!
 <%= @product.name.html_safe %>
 
-# Wrong! Newer rails versions, do not do this!
+# Wrong! Do not do this!
 <%= content_tag @product.name %>
 ```
 
@@ -174,7 +180,7 @@ Devise.setup do \|config\|
   ...
 ```
 
-You can try out [this PoC](https://github.com/qutorial/revise), to learn more about it.
+You can try out [this PoC](https://github.com/qutorial/revise) to learn more about it.
 
 Next, [omniauth gem](https://github.com/omniauth/omniauth) allows for multiple strategies for authentication. Using it one can configure secure authentication with Facebook, LDAP and many other providers. Read on [here](https://github.com/omniauth/omniauth#integrating-omniauth-into-your-application).
 
@@ -216,7 +222,7 @@ There is an [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
 
 ## Insecure Direct Object Reference or Forceful Browsing
 
-By default, Ruby on Rails apps use a RESTful uri structure. That means that paths are often intuitive and guessable. To protect against a user trying to access or modify data that belongs to another user, it is important to specifically control actions. Out of the gate on a vanilla Rails application, there is no such built in protection. It is possible to do this by hand at the controller level.
+By default, Ruby on Rails apps use a RESTful URI structure. That means that paths are often intuitive and guessable. To protect against a user trying to access or modify data that belongs to another user, it is important to specifically control actions. Out of the gate on a vanilla Rails application, there is no such built in protection. It is possible to do this by hand at the controller level.
 
 It is also possible, and probably recommended, to consider resource-based access control libraries such as [cancancan](https://github.com/CanCanCommunity/cancancan) (cancan replacement) or [pundit](https://github.com/elabs/pundit) to do this. This ensures that all operations on a database object are authorized by the business logic of the application.
 
@@ -235,7 +241,7 @@ Note that the syntax for this type of control includes a way to add exceptions. 
 
 ``` ruby
 class ProjectController < ApplicationController
-  protect_from_forgery :except => :show
+  protect_from_forgery except: :show
 ```
 
 Also note that by default Rails does not provide CSRF protection for any HTTP `GET` request.
@@ -243,32 +249,6 @@ Also note that by default Rails does not provide CSRF protection for any HTTP `G
 **Note:** if you use token authentication only, there is no need to protect from CSRF in controllers like this. If cookie-based authentication is used on some paths, then the protections is still required on them.
 
 There is a top level OWASP page for [Cross-Site Request Forgery (CSRF)](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29).
-
-## Mass Assignment and Strong Parameters
-
-Although the major issue with [Mass Assignment](https://ropesec.com/articles/mass-assignment/) has been fixed by default in base Rails specifically when generating new projects, it still applies to older and upgraded projects so it is important to understand the issue and to ensure that only attributes that are intended to be modifiable are exposed.
-
-When working with a model, the attributes on the model will not be accessible to forms being posted unless a programmer explicitly indicates that:
-
-``` ruby
-class Project < ActiveRecord::Base
-  attr_accessible :name, :admin
-end
-```
-
-With the admin attribute accessible based on the example above, the following could work:
-
-```bash
-$ curl -d "project[name]=triage&project[admin]=1" host:port/projects
-```
-
-Review accessible attributes to ensure that they should be accessible. If you are working in Rails &lt; 3.2.3 you should ensure that your attributes are whitelisted with the following:
-
-``` ruby
-config.active_record.whitelist_attributes = true
-```
-
-In Rails 4.0 strong parameters will be the recommended approach for handling attribute visibility. It is also possible to use the strong_parameters gem with Rails 3.x, and the strong_parameters_rails2 gem for Rails 2.3.x applications.
 
 ## Redirects and Forwards
 
@@ -401,7 +381,7 @@ To set a header value, simply access the response.headers object as a hash insid
 response.headers['X-header-name'] = 'value'
 ```
 
-**Rails 4** provides the `default_headers` functionality that will automatically apply the values supplied. This works for most headers in almost all cases.
+Rails provides the `default_headers` functionality that will automatically apply the values supplied. This works for most headers in almost all cases.
 
 ```ruby
 ActionDispatch::Response.default_headers = {
@@ -475,11 +455,11 @@ In general, it is important to have a process for updating dependencies. An exam
 
 Use [brakeman](https://brakemanscanner.org/), an open source code analysis tool for Rails applications, to identify many potential issues. It will not necessarily produce comprehensive security findings, but it can find easily exposed issues. A great way to see potential issues in Rails is to review the brakeman documentation of warning types.
 
-There are emerging tools that can be used to track security issues in dependency sets, like [this](https://appcanary.com) and [this](https://gemnasium.com).
+There are emerging tools that can be used to track security issues in dependency sets, like [this](https://github.blog/2017-11-16-introducing-security-alerts-on-github/) and [this](https://docs.gitlab.com/ee/user/application_security/dependency_scanning/).
 
 Another area of tooling is the security testing tool [Gauntlt](http://gauntlt.org) which is built on cucumber and uses gherkin syntax to define attack files.
 
-Launched in May 2013 and very similar to brakeman scanner, the [dawnscanner](https://github.com/thesp0nge/dawnscanner) rubygem is a static analyzer for security issues that work with Rails, Sinatra and Padrino web applications. Version 0.60 has more than 30 ruby specific CVE security checks and future releases custom checks against Cross Site Scripting and SQL Injections will be added.
+Launched in May 2013 and very similar to brakeman scanner, the [dawnscanner](https://github.com/thesp0nge/dawnscanner) rubygem is a static analyzer for security issues that work with Rails, Sinatra and Padrino web applications. Version 1.6.6 has more than 235 ruby specific CVE security checks.
 
 # Related Articles and References
 
