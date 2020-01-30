@@ -1,8 +1,8 @@
 # Introduction
 
-Error handling is a part of the overall security of an application. Except in movies, an attack always begin by a **Reconnaissance** phase in which the attacker will try to gather as much technical information (often *name* and *version* properties) as possible about the target, such as the application server, frameworks, libraries, etc.
+Error handling is a part of the overall security of an application. Except in movies, an attack always begins with a **Reconnaissance** phase in which the attacker will try to gather as much technical information (often *name* and *version* properties) as possible about the target, such as the application server, frameworks, libraries, etc.
 
-Unhandled errors can assist an attacker in this initial phase, which is very important for the rest the attack.
+Unhandled errors can assist an attacker in this initial phase, which is very important for the rest of the attack.
 
 The following [link](https://cipher.com/blog/a-complete-guide-to-the-phases-of-penetration-testing/) provides a description of the different phases of an attack.
 
@@ -10,7 +10,7 @@ The following [link](https://cipher.com/blog/a-complete-guide-to-the-phases-of-p
 
 Issues at the error handling level can reveal a lot of information about the target and can also be used to identify injection points in the target's features.
 
-Below is an example of the disclosure of a technology stack, here Struts2 and Tomcat version, via an exception rendered to the user:
+Below is an example of the disclosure of a technology stack, here the Struts2 and Tomcat versions, via an exception rendered to the user:
 
 ```text
 HTTP Status 500 - For input string: "null"
@@ -41,7 +41,7 @@ java.lang.NumberFormatException: For input string: "null"
 note: The full stack trace of the root cause is available in the Apache Tomcat/7.0.56 logs.
 ```
 
-Below is an example of disclosure of a SQL query error, along the site installation path, that is useful to identify an injection point:
+Below is an example of disclosure of a SQL query error, along with the site installation path, that can be used to identify an injection point:
 
 ```text
 Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given 
@@ -52,15 +52,15 @@ The [OWASP Testing Guide](https://www.owasp.org/index.php/Testing_Information_Ga
 
 # Objective
 
-The article shows how to configure a global error handler at the configuration level when possible, otherwise at code level, in differents technologies, in order to ensure that if an unexpected error occurs then a generic response is returned by the application but the error is traced on server side for investigation.
+The article shows how to configure a global error handler at the configuration level when possible, otherwise at code level, in different technologies, in order to ensure that if an unexpected error occurs then a generic response is returned by the application but the error is traced on server side for investigation.
 
 The following schema shows the target approach:
 
 ![Overview](../assets/Error_Handling_Cheat_Sheet_Overview.png)
 
-As most of the recent application topology are *API based*, we assume in this article that the backend exposes only a REST API and does not contain any user interface content.
+As most recent application topologies are *API based*, we assume in this article that the backend exposes only a REST API and does not contain any user interface content.
 
-About the error logging operation itself, the [logging cheat sheet](Logging_Cheat_Sheet.md) should be used, this article will focus on the error handling part.
+For the error logging operation itself, the [logging cheat sheet](Logging_Cheat_Sheet.md) should be used. This article focuses on the error handling part.
 
 # Proposition
 
@@ -109,7 +109,7 @@ response.setStatus(200);
 
 ## Java SpringMVC/SpringBoot web application
 
-With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](http://spring.io/projects/spring-boot), you can define a global error handler by simply implementing this kind of class into your project.
+With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](http://spring.io/projects/spring-boot), you can define a global error handler by simply implementing the following kind of class in your project.
 
 We indicate to the handler, via the annotation [@ExceptionHandler](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html), to act when any exception extending the class *java.lang.Exception* is thrown by the application.
 
