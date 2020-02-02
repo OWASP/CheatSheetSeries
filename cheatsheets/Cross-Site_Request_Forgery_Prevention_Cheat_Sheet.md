@@ -89,7 +89,7 @@ For example:
 </form>
 ```
 
-Inserting the CSRF token in the custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because it adds [additional layer of security](#use-of-custom-request-headers).
+Inserting the CSRF token in the custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because it [uses custom request headers](#use-of-custom-request-headers).
 
 ### Encryption based Token Pattern
 
