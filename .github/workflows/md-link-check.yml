@@ -22,3 +22,6 @@ jobs:
       run: npm install -g markdown-link-check
     - name: Run link check
       run: npm run-script link-check
+    - name: Show broken links
+      if: failure()
+      run: cat log | awk -v RS="FILE:" 'match($0, /(\S*\.md).*\[✖\].*(\d*\slinks\schecked\.)(.*)/, arr ) { print "FILE:"arr[1] arr[3]}'
