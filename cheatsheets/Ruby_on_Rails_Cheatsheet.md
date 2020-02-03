@@ -18,15 +18,9 @@ exec("os command here")
 open("\| os command here")
 ```
 
-While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, a whitelist of possible values should be used and any input should be validated as thoroughly as possible. When needed, you can escape a string to use it safely in a Bourne shell.
+While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, a whitelist of possible values should be used and any input should be validated as thoroughly as possible.
 
-```ruby
-require "shellwords"
-
-Shellwords.escape(str)
-```
-
-Check out the OWASP guide for more on [Command Injection](https://www.owasp.org/index.php/Command_Injection).
+Check out the guides from [Rails](https://guides.rubyonrails.org/security.html#command-line-injection) and [OWASP](https://www.owasp.org/index.php/Command_Injection) for more on command injection.
 
 ## SQL Injection
 
@@ -455,7 +449,7 @@ In general, it is important to have a process for updating dependencies. An exam
 
 Use [brakeman](https://brakemanscanner.org/), an open source code analysis tool for Rails applications, to identify many potential issues. It will not necessarily produce comprehensive security findings, but it can find easily exposed issues. A great way to see potential issues in Rails is to review the brakeman documentation of warning types.
 
-There are emerging tools that can be used to track security issues in dependency sets, like [this](https://github.blog/2017-11-16-introducing-security-alerts-on-github/) and [this](https://docs.gitlab.com/ee/user/application_security/dependency_scanning/).
+There are emerging tools that can be used to track security issues in dependency sets, like automated scanning from [GitHub](https://github.blog/2017-11-16-introducing-security-alerts-on-github/) and [GitLab](https://docs.gitlab.com/ee/user/application_security/dependency_scanning/).
 
 Another area of tooling is the security testing tool [Gauntlt](http://gauntlt.org) which is built on cucumber and uses gherkin syntax to define attack files.
 
