@@ -46,31 +46,11 @@ There are various [modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_ope
 
 Where available, authenticated modes should always be used. These provide guarantees of the integrity and authenticity of the data, as well as confidentiality. The most commonly used authenticated modes are **[GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)** and **[CCM](https://en.wikipedia.org/wiki/CCM_mode)**, which should be used as a first preference.
 
-If GCM or CCM are not available, then [CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) mode or [CBC](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_(CBC)) mode should be used. As these do not provide any guarantees about the authenticity of the data, separate authentication should be implemented, such as using the [Encrypt-then-MAC](https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_(EtM)) technique.
+If GCM or CCM are not available, then [CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)) mode or [CBC](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_(CBC)) mode should be used. As these do not provide any guarantees about the authenticity of the data, separate authentication should be implemented, such as using the [Encrypt-then-MAC](https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_(EtM)) technique. Care needs to be taken when using this method with [variable length messages](https://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages)
 
 If random access to the encrypted data is required then [XTS](https://en.wikipedia.org/wiki/Disk_encryption_theory#XTS) mode should be used. This is typically used for disk encryption, so it unlikely to be used by a web application.
 
 [EBC](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB) should not be used outside of very specific circumstances.
-
-### Use Authenticated Encryption of data
-
-Use ([AE](http://en.wikipedia.org/wiki/Authenticated_encryption)) modes under a uniform API. Recommended modes include [CCM](http://en.wikipedia.org/wiki/CCM_mode), and [GCM](http://en.wikipedia.org/wiki/Galois/Counter_Mode) as these, and only these as of November 2014, are specified in [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html), ISO IEC 19772 (2009) "Information technology - Security techniques - Authenticated encryption", and [IEEE P1619 Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices](http://en.wikipedia.org/wiki/IEEE_P1619):
-
-- [Authenticated Encryption](http://en.wikipedia.org/wiki/Authenticated_encryption) gives [confidentiality](http://en.wikipedia.org/wiki/Confidentiality), [integrity](http://en.wikipedia.org/wiki/Data_integrity), and [authenticity](http://en.wikipedia.org/wiki/Authentication) (CIA); encryption alone just gives confidentiality. Encryption must always be combined with message integrity and authenticity protection. Otherwise the ciphertext may be vulnerable to manipulation causing changes to the underlying plaintext data, especially if it's being passed over untrusted channels (e.g. in an URL or cookie).
-- These modes require only one key. In general, the tag sizes and the IV sizes should be set to maximum values.
-
-If these recommended [AE](http://en.wikipedia.org/wiki/Authenticated_encryption) modes are not available:
-
-- Combine encryption in [cipher-block chaining (CBC) mode](http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29) with post-encryption message authentication code, such as [HMAC](http://en.wikipedia.org/wiki/HMAC) or [CMAC](http://en.wikipedia.org/wiki/CMAC) i.e. Encrypt-then-MAC.
-    - Note that Integrity and Authenticity are preferable to Integrity alone i.e. a MAC such as HMAC-SHA256 or HMAC-SHA512 is a better choice than SHA-256 or SHA-512.
-- Use 2 independent keys for these 2 independent operations.
-- Do not use ECB mode. CBC is preferred.
-- Do not use [CBC MAC for variable length data](http://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages)
-- The [CAVP program](http://csrc.nist.gov/groups/STM/cavp/index.html) is a good default place to go for validation of cryptographic algorithms when one does not have AES or one of the authenticated encryption modes that provide confidentiality and authenticity (i.e., data origin authentication) such as CCM, EAX, CMAC, etc. For Java, if you are using SunJCE that will be the case. The cipher modes supported in JDK 1.5 and later are CBC, CFB, CFBx, CTR, CTS, ECB, OFB, OFBx, PCBC. None of these cipher modes are authenticated encryption modes. (That's why it is added explicitly.) If you are using an alternate JCE provider such as Bouncy Castle, RSA JSafe, IAIK, etc., then these authenticated encryption modes should be used.
-
-**Note:** 
-- [Disk encryption](http://en.wikipedia.org/wiki/Disk_encryption_theory) is a special case of [data at rest](http://en.wikipedia.org/wiki/Data_at_Rest) e.g. Encrypted File System on a Hard Disk Drive. 
-- [XTS-AES mode](http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf) is optimized for Disk encryption and is one of the [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html); it provides confidentiality and some protection against data manipulation (but not as strong as the [AE](http://en.wikipedia.org/wiki/Authenticated_encryption) [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html)). It is also specified in [IEEE P1619 Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices](http://en.wikipedia.org/wiki/IEEE_P1619)
 
 ### Secure Random Number Generation
 
