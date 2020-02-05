@@ -230,6 +230,7 @@ To detect misconfigurations in Kubernetes:
  - [kubeaudit](https://github.com/Shopify/kubeaudit)
  - [kubesec.io](https://kubesec.io/)
  - [kube-bench](https://github.com/aquasecurity/kube-bench)
+ - [kubescan](https://github.com/octarinesec/kube-scan)
 
 To detect misconfigurations in Docker:
  - [inspec.io](https://www.inspec.io/docs/reference/resources/docker/)
