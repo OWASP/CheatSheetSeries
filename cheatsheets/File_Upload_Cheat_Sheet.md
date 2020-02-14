@@ -117,6 +117,12 @@ In order to avoid the above mentioned threat, creating a **random string** as a 
 
 As mentioned in the [Public File Retrieval](#public-file-retrieval) section, file content can contain malicious, inappropriate, or illegal data.
 
+Based on the expected type, special file content validation can be applied:
+
+- For **images**, applying image rewriting techniques destroys any kind of malicious content injected in an image; this could be done through [randomization](https://security.stackexchange.com/a/8625/118367).
+- For **Microsoft documents**, the usage of [Apache POI](https://poi.apache.org/) helps validating the uploaded documents.
+- **ZIP files** are not recommended since they can contain all types of files, and the attack vectors pertaining to them are numerous.
+
 The File Upload service should allow users to report illegal content, and copyright owners to report abuse.
 
 If there are enough resources, manual file review should be conducted in a sandboxed environment before releasing the files to the public.
