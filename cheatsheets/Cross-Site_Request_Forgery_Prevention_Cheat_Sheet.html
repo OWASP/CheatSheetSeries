@@ -1050,100 +1050,127 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p><a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29" target="_blank">Cross-Site Request Forgery (CSRF)</a> is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user&apos;s web browser to perform an unwanted action on a trusted site when the user is authenticated. A CSRF attack works because browser requests automatically include any credentials associated with the site, such as the user&apos;s session cookie, IP address, etc. Therefore, if the user is authenticated to the site, the site cannot distinguish between the forged or legitimate request sent by the victim. We would need a token/identifier that is not accessible to attacker and would not be sent along (like cookies) with forged requests that attacker initiates. For more information on CSRF, see OWASP <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29" target="_blank">Cross-Site Request Forgery (CSRF) page</a>.</p>
-<p>The impact of a successful CSRF attack is limited to the capabilities exposed by the vulnerable application. For example, this attack could result in a transfer of funds, changing a password, or making a purchase with the user&apos;s credentials. In effect, CSRF attacks are used by an attacker to make a target system perform a function via the target&apos;s browser, without the user&apos;s knowledge, at least until the unauthorized transaction has been committed.</p>
-<p>Impacts of successful CSRF exploits vary greatly based on the privileges of each victim. When targeting a normal user, a successful CSRF attack can compromise end-user data and their associated functions. If the targeted end user is an administrator account, a CSRF attack can compromise the entire web application. Using social engineering, an attacker can embed malicious HTML or JavaScript code into an email or website to request a specific &apos;task URL&apos;. The task then executes with or without the user&apos;s knowledge, either directly or by using a Cross-Site Scripting flaw. For example, see <a href="https://en.wikipedia.org/wiki/Samy_%28computer_worm%29" target="_blank">Samy MySpace Worm</a>.</p>
-<h1 id="warning-no-cross-site-scripting-xss-vulnerabilities"><a name="warning-no-cross-site-scripting-xss-vulnerabilities" class="plugin-anchor" href="#warning-no-cross-site-scripting-xss-vulnerabilities"><i class="fa fa-link" aria-hidden="true"></i></a>Warning: No Cross-Site Scripting (XSS) Vulnerabilities</h1>
-<p><a href="https://www.owasp.org/index.php/Cross-Site_Scripting" target="_blank">Cross-Site Scripting</a> is not necessary for CSRF to work. However, any cross-site scripting vulnerability can be used to defeat all CSRF mitigation techniques available in the market today (except mitigation techniques that involve user interaction and described later in this cheatsheet). This is because an XSS payload can simply read any page on the site using an XMLHttpRequest (direct DOM access can be done, if on same page) and obtain the generated token from the response, and include that token with a forged request.  This technique is exactly how the <a href="https://en.wikipedia.org/wiki/Samy_%28computer_worm%29" target="_blank">MySpace (Samy) worm</a> defeated MySpace&apos;s anti-CSRF defenses in 2005, which enabled the worm to propagate.</p>
-<p>It is imperative that no XSS vulnerabilities are present to ensure that CSRF defenses can&apos;t be circumvented. Please see the OWASP <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheat Sheet</a> for detailed guidance on how to prevent XSS flaws.</p>
-<h1 id="resources-that-need-to-be-protected-from-csrf-vulnerability"><a name="resources-that-need-to-be-protected-from-csrf-vulnerability" class="plugin-anchor" href="#resources-that-need-to-be-protected-from-csrf-vulnerability"><i class="fa fa-link" aria-hidden="true"></i></a>Resources that need to be protected from CSRF vulnerability</h1>
-<p>The following list assumes that you are not violating <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.1.1" target="_blank">RFC2616</a>, section 9.1.1, by using GET requests for state changing operations.</p>
-<p><strong>Note:</strong> If for any reason you violate, you would also need to protect those resources, which is mostly achieved with default <code>form</code> <code>tag</code> <code>[GET method]</code>, <code>href</code>, and <code>src</code> attributes.</p>
+                                <h1 id="cross-site-request-forgery-csrf-prevention-cheat-sheet"><a name="cross-site-request-forgery-csrf-prevention-cheat-sheet" class="plugin-anchor" href="#cross-site-request-forgery-csrf-prevention-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+<p><a href="https://wiki.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29" target="_blank">Cross-Site Request Forgery (CSRF)</a> is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user&apos;s web browser to perform an unwanted action on a trusted site when the user is authenticated. A CSRF attack works because browser requests automatically include all cookies including session cookies. Therefore, if the user is authenticated to the site, the site cannot distinguish between legitimate requests and forged requests.</p>
+<p>The impact of a successful CSRF attack is limited to the capabilities exposed by the vulnerable application and privileges of the user. For example, this attack could result in a transfer of funds, changing a password, or making a purchase with the user&apos;s credentials. In effect, CSRF attacks are used by an attacker to make a target system perform a function via the victim&apos;s browser, without the victim&apos;s knowledge, at least until the unauthorized transaction has been committed.</p>
+<p>In short, the following principles should be followed to defend against CSRF:</p>
 <ul>
-<li>Form tags with POST</li>
-<li>Ajax/XHR calls</li>
+<li><strong>Check if your framework has <a href="#use-build-in-or-existing-csrf-implementations-for-csrf-protection">built-in CSRF protection</a> and use it</strong><ul>
+<li><strong>If framework does not have built-in CSRF protection add <a href="#token-based-mitigation">CSRF tokens</a> to all state changing requests (requests that cause actions on the site) and validate them on backend</strong> </li>
 </ul>
-<h1 id="csrf-defense-recommendations-summary"><a name="csrf-defense-recommendations-summary" class="plugin-anchor" href="#csrf-defense-recommendations-summary"><i class="fa fa-link" aria-hidden="true"></i></a>CSRF Defense Recommendations Summary</h1>
-<p>We recommend token based CSRF defense (either stateful/stateless) as a primary defense to mitigate CSRF in your applications. Only for highly sensitive operations, we also recommend a user interaction based protection (either re-authentication/one-time token, detailed in section 6.5) along with token based mitigation.</p>
-<p>As a defense-in-depth measure, consider implementing one mitigation from Defense in Depth Mitigations section (you can choose the mitigation that fits your ecosystem considering the issues mentioned under them). These defense-in-depth mitigation techniques are not recommended to be used by themselves (without token based mitigation) for mitigating CSRF in your applications.</p>
-<h1 id="primary-defense-technique"><a name="primary-defense-technique" class="plugin-anchor" href="#primary-defense-technique"><i class="fa fa-link" aria-hidden="true"></i></a>Primary Defense Technique</h1>
+</li>
+<li><strong>Always use <a href="#samesite-cookie-attribute">SameSite Cookie Attribute</a> for session cookies</strong></li>
+<li><strong>Implement at least one mitigation from <a href="#defense-in-depth-techniques">Defense in Depth Mitigations</a> section</strong><ul>
+<li><strong><a href="#use-of-custom-request-headers">Use custom request headers</a></strong></li>
+<li><strong><a href="#verifying-origin-with-standard-headers">Verify the origin with standard headers</a></strong></li>
+<li><strong><a href="#double-submit-cookie">Use double submit cookies</a></strong></li>
+</ul>
+</li>
+<li><strong>Consider implementing <a href="#user-interaction-based-csrf-defense">user interaction based protection</a> for highly sensitive operations</strong></li>
+<li><strong>Remember that any Cross-Site Scripting (XSS) can be used to defeat all CSRF mitigation techniques!</strong><ul>
+<li><strong>See the OWASP <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheat Sheet</a> for detailed guidance on how to prevent XSS flaws.</strong></li>
+</ul>
+</li>
+<li><strong>Do not use GET requests for state changing operations.</strong><ul>
+<li><strong>If for any reason you do it, you have to also protect those resources against CSRF</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h2>
+<ul>
+<li><a href="#token-based-mitigation">Token Based Mitigation</a><ul>
+<li><a href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection">Use Build-In Or Existing CSRF Implementations for CSRF Protection</a></li>
+<li><a href="#synchronizer-token-pattern">Synchronizer Token Pattern</a></li>
+<li><a href="#encryption-based-token-pattern">Encryption based Token Pattern</a></li>
+<li><a href="#hmac-based-token-pattern">HMAC Based Token Pattern</a></li>
+</ul>
+</li>
+<li><a href="#defense-in-depth-techniques">Defense In Depth Techniques</a><ul>
+<li><a href="#samesite-cookie-attribute">SameSite Cookie Attribute</a></li>
+<li><a href="#verifying-origin-with-standard-headers">Verifying Origin With Standard Headers</a><ul>
+<li><a href="#identifying-source-origin--via-origin-referer-header-">Identifying Source Origin (via Origin/Referer header)</a></li>
+<li><a href="#identifying-the-target-origin">Identifying the Target Origin</a></li>
+</ul>
+</li>
+<li><a href="#double-submit-cookie">Double Submit Cookie</a><ul>
+<li><a href="#cookie-with---host--prefix">Cookie with __Host- prefix</a></li>
+</ul>
+</li>
+<li><a href="#use-of-custom-request-headers">Use of Custom Request Headers</a></li>
+<li><a href="#user-interaction-based-csrf-defense">User Interaction Based CSRF Defense</a></li>
+</ul>
+</li>
+<li><a href="#login-csrf">Login CSRF</a></li>
+<li><a href="#java-reference-example">Java Reference Example</a></li>
+<li><a href="#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header">JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header</a><ul>
+<li><a href="#storing-the-csrf-token-value-in-the-dom">Storing the CSRF Token Value in the DOM</a></li>
+<li><a href="#overriding-defaults-to-set-custom-header">Overriding Defaults to Set Custom Header</a><ul>
+<li><a href="#xmlhttprequest--native-javascript-">XMLHttpRequest (Native JavaScript)</a></li>
+<li><a href="#angularjs">AngularJS</a></li>
+<li><a href="#axios">Axios</a></li>
+<li><a href="#jquery">JQuery</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#references">References</a><ul>
+<li><a href="#csrf">CSRF</a></li>
+<li><a href="#cookie-prefixes">Cookie Prefixes</a></li>
+</ul>
+</li>
+</ul>
 <h2 id="token-based-mitigation"><a name="token-based-mitigation" class="plugin-anchor" href="#token-based-mitigation"><i class="fa fa-link" aria-hidden="true"></i></a>Token Based Mitigation</h2>
-<p>This defense is one of the most popular and recommended methods to mitigate CSRF. It can be achieved either with state (synchronizer token pattern) or stateless (encrypted/hash based token pattern). See section 4.3 on how to mitigate login CSRF in your applications. For all the mitigations, it is implicit that general security principles should be adhered</p>
+<p>This defense is one of the most popular and recommended methods to mitigate CSRF. It can be achieved either with state (<a href="#synchronizer-token-pattern">synchronizer token pattern</a>) or stateless (<a href="#encryption-based-token-pattern">encrypted</a> or <a href="#hmac-based-token-pattern">hashed</a> based token pattern).</p>
+<h3 id="use-built-in-or-existing-csrf-implementations-for-csrf-protection"><a name="use-built-in-or-existing-csrf-implementations-for-csrf-protection" class="plugin-anchor" href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection"><i class="fa fa-link" aria-hidden="true"></i></a>Use Built-In Or Existing CSRF Implementations for CSRF Protection</h3>
+<p>Synchronizer token defenses have been built into many frameworks. It is strongly recommended to research if the framework you are using has an option to achieve CSRF protection by default before trying to build your custom token generating system. For example, .NET has <a href="https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1" target="_blank">built-in protection</a> that adds a token to CSRF vulnerable resources. You are responsible for proper configuration (such as key management and token management) before using these built-in CSRF protections that generate tokens to guard CSRF vulnerable resources.</p>
+<p>External components that add CSRF defenses to existing applications are also recommended. Examples:</p>
 <ul>
-<li>Strong encryption/HMAC functions should be adhered to.</li>
-</ul>
-<p><strong>Note:</strong> You can select any algorithm per your organizational needs. We recommend AES256-GCM for encryption and SHA256/512 for HMAC.</p>
-<ul>
-<li>Strict key rotation and token lifetime policies should be maintained. Policies can be set according to your organizational needs. Generic key management guidance from OWASP can be found <a href="Key_Management_Cheat_Sheet.html">here</a>.</li>
-</ul>
-<h3 id="synchronizer-token-pattern"><a name="synchronizer-token-pattern" class="plugin-anchor" href="#synchronizer-token-pattern"><i class="fa fa-link" aria-hidden="true"></i></a>Synchronizer Token Pattern</h3>
-<p>Any state changing operation requires a secure random token (e.g., CSRF token) to prevent CSRF attacks. A CSRF token should be:</p>
-<ul>
-<li>unique per user session;</li>
-<li>large random value;</li>
-<li>generated by a Cryptographically Secure Pseudo-Random Number Generator (CSPRNG).</li>
-</ul>
-<p>The CSRF token can be added through hidden fields, headers, and can be used with forms, and AJAX calls. Make sure that the token is not leaked in the server logs, or <a href="#disclosure-of-token-in-url">in the URL</a>. The server must reject the requested action if the CSRF token fails validation.</p>
-<p>Inserting the CSRF token in the HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter. In this situation, even if the CSRF token is weak, predictable or leaked but still an attacker cannot forge the POST request directly by setting the custom request header through XMLHttpRequest. As per the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Preflighted_requests" target="_blank">MDN documentation</a> when the attacker tries to set any custom header through any XMLHttpRequest, the browser sends the OPTIONS (pre-flight) request. Moreover, when the attacker tries to spoof the header through flash, the browser initiates the GET request for crossdomain.xml. In both cases, the browser prevents the forged request to be sent.</p>
-<p>In order to facilitate a &quot;transparent but visible&quot; CSRF solution, developers are encouraged to adopt a pattern similar to <a href="http://www.corej2eepatterns.com/Design/PresoDesign.htm" target="_blank">Synchronizer Token Pattern</a> (The original intention of this synchronizer token pattern was to detect duplicate submissions in forms). The synchronizer token pattern requires the generation of random &quot;challenge&quot; tokens that are associated with the user&apos;s current session. These challenge tokens are then inserted within the HTML forms and calls associated with sensitive server-side operations. It is the responsibility of the server application to verify the existence and correctness of this token. By including a challenge token with each request, the developer has a strong control to verify that the user actually intended to submit the desired requests. Inclusion of a required security token in HTTP requests associated with sensitive business functions helps mitigate CSRF attacks as successful exploitation assumes the attacker knows the randomly generated token for the target victim&apos;s session.</p>
-<p><strong>Note:</strong> These tokens aren&apos;t like cookies that are automatically sent with forged requests made from your browser from the attacker website.</p>
-<p>This is analogous to the attacker being able to guess the target victim&apos;s session identifier.</p>
-<p>The following describes a general approach to incorporate challenge tokens within the request.</p>
-<p>When a Web application formulates a request, the application should include a hidden input parameter with a common name such as &quot;CSRFToken&quot; (for forms)/ as header/parameter value for Ajax calls. The value of this token must be randomly generated such that it cannot be guessed by an attacker. Consider leveraging the java.security.SecureRandom class for Java applications to generate a sufficiently long random token. Alternative generation algorithms include the use of 256-bit BASE64 encoded hashes. Developers that choose this generation algorithm must make sure that there is randomness and uniqueness utilized in the data that is hashed to generate the random token.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;/transfer.do&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;hidden&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;CSRFToken&quot;</span>
-<span class="hljs-attr">value</span>=<span class="hljs-string">&quot;OWY4NmQwODE4ODRjN2Q2NTlhMmZlYWEwYzU1YWQwMTVhM2JmNGYxYjJiMGI4MjJjZDE1ZDZMGYwMGEwOA==&quot;</span>&gt;</span>
-...
-<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
-</code></pre>
-<p>In general, developers need only generate this token once for the current session. After initial generation of this token, the value is stored in the session and is used for each subsequent request until the session expires. When a request is issued by the end-user, the server-side component must verify the existence and validity of the token in the request compared to the token found in the user session. If the token was not found within the request, or the value provided does not match the value within the user session, then the request should be aborted, and the event logged as a potential CSRF attack in progress.</p>
-<p>To further enhance the security of this proposed design, consider randomizing the CSRF token parameter name and/or value for each request. Implementing this approach results in the generation of per-request tokens as opposed to per-session tokens. This is more secure than per-session tokens as the time range for an attacker to exploit the stolen tokens is minimal. However, this may result in usability concerns. For example, the &quot;Back&quot; button browser capability is often hindered as the previous page may contain a token that is no longer valid. Interaction with this previous page will result in a CSRF false positive security event at the server. Few applications that need high security typically implement this approach (such as banks). You have to check what suits your needs. Regardless of the approach taken, developers are encouraged to protect the CSRF token the same way they protect authenticated session identifiers, such as the use of TLS.</p>
-<p><strong>Existing Synchronizer Implementations</strong></p>
-<p>Synchronizer token defenses have been built into many frameworks, so we strongly recommend using them first when they are available. External components that add CSRF defenses to existing applications are also recommended. OWASP has the following:</p>
-<ul>
-<li>For Java: OWASP <a href="https://www.owasp.org/index.php/CSRF_Guard" target="_blank">CSRF Guard</a></li>
+<li>For Java: OWASP <a href="https://www.owasp.org/index.php/CSRF_Guard" target="_blank">CSRF Guard</a> or <a href="https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html" target="_blank">Spring Security</a></li>
 <li>For PHP and Apache: <a href="https://www.owasp.org/index.php/CSRFProtector_Project" target="_blank">CSRFProtector Project</a></li>
 </ul>
-<h4 id="disclosure-of-token-in-url"><a name="disclosure-of-token-in-url" class="plugin-anchor" href="#disclosure-of-token-in-url"><i class="fa fa-link" aria-hidden="true"></i></a>Disclosure of Token in URL</h4>
-<p>Some implementations of synchronizer tokens include the challenge token in GET (URL) requests as well as POST requests. This is often implemented as a result of sensitive server-side operations being invoked as a result of embedded links in the page or other general design patterns. While this control does help mitigate the risk of CSRF attacks, the unique per-session token is being exposed for GET requests. CSRF tokens in GET requests are potentially leaked at several locations: browser history, log files, network appliances that make a point to log the first line of an HTTP request, and Referer headers if the protected site links to an external site. In the latter case (leaked CSRF token due to the Referer header being parsed by a linked site), it is trivially easy for the linked site to launch a CSRF attack on the protected site, and they will be able to target this attack very effectively, since the Referer header tells them the site as well as the CSRF token. </p>
-<p>The ideal solution is to only include the CSRF token in POST requests and modify server-side actions that have state changing affect to only respond to POST requests. This is in fact what the RFC 2616 requires for GET requests. If sensitive server-side actions are guaranteed to only ever respond to POST requests, then there is no need to include the token in GET requests.</p>
+<h3 id="synchronizer-token-pattern"><a name="synchronizer-token-pattern" class="plugin-anchor" href="#synchronizer-token-pattern"><i class="fa fa-link" aria-hidden="true"></i></a>Synchronizer Token Pattern</h3>
+<p>CSRF tokens should be generated on the server-side. They can be generated once per user session or for each request. Per-request tokens are more secure than per-session tokens as the time range for an attacker to exploit the stolen tokens is minimal. However, this may result in usability concerns. For example, the &quot;Back&quot; button browser capability is often hindered as the previous page may contain a token that is no longer valid. Interaction with this previous page will result in a CSRF false positive security event at the server. In per-session token implementation after initial generation of token, the value is stored in the session and is used for each subsequent request until the session expires.</p>
+<p>When a request is issued by the client, the server-side component must verify the existence and validity of the token in the request compared to the token found in the user session. If the token was not found within the request, or the value provided does not match the value within the user session, then the request should be aborted, session of the user terminated and the event logged as a potential CSRF attack in progress.</p>
+<p>CSRF tokens should be:</p>
+<ul>
+<li>Unique per user session.</li>
+<li>Secret</li>
+<li>Unpredictable (large random value generated by a <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng" target="_blank">secure method</a>).</li>
+</ul>
+<p>CSRF tokens prevent CSRF because without token, attacker cannot create a valid requests to the backend server.</p>
+<p><strong>CSRF tokens should not be transmitted using cookies.</strong></p>
+<p>The CSRF token can be added through hidden fields, headers, and can be used with forms, and AJAX calls. Make sure that the token is not leaked in the server logs, or in the URL. CSRF tokens in GET requests are potentially leaked at several locations, such as the browser history, log files, network appliances that log the first line of an HTTP request, and Referer headers if the protected site links to an external site.</p>
+<p>For example:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;/transfer.do&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;hidden&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;CSRFToken&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;OWY4NmQwODE4ODRjN2Q2NTlhMmZlYWEwYzU1YWQwMTVhM2JmNGYxYjJiMGI4MjJjZDE1ZDZMGYwMGEwOA==&quot;</span>&gt;</span>
+[...]
+<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+</code></pre>
+<p>Inserting the CSRF token in the custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because it <a href="#use-of-custom-request-headers">uses custom request headers</a>.</p>
 <h3 id="encryption-based-token-pattern"><a name="encryption-based-token-pattern" class="plugin-anchor" href="#encryption-based-token-pattern"><i class="fa fa-link" aria-hidden="true"></i></a>Encryption based Token Pattern</h3>
-<p>The Encrypted Token Pattern leverages an encryption, rather than comparison method of Token-validation. It is most suitable for applications that do not want to maintain any state at server side. </p>
-<p>Server generates a token comprised of the user&apos;s session ID and a timestamp (to prevent replay attacks) using a unique key available only on the server (AES256-with GCM mode/GCM-SIV is recommended. Usage of ECB mode is strictly not recommended. If you would like to use any other block cipher mode of operation, refer <a href="Cryptographic_Storage_Cheat_Sheet.html">here</a> and <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation" target="_blank">here</a> for more information). This token is returned to the client and embedded in a hidden field for forms, in the request-header/parameter for AJAX requests. On receipt of this request, the server reads and decrypts the token value with the same key used to create the token. Inability to correctly decrypt suggest an intrusion attempt (recommend to block and log the attack for incident response purposes). Once decrypted, the users sessionId and timestamp contained within the token are validated; session-id is compared against the currently logged in user, and the timestamp is compared against the current time to verify that its not beyond the defined token expiry time. If session-id matches and the timestamp is under the defined token expiry time, request can be allowed.</p>
-<p>Refer <a href="Key_Management_Cheat_Sheet.html#key-management-lifecycle-best-practices">here</a> to learn best practices about managing your encryption key.</p>
+<p>The Encrypted Token Pattern leverages an encryption, rather than comparison method of Token-validation. It is most suitable for applications that do not want to maintain any state at server side.</p>
+<p>The server generates a token comprised of the user&apos;s session ID and a timestamp (to prevent replay attacks) using a unique key available only on the server (AES256-with GCM mode/GCM-SIV is recommended. Usage of ECB mode is strictly not recommended. If you would like to use any other block cipher mode of operation, refer <a href="Cryptographic_Storage_Cheat_Sheet.html">here</a> and <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation" target="_blank">here</a> for more information). This token is returned to the client and embedded in a hidden field for forms, in the request-header/parameter for AJAX requests. On receipt of this request, the server reads and decrypts the token value with the same key used to create the token.</p>
+<p>If the value cannot be decrypted then this suggests an intrusion attempt (which should be blocked and logged for debugging or incident response purposes). Once decrypted, the users session ID and timestamp contained within the token are validated. The session ID is compared against the currently logged in user, and the timestamp is compared against the current time to verify that its not beyond the defined token expiry time. If session id matches and the timestamp is under the defined token expiry time, request is allowed.</p>
+<p>The <a href="Key_Management_Cheat_Sheet.html#key-management-lifecycle-best-practices">Key Management Cheat Sheet</a> contains best practices about managing encryption keys.</p>
 <h3 id="hmac-based-token-pattern"><a name="hmac-based-token-pattern" class="plugin-anchor" href="#hmac-based-token-pattern"><i class="fa fa-link" aria-hidden="true"></i></a>HMAC Based Token Pattern</h3>
 <p>HMAC Based Token Pattern mitigation is also achieved without maintaining any state at the server. <a href="https://en.wikipedia.org/wiki/HMAC" target="_blank">HMAC</a> based CSRF protection works similar to encryption based CSRF protection with a couple of minor differences</p>
 <ol>
-<li>Use strong HMAC function (SHA256 or stronger algorithms are recommended) instead of an encryption function to generate the token</li>
-<li>Token is HMAC+timestamp</li>
+<li>It uses a strong HMAC function (SHA-256 or better is recommended) instead of an encryption function to generate the token.</li>
+<li>The token consists of a HMAC and timestamp.</li>
 </ol>
 <p>Below are the steps for the proper implementation of the HMAC based CSRF protection:</p>
 <ol>
 <li>Generate the token\
-Using key K, generate HMAC(usersessionID+timestamp) and append the same timestamp value to it which results in your CSRF token.</li>
-<li>Include the token (<em>i.e.</em> HMAC+timestamp)\
-Include token in a hidden field for forms and in the request-header field/request body parameter for AJAX requests. </li>
+Using key K, generate <code>HMAC(session ID + timestamp</code>) and append the same timestamp value to it which results in your CSRF token.</li>
+<li>Include the token (<em>i.e.</em> <code>HMAC+timestamp</code>)\
+Include token in a hidden field for forms and in the request-header field/request body parameter for AJAX requests.</li>
 <li>Validating the token\
-When the request is received at the server, re-generate the token with same key K (parameters are sessionID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.</li>
+When the request is received at the server, re-generate the token with same key K (parameters are the session ID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.</li>
 </ol>
-<p>Refer <a href="Key_Management_Cheat_Sheet.html#key-management-lifecycle-best-practices">here</a> to learn best practices about managing your HMAC key.</p>
-<h2 id="auto-csrf-mitigation-techniques"><a name="auto-csrf-mitigation-techniques" class="plugin-anchor" href="#auto-csrf-mitigation-techniques"><i class="fa fa-link" aria-hidden="true"></i></a>Auto CSRF Mitigation Techniques</h2>
-<p>Though the technique of mitigating tokens is widely used (stateful with synchronizer token and stateless with encrypted/HMAC token), the major problem associated with these techniques is the human tendency to forget things at times. If a developer forgets to add the token to any state changing operation, they are making the application vulnerable to CSRF. To avoid this, you can try to automate the process of adding tokens to CSRF vulnerable resources (mentioned earlier in this document). You can achieve this by doing the following:</p>
-<ul>
-<li>Write wrappers (that would auto add tokens when used) around default form tags/ajax calls and educate your developers to use those wrappers instead of standard tags. Though this approach is better than depending purely on developers to add tokens, it still is vulnerable to the issue of human tendency to forget things. <a href="https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html" target="_blank">Spring Security</a> uses this technique to add CSRF tokens by default when a custom <code>&lt;form:form&gt;</code> tag is used, you can opt to use after verifying that its enabled and properly configured in the Spring Security version you are using.</li>
-<li>Write a hook (that would capture the traffic and add tokens to CSRF vulnerable resources before rendering to customers) in your organizational web rendering frameworks. Because it is hard to analyze when a particular response is doing any state change (and thus needing a token), you might want to include tokens in all CSRF vulnerable resources (ex: include tokens in all POST responses). This is one recommended approach, but you need to consider the performance costs it might incur.</li>
-<li>Get the tokens automatically added on the client side when the page is being rendered in user&apos;s browser, with help of a client side script (this approach is used by <a href="https://www.owasp.org/index.php/CSRF_Guard" target="_blank">CSRF Guard</a>). You need to consider any possible JavaScript hijacking attacks.</li>
-</ul>
-<p>We recommend researching if the framework you are using has an option to achieve CSRF protection by default before trying to build your custom token generating system. For example, .NET has <a href="https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1" target="_blank">built-in protection</a> that adds a token to CSRF vulnerable resources. You are responsible for proper configuration (such as key management and token management) before using these built-in CSRF protections that generate tokens to guard CSRF vulnerable resources.</p>
-<h2 id="login-csrf"><a name="login-csrf" class="plugin-anchor" href="#login-csrf"><i class="fa fa-link" aria-hidden="true"></i></a>Login CSRF</h2>
-<p>Most developers tend to ignore CSRF vulnerability on login forms as they assume that CSRF would not be applicable on login forms because user is not authenticated at that stage. That assumption is false. CSRF vulnerability can still occur on login forms where the user is not authenticated, but the impact/risk view for it is quite different from the impact/risk view of a general CSRF vulnerability (when a user is authenticated).</p>
-<p>With a CSRF vulnerability on login form, an attacker can make a victim login as them and learn behavior from their searches. For more information about login CSRF and other risks, see section 3 of <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">this</a> paper.</p>
-<p>Login CSRF can be mitigated by creating pre-sessions (sessions before a user is authenticated) and including tokens in login form. You can use any of the techniques mentioned above to generate tokens. Pre-sessions can be transitioned to real sessions once the user is authenticated. This technique is described in <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">Robust Defenses for Cross-Site Request Forgery section 4.1</a>.</p>
-<p>If sub-domains under your master domain are treated as not trusty in your threat model, it is difficult to mitigate login CSRF. A strict subdomain and path level referrer header (because most login pages are served on HTTPS - no stripping of referrer - and are also linked from home pages) validation (detailed in section 6.1) can be used in these cases for mitigating CSRF on login forms to an extent.</p>
-<h1 id="defense-in-depth-techniques"><a name="defense-in-depth-techniques" class="plugin-anchor" href="#defense-in-depth-techniques"><i class="fa fa-link" aria-hidden="true"></i></a>Defense In Depth Techniques</h1>
-<h2 id="samesite-cookie-attribute"><a name="samesite-cookie-attribute" class="plugin-anchor" href="#samesite-cookie-attribute"><i class="fa fa-link" aria-hidden="true"></i></a>Samesite Cookie Attribute</h2>
+<p>The <a href="Key_Management_Cheat_Sheet.html#key-management-lifecycle-best-practices">Key Management Cheat Sheet</a> contains best practices about managing the HMAC key.</p>
+<h2 id="defense-in-depth-techniques"><a name="defense-in-depth-techniques" class="plugin-anchor" href="#defense-in-depth-techniques"><i class="fa fa-link" aria-hidden="true"></i></a>Defense In Depth Techniques</h2>
+<h3 id="samesite-cookie-attribute"><a name="samesite-cookie-attribute" class="plugin-anchor" href="#samesite-cookie-attribute"><i class="fa fa-link" aria-hidden="true"></i></a>SameSite Cookie Attribute</h3>
 <p>SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) which aims to mitigate CSRF attacks. It is defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7" target="_blank">RFC6265bis</a>. This attribute helps the browser decide whether to send cookies along with cross-site requests. Possible values for this attribute are <code>Lax</code>, <code>Strict</code>, or <code>None</code>.</p>
 <p>The Strict value will prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link. For example, for a GitHub-like website this would mean that if a logged-in user follows a link to a private GitHub project posted on a corporate discussion forum or email, GitHub will not receive the session cookie and the user will not be able to access the project. A bank website however doesn&apos;t want to allow any transactional pages to be linked from external sites, so the Strict flag would be most appropriate.</p>
 <p>The default Lax value provides a reasonable balance between security and usability for websites that want to maintain user&apos;s logged-in session after the user arrives from an external link. In the above GitHub scenario, the session cookie would be allowed when following a regular link from an external website while blocking it in CSRF-prone request methods such as POST. Only cross-site-requests that are allowed in Lax mode are the ones that have top-level navigations and are also <a href="https://tools.ietf.org/html/rfc7231#section-4.2.1" target="_blank">safe</a> HTTP methods.</p>
@@ -1153,24 +1180,21 @@ When the request is received at the server, re-generate the token with same key 
 Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 </code></pre><p>All desktop browsers and almost all mobile browsers now support the <code>SameSite</code> attribute. To keep track of the browsers implementing it and the usage of the attribute, refer to the following <a href="https://caniuse.com/#feat=same-site-cookie-attribute" target="_blank">service</a>. Note that Chrome has <a href="https://blog.chromium.org/2019/10/developers-get-ready-for-new.html" target="_blank">announced</a> that they will mark cookies as <code>SameSite=Lax</code> by default from Chrome 80 (due in February 2020), and Firefox and Edge are both planning to follow suit. Additionally, the <code>Secure</code> flag will be required for cookies that are marked as <code>SameSite=None</code>.</p>
 <p>It is important to note that this attribute should be implemented as an additional layer <em>defense in depth</em> concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1" target="_blank">section</a>. This attribute should not replace having a CSRF Token. Instead, it should co-exist with that token in order to protect the user in a more robust way.</p>
-<h2 id="verifying-origin-with-standard-headers"><a name="verifying-origin-with-standard-headers" class="plugin-anchor" href="#verifying-origin-with-standard-headers"><i class="fa fa-link" aria-hidden="true"></i></a>Verifying origin with standard headers</h2>
-<p>This defense technique is specifically proposed in section 5.0 of <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">Robust Defenses for Cross-Site Request Forgery</a>. This paper proposes the first creation of the Origin header and its use as a CSRF defense mechanism.</p>
+<h3 id="verifying-origin-with-standard-headers"><a name="verifying-origin-with-standard-headers" class="plugin-anchor" href="#verifying-origin-with-standard-headers"><i class="fa fa-link" aria-hidden="true"></i></a>Verifying Origin With Standard Headers</h3>
 <p>There are two steps to this mitigation, both of which rely on examining an HTTP request header value.</p>
 <ol>
-<li><p>Determining the origin the request is coming from (source origin). Can be done via Origin and/or referer header.</p>
-</li>
-<li><p>Determining the origin the request is going to (target origin).</p>
-</li>
+<li>Determining the origin the request is coming from (source origin). Can be done via Origin or Referer headers.</li>
+<li>Determining the origin the request is going to (target origin).</li>
 </ol>
-<p>At server side we verify if both of them match. If they do, we accept the request as legitimate (meaning it&apos;s the same origin request) and if they don&apos;t, we discard the request (meaning that the request originated from cross-domain). Reliability on these headers comes from the fact that they cannot be altered programmatically (using JavaScript in an XSS) as they fall under <a href="https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name" target="_blank">forbidden headers</a> list (i.e., only browsers can set them).</p>
-<h3 id="identifying-source-origin-via-originreferer-header"><a name="identifying-source-origin-via-originreferer-header" class="plugin-anchor" href="#identifying-source-origin-via-originreferer-header"><i class="fa fa-link" aria-hidden="true"></i></a>Identifying Source Origin (via Origin/Referer header)</h3>
+<p>At server side we verify if both of them match. If they do, we accept the request as legitimate (meaning it&apos;s the same origin request) and if they don&apos;t, we discard the request (meaning that the request originated from cross-domain). Reliability on these headers comes from the fact that they cannot be altered programmatically (using JavaScript with an XSS vulnerability) as they fall under <a href="https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name" target="_blank">forbidden headers</a> list, meaning that only the browser can set them</p>
+<h4 id="identifying-source-origin-via-originreferer-header"><a name="identifying-source-origin-via-originreferer-header" class="plugin-anchor" href="#identifying-source-origin-via-originreferer-header"><i class="fa fa-link" aria-hidden="true"></i></a>Identifying Source Origin (via Origin/Referer header)</h4>
 <p><strong>Checking the Origin Header</strong></p>
 <p>If the Origin header is present, verify that its value matches the target origin. Unlike the Referer, the Origin header will be present in HTTP requests that originate from an HTTPS URL.</p>
 <p><strong>Checking the Referer Header</strong></p>
 <p>If the Origin header is not present, verify the hostname in the Referer header matches the target origin. This method of CSRF mitigation is also commonly used with unauthenticated requests, such as requests made prior to establishing a session state, which is required to keep track of a synchronization token.</p>
-<p>In both cases, make sure the target origin check is strong. For example, if your site is <code>site.com</code> make sure <code>site.com.attacker.com</code> does not pass your origin check (i.e., match through the trailing / after the origin to make sure you are matching against the entire origin).</p>
+<p>In both cases, make sure the target origin check is strong. For example, if your site is <code>example.org</code> make sure <code>example.org.attacker.com</code> does not pass your origin check (i.e, match through the trailing / after the origin to make sure you are matching against the entire origin).</p>
 <p>If neither of these headers are present, you can either accept or block the request. We recommend <strong>blocking</strong>. Alternatively, you might want to log all such instances, monitor their use cases/behavior, and then start blocking requests only after you get enough confidence.</p>
-<h3 id="identifying-the-target-origin"><a name="identifying-the-target-origin" class="plugin-anchor" href="#identifying-the-target-origin"><i class="fa fa-link" aria-hidden="true"></i></a>Identifying the Target Origin</h3>
+<h4 id="identifying-the-target-origin"><a name="identifying-the-target-origin" class="plugin-anchor" href="#identifying-the-target-origin"><i class="fa fa-link" aria-hidden="true"></i></a>Identifying the Target Origin</h4>
 <p>You might think it&apos;s easy to determine the target origin, but it&apos;s frequently not. The first thought is to simply grab the target origin (i.e., its hostname and port <code>#</code>) from the URL in the request. However, the application server is frequently sitting behind one or more proxies and the original URL is different from the URL the app server actually receives. If your application server is directly accessed by its users, then using the origin in the URL is fine and you&apos;re all set.</p>
 <p>If you are behind a proxy, there are a number of options to consider.</p>
 <ul>
@@ -1189,295 +1213,59 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 <li>Origin header is included for all cross origin requests but for same origin requests, in most browsers it is only included in POST/DELETE/PUT <strong>Note:</strong> Although it is not ideal, many developers use GET requests to do state changing operations.</li>
 <li>Referer header is no exception. There are multiple use cases where referrer header is omitted as well (<a href="https://stackoverflow.com/questions/6880659/in-what-cases-will-http-referer-be-empty" target="_blank">1</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer" target="_blank">2</a>, <a href="https://en.wikipedia.org/wiki/HTTP_referer#Referer_hiding" target="_blank">3</a>, <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">4</a> and <a href="https://www.google.com/search?q=referrer+header+sent+null+value+site:stackoverflow.com" target="_blank">5</a>). Load balancers, proxies and embedded network devices are also well known to strip the referrer header due to privacy reasons in logging them.</li>
 </ul>
-<p>Usually, a minor percentage of traffic does fall under above categories (<a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html" target="_blank">1-2%</a>) and no enterprise would want to lose even this minor % of traffic. One of the popular technique used across Internet to make this technique more usable is to accept the request if the Origin/referrer matches your configured list of domains &quot;OR&quot; a null value (Examples <a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html" target="_blank">here</a>. null value is to cover the edge cases mentioned above where these headers are not sent). Please note that, attackers can exploit this but people prefer to use this technique as a defense in depth measure because of minor effort involved in deploying it</p>
-<h2 id="double-submit-cookie"><a name="double-submit-cookie" class="plugin-anchor" href="#double-submit-cookie"><i class="fa fa-link" aria-hidden="true"></i></a>Double Submit Cookie</h2>
+<p>Usually, a minor percentage of traffic does fall under above categories (<a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html" target="_blank">1-2%</a>) and no enterprise would want to lose this traffic. One of the popular technique used across Internet to make this technique more usable is to accept the request if the Origin/referrer matches your configured list of domains &quot;OR&quot; a null value (Examples <a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html" target="_blank">here</a>. null value is to cover the edge cases mentioned above where these headers are not sent). Please note that, attackers can exploit this but people prefer to use this technique as a defense in depth measure because of minor effort involved in deploying it</p>
+<h3 id="double-submit-cookie"><a name="double-submit-cookie" class="plugin-anchor" href="#double-submit-cookie"><i class="fa fa-link" aria-hidden="true"></i></a>Double Submit Cookie</h3>
 <p>If maintaining the state for CSRF token at server side is problematic, an alternative defense is to use the double submit cookie technique. This technique is easy to implement and is stateless. In this technique, we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (cryptographically strong) pseudorandom value and set it as a cookie on the user&apos;s machine separate from the session identifier. The site then requires that every transaction request include this pseudorandom value as a hidden form value (or other request parameter/header). If both of them match at server side, the server accepts it as legitimate request and if they don&apos;t, it would reject the request.</p>
-<p><strong>This technique works as long as you are sure that your subdomains are fully secured and only accept HTTPS connections</strong> 
-The problem of &quot;trusting of sub domains and proper configuration of whole site in general to accept HTTPS connections only&quot;. The <a href="https://media.blackhat.com/eu-13/briefings/Lundeen/bh-eu-13-deputies-still-confused-lundeen-wp.pdf" target="_blank">Blackhat talk</a> by Rich Lundeen references these drawbacks.</p>
-<p>&quot;<em>With double submit, if an attacker can write a cookie they can obviously defeat the protection. And again, writing cookies is significantly easier then reading them. The fact that cookies can be written is difficult for many people to understand. After all, doesn&apos;t the same origin policy specify that one domain cannot access cookies from another domain? However, there are two common scenarios where writing cookies across domains is possible:</em></p>
-<p><em>a)   While it&apos;s true that hellokitty.marketing.example.com cannot read cookies or access the DOM from secure.example.com because of the same origin policy, hellokitty.marketing.example.com can write cookies to the parent domain (example.com), and these cookies are then consumed by secure.example.com (secure.example.com has no good way to distinguish which site set the cookie). Additionally, there are methods of forcing secure.example.com to always accept your cookie first. What this means is that XSS in hellokitty.marketing.example.com is able to overwrite cookies in secure.example.com.</em></p>
-<p><em>b)   If an attacker is in the middle, they can usually force a request to the same domain over HTTP. If an application is hosted at <code>https://secure.example.com</code>, even if the cookies are set with the secure flag, a man in the middle can force connections to <code>http://secure.example.com</code> and set (overwrite) any arbitrary cookies (even though the secure flag prevents the attacker from reading those cookies). Even if the HSTS header is set on the server and the browser visiting the site supports HSTS (this would prevent a man in the middle from forcing plaintext HTTP requests) unless the HSTS header is set in a way that includes all subdomains, a man in the middle can simply force a request to a separate subdomain and overwrite cookies similar to 1. In other words, as long as <code>http://hellokitty.marketing.example.com</code> doesn&apos;t force https, then an attacker can overwrite cookies on any <code>example.com</code> subdomain.</em>&quot;</p>
-<p>Scenarios a and b mentioned above are possible only if the CSRF token is not derived/tied to the session in which case an attacker can overwrite the token in the parent domain cookie with XSS in child domain. A variant of how this can be mitigated by linking token and session/auth cookie is explained below.</p>
-<p>Including the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side matching it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for ajax calls mitigates both the issues mentioned above. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.</p>
+<p>Because subdomains can write cookies to the parent domains and because cookies can be set for the domain over plain HTTP connections this technique works as long as you are sure that your subdomains are fully secured and only accept HTTPS connections.</p>
+<p>To enhance the security of this solution include the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for ajax calls. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.</p>
 <p>A simpler alternative to an encrypted cookie is to hash the token with a secret salt known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a salted-hash is used, an attacker won&apos;t be able to recreate the cookie value from the plain token without knowledge of the server secrets.</p>
-<p><strong>Note about Triple Submit Cookie</strong> </p>
-<p>This mitigation is proposed by John Wilander in 2012 at OWASP Appsec Research. This technique adds an additional step to double submit cookie approach by verifying if the request contains two cookies with same name (please note, attacker need to write an additional cookie to bypass double submit cookie mitigation). Though it mitigates the issues discussed in bypass of double submit cookie, it introduces new problems such as cookie jar overflow (in-details and more issue details <a href="https://media.blackhat.com/eu-13/briefings/Lundeen/bh-eu-13-deputies-still-confused-lundeen-wp.pdf" target="_blank">here</a> and <a href="https://webstersprodigy.net/2012/08/03/analysis-of-john-wilanders-triple-submit-cookies/" target="_blank">here</a></p>
-<h2 id="use-of-custom-request-headers"><a name="use-of-custom-request-headers" class="plugin-anchor" href="#use-of-custom-request-headers"><i class="fa fa-link" aria-hidden="true"></i></a>Use of Custom Request Headers</h2>
-<p>Adding CSRF tokens, a double submit cookie and value, encrypted token, or other defense that involves changing the UI can frequently be complex or otherwise problematic. An alternate defense that is particularly well suited for AJAX/XHR endpoints is the use of a custom request header. This defense relies on the <a href="https://en.wikipedia.org/wiki/Same-origin_policy" target="_blank">same-origin policy (SOP)</a> restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests.</p>
-<p>A particularly attractive custom header and value to use is &quot;X-Requested-With: XMLHttpRequest&quot; because most JavaScript libraries already add this header to requests they generate by default. However, some do not. For example, AngularJS used to, but does not anymore. For more information, see <a href="https://github.com/angular/angular.js/commit/3a75b1124d062f64093a90b26630938558909e8d" target="_blank">their rationale</a> and how to add it back.</p>
-<p>If this is the case for your system, you can simply verify the presence of this header and value on all your server side AJAX endpoints in order to protect against CSRF attacks. This approach has the double advantage of usually requiring no UI changes and not introducing any server side state, which is particularly attractive to REST services. You can always add your own custom header and value if that is preferred.</p>
-<p>This defense technique is specifically discussed in section 4.3 of <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">Robust Defenses for Cross-Site Request Forgery</a>. However, bypasses of this defense using Flash were documented as early as 2008 and again as recently as 2015 by Mathias Karlsson to <a href="https://hackerone.com/reports/44146" target="_blank">exploit a CSRF flaw in Vimeo</a>. Riyaz Walikar from <a href="https://appsecco.com/" target="_blank">Appsecco Labs</a> was able to exploit this even in early 2019 <a href="https://blog.appsecco.com/exploiting-csrf-on-json-endpoints-with-flash-and-redirects-681d4ad6b31b" target="_blank">using older versions of Firefox</a> and also in some recent versions of Chrome (with a bit of <a href="https://github.com/sp1d3r/swf_json_csrf/blob/master/read.html" target="_blank">user involvement</a>). Since we cannot the control the versions of browser end user uses nor depend on it for their security, this technique is not recommended as a primary defense in measure.</p>
-<p>This technique obviously works for Ajax calls and you have to still need protect <code>&lt;form&gt;</code> tags with approaches described in this document such as tokens. Also, CORS configuration should also be robust to make this solution work effectively (as custom headers for requests coming from other domains trigger a pre-flight CORS check).</p>
-<p><strong>Note about Content-Type Header Validation</strong> </p>
-<p>Do not use Content-Type Header as a CSRF mitigation. For more information why, see <a href="https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/" target="_blank">Common CSRF Prevention Misconceptions</a></p>
-<h2 id="user-interaction-based-csrf-defense"><a name="user-interaction-based-csrf-defense" class="plugin-anchor" href="#user-interaction-based-csrf-defense"><i class="fa fa-link" aria-hidden="true"></i></a>User Interaction Based CSRF Defense</h2>
+<h4 id="cookie-with-host--prefix"><a name="cookie-with-host--prefix" class="plugin-anchor" href="#cookie-with-host--prefix"><i class="fa fa-link" aria-hidden="true"></i></a>Cookie with __Host- prefix</h4>
+<p>Another solution for this problem is use of <code>Cookie Prefixes</code> for cookie with CSRF token. If cookie has <code>__Host-</code> prefix e.g. <code>Set-Cookie: __Host-token=RANDOM; path=/; Secure</code> then the cookie:</p>
+<ul>
+<li>Cannot be (over)written from another subdomain.</li>
+<li>Must have the path of <code>/</code>.</li>
+<li>Must be marked as Secure (i.e, cannot be send over unencrypted HTTP).</li>
+</ul>
+<p>However, as of January 2020 cookie prefixes <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility" target="_blank">are not supported by IE and Edge</a>.</p>
+<p>See the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives" target="_blank">Mozilla Developer Network</a> and <a href="https://tools.ietf.org/html/draft-west-cookie-prefixes-05" target="_blank">IETF Draft</a> for further information about cookie prefixes.</p>
+<h3 id="use-of-custom-request-headers"><a name="use-of-custom-request-headers" class="plugin-anchor" href="#use-of-custom-request-headers"><i class="fa fa-link" aria-hidden="true"></i></a>Use of Custom Request Headers</h3>
+<p>Adding CSRF tokens, a double submit cookie and value, an encrypted token, or other defense that involves changing the UI can frequently be complex or otherwise problematic. An alternate defense that is particularly well suited for AJAX or API endpoints is the use of a <strong>custom request header</strong>. This defense relies on the <a href="https://en.wikipedia.org/wiki/Same-origin_policy" target="_blank">same-origin policy (SOP)</a> restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests with custom headers.</p>
+<p>If this is the case for your system, you can simply verify the presence of this header and value on all your server side AJAX endpoints in order to protect against CSRF attacks. This approach has the double advantage of usually requiring no UI changes and not introducing any server side state, which is particularly attractive to REST services. You can always add your own <strong>custom header</strong> and value if that is preferred.</p>
+<p>This technique obviously works for AJAX calls and you have to still need protect <code>&lt;form&gt;</code> tags with approaches described in this document such as tokens. Also, CORS configuration should also be robust to make this solution work effectively (as custom headers for requests coming from other domains trigger a pre-flight CORS check).</p>
+<h3 id="user-interaction-based-csrf-defense"><a name="user-interaction-based-csrf-defense" class="plugin-anchor" href="#user-interaction-based-csrf-defense"><i class="fa fa-link" aria-hidden="true"></i></a>User Interaction Based CSRF Defense</h3>
 <p>While all the techniques referenced here do not require any user interaction, sometimes it&apos;s easier or more appropriate to involve the user in the transaction to prevent unauthorized operations (forged via CSRF or otherwise). The following are some examples of techniques that can act as strong CSRF defense when implemented correctly.</p>
 <ul>
 <li>Re-Authentication (password or stronger)</li>
 <li>One-time Token</li>
 <li>CAPTCHA</li>
 </ul>
-<p>While these are a very strong CSRF defense, it does create a huge impact on the user experience. For applications that are in need of high security for some operations (password change, money transfer etc.), these techniques should be used along with token based mitigation. Please note that tokens by themselves can mitigate CSRF, developers should use these techniques only to achieve additional security for their high sensitive operations.</p>
-<h1 id="implementation-reference-example"><a name="implementation-reference-example" class="plugin-anchor" href="#implementation-reference-example"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation reference example</h1>
-<p>The following JEE web filter provides an example reference for some of the concepts described in this cheatsheet. It implements the following stateless mitigations (<a href="https://github.com/aramrami/OWASP-CSRFGuard" target="_blank">OWASP CSRFGuard</a>, cover a stateful approach).</p>
+<p>While these are a very strong CSRF defense, it can create a significant impact on the user experience. As such, they would generally only be used for security critical operations (such as password change, money transfers, etc.), alongside the other defences discussed in this cheat sheet.</p>
+<h2 id="login-csrf"><a name="login-csrf" class="plugin-anchor" href="#login-csrf"><i class="fa fa-link" aria-hidden="true"></i></a>Login CSRF</h2>
+<p>Most developers tend to ignore CSRF vulnerability on login forms as they assume that CSRF would not be applicable on login forms because user is not authenticated at that stage, however this assumption is not always true. CSRF vulnerabilities can still occur on login forms where the user is not authenticated, but the impact and risk is different.</p>
+<p>For example, if an attacker uses CSRF to authenticate a victim on a shopping website using the attacker&apos;s account, and the victim then enters their credit card information, an attacker may be able to purchase items using the victim&apos;s stored card details. For more information about login CSRF and other risks, see section 3 of <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">this</a> paper.</p>
+<p>Login CSRF can be mitigated by creating pre-sessions (sessions before a user is authenticated) and including tokens in login form. You can use any of the techniques mentioned above to generate tokens. Remember that pre-sessions cannot be transitioned to real sessions once the user is authenticated - the session should be destroyed and a new one should be made to avoid <a href="http://www.acrossecurity.com/papers/session_fixation.pdf" target="_blank">session fixation attacks</a>. This technique is described in <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">Robust Defenses for Cross-Site Request Forgery section 4.1</a>.</p>
+<p>If sub-domains under your master domain are not trusted in your threat model, it is difficult to mitigate login CSRF. A strict subdomain and path level referrer header validation can be used in these cases for mitigating CSRF on login forms to an extent.</p>
+<h2 id="java-reference-example"><a name="java-reference-example" class="plugin-anchor" href="#java-reference-example"><i class="fa fa-link" aria-hidden="true"></i></a>Java Reference Example</h2>
+<p>The following <a href="https://github.com/righettod/poc-csrf/blob/master/src/main/java/eu/righettod/poccsrf/filter/CSRFValidationFilter.java" target="_blank">JEE web filter</a> provides an example reference for some of the concepts described in this cheatsheet. It implements the following stateless mitigations (<a href="https://github.com/aramrami/OWASP-CSRFGuard" target="_blank">OWASP CSRFGuard</a>, cover a stateful approach).</p>
 <ul>
 <li>Verifying same origin with standard headers</li>
 <li>Double submit cookie</li>
 <li>SameSite cookie attribute</li>
 </ul>
 <p><strong>Please note</strong> that it only acts a reference sample and is not complete (for example: it doesn&apos;t have a block to direct the control flow when origin and referrer header check succeeds nor it has a port/host/protocol level validation for referrer header). Developers are recommended to build their complete mitigation on top of this reference sample. Developers should also implement standard authentication or authorization checks before checking for CSRF.</p>
-<p>Source is also located <a href="https://github.com/righettod/poc-csrf" target="_blank">here</a> and provides a runnable POC.</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> org.slf4j.Logger;
-<span class="hljs-keyword">import</span> org.slf4j.LoggerFactory;
-
-<span class="hljs-keyword">import</span> javax.servlet.Filter;
-<span class="hljs-keyword">import</span> javax.servlet.FilterChain;
-<span class="hljs-keyword">import</span> javax.servlet.FilterConfig;
-<span class="hljs-keyword">import</span> javax.servlet.ServletException;
-<span class="hljs-keyword">import</span> javax.servlet.ServletRequest;
-<span class="hljs-keyword">import</span> javax.servlet.ServletResponse;
-<span class="hljs-keyword">import</span> javax.servlet.annotation.WebFilter;
-<span class="hljs-keyword">import</span> javax.servlet.http.Cookie;
-<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;
-<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletResponse;
-<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletResponseWrapper;
-<span class="hljs-keyword">import</span> javax.xml.bind.DatatypeConverter;
-<span class="hljs-keyword">import</span> java.io.IOException;
-<span class="hljs-keyword">import</span> java.net.MalformedURLException;
-<span class="hljs-keyword">import</span> java.net.URL;
-<span class="hljs-keyword">import</span> java.security.SecureRandom;
-<span class="hljs-keyword">import</span> java.util.Arrays;
-
-<span class="hljs-comment">/**
- * Filter in charge of validating each incoming HTTP request about Headers 
- * and CSRF token.
- * It is called for all requests to backend destination.
- *
- * We use the approach in which:
- * - The CSRF token is changed after each valid HTTP exchange
- * - The custom Header name for the CSRF token transmission is fixed
- * - A CSRF token is associated to a backend service URI in order to enable 
- *   the support for multiple parallel Ajax request from the same application
- * - The CSRF cookie name is the backend service name prefixed with a fixed prefix
- *
- * Here for the POC we show the &quot;access denied&quot; reason in the response but in 
- * production code only return a generic message !
- *
- * <span class="hljs-doctag">@see</span> &quot;https://wiki.mozilla.org/Security/Origin&quot;
- * <span class="hljs-doctag">@see</span> &quot;https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie&quot;
- * <span class="hljs-doctag">@see</span> &quot;https://chloe.re/2016/04/13/goodbye-csrf-samesite-to-the-rescue/&quot;
- */</span>
-<span class="hljs-meta">@WebFilter</span>(<span class="hljs-string">&quot;/backend/*&quot;</span>)
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CSRFValidationFilter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Filter</span> </span>{
-
-    <span class="hljs-comment">/**
-     * JVM param name used to define the target origin
-     */</span>
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String TARGET_ORIGIN_JVM_PARAM_NAME = <span class="hljs-string">&quot;target.origin&quot;</span>;
-
-    <span class="hljs-comment">/**
-     * Name of the custom HTTP header used to transmit the CSRF token and also to prefix
-     * the CSRF cookie for the expected backend service
-     */</span>
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String CSRF_TOKEN_NAME = <span class="hljs-string">&quot;X-TOKEN&quot;</span>;
-
-    <span class="hljs-comment">/**
-     * Logger
-     */</span>
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Logger LOG = LoggerFactory.getLogger(CSRFValidationFilter.class);
-
-    <span class="hljs-comment">/**
-     * Application expected deployment domain: named &quot;Target Origin&quot; in OWASP CSRF article
-     */</span>
-    <span class="hljs-keyword">private</span> URL targetOrigin;
-
-    <span class="hljs-comment">/***
-     * Secure generator
-     */</span>
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> SecureRandom secureRandom = <span class="hljs-keyword">new</span> SecureRandom();
-
-
-    <span class="hljs-comment">/**
-     * {<span class="hljs-doctag">@inheritDoc</span>}
-     */</span>
-    <span class="hljs-meta">@Override</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doFilter</span><span class="hljs-params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> 
-    <span class="hljs-keyword">throws</span> IOException, ServletException </span>{
-        HttpServletRequest httpReq = (HttpServletRequest) request;
-        HttpServletResponse httpResp = (HttpServletResponse) response;
-        String accessDeniedReason;
-
-        <span class="hljs-comment">/* STEP 1: Verifying Same Origin with Standard Headers */</span>
-        <span class="hljs-comment">//Try to get the source from the &quot;Origin&quot; header</span>
-        String source = httpReq.getHeader(<span class="hljs-string">&quot;Origin&quot;</span>);
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isBlank(source)) {
-            <span class="hljs-comment">//If empty then fallback on &quot;Referer&quot; header</span>
-            source = httpReq.getHeader(<span class="hljs-string">&quot;Referer&quot;</span>);
-            <span class="hljs-comment">//If this one is empty too then we trace the event and we block the request </span>
-            <span class="hljs-comment">//(recommendation of the article)...</span>
-            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isBlank(source)) {
-                accessDeniedReason = <span class="hljs-string">&quot;CSRFValidationFilter: ORIGIN and REFERER request&quot;</span> + 
-                <span class="hljs-string">&quot;headers are both absent/empty so we block the request !&quot;</span>;
-                LOG.warn(accessDeniedReason);
-                httpResp.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedReason);
-                <span class="hljs-keyword">return</span>;
-            }
-        }
-
-        <span class="hljs-comment">//Compare the source against the expected target origin</span>
-        URL sourceURL = <span class="hljs-keyword">new</span> URL(source);
-        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.targetOrigin.getProtocol().equals(sourceURL.getProtocol()) || 
-            !<span class="hljs-keyword">this</span>.targetOrigin.getHost().equals(sourceURL.getHost())
-        || <span class="hljs-keyword">this</span>.targetOrigin.getPort() != sourceURL.getPort()) {
-            <span class="hljs-comment">//One the part do not match so we trace the event and we block the request</span>
-            accessDeniedReason = String.format(<span class="hljs-string">&quot;CSRFValidationFilter: Protocol/Host/Port &quot;</span> + 
-            <span class="hljs-string">&quot;do not fully matches so we block the request! (%s != %s) &quot;</span>,
-                <span class="hljs-keyword">this</span>.targetOrigin, sourceURL);
-            LOG.warn(accessDeniedReason);
-            httpResp.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedReason);
-            <span class="hljs-keyword">return</span>;
-        }
-
-        <span class="hljs-comment">/* STEP 2: Verifying CSRF token using &quot;Double Submit Cookie&quot; approach */</span>
-        <span class="hljs-comment">//If CSRF token cookie is absent from the request then we provide one </span>
-        <span class="hljs-comment">//in response but we stop the process at this stage.</span>
-        <span class="hljs-comment">//Using this way we implement the first providing of token</span>
-        Cookie tokenCookie = <span class="hljs-keyword">null</span>;
-        <span class="hljs-keyword">if</span> (httpReq.getCookies() != <span class="hljs-keyword">null</span>) {
-            String csrfCookieExpectedName = <span class="hljs-keyword">this</span>.determineCookieName(httpReq);
-            tokenCookie = Arrays.stream(httpReq.getCookies()).filter(c 
-            -&gt; c.getName().equals(csrfCookieExpectedName)).findFirst().orElse(<span class="hljs-keyword">null</span>);
-        }
-        <span class="hljs-keyword">if</span> (tokenCookie == <span class="hljs-keyword">null</span> || <span class="hljs-keyword">this</span>.isBlank(tokenCookie.getValue())) {
-            LOG.info(<span class="hljs-string">&quot;CSRFValidationFilter: CSRF cookie absent or value&quot;</span> + 
-            <span class="hljs-string">&quot; is null/empty so we provide one and return an HTTP NO_CONTENT response !&quot;</span>);
-            <span class="hljs-comment">//Add the CSRF token cookie and header</span>
-            <span class="hljs-keyword">this</span>.addTokenCookieAndHeader(httpReq, httpResp);
-            <span class="hljs-comment">//Set response state to &quot;204 No Content&quot; in order to allow the requester to </span>
-            <span class="hljs-comment">//clearly identify an initial response providing the initial CSRF token</span>
-            httpResp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-        } <span class="hljs-keyword">else</span> {
-            <span class="hljs-comment">//If the cookie is present then we pass to validation phase</span>
-            <span class="hljs-comment">//Get token from the custom HTTP header (part under control of the requester)</span>
-            String tokenFromHeader = httpReq.getHeader(CSRF_TOKEN_NAME);
-            <span class="hljs-comment">//If empty then we trace the event and we block the request</span>
-            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isBlank(tokenFromHeader)) {
-                accessDeniedReason = <span class="hljs-string">&quot;CSRFValidationFilter: Token provided via HTTP Header&quot;</span>+ 
-                <span class="hljs-string">&quot; is absent/empty so we block the request !&quot;</span>;
-                LOG.warn(accessDeniedReason);
-                httpResp.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedReason);
-            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!tokenFromHeader.equals(tokenCookie.getValue())) {
-                <span class="hljs-comment">//Verify that token from header and one from cookie are the same</span>
-                <span class="hljs-comment">//Here is not the case so we trace the event and we block the request</span>
-                accessDeniedReason = <span class="hljs-string">&quot;CSRFValidationFilter: Token provided via HTTP Header&quot;</span>+ 
-                <span class="hljs-string">&quot;and via Cookie are not equals so we block the request !&quot;</span>;
-                LOG.warn(accessDeniedReason);
-                httpResp.sendError(HttpServletResponse.SC_FORBIDDEN, accessDeniedReason);
-            } <span class="hljs-keyword">else</span> {
-                <span class="hljs-comment">//Verify that token from header and one from cookie matches</span>
-                <span class="hljs-comment">//Here is the case so we let the request reach the target component </span>
-                <span class="hljs-comment">//(ServiceServlet, jsp...) and add a new token when we get back the bucket</span>
-                HttpServletResponseWrapper httpRespWrapper = 
-                                            <span class="hljs-keyword">new</span> HttpServletResponseWrapper(httpResp);
-                chain.doFilter(request, httpRespWrapper);
-                <span class="hljs-comment">//Add the CSRF token cookie and header</span>
-                <span class="hljs-keyword">this</span>.addTokenCookieAndHeader(httpReq, httpRespWrapper);
-            }
-        }
-    }
-
-    <span class="hljs-comment">/**
-     * {<span class="hljs-doctag">@inheritDoc</span>}
-     */</span>
-    <span class="hljs-meta">@Override</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(FilterConfig filterConfig)</span> <span class="hljs-keyword">throws</span> ServletException </span>{
-        <span class="hljs-comment">//To easier the configuration, we load the target expected origin from </span>
-        <span class="hljs-comment">//an JVM property</span>
-        <span class="hljs-comment">//Reconfiguration only require an application restart that is generally acceptable</span>
-        <span class="hljs-keyword">try</span> {
-            <span class="hljs-keyword">this</span>.targetOrigin = <span class="hljs-keyword">new</span> URL(System.getProperty(TARGET_ORIGIN_JVM_PARAM_NAME));
-        } <span class="hljs-keyword">catch</span> (MalformedURLException e) {
-            LOG.error(<span class="hljs-string">&quot;Cannot init the filter !&quot;</span>, e);
-            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ServletException(e);
-        }
-        LOG.info(<span class="hljs-string">&quot;CSRFValidationFilter: Filter init, set expected target origin to &apos;{}&apos;.&quot;</span>, 
-                 <span class="hljs-keyword">this</span>.targetOrigin);
-    }
-
-    <span class="hljs-comment">/**
-     * {<span class="hljs-doctag">@inheritDoc</span>}
-     */</span>
-    <span class="hljs-meta">@Override</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">destroy</span><span class="hljs-params">()</span> </span>{
-        LOG.info(<span class="hljs-string">&quot;CSRFValidationFilter: Filter shutdown&quot;</span>);
-    }
-
-    <span class="hljs-comment">/**
-     * Check if a string is null or empty (including containing only spaces)
-     *
-     * <span class="hljs-doctag">@param</span> s Source string
-     * <span class="hljs-doctag">@return</span> TRUE if source string is null or empty (including containing only spaces)
-     */</span>
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isBlank</span><span class="hljs-params">(String s)</span> </span>{
-        <span class="hljs-keyword">return</span> s == <span class="hljs-keyword">null</span> || s.trim().isEmpty();
-    }
-
-    <span class="hljs-comment">/**
-     * Generate a new CSRF token
-     *
-     * <span class="hljs-doctag">@return</span> The token a string
-     */</span>
-    <span class="hljs-function"><span class="hljs-keyword">private</span> String <span class="hljs-title">generateToken</span><span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">byte</span>[] buffer = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">50</span>];
-        <span class="hljs-keyword">this</span>.secureRandom.nextBytes(buffer);
-        <span class="hljs-keyword">return</span> DatatypeConverter.printHexBinary(buffer);
-    }
-
-    <span class="hljs-comment">/**
-     * Determine the name of the CSRF cookie for the targeted backend service
-     *
-     * <span class="hljs-doctag">@param</span> httpRequest Source HTTP request
-     * <span class="hljs-doctag">@return</span> The name of the cookie as a string
-     */</span>
-    <span class="hljs-function"><span class="hljs-keyword">private</span> String <span class="hljs-title">determineCookieName</span><span class="hljs-params">(HttpServletRequest httpRequest)</span> </span>{
-        String backendServiceName = httpRequest.getRequestURI().replaceAll(<span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-string">&quot;-&quot;</span>);
-        <span class="hljs-keyword">return</span> CSRF_TOKEN_NAME + <span class="hljs-string">&quot;-&quot;</span> + backendServiceName;
-    }
-
-    <span class="hljs-comment">/**
-     * Add the CSRF token cookie and header to the provided HTTP response object
-     *
-     * <span class="hljs-doctag">@param</span> httpRequest  Source HTTP request
-     * <span class="hljs-doctag">@param</span> httpResponse HTTP response object to update
-     */</span>
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addTokenCookieAndHeader</span><span class="hljs-params">(HttpServletRequest httpRequest, 
-                                         HttpServletResponse httpResponse)</span> </span>{
-        <span class="hljs-comment">//Get new token</span>
-        String token = <span class="hljs-keyword">this</span>.generateToken();
-        <span class="hljs-comment">//Add cookie manually because the current Cookie class implementation </span>
-        <span class="hljs-comment">//do not support the &quot;SameSite&quot; attribute</span>
-        <span class="hljs-comment">//We let the adding of the &quot;Secure&quot; cookie attribute to the reverse proxy rewriting...</span>
-        <span class="hljs-comment">//Here we lock the cookie from JS access and we use the SameSite new attribute protection</span>
-        String cookieSpec = String.format(<span class="hljs-string">&quot;%s=%s; Path=%s; HttpOnly; SameSite=Strict&quot;</span>, 
-                            <span class="hljs-keyword">this</span>.determineCookieName(httpRequest), token, httpRequest.getRequestURI());
-        httpResponse.addHeader(<span class="hljs-string">&quot;Set-Cookie&quot;</span>, cookieSpec);
-        <span class="hljs-comment">//Add cookie header to give access to the token to the JS code</span>
-        httpResponse.setHeader(CSRF_TOKEN_NAME, token);
-    }
-}
-</code></pre>
-<h1 id="javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header"><a name="javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header" class="plugin-anchor" href="#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header"><i class="fa fa-link" aria-hidden="true"></i></a>JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header</h1>
-<p>The following guidance considers <strong>GET</strong>, <strong>HEAD</strong> and <strong>OPTIONS</strong> methods are safe operations. Therefore <strong>GET</strong>, <strong>HEAD</strong>, and <strong>OPTIONS</strong> method AJAX calls need not be appended with a CSRF token header. However, if the verbs are used to perform state changing operations, they will also require a CSRF token header.</p>
-<p><strong>POST</strong>, <strong>PUT</strong>, <strong>PATCH</strong>, <strong>DELETE</strong> and <strong>TRACE</strong> verbs, being state changing verbs, should have a CSRF token attached to the request. The following guidance will demonstrate how to create overrides in JavaScript libraries to have CSRF tokens included automatically with every AJAX request for the state changing methods mentioned above.</p>
-<h2 id="storing-the-csrf-token-value-in-the-dom"><a name="storing-the-csrf-token-value-in-the-dom" class="plugin-anchor" href="#storing-the-csrf-token-value-in-the-dom"><i class="fa fa-link" aria-hidden="true"></i></a>Storing the CSRF Token Value in the DOM</h2>
-<p>A CSRF token can be included in the <code>&lt;meta&gt;</code> tag as shown below. All subsequent calls in the page can extract the CSRF token from this <code>&lt;meta&gt;</code> tag. It can also be stored in a JS variable / anywhere on the DOM. However, it is not recommended to store it in cookies or browser local storage.</p>
+<p>Full source is located <a href="https://github.com/righettod/poc-csrf" target="_blank">here</a> and provides a runnable POC.</p>
+<h2 id="javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header"><a name="javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header" class="plugin-anchor" href="#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header"><i class="fa fa-link" aria-hidden="true"></i></a>JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header</h2>
+<p>The following guidance considers <strong>GET</strong>, <strong>HEAD</strong> and <strong>OPTIONS</strong> methods are safe operations. Therefore <strong>GET</strong>, <strong>HEAD</strong>, and <strong>OPTIONS</strong> method AJAX calls need not be appended with a CSRF token header. However, if the verbs are used to perform state changing operations, they will also require a CSRF token header (although this is bad practice, and should be avoided).</p>
+<p>The <strong>POST</strong>, <strong>PUT</strong>, <strong>PATCH</strong>, and <strong>DELETE</strong> methods, being state changing verbs, should have a CSRF token attached to the request. The following guidance will demonstrate how to create overrides in JavaScript libraries to have CSRF tokens included automatically with every AJAX request for the state changing methods mentioned above.</p>
+<h3 id="storing-the-csrf-token-value-in-the-dom"><a name="storing-the-csrf-token-value-in-the-dom" class="plugin-anchor" href="#storing-the-csrf-token-value-in-the-dom"><i class="fa fa-link" aria-hidden="true"></i></a>Storing the CSRF Token Value in the DOM</h3>
+<p>A CSRF token can be included in the <code>&lt;meta&gt;</code> tag as shown below. All subsequent calls in the page can extract the CSRF token from this <code>&lt;meta&gt;</code> tag. It can also be stored in a JavaScript variable or anywhere on the DOM. However, it is not recommended to store it in cookies or browser local storage.</p>
 <p>The following code snippet can be used to include a CSRF token as a <code>&lt;meta&gt;</code> tag:</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;csrf-token&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;{{ csrf_token() }}&quot;</span>&gt;</span>
 </code></pre>
 <p>The exact syntax of populating the content attribute would depend on your web application&apos;s backend programming language.</p>
-<h2 id="overriding-defaults-to-set-custom-header"><a name="overriding-defaults-to-set-custom-header" class="plugin-anchor" href="#overriding-defaults-to-set-custom-header"><i class="fa fa-link" aria-hidden="true"></i></a>Overriding Defaults to Set Custom Header</h2>
+<h3 id="overriding-defaults-to-set-custom-header"><a name="overriding-defaults-to-set-custom-header" class="plugin-anchor" href="#overriding-defaults-to-set-custom-header"><i class="fa fa-link" aria-hidden="true"></i></a>Overriding Defaults to Set Custom Header</h3>
 <p>Several JavaScript libraries allow for overriding default settings to have a header added automatically to all AJAX requests.</p>
-<h3 id="xmlhttprequest-native-javascript"><a name="xmlhttprequest-native-javascript" class="plugin-anchor" href="#xmlhttprequest-native-javascript"><i class="fa fa-link" aria-hidden="true"></i></a>XMLHttpRequest (Native JavaScript)</h3>
+<h4 id="xmlhttprequest-native-javascript"><a name="xmlhttprequest-native-javascript" class="plugin-anchor" href="#xmlhttprequest-native-javascript"><i class="fa fa-link" aria-hidden="true"></i></a>XMLHttpRequest (Native JavaScript)</h4>
 <p>XMLHttpRequest&apos;s open() method can be overridden to set the <code>anti-csrf-token</code> header whenever the <code>open()</code> method is invoked next. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>This can be done as demonstrated in the following code snippet:</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript">
@@ -1497,7 +1285,7 @@ The problem of &quot;trusting of sub domains and proper configuration of whole s
     };
  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
-<h3 id="angularjs"><a name="angularjs" class="plugin-anchor" href="#angularjs"><i class="fa fa-link" aria-hidden="true"></i></a>AngularJS</h3>
+<h4 id="angularjs"><a name="angularjs" class="plugin-anchor" href="#angularjs"><i class="fa fa-link" aria-hidden="true"></i></a>AngularJS</h4>
 <p>AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS&apos;s documentation for <a href="https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults" target="_blank">$httpProvider</a>.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
     <span class="hljs-keyword">var</span> csrf_token = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;meta[name=&apos;csrf-token&apos;]&quot;</span>).getAttribute(<span class="hljs-string">&quot;content&quot;</span>);
@@ -1521,7 +1309,7 @@ The problem of &quot;trusting of sub domains and proper configuration of whole s
  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
 <p>This code snippet has been tested with AngularJS version 1.7.7.</p>
-<h3 id="axios"><a name="axios" class="plugin-anchor" href="#axios"><i class="fa fa-link" aria-hidden="true"></i></a>Axios</h3>
+<h4 id="axios"><a name="axios" class="plugin-anchor" href="#axios"><i class="fa fa-link" aria-hidden="true"></i></a>Axios</h4>
 <p><a href="https://github.com/axios/axios" target="_blank">Axios</a> allows us to set default headers for the POST, PUT, DELETE and PATCH actions.</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript">
     <span class="hljs-keyword">var</span> csrf_token = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;meta[name=&apos;csrf-token&apos;]&quot;</span>).getAttribute(<span class="hljs-string">&quot;content&quot;</span>);
@@ -1537,7 +1325,7 @@ The problem of &quot;trusting of sub domains and proper configuration of whole s
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
 <p>This code snippet has been tested with Axios version 0.18.0.</p>
-<h3 id="jquery"><a name="jquery" class="plugin-anchor" href="#jquery"><i class="fa fa-link" aria-hidden="true"></i></a>JQuery</h3>
+<h4 id="jquery"><a name="jquery" class="plugin-anchor" href="#jquery"><i class="fa fa-link" aria-hidden="true"></i></a>JQuery</h4>
 <p>JQuery exposes an API called $.ajaxSetup() which can be used to add the <code>anti-csrf-token</code> header to the AJAX request. API documentation for <code>$.ajaxSetup()</code> can be found here. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>You can configure JQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript">
@@ -1558,6 +1346,13 @@ The problem of &quot;trusting of sub domains and proper configuration of whole s
 </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 </code></pre>
 <p>This code snippet has been tested with jQuery version 3.3.1.</p>
+<h2 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h2>
+<h3 id="csrf"><a name="csrf" class="plugin-anchor" href="#csrf"><i class="fa fa-link" aria-hidden="true"></i></a>CSRF</h3>
+<p><a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29" target="_blank">OWASP Cross-Site Request Forgery (CSRF)</a>
+<a href="https://portswigger.net/web-security/csrf" target="_blank">PortSwigger Web Security Academy</a>
+<a href="https://infosec.mozilla.org/guidelines/web_security#csrf-prevention" target="_blank">Mozilla Web Security Cheat Sheet</a>
+<a href="https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/" target="_blank">Common CSRF Prevention Misconceptions</a>
+<a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">Robust Defenses for Cross-Site Request Forgery</a></p>
 
                                 
                                 </section>
@@ -1601,7 +1396,7 @@ The problem of &quot;trusting of sub domains and proper configuration of whole s
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Cross-Site Request Forgery Prevention ","level":"1.18","depth":1,"next":{"title":"Cross Site Scripting Prevention ","level":"1.19","depth":1,"path":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Credential Stuffing Prevention ","level":"1.17","depth":1,"path":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md","mtime":"2020-01-30T12:08:29.284Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-01-30T12:09:04.009Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Cross-Site Request Forgery Prevention ","level":"1.18","depth":1,"next":{"title":"Cross Site Scripting Prevention ","level":"1.19","depth":1,"path":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Credential Stuffing Prevention ","level":"1.17","depth":1,"path":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md","mtime":"2020-02-15T15:40:47.311Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-02-15T15:41:17.820Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
