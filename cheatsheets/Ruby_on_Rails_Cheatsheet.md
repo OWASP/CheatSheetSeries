@@ -20,7 +20,7 @@ open("\| os command here")
 
 While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, a whitelist of possible values should be used and any input should be validated as thoroughly as possible.
 
-Check out the guides from [Rails](https://guides.rubyonrails.org/security.html#command-line-injection) and [OWASP](https://www.owasp.org/index.php/Command_Injection) for more on command injection.
+The guides from [Rails](https://guides.rubyonrails.org/security.html#command-line-injection) and [OWASP](https://www.owasp.org/index.php/Command_Injection) contain further information on command injection.
 
 ## SQL Injection
 
