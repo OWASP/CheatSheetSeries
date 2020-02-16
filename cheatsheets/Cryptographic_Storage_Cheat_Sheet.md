@@ -126,15 +126,38 @@ It is important that the code and processes required to rotate a key are in plac
 
 ## Key Storage
 
-### Store unencrypted keys away from the encrypted data
+Securely storing cryptographic keys is one of the hardest problems to solve, as the application always needs to have some level of access to the keys in order to decrypt the data. While it may not be possible to fully protect the keys from an attacker who has fully compromised the application, a number of steps can be taken to make it harder for them to obtain the keys.
 
-If the keys are stored with the data then any compromise of the data will easily compromise the keys as well. Unencrypted keys should never reside on the same machine or cluster as the data.
+Where available, the secure storage mechanisms provided by the operating system, framework or cloud service provider should be used. These include:
 
-### Protect keys in a key vault
+- A physical Hardware Security Module (HSM).
+- A virtual HSM.
+- A secure storage such as [Amazon KMS](https://aws.amazon.com/kms/) or [Azure Key Vault](https://azure.microsoft.com/en-gb/services/key-vault/).
+- Secure storage APIs provided [ProtectedData](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?redirectedfrom=MSDN&view=netframework-4.8) class in the .NET framework.
 
-Keys should remain in a protected key vault at all times. In particular, ensure that there is a gap between the threat vectors that have direct access to the data and the threat vectors that have direct access to the keys. 
+In some cases such none of these will be available, such as in a shared hosting environment, meaning that it is not possible to obtain a high degree of protection for any encryption keys. However, the following basic rules can still be followed:
 
-This implies that keys should not be stored on the application or web server (assuming that application attackers are part of the relevant threat model).
+- Do not hard-code keys into the application code.
+- Do not check keys into version control systems.
+- Protect the configuration files containing the keys with restrictive permissions.
+- Avoid storing keys in environment variables, as these can be accidentally exposed through functions such as [phpinfo()](https://www.php.net/manual/en/function.phpinfo.php).
+
+### Separation of Keys and Data
+
+Where possible, encryption keys should be stored in a separate location from encrypted data. For example, if the data is stored in a database, the keys should be stored in the filesystem. This means that if an attacker only has access to one of these (for example through directory traversal or SQL injection), they cannot access both the keys and the data.
+
+Depending on the architecture of the environment, it may be possible to store the keys and data on separate systems, which would provide a greater degree of isolation.
+
+### Encrypting Stored Keys
+
+Where possible, encryption keys should themselves be stored in an encrypted form. At least two separate keys are required for this:
+
+- The Data Encryption Key (DEK) is used to encrypt the data.
+- The Key Encryption Key (KEK) is used to encryption the DEK.
+
+For this to be effective, the KEK must be stored separately from the DEK. The KEK should also be at least as strong as the DEK.
+
+In simpler application architectures (such as shared hosting environments) where the KEK and DEK cannot be stored separately, there is limited value to the is approach, as an attacker is likely to be able to obtain both of the keys at the same time. However, it can provide an additional barrier to unskilled attackers.
 
 ## Regulatory Requirements
 
