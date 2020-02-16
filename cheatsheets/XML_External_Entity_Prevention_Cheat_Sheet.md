@@ -56,7 +56,8 @@ Use of `XercesDOMParser` do this to prevent XXE:
 
 ``` cpp
 XercesDOMParser *parser = new XercesDOMParser;
-parser->setCreateEntityReferenceNodes(false);
+parser->setCreateEntityReferenceNodes(true);
+parser->setDisableDefaultEntityResolution(true);
 ```
 
 Use of SAXParser, do this to prevent XXE:
