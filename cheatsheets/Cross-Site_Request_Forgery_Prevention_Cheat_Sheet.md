@@ -377,7 +377,7 @@ This code snippet has been tested with jQuery version 3.3.1.
 
 ### CSRF
 
-[OWASP Cross-Site Request Forgery (CSRF)](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29)
+[OWASP Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf)
 [PortSwigger Web Security Academy](https://portswigger.net/web-security/csrf)
 [Mozilla Web Security Cheat Sheet](https://infosec.mozilla.org/guidelines/web_security#csrf-prevention)
 [Common CSRF Prevention Misconceptions](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/)
