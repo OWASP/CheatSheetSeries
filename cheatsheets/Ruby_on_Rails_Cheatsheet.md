@@ -210,7 +210,7 @@ $ rails g devise_token_auth:install [USER_CLASS] [MOUNT_PATH]
 
 You may need to edit the generated migration to avoid unnecessary fields and/or field duplication depending on your use case.
 
-Note: when you use only token authentication, there is no more need in [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29) protection in controllers. If you use both ways: cookies and tokens, the paths where cookies are used for authentication still must be protected from forgery!
+Note: when you use only token authentication, there is no more need in [CSRF](https://owasp.org/www-community/attacks/csrf) protection in controllers. If you use both ways: cookies and tokens, the paths where cookies are used for authentication still must be protected from forgery!
 
 There is an [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
 
