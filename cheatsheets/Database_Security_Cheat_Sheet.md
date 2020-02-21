@@ -85,7 +85,7 @@ The permissions assigned to database user accounts should be based on the princi
 - Avoid using database links or linked servers.
   - Where they are required, use an account that has been granted access to only the minimum databases, tables, and system privileges required.
 
-For more security-critical applications, it is possible to apply permissions are more granular levels, including:
+For more security-critical applications, it is possible to apply permissions at more granular levels, including:
 
 - Table-level permissions.
 - Column-level permissions.
@@ -111,9 +111,9 @@ The following sections gives some further recommendations for specific database 
 
 - Disable `xp_cmdshell`.
 - Disable the SQL Browser service.
-- Disable [Mixed Mode Authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15) unless if it's not required.
+- Disable [Mixed Mode Authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15) unless it is required.
 - Ensure that the sample [Northwind and AdventureWorks databases](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases) have been removed.
-- See the [Microsoft](https://docs.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server).
+- See Microsoft's articles on [securing SQL Server](https://docs.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server).
 
 ### MySQL and MariaDB
 
@@ -123,7 +123,7 @@ The following sections gives some further recommendations for specific database 
 
 ### PostgreSQL
 
-- See the [PostgreSQL Server Setup and Operation documentation](https://www.postgresql.org/docs/12/runtime.html) and the older [Security documentation](https://www.postgresql.org/docs/7.0/security.htm)
+- See the [PostgreSQL Server Setup and Operation documentation](https://www.postgresql.org/docs/12/runtime.html) and the older [Security documentation](https://www.postgresql.org/docs/7.0/security.htm).
 
 ### MongoDB
 
