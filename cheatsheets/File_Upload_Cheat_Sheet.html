@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Pinning  · OWASP Cheat Sheet Series</title>
+        <title>File Upload  · OWASP Cheat Sheet Series</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -61,10 +61,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Query_Parameterization_Cheat_Sheet.html" />
+    <link rel="next" href="Forgot_Password_Cheat_Sheet.html" />
     
     
-    <link rel="prev" href="Password_Storage_Cheat_Sheet.html" />
+    <link rel="prev" href="Error_Handling_Cheat_Sheet.html" />
     
 
     </head>
@@ -446,7 +446,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
+        <li class="chapter active" data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
             
                 <a href="File_Upload_Cheat_Sheet.html">
             
@@ -706,7 +706,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
+        <li class="chapter " data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
             
                 <a href="Pinning_Cheat_Sheet.html">
             
@@ -1035,7 +1035,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Pinning </a>
+        <a href=".." >File Upload </a>
     </h1>
 </div>
 
@@ -1050,91 +1050,164 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>The Pinning Cheat Sheet is a technical guide to implementing certificate and public key pinning as discussed at the Virginia chapter&apos;s presentation <a href="https://www.owasp.org/images/8/8f/Securing-Wireless-Channels-in-the-Mobile-Space.ppt" target="_blank">Securing Wireless Channels in the Mobile Space</a>. This guide is focused on providing clear, simple, actionable guidance for securing the channel in a hostile environment where actors could be malicious and the conference of trust a liability.</p>
-<p>A verbose article is available at <a href="https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning" target="_blank">Certificate and Public Key Pinning</a>. The article includes additional topics, such as Alternatives to Pinning, Ephemeral Keys, Pinning Gaps, Revocation, and X509 Validation.</p>
-<h1 id="whats-the-problem"><a name="whats-the-problem" class="plugin-anchor" href="#whats-the-problem"><i class="fa fa-link" aria-hidden="true"></i></a>What&apos;s the problem?</h1>
-<p>Users, developers, and applications expect end-to-end security on their secure channels, but some secure channels are not meeting the expectation. Specifically, channels built using well known protocols such as VPN, SSL, and TLS can be vulnerable to a number of attacks.</p>
-<h1 id="what-is-pinning"><a name="what-is-pinning" class="plugin-anchor" href="#what-is-pinning"><i class="fa fa-link" aria-hidden="true"></i></a>What Is Pinning?</h1>
-<p>Pinning is the process of associating a host with their <em>expected</em> X509 certificate or public key. Once a certificate or public key is known or seen for a host, the certificate or public key is associated or &apos;pinned&apos; to the host. If more than one certificate or public key is acceptable, then the program holds a <em>pinset</em> (taking from <a href="https://developers.google.com/events/io/sessions/gooio2012/107/" target="_blank">Jon Larimer and Kenny Root Google I/O talk</a>). In this case, the advertised identity must match one of the elements in the pinset.</p>
-<p>A host or service&apos;s certificate or public key can be added to an application at development time, or it can be added upon first encountering the certificate or public key. The former - adding at development time - is preferred since <em>preloading</em> the certificate or public key <em>out of band</em> usually means the attacker cannot taint the pin.</p>
-<h2 id="when-do-you-pin"><a name="when-do-you-pin" class="plugin-anchor" href="#when-do-you-pin"><i class="fa fa-link" aria-hidden="true"></i></a>When Do You Pin?</h2>
-<p>You should pin anytime you want to be relatively certain of the remote host&apos;s identity or when operating in a hostile environment. Since one or both are almost always true, you should probably pin all the time.</p>
-<h2 id="when-do-you-whitelist"><a name="when-do-you-whitelist" class="plugin-anchor" href="#when-do-you-whitelist"><i class="fa fa-link" aria-hidden="true"></i></a>When Do You Whitelist?</h2>
-<p>If you are working for an organization which practices &quot;egress filtering&quot; as part of a Data Loss Prevention (DLP) strategy, you will likely encounter <em>Interception Proxies</em>. I like to refer to these things as <strong>&quot;good&quot; bad guys</strong> (as opposed to <strong>&quot;bad&quot; bad guys</strong>) since both break end-to-end security and we can&apos;t tell them apart. In this case, <strong>do not</strong> offer to whitelist the interception proxy since it defeats your security goals. Add the interception proxy&apos;s public key to your pinset after being <strong>instructed</strong> to do so by the folks in Risk Acceptance.</p>
-<h2 id="how-do-you-pin"><a name="how-do-you-pin" class="plugin-anchor" href="#how-do-you-pin"><i class="fa fa-link" aria-hidden="true"></i></a>How Do You Pin?</h2>
-<p>The idea is to re-use the exiting protocols and infrastructure, but use them in a hardened manner. For re-use, a program would keep doing the things it used to do when establishing a secure connection.</p>
-<p>To harden the channel, the program would take advantage of the <code>OnConnect</code> callback offered by a library, framework or platform. In the callback, the program would verify the remote host&apos;s identity by validating its certificate or public key.</p>
-<h1 id="what-should-be-pinned"><a name="what-should-be-pinned" class="plugin-anchor" href="#what-should-be-pinned"><i class="fa fa-link" aria-hidden="true"></i></a>What Should Be Pinned?</h1>
-<p>The first thing to decide is what should be pinned. For this choice, you have two options: </p>
+                                <h1 id="file-upload-cheat-sheet"><a name="file-upload-cheat-sheet" class="plugin-anchor" href="#file-upload-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>File Upload Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+<p>File upload is becoming a more and more essential part of any application, where the user is able to upload their photo, their CV, or a video showcasing a project they are working on. The application should be able to fend off bogus and malicious files in a way to keep the application and the users safe.</p>
+<p>In short, the following principles should be followed to reach a secure file upload implementation:</p>
 <ul>
-<li>Pin the certificate.</li>
-<li>Pin the public key. </li>
+<li><strong>Whitelist allowed extensions. Only allow safe and critical extensions for business functionality</strong><ul>
+<li><strong>Ensure that <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Input_Validation_Cheat_Sheet.md#validating-free-form-unicode-text" target="_blank">input validation</a> is applied before validating the extensions.</strong></li>
 </ul>
-<p>If you choose public keys, you have two additional choices: </p>
+</li>
+<li><strong>Validate the file type, don&apos;t trust the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type" target="_blank">Content-Type header</a> as it can be spoofed</strong></li>
+<li><strong>Change the file name to something generated by the application</strong></li>
+<li><strong>Set a file name length limit. Restrict the allowed characters if possible</strong></li>
+<li><strong>Set a file size limit</strong></li>
+<li><strong>Only allow authorised users to upload files</strong></li>
+<li><strong>Store the files on a different server. If that&apos;s not possible, store them outside of the webroot</strong><ul>
+<li><strong>In the case of public access to the files, use a handler that gets mapped to file names inside the application (someid -&gt; file.ext)</strong></li>
+</ul>
+</li>
+<li><strong>Run the file through an antivirus or a sandbox if available to validate that it doesn&apos;t contain malicious data</strong></li>
+<li><strong>Ensure that any libraries used are securely configured and kept up to date</strong></li>
+<li><strong>Protect the file upload from <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF</a> attacks</strong></li>
+</ul>
+<h2 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h2>
 <ul>
-<li>Pin the <code>subjectPublicKeyInfo</code>.</li>
-<li>Pin one of the concrete types such as <code>RSAPublicKey</code> or <code>DSAPublicKey</code>.</li>
+<li><a href="#file-upload-threats">File Upload Threats</a><ul>
+<li><a href="#malicious-files">Malicious Files</a></li>
+<li><a href="#public-file-retrieval">Public File Retrieval</a></li>
 </ul>
-<p><strong>subjectPublicKeyInfo</strong>:</p>
-<p><img src="../assets/Pinning_Cheat_Sheet_RandomOrgDERDump.png" alt="RandomOrgDERDump"></p>
-<p>The three choices are explained below in more detail. I would encourage you to pin the <code>subjectPublicKeyInfo</code> because it has the public parameters (such as <code>{e,n}</code> for an RSA public key) <strong>and</strong> contextual information such as an algorithm and OID. The context will help you keep your bearings at times, and the figure to the right shows the additional information available.</p>
-<h2 id="certificate"><a name="certificate" class="plugin-anchor" href="#certificate"><i class="fa fa-link" aria-hidden="true"></i></a>Certificate</h2>
-<p><img src="../assets/Pinning_Cheat_Sheet_Certificate.png" alt="Certificate"></p>
-<p>The certificate is easiest to pin. You can fetch the certificate out of band for the website, have the IT folks email your company certificate to you, use <code>openssl s_client</code> to retrieve the certificate etc. At runtime, you retrieve the website or server&apos;s certificate in the callback. Within the callback, you compare the retrieved certificate with the certificate embedded within the program. If the comparison fails, then fail the method or function.</p>
-<p>There is a downside to pinning a certificate. If the site rotates its certificate on a regular basis, then your application would need to be updated regularly. For example, Google rotates its certificates, so you will need to update your application about once a month (if it depended on Google services). Even though Google rotates its certificates, the underlying public keys (within the certificate) remain static.</p>
-<h2 id="public-key"><a name="public-key" class="plugin-anchor" href="#public-key"><i class="fa fa-link" aria-hidden="true"></i></a>Public Key</h2>
-<p><img src="../assets/Pinning_Cheat_Sheet_PublicKey.png" alt="PublicKey"></p>
-<p>Public key pinning is more flexible but a little trickier due to the extra steps necessary to extract the public key from a certificate. As with a certificate, the program checks the extracted public key with its embedded copy of the public key.</p>
-<p>There are two downsides to public key pinning. First, it&apos;s harder to work with keys (versus certificates) since you must extract the key from the certificate. Extraction is a minor inconvenience in Java and .Net, buts it&apos;s uncomfortable in Cocoa/CocoaTouch and OpenSSL. Second, the key is static and may violate key rotation policies.</p>
-<h2 id="hashing"><a name="hashing" class="plugin-anchor" href="#hashing"><i class="fa fa-link" aria-hidden="true"></i></a>Hashing</h2>
-<p>While the three choices above used DER encoding, its also acceptable to use a hash of the information. In fact, the original sample programs were written using digested certificates and public keys. The samples were changed to allow a programmer to inspect the objects with tools like <code>dumpasn1</code> and other ASN.1 decoders.</p>
-<p>Hashing also provides three additional benefits. First, hashing allows you to anonymize a certificate or public key. This might be important if you application is concerned about leaking information during decompilation and re-engineering. Second, a digested certificate fingerprint is often available as a native API for many libraries, so its convenient to use.</p>
-<p>Finally, an organization might want to supply a reserve (or back-up) identity in case the primary identity is compromised. Hashing ensures your adversaries do not see the reserved certificate or public key in advance of its use. In fact, Google&apos;s IETF draft <em>websec-key-pinning</em> uses the technique.</p>
-<h1 id="examples-of-pinning"><a name="examples-of-pinning" class="plugin-anchor" href="#examples-of-pinning"><i class="fa fa-link" aria-hidden="true"></i></a>Examples of Pinning</h1>
-<p>This section discusses certificate and public key pinning in Android Java, iOS, .Net, and OpenSSL. Code has been omitted for brevity, but the key points for the platform are highlighted.</p>
-<h2 id="android"><a name="android" class="plugin-anchor" href="#android"><i class="fa fa-link" aria-hidden="true"></i></a>Android</h2>
-<p>Since Android N, the preferred way for implementing pinning is by leveraging Android&apos;s <a href="https://developer.android.com/training/articles/security-config.html" target="_blank">Network Security Configuration</a> feature, which lets apps customize their network security settings in a safe, declarative configuration file without modifying app code.</p>
-<p>To enable pinning, <a href="https://developer.android.com/training/articles/security-config.html#CertificatePinning" target="_blank">the <code>&lt;pin-set&gt;</code> configuration setting</a> can be used.</p>
-<p>If devices running a version of Android that is earlier than N need to be supported, a backport of the Network Security Configuration pinning functionality is available via the <a href="https://github.com/datatheorem/TrustKit-Android" target="_blank">TrustKit Android library</a>.</p>
-<p>Alternatively you can use methods such as the pinning from OkHTTP in order to set specific pins programmatically, as explained in <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md#network-libraries-and-webviews" target="_blank">the MSTG</a> and <a href="https://square.github.io/okhttp/3.x/okhttp/okhttp3/CertificatePinner.html" target="_blank">the OKHttp documentation</a>.</p>
-<p>The Android documentation provides an example of how SSL validation can be customized within the app&apos;s code (in order to implement pinning) in the <a href="https://developer.android.com/training/articles/security-ssl.html#UnknownCa" target="_blank">Unknown CA implementation document</a>. However, implementing pinning validation from scratch should be avoided, as implementation mistakes are extremely likely and usually lead to severe vulnerabilities.</p>
-<p>Lastly, if you want to validate whether the pinning is successful, please follow instructions from the Mobile Security Testing Guide&apos;s <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04f-Testing-Network-Communication.md#testing-network-communication" target="_blank">ntroduction into testing network communication</a> and the <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md#android-network-apis" target="_blank">Android specific network testing</a>.</p>
-<h2 id="ios"><a name="ios" class="plugin-anchor" href="#ios"><i class="fa fa-link" aria-hidden="true"></i></a>iOS</h2>
-<p><a href="https://github.com/datatheorem/TrustKit" target="_blank">TrustKit</a>, an open-source SSL pinning library for iOS and macOS is available. It provides an easy-to-use API for implementing pinning, and has been deployed in many apps.</p>
-<p>Otherwise, more details regarding how SSL validation can be customized on iOS (in order to implement pinning) are available in the <a href="https://developer.apple.com/library/content/technotes/tn2232/_index.html" target="_blank">HTTPS Server Trust Evaluation</a> technical note. However, implementing pinning validation from scratch should be avoided, as implementation mistakes are extremely likely and usually lead to severe vulnerabilities.</p>
-<p>Lastly, if you want to validate whether the pinning is successful, please follow instructions from the Mobile Security Testing Guide&apos;s <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04f-Testing-Network-Communication.md#testing-network-communication" target="_blank">introduction into testing network communication</a> and the <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x06g-Testing-Network-Communication.md" target="_blank">iOS specific network testing</a>.</p>
-<h2 id="net"><a name="net" class="plugin-anchor" href="#net"><i class="fa fa-link" aria-hidden="true"></i></a>.Net</h2>
-<p>.Net pinning can be achieved by using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.servicepointmanager?view=netframework-4.7.2" target="_blank"><code>ServicePointManager</code></a>. An example can be found at the <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md#xamarin-applications" target="_blank">OWASP MSTG</a>.</p>
-<p>Download the <a href="../assets/Pinning_Cheat_Sheet_Certificate_DotNetSample.zip">.Net sample program</a>.</p>
-<h2 id="openssl"><a name="openssl" class="plugin-anchor" href="#openssl"><i class="fa fa-link" aria-hidden="true"></i></a>OpenSSL</h2>
-<p>Pinning can occur at one of two places with OpenSSL. First is the user supplied <code>verify_callback</code>. Second is after the connection is established via <code>SSL_get_peer_certificate</code>. Either method will allow you to access the peer&apos;s certificate.</p>
-<p>Though OpenSSL performs the X509 checks, you must fail the connection and tear down the socket on error. By design, a server that does not supply a certificate will result in <code>X509_V_OK</code> with a <strong>NULL</strong> certificate. To check the result of the customary verification: </p>
+</li>
+<li><a href="#file-upload-protection">File Upload Protection</a><ul>
+<li><a href="#extension-validation">Extension Validation</a><ul>
+<li><a href="#whitelist-extensions">Whitelist Extensions</a></li>
+<li><a href="#blacklist-extensions">Blacklist Extensions</a></li>
+</ul>
+</li>
+<li><a href="#content-type-validation">Content-Type Validation</a></li>
+<li><a href="#magic-number-validation">Magic Number Validation</a></li>
+<li><a href="#file-name-sanitization">File Name Sanitization</a></li>
+<li><a href="#file-content-validation">File Content Validation</a></li>
+<li><a href="#file-storage-location">File Storage Location</a></li>
+<li><a href="#user-permissions">User Permissions</a></li>
+<li><a href="#system-permissions">System Permissions</a></li>
+<li><a href="#upload-and-download-limits">Upload and Download Limits</a></li>
+</ul>
+</li>
+<li><a href="#java-code-snippets">Java Code Snippets</a></li>
+</ul>
+<h2 id="file-upload-threats"><a name="file-upload-threats" class="plugin-anchor" href="#file-upload-threats"><i class="fa fa-link" aria-hidden="true"></i></a>File Upload Threats</h2>
+<p>In order to assess and know exactly what controls to implement, knowing what you&apos;re facing is essential to protect your assets. The following sections will hopefully showcase the risks accompanying the file upload functionality.</p>
+<h3 id="malicious-files"><a name="malicious-files" class="plugin-anchor" href="#malicious-files"><i class="fa fa-link" aria-hidden="true"></i></a>Malicious Files</h3>
+<p>The attacker delivers a file for malicious intent, such as:</p>
 <ol>
-<li>You must call <code>SSL_get_verify_result</code> and verify the return code is <code>X509_V_OK</code>; </li>
-<li>You must call <code>SSL_get_peer_certificate</code> and verify the certificate is <strong>non-NULL</strong>.</li>
+<li>Exploit vulnerabilities in the file parser or processing module (<em>e.g.</em> <a href="https://imagetragick.com/" target="_blank">ImageTrick Exploit</a>, <a href="https://www.owasp.org/index.php/XML_External_Entity_(XXE" target="_blank">XXE</a>_Processing))</li>
+<li>Use the file for phishing (<em>e.g.</em> careers form)</li>
+<li>Send ZIP bombs, XML bombs (otherwise known as billion laughs attack), or simply huge files in a way to fill the server storage which hinders and damages the server&apos;s availability</li>
+<li>Overwrite an existing file on the system</li>
+<li>Client-side active content (XSS, CSRF, etc.) that could endanger other users if the files are publicly retrievable.</li>
 </ol>
-<p>Download: <a href="../assets/Pinning_Cheat_Sheet_Certificate_OpenSSLSample.zip">OpenSSL sample program</a>.</p>
-<h2 id="electron"><a name="electron" class="plugin-anchor" href="#electron"><i class="fa fa-link" aria-hidden="true"></i></a>Electron</h2>
-<p><a href="https://github.com/dialogs/electron-ssl-pinning" target="_blank">electron-ssl-pinning</a>, an open-source SSL pinning library for <a href="https://electronjs.org" target="_blank">Electron</a> based applications. It provides an easy-to-use API for implementing pinning and also provides tool for fetching configuration based on needed hosts.</p>
-<p>Otherwise, you can validate certificates by yourself using <a href="https://electronjs.org/docs/api/session#sessetcertificateverifyprocproc" target="_blank">ses.setCertificateVerifyProc(proc)</a>.</p>
-<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<h3 id="public-file-retrieval"><a name="public-file-retrieval" class="plugin-anchor" href="#public-file-retrieval"><i class="fa fa-link" aria-hidden="true"></i></a>Public File Retrieval</h3>
+<p>If the file uploaded is publicly retrievable, additional threats can be addressed:</p>
+<ol>
+<li>Public disclosure of other files</li>
+<li>Initiate a DoS attack by requesting lots of files. Requests are small, yet responses are much larger</li>
+<li>File content that could be deemed as illegal, offensive, or dangerous (<em>e.g.</em> personal data, copyrighted data, etc.) which will make you a host for such malicious files.</li>
+</ol>
+<h2 id="file-upload-protection"><a name="file-upload-protection" class="plugin-anchor" href="#file-upload-protection"><i class="fa fa-link" aria-hidden="true"></i></a>File Upload Protection</h2>
+<p>There is no silver bullet in validating user content. Implementing a defense in depth approach is key to make the upload process harder and more locked down to the needs and requirements for the service. Implementing multiple techniques is key and recommended, as no one technique is enough to secure the service.</p>
+<h3 id="extension-validation"><a name="extension-validation" class="plugin-anchor" href="#extension-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Extension Validation</h3>
+<p>Ensure that the validation occurs after decoding the file name, and that a proper filter is set in place in order to avoid certain known bypasses, such as the following:</p>
 <ul>
-<li>OWASP <a href="https://www.owasp.org/index.php/Injection_Theory" target="_blank">Injection Theory</a></li>
-<li>OWASP <a href="https://www.owasp.org/index.php/Data_Validation" target="_blank">Data Validation</a></li>
-<li>OWASP <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a></li>
-<li>OWASP <a href="https://github.com/OWASP/owasp-mstg" target="_blank">Mobile Security Testing Guide</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc1421.txt" target="_blank">RFC 1421 (PEM Encoding)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc4648.txt" target="_blank">RFC 4648 (Base16, Base32, and Base64 Encodings)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc5280.txt" target="_blank">RFC 5280 (Internet X.509, PKIX)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc3279.txt" target="_blank">RFC 3279 (PKI, X509 Algorithms and CRL Profiles)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc4055.txt" target="_blank">RFC 4055 (PKI, X509 Additional Algorithms and CRL Profiles)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc2246.txt" target="_blank">RFC 2246 (TLS 1.0)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc4346.txt" target="_blank">RFC 4346 (TLS 1.1)</a></li>
-<li>IETF <a href="http://www.ietf.org/rfc/rfc5246.txt" target="_blank">RFC 5246 (TLS 1.2)</a></li>
-<li>RSA Laboratories <a href="http://www.rsa.com/rsalabs/node.asp?id=2125" target="_blank">PKCS#1, RSA Encryption Standard</a></li>
-<li>RSA Laboratories <a href="http://www.rsa.com/rsalabs/node.asp?id=2128" target="_blank">PKCS#6, Extended-Certificate Syntax Standard</a></li>
+<li>Double extensions, <em>e.g.</em> <code>.jpg.php</code>, where it circumvents easily the regex <code>\.jpg</code></li>
+<li>Null bytes, <em>e.g.</em> <code>.php%00.jpg</code>, where <code>.jpg</code> gets truncated and <code>.php</code> becomes the new extension</li>
+<li>Generic bad regex that isn&apos;t properly tested and well reviewed. Refrain from building your own logic unless you have enough knowledge on this topic.</li>
 </ul>
+<p>Refer to the <a href="Input_Validation_Cheat_Sheet.html">Input Validation CS</a> to properly parse and process the extension.</p>
+<h4 id="whitelist-extensions"><a name="whitelist-extensions" class="plugin-anchor" href="#whitelist-extensions"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelist Extensions</h4>
+<p>Ensure the usage of <em>business-critical</em> extensions only, without allowing any type of <em>non-required</em> extensions. For example if the system requires:</p>
+<ul>
+<li>image upload, allow one type that is agreed upon to fit the business requirement;</li>
+<li>cv upload, allow <code>docx</code> and <code>pdf</code> extensions.</li>
+</ul>
+<p>Based on the needs of the application, ensure the <strong>least harmful</strong> and the <strong>lowest risk</strong> file types to be used.</p>
+<h4 id="blacklist-extensions"><a name="blacklist-extensions" class="plugin-anchor" href="#blacklist-extensions"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklist Extensions</h4>
+<p>Blacklisting extensions is a bad idea and is very dangerous. Don&apos;t do it unless you have no other choice!</p>
+<p>In order to perform this validation, specifying and identifying which patterns that could should be rejected are used in order to protect the service.</p>
+<h3 id="content-type-validation"><a name="content-type-validation" class="plugin-anchor" href="#content-type-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Content-Type Validation</h3>
+<p><em>The Content-Type for uploaded files is provided by the user, and as such cannot be trusted, as it is trivial to spoof. Although it should not be relied upon for security, it provides a quick check to prevent users from unintentionally uploading files with the incorrect type.</em></p>
+<p>Other than defining the extension of the uploaded file, its MIME-type can be checked for a quick protection against simple file upload attacks.</p>
+<p>This can be done preferrably in a whitelist approach; otherwise, this can be done in a blacklist approach.</p>
+<h3 id="file-signature-validation"><a name="file-signature-validation" class="plugin-anchor" href="#file-signature-validation"><i class="fa fa-link" aria-hidden="true"></i></a>File Signature Validation</h3>
+<p>In conjunction with <a href="#content-type-validation">content-type validation</a>, validating the file&apos;s signature can be checked and verified against the expected file that should be received.</p>
+<blockquote>
+<p>This should not be used on its own, as bypassing it is pretty common and easy.</p>
+</blockquote>
+<h3 id="file-name-sanitization"><a name="file-name-sanitization" class="plugin-anchor" href="#file-name-sanitization"><i class="fa fa-link" aria-hidden="true"></i></a>File Name Sanitization</h3>
+<p>File-names can endager the system in multiple ways, either by using non acceptable characters, or by using special and restricted filenames. For Windows, refer to the following <a href="https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file?redirectedfrom=MSDN#naming-conventions" target="_blank">MSDN guide</a>. For a wider overview on different filesystems and how they treat files, refer to <a href="https://en.wikipedia.org/wiki/Filename" target="_blank">Wikipedia&apos;s Filename page</a>.</p>
+<p>In order to avoid the above mentioned threat, creating a <strong>random string</strong> as a file-name, such as generating a UUID/GUID, is essential. If the file-name is required by the business needs, proper input validation should be done for client-side (<em>e.g.</em> active content that results in XSS and CSRF attacks) and back-end side (<em>e.g.</em> special files overwrite or creation) attack vectors. File-name length limits should be taken into consideration based on the system storing the files, as each system has its own file name length limit. If user file-names are required, consider implementing the following:</p>
+<ul>
+<li>Implement a maximum length</li>
+<li>Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods<ul>
+<li>If this is not possible, blacklist dangerous characters that could endanger the framework and system that is storing and using the files.</li>
+</ul>
+</li>
+</ul>
+<h3 id="file-content-validation"><a name="file-content-validation" class="plugin-anchor" href="#file-content-validation"><i class="fa fa-link" aria-hidden="true"></i></a>File Content Validation</h3>
+<p>As mentioned in the <a href="#public-file-retrieval">Public File Retrieval</a> section, file content can contain malicious, inappropriate, or illegal data.</p>
+<p>Based on the expected type, special file content validation can be applied:</p>
+<ul>
+<li>For <strong>images</strong>, applying image rewriting techniques destroys any kind of malicious content injected in an image; this could be done through <a href="https://security.stackexchange.com/a/8625/118367" target="_blank">randomization</a>.</li>
+<li>For <strong>Microsoft documents</strong>, the usage of <a href="https://poi.apache.org/" target="_blank">Apache POI</a> helps validating the uploaded documents.</li>
+<li><strong>ZIP files</strong> are not recommended since they can contain all types of files, and the attack vectors pertaining to them are numerous.</li>
+</ul>
+<p>The File Upload service should allow users to report illegal content, and copyright owners to report abuse.</p>
+<p>If there are enough resources, manual file review should be conducted in a sandboxed environment before releasing the files to the public.</p>
+<p>Adding some automation to the review could be helpful, which is a harsh process and should be well studied before its usage. Some services (<em>e.g.</em> Virus Total) provide APIs to scan files against well known malicious file hashes. Some frameworks can check and validate the raw content type and validating it against predefined file types, such as in <a href="https://docs.microsoft.com/en-us/dotnet/api/system.drawing.imaging.imageformat" target="_blank">ASP.NET Drawing Library</a>. Beware of data leakage threats and information gathering by public services.</p>
+<h3 id="file-storage-location"><a name="file-storage-location" class="plugin-anchor" href="#file-storage-location"><i class="fa fa-link" aria-hidden="true"></i></a>File Storage Location</h3>
+<p>The location where the files should be stored must be chosen based on security and business requirements. The following points are set by security priority, and are inclusive:</p>
+<ol>
+<li>Store the files on a <strong>different host</strong>, which allows for complete segragation of duties between the application serving the user, and the host handling file uploads and their storage.</li>
+<li>Store the files <strong>outside the webroot</strong>, where only administrative access is allowed.</li>
+<li>Store the files <strong>inside the webroot</strong>, and set them in write permissions only.<ul>
+<li>If read access is required, setting proper controls is a must (<em>e.g.</em> internal IP, authorized user, etc.)</li>
+</ul>
+</li>
+</ol>
+<p>Storing files in a studied manner in databases is one additional technique. This is sometimes used for automatic backup processes, non file-system attacks, and permissions issues. In return, this opens up the door to performance issues (in some cases), storage considerations for the database and its backups, and this opens up the door to SQLi attack. This is advised only when a DBA is on the team and that this process shows to be an improvement on storing them on the file-system.</p>
+<blockquote>
+<p>Some files are emailed or processed once they are uploaded, and are not stored on the server. It is essential to conduct the security measures discussed in this sheet before doing any actions on them.</p>
+</blockquote>
+<h3 id="user-permissions"><a name="user-permissions" class="plugin-anchor" href="#user-permissions"><i class="fa fa-link" aria-hidden="true"></i></a>User Permissions</h3>
+<p>Before any file upload service is accessed, proper validation should occur on two levels for the user uploading a file:</p>
+<ul>
+<li>Authentication level<ul>
+<li>The user should be a registered user, or an identifiable user, in order to set restrictions and limitations for their upload capabilities</li>
+</ul>
+</li>
+<li>Authorization level<ul>
+<li>The user should have appropriate permissions to access or modify the files</li>
+</ul>
+</li>
+</ul>
+<h3 id="filesystem-permissions"><a name="filesystem-permissions" class="plugin-anchor" href="#filesystem-permissions"><i class="fa fa-link" aria-hidden="true"></i></a>Filesystem Permissions</h3>
+<blockquote>
+<p>Set the files permissions on the principle of least privilege.</p>
+</blockquote>
+<p>Files should be stored in a way that ensures:</p>
+<ul>
+<li>Allowed system users are the only ones capable of reading the files</li>
+<li>Required modes only are set for the file<ul>
+<li>If execution is required, scanning the file before running it is required as a security best practice, to ensure that no macros or hidden scripts are available.</li>
+</ul>
+</li>
+</ul>
+<h3 id="upload-and-download-limits"><a name="upload-and-download-limits" class="plugin-anchor" href="#upload-and-download-limits"><i class="fa fa-link" aria-hidden="true"></i></a>Upload and Download Limits</h3>
+<p>The application should set proper size limits for the upload service in order to protect the file storage capacity. If the system is going to extract the files or process them, the file size limit should be considered after file decompression is conducted and by using secure methods to calculate zip files size. For more on this, see how to <a href="https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream" target="_blank">Safely extract files from ZipInputStream</a>, Java&apos;s input stream to handle ZIP files.</p>
+<p>The application should set proper request limits as well for the download service if available to protect the server from DoS attacks.</p>
+<h2 id="java-code-snippets"><a name="java-code-snippets" class="plugin-anchor" href="#java-code-snippets"><i class="fa fa-link" aria-hidden="true"></i></a>Java Code Snippets</h2>
+<p><a href="https://github.com/righettod/document-upload-protection" target="_blank">Document Upload Protection</a> repository written by Dominique for certain document types in Java.</p>
 
                                 
                                 </section>
@@ -1162,12 +1235,12 @@
 
             
                 
-                <a href="Password_Storage_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Password Storage ">
+                <a href="Error_Handling_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Error Handling ">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Query_Parameterization_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Query Parameterization ">
+                <a href="Forgot_Password_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Forgot Password ">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1178,7 +1251,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Pinning ","level":"1.48","depth":1,"next":{"title":"Query Parameterization ","level":"1.49","depth":1,"path":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","ref":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","articles":[]},"previous":{"title":"Password Storage ","level":"1.47","depth":1,"path":"cheatsheets/Password_Storage_Cheat_Sheet.md","ref":"cheatsheets/Password_Storage_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Pinning_Cheat_Sheet.md","mtime":"2020-02-21T12:28:01.256Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-02-21T12:28:31.418Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"File Upload ","level":"1.28","depth":1,"next":{"title":"Forgot Password ","level":"1.29","depth":1,"path":"cheatsheets/Forgot_Password_Cheat_Sheet.md","ref":"cheatsheets/Forgot_Password_Cheat_Sheet.md","articles":[]},"previous":{"title":"Error Handling ","level":"1.27","depth":1,"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","ref":"cheatsheets/Error_Handling_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/File_Upload_Cheat_Sheet.md","mtime":"2020-02-21T12:28:01.252Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-02-21T12:28:31.418Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
