@@ -111,7 +111,7 @@ The following sections gives some further recommendations for specific database 
 
 - Disable `xp_cmdshell`.
 - Disable the SQL Browser service.
-- Disable [Mixed Mode Authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15) unless if it's not required.
+- Disable [Mixed Mode Authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15) unless it is required.
 - Ensure that the sample [Northwind and AdventureWorks databases](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases) have been removed.
 - See the [Microsoft](https://docs.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server).
 
