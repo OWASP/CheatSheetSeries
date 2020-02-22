@@ -69,8 +69,15 @@ As such, it is generally best not to allow users to write their own questions.
 
 ### Restricting Answers
 
-- Consider where length limits are appropriate
-- Blacklist weak answers (username, current password, etc?)
+Enforcing a minimum length for answers can prevent users from entering strings such as "a" or "123" for their answers. However, depending on the questions asked, it could also prevent users from being able to correctly answer the question. For example, if asking for a first name or surname could result in a two letter answer such as "Li", and a colour-based question could be four letters such as "blue".
+
+Answers should also be checked against a blacklist, including:
+
+- The username or email address.
+- The user's current password.
+- Common strings such as "123" or "password".
+
+It is also beneficial to give the user some indication of the format that they should use to enter answers. This could be done through input validation, or simply by recommending that the user enters their details in a specific format. For example, when asking for a date, indicating that the format should be "DDMMYYYY" will mean that the user doesn't have to try and guess what format they entered when registering.
 
 ### Renewing Security Questions
 
