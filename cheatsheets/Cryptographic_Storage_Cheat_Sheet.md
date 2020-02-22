@@ -4,7 +4,7 @@
 
 This article provides a simple model to follow when implementing solutions to protect data at rest.
 
-For guidance on securely storing passwords, see the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md).
+Passwords should not be stored using reversible encryption - security password hashing algorithms should be used instead. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) contains further guidance on storing passwords.
 
 ## Contents
 
@@ -12,11 +12,26 @@ For guidance on securely storing passwords, see the [Password Storage Cheat Shee
 
 ## Architectural Design
 
-An architectural decision must be made to determine the appropriate method to protect data at rest. There are such wide varieties of products, methods and mechanisms for cryptographic storage. This cheat sheet will only focus on low-level guidelines for developers and architects who are implementing cryptographic solutions. We will not address specific vendor solutions, nor will we address the design of cryptographic algorithms.
+The first step in designing any application is to consider the overall architecture of the system, as this will have a huge impact on the technical implementation.
+
+This process should begin with considering the [threat model](Threat_Modeling_Cheat_Sheet.md) of the application (i.e, who you trying to protect that data against).
+
+The use of dedicated secret or key management systems can provide an additional layer of security protection, as well as making the management of secrets significantly easier - however it comes at the cost of additional complexity and administrative overhead - so may not be feasible for all applications. Note that many cloud environments provide these services, so these should be taken advantage of where possible.
+
+### Where to Perform Encryption
+
+Encryption can be performed a a number of levels in the application stack, such as:
+
+- At the application level.
+- At the database level (e.g, [SQL Server TDE](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/transparent-data-encryption?view=sql-server-ver15)
+- At the filesystem level (e.g, BitLocker or LUKS)
+- At the hardware level (e.g, encrypted RAID cards or SSDs)
+
+Which layer(s) are most appropriate will depend on the threat model. For example, hardware level encryption is effective at protecting against the physical theft of the server, but will provide no protection if an attacker is able to compromise the server remotely.
 
 ### Minimise the Storage of Sensitive Information
 
-The best way to protect sensitive information is to not store it in the first place. Although this applies to all kinds of information, it is most often applicable to credit card details, as they are highly desirable for attackers, and PCI DSS has such stringent requirements for how they must be stored, discussed in the [section below](#pci-dss)
+The best way to protect sensitive information is to not store it in the first place. Although this applies to all kinds of information, it is most often applicable to credit card details, as they are highly desirable for attackers, and PCI DSS has such stringent requirements for how they must be stored. Wherever possible, the storage of sensitive information should be avoided.
 
 ## Algorithms
 
