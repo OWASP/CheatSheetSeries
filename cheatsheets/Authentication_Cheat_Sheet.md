@@ -8,7 +8,7 @@
 
 ## User IDs
 
-Make sure your usernames/userIds are case insensitive. User 'smith' and user 'Smith' should be the same user. Usernames should also be unique. For high-security applications, usernames could be assigned and secret instead of user-defined public data.
+Make sure your usernames/user IDs are case insensitive. User 'smith' and user 'Smith' should be the same user. Usernames should also be unique. For high-security applications, usernames could be assigned and secret instead of user-defined public data.
 
 ### Email address as a User ID
 
@@ -85,7 +85,7 @@ For more information, see: [Client-authenticated TLS handshake](https://en.wikip
 
 ## Authentication and Error Messages
 
-Incorrectly implemented error messages in the case of authentication functionality can be used for the purposes of the user ID and password enumeration. An application should respond (both HTTP and HTML) in a generic manner.
+Incorrectly implemented error messages in the case of authentication functionality can be used for the purposes of user ID and password enumeration. An application should respond (both HTTP and HTML) in a generic manner.
 
 #### Authentication Responses
 
@@ -102,7 +102,7 @@ It is interesting to note that the business logic itself can bring a discrepancy
 
 Example using pseudo-code for a login feature:
 
-* the First implementation using the "quick exit" approach*
+* First implementation using the "quick exit" approach*
 
 ```
 IF USER_EXISTS(username) THEN
@@ -116,7 +116,7 @@ ELSE
 ENDIF
 ```
 
-It can be clearly seen that if the user doesn't exist, the application will directly throw out an error. Otherwise, when the user exists, and the password doesn't, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.
+It can be clearly seen that if the user doesn't exist, the application will directly throw an error. Otherwise, when the user exists and the password doesn't, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.
 
 *Second implementation without relying on the "quick exit" approach:*
 
@@ -163,7 +163,7 @@ Incorrect response examples:
 - "Welcome! You have signed up successfully."
 
 Correct response example:
-- "A link to activate your account has been emailed to ⟨input email address⟩."
+- "A link to activate your account has been emailed to the address provided."
 
 #### Error Codes and URLs
 
@@ -189,12 +189,12 @@ The following sections will focus primarily on preventing brute-force attacks, a
 
 Multi-factor authentication (MFA) is by far the best defence against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
 
-In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor when performing sensitive actions (such as adding a new payment destination), or in specific circumstances where there is a reason to suspect that the login attempt may not be legitimate, such as a login form:
+In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor when performing sensitive actions (such as adding a new payment destination), or in specific circumstances where there is a reason to suspect that the login attempt may not be legitimate, such as a login from:
 
 - A new browser/device or IP address.
 - An unusual country or location.
 - Specific countries that are considered untrusted.
-- An IP address that appears to be on a known blacklist.
+- An IP address that appears on known blacklists.
 - An IP address that has tried to log in to multiple accounts.
 - A login attempt that appears to be scripted rather than manual.
 
@@ -218,7 +218,7 @@ When designing an account lockout system, care must be taken to prevent it from 
 
 The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques or can be outsourced to services which can solve them. As such, the use of CAPTCHA should be viewed as a defence-in-depth control to make brute-force attacks more time consuming and expensive, rather than as a preventative.
 
-It may be more user-friendly only to require a CAPTCHA be solved after a small number of failed login attempts, rather than requiring it from the very first login.
+It may be more user-friendly to only require a CAPTCHA be solved after a small number of failed login attempts, rather than requiring it from the very first login.
 
 ### Security Questions and Memorable Words
 
@@ -283,6 +283,6 @@ Web applications should at least not make password managers job more difficult t
 - use standard HTML forms for username and password input with appropriate `type` attributes,
 - do not artificially limit user passwords to a length "reasonable for humans" and allow passwords lengths up to 128 characters,
 - do not artificially prevent copy and paste on username and password fields,
-- avoid plugin-based login pages (Flash, Silverlight etc.)
+- avoid plugin-based login pages (Flash, Silverlight, etc.)
 
 As of 2017 [Credential Management Level 1](https://w3c.github.io/webappsec-credential-management/) standard for web browsers is being developed that may further facilitate interaction between password managers and complex log-in schemes (e.g. single sign-on).
