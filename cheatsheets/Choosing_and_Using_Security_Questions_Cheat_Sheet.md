@@ -33,12 +33,30 @@ This approach avoids having to ask the user to provide specific security questio
 
 ## User Defined Security Questions
 
-### Choosing Strong Questions
+### Bad Questions
+
+Any questions that breaks one or more of the characteristics discussed above should be avoided. The table below gives some examples of bad security questions:
+
+| Question | Problem |
+|----------|---------|
+| When is your date of birth? | Easy for an attacker to discover. |
+| What is your memorable date? | Most users will just enter their birthday. |
+| What is your favourite movie? | Likely to change over time. |
+| What is your favourite cricket team? | Not applicable to most users. |
+| What is the make and model of your first car? | Fairly small range of likely answers. |
+
+Additionally, when the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was using in a virtual learning environment for a school, but would be much stronger for an online gaming website.
+
+### Good Questions
 
 - Provide user with a list of questions to choose from
-- Allow user-set questions?
 - Examples of good questions
-- Examples of bad questions
+
+### Allowing Users to Write Their Own Questions
+
+- Can result in very strong or very weak questions.
+- Can result in storage of inappropriate information
+- Best avoided
 
 ### Restricting Answers
 
