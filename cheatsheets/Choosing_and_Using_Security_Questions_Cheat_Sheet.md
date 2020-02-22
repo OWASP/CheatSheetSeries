@@ -61,9 +61,9 @@ The following list provides some examples of good questions:
 
 ### Allowing Users to Write Their Own Questions
 
-- Can result in very strong or very weak questions.
-- Can result in storage of inappropriate information
-- Best avoided
+Allowing users to write their own security questions can result in them choosing very strong and unique questions that would be very hard for an attacker to guess. However, there is also a significant risk that users will choose weak questions. In some cases, users might even set a recovery question to a reminder of what their password is - allowing anyone guessing their email address to compromise their account.
+
+As such, it is generally best not to allow users to write their own questions.
 
 ### Restricting Answers
 
