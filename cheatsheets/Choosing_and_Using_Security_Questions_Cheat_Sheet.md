@@ -1,29 +1,33 @@
 # Introduction
 
-This cheat sheet provides some best practice for developers to follow when choosing and using security questions to implement a "forgot password" web application feature.
+Security questions are used by many websites to allow a user to regain access to their account if they have forgotten their password, or have lost their secondary authentication factors when MFA is required. However, they are often a significantly weaker form of authentication than passwords, and there have been a number of high profile cases where they have allowed attacker to compromise users' accounts.
 
-# The Problem
+This cheat sheet provides guidance on both how to choose strong security questions, and how to use them securely within an application.
 
-There is no industry standard either for providing guidance to users or developers when using or implementing a Forgot Password feature. The result is that developers generally pick a set of dubious questions and implement them insecurely. They do so, not only at the risk to their users, but also--because of potential liability issues--at the risk to their organization. Ideally, passwords would be dead, or at least less important in the sense that they make up only one of several multi-factor authentication mechanisms, but the truth is that we probably are stuck with passwords just like we are stuck with Cobol. So with that in mind, what can we do to make the Forgot Password solution as palatable as possible?
+# Choosing Security Questions
 
-# Choosing Security Questions and/or Identity Data
+## Types of Security Questions
 
-Most of us can instantly spot a bad "security question" when we see one. You know the ones we mean. Ones like "What is your favorite color?" are obviously bad. But as the [Good Security Questions](http://goodsecurityquestions.com/) web site rightly points out, "there really are NO GOOD security questions; only fair or bad questions".
+Security questions fall into two main types. With *user defined* security questions, the user must choose a question from a list, and provide an answer to the question. Common examples are "What is your favourite colour?" or "What was your first car?"
 
-The reason that most organizations allow users to reset their own forgotten passwords is not because of security, but rather to reduce their own costs by reducing their volume of calls to their help desks. It's the classic convenience vs. security trade-off, and in this case, convenience (both to the organization in terms of reduced costs and to the user in terms of simpler, self-service) almost always wins out.
+These are easy for applications to implement, as the additional information required is provided by the user when they first create their account. However, users will often choose weak or easily discovered answers to these questions.
 
-So given that the business aspect of lower cost generally wins out, what can we do to at least raise the bar a bit?
+*System defined* security questions are based on information that is already known about the user. This can include personal details (such as  an address or date of birth), or details about the user's account (such as when the account was opened or details of recent transactions).
 
-Here are some suggestions. Note that we intentionally avoid recommending specific security questions. To do so likely would be counterproductive because many developers would simply use those questions without much thinking and adversaries would immediately start harvesting that data from various social networks.
+This approach avoids having to ask the user to provide specific security questions and answers, and also prevents them from being able to choose weak details. However it relies on sufficient information already being stored about the user, and on this information being hard for an attacker to obtain.
 
 ## Desired Characteristics
 
 Any security questions or identity information presented to users to reset forgotten passwords should ideally have the following four characteristics:
 
-1. **Memorable**: If users can't remember their answers to their security questions, you have achieved nothing.
-2. **Consistent**: The user's answers should not change over time. For instance, asking "What is the name of your significant other?" may have a different answer 5 years from now.
-3. **Nearly universal**: The security questions should apply to as wide an audience as possible.
-4. **Safe**: The answers to security questions should not be something that is easily guessed, or research (e.g., something that is matter of public record).
+| Characteristic | Explanation |
+|----------------|-------------|
+| Memorable | The user must be able to recall the answer to the question, potentially years after creating their account. |
+| Consistent | The answer to the question must not change over time. |
+| Applicable | The user must be able to answer the question.
+| Confidential | The answer to the question must be hard for an attacker to obtain. |
+
+These characteristics apply to both user defined and system defined questions.
 
 ## Steps
 
@@ -98,8 +102,6 @@ Therefore, at least some development teams will be faced with collecting more ge
 - briefly describe the importance of selecting a good security question / answer.
 - provide some guidance, along with some examples, of what constitutes bad vs. fair security questions.
 
-You may wish to refer your users to the [Good Security Questions](http://goodsecurityquestions.com/) web site for the latter.
-
 Furthermore, since adversaries will try the "forgot password" reset flow to reset a user's password (especially if they have compromised the side-channel, such as user's email account or their mobile device where they receive SMS text messages), is a good practice to minimize unintended and unauthorized information disclosure of the security questions. This may mean that you require the user to answer one security question before displaying any subsequent questions to be answered. In this manner, it does not allow an adversary an opportunity to research all the questions at once. Note however that this is contrary to the advice given on the [Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md) and it may also be perceived as not being user-friendly by your sponsoring business unit, so again YMMV.
 
 Lastly, you should consider whether or not you should treat the security questions that a user will type in as a "password" type or simply as regular "text" input. The former can prevent shoulder-surfing attacks, but also cause more typos, so there is a trade-off. Perhaps the best advice is to give the user a choice; hide the text by treating it as "password" input type by default, but all the user to check a box that would display their security answers as clear text when checked.
@@ -116,4 +118,3 @@ First, it bears repeating again...if passwords are considered weak authenticatio
 # Related Articles
 
 - [Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md)
-- [Good Security Questions web site](http://goodsecurityquestions.com/)
