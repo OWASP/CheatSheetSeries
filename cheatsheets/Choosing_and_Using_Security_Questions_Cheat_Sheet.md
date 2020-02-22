@@ -81,7 +81,7 @@ It is also beneficial to give the user some indication of the format that they s
 
 ### Renewing Security Questions
 
-- Regularly prompt user to review their security questions.
+If the security questions are not used as part of the main authentication process, then consider periodically prompting the user to review their security questions and verify that they still know the answers. This should give them a chance to update any answers that may have changed (although ideally this shouldn't happen with good questions), and increases the likelihood that they will remember them if they ever need to recover their account.
 
 ## System Defined Security Questions
 
