@@ -20,6 +20,7 @@ Any security questions or identity information presented to users to reset forgo
 | Consistent | The answer to the question must not change over time. |
 | Applicable | The user must be able to answer the question.
 | Confidential | The answer to the question must be hard for an attacker to obtain. |
+| Specific | The answer should be clear to the user. |
 
 ## Types of Security Questions
 
@@ -49,8 +50,14 @@ Additionally, when the context of the application must be considered when decidi
 
 ### Good Questions
 
-- Provide user with a list of questions to choose from
-- Examples of good questions
+Many good security questions are not applicable to all users, so the best approach is to give the user a list of security questions that they can choose from. This allows you to have more specific questions (with more secure answers), while still providing every user with questions that they can answer.
+
+The following list provides some examples of good questions:
+
+- What are the last four digits of your national insurance or social security number?
+- What was your maths teacher's surname in your 8th year of school?
+- What was the name of your first stuffed toy?
+- What was your driving instructor's first name?
 
 ### Allowing Users to Write Their Own Questions
 
