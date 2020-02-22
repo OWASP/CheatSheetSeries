@@ -105,9 +105,19 @@ It is also beneficial to give the user some indication of the format that they s
 - How to compare answer (case insensitive? format hints?)
 - Full answers vs individual characters
 
-## Username Enumeration
+## Forgotten Password Flow
 
-- How to avoid username/email enumeration with security questions
+- User enters email address (+CAPTCHA)
+- Email random link to them
+- User clicks link
+- Ask security questions
+- User enters new password
+
+## Authentication Flow
+
+- User enters username + password
+- Ask security questions
+- Login
 
 ## Account Lockout
 
