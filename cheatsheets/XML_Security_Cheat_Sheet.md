@@ -53,7 +53,7 @@ Normalization of a `CDATA` section is not a common rule among parsers. Libxml co
 </element>
 ```
 
-## Coersive Parsing
+## Coercive Parsing
 
 A coercive attack in XML involves parsing deeply nested XML documents without their corresponding ending tags. The idea is to make the victim use up -and eventually deplete- the machine's resources and cause a denial of service on the target. Reports of a DoS attack in Firefox 3.67 included the use of 30,000 open XML elements without their corresponding ending tags. Removing the closing tags simplified the attack since it requires only half of the size of a well-formed document to accomplish the same results. The number of tags being processed eventually caused a stack overflow. A simplified version of such a document would look like this:
 
@@ -323,7 +323,7 @@ The consequences of not defining a maximum number of occurrences could be worse 
 </xs:schema>
 ```
 
-The previous schema includes a root element named `operation`, which can contain an unlimited (`unbounded`) amount of buy elements. This is a common finding, since developers do not normally want to restrict maximum numbers of ocurrences. Applications using limitless occurrences should test what happens when they receive an extremely large amount of elements to be processed. Since computational resources are limited, the consequences should be analyzed and eventually a maximum number ought to be used instead of an `unbounded` value.
+The previous schema includes a root element named `operation`, which can contain an unlimited (`unbounded`) amount of buy elements. This is a common finding, since developers do not normally want to restrict maximum numbers of occurrences. Applications using limitless occurrences should test what happens when they receive an extremely large amount of elements to be processed. Since computational resources are limited, the consequences should be analyzed and eventually a maximum number ought to be used instead of an `unbounded` value.
 
 ## Jumbo Payloads
 
@@ -507,19 +507,19 @@ public class parseDocument {
    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
    DocumentBuilder builder = factory.newDocumentBuilder();
    Document doc = builder.parse(new InputSource("contacts.xml"));
-   NodeList nodeLst = doc.getElementsByTagName("contact");
-   for (int s = 0; s < nodeLst.getLength(); s++) {
-     Node fstNode = nodeLst.item(s);
-     if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
-       Element fstElmnt = (Element) fstNode;
-       NodeList fstNmElmntLst = fstElmnt.getElementsByTagName("firstname");
-       Element fstNmElmnt = (Element) fstNmElmntLst.item(0);
-       NodeList fstNm = fstNmElmnt.getChildNodes();
-       System.out.println("First Name: "  + ((Node) fstNm.item(0)).getNodeValue());
-       NodeList lstNmElmntLst = fstElmnt.getElementsByTagName("lastname");
-       Element lstNmElmnt = (Element) lstNmElmntLst.item(0);
-       NodeList lstNm = lstNmElmnt.getChildNodes();
-       System.out.println("Last Name: " + ((Node) lstNm.item(0)).getNodeValue());
+   NodeList nodeList = doc.getElementsByTagName("contact");
+   for (int s = 0; s < nodeList.getLength(); s++) {
+     Node firstNode = nodeList.item(s);
+     if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+       Element firstElement = (Element) firstNode;
+       NodeList firstNameElementList = firstElement.getElementsByTagName("firstname");
+       Element firstNameElement = (Element) firstNameElementList.item(0);
+       NodeList firstName = firstNameElement.getChildNodes();
+       System.out.println("First Name: "  + ((Node) firstName.item(0)).getNodeValue());
+       NodeList lastNameElementList = firstElement.getElementsByTagName("lastname");
+       Element lastNameElement = (Element) lastNameElementList.item(0);
+       NodeList lastName = lastNameElement.getChildNodes();
+       System.out.println("Last Name: " + ((Node) lastName.item(0)).getNodeValue());
      }
     }
   } catch (Exception e) {

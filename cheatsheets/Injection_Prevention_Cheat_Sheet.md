@@ -264,7 +264,7 @@ Equally Static Code Analysis tools check the data flow of untrusted user input i
 
 If it is considered unavoidable the call to a system command incorporated with user-supplied, the following two layers of defense should be used within software in order to prevent attacks
 
-1.  **Parametrization** - If available, use structured mechanisms that automatically enforce the separation between data and command. These mechanisms can help to provide the relevant quoting, encoding.
+1.  **Parameterization** - If available, use structured mechanisms that automatically enforce the separation between data and command. These mechanisms can help to provide the relevant quoting, encoding.
 2.  **Input validation** - the values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:
     - When it comes to the **commands** used, these must be validated against a whitelist of allowed commands.
     - In regards to the **arguments** used for these commands, they should be validated using the following options:

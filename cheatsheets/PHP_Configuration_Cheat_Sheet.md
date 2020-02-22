@@ -10,10 +10,6 @@ For general PHP codebase security please refer to the two following great guides
 
 # PHP Configuration and Deployment
 
-## Suhosin
-
-Consider using [Suhosin](http://www.hardened-php.net/suhosin/index.html) if you want to patch many custom security flaws in various parts of PHP. 
-
 ## php.ini
 
 Some of following settings need to be adapted to your system, in particular `session.save_path`, `session.cookie_path` (e.g. `/var/www/mysite`), and `session.cookie_domain` (e.g. `ExampleSite.com`). 
@@ -111,3 +107,9 @@ report_memleaks         = On
 track_errors            = Off
 html_errors             = Off
 ```
+
+## Suhosin
+
+[Suhosin](http://www.hardened-php.net/suhosin/index.html) is a patch to PHP which provides a number of hardening and security features that are not available in the default PHP build. However, Suhosin only works with PHP 5, which is **unsupported** and **should not be used**.
+
+There are a number of projects that have attempted to implement similar features for PHP 7 such as [Snuffleupagus](https://snuffleupagus.readthedocs.io/) and [Suhosin-ng](https://github.com/sektioneins/suhosin-ng/wiki/News), but these are both in the pre-release stage, and as such **should not be used in production**.

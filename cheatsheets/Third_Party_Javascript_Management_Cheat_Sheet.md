@@ -58,7 +58,7 @@ Typical defenses include, but are not restricted to: in-house script mirroring (
 
 There are three basic deployment mechanisms for **tags**. These mechanisms can be combined with each other.
 
-## Vendor Javascript on page
+## Vendor JavaScript on page
 
 This is where the vendor provides the host with the javascript and the host puts it on the host page. To be secure the host company must review the code for any vulnerabilities like [XSS attacks](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29) or malicious actions such as sending sensitive data from the DOM to a malicious site. This is often difficult because the javascript is commonly obfuscated.
 
@@ -73,7 +73,7 @@ This is where the vendor provides the host with the javascript and the host puts
 </html>
 ```
 
-## Javascript Request to Vendor
+## JavaScript Request to Vendor
 
 This is where one or a few lines of code on the host page each request a javascript file or URL directly from the vendor site. When the host page is being created, the developer includes the lines of code provided by the vendor that will request the vendor javascript. Each time the page is accessed the requests are made to the vendor site for the javascript, which then executes on the user browser.
 

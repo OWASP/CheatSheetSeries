@@ -9,11 +9,11 @@ Often when the security level of an application is mentioned in requirements, th
 
 These security requirements are too generic, and thus useless for a development team...
 
-In order to build a secure application, from an pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context.
+In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context.
 
 # Objective
 
-The objective of this cheat sheet is to provide an explanation of about what an **Abuse Case** is, why abuse cases are important when considering the security of an application, and further finally, to provide a proposal for a pragmatic approach to builing  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).
+The objective of this cheat sheet is to provide an explanation of about what an **Abuse Case** is, why abuse cases are important when considering the security of an application, and further finally, to provide a proposal for a pragmatic approach to building  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).
 
 **Important note about this Cheat Sheet:**
 
@@ -91,7 +91,7 @@ phase. For existing projects, new requirements should be analyzed for potential 
 projects should opportunistically build abuse-cases for established functionality where practical.
 ```
 
-Open SAMM source: [Threat Assessment Level 2 Actvity A](https://www.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2)
+Open SAMM source: [Threat Assessment Level 2 Activity A](https://www.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2)
 
 Another way to achieve the building of the list can be the following (more bottom-up and collaboratively oriented):
 
@@ -114,7 +114,7 @@ It is important to take into account **Technical** and **Business** kind of abus
 
 ## When to define the list of Abuse Cases?
 
-On agile project, the definition workshop must be made after the meeting in which User Stories are includen in a Sprint.
+On agile project, the definition workshop must be made after the meeting in which User Stories are included in a Sprint.
 
 In waterfall projects, the definition workshop must be made when the business feature to implements are identified and known by the business.
 
@@ -126,7 +126,7 @@ An example of unique ID format can be **ABUSE_CASE_001**.
 
 The following figure provides an overview of the chaining of the different steps involved (from left to right):
 
-![OverviewSchema](../assets/Abuse_Case_Cheat_Sheet_Overview.png)
+![Overview Schema](../assets/Abuse_Case_Cheat_Sheet_Overview.png)
 
 # Proposal
 

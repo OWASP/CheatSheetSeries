@@ -4,7 +4,7 @@
 Python3 script to generate the index markdown page that
 reference all cheat sheets grouped by the first letter.
 
-The index markdown page is located on the root folder 
+The index markdown page is located on the root folder
 and is named "Index.md".
 """
 import os
@@ -13,14 +13,14 @@ from collections import OrderedDict
 # Define utility functions
 def extract_languages_snippet_provided(cheatsheet):
     languages = []
-    markers = ["javascript", "java", "csharp", "c", "cpp", "html", "xml", "python", 
+    markers = ["javascript", "java", "csharp", "c", "cpp", "html", "xml", "python",
                "ruby", "php", "json", "sql", "bash", "shell", "coldfusion", "perl",
                "vbnet"]
     with open("../cheatsheets/" + cheatsheet, encoding="utf8") as cs_file:
         cs_content = cs_file.read().lower().replace(" ","")
     for marker in markers:
         if "```" + marker + "\n" in cs_content:
-            languages.append(marker.capitalize())                       
+            languages.append(marker.capitalize())
     return languages
 
 # Define templates
@@ -53,7 +53,7 @@ with open("../Index.md", "w") as index_file:
     for letter in index:
         index_file.write(top_menu_template % (letter, letter.lower()))
         index_file.write(" ")
-    index_file.write("\n\n")    
+    index_file.write("\n\n")
     # Generate letter sections
     j = 0
     for letter in index:

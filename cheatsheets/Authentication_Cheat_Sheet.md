@@ -2,7 +2,7 @@
 
 **Authentication** is the process of verifying that an individual, entity or website is whom it claims to be. Authentication in the context of web applications is commonly performed by submitting a username or ID and one or more items of private information that only a given user should know.
 
-**Session Management** is a process by which a server maintains the state of an entity interacting with it. This is required for a server to remember how to react to subsequent requests throughout a transaction. Sessions are maintained on the server by a session identifier which can be passed back and forward between the client and server when transmitting and receiving requests. Sessions should be unique per user and computationally very difficult to predict.
+**Session Management** is a process by which a server maintains the state of an entity interacting with it. This is required for a server to remember how to react to subsequent requests throughout a transaction. Sessions are maintained on the server by a session identifier which can be passed back and forward between the client and server when transmitting and receiving requests. Sessions should be unique per user and computationally very difficult to predict. The [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md) contains further guidance on the best practices in this area.
 
 # Authentication General Guidelines
 
@@ -26,12 +26,13 @@ A key concern when using passwords for authentication is password strength. A "s
 - Password Length
     - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
     - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters. It is important to set a maximum password length to prevent [long password Denial of Service attacks](https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/).
+    - Some password hashes such as Bcrypt truncate the input, so a shorter maximum length may be required, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#maximum-password-lengths).
 
       When selecting a maximum password length, consider whether the hashing algorithm to be used has any limitations because some [have a maximum password length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851).
 
 - Do not truncate passwords. Make sure that every character the user types in is actually included in the password.
 
-- Allow usage of **all** characters including Unicode and whitespaces. There should be no password composition rules limiting the type of characters permitted.
+- Allow usage of **all** characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted.
 
 - Ensure credential rotation when a password leak, or at the time of compromise identification.
 
@@ -51,6 +52,14 @@ It is common for an application to have a mechanism that provides a means for a 
 ## Store Passwords in a Secure Fashion
 
 It is critical for an application to store a password using the right cryptographic technique. Please see [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) for details on this feature.
+
+## Compare Password Hashes Using Safe Functions
+
+Where possible, the user-supplied password should be compared to the stored password hash using a secure password comparison function provided by the language or framework, such as the [password_verify()](https://www.php.net/manual/en/function.password-verify.php) function in PHP. Where this is not possible, ensure that the comparison function:
+
+- Has a maximum input length, to protect against denial of service attacks with very long inputs.
+- Explicitly sets the type of both variable, to protect against type confusion attacks such as [Magic Hashes](https://www.whitehatsec.com/blog/magic-hashes/) in PHP.
+- Returns in constant time, to protect against timing attacks.
 
 ## Transmit Passwords Only Over TLS or Other Strong Transport
 
@@ -189,27 +198,18 @@ The following sections will focus primarily on preventing brute-force attacks, a
 
 Multi-factor authentication (MFA) is by far the best defence against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
 
-In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor when performing sensitive actions (such as adding a new payment destination), or in specific circumstances where there is a reason to suspect that the login attempt may not be legitimate, such as a login from:
-
-- A new browser/device or IP address.
-- An unusual country or location.
-- Specific countries that are considered untrusted.
-- An IP address that appears on known blacklists.
-- An IP address that has tried to log in to multiple accounts.
-- A login attempt that appears to be scripted rather than manual.
-
-Additionally, for enterprise applications, known trusted IP ranges could be added to a whitelist so that MFA is not required when users connect from these ranges.
+The [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md) contains further guidance on implementing MFA.
 
 ### Account Lockout
 
 The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.
 
 The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker from making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:
-
+We've got 4 tickets for We've got 4 tickets for 
 - The number of failed attempts before the account is locked out (lockout threshold).
 - The time period that these attempts must occur within (observation window).
 - How long the account is locked out for (lockout duration).
-
+We've got 4 tickets for 
 Rather than implementing a fixed lockout duration (e.g., ten minutes), some applications use an exponential lockout, where the lockout duration starts as a very short period (e.g., one second), but doubles after each failed login attempt.
 
 When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the user of the forgotten password functionality to log in, even if the account is locked out.
@@ -270,19 +270,15 @@ UAF takes advantage of existing security technologies present on devices for aut
 
 U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides **protection against phishing** by using the URL of the website to look up the stored authentication key.
 
-# Session Management General Guidelines
-
-Session management is directly related to authentication. The **Session Management General Guidelines** previously available on this OWASP Authentication Cheat Sheet have been integrated into the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
-
 # Password Managers
 
-Password managers are programs, browser plugins or web services that automate the management of a large number of different credentials, including memorizing and filling-in, generating random passwords on different sites etc.
+Password managers are programs, browser plugins or web services that automate management of large number of different credentials. Most password managers have functionality to allow users to easily use them on websites, either by pasting the passwords into the login form, or by simulating the user typing them in.
 
 Web applications should at least not make password managers job more difficult than necessary by observing the following recommendations:
 
-- use standard HTML forms for username and password input with appropriate `type` attributes,
-- do not artificially limit user passwords to a length "reasonable for humans" and allow passwords lengths up to 128 characters,
-- do not artificially prevent copy and paste on username and password fields,
-- avoid plugin-based login pages (Flash, Silverlight, etc.)
-
-As of 2017 [Credential Management Level 1](https://w3c.github.io/webappsec-credential-management/) standard for web browsers is being developed that may further facilitate interaction between password managers and complex log-in schemes (e.g. single sign-on).
+- Use standard HTML forms for username and password input with appropriate `type` attributes.
+  - Avoid plugin-based login pages (such as Flash or Silverlight).
+- Allow long passwords (at least 64 characters).
+- Allow any printable characters to be used in passwords.
+- Allow users to paste into the username and password fields.
+- Allow users to navigate between the username and password field with a single press of the `Tab` key.

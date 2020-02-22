@@ -16,7 +16,7 @@ In order to implement flows with REST APIs, resources are typically created, rea
 
 Another key feature of REST applications is the use of standard HTTP verbs and error codes in the pursuit or removing unnecessary variation among different services.
 
-Another key feature of REST applications is the use of [HATEOAS or Hypermedia As The Engine of Application State](https://en.wikipedia.org/wiki/HATEOAS). This provides REST applications a self-documenting nature making it easier for developers to interact with a REST service without a priori knowledge.
+Another key feature of REST applications is the use of [HATEOAS or Hypermedia As The Engine of Application State](https://en.wikipedia.org/wiki/HATEOAS). This provides REST applications a self-documenting nature making it easier for developers to interact with a REST service without prior knowledge.
 
 # HTTPS
 
@@ -30,7 +30,7 @@ Consider the use of mutually authenticated client-side certificates to provide a
 
 Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple micro services following the RESTful style.
 
-- in order to minimise latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints
+- in order to minimize latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints
 - user authentication should be centralised in a Identity Provider (IdP), which issues access tokens
 
 # JWT
@@ -165,7 +165,7 @@ HTTP defines [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_cod
 
 Here is a non-exhaustive selection of security related REST API **status codes**. Use it to ensure you return the correct code.
 
-| Code | Message                | Decription                                                                                                                                                                                                           |
+| Code | Message                | Description                                                                                                                                                                                                          |
 |-------------|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 200         | OK                     |  Response to a successful REST API action. The HTTP method can be GET, POST, PUT, PATCH or DELETE.                                                                                                                  |
 | 201         | Created                |  The request has been fulfilled and resource created. A URI for the created resource is returned in the Location header.                                                                                            |

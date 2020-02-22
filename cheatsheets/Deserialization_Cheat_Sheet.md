@@ -60,7 +60,7 @@ Implementation advices:
 
 ### WhiteBox Review
 
-Be aware of the following Java API uses for potential serilization vulnerability.
+Be aware of the following Java API uses for potential serialization vulnerability.
 
 1. `XMLdecoder` with external user defined parameters
 
@@ -146,6 +146,7 @@ More complete implementations of this approach have been proposed by various com
 
 - [NibbleSec](https://github.com/ikkisoft/SerialKiller) - a library that allows whitelisting and blacklisting of classes that are allowed to be deserialized
 - [IBM](https://www.ibm.com/developerworks/library/se-lookahead/) - the seminal protection, written years before the most devastating exploitation scenarios were envisioned.
+- [Apache Commons IO classes](https://commons.apache.org/proper/commons-io/javadocs/api-2.5/org/apache/commons/io/serialization/ValidatingObjectInputStream.html)
 
 ### Harden All java.io.ObjectInputStream Usage with an Agent
 
@@ -236,11 +237,11 @@ if (suspectObject is SomeDangerousObjectType)
 }
 ```    
 
-For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of white list control useing a custom `SerializationBinder`.
+For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of white list control using a custom `SerializationBinder`.
 
 Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. **A deserializer can only instantiate types that it knows about**. 
 
-Try to keep any code that might create potential gagdets separate from any code that has internet connectivity. As an example `System.Windows.Data.ObjectDataProvider` used in WPF applications is a known gadget that allows arbitrary method invocation. It would be risky to have this a reference to this assembly in a REST service project that deserializes untrusted data.
+Try to keep any code that might create potential gadgets separate from any code that has internet connectivity. As an example `System.Windows.Data.ObjectDataProvider` used in WPF applications is a known gadget that allows arbitrary method invocation. It would be risky to have this a reference to this assembly in a REST service project that deserializes untrusted data.
 
 ### Known .NET RCE Gadgets
 

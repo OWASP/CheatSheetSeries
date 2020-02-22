@@ -56,7 +56,8 @@ Use of `XercesDOMParser` do this to prevent XXE:
 
 ``` cpp
 XercesDOMParser *parser = new XercesDOMParser;
-parser->setCreateEntityReferenceNodes(false);
+parser->setCreateEntityReferenceNodes(true);
+parser->setDisableDefaultEntityResolution(true);
 ```
 
 Use of SAXParser, do this to prevent XXE:
@@ -378,6 +379,10 @@ marshaller.unmarshal(new StreamSource(new StringReader(some_string_containing_XM
 
 So, per the [Spring OXM CVE writeup](https://pivotal.io/security/cve-2013-4152), the above is now safe. But if you were to use a DOMSource or StAXSource instead, it would be up to you to configure those sources to be safe from XXE.
 
+### Castor
+
+Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor **prior to version 1.3.3** are vulnerable to XXE, and should be upgraded to the latest version. For additional information, check the official [XML configuration file](https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html)
+
 # .NET
 
 The following information for XXE injection in .NET is directly from this [web application of unit tests by Dean Fleming](https://github.com/deanf1/dotnet-security-unit-tests).
@@ -548,6 +553,24 @@ libxml_disable_entity_loader(true);
 ```
 
 A description of how to abuse this in PHP is presented in a good [SensePost article](https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/) describing a cool PHP based XXE vulnerability that was fixed in Facebook.
+
+# Python
+
+The Python 3 official documentation contains a section on [xml vulnerabilities](https://docs.python.org/3/library/xml.html#xml-vulnerabilities). For Python 2, you can refer to this [page](https://docs.Python.org/2/library/xml.html#xml-vulnerabilities). 
+
+> The end of life for Python 2 is expected to be January 1st, 2020.
+
+The following table gives an overview of various modules in Python 3 used for XML parsing and whether or not they are vulnerable.
+
+| Attack Type               | sax        | etree      | minidom    | pulldom    | xmlrpc     |
+|---------------------------|------------|------------|------------|------------|------------|
+| Billion Laughs            | Vulnerable | Vulnerable | Vulnerable | Vulnerable | Vulnerable |
+| Quadratic Blowup          | Vulnerable | Vulnerable | Vulnerable | Vulnerable | Vulnerable |
+| External Entity Expansion | Safe       | Safe       | Safe       | Safe       | Safe       |
+| DTD Retrieval             | Safe       | Safe       | Safe       | Safe       | Safe       |
+| Decompression Bomb        | Safe       | Safe       | Safe       | Safe       | Vulnerable |
+
+To protect your application from the applicable attacks, [two packages](https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages) exist to help you sanitize your input and protect your application against DDoS and remote attacks.
 
 # References
 
