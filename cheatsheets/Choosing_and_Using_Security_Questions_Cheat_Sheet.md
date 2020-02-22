@@ -4,6 +4,10 @@ Security questions are used by many websites to allow a user to regain access to
 
 This cheat sheet provides guidance on both how to choose strong security questions, and how to use them securely within an application.
 
+# Contents
+
+**FIXME**
+
 # Choosing Security Questions
 
 ## Desired Characteristics
