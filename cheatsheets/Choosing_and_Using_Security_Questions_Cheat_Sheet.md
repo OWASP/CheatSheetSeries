@@ -42,7 +42,7 @@ This approach avoids having to ask the user to provide specific security questio
 
 ### Restricting Answers
 
-- Consider where length limits are appropraite
+- Consider where length limits are appropriate
 - Blacklist weak answers (username, current password, etc?)
 
 ### Renewing Security Questions
