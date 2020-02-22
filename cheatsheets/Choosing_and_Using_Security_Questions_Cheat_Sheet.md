@@ -59,6 +59,8 @@ The following list provides some examples of good questions:
 - What was the name of your first stuffed toy?
 - What was your driving instructor's first name?
 
+Much like passwords, there is a risk that users will re-use recovery questions between different sites, which could expose the users if the other site is compromised. As such, there are benefits to having unique security questions that are unlikely to be shared. An easy way to achieve this is to create more targeted questions based on the type of application. For example, on a share dealing platform, financial related questions such as "What is the first company you owned shares in?" could be used.
+
 ### Allowing Users to Write Their Own Questions
 
 Allowing users to write their own security questions can result in them choosing very strong and unique questions that would be very hard for an attacker to guess. However, there is also a significant risk that users will choose weak questions. In some cases, users might even set a recovery question to a reminder of what their password is - allowing anyone guessing their email address to compromise their account.
