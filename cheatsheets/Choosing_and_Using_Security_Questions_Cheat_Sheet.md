@@ -85,8 +85,13 @@ If the security questions are not used as part of the main authentication proces
 
 ## System Defined Security Questions
 
-- Examples of good questions
-- Examples of bad question
+System defined security questions are based on information that is already known about the user. The users' personal details are often used, including the full name, address and date of birth - however these can easily be obtained by an attacker from social media, and as such provide a very weak level of authentication.
+
+The questions that can be used will vary hugely depending on the application, and how much information is already held about the user. When deciding which bits of information may be usable for security questions, the following areas should be considered:
+
+- Will the user be able to remember the answer to the question?
+- Could an attacker easily obtain this information from social media or other sources?
+- Is the answer likely to be the same for a large number of users, or easily guessable?
 
 # Using Security Questions
 
