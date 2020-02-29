@@ -130,7 +130,7 @@ Forgotten password functionality often provides a mechanism for attackers to enu
 
 ### Storing Answers
 
-- How to store answer (hash? encrypt?)
+The answers to security questions may contain personal information about the user, and may also be re-used by the user between different applications. As such, they should be treated in the same way as passwords, and stored using a secure hashing algorithm such as Bcrypt. The [password storage cheat sheet](Password_Storage_Cheat_Sheet.md) contains further guidance on this.
 
 ### Comparing Answers
 
