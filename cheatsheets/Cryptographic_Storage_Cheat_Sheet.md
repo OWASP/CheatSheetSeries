@@ -163,7 +163,7 @@ In some cases such none of these will be available, such as in a shared hosting 
 - Do not hard-code keys into the application code.
 - Do not check keys into version control systems.
 - Protect the configuration files containing the keys with restrictive permissions.
-- Avoid storing keys in environment variables, as these can be accidentally exposed through functions such as [phpinfo()](https://www.php.net/manual/en/function.phpinfo.php).
+- Avoid storing keys in environment variables, as these can be accidentally exposed through functions such as [phpinfo()](https://www.php.net/manual/en/function.phpinfo.php) or through the `/proc/self/environ` file.
 
 ### Separation of Keys and Data
 
