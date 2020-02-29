@@ -140,7 +140,9 @@ It is also beneficial to give the user some indication of the format that they s
 
 ### Multiple Security Questions
 
-- Don't rotate questions until correct.
+When security questions are used, the user can either be asked a single question, or can be asked multiple questions at the same time. This provides a greater level of assurance, especially if the questions are diverse, as an attacker would need to obtain more information about the target user. A mixture of user-defined and system-defined questions can be very effective for this.
+
+If the user is asked a single question out of a bank of possible questions, then this question **should not** be changed until the user has answered it correctly. If the attacker is allowed to try answering all of the different security questions, this greatly increases the chance that they will be able to guess or obtain the answer to one of them.
 
 # Old Contents
 
@@ -228,6 +230,11 @@ Lastly, you should consider whether or not you should treat the security questio
 First, it bears repeating again...if passwords are considered weak authentication, then using security questions are even less robust. Furthermore, they are no substitute for true multi-factor authentication, or stronger forms of authentication such as authentication using one-time passwords or involving side-channel communications. In a word, very little is gained by using security questions in this context. But, if you must...keep these things in mind:
 
 - Display the security question(s) on a separate page only *after* your users have successfully authenticated with their usernames / passwords (rather than only after they have entered their username). In this manner, you at least do not allow an adversary to view and research the security questions unless they also know the user's current password.
-- If you also use security questions to reset a user's password, then you should use a *different* set of security questions for an additional means of authenticating.
+- If you also use  security questions to reset a user's password, then you should use a *different* set of security questions for an additional means of authenticating.
 - Security questions used for actual authentication purposes should regularly expire much like passwords. Periodically make the user choose new security questions and answers.
-- If you use answers to security questions as a *subsequent* authentication mechanism (say to enter a more sensitive area of your web site), make sure that you keep the session idle time out very low...say less than 5 minutes or so, or that you also require the user to first re-authenticate with their password and then immediately after answer the security question(s
+- If you use answers to security questions as a *subsequent* authentication mechanism (say to enter a more sensitive area of your web site), make sure that you keep the session idle time out very low...say less than 5 minutes or so, or that you also require the user to first re-authenticate with their password and then immediately after answer the security question(s).
+
+# Related Articles
+
+- [Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md)
+- [Good Security Questions web site](http://goodsecurityquestions.com/)
