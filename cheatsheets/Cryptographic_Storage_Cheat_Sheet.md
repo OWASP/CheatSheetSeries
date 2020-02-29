@@ -170,6 +170,8 @@ Where possible, encryption keys should themselves be stored in an encrypted form
 - The Data Encryption Key (DEK) is used to encrypt the data.
 - The Key Encryption Key (KEK) is used to encryption the DEK.
 
-For this to be effective, the KEK must be stored separately from the DEK. The KEK should also be at least as strong as the DEK.
+For this to be effective, the KEK must be stored separately from the DEK. The encrypted DEK can be stored with the data, but will only be usable if an attacker is able to also obtain the KEK, which is stored on another system.
+
+The KEK should also be at least as strong as the DEK. The [envelope encryption](https://cloud.google.com/kms/docs/envelope-encryption) guidance from Google contains further details on how to manage DEKs and KEKs.
 
 In simpler application architectures (such as shared hosting environments) where the KEK and DEK cannot be stored separately, there is limited value to the is approach, as an attacker is likely to be able to obtain both of the keys at the same time. However, it can provide an additional barrier to unskilled attackers.
