@@ -150,6 +150,14 @@ Where available, the secure storage mechanisms provided by the operating system,
 - A secure storage such as [Amazon KMS](https://aws.amazon.com/kms/) or [Azure Key Vault](https://azure.microsoft.com/en-gb/services/key-vault/).
 - Secure storage APIs provided [ProtectedData](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?redirectedfrom=MSDN&view=netframework-4.8) class in the .NET framework.
 
+There are many advantages to using these types of secure storage over simply putting keys in configuration files. The specifics of these will vary depending on the solution used, but they include:
+
+- Central management of keys, especially in containerised environments.
+- Easy key rotation and replacement.
+- Secure key generation.
+- Simplifying compliance with regulatory standards such as FIPS 140 or PCI DSS.
+- Making it harder for an attacker to export or steal keys.
+
 In some cases such none of these will be available, such as in a shared hosting environment, meaning that it is not possible to obtain a high degree of protection for any encryption keys. However, the following basic rules can still be followed:
 
 - Do not hard-code keys into the application code.
