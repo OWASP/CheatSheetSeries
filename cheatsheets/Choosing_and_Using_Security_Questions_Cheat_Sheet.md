@@ -107,18 +107,24 @@ Applications should generally use a password along with a second authentication 
 
 ### Authentication Flow
 
-- User enters username + password
-- Ask security questions
-- Login
-- Consider account lockout
+Security questions may be used as part of the main authentication flow to supplement passwords. Note that this **does not constitute MFA**, as both factors are the same (i.e, something you know). A typical authentication flow would be:
+
+- The user enters their username and password.
+- If the username and password are correct, the user is presented with the security question(s).
+- If the answers are correct, the user is logged in.
+
+If the answers to the security questions are incorrect, then this should be counted as a failed login attempt, and the account lockout counter should be incremented for the user.
 
 ### Forgotten Password or Lost MFA Token Flow
 
-- User enters email address (+CAPTCHA)
-- Email random link to them
-- User clicks link
-- Ask security questions
-- User enters new password
+Forgotten password functionality often provides a mechanism for attackers to enumerate user accounts if it is not correctly implemented. The following flow avoids this issue by only displaying the security questions once the user has proved ownership of the email address:
+
+- The user enters email address (and solves a CAPTCHA).
+- The application displays a generic message such as "If the email address was correct, an email will be sent to it".
+- An email email with a randomly generated, single-use link is sent to the user.
+- The user clicks the link.
+- The user is asked to answer the security question(s).
+- If the answer is correct, the user can enter a new password.
 
 ## How to Use Security Questions
 
@@ -131,6 +137,10 @@ Applications should generally use a password along with a second authentication 
 Comparing the answers provided by the user with the stored answer in a case insensitive manner makes it much easier for the user. The simplest way to do this is to convert the answer to lowercase before hashing the answer to store it, and then lowercase the user-provided answer before comparing them.
 
 It is also beneficial to give the user some indication of the format that they should use to enter answers. This could be done through input validation, or simply by recommending that the user enters their details in a specific format. For example, when asking for a date, indicating that the format should be "DD/MM/YYYY" will mean that the user doesn't have to try and guess what format they entered when registering.
+
+### Multiple Security Questions
+
+- Don't rotate questions until correct.
 
 # Old Contents
 
@@ -220,9 +230,4 @@ First, it bears repeating again...if passwords are considered weak authenticatio
 - Display the security question(s) on a separate page only *after* your users have successfully authenticated with their usernames / passwords (rather than only after they have entered their username). In this manner, you at least do not allow an adversary to view and research the security questions unless they also know the user's current password.
 - If you also use security questions to reset a user's password, then you should use a *different* set of security questions for an additional means of authenticating.
 - Security questions used for actual authentication purposes should regularly expire much like passwords. Periodically make the user choose new security questions and answers.
-- If you use answers to security questions as a *subsequent* authentication mechanism (say to enter a more sensitive area of your web site), make sure that you keep the session idle time out very low...say less than 5 minutes or so, or that you also require the user to first re-authenticate with their password and then immediately after answer the security question(s).
-
-# Related Articles
-
-- [Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md)
-- [Good Security Questions web site](http://goodsecurityquestions.com/)
+- If you use answers to security questions as a *subsequent* authentication mechanism (say to enter a more sensitive area of your web site), make sure that you keep the session idle time out very low...say less than 5 minutes or so, or that you also require the user to first re-authenticate with their password and then immediately after answer the security question(s
