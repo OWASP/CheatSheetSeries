@@ -46,7 +46,7 @@ In order to assess and know exactly what controls to implement, knowing what you
 
 The attacker delivers a file for malicious intent, such as:
 
-1. Exploit vulnerabilities in the file parser or processing module (_e.g._ [ImageTrick Exploit](https://imagetragick.com/), [XXE](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing))
+1. Exploit vulnerabilities in the file parser or processing module (_e.g._ [ImageTrick Exploit](https://imagetragick.com/), [XXE](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing))
 2. Use the file for phishing (_e.g._ careers form)
 3. Send ZIP bombs, XML bombs (otherwise known as billion laughs attack), or simply huge files in a way to fill the server storage which hinders and damages the server's availability
 4. Overwrite an existing file on the system
