@@ -35,7 +35,7 @@ The best way to protect sensitive information is to not store it in the first pl
 
 ## Algorithms
 
-For symmetric encryption **AES** with a **256 bit** key and a secure [mode](#cipher-modes) should be used as the preferred algorithm.
+For symmetric encryption **AES** with a key that's at least **128 bits** (ideally **256 bits**) and a secure [mode](#cipher-modes) should be used as the preferred algorithm.
 
 For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as **X25519** as a preferred algorithm. If ECC is not available **RSA** must be used, then ensure that the key is at least **2048 bits**.
 
