@@ -49,7 +49,7 @@ Many other symmetric and asymmetric algorithms are available which have their ow
 - Quality of the libraries available.
 - Portability of the algorithm (i.e, how widely supported is it).
 
-In some cases there may be regulatory requirements that limit the algorithms that can be used, such as [FIPS 140-2](https://csrc.nist.gov/csrc/media/publications/fips/140/2/final/documents/fips1402annexa.pdf) or [PCI DSS](#34-render-pan-primary-account-number-at-minimum-unreadable-anywhere-it-is-stored).
+In some cases there may be regulatory requirements that limit the algorithms that can be used, such as [FIPS 140-2](https://csrc.nist.gov/csrc/media/publications/fips/140/2/final/documents/fips1402annexa.pdf) or [PCI DSS](https://www.pcisecuritystandards.org/document_library).
 
 ### Custom Algorithms
 
