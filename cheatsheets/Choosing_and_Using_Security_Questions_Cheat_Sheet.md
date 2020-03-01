@@ -48,7 +48,7 @@ Any questions that breaks one or more of the characteristics discussed above sho
 | What is your favourite cricket team? | Not applicable to most users. |
 | What is the make and model of your first car? | Fairly small range of likely answers. |
 
-Additionally, when the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was using in a virtual learning environment for a school, but would be much stronger for an online gaming website.
+Additionally, when the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was using in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.
 
 ### Good Questions
 
