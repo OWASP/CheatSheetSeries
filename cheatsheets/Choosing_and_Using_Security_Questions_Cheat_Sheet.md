@@ -1,6 +1,6 @@
 # Introduction
 
-Security questions are used by many websites to allow a user to regain access to their account if they have forgotten their password, or have lost their secondary authentication factors when multifactor authentication (MFA) is required. However, they are often a significantly weaker form of authentication than passwords, and there have been a number of high profile cases where they have allowed attacker to compromise users' accounts.
+Security questions are used by many websites to allow a user to regain access to their account if they have forgotten their password, or have lost their secondary authentication factors when multifactor authentication (MFA) is required. However, they are often a significantly weaker form of authentication than passwords, and there have been a number of high profile cases where they have allowed attackers to compromise users' accounts.
 
 Security questions **should not be relied upon as a sole mechanism to authenticate a user**. However, they can provide a useful additional layer of security when [MFA](Multifactor_Authentication_Cheat_Sheet.md) is not available.
 
@@ -8,13 +8,33 @@ This cheat sheet provides guidance on both how to choose strong security questio
 
 # Contents
 
-**FIXME**
+- [Introduction](#introduction)
+- [Contents](#contents)
+- [Choosing Security Questions](#choosing-security-questions)
+  * [Desired Characteristics](#desired-characteristics)
+  * [Types of Security Questions](#types-of-security-questions)
+  * [User Defined Security Questions](#user-defined-security-questions)
+    + [Bad Questions](#bad-questions)
+    + [Good Questions](#good-questions)
+    + [Allowing Users to Write Their Own Questions](#allowing-users-to-write-their-own-questions)
+    + [Restricting Answers](#restricting-answers)
+    + [Renewing Security Questions](#renewing-security-questions)
+  * [System Defined Security Questions](#system-defined-security-questions)
+- [Using Security Questions](#using-security-questions)
+  * [When to Use Security Questions](#when-to-use-security-questions)
+    + [Authentication Flow](#authentication-flow)
+    + [Forgotten Password or Lost MFA Token Flow](#forgotten-password-or-lost-mfa-token-flow)
+  * [How to Use Security Questions](#how-to-use-security-questions)
+    + [Storing Answers](#storing-answers)
+    + [Comparing Answers](#comparing-answers)
+    + [Updating Answers](#updating-answers)
+    + [Multiple Security Questions](#multiple-security-questions)
 
 # Choosing Security Questions
 
 ## Desired Characteristics
 
-Any security questions or identity information presented to users to reset forgotten passwords must meet the following characteristics:
+Any security questions presented to users to reset forgotten passwords must meet the following characteristics:
 
 | Characteristic | Explanation |
 |----------------|-------------|
@@ -36,7 +56,7 @@ These are easy for applications to implement, as the additional information requ
 
 ### Bad Questions
 
-Any questions that breaks one or more of the characteristics discussed above should be avoided. The table below gives some examples of bad security questions:
+Any questions that do not have all of the characteristics discussed above should be avoided. The table below gives some examples of bad security questions:
 
 | Question | Problem |
 |----------|---------|
@@ -59,7 +79,7 @@ The following list provides some examples of good questions:
 - What was the name of your first stuffed toy?
 - What was your driving instructor's first name?
 
-Much like passwords, there is a risk that users will re-use recovery questions between different sites, which could expose the users if the other site is compromised. As such, there are benefits to having unique security questions that are unlikely to be shared. An easy way to achieve this is to create more targeted questions based on the type of application. For example, on a share dealing platform, financial related questions such as "What is the first company you owned shares in?" could be used.
+Much like passwords, there is a risk that users will re-use recovery questions between different sites, which could expose the users if the other site is compromised. As such, there are benefits to having unique security questions that are unlikely to be shared between sites. An easy way to achieve this is to create more targeted questions based on the type of application. For example, on a share dealing platform, financial related questions such as "What is the first company you owned shares in?" could be used.
 
 ### Allowing Users to Write Their Own Questions
 
@@ -69,7 +89,7 @@ As such, it is generally best not to allow users to write their own questions.
 
 ### Restricting Answers
 
-Enforcing a minimum length for answers can prevent users from entering strings such as "a" or "123" for their answers. However, depending on the questions asked, it could also prevent users from being able to correctly answer the question. For example, if asking for a first name or surname could result in a two letter answer such as "Li", and a colour-based question could be four letters such as "blue".
+Enforcing a minimum length for answers can prevent users from entering strings such as "a" or "123" for their answers. However, depending on the questions asked, it could also prevent users from being able to correctly answer the question. For example, asking for a first name or surname could result in a two letter answer such as "Li", and a colour-based question could be four letters such as "blue".
 
 Answers should also be checked against a blacklist, including:
 
@@ -83,7 +103,7 @@ If the security questions are not used as part of the main authentication proces
 
 ## System Defined Security Questions
 
-System defined security questions are based on information that is already known about the user. The users' personal details are often used, including the full name, address and date of birth - however these can easily be obtained by an attacker from social media, and as such provide a very weak level of authentication.
+System defined security questions are based on information that is already known about the user. The users' personal details are often used, including the full name, address and date of birth. However these can easily be obtained by an attacker from social media, and as such provide a very weak level of authentication.
 
 The questions that can be used will vary hugely depending on the application, and how much information is already held about the user. When deciding which bits of information may be usable for security questions, the following areas should be considered:
 
@@ -99,7 +119,7 @@ Applications should generally use a password along with a second authentication 
 
 **Security questions should never be relied upon as the sole mechanism to authenticate a user**. However, they can provide a useful additional layer of security when other stronger factors are not available. Common cases where they would be use include:
 
-- Authenticating users.
+- Logging in.
 - Resetting a forgotten password.
 - Resetting a lost MFA token.
 
@@ -121,7 +141,7 @@ Forgotten password functionality often provides a mechanism for attackers to enu
 - The application displays a generic message such as "If the email address was correct, an email will be sent to it".
 - An email email with a randomly generated, single-use link is sent to the user.
 - The user clicks the link.
-- The user is asked to answer the security question(s).
+- The user is presented with the security question(s).
 - If the answer is correct, the user can enter a new password.
 
 ## How to Use Security Questions
