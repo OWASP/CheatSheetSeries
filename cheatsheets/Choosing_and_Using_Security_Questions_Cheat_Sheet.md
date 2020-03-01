@@ -30,9 +30,7 @@ Security questions fall into two main types. With *user defined* security questi
 
 These are easy for applications to implement, as the additional information required is provided by the user when they first create their account. However, users will often choose weak or easily discovered answers to these questions.
 
-*System defined* security questions are based on information that is already known about the user. This can include personal details (such as  an address or date of birth), or details about the user's account (such as when the account was opened or details of recent transactions).
-
-This approach avoids having to ask the user to provide specific security questions and answers, and also prevents them from being able to choose weak details. However it relies on sufficient information already being stored about the user, and on this information being hard for an attacker to obtain.
+*System defined* security questions are based on information that is already known about the user. This approach avoids having to ask the user to provide specific security questions and answers, and also prevents them from being able to choose weak details. However it relies on sufficient information already being stored about the user, and on this information being hard for an attacker to obtain.
 
 ## User Defined Security Questions
 
