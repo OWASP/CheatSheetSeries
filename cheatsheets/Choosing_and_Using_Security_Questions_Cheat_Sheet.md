@@ -107,7 +107,7 @@ Applications should generally use a password along with a second authentication 
 
 ### Authentication Flow
 
-Security questions may be used as part of the main authentication flow to supplement passwords. Note that this **does not constitute MFA**, as both factors are the same (i.e, something you know). A typical authentication flow would be:
+Security questions may be used as part of the main authentication flow to supplement passwords where MFA is not available. A typical authentication flow would be:
 
 - The user enters their username and password.
 - If the username and password are correct, the user is presented with the security question(s).
