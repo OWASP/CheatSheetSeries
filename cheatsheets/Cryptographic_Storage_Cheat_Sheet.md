@@ -8,7 +8,25 @@ Passwords should not be stored using reversible encryption - secure password has
 
 ## Contents
 
-**FIXME**
+- [Cryptographic Storage Cheat Sheet](#cryptographic-storage-cheat-sheet)
+  * [Introduction](#introduction)
+  * [Contents](#contents)
+  * [Architectural Design](#architectural-design)
+    + [Where to Perform Encryption](#where-to-perform-encryption)
+    + [Minimise the Storage of Sensitive Information](#minimise-the-storage-of-sensitive-information)
+  * [Algorithms](#algorithms)
+    + [Custom Algorithms](#custom-algorithms)
+    + [Cipher Modes](#cipher-modes)
+    + [Secure Random Number Generation](#secure-random-number-generation)
+      - [UUIDs and GUIDs](#uuids-and-guids)
+    + [Defence in Depth](#defence-in-depth)
+  * [Key Management](#key-management)
+    + [Processes](#processes)
+    + [Key Generation](#key-generation)
+    + [Key Lifetimes and Rotation](#key-lifetimes-and-rotation)
+  * [Key Storage](#key-storage)
+    + [Separation of Keys and Data](#separation-of-keys-and-data)
+    + [Encrypting Stored Keys](#encrypting-stored-keys)
 
 ## Architectural Design
 
@@ -37,9 +55,9 @@ The best way to protect sensitive information is to not store it in the first pl
 
 For symmetric encryption **AES** with a key that's at least **128 bits** (ideally **256 bits**) and a secure [mode](#cipher-modes) should be used as the preferred algorithm.
 
-For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as **Curve25519** as a preferred algorithm. If ECC is not available **RSA** must be used, then ensure that the key is at least **2048 bits**.
+For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as **Curve25519** as a preferred algorithm. If ECC is not available and  **RSA** must be used, then ensure that the key is at least **2048 bits**.
 
-Many other symmetric and asymmetric algorithms are available which have their own pros and cons with specific use cases, and they may be better or worse than AES or Curve25519. When considering these, a number of factors should be taken into account, including:
+Many other symmetric and asymmetric algorithms are available which have their own pros and cons, and they may be better or worse than AES or Curve25519 in specific use cases. When considering these, a number of factors should be taken into account, including:
 
 - Key size.
 - Known attacks and weaknesses of the algorithm.
@@ -49,7 +67,7 @@ Many other symmetric and asymmetric algorithms are available which have their ow
 - Quality of the libraries available.
 - Portability of the algorithm (i.e, how widely supported is it).
 
-In some cases there may be regulatory requirements that limit the algorithms that can be used, such as [FIPS 140-2](https://csrc.nist.gov/csrc/media/publications/fips/140/2/final/documents/fips1402annexa.pdf) or [PCI DSS](https://www.pcisecuritystandards.org/document_library).
+In some cases there may be regulatory requirements that limit the algorithms that can be used, such as [FIPS 140-2](https://csrc.nist.gov/csrc/media/publications/fips/140/2/final/documents/fips1402annexa.pdf) or [PCI DSS](https://www.pcisecuritystandards.org/pci_security/glossary#Strong%20Cryptography).
 
 ### Custom Algorithms
 
@@ -57,11 +75,11 @@ Don't do this.
 
 ### Cipher Modes
 
-There are various [modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) that can be used to allow block ciphers (such as AES) to decrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.
+There are various [modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) that can be used to allow block ciphers (such as AES) to encrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.
 
 Where available, authenticated modes should always be used. These provide guarantees of the integrity and authenticity of the data, as well as confidentiality. The most commonly used authenticated modes are **[GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)** and **[CCM](https://en.wikipedia.org/wiki/CCM_mode)**, which should be used as a first preference.
 
-If GCM or CCM are not available, then [CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_%28CTR%29) mode or [CBC](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_(CBC)) mode should be used. As these do not provide any guarantees about the authenticity of the data, separate authentication should be implemented, such as using the [Encrypt-then-MAC](https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_%28EtM%29) technique. Care needs to be taken when using this method with [variable length messages](https://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages)
+If GCM or CCM are not available, then [CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_%28CTR%29) mode or [CBC](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_%28CBC%29) mode should be used. As these do not provide any guarantees about the authenticity of the data, separate authentication should be implemented, such as using the [Encrypt-then-MAC](https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_%28EtM%29) technique. Care needs to be taken when using this method with [variable length messages](https://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages)
 
 If random access to the encrypted data is required then [XTS](https://en.wikipedia.org/wiki/Disk_encryption_theory#XTS) mode should be used. This is typically used for disk encryption, so it unlikely to be used by a web application.
 
@@ -69,9 +87,9 @@ If random access to the encrypted data is required then [XTS](https://en.wikiped
 
 ### Secure Random Number Generation
 
-Random numbers (or strings) are needed for various security critical functionality, such as generating session IDs, CSRF tokens or password reset tokens. As such, it is important that these are generated securely, and that it is not possible for an attacker to guess and predict them.
+Random numbers (or strings) are needed for various security critical functionality, such as generating encryption keys, IVs, session IDs, CSRF tokens or password reset tokens. As such, it is important that these are generated securely, and that it is not possible for an attacker to guess and predict them.
 
-It is generally not possible for computers to generate truly random numbers (without special hardware), so most systems and languages provide two different types of randomness:
+It is generally not possible for computers to generate truly random numbers (without special hardware), so most systems and languages provide two different types of randomness.
 
 Pseudo-Random Number Generators (PRNG) provide low-quality randomness that are much faster, and can be used for non-security related functionality (such as ordering results on a page, or randomising UI elements). However, they **must not** be used for anything security critical, as it is often possible for attackers to guess or predict the output.
 
@@ -97,9 +115,9 @@ Universally unique identifiers (UUIDs or GUIDs) are sometimes used as a quick wa
 
 Specifically, version 1 UUIDs are comprised of a high precision timestamp and the MAC address of the system that generated them, so are **not random** (although they may be hard to guess, given the timestamp is to the nearest 100ns). Type 4 UUIDs are randomly generated, although whether this is done using a CSPRNG will depend on the implementation. Unless this is known to be secure in the specific language or framework, the randomness of UUIDs should not be relied upon.
 
-### Ensure that the cryptographic protection remains secure even if access controls fail
+### Defence in Depth
 
-This rule supports the principle of defense in depth. Access controls (usernames, passwords, privileges, etc.) are one layer of protection. Storage encryption should add an additional layer of protection that will continue protecting the data even if an attacker subverts the database access control layer.
+Applications should be designed to still be secure even if cryptographic controls fail. Any information that is stored in an encrypted form should also be protected by additional layers of security. Application should also not rely on the security of encrypted URL parameters, and should enforce strong access control to prevent unauthorised access to information.
 
 ## Key Management
 
@@ -114,7 +132,7 @@ Formal processes should be implemented (and tested) to cover all aspects of key 
 
 ### Key Generation
 
-Keys should usually be randomly generated using a cryptographically secure function, such as those discussed in the [Secure Random Number Generation](#secure-random-number-generation) section. Keys **should not** be based on common words or phrases, or on "random" characters generated by mashing the keyboard.
+Keys should be randomly generated using a cryptographically secure function, such as those discussed in the [Secure Random Number Generation](#secure-random-number-generation) section. Keys **should not** be based on common words or phrases, or on "random" characters generated by mashing the keyboard.
 
 Where multiple keys are used (such as data separate data-encrypting and key-encrypting keys), they should be fully independent from each other.
 
@@ -147,7 +165,7 @@ Where available, the secure storage mechanisms provided by the operating system,
 
 - A physical Hardware Security Module (HSM).
 - A virtual HSM.
-- A secure storage such as [Amazon KMS](https://aws.amazon.com/kms/) or [Azure Key Vault](https://azure.microsoft.com/en-gb/services/key-vault/).
+- Key vaults such as [Amazon KMS](https://aws.amazon.com/kms/) or [Azure Key Vault](https://azure.microsoft.com/en-gb/services/key-vault/).
 - Secure storage APIs provided by the [ProtectedData](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?redirectedfrom=MSDN&view=netframework-4.8) class in the .NET framework.
 
 There are many advantages to using these types of secure storage over simply putting keys in configuration files. The specifics of these will vary depending on the solution used, but they include:
@@ -160,7 +178,7 @@ There are many advantages to using these types of secure storage over simply put
 
 In some cases none of these will be available, such as in a shared hosting environment, meaning that it is not possible to obtain a high degree of protection for any encryption keys. However, the following basic rules can still be followed:
 
-- Do not hard-code keys into the application code.
+- Do not hard-code keys into the application source code.
 - Do not check keys into version control systems.
 - Protect the configuration files containing the keys with restrictive permissions.
 - Avoid storing keys in environment variables, as these can be accidentally exposed through functions such as [phpinfo()](https://www.php.net/manual/en/function.phpinfo.php) or through the `/proc/self/environ` file.
