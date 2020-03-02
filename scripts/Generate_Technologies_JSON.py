@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Python3 script to generate a JSON structure with the list of 
-all cheatsheets classified by the technology used in the samples 
+Python3 script to generate a JSON structure with the list of
+all cheatsheets classified by the technology used in the samples
 of code provided using the alphabetical index as source:
 https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/Index.md
 
