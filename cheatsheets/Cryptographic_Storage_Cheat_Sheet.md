@@ -176,7 +176,7 @@ Depending on the architecture of the environment, it may be possible to store th
 Where possible, encryption keys should themselves be stored in an encrypted form. At least two separate keys are required for this:
 
 - The Data Encryption Key (DEK) is used to encrypt the data.
-- The Key Encryption Key (KEK) is used to encryption the DEK.
+- The Key Encryption Key (KEK) is used to encrypt the DEK.
 
 For this to be effective, the KEK must be stored separately from the DEK. The encrypted DEK can be stored with the data, but will only be usable if an attacker is able to also obtain the KEK, which is stored on another system.
 
