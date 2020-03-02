@@ -20,7 +20,7 @@ The use of dedicated secret or key management systems can provide an additional 
 
 ### Where to Perform Encryption
 
-Encryption can be performed a a number of levels in the application stack, such as:
+Encryption can be performed on a number of levels in the application stack, such as:
 
 - At the application level.
 - At the database level (e.g, [SQL Server TDE](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/transparent-data-encryption?view=sql-server-ver15)
@@ -37,9 +37,9 @@ The best way to protect sensitive information is to not store it in the first pl
 
 For symmetric encryption **AES** with a key that's at least **128 bits** (ideally **256 bits**) and a secure [mode](#cipher-modes) should be used as the preferred algorithm.
 
-For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as **X25519** as a preferred algorithm. If ECC is not available **RSA** must be used, then ensure that the key is at least **2048 bits**.
+For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as **X25519** as a preferred algorithm. If ECC is not available, **RSA** must be used with a key that is at least **2048 bits** in size.
 
-Many other symmetric and asymmetric algorithms are available which have their own pros and cons, and specific use cases they may be better or worse than AES or X25519. When considering these, a number of factors should be taken into account, including:
+Many other symmetric and asymmetric algorithms are available which have their own pros and cons with specific use cases, and they may be better or worse than AES or X25519. When considering these, a number of factors should be taken into account, including:
 
 - Key size.
 - Known attacks and weaknesses of the algorithm.
@@ -57,7 +57,7 @@ Don't do this.
 
 ### Cipher Modes
 
-There are various [modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) that can be used to allow block ciphers (such as AES) to decrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them it outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.
+There are various [modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) that can be used to allow block ciphers (such as AES) to decrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.
 
 Where available, authenticated modes should always be used. These provide guarantees of the integrity and authenticity of the data, as well as confidentiality. The most commonly used authenticated modes are **[GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)** and **[CCM](https://en.wikipedia.org/wiki/CCM_mode)**, which should be used as a first preference.
 
@@ -65,7 +65,7 @@ If GCM or CCM are not available, then [CTR](https://en.wikipedia.org/wiki/Block_
 
 If random access to the encrypted data is required then [XTS](https://en.wikipedia.org/wiki/Disk_encryption_theory#XTS) mode should be used. This is typically used for disk encryption, so it unlikely to be used by a web application.
 
-[EBC](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB) should not be used outside of very specific circumstances.
+[ECB](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB) should not be used outside of very specific circumstances.
 
 ### Secure Random Number Generation
 
@@ -132,8 +132,8 @@ Encryption keys should be changed (or rotated) based on a number of different cr
 
 Once one of these criteria have been met, a new key should be generated and used for encrypting any new data. There are two main approaches for how existing data that was encrypted with the old key(s) should be handled:
 
-- Decrypting it and re-encrypting it with the new key.
-- Marking each item with the ID of the key that was used to encrypt it, and storing multiple keys to allow the old data to be decrypted.
+1. Decrypting it and re-encrypting it with the new key.
+2. Marking each item with the ID of the key that was used to encrypt it, and storing multiple keys to allow the old data to be decrypted.
 
 The first option should generally be preferred, as it greatly simplifies both the application code and key management processes; however, it may not always be feasible. Note that old keys should generally be stored for a certain period after they have been retired, in case old backups of copies of the data need to be decrypted.
 
@@ -148,7 +148,7 @@ Where available, the secure storage mechanisms provided by the operating system,
 - A physical Hardware Security Module (HSM).
 - A virtual HSM.
 - A secure storage such as [Amazon KMS](https://aws.amazon.com/kms/) or [Azure Key Vault](https://azure.microsoft.com/en-gb/services/key-vault/).
-- Secure storage APIs provided [ProtectedData](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?redirectedfrom=MSDN&view=netframework-4.8) class in the .NET framework.
+- Secure storage APIs provided by the [ProtectedData](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?redirectedfrom=MSDN&view=netframework-4.8) class in the .NET framework.
 
 There are many advantages to using these types of secure storage over simply putting keys in configuration files. The specifics of these will vary depending on the solution used, but they include:
 
@@ -158,7 +158,7 @@ There are many advantages to using these types of secure storage over simply put
 - Simplifying compliance with regulatory standards such as FIPS 140 or PCI DSS.
 - Making it harder for an attacker to export or steal keys.
 
-In some cases such none of these will be available, such as in a shared hosting environment, meaning that it is not possible to obtain a high degree of protection for any encryption keys. However, the following basic rules can still be followed:
+In some cases none of these will be available, such as in a shared hosting environment, meaning that it is not possible to obtain a high degree of protection for any encryption keys. However, the following basic rules can still be followed:
 
 - Do not hard-code keys into the application code.
 - Do not check keys into version control systems.
@@ -182,4 +182,4 @@ For this to be effective, the KEK must be stored separately from the DEK. The en
 
 The KEK should also be at least as strong as the DEK. The [envelope encryption](https://cloud.google.com/kms/docs/envelope-encryption) guidance from Google contains further details on how to manage DEKs and KEKs.
 
-In simpler application architectures (such as shared hosting environments) where the KEK and DEK cannot be stored separately, there is limited value to the is approach, as an attacker is likely to be able to obtain both of the keys at the same time. However, it can provide an additional barrier to unskilled attackers.
+In simpler application architectures (such as shared hosting environments) where the KEK and DEK cannot be stored separately, there is limited value to this approach, as an attacker is likely to be able to obtain both of the keys at the same time. However, it can provide an additional barrier to unskilled attackers.
