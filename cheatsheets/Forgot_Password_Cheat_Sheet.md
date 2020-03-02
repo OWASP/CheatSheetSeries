@@ -12,7 +12,7 @@ There is no industry standard for implementing a **Forgot Password** feature. Th
 
 The first page of a secure Forgot Password feature asks the user for multiple pieces of hard data that should have been previously collected (generally when the user first registers). 
 
-Steps for this are detailed in the identity section of the [Choosing and Using Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md#step-1-decide-on-identity-data-vs-canned-questions-vs-user-created-questions).
+Steps for this are detailed in the identity section of the [Choosing and Using Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md#choosing-security-questions).
 
 At a minimum, you should have collected some data that will allow you to send the password reset information to some out-of-band side-channel, such as a (possibly different) email address or an SMS text number, etc. to be used in Step 3.
 
