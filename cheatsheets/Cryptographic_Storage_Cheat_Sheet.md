@@ -4,7 +4,7 @@
 
 This article provides a simple model to follow when implementing solutions to protect data at rest.
 
-Passwords should not be stored using reversible encryption - security password hashing algorithms should be used instead. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) contains further guidance on storing passwords.
+Passwords should not be stored using reversible encryption - secure password hashing algorithms should be used instead. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) contains further guidance on storing passwords.
 
 ## Contents
 
