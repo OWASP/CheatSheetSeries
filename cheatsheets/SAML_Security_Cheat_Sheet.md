@@ -138,5 +138,5 @@ Just because SAML is a security protocol does not mean that input validation goe
 
 Solutions relying cryptographic algorithms need to follow the latest developments in cryptoanalysis.
 
-- Ensure all SAML elements in the chain use [strong encryption](Cryptographic_Storage_Cheat_Sheet.md#rule---use-strong-approved-authenticated-encryption)
+- Ensure all SAML elements in the chain use [strong encryption](Cryptographic_Storage_Cheat_Sheet.md#algorithms)
 - Consider deprecating support for [insecure XMLEnc algorithms](https://www.w3.org/TR/xmlenc-core1/#sec-RSA-1_5)
