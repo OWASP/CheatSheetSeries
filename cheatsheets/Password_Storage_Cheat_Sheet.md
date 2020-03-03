@@ -82,7 +82,7 @@ Salting also provides protection against an attacker pre-computing hashes using 
 
 [Modern hashing algorithms](#modern-algorithms) such as Argon2 or Bcrypt automatically salt the passwords, so no additional steps are required when using them. However, if you are using a [legacy password hashing algorithm](#legacy-algorithms) then salting needs to be implemented manually. The basic steps to perform this are:
 
-- Generate a salt using a [cryptographically secure function](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
+- Generate a salt using a [cryptographically secure function](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
   - The salt should be at least 16 characters long.
   - Encode the salt into a safe character set such as hexadecimal or Base64.
 - Combine the salt with the password.
@@ -181,7 +181,7 @@ In some circumstances it is not possible to use [modern hashing algorithms](#mod
 
 - Use the strongest algorithm available (SHA-512 > SHA-256 > SHA-1 > MD5).
 - Use a [pepper](#peppering).
-- Use a unique [salt](#salting) for each password, generated using a [cryptographically secure random number generator](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
+- Use a unique [salt](#salting) for each password, generated using a [cryptographically secure random number generator](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
 - Use a very large number of iterations of the algorithm (at least 10,000, and possibly significantly more depending on the speed of the hardware).
 
 It should be emphasised that these steps **are not as good as using a modern hashing algorithm**, and that this approach should only be taken where no other options are available.

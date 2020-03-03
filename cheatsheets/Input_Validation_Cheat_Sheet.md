@@ -200,7 +200,7 @@ Semantic validation is about determining whether the email address is correct an
 The links that are sent to users to prove ownership should contain a token that is:
 
 - At least 32 characters long.
-- Generated using a [secure source of randomness](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
+- Generated using a [secure source of randomness](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
 - Single use.
 - Time limited (e.g, expiring after eight hours).
 
