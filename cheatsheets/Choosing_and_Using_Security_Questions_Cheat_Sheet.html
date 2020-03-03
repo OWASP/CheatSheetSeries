@@ -1050,86 +1050,185 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>This cheat sheet provides some best practice for developers to follow when choosing and using security questions to implement a &quot;forgot password&quot; web application feature.</p>
-<h1 id="the-problem"><a name="the-problem" class="plugin-anchor" href="#the-problem"><i class="fa fa-link" aria-hidden="true"></i></a>The Problem</h1>
-<p>There is no industry standard either for providing guidance to users or developers when using or implementing a Forgot Password feature. The result is that developers generally pick a set of dubious questions and implement them insecurely. They do so, not only at the risk to their users, but also--because of potential liability issues--at the risk to their organization. Ideally, passwords would be dead, or at least less important in the sense that they make up only one of several multi-factor authentication mechanisms, but the truth is that we probably are stuck with passwords just like we are stuck with Cobol. So with that in mind, what can we do to make the Forgot Password solution as palatable as possible?</p>
-<h1 id="choosing-security-questions-andor-identity-data"><a name="choosing-security-questions-andor-identity-data" class="plugin-anchor" href="#choosing-security-questions-andor-identity-data"><i class="fa fa-link" aria-hidden="true"></i></a>Choosing Security Questions and/or Identity Data</h1>
-<p>Most of us can instantly spot a bad &quot;security question&quot; when we see one. You know the ones we mean. Ones like &quot;What is your favorite color?&quot; are obviously bad. But as the <a href="http://goodsecurityquestions.com/" target="_blank">Good Security Questions</a> web site rightly points out, &quot;there really are NO GOOD security questions; only fair or bad questions&quot;.</p>
-<p>The reason that most organizations allow users to reset their own forgotten passwords is not because of security, but rather to reduce their own costs by reducing their volume of calls to their help desks. It&apos;s the classic convenience vs. security trade-off, and in this case, convenience (both to the organization in terms of reduced costs and to the user in terms of simpler, self-service) almost always wins out.</p>
-<p>So given that the business aspect of lower cost generally wins out, what can we do to at least raise the bar a bit?</p>
-<p>Here are some suggestions. Note that we intentionally avoid recommending specific security questions. To do so likely would be counterproductive because many developers would simply use those questions without much thinking and adversaries would immediately start harvesting that data from various social networks.</p>
-<h2 id="desired-characteristics"><a name="desired-characteristics" class="plugin-anchor" href="#desired-characteristics"><i class="fa fa-link" aria-hidden="true"></i></a>Desired Characteristics</h2>
-<p>Any security questions or identity information presented to users to reset forgotten passwords should ideally have the following four characteristics:</p>
-<ol>
-<li><strong>Memorable</strong>: If users can&apos;t remember their answers to their security questions, you have achieved nothing.</li>
-<li><strong>Consistent</strong>: The user&apos;s answers should not change over time. For instance, asking &quot;What is the name of your significant other?&quot; may have a different answer 5 years from now.</li>
-<li><strong>Nearly universal</strong>: The security questions should apply to as wide an audience as possible.</li>
-<li><strong>Safe</strong>: The answers to security questions should not be something that is easily guessed, or research (e.g., something that is matter of public record).</li>
-</ol>
-<h2 id="steps"><a name="steps" class="plugin-anchor" href="#steps"><i class="fa fa-link" aria-hidden="true"></i></a>Steps</h2>
-<h3 id="step-1-decide-on-identity-data-vs-canned-questions-vs-user-created-questions"><a name="step-1-decide-on-identity-data-vs-canned-questions-vs-user-created-questions" class="plugin-anchor" href="#step-1-decide-on-identity-data-vs-canned-questions-vs-user-created-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Step 1) Decide on Identity Data vs Canned Questions vs. User-Created Questions</h3>
-<p>Generally, a single HTML form should be used to collect all of the inputs to be used for later password resets.</p>
-<p>If your organization has a business relationship with users, you probably have collected some sort of additional information from your users when they registered with your web site. Such information includes, but is not limited to:</p>
+                                <h1 id="choosing-and-using-security-questions-cheat-sheet"><a name="choosing-and-using-security-questions-cheat-sheet" class="plugin-anchor" href="#choosing-and-using-security-questions-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Choosing and Using Security Questions Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+<p>Security questions are used by many websites to allow a user to regain access to their account if they have forgotten their password, or have lost their secondary authentication factors when multifactor authentication (MFA) is required. However, they are often a significantly weaker form of authentication than passwords, and there have been a number of high profile cases where they have allowed attackers to compromise users&apos; accounts.</p>
+<p>Security questions <strong>should not be relied upon as a sole mechanism to authenticate a user</strong>. However, they can provide a useful additional layer of security when <a href="Multifactor_Authentication_Cheat_Sheet.html">MFA</a> is not available.</p>
+<p>This cheat sheet provides guidance on both how to choose strong security questions, and how to use them securely within an application.</p>
+<h2 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h2>
 <ul>
-<li>email address</li>
-<li>last name</li>
-<li>date of birth</li>
-<li>account number</li>
-<li>customer number</li>
-<li>last 4 of social security number</li>
-<li>zip code for address on file</li>
-<li>street number for address on file</li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#contents">Contents</a></li>
+<li><a href="#choosing-security-questions">Choosing Security Questions</a><ul>
+<li><a href="#desired-characteristics">Desired Characteristics</a></li>
+<li><a href="#types-of-security-questions">Types of Security Questions</a></li>
+<li><a href="#user-defined-security-questions">User Defined Security Questions</a><ul>
+<li><a href="#bad-questions">Bad Questions</a></li>
+<li><a href="#good-questions">Good Questions</a></li>
+<li><a href="#allowing-users-to-write-their-own-questions">Allowing Users to Write Their Own Questions</a></li>
+<li><a href="#restricting-answers">Restricting Answers</a></li>
+<li><a href="#renewing-security-questions">Renewing Security Questions</a></li>
 </ul>
-<p>For enhanced security, you may wish to consider asking the user for their email address first and then send an email that takes them to a private page that requests the other 2 (or more) identity factors. That way the email itself isn&apos;t that useful because they still have to answer a bunch of &apos;secret&apos; questions after they get to the landing page.</p>
-<p>On the other hand, if you host a web site that targets the general public, such as social networking sites, free email sites, news sites, photo sharing sites, etc., then you likely to not have this identity information and will need to use some sort of the ubiquitous &quot;security questions&quot;. However, also be sure that you collect some means to send the password reset information to some out-of-band side-channel, such as a (different) email address, an SMS texting number, etc.</p>
-<p>Believe it or not, there is a certain merit to allow your users to select from a set of several &quot;canned&quot; questions. We generally ask users to fill out the security questions as part of completing their initial user profile and often that is the very time that the user is in a hurry; they just wish to register and get about using your site. If we ask users to create their own question(s) instead, they then generally do so under some amount of duress, and thus may be more likely to come up with extremely poor questions.</p>
-<p>However, there is also some strong rationale to requiring users to create their own question(s), or at least one such question. The prevailing legal opinion seems to be if we provide some sort of reasonable guidance to users in creating their own questions and then insist on them doing so, at least some of the potential liabilities are transferred from our organizations to the users. In such cases, if user accounts get hacked because of their weak security questions (e.g., &quot;What is my favorite ice cream flavor?&quot;, etc.) then the thought is that they only have themselves to blame and thus our organizations are less likely to get sued.</p>
-<p>Since OWASP recommends in the <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> that multiple security questions should be posed to the user and successfully answered before allowing a password reset, a good practice might be to require the user to select 1 or 2 questions from a set of canned questions as well as to create (a different) one of their own and then require they answer one of their selected canned questions as well as their own question.</p>
-<h3 id="step-2-review-any-canned-questions-with-your-legal-department-or-privacy-officer"><a name="step-2-review-any-canned-questions-with-your-legal-department-or-privacy-officer" class="plugin-anchor" href="#step-2-review-any-canned-questions-with-your-legal-department-or-privacy-officer"><i class="fa fa-link" aria-hidden="true"></i></a>Step 2) Review Any Canned Questions with Your Legal Department or Privacy Officer</h3>
-<p>While most developers would generally first review any potential questions with whatever relevant business unit, it may not occur to them to review the questions with their legal department or chief privacy officer. However, this is advisable because their may be applicable laws or regulatory / compliance issues to which the questions must adhere. For example, in the telecommunications industry, the FCC&apos;s Customer Proprietary Network Information (CPNI) regulations prohibit asking customers security questions that involve &quot;personal information&quot;, so questions such as &quot;In what city were you born?&quot; are generally not allowed.</p>
-<h3 id="step-3-insist-on-a-minimal-length-for-the-answers"><a name="step-3-insist-on-a-minimal-length-for-the-answers" class="plugin-anchor" href="#step-3-insist-on-a-minimal-length-for-the-answers"><i class="fa fa-link" aria-hidden="true"></i></a>Step 3) Insist on a Minimal Length for the Answers</h3>
-<p>Even if you pose decent security questions, because users generally dislike putting a whole lot of forethought into answering the questions, they often will just answer with something short. Answering with a short expletive is not uncommon, nor is answering with something like &quot;xxx&quot; or &quot;1234&quot;. If you tell the user that they <em>should</em> answer with a phrase or sentence and tell them that there is some minimal length to an acceptable answer (say 10 or 12 characters), you generally will get answers that are somewhat more resistant to guessing.</p>
-<h3 id="step-4-consider-how-to-securely-store-the-questions-and-answers"><a name="step-4-consider-how-to-securely-store-the-questions-and-answers" class="plugin-anchor" href="#step-4-consider-how-to-securely-store-the-questions-and-answers"><i class="fa fa-link" aria-hidden="true"></i></a>Step 4) Consider How To Securely Store the Questions and Answers</h3>
-<p>There are two aspects to this...storing the questions and storing the answers. Obviously, the questions must be presented to the user, so the options there are store them as plaintext or as reversible ciphertext. The answers technically do not need to be ever viewed by any human so they could be stored using a secure cryptographic hash (although in principle, I am aware of some help desks that utilize the both the questions and answers for password reset and they insist on being able to <em>read</em> the answers rather than having to type them in; YMMV). Either way, we would always recommend at least encrypting the answers rather than storing them as plaintext. This is especially true for answers to the &quot;create your own question&quot; type as users will sometimes pose a question that potentially has a sensitive answer (e.g., &quot;What is my bank account # that I share with my wife?&quot;).</p>
-<p>So the main question is whether or not you should store the questions as plaintext or reversible ciphertext. Admittedly, we are a bit biased, but for the &quot;create your own question&quot; types at least, we recommend that such questions be encrypted. This is because if they are encrypted, it makes it much less likely that your company will be sued if you have some bored, rogue DBAs pursuing the DB where the security questions and answers are stored in an attempt to amuse themselves and stumble upon something sensitive or perhaps embarrassing.</p>
-<p>In addition, if you explain to your customers that you are encrypting their questions and hashing their answers, they might feel safer about asking some questions that while potentially embarrassing, might be a bit more secure. (Use your imagination. Do we need to spell it out for you? Really???)</p>
-<h3 id="step-5-periodically-have-your-users-review-their-questions"><a name="step-5-periodically-have-your-users-review-their-questions" class="plugin-anchor" href="#step-5-periodically-have-your-users-review-their-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Step 5) Periodically Have Your Users Review their Questions</h3>
-<p>Many companies often ask their users to update their user profiles to make sure contact information such as email addresses, street address, etc. is still up-to-date. Use that opportunity to have your users review their security questions. (Hopefully, at that time, they will be in a bit less of a rush, and may use the opportunity to select better questions.) If you had chosen to encrypt rather than hash their answers, you can also display their corresponding security answers at that time.</p>
-<p>If you keep statistics on how many times the respective questions has been posed to someone as part of a Forgot Password flow (recommended), it would be advisable to also display that information. (For instance, if against your advice, they created a question such as &quot;What is my favorite hobby?&quot; and see that it had been presented 113 times and they think they might have only reset their password 5 times, it would probably be advisable to change that security question and probably their password as well.)</p>
-<h3 id="step-6-authenticate-requests-to-change-questions"><a name="step-6-authenticate-requests-to-change-questions" class="plugin-anchor" href="#step-6-authenticate-requests-to-change-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Step 6) Authenticate Requests to Change Questions</h3>
-<p>Many web sites properly authenticate change password requests simply by requesting the current password along with the desired new password. If the user cannot provide the correct current password, the request to change the password is ignored. The same authentication control should be in place when changing security questions. The user should be required to provide the correct password along with their new security questions &amp; answers. If the user cannot provide the correct password, then the request to change the security questions should be ignored. This control prevents both Cross-Site Request Forgery attacks, as well as changes made by attackers who have taken control over a users workstation or authenticated application session.</p>
-<h1 id="using-security-questions"><a name="using-security-questions" class="plugin-anchor" href="#using-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Using Security Questions</h1>
-<p>Requiring users to answer security questions is most frequently done under two quite different scenarios:</p>
+</li>
+<li><a href="#system-defined-security-questions">System Defined Security Questions</a></li>
+</ul>
+</li>
+<li><a href="#using-security-questions">Using Security Questions</a><ul>
+<li><a href="#when-to-use-security-questions">When to Use Security Questions</a><ul>
+<li><a href="#authentication-flow">Authentication Flow</a></li>
+<li><a href="#forgotten-password-or-lost-mfa-token-flow">Forgotten Password or Lost MFA Token Flow</a></li>
+</ul>
+</li>
+<li><a href="#how-to-use-security-questions">How to Use Security Questions</a><ul>
+<li><a href="#storing-answers">Storing Answers</a></li>
+<li><a href="#comparing-answers">Comparing Answers</a></li>
+<li><a href="#updating-answers">Updating Answers</a></li>
+<li><a href="#multiple-security-questions">Multiple Security Questions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="choosing-security-questions"><a name="choosing-security-questions" class="plugin-anchor" href="#choosing-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Choosing Security Questions</h2>
+<h3 id="desired-characteristics"><a name="desired-characteristics" class="plugin-anchor" href="#desired-characteristics"><i class="fa fa-link" aria-hidden="true"></i></a>Desired Characteristics</h3>
+<p>Any security questions presented to users to reset forgotten passwords must meet the following characteristics:</p>
+<table>
+<thead>
+<tr>
+<th>Characteristic</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memorable</td>
+<td>The user must be able to recall the answer to the question, potentially years after creating their account.</td>
+</tr>
+<tr>
+<td>Consistent</td>
+<td>The answer to the question must not change over time.</td>
+</tr>
+<tr>
+<td>Applicable</td>
+<td>The user must be able to answer the question.</td>
+</tr>
+<tr>
+<td>Confidential</td>
+<td>The answer to the question must be hard for an attacker to obtain.</td>
+</tr>
+<tr>
+<td>Specific</td>
+<td>The answer should be clear to the user.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="types-of-security-questions"><a name="types-of-security-questions" class="plugin-anchor" href="#types-of-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Types of Security Questions</h3>
+<p>Security questions fall into two main types. With <em>user defined</em> security questions, the user must choose a question from a list, and provide an answer to the question. Common examples are &quot;What is your favourite colour?&quot; or &quot;What was your first car?&quot;</p>
+<p>These are easy for applications to implement, as the additional information required is provided by the user when they first create their account. However, users will often choose weak or easily discovered answers to these questions.</p>
+<p><em>System defined</em> security questions are based on information that is already known about the user. This approach avoids having to ask the user to provide specific security questions and answers, and also prevents them from being able to choose weak details. However it relies on sufficient information already being stored about the user, and on this information being hard for an attacker to obtain.</p>
+<h3 id="user-defined-security-questions"><a name="user-defined-security-questions" class="plugin-anchor" href="#user-defined-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>User Defined Security Questions</h3>
+<h4 id="bad-questions"><a name="bad-questions" class="plugin-anchor" href="#bad-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Bad Questions</h4>
+<p>Any questions that do not have all of the characteristics discussed above should be avoided. The table below gives some examples of bad security questions:</p>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Problem</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>When is your date of birth?</td>
+<td>Easy for an attacker to discover.</td>
+</tr>
+<tr>
+<td>What is your memorable date?</td>
+<td>Most users will just enter their birthday.</td>
+</tr>
+<tr>
+<td>What is your favourite movie?</td>
+<td>Likely to change over time.</td>
+</tr>
+<tr>
+<td>What is your favourite cricket team?</td>
+<td>Not applicable to most users.</td>
+</tr>
+<tr>
+<td>What is the make and model of your first car?</td>
+<td>Fairly small range of likely answers.</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, when the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as &quot;What was your maths teacher&apos;s surname in your 8th year of school?&quot; would be very easy to guess if it was using in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.</p>
+<h4 id="good-questions"><a name="good-questions" class="plugin-anchor" href="#good-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Good Questions</h4>
+<p>Many good security questions are not applicable to all users, so the best approach is to give the user a list of security questions that they can choose from. This allows you to have more specific questions (with more secure answers), while still providing every user with questions that they can answer.</p>
+<p>The following list provides some examples of good questions:</p>
 <ul>
-<li>As a means for users to reset forgotten passwords. (See <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a>.)</li>
-<li>As an additional means of corroborating evidence used for authentication.</li>
+<li>What are the last four digits of your national insurance or social security number?</li>
+<li>What was your maths teacher&apos;s surname in your 8th year of school?</li>
+<li>What was the name of your first stuffed toy?</li>
+<li>What was your driving instructor&apos;s first name?</li>
 </ul>
-<p>If at anytime you intend for your users to answer security questions for both of these scenarios, it is <em>strongly</em> recommended that you use two different sets of questions / answers.</p>
-<p>It should noted that using a security question / answer in addition to using passwords does <strong><em>not</em></strong> give you multi-factor authentication because both of these fall under the category of &quot;what you know&quot;. Hence they are two of the <em>same</em> factor, which is not multi-factor. Furthermore, it should be noted that while passwords are a very weak form of authentication, answering security questions are generally is a much weaker form. This is because when we have users create passwords, we generally test the candidate password against some password complexity rules (e.g., minimal length &gt; 10 characters; must have at least one alphabetic, one numeric, and one special character; etc.); we usually do no such thing for security answers (except for perhaps some minimal length requirement). Thus good passwords generally will have much more entropy than answers to security questions, often by several orders of magnitude.</p>
-<h2 id="security-questions-used-to-reset-forgotten-passwords"><a name="security-questions-used-to-reset-forgotten-passwords" class="plugin-anchor" href="#security-questions-used-to-reset-forgotten-passwords"><i class="fa fa-link" aria-hidden="true"></i></a>Security Questions Used To Reset Forgotten Passwords</h2>
-<p>The <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> already details pretty much everything that you need to know as a developer when <em>collecting</em> answers to security questions. However, it provides no guidance about how to assist the user in selecting security questions (if chosen from a list of candidate questions) or writing their own security questions / answers. Indeed, the <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> makes the assumption that one can actually use additional <em>identity</em> data as the security questions / answers. However, often this is not the case as the user has never (or won&apos;t) volunteer it or is it prohibited for compliance reasons with certain regulations (e.g., as in the case of telecommunications companies and <a href="https://en.wikipedia.org/wiki/Customer_proprietary_network_information" target="_blank">CPNI</a> data).</p>
-<p>Therefore, at least some development teams will be faced with collecting more generic security questions and answers from their users. If you must do this as a developer, it is good practice to:</p>
+<p>Much like passwords, there is a risk that users will re-use recovery questions between different sites, which could expose the users if the other site is compromised. As such, there are benefits to having unique security questions that are unlikely to be shared between sites. An easy way to achieve this is to create more targeted questions based on the type of application. For example, on a share dealing platform, financial related questions such as &quot;What is the first company you owned shares in?&quot; could be used.</p>
+<h4 id="allowing-users-to-write-their-own-questions"><a name="allowing-users-to-write-their-own-questions" class="plugin-anchor" href="#allowing-users-to-write-their-own-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Allowing Users to Write Their Own Questions</h4>
+<p>Allowing users to write their own security questions can result in them choosing very strong and unique questions that would be very hard for an attacker to guess. However, there is also a significant risk that users will choose weak questions. In some cases, users might even set a recovery question to a reminder of what their password is - allowing anyone guessing their email address to compromise their account.</p>
+<p>As such, it is generally best not to allow users to write their own questions.</p>
+<h4 id="restricting-answers"><a name="restricting-answers" class="plugin-anchor" href="#restricting-answers"><i class="fa fa-link" aria-hidden="true"></i></a>Restricting Answers</h4>
+<p>Enforcing a minimum length for answers can prevent users from entering strings such as &quot;a&quot; or &quot;123&quot; for their answers. However, depending on the questions asked, it could also prevent users from being able to correctly answer the question. For example, asking for a first name or surname could result in a two letter answer such as &quot;Li&quot;, and a colour-based question could be four letters such as &quot;blue&quot;.</p>
+<p>Answers should also be checked against a blacklist, including:</p>
 <ul>
-<li>briefly describe the importance of selecting a good security question / answer.</li>
-<li>provide some guidance, along with some examples, of what constitutes bad vs. fair security questions.</li>
+<li>The username or email address.</li>
+<li>The user&apos;s current password.</li>
+<li>Common strings such as &quot;123&quot; or &quot;password&quot;.</li>
 </ul>
-<p>You may wish to refer your users to the <a href="http://goodsecurityquestions.com/" target="_blank">Good Security Questions</a> web site for the latter.</p>
-<p>Furthermore, since adversaries will try the &quot;forgot password&quot; reset flow to reset a user&apos;s password (especially if they have compromised the side-channel, such as user&apos;s email account or their mobile device where they receive SMS text messages), is a good practice to minimize unintended and unauthorized information disclosure of the security questions. This may mean that you require the user to answer one security question before displaying any subsequent questions to be answered. In this manner, it does not allow an adversary an opportunity to research all the questions at once. Note however that this is contrary to the advice given on the <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> and it may also be perceived as not being user-friendly by your sponsoring business unit, so again YMMV.</p>
-<p>Lastly, you should consider whether or not you should treat the security questions that a user will type in as a &quot;password&quot; type or simply as regular &quot;text&quot; input. The former can prevent shoulder-surfing attacks, but also cause more typos, so there is a trade-off. Perhaps the best advice is to give the user a choice; hide the text by treating it as &quot;password&quot; input type by default, but all the user to check a box that would display their security answers as clear text when checked.</p>
-<h2 id="security-questions-as-an-additional-means-of-authenticating"><a name="security-questions-as-an-additional-means-of-authenticating" class="plugin-anchor" href="#security-questions-as-an-additional-means-of-authenticating"><i class="fa fa-link" aria-hidden="true"></i></a>Security Questions As An Additional Means Of Authenticating</h2>
-<p>First, it bears repeating again...if passwords are considered weak authentication, then using security questions are even less robust. Furthermore, they are no substitute for true multi-factor authentication, or stronger forms of authentication such as authentication using one-time passwords or involving side-channel communications. In a word, very little is gained by using security questions in this context. But, if you must...keep these things in mind:</p>
+<h4 id="renewing-security-questions"><a name="renewing-security-questions" class="plugin-anchor" href="#renewing-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Renewing Security Questions</h4>
+<p>If the security questions are not used as part of the main authentication process, then consider periodically prompting the user to review their security questions and verify that they still know the answers. This should give them a chance to update any answers that may have changed (although ideally this shouldn&apos;t happen with good questions), and increases the likelihood that they will remember them if they ever need to recover their account.</p>
+<h3 id="system-defined-security-questions"><a name="system-defined-security-questions" class="plugin-anchor" href="#system-defined-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>System Defined Security Questions</h3>
+<p>System defined security questions are based on information that is already known about the user. The users&apos; personal details are often used, including the full name, address and date of birth. However these can easily be obtained by an attacker from social media, and as such provide a very weak level of authentication.</p>
+<p>The questions that can be used will vary hugely depending on the application, and how much information is already held about the user. When deciding which bits of information may be usable for security questions, the following areas should be considered:</p>
 <ul>
-<li>Display the security question(s) on a separate page only <em>after</em> your users have successfully authenticated with their usernames / passwords (rather than only after they have entered their username). In this manner, you at least do not allow an adversary to view and research the security questions unless they also know the user&apos;s current password.</li>
-<li>If you also use security questions to reset a user&apos;s password, then you should use a <em>different</em> set of security questions for an additional means of authenticating.</li>
-<li>Security questions used for actual authentication purposes should regularly expire much like passwords. Periodically make the user choose new security questions and answers.</li>
-<li>If you use answers to security questions as a <em>subsequent</em> authentication mechanism (say to enter a more sensitive area of your web site), make sure that you keep the session idle time out very low...say less than 5 minutes or so, or that you also require the user to first re-authenticate with their password and then immediately after answer the security question(s).</li>
+<li>Will the user be able to remember the answer to the question?</li>
+<li>Could an attacker easily obtain this information from social media or other sources?</li>
+<li>Is the answer likely to be the same for a large number of users, or easily guessable?</li>
 </ul>
-<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h1>
+<h2 id="using-security-questions"><a name="using-security-questions" class="plugin-anchor" href="#using-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Using Security Questions</h2>
+<h3 id="when-to-use-security-questions"><a name="when-to-use-security-questions" class="plugin-anchor" href="#when-to-use-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>When to Use Security Questions</h3>
+<p>Applications should generally use a password along with a second authentication factor (such as an OTP code) to authenticate users. The combination of a password and security questions <strong>does not constitute MFA</strong>, as both factors as the same (i.e, something you know).</p>
+<p><strong>Security questions should never be relied upon as the sole mechanism to authenticate a user</strong>. However, they can provide a useful additional layer of security when other stronger factors are not available. Common cases where they would be use include:</p>
 <ul>
-<li><a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a></li>
-<li><a href="http://goodsecurityquestions.com/" target="_blank">Good Security Questions web site</a></li>
+<li>Logging in.</li>
+<li>Resetting a forgotten password.</li>
+<li>Resetting a lost MFA token.</li>
 </ul>
+<h4 id="authentication-flow"><a name="authentication-flow" class="plugin-anchor" href="#authentication-flow"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication Flow</h4>
+<p>Security questions may be used as part of the main authentication flow to supplement passwords where MFA is not available. A typical authentication flow would be:</p>
+<ul>
+<li>The user enters their username and password.</li>
+<li>If the username and password are correct, the user is presented with the security question(s).</li>
+<li>If the answers are correct, the user is logged in.</li>
+</ul>
+<p>If the answers to the security questions are incorrect, then this should be counted as a failed login attempt, and the account lockout counter should be incremented for the user.</p>
+<h4 id="forgotten-password-or-lost-mfa-token-flow"><a name="forgotten-password-or-lost-mfa-token-flow" class="plugin-anchor" href="#forgotten-password-or-lost-mfa-token-flow"><i class="fa fa-link" aria-hidden="true"></i></a>Forgotten Password or Lost MFA Token Flow</h4>
+<p>Forgotten password functionality often provides a mechanism for attackers to enumerate user accounts if it is not correctly implemented. The following flow avoids this issue by only displaying the security questions once the user has proved ownership of the email address:</p>
+<ul>
+<li>The user enters email address (and solves a CAPTCHA).</li>
+<li>The application displays a generic message such as &quot;If the email address was correct, an email will be sent to it&quot;.</li>
+<li>An email email with a randomly generated, single-use link is sent to the user.</li>
+<li>The user clicks the link.</li>
+<li>The user is presented with the security question(s).</li>
+<li>If the answer is correct, the user can enter a new password.</li>
+</ul>
+<h3 id="how-to-use-security-questions"><a name="how-to-use-security-questions" class="plugin-anchor" href="#how-to-use-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>How to Use Security Questions</h3>
+<h4 id="storing-answers"><a name="storing-answers" class="plugin-anchor" href="#storing-answers"><i class="fa fa-link" aria-hidden="true"></i></a>Storing Answers</h4>
+<p>The answers to security questions may contain personal information about the user, and may also be re-used by the user between different applications. As such, they should be treated in the same way as passwords, and stored using a secure hashing algorithm such as Bcrypt. The <a href="Password_Storage_Cheat_Sheet.html">password storage cheat sheet</a> contains further guidance on this.</p>
+<h4 id="comparing-answers"><a name="comparing-answers" class="plugin-anchor" href="#comparing-answers"><i class="fa fa-link" aria-hidden="true"></i></a>Comparing Answers</h4>
+<p>Comparing the answers provided by the user with the stored answer in a case insensitive manner makes it much easier for the user. The simplest way to do this is to convert the answer to lowercase before hashing the answer to store it, and then lowercase the user-provided answer before comparing them.</p>
+<p>It is also beneficial to give the user some indication of the format that they should use to enter answers. This could be done through input validation, or simply by recommending that the user enters their details in a specific format. For example, when asking for a date, indicating that the format should be &quot;DD/MM/YYYY&quot; will mean that the user doesn&apos;t have to try and guess what format they entered when registering.</p>
+<h4 id="updating-answers"><a name="updating-answers" class="plugin-anchor" href="#updating-answers"><i class="fa fa-link" aria-hidden="true"></i></a>Updating Answers</h4>
+<p>When the user updates the answers to their security questions, this should be treated as a sensitive operation within the application. As such, the user should be required to re-authenticate themselves by entering their password (or ideally using MFA), in order to prevent an attacker updating the questions if they gain temporary access to the user&apos;s account.</p>
+<h4 id="multiple-security-questions"><a name="multiple-security-questions" class="plugin-anchor" href="#multiple-security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Multiple Security Questions</h4>
+<p>When security questions are used, the user can either be asked a single question, or can be asked multiple questions at the same time. This provides a greater level of assurance, especially if the questions are diverse, as an attacker would need to obtain more information about the target user. A mixture of user-defined and system-defined questions can be very effective for this.</p>
+<p>If the user is asked a single question out of a bank of possible questions, then this question <strong>should not</strong> be changed until the user has answered it correctly. If the attacker is allowed to try answering all of the different security questions, this greatly increases the chance that they will be able to guess or obtain the answer to one of them.</p>
 
                                 
                                 </section>
@@ -1173,7 +1272,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Choosing and Using Security Questions ","level":"1.14","depth":1,"next":{"title":"Clickjacking Defense ","level":"1.15","depth":1,"path":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","ref":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","articles":[]},"previous":{"title":"C-Based Toolchain Hardening ","level":"1.13","depth":1,"path":"cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md","ref":"cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md","mtime":"2020-03-03T08:39:02.149Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-03T08:39:30.645Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Choosing and Using Security Questions ","level":"1.14","depth":1,"next":{"title":"Clickjacking Defense ","level":"1.15","depth":1,"path":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","ref":"cheatsheets/Clickjacking_Defense_Cheat_Sheet.md","articles":[]},"previous":{"title":"C-Based Toolchain Hardening ","level":"1.13","depth":1,"path":"cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md","ref":"cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md","mtime":"2020-03-03T10:50:12.772Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-03T10:50:44.661Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
