@@ -231,7 +231,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 ```
 
-Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API's or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29) protection for the show method.
+Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API's or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide [CSRF](https://owasp.org/www-community/attacks/csrf) protection for the show method.
 
 ``` ruby
 class ProjectController < ApplicationController
@@ -242,7 +242,7 @@ Also note that by default Rails does not provide CSRF protection for any HTTP `G
 
 **Note:** if you use token authentication only, there is no need to protect from CSRF in controllers like this. If cookie-based authentication is used on some paths, then the protections is still required on them.
 
-There is a top level OWASP page for [Cross-Site Request Forgery (CSRF)](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29).
+There is a top level OWASP page for [Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf).
 
 ## Redirects and Forwards
 
