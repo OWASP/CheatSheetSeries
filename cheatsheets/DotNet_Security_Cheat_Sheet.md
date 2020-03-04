@@ -29,7 +29,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 
 - Use [Parameterized SQL](https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlcommand.prepare?view=netframework-4.7.2) commands for all data access, without exception.
 - Do not use [SqlCommand](http://msdn.microsoft.com/en-us/library/system.data.sqlclient.sqlcommand.aspx) with a string parameter made up of a [concatenated SQL String](https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca2100-review-sql-queries-for-security-vulnerabilities?view=vs-2017).
-- Whitelist allowable values coming from the user. Use enums, [TryParse](http://msdn.microsoft.com/en-us/library/f02979c7.aspx) or lookup values to assure that the data coming from the user is as expected.
+- Whitelist allowable values coming from the user. Use enums, [TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.int32.tryparse#System_Int32_TryParse_System_String_System_Int32__) or lookup values to assure that the data coming from the user is as expected.
     - Enums are still vulnerable to unexpected values because .NET only validates a successful cast to the underlying data type, integer by default. [Enum.IsDefined](https://msdn.microsoft.com/en-us/library/system.enum.isdefined) can validate whether the input value is valid within the list of defined constants.
 - Apply the principle of least privilege when setting up the Database User in your database of choice. The database user should only be able to access items that make sense for the use case.
 - Use of the [Entity Framework](http://msdn.microsoft.com/en-us/data/ef.aspx) is a very effective [SQL injection](https://www.owasp.org/index.php/SQL_Injection) prevention mechanism. **Remember that building your own ad hoc queries in Entity Framework is just as susceptible to SQLi as a plain SQL query**.
@@ -847,9 +847,9 @@ Logging levels for ILogger are listed below, in order of high to low importance:
 
 Monitoring allow us to validate the performance and health of a running system through key performance indicators.
 
-In .NET a great option to add monitoring capabilities is [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-asp-net-core).
+In .NET a great option to add monitoring capabilities is [Application Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-core).
 
-More information about Logging and Monitoring can be found [here](https://microsoft.github.io/code-with-engineering-playbook/Engineering/DevOpsLoggingDetailsCSharp.html).
+More information about Logging and Monitoring can be found [here](https://github.com/microsoft/code-with-engineering-playbook/tree/master/observability).
 
 # OWASP 2013
 
