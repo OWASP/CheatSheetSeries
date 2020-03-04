@@ -152,18 +152,18 @@ try {
 DocumentBuilder safebuilder = dbf.newDocumentBuilder();
 ```
 
-[Xerces 1](http://xerces.apache.org/xerces-j/) [Features](http://xerces.apache.org/xerces-j/features.html):
+[Xerces 1](https://xerces.apache.org/xerces-j/) [Features](https://xerces.apache.org/xerces-j/features.html):
 
-- Do not include external entities by setting [this feature](http://xerces.apache.org/xerces-j/features.html#external-general-entities) to `false`.
-- Do not include parameter entities by setting [this feature](http://xerces.apache.org/xerces-j/features.html#external-parameter-entities) to `false`.
-- Do not include external DTDs by setting [this feature](http://xerces.apache.org/xerces-j/features.html#load-external-dtd) to `false`.
+- Do not include external entities by setting [this feature](https://xerces.apache.org/xerces-j/features.html#external-general-entities) to `false`.
+- Do not include parameter entities by setting [this feature](https://xerces.apache.org/xerces-j/features.html#external-parameter-entities) to `false`.
+- Do not include external DTDs by setting [this feature](https://xerces.apache.org/xerces-j/features.html#load-external-dtd) to `false`.
 
-[Xerces 2](http://xerces.apache.org/xerces2-j/) [Features](http://xerces.apache.org/xerces2-j/features.html):
+[Xerces 2](https://xerces.apache.org/xerces2-j/) [Features](https://xerces.apache.org/xerces2-j/features.html):
 
-- Disallow an inline DTD by setting [this feature](http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl) to `true`.
-- Do not include external entities by setting [this feature](http://xerces.apache.org/xerces2-j/features.html#external-general-entities) to `false`.
-- Do not include parameter entities by setting [this feature](http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities) to `false`.
-- Do not include external DTDs by setting [this feature](http://xerces.apache.org/xerces-j/features.html#load-external-dtd) to `false`.
+- Disallow an inline DTD by setting [this feature](https://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl) to `true`.
+- Do not include external entities by setting [this feature](https://xerces.apache.org/xerces2-j/features.html#external-general-entities) to `false`.
+- Do not include parameter entities by setting [this feature](https://xerces.apache.org/xerces2-j/features.html#external-parameter-entities) to `false`.
+- Do not include external DTDs by setting [this feature](https://xerces.apache.org/xerces-j/features.html#load-external-dtd) to `false`.
 
 **Note:** The above defenses require Java 7 update 67, Java 8 update 20, or above, because the above countermeasures for `DocumentBuilderFactory` and SAXParserFactory are broken in earlier Java versions, per: [CVE-2014-6517](http://www.cvedetails.com/cve/CVE-2014-6517/).
 
