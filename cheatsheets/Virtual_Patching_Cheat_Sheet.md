@@ -207,7 +207,7 @@ In order to accurately test out the newly created virtual patches, it may be nec
 - Web browser.
 - Command line web clients such as Curl and Wget.
 - Local Proxy Servers such as [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project).
-- [ModSecurity AuditViewer](http://www.jwall.org/web/audit/viewer.jsp) – which allows you to load a ModSecurity audit log file, manipulate it and then re-inject the data back into any web server.
+- [ModSecurity AuditViewer](https://web.archive.org/web/20181011065823/http://www.jwall.org/web/audit/viewer.jsp) – which allows you to load a ModSecurity audit log file, manipulate it and then re-inject the data back into any web server.
 
 ## Testing Steps
 
