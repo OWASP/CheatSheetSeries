@@ -57,7 +57,7 @@ The primary means of input validation for free-form text input should be:
 
 References: 
 
-- [Input validation of free-form Unicode text in Python](https://ipsec.pl/python/2017/input-validation-free-form-unicode-text-python.html)
+- [Input validation of free-form Unicode text in Python](https://web.archive.org/web/20170717174432/https://ipsec.pl/python/2017/input-validation-free-form-unicode-text-python.html/)
 
 ## Regular expressions
 
