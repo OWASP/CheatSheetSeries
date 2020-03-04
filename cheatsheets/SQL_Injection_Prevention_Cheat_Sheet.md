@@ -325,9 +325,9 @@ We have not implemented the SQL Server escaping routine yet, but the following h
 
 #### DB2 Escaping
 
-This information is based on [DB2 WebQuery special characters](https://www-01.ibm.com/support/docview.wss?uid=nas8N1013655) as well as some information from [Oracle's JDBC DB2 driver](http://docs.oracle.com/cd/E12840_01/wls/docs103/jdbc_drivers/sqlescape.html).
+This information is based on [DB2 WebQuery special characters](https://www.ibm.com/support/pages/web-query-special-characters) as well as some information from [Oracle's JDBC DB2 driver](http://docs.oracle.com/cd/E12840_01/wls/docs103/jdbc_drivers/sqlescape.html).
 
-Information in regards to differences between several [DB2 Universal drivers](http://www-01.ibm.com/support/docview.wss?uid=swg21363866).
+Information in regards to differences between several [DB2 Universal drivers](https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads).
 
 ### Hex-encoding all input
 
@@ -364,7 +364,7 @@ foreach ($stmt as $row) {
 }
 ```
 
-2. Using [MySQLi](http://php.net/manual/en/book.mysqli.php) (for MySQL):
+2. Using [MySQLi](https://php.net/manual/en/book.mysqli.php) (for MySQL):
 
 ```php
 $stmt = $dbConnection->prepare('SELECT * FROM employees WHERE name = ?');
