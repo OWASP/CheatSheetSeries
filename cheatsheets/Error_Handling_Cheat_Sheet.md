@@ -109,7 +109,7 @@ response.setStatus(200);
 
 ## Java SpringMVC/SpringBoot web application
 
-With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](http://spring.io/projects/spring-boot), you can define a global error handler by simply implementing the following kind of class in your project.
+With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](https://spring.io/projects/spring-boot), you can define a global error handler by simply implementing the following kind of class in your project.
 
 We indicate to the handler, via the annotation [@ExceptionHandler](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html), to act when any exception extending the class *java.lang.Exception* is thrown by the application.
 
@@ -149,7 +149,7 @@ public class RestResponseEntityExceptionHandler {
 
 References:
 
-- [Exception handling with Spring](http://www.baeldung.com/exception-handling-for-rest-with-spring)
+- [Exception handling with Spring](https://www.baeldung.com/exception-handling-for-rest-with-spring)
 - [Exception handling with SpringBoot](https://www.toptal.com/java/spring-boot-rest-api-error-handling)
 
 ## ASP NET Core web application
