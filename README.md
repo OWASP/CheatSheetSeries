@@ -9,9 +9,8 @@
 This repository contains all the cheat sheets of the project and represent the V2 of the **OWASP Cheat Sheet Series** project.
 
 Links:
-* [OWASP home page of the project](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series)
+* [OWASP home page of the project](https://owasp.org/www-project-cheat-sheets/)
 * [Official website](https://cheatsheetseries.owasp.org)
-* [Github repository](https://github.com/OWASP/CheatSheetSeries)
 
 # Table of Contents
 
