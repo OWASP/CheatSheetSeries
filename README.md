@@ -78,32 +78,6 @@ Members:
 * [Robin Bailey](https://github.com/rbsec).
 * [Jim Manico](https://github.com/jmanico).
 
-# PR usage for core committers
-
-For the following kind of modifications, the PR system will be used by the core committers in order to allow peer review using the GitHub PR review system:
-* Addition of a new cheat sheet.
-* Deep modification of an existing cheat sheet.
-
-Below are the steps to properly submit a PR:
-1. Clone the project.
-2. Move on to the `master` branch: 
-    > `git checkout master`
-3. Ensure that you have the latest files:
-    > `git pull`
-4. Create a branch named `CSS-[ID]` where **[ID]** is the number of the linked issue opened prior to the PR to follow the contribution process:
-    > `git checkout -b CSS-[ID]`
-5. Switch to this new branch (normally it's already the case):
-    > `git checkout CSS-[ID]`
-6. Do the expected work.
-7. Push the new branch:
-    > `git push origin CSS-[ID]`   
-8. When the work is ready for the review, create a pull request by visiting this link:
-    > `https://github.com/OWASP/CheatSheetSeries/pull/new/CSS-[ID]`
-9. Implement the modifications requested by the reviewers. Once the reviewers approve the PR, it is then merged to the `master` branch.
-10. Once merged, delete the branch using this [GitHub feature](https://help.github.com/en/articles/creating-and-deleting-branches-within-your-repository#deleting-a-branch).
-
-See project current [branches](https://github.com/OWASP/CheatSheetSeries/branches).
-
 # Project logo
 
 The project's official logo files are hosted [here](https://github.com/OWASP/owasp-swag/tree/master/projects/cheat-sheet-series).
