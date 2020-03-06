@@ -21,6 +21,7 @@ Links:
   * [Cheat Sheet Series Team](#cheat-sheet-series-team)
     + [Project Leaders](#project-leaders)
     + [Core Team](#core-team)
+  * [Chat with Us](#chat-with-us)
   * [Project Logo](#project-logo)
   * [Folders](#folders)
   * [Offline Website](#offline-website)
@@ -65,6 +66,15 @@ The official website provides a search bar (top left corner) that can be used.
 * [Robin Bailey](https://github.com/rbsec).
 
 The core team contains a set of knowledgeable people that assist the project leaders in maintaining the repository and take on actions on their own. The team follows a well documented process in issues and pull requests, whether in accepting or rejecting them.
+
+## Chat With Us
+
+We're easy to find on Slack:
+
+1. Join the OWASP Group Slack with this [invitation link](https://owasp-slack.herokuapp.com/).
+2. Join this project's [channel, #cheatsheets](https://owasp.slack.com/messages/C073YNUQG).
+
+Feel free to ask questions, suggest ideas, or share your best recipes.
 
 ## Project Logo
 
