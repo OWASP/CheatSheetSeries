@@ -1,10 +1,6 @@
 [![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)
 ![CSCounterBadge](https://img.shields.io/badge/cheat_sheets_available-63-orange.svg)
 ![LicenseBadge](https://img.shields.io/badge/license-C_C-blue.svg)
-[![PushAndPullRequestIntegrityCheck](https://travis-ci.org/OWASP/CheatSheetSeries.svg?branch=master)](https://travis-ci.org/OWASP/CheatSheetSeries)
-[![OfflineWebsiteBuild](https://circleci.com/gh/OWASP/CheatSheetSeries/tree/master.svg?style=svg)](https://circleci.com/gh/OWASP/CheatSheetSeries/tree/master)
-
-![OWASPHeader](assets/Preface_Cheatsheet_Header.png)
 
 ![ProjectLogoOfficial](assets/Preface_Cheatsheet_Logo.png)
 
