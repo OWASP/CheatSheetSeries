@@ -73,10 +73,8 @@ However, we have created an official core team (core committers) in order to:
 A decision from a member of the core team has the same weight to those of the project's leaders, so if a core team member rejects a PR (*rejection must be technically documented and explained*), then the project's leaders will carry on that same decision.
 
 Members:
-* [Elie Saad](https://github.com/ThunderSon).
 * [Jakub Maćkowski](https://github.com/mackowski).
 * [Robin Bailey](https://github.com/rbsec).
-* [Jim Manico](https://github.com/jmanico).
 
 # Project logo
 
