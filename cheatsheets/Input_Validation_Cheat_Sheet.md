@@ -33,7 +33,7 @@ Input validation can be implemented using any programming technique that allows 
 
 ## Whitelisting vs blacklisting
 
-It is a common mistake to use black list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass by such filters. 
+It is a common mistake to use black list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters. 
 
 Plus, such filters frequently prevent authorized input, like `O'Brian`, where the `'` character is fully legitimate. For more information on XSS filter evasion please see the [this wiki page](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet).
 
