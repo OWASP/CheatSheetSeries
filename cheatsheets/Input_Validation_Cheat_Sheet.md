@@ -33,7 +33,7 @@ Input validation can be implemented using any programming technique that allows 
 
 ## Whitelisting vs blacklisting
 
-It is a common mistake black list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to avoid getting caught by such filters. 
+It is a common mistake to use black list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters. 
 
 Plus, such filters frequently prevent authorized input, like `O'Brian`, where the `'` character is fully legitimate. For more information on XSS filter evasion please see the [this wiki page](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet).
 
@@ -69,11 +69,11 @@ In summary, input validation should:
 
 - Be applied to all input data, at minimum.
 - Define the allowed set of characters to be accepted.
-- Defines a minimum and maximum length for the data (e.g. `{1,25}` ).
+- Define a minimum and maximum length for the data (e.g. `{1,25}` ).
 
 # White List Regular Expression Examples
 
-Validating an U.S. Zip Code (5 digits plus optional -4)
+Validating a U.S. Zip Code (5 digits plus optional -4)
 
 ```text
 ^\d{5}(-\d{4})?$
@@ -175,7 +175,7 @@ The format of email addresses is defined by [RFC 5321](https://tools.ietf.org/ht
 - `user@[IPv6:2001:db8::1]`
 - `" "@example.org`
 
-Properly parsing email addresses for validity with regular expressions is very complicated, although there are a number of [publicly documents regex](https://tools.ietf.org/id/draft-seantek-mail-regexen-03.html#rfc.section.3).
+Properly parsing email addresses for validity with regular expressions is very complicated, although there are a number of [publicly available documents on regex](https://tools.ietf.org/id/draft-seantek-mail-regexen-03.html#rfc.section.3).
 
 The biggest caveat on this is that although the RFC defines a very flexible format for email addresses, most real world implementations (such as mail servers) use a far more restricted address format, meaning that they will reject addresses that are *technically* valid.  Although they may be technically correct, these addresses are of little use if your application will not be able to actually send emails to them.
 
