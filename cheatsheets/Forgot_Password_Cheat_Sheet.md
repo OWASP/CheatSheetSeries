@@ -40,7 +40,7 @@ TOTP is a favorite candidate over HOTP, since you don't have to worry about the 
 
 The first page of a secure Forgot Password feature asks the user for multiple pieces of hard data that should have been previously collected (generally when the user first registers). 
 
-Steps for this are detailed in the identity section the Choosing and Using Security Questions Cheat Sheet [here](Choosing_and_Using_Security_Questions_Cheat_Sheet.md#step-1-decide-on-identity-data-vs-canned-questions-vs-user-created-questions).
+Steps for this are detailed in the identity section of the [Choosing and Using Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md#choosing-security-questions).
 
 At a minimum, you should have collected some data that will allow you to send the password reset information to some out-of-band side-channel, such as a (possibly different) email address or an SMS text number, etc. to be used in Step 3.
 
@@ -52,13 +52,20 @@ If all submitted data is correct, Step 2 should display at least two of the user
 
 Do not provide a drop-down list for the user to select the questions he wants to answer. Avoid sending the username as a parameter (hidden or otherwise) when the form on this page is submitted. The username should be stored in the server-side session where it can be retrieved as needed.
 
-Because users' security questions / answers generally contains much less entropy than a well-chosen password (how many likely answers are there to the typical *What's your favorite sports team?* or *In what city where you born?* security questions anyway?), make sure you limit the number of guesses attempted and if some threshold is exceeded for that user (say 3 to 5), lock out the user's account for some reasonable duration (say at least 5 minutes) and then challenge the user with some form of challenge token per standard multi-factor workflow; see \#3, below) to mitigate attempts by hackers to guess the questions and reset the user's password. It is not unreasonable to think that a user's email account may have already been compromised, so tokens that do not involve email, such as SMS or a mobile soft-token, are best.
+Because users' security questions / answers generally contains much less entropy than a well-chosen password (how many likely answers are there to the typical *What's your favorite sports team?* or *In what city where you born?* security questions anyway?), make sure you limit the number of guesses attempted and if some threshold is exceeded for that user (say 3 to 5), lock out the user's account for some reasonable duration (say at least 5 minutes) and then challenge the user with some form of challenge token per standard multi-factor workflow (see \#3, below) to mitigate attempts by hackers to guess the questions and reset the user's password. It is not unreasonable to think that a user's email account may have already been compromised, so tokens that do not involve email, such as SMS or a mobile soft-token, are best.
 
 ## Step 3) Send a Token Over a Side-Channel
 
 After step 2, lock out the user's account immediately. Then SMS or utilize some other multi-factor token challenge with a randomly-generated code having 8 or more characters. 
 
 This introduces an *out-of-band* communication channel and adds defense-in-depth as it is another barrier for a hacker to overcome. If the bad guy has somehow managed to successfully get past steps 1 and 2, he is unlikely to have compromised the side-channel. It is also a good idea to have the random code which your system generates to only have a limited validity period, say no more than 20 minutes or so. That way if the user doesn't get around to checking their email and their email account is later compromised, the random token used to reset the password would no longer be valid if the user never reset their password and the *reset password* token was discovered by an attacker. 
+
+The user should always be sent a token rather than a new password for their account. There are numerous problems with directly sending the user a password, especially via email. These include:
+
+- The transport mechanism used to send the password (email, SMS, etc) may not be encrypted.
+- The password may be stored in the users' mailbox or device for an indefinite period.
+- The password may be accessible to IT staff or other users who have access to the mailbox or device.
+- The password may be logged by third parties such as mail security scanning platforms.
 
 Of course, by all means, once a user's password has been reset, the randomly-generated token should no longer be valid.
 

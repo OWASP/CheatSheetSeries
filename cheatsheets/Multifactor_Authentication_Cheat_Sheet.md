@@ -119,9 +119,9 @@ One of the biggest challenges with implementing MFA is handling users who forget
 - Wiping or losing a phone without backing up OTP codes.
 - Changing mobile numbers.
 
-In order to prevent users from being locked out of the application, there needs to be a mechanism for them to regain access to their account if they can't use their existing MFA; however it is also crucial that this doesn't provide an attacker with a way to bypass MFA and hijack there account.
+In order to prevent users from being locked out of the application, there needs to be a mechanism for them to regain access to their account if they can't use their existing MFA; however it is also crucial that this doesn't provide an attacker with a way to bypass MFA and hijack their account.
 
-There is no definitive "best way" to do this, and what is appropriate will vary hugely based on the security of the application, and also the level of control over the users. Solutions that work for a corporate application where all the staff know each other are unlikely to be feasible for a publicly available application with thousands of users all over the world. Every recovery methods has its own advantages and disadvantages, and these need to be evaluated in the context of the application.
+There is no definitive "best way" to do this, and what is appropriate will vary hugely based on the security of the application, and also the level of control over the users. Solutions that work for a corporate application where all the staff know each other are unlikely to be feasible for a publicly available application with thousands of users all over the world. Every recovery method has its own advantages and disadvantages, and these need to be evaluated in the context of the application.
 
 Some suggestions of possible methods include:
 
@@ -172,9 +172,9 @@ Security questions require the user to choose (or create) a number of questions 
 
 # Something You Have
 
-The second factor is something that the users possesses. This could be a physical item (such as a hardware token), a digital item (such as a certificate or private key), or based on the ownership of a mobile phone or email address (such as SMS or a software token installed on the phone, or an email with a single-use verification code).
+The second factor is something that the user possesses. This could be a physical item (such as a hardware token), a digital item (such as a certificate or private key), or based on the ownership of a mobile phone, phone number, or email address (such as SMS or a software token installed on the phone, or an email with a single-use verification code).
 
-If properly implemented then this can be significantly more difficult  for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.
+If properly implemented then this can be significantly more difficult for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.
 
 The requirement to have a second factor can also limit certain types of users' ability to access a service. For example, if a user does not have access to a mobile phone, many types of MFA will not be available for them.
 
@@ -206,7 +206,7 @@ Most websites use standardised TOTP tokens, allowing the user to install any aut
 - The absence of physical tokens greatly reduces the cost and administrative overhead of implementing the system.
 - When users lose access to their TOTP app, a new one can be configured without needing to ship a physical token to them.
 - TOTP is widely used, and many users will already have at least one TOTP app installed.
-- As long as the user has a screen lock on their phone, an attacker will be unable to use the code if they still the phone.
+- As long as the user has a screen lock on their phone, an attacker will be unable to use the code if they steal the phone.
 
 ### Cons
 
@@ -214,7 +214,7 @@ Most websites use standardised TOTP tokens, allowing the user to install any aut
 - The TOTP app may be installed on the same mobile device (or workstation) that is used to authenticate.
 - Users may store the backup seeds insecurely.
 - Not all users have mobile devices to use with TOTP.
-- If the users mobile device is lost, stolen or out of battery, they will be unable to authenticate.
+- If the user's mobile device is lost, stolen or out of battery, they will be unable to authenticate.
 - Susceptible to phishing (although short-lived).
 
 ## Hardware U2F Tokens
@@ -260,7 +260,7 @@ Smartcards are credit-card size cards with a chip containing a digital certifica
 ### Pros
 
 - Stolen smartcards cannot be used without the PIN.
-- Smartcards can be users across multiple applications and systems.
+- Smartcards can be used across multiple applications and systems.
 - Resistant to phishing.
 
 ### Cons
@@ -290,7 +290,7 @@ SMS messages or phone calls can be used to provide users with a single-use code 
 
 ## Email
 
-Email verification requires that the user enters a code or clicks  a link send to their email address. There is some debate as to whether email constitutes a form of MFA, because if the user does not have MFA configured on their email account, it simply requires knowledge of the user's email password (which is often the same as their application password). However, it is included here for completeness.
+Email verification requires that the user enters a code or clicks a link sent to their email address. There is some debate as to whether email constitutes a form of MFA, because if the user does not have MFA configured on their email account, it simply requires knowledge of the user's email password (which is often the same as their application password). However, it is included here for completeness.
 
 ### Pros
 
@@ -307,7 +307,7 @@ Email verification requires that the user enters a code or clicks  a link send t
 
 # Something You Are
 
-The final factor in the traditional view of MFA is something you are - which is physical attributes of the users (often called biometrics). Biometrics are rarely used in web applications due to the requirement for users to have specific hardware.
+The final factor in the traditional view of MFA is something you are - which is one of the physical attributes of the users (often called biometrics). Biometrics are rarely used in web applications due to the requirement for users to have specific hardware.
 
 ## Biometrics
 
@@ -327,6 +327,7 @@ The are a number of common types of biometrics that are used, including:
 - Require manual enrolment of the user's physical attributes.
 - Custom (sometimes expensive) hardware is often required to read biometrics.
 - Modern browsers do not have native support, so custom client-side software is required.
+- If compromised, biometric data can be difficult to change.
 
 # Location
 
@@ -346,7 +347,7 @@ The source IP address the user is connecting from can be used as a factor, typic
 ### Cons
 
 - Doesn't provide any protection if the user's system is compromised.
-- Doesn't provide any protection against rouge insiders.
+- Doesn't provide any protection against rogue insiders.
 - Trusted IP addresses must be carefully restricted (for example, if the open guest WiFi uses the main corporate IP range).
 
 ## Geolocation
@@ -360,5 +361,5 @@ Rather than using the exact IP address of the user, the geographic location that
 ### Cons
 
 - Doesn't provide any protection if the user's system is compromised.
-- Doesn't provide any protection against rouge insiders.
+- Doesn't provide any protection against rogue insiders.
 - Easy for an attacker to bypass by obtaining IP addresses in the trusted country or location.
