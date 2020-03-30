@@ -372,13 +372,7 @@ Will instruct web browser to load all resources only from the page's origin and 
 
 Many web application frameworks provide automatic contextual escaping functionality such as [AngularJS strict contextual escaping](https://docs.angularjs.org/api/ng/service/$sce) and [Go Templates](https://golang.org/pkg/html/template/). Use these technologies when you can.
 
-## Bonus Rule \#4: Use the X-XSS-Protection Response Header
-
-This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) enables the Cross-site scripting (XSS) filter built into some modern web browsers. This header is usually enabled by default anyway, so the role of this header is to re-enable the filter for this particular website if it was disabled by the user.
-
-Note that Firefox never supported X-XSS-Protection and Chrome and Edge have announced they are dropping support for it.
-
-## Bonus Rule \#5: Properly use modern JS frameworks
+## Bonus Rule \#4: Properly use modern JS frameworks
 
 Modern JavaScript frameworks have pretty good XSS protection built in.
 Usually framework API allows bypassing that protection in order to render unescaped HTML or include executable code.
