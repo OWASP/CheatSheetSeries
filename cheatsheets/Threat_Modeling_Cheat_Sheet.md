@@ -143,7 +143,7 @@ If you don’t like to manually draw your DFD; there are several tools available
 
 #### OWASP Threat Dragon
 
-The OWASP [Threat Dragon project](https://owasp.org/www-project-threat-dragon/) is a cross platform tool that runs on Linux, MacOS and Windows 10. Threat Dragon is used to create threat model diagrams and to record possible threats and decide on their mitigations using STRIDE methodology. TD is both a [web application](https://github.com/mike-goodwin/owasp-threat-dragon/releases/tag/v1.1) and a [desktop application](https://github.com/mike-goodwin/owasp-threat-dragon-desktop/releases/tag/v1.1); in active development with version 1.1 released in March 2020.
+The OWASP [Threat Dragon project](https://owasp.org/www-project-threat-dragon/) is a cross platform tool that runs on Linux, MacOS and Windows 10. Threat Dragon (TD) is used to create threat model diagrams and to record possible threats and decide on their mitigations using STRIDE methodology. TD is both a [web application](https://github.com/mike-goodwin/owasp-threat-dragon/releases/tag/v1.1) and a [desktop application](https://github.com/mike-goodwin/owasp-threat-dragon-desktop/releases/tag/v1.1); in active development with version 1.1 released in March 2020.
 
 #### Poirot
 
