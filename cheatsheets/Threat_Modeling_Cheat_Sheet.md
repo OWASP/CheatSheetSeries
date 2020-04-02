@@ -141,13 +141,17 @@ In this step, Data Flow Diagram should be divided in the context of Model, View,
 
 If you don’t like to manually draw your DFD; there are several tools available that could be used:
 
+#### OWASP Threat Dragon
+
+The OWASP [Threat Dragon project](https://owasp.org/www-project-threat-dragon/) is a cross platform tool that runs on Linux, MacOS and Windows 10. Threat Dragon (TD) is used to create threat model diagrams and to record possible threats and decide on their mitigations using STRIDE methodology. TD is both a [web application](https://github.com/mike-goodwin/owasp-threat-dragon/releases/tag/v1.1) and a [desktop application](https://github.com/mike-goodwin/owasp-threat-dragon-desktop/releases/tag/v1.1); in active development with version 1.1 released in March 2020.
+
 #### Poirot
 
 The Poirot tool isolates and diagnoses defects through fault modeling and simulation. Along with a carefully selected partitioning strategy, functional and sequential test pattern applications show success with circuits having a high degree of observability.
 
-#### MS Threat modeling
+#### MS TMT
 
-A tool that helps in finding threats in the design phase of software projects.
+The Microsoft Threat Modeling Tool (TMT) helps find threats in the design phase of software projects. It is one of the longest lived threat modeling tools, having been introduced as Microsoft SDL in 2008, and is actively supported; [version 7.3](https://aka.ms/threatmodelingtool) was released March 2020. It runs only on Windows 10 Anniversary Update or later, and so is difficult to use on MacOS or Linux.
 
 ## Define Data Flow over your DFD
 
