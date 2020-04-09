@@ -389,7 +389,19 @@ If you **really** have to use them remember that now all the data must be [sanit
 
 Avoid template injection in Angular by building with `--prod` parameter (`ng build --prod`).
 
-Also remember to keep your framework updated to the latest version with all possible bug fixes. 
+Also remember to keep your framework updated to the latest version with all possible bug fixes.
+
+## X-XSS-Protection Header
+
+`X-XSS-Protection` header has been deprecated by modern browsers and its use can introduce additional security issues. As such, it is no longer recommended and should be disabled.
+
+For references:
+
+- [Chrome removed the XSS Auditor](https://www.chromestatus.com/feature/5021976655560704)
+- [Firefox does not implement the XSSAuditor](https://bugzilla.mozilla.org/show_bug.cgi?id=528661)
+- [Edge retired their XSS filter](https://blogs.windows.com/windowsexperience/2018/07/25/announcing-windows-10-insider-preview-build-17723-and-build-18204/)
+- [OWASP ZAP deprecated the scan for the header](https://github.com/zaproxy/zaproxy/issues/5849)
+- [SecurityHeaders.com no longer scans for the header](https://scotthelme.co.uk/security-headers-updates/#removing-the-x-xss-protection-header)
 
 # XSS Prevention Rules Summary
 
