@@ -154,7 +154,7 @@ if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue ||
          <add name="X-Content-Type-Options" value="NOSNIFF" />
          <add name="X-Frame-Options" value="DENY" />
          <add name="X-Permitted-Cross-Domain-Policies" value="master-only"/>
-         <add name="X-XSS-Protection" value="1; mode=block"/>
+         <add name="X-XSS-Protection" value="0"/>
          <remove name="X-Powered-By"/>
        </customHeaders>
      </httpProtocol>
@@ -387,7 +387,7 @@ e.g Web.config
             <add name="X-Content-Type-Options" value="nosniff" />
             <add name="X-Frame-Options" value="DENY" />
             <add name="X-Permitted-Cross-Domain-Policies" value="master-only"/>
-            <add name="X-XSS-Protection" value="1; mode=block"/>
+            <add name="X-XSS-Protection" value="0"/>
             <remove name="X-Powered-By"/>
         </customHeaders>
     </httpProtocol>
@@ -400,7 +400,7 @@ e.g Startup.cs
 app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
 app.UseXContentTypeOptions();
 app.UseReferrerPolicy(opts => opts.NoReferrer());
-app.UseXXssProtection(options => options.EnabledWithBlockMode());
+app.UseXXssProtection(options => options.FilterDisabled());
 app.UseXfo(options => options.Deny());
 
 app.UseCsp(opts => opts
