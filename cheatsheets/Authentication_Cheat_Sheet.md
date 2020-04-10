@@ -8,7 +8,7 @@
 
 ## User IDs
 
-Make sure your usernames/user IDs are case insensitive. User 'smith' and user 'Smith' should be the same user. Usernames should also be unique. For high-security applications, usernames could be assigned and secret instead of user-defined public data.
+Make sure your usernames/user IDs are case-insensitive. User 'smith' and user 'Smith' should be the same user. Usernames should also be unique. For high-security applications, usernames could be assigned and secret instead of user-defined public data.
 
 ### Email address as a User ID
 
@@ -16,7 +16,7 @@ For information on validating email addresses, please visit the [input validatio
 
 ## Authentication Solution and Sensitive Accounts
 
-- Do **NOT** allow login with sensitive accounts (i.e. accounts that can be used internally within the solution such as to a back-end / middle-ware / DB) to any front end-user interface
+- Do **NOT** allow login with sensitive accounts (i.e. accounts that can be used internally within the solution such as to a back-end / middle-ware / DB) to any front-end user-interface
 - Do **NOT** use the same authentication solution (e.g. IDP / AD) used internally for unsecured access (e.g. public access / DMZ)
 
 ## Implement Proper Password Strength Controls
@@ -111,7 +111,7 @@ It is interesting to note that the business logic itself can bring a discrepancy
 
 Example using pseudo-code for a login feature:
 
-* First implementation using the "quick exit" approach*
+* First implementation using the "quick exit" approach
 
 ```
 IF USER_EXISTS(username) THEN
@@ -127,7 +127,7 @@ ENDIF
 
 It can be clearly seen that if the user doesn't exist, the application will directly throw an error. Otherwise, when the user exists and the password doesn't, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.
 
-*Second implementation without relying on the "quick exit" approach:*
+* Second implementation without relying on the "quick exit" approach:
 
 ```
 password_hash=HASH(password)
@@ -149,7 +149,7 @@ Regarding the user enumeration itself, protection against [brute-force attack](#
 
 Incorrect response examples:
 - "Login for User foo: invalid password."
-- "Login failed, the invalid user ID."
+- "Login failed, invalid user ID."
 - "Login failed; account disabled."
 - "Login failed; this user is not active."
 
@@ -205,11 +205,11 @@ The [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sh
 The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.
 
 The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker from making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:
-We've got 4 tickets for We've got 4 tickets for 
+
 - The number of failed attempts before the account is locked out (lockout threshold).
 - The time period that these attempts must occur within (observation window).
 - How long the account is locked out for (lockout duration).
-We've got 4 tickets for 
+
 Rather than implementing a fixed lockout duration (e.g., ten minutes), some applications use an exponential lockout, where the lockout duration starts as a very short period (e.g., one second), but doubles after each failed login attempt.
 
 When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the user of the forgotten password functionality to log in, even if the account is locked out.
@@ -246,7 +246,7 @@ OAuth 2.0 relies on HTTPS for security and is currently used and implemented by 
 
 ## OpenId
 
-OpenId is an HTTP-based protocol that uses identity providers to validate that a user is whom he says he is. It is a very simple protocol which allows a service provider-initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user in multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.
+OpenId is an HTTP-based protocol that uses identity providers to validate that a user is whom he says he is. It is a very simple protocol which allows a service provider initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user in multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.
 
 Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well-known identity providers for OpenId are Stack Exchange, Google, Facebook and Yahoo!
 
