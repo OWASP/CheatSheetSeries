@@ -99,9 +99,9 @@ Incorrectly implemented error messages in the case of authentication functionali
 #### Authentication Responses
 
 Using any of the authentication mechanisms (login, password reset or password recovery), an application must respond with a generic error message regardless of whether:
-* The user ID or password was incorrect.
-* The account does not exist.
-* The account is locked or disabled.
+- The user ID or password was incorrect.
+- The account does not exist.
+- The account is locked or disabled.
 
 The account registration feature should also be taken into consideration, and the same approach of generic error message can be applied regarding the case in which the user exists.
 
@@ -111,7 +111,7 @@ It is interesting to note that the business logic itself can bring a discrepancy
 
 Example using pseudo-code for a login feature:
 
-* First implementation using the "quick exit" approach
+- First implementation using the "quick exit" approach
 
 ```
 IF USER_EXISTS(username) THEN
