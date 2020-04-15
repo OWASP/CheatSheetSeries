@@ -1051,16 +1051,16 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p><strong>Authentication</strong> is the process of verifying that an individual, entity or website is who it claims to be. Authentication in the context of web applications is commonly performed by submitting a username or ID and one or more items of private information that only a given user should know.</p>
+<p><strong>Authentication</strong> is the process of verifying that an individual, entity or website is whom it claims to be. Authentication in the context of web applications is commonly performed by submitting a username or ID and one or more items of private information that only a given user should know.</p>
 <p><strong>Session Management</strong> is a process by which a server maintains the state of an entity interacting with it. This is required for a server to remember how to react to subsequent requests throughout a transaction. Sessions are maintained on the server by a session identifier which can be passed back and forward between the client and server when transmitting and receiving requests. Sessions should be unique per user and computationally very difficult to predict. The <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a> contains further guidance on the best practices in this area.</p>
 <h1 id="authentication-general-guidelines"><a name="authentication-general-guidelines" class="plugin-anchor" href="#authentication-general-guidelines"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication General Guidelines</h1>
 <h2 id="user-ids"><a name="user-ids" class="plugin-anchor" href="#user-ids"><i class="fa fa-link" aria-hidden="true"></i></a>User IDs</h2>
-<p>Make sure your usernames or user IDs are case insensitive. User &apos;smith&apos; and user &apos;Smith&apos; should be the same user. Usernames should also be unique. For high security applications usernames could be assigned and secret instead of user-defined public data.</p>
+<p>Make sure your usernames/user IDs are case-insensitive. User &apos;smith&apos; and user &apos;Smith&apos; should be the same user. Usernames should also be unique. For high-security applications, usernames could be assigned and secret instead of user-defined public data.</p>
 <h3 id="email-address-as-a-user-id"><a name="email-address-as-a-user-id" class="plugin-anchor" href="#email-address-as-a-user-id"><i class="fa fa-link" aria-hidden="true"></i></a>Email address as a User ID</h3>
 <p>For information on validating email addresses, please visit the <a href="Input_Validation_Cheat_Sheet.html#Email_Address_Validation">input validation cheatsheet email discussion</a>.</p>
 <h2 id="authentication-solution-and-sensitive-accounts"><a name="authentication-solution-and-sensitive-accounts" class="plugin-anchor" href="#authentication-solution-and-sensitive-accounts"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication Solution and Sensitive Accounts</h2>
 <ul>
-<li>Do <strong>NOT</strong> allow login with sensitive accounts (i.e. accounts that can be used internally within the solution such as to a back-end / middle-ware / DB) to any front end user interface</li>
+<li>Do <strong>NOT</strong> allow login with sensitive accounts (i.e. accounts that can be used internally within the solution such as to a back-end / middle-ware / DB) to any front-end user-interface</li>
 <li>Do <strong>NOT</strong> use the same authentication solution (e.g. IDP / AD) used internally for unsecured access (e.g. public access / DMZ)</li>
 </ul>
 <h2 id="implement-proper-password-strength-controls"><a name="implement-proper-password-strength-controls" class="plugin-anchor" href="#implement-proper-password-strength-controls"><i class="fa fa-link" aria-hidden="true"></i></a>Implement Proper Password Strength Controls</h2>
@@ -1071,7 +1071,7 @@
 <li><strong>Minimum</strong> length of the passwords should be <strong>enforced</strong> by the application. Passwords <strong>shorter than 8 characters</strong> are considered to be weak (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank">NIST SP800-63B</a>).</li>
 <li><strong>Maximum</strong> password length should not be set <strong>too low</strong>, as it will prevent users from creating passphrases. Typical maximum length is 128 characters. It is important to set a maximum password length to prevent <a href="https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/" target="_blank">long password Denial of Service attacks</a>.</li>
 <li><p>Some password hashes such as Bcrypt truncate the input, so a shorter maximum length may be required, as discussed in the <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a>.</p>
-<p>When selecting a maximum password length consider whether the hashing algorithm to be used has any limitations because some <a href="https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851" target="_blank">have a maximum password length</a>.</p>
+<p>When selecting a maximum password length, consider whether the hashing algorithm to be used has any limitations because some <a href="https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851" target="_blank">have a maximum password length</a>.</p>
 </li>
 </ul>
 </li>
@@ -1096,7 +1096,7 @@
 <h2 id="implement-secure-password-recovery-mechanism"><a name="implement-secure-password-recovery-mechanism" class="plugin-anchor" href="#implement-secure-password-recovery-mechanism"><i class="fa fa-link" aria-hidden="true"></i></a>Implement Secure Password Recovery Mechanism</h2>
 <p>It is common for an application to have a mechanism that provides a means for a user to gain access to their account in the event they forget their password. Please see <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> for details on this feature.</p>
 <h2 id="store-passwords-in-a-secure-fashion"><a name="store-passwords-in-a-secure-fashion" class="plugin-anchor" href="#store-passwords-in-a-secure-fashion"><i class="fa fa-link" aria-hidden="true"></i></a>Store Passwords in a Secure Fashion</h2>
-<p>It is critical for a application to store a password using the right cryptographic technique. Please see <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> for details on this feature.</p>
+<p>It is critical for an application to store a password using the right cryptographic technique. Please see <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> for details on this feature.</p>
 <h2 id="compare-password-hashes-using-safe-functions"><a name="compare-password-hashes-using-safe-functions" class="plugin-anchor" href="#compare-password-hashes-using-safe-functions"><i class="fa fa-link" aria-hidden="true"></i></a>Compare Password Hashes Using Safe Functions</h2>
 <p>Where possible, the user-supplied password should be compared to the stored password hash using a secure password comparison function provided by the language or framework, such as the <a href="https://www.php.net/manual/en/function.password-verify.php" target="_blank">password_verify()</a> function in PHP. Where this is not possible, ensure that the comparison function:</p>
 <ul>
@@ -1106,17 +1106,17 @@
 </ul>
 <h2 id="transmit-passwords-only-over-tls-or-other-strong-transport"><a name="transmit-passwords-only-over-tls-or-other-strong-transport" class="plugin-anchor" href="#transmit-passwords-only-over-tls-or-other-strong-transport"><i class="fa fa-link" aria-hidden="true"></i></a>Transmit Passwords Only Over TLS or Other Strong Transport</h2>
 <p>See: <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a></p>
-<p>The login page and all subsequent authenticated pages must be exclusively accessed over TLS or other strong transport. The initial login page, referred to as the &quot;login landing page&quot;, must be served over TLS or other strong transport. Failure to utilize TLS or other strong transport for the login landing page allows an attacker to modify the login form action, causing the user&apos;s credentials to be posted to an arbitrary location. Failure to utilize TLS or other strong transport for authenticated pages after login enables an attacker to view the unencrypted session ID and compromise the user&apos;s authenticated session.</p>
+<p>The login page and all subsequent authenticated pages must be exclusively accessed over TLS or other strong transport. The initial login page referred to as the &quot;login landing page&quot;, must be served over TLS or other strong transport. Failure to utilize TLS or other strong transport for the login landing page allows an attacker to modify the login form action, causing the user&apos;s credentials to be posted to an arbitrary location. Failure to utilize TLS or other strong transport for authenticated pages after login enables an attacker to view the unencrypted session ID and compromise the user&apos;s authenticated session.</p>
 <h2 id="require-re-authentication-for-sensitive-features"><a name="require-re-authentication-for-sensitive-features" class="plugin-anchor" href="#require-re-authentication-for-sensitive-features"><i class="fa fa-link" aria-hidden="true"></i></a>Require Re-authentication for Sensitive Features</h2>
 <p>In order to mitigate CSRF and session hijacking, it&apos;s important to require the current credentials for an account before updating sensitive account information such as the user&apos;s password, user&apos;s email, or before sensitive transactions, such as shipping a purchase to a new address. Without this countermeasure, an attacker may be able to execute sensitive transactions through a CSRF or XSS attack without needing to know the user&apos;s current credentials. Additionally, an attacker may get temporary physical access to a user&apos;s browser or steal their session ID to take over the user&apos;s session.</p>
 <h2 id="consider-strong-transaction-authentication"><a name="consider-strong-transaction-authentication" class="plugin-anchor" href="#consider-strong-transaction-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>Consider Strong Transaction Authentication</h2>
-<p>Some applications should use a second factor to check whether a user may perform sensitive operations. For more information see the <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a>.</p>
+<p>Some applications should use a second factor to check whether a user may perform sensitive operations. For more information, see the <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a>.</p>
 <h3 id="tls-client-authentication"><a name="tls-client-authentication" class="plugin-anchor" href="#tls-client-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>TLS Client Authentication</h3>
 <p>TLS Client Authentication, also known as two-way TLS authentication, consists of both, browser and server, sending their respective TLS certificates during the TLS handshake process. Just as you can validate the authenticity of a server by using the certificate and asking a well known Certificate Authority (CA) if the certificate is valid, the server can authenticate the user by receiving a certificate from the client and validating against a third party CA or its own CA. To do this, the server must provide the user with a certificate generated specifically for him, assigning values to the subject so that these can be used to determine what user the certificate should validate. The user installs the certificate on a browser and now uses it for the website.</p>
 <p>It is a good idea to do this when:</p>
 <ul>
 <li>It is acceptable (or even preferred) that the user only has access to the website from only a single computer/browser.</li>
-<li>The user is not easily scared by the process of installing TLS certificates on his browser or there will be someone, probably from IT support, that will do this for the user.</li>
+<li>The user is not easily scared by the process of installing TLS certificates on his browser, or there will be someone, probably from IT support, that will do this for the user.</li>
 <li>The website requires an extra step of security.</li>
 <li>It is also a good thing to use when the website is for an intranet of a company or organization.</li>
 </ul>
@@ -1126,17 +1126,19 @@
 <h2 id="authentication-and-error-messages"><a name="authentication-and-error-messages" class="plugin-anchor" href="#authentication-and-error-messages"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication and Error Messages</h2>
 <p>Incorrectly implemented error messages in the case of authentication functionality can be used for the purposes of user ID and password enumeration. An application should respond (both HTTP and HTML) in a generic manner.</p>
 <h4 id="authentication-responses"><a name="authentication-responses" class="plugin-anchor" href="#authentication-responses"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication Responses</h4>
-<p>Using any of the authentication mechanisms (login, password reset or password recovery) an application must respond with a generic error message regardless of whether:</p>
+<p>Using any of the authentication mechanisms (login, password reset or password recovery), an application must respond with a generic error message regardless of whether:</p>
 <ul>
 <li>The user ID or password was incorrect.</li>
 <li>The account does not exist.</li>
 <li>The account is locked or disabled.</li>
 </ul>
 <p>The account registration feature should also be taken into consideration, and the same approach of generic error message can be applied regarding the case in which the user exists.</p>
-<p>The objective is to prevent the creation of a <a href="https://cwe.mitre.org/data/definitions/204.html" target="_blank">discrepancy factor</a> allowing an attacker to mount a user enumeration action against the application.</p>
+<p>The objective is to prevent the creation of a <a href="https://cwe.mitre.org/data/definitions/204.html" target="_blank">discrepancy factor</a>, allowing an attacker to mount a user enumeration action against the application.</p>
 <p>It is interesting to note that the business logic itself can bring a discrepancy factor related to the processing time taken. Indeed, depending on the implementation, the processing time can be significantly different according to the case (success vs failure) allowing an attacker to mount a <a href="https://en.wikipedia.org/wiki/Timing_attack" target="_blank">time-based attack</a> (delta of some seconds for example).</p>
 <p>Example using pseudo-code for a login feature:</p>
-<p><em>First implementation using the &quot;quick exit&quot; approach</em></p>
+<ul>
+<li>First implementation using the &quot;quick exit&quot; approach</li>
+</ul>
 <pre><code>IF USER_EXISTS(username) THEN
     password_hash=HASH(password)
     IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
@@ -1146,8 +1148,10 @@
 ELSE
    RETURN Error(&quot;Invalid Username or Password!&quot;)
 ENDIF
-</code></pre><p>It can be clearly seen that if the user doesn&apos;t exist, the application will directly throw out an error. Otherwise, when the user exists and the password doesn&apos;t, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.</p>
-<p><em>Second implementation without relying on the &quot;quick exit&quot; approach:</em></p>
+</code></pre><p>It can be clearly seen that if the user doesn&apos;t exist, the application will directly throw an error. Otherwise, when the user exists and the password doesn&apos;t, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.</p>
+<ul>
+<li>Second implementation without relying on the &quot;quick exit&quot; approach:</li>
+</ul>
 <pre><code>password_hash=HASH(password)
 IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
 IF NOT IS_VALID THEN
@@ -1155,39 +1159,39 @@ IF NOT IS_VALID THEN
 ENDIF
 </code></pre><p>This code will go through the same process no matter what the user or the password is, allowing the application to return in approximately the same response time.</p>
 <p>The problem with returning a generic error message for the user is a User Experience (UX) matter. A legitimate user might feel confused with the generic messages, thus making it hard for them to use the application, and might after several retries, leave the application because of its complexity. The decision to return a <em>generic error message</em> can be determined based on the criticality of the application and its data. For example, for critical applications, the team can decide that under the failure scenario, a user will always be redirected to the support page and a <em>generic error message</em> will be returned.</p>
-<p>Regarding the user enumeration itself, protection against <a href="#protect-against-automated-attacks">brute-force attack</a> are also effective because they prevent an attacker to apply the enumeration at scale. Usage of <a href="https://en.wikipedia.org/wiki/CAPTCHA" target="_blank">CAPTCHA</a> can be applied on a feature for which a <em>generic error message</em> cannot be returned because the <em>user experience</em> must be preserved.</p>
+<p>Regarding the user enumeration itself, protection against <a href="#protect-against-automated-attacks">brute-force attack</a> are also effective because they prevent an attacker from applying the enumeration at scale. Usage of <a href="https://en.wikipedia.org/wiki/CAPTCHA" target="_blank">CAPTCHA</a> can be applied on a feature for which a <em>generic error message</em> cannot be returned because the <em>user experience</em> must be preserved.</p>
 <h4 id="incorrect-and-correct-response-examples"><a name="incorrect-and-correct-response-examples" class="plugin-anchor" href="#incorrect-and-correct-response-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Incorrect and correct response examples</h4>
 <h5 id="login"><a name="login" class="plugin-anchor" href="#login"><i class="fa fa-link" aria-hidden="true"></i></a>Login</h5>
 <p>Incorrect response examples:</p>
 <ul>
-<li>&quot;Login for User foo: invalid password&quot;</li>
-<li>&quot;Login failed, invalid user ID&quot;</li>
-<li>&quot;Login failed; account disabled&quot;</li>
-<li>&quot;Login failed; this user is not active&quot;</li>
+<li>&quot;Login for User foo: invalid password.&quot;</li>
+<li>&quot;Login failed, invalid user ID.&quot;</li>
+<li>&quot;Login failed; account disabled.&quot;</li>
+<li>&quot;Login failed; this user is not active.&quot;</li>
 </ul>
 <p>Correct response example:</p>
 <ul>
-<li>&quot;Login failed; Invalid user ID or password&quot;</li>
+<li>&quot;Login failed; Invalid user ID or password.&quot;</li>
 </ul>
 <h5 id="password-recovery"><a name="password-recovery" class="plugin-anchor" href="#password-recovery"><i class="fa fa-link" aria-hidden="true"></i></a>Password recovery</h5>
 <p>Incorrect response examples:</p>
 <ul>
-<li>&quot;We just sent you a password-reset link&quot;</li>
-<li>&quot;This email address doesn&apos;t exist in our database&quot;</li>
+<li>&quot;We just sent you a password reset link.&quot;</li>
+<li>&quot;This email address doesn&apos;t exist in our database.&quot;</li>
 </ul>
 <p>Correct response example:</p>
 <ul>
-<li>&quot;If that email address is in our database, we will send you an email to reset your password&quot;</li>
+<li>&quot;If that email address is in our database, we will send you an email to reset your password.&quot;</li>
 </ul>
 <h5 id="account-creation"><a name="account-creation" class="plugin-anchor" href="#account-creation"><i class="fa fa-link" aria-hidden="true"></i></a>Account creation</h5>
 <p>Incorrect response examples:</p>
 <ul>
-<li>&quot;This user ID is already in use&quot;</li>
-<li>&quot;Welcome! You have signed up successfully&quot;</li>
+<li>&quot;This user ID is already in use.&quot;</li>
+<li>&quot;Welcome! You have signed up successfully.&quot;</li>
 </ul>
 <p>Correct response example:</p>
 <ul>
-<li>&quot;A link to activate your account has been emailed to &#x27E8;input email address&#x27E9;&quot;</li>
+<li>&quot;A link to activate your account has been emailed to the address provided.&quot;</li>
 </ul>
 <h4 id="error-codes-and-urls"><a name="error-codes-and-urls" class="plugin-anchor" href="#error-codes-and-urls"><i class="fa fa-link" aria-hidden="true"></i></a>Error Codes and URLs</h4>
 <p>The application may return a different <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" target="_blank">HTTP Error code</a> depending on the authentication attempt response. It may respond with a 200 for a positive result and a 403 for a negative result. Even though a generic error page is shown to a user, the HTTP response code may differ which can leak information about whether the account is valid or not.</p>
@@ -1204,7 +1208,7 @@ ENDIF
 <tbody>
 <tr>
 <td>Brute Force</td>
-<td>Testing multiple passwords from dictionary or other source against a single account.</td>
+<td>Testing multiple passwords from a dictionary or other source against a single account.</td>
 </tr>
 <tr>
 <td>Credential Stuffing</td>
@@ -1216,52 +1220,52 @@ ENDIF
 </tr>
 </tbody>
 </table>
-<p>Different protection mechanisms can be implemented to protect against these attacks. In many cases these defences do not provide complete protection, but when a number of them are implemented in a defence-in-depth approach, a reasonable level of protection can be achieved.</p>
+<p>Different protection mechanisms can be implemented to protect against these attacks. In many cases, these defences do not provide complete protection, but when a number of them are implemented in a defence-in-depth approach, a reasonable level of protection can be achieved.</p>
 <p>The following sections will focus primarily on preventing brute-force attacks, although these controls can also be effective against other types of attacks. For further guidance on defending against credential stuffing and password spraying, see the <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">Credential Stuffing Cheat Sheet</a>.</p>
 <h3 id="multi-factor-authentication"><a name="multi-factor-authentication" class="plugin-anchor" href="#multi-factor-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>Multi-Factor Authentication</h3>
-<p>Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984" target="_blank">99.9% of account compromises</a>. As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.</p>
+<p>Multi-factor authentication (MFA) is by far the best defence against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984" target="_blank">99.9% of account compromises</a>. As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.</p>
 <p>The <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet</a> contains further guidance on implementing MFA.</p>
 <h3 id="account-lockout"><a name="account-lockout" class="plugin-anchor" href="#account-lockout"><i class="fa fa-link" aria-hidden="true"></i></a>Account Lockout</h3>
 <p>The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.</p>
-<p>The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:</p>
+<p>The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker from making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:</p>
 <ul>
 <li>The number of failed attempts before the account is locked out (lockout threshold).</li>
 <li>The time period that these attempts must occur within (observation window).</li>
 <li>How long the account is locked out for (lockout duration).</li>
 </ul>
-<p>Rather than implementing a fixed lockout duration (e.g, ten minutes), some applications use an exponential lockout, where the lockout duration starts as a very short period (e.g, one second), but doubles after each failed login attempt.</p>
-<p>When designing an account lockout system, care must be taken to prevent it being used to cause a denial of service by locking out other users&apos; accounts. One way this could be performed is to allow the user of the forgotten password functionality to login, even if the account is locked out.</p>
+<p>Rather than implementing a fixed lockout duration (e.g., ten minutes), some applications use an exponential lockout, where the lockout duration starts as a very short period (e.g., one second), but doubles after each failed login attempt.</p>
+<p>When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users&apos; accounts. One way this could be performed is to allow the user of the forgotten password functionality to log in, even if the account is locked out.</p>
 <h3 id="captcha"><a name="captcha" class="plugin-anchor" href="#captcha"><i class="fa fa-link" aria-hidden="true"></i></a>CAPTCHA</h3>
-<p>The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques, or can be outsourced to services which can solve them. As such, the use of CAPTCHA should be viewed as a defence-in-depth control to make brute-force attacks more time consuming and expensive, rather than as a preventative.</p>
+<p>The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques or can be outsourced to services which can solve them. As such, the use of CAPTCHA should be viewed as a defence-in-depth control to make brute-force attacks more time consuming and expensive, rather than as a preventative.</p>
 <p>It may be more user-friendly to only require a CAPTCHA be solved after a small number of failed login attempts, rather than requiring it from the very first login.</p>
 <h3 id="security-questions-and-memorable-words"><a name="security-questions-and-memorable-words" class="plugin-anchor" href="#security-questions-and-memorable-words"><i class="fa fa-link" aria-hidden="true"></i></a>Security Questions and Memorable Words</h3>
-<p>The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does <strong>not</strong> constitute multi-factor authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so must be carefully chosen. The <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">Choosing and Using Security Questions cheat sheet</a> contains further guidance on this.</p>
+<p>The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does <strong>not</strong> constitute multi-factor authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so they must be carefully chosen. The <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">Choosing and Using Security Questions cheat sheet</a> contains further guidance on this.</p>
 <h1 id="logging-and-monitoring"><a name="logging-and-monitoring" class="plugin-anchor" href="#logging-and-monitoring"><i class="fa fa-link" aria-hidden="true"></i></a>Logging and Monitoring</h1>
-<p>Enable logging and monitoring of authentication functions to detect attacks / failures on a real time basis</p>
+<p>Enable logging and monitoring of authentication functions to detect attacks/failures on a real-time basis</p>
 <ul>
 <li>Ensure that all failures are logged and reviewed</li>
 <li>Ensure that all password failures are logged and reviewed</li>
 <li>Ensure that all account lockouts are logged and reviewed</li>
 </ul>
 <h1 id="use-of-authentication-protocols-that-require-no-password"><a name="use-of-authentication-protocols-that-require-no-password" class="plugin-anchor" href="#use-of-authentication-protocols-that-require-no-password"><i class="fa fa-link" aria-hidden="true"></i></a>Use of authentication protocols that require no password</h1>
-<p>While authentication through a user/password combination and using multi-factor authentication is considered generally secure, there are use cases where it isn&apos;t considered the best option or even safe. Examples of this are third party applications that desire connecting to the web application, either from a mobile device, another website, desktop or other situations. When this happens, it is NOT considered safe to allow the third party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn&apos;t in your control. For this, and other use cases, there are several authentication protocols that can protect you from exposing your users&apos; data to attackers.</p>
+<p>While authentication through a user/password combination and using multi-factor authentication is considered generally secure, there are use cases where it isn&apos;t considered the best option or even safe. Examples of this are third party applications that desire connecting to the web application, either from a mobile device, another website, desktop or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn&apos;t in your control. For this, and other use cases, there are several authentication protocols that can protect you from exposing your users&apos; data to attackers.</p>
 <h2 id="oauth"><a name="oauth" class="plugin-anchor" href="#oauth"><i class="fa fa-link" aria-hidden="true"></i></a>OAuth</h2>
-<p>Open Authorization (OAuth) is a protocol that allows an application to authenticate against a server as a user, without requiring passwords or any third party server that acts as an identity provider. It uses a token generated by the server, and provides how the authorization flows most occur, so that a client, such as a mobile application, can tell the server what user is using the service.</p>
-<p>The recommendation is to use and implement OAuth 1.0a or OAuth 2.0, since the very first version (OAuth1.0) has been found to be vulnerable to session fixation.</p>
-<p>OAuth 2.0 relies on HTTPS for security and is currently used and implemented by APIs from companies such as Facebook, Google, Twitter and Microsoft. OAuth1.0a is more difficult to use because it requires the use of cryptographic libraries for digital signatures. However, since OAuth1.0a does not rely on HTTPS for security it can be more suited for higher risk transactions.</p>
+<p>Open Authorization (OAuth) is a protocol that allows an application to authenticate against a server as a user, without requiring passwords or any third party server that acts as an identity provider. It uses a token generated by the server and provides how the authorization flows most occur, so that a client, such as a mobile application, can tell the server what user is using the service.</p>
+<p>The recommendation is to use and implement OAuth 1.0a or OAuth 2.0 since the very first version (OAuth1.0) has been found to be vulnerable to session fixation.</p>
+<p>OAuth 2.0 relies on HTTPS for security and is currently used and implemented by APIs from companies such as Facebook, Google, Twitter and Microsoft. OAuth1.0a is more difficult to use because it requires the use of cryptographic libraries for digital signatures. However, since OAuth1.0a does not rely on HTTPS for security, it can be more suited for higher-risk transactions.</p>
 <h2 id="openid"><a name="openid" class="plugin-anchor" href="#openid"><i class="fa fa-link" aria-hidden="true"></i></a>OpenId</h2>
-<p>OpenId is an HTTP-based protocol that uses identity providers to validate that a user is who he says he is. It is a very simple protocol which allows a service provider initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user in multiple websites, without the need to provide any website the password, except for the OpenId identity provider.</p>
-<p>Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well known identity providers for OpenId are Stack Exchange, Google, Facebook and Yahoo!</p>
+<p>OpenId is an HTTP-based protocol that uses identity providers to validate that a user is whom he says he is. It is a very simple protocol which allows a service provider initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user in multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.</p>
+<p>Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well-known identity providers for OpenId are Stack Exchange, Google, Facebook and Yahoo!</p>
 <p>For non-enterprise environments, OpenId is considered a secure and often better choice, as long as the identity provider is of trust.</p>
 <h2 id="saml"><a name="saml" class="plugin-anchor" href="#saml"><i class="fa fa-link" aria-hidden="true"></i></a>SAML</h2>
-<p>Security Assertion Markup Language (SAML) is often considered to compete with OpenId. The most recommended version is 2.0, since it is very feature complete and provides a strong security. Like OpenId, SAML uses identity providers, but unlike OpenId, it is XML-based and provides more flexibility. SAML is based on browser redirects which send XML data. Furthermore, SAML isn&apos;t only initiated by a service provider; it can also be initiated from the identity provider. This allows the user to navigate through different portals while still being authenticated without having to do anything, making the process transparent.</p>
-<p>While OpenId has taken most of the consumer market, SAML is often the choice for enterprise applications. The reason for this is often that there are few OpenId identity providers which are considered of enterprise class (meaning that the way they validate the user identity doesn&apos;t have high standards required for enterprise identity). It is more common to see SAML being used inside of intranet websites, sometimes even using a server from the intranet as the identity provider.</p>
+<p>Security Assertion Markup Language (SAML) is often considered to compete with OpenId. The most recommended version is 2.0 since it is very features complete and provides strong security. Like OpenId, SAML uses identity providers, but unlike OpenId, it is XML-based and provides more flexibility. SAML is based on browser redirects which send XML data. Furthermore, SAML isn&apos;t only initiated by a service provider; it can also be initiated from the identity provider. This allows the user to navigate through different portals while still being authenticated without having to do anything, making the process transparent.</p>
+<p>While OpenId has taken most of the consumer market, SAML is often the choice for enterprise applications. The reason for this is often that there are few OpenId identity providers which are considered of enterprise-class (meaning that the way they validate the user identity doesn&apos;t have high standards required for enterprise identity). It is more common to see SAML being used inside of intranet websites, sometimes even using a server from the intranet as the identity provider.</p>
 <p>In the past few years, applications like SAP ERP and SharePoint (SharePoint by using Active Directory Federation Services 2.0) have decided to use SAML 2.0 authentication as an often preferred method for single sign-on implementations whenever enterprise federation is required for web services and web applications.</p>
 <p><strong>See also: <a href="SAML_Security_Cheat_Sheet.html">SAML Security Cheat Sheet</a></strong></p>
 <h2 id="fido"><a name="fido" class="plugin-anchor" href="#fido"><i class="fa fa-link" aria-hidden="true"></i></a>FIDO</h2>
-<p>The Fast Identity Online (FIDO) Alliance has created two protocols to facilitate online authentication : the Universal Authentication Framework (UAF) protocol and the Universal Second Factor (U2F) protocol. While UAF focuses on passwordless authentication, U2F allows the addition of a second factor to existing password-based authentication. Both protocols are based on a public key cryptography challenge-response model.</p>
+<p>The Fast Identity Online (FIDO) Alliance has created two protocols to facilitate online authentication: the Universal Authentication Framework (UAF) protocol and the Universal Second Factor (U2F) protocol. While UAF focuses on passwordless authentication, U2F allows the addition of a second factor to existing password-based authentication. Both protocols are based on a public key cryptography challenge-response model.</p>
 <p>UAF takes advantage of existing security technologies present on devices for authentication including fingerprint sensors, cameras(face biometrics), microphones(voice biometrics), Trusted Execution Environments(TEEs), Secure Elements(SEs) and others. The protocol is designed to plug-in these device capabilities into a common authentication framework. UAF works with both native applications and web applications.</p>
-<p>U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides <strong>protection against phishing</strong> by using the URL of the website to lookup the stored authentication key.</p>
+<p>U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides <strong>protection against phishing</strong> by using the URL of the website to look up the stored authentication key.</p>
 <h1 id="password-managers"><a name="password-managers" class="plugin-anchor" href="#password-managers"><i class="fa fa-link" aria-hidden="true"></i></a>Password Managers</h1>
 <p>Password managers are programs, browser plugins or web services that automate management of large number of different credentials. Most password managers have functionality to allow users to easily use them on websites, either by pasting the passwords into the login form, or by simulating the user typing them in.</p>
 <p>Web applications should at least not make password managers job more difficult than necessary by observing the following recommendations:</p>
@@ -1318,7 +1322,7 @@ ENDIF
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Authentication ","level":"1.9","depth":1,"next":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"previous":{"title":"Attack Surface Analysis ","level":"1.8","depth":1,"path":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","ref":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authentication_Cheat_Sheet.md","mtime":"2020-04-15T18:31:44.684Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-15T18:32:17.761Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Authentication ","level":"1.9","depth":1,"next":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"previous":{"title":"Attack Surface Analysis ","level":"1.8","depth":1,"path":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","ref":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authentication_Cheat_Sheet.md","mtime":"2020-04-15T18:37:53.003Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-15T18:38:26.107Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
