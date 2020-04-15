@@ -2,13 +2,13 @@
 
 ## Introduction
 
-[Cross-Site Request Forgery (CSRF)](https://wiki.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29) is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user's web browser to perform an unwanted action on a trusted site when the user is authenticated. A CSRF attack works because browser requests automatically include all cookies including session cookies. Therefore, if the user is authenticated to the site, the site cannot distinguish between legitimate requests and forged requests.
+[Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf) is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user's web browser to perform an unwanted action on a trusted site when the user is authenticated. A CSRF attack works because browser requests automatically include all cookies including session cookies. Therefore, if the user is authenticated to the site, the site cannot distinguish between legitimate requests and forged requests.
 
 The impact of a successful CSRF attack is limited to the capabilities exposed by the vulnerable application and privileges of the user. For example, this attack could result in a transfer of funds, changing a password, or making a purchase with the user's credentials. In effect, CSRF attacks are used by an attacker to make a target system perform a function via the victim's browser, without the victim's knowledge, at least until the unauthorized transaction has been committed.
 
 In short, the following principles should be followed to defend against CSRF:
 
-- **Check if your framework has [built-in CSRF protection](#use-build-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
+- **Check if your framework has [built-in CSRF protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
   - **If framework does not have built-in CSRF protection add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on backend** 
 - **Always use [SameSite Cookie Attribute](#samesite-cookie-attribute) for session cookies**
 - **Implement at least one mitigation from [Defense in Depth Mitigations](#defense-in-depth-techniques) section**
@@ -60,8 +60,8 @@ Synchronizer token defenses have been built into many frameworks. It is strongly
 
 External components that add CSRF defenses to existing applications are also recommended. Examples:
 
-- For Java: OWASP [CSRF Guard](https://www.owasp.org/index.php/CSRF_Guard) or [Spring Security](https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html)
-- For PHP and Apache: [CSRFProtector Project](https://www.owasp.org/index.php/CSRFProtector_Project)
+- For Java: OWASP [CSRF Guard](https://owasp.org/www-project-csrfguard/) or [Spring Security](https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html)
+- For PHP and Apache: [CSRFProtector Project](https://owasp.org/www-project-csrfprotector/)
 
 ### Synchronizer Token Pattern
 
@@ -377,8 +377,8 @@ This code snippet has been tested with jQuery version 3.3.1.
 
 ### CSRF
 
-[OWASP Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf)
-[PortSwigger Web Security Academy](https://portswigger.net/web-security/csrf)
-[Mozilla Web Security Cheat Sheet](https://infosec.mozilla.org/guidelines/web_security#csrf-prevention)
-[Common CSRF Prevention Misconceptions](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/)
-[Robust Defenses for Cross-Site Request Forgery](https://seclab.stanford.edu/websec/csrf/csrf.pdf)
+- [OWASP Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf)
+- [PortSwigger Web Security Academy](https://portswigger.net/web-security/csrf)
+- [Mozilla Web Security Cheat Sheet](https://infosec.mozilla.org/guidelines/web_security#csrf-prevention)
+- [Common CSRF Prevention Misconceptions](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/)
+- [Robust Defenses for Cross-Site Request Forgery](https://seclab.stanford.edu/websec/csrf/csrf.pdf)
