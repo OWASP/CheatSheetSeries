@@ -393,10 +393,11 @@ Also remember to keep your framework updated to the latest version with all poss
 
 ## X-XSS-Protection Header
 
-`X-XSS-Protection` header has been deprecated by modern browsers and its use can introduce additional security issues. As such, it is no longer recommended and should be disabled.
+The `X-XSS-Protection` header has been deprecated by modern browsers and its use can introduce additional security issues. As such, it is no longer recommended and should be disabled (X-XSS-Protection: 0).
 
 For references:
 
+- [Google Chrome’s XSS Auditor goes back to filter mode](https://portswigger.net/daily-swig/google-chromes-xss-auditor-goes-back-to-filter-mode)
 - [Chrome removed the XSS Auditor](https://www.chromestatus.com/feature/5021976655560704)
 - [Firefox does not implement the XSSAuditor](https://bugzilla.mozilla.org/show_bug.cgi?id=528661)
 - [Edge retired their XSS filter](https://blogs.windows.com/windowsexperience/2018/07/25/announcing-windows-10-insider-preview-build-17723-and-build-18204/)
