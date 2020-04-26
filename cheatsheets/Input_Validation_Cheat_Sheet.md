@@ -132,7 +132,7 @@ Detailed information on XSS prevention here: [OWASP XSS Prevention Cheat Sheet](
 
 Many websites allow users to upload files, such as a profile picture or more. This section helps provide that feature securely.
 
-Additional information on upload protection here: [File Upload Protection Cheat Sheet](Protect_FileUpload_Against_Malicious_File.md).
+Check the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md).
 
 ## Upload Verification
 
