@@ -20,7 +20,7 @@ The following language-specific guidance attempts to enumerate safe methodologie
 
 ### WhiteBox Review
 
-Check the use of [unserialize()](http://php.net/manual/en/function.unserialize.php) function and review how the external parameters are accepted. Use a safe, standard data interchange format such as JSON (via `json_decode()` and `json_encode()`) if you need to pass serialized data to the user.
+Check the use of [unserialize()](https://www.php.net/manual/en/function.unserialize.php) function and review how the external parameters are accepted. Use a safe, standard data interchange format such as JSON (via `json_decode()` and `json_encode()`) if you need to pass serialized data to the user.
 
 ## Python
 

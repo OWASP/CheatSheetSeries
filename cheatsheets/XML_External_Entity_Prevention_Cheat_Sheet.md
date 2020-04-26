@@ -546,7 +546,7 @@ However, to completely disable XXE in an `NSXMLDocument` in any version of iOS y
 
 # PHP
 
-Per [the PHP documentation](http://php.net/manual/en/function.libxml-disable-entity-loader.php), the following should be set when using the default PHP XML parser in order to prevent XXE:
+Per [the PHP documentation](https://www.php.net/manual/en/function.libxml-disable-entity-loader.php), the following should be set when using the default PHP XML parser in order to prevent XXE:
 
 ``` php
 libxml_disable_entity_loader(true);

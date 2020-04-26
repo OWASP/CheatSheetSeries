@@ -14,7 +14,7 @@ For general PHP codebase security please refer to the two following great guides
 
 Some of following settings need to be adapted to your system, in particular `session.save_path`, `session.cookie_path` (e.g. `/var/www/mysite`), and `session.cookie_domain` (e.g. `ExampleSite.com`). 
 
-You should also be running PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the [PHP Manual](http://www.php.net/manual/ini.core.php) for a complete reference on every value in the php.ini configuration file.
+You should also be running PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the [PHP Manual](https://www.php.net/manual/ini.core.php) for a complete reference on every value in the php.ini configuration file.
 
 You can find a copy of the following values in a ready-to-go php.ini file [here](https://github.com/danehrlich1/very-secure-php-ini).
 

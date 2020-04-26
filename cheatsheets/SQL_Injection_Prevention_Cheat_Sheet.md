@@ -354,7 +354,7 @@ If an attacker were to transmit a string containing a single-quote character fol
 Use prepared statements and parameterized queries. These are SQL statements that are sent to and parsed by the database server separately from any parameters. This way it is impossible for an attacker to inject malicious SQL.
 
 You basically have two options to achieve this:
-1. Using [PDO](http://php.net/manual/en/book.pdo.php) (for any supported database driver):
+1. Using [PDO](https://www.php.net/manual/en/book.pdo.php) (for any supported database driver):
 
 ```php
 $stmt = $pdo->prepare('SELECT * FROM employees WHERE name = :name');
@@ -364,7 +364,7 @@ foreach ($stmt as $row) {
 }
 ```
 
-2. Using [MySQLi](https://php.net/manual/en/book.mysqli.php) (for MySQL):
+2. Using [MySQLi](https://www.php.net/manual/en/book.mysqli.php) (for MySQL):
 
 ```php
 $stmt = $dbConnection->prepare('SELECT * FROM employees WHERE name = ?');

@@ -38,7 +38,7 @@ If there are available libraries or APIs for the language you used, this is the 
 
 **TODO: To enhance.**
 
-For examples, see [escapeshellarg()](http://php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](http://php.net/manual/en/function.escapeshellcmd.php) in PHP.
+For examples, see [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](https://www.php.net/manual/en/function.escapeshellcmd.php) in PHP.
 
 ## Defense option 3: Parameterization in conjunction with Input Validation
 
@@ -198,7 +198,7 @@ process.Start();
 
 ## PHP
 
-In PHP use [escapeshellarg()](http://php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](http://php.net/manual/en/function.escapeshellcmd.php) rather than [exec()](http://php.net/manual/en/function.exec.php), [system()](http://php.net/manual/en/function.system.php), [passthru()](http://php.net/manual/en/function.passthru.php).
+In PHP use [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](https://www.php.net/manual/en/function.escapeshellcmd.php) rather than [exec()](https://www.php.net/manual/en/function.exec.php), [system()](https://www.php.net/manual/en/function.system.php), [passthru()](https://www.php.net/manual/en/function.passthru.php).
 
 # Related articles
 
