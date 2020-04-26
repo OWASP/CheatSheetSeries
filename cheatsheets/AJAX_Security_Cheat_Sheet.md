@@ -63,7 +63,7 @@ Take a look at the [Cross-Site Request Forgery (CSRF) Prevention](Cross-Site_Req
 
 #### Review AngularJS JSON Hijacking Defense Mechanism
 
-See the [JSON Vulnerability Protection](https://docs.angularjs.org/api/ng/service/$http) section of the AngularJS documentation.
+See the [JSON Vulnerability Protection](https://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection) section of the AngularJS documentation.
 
 #### Always return JSON with an Object on the outside
 

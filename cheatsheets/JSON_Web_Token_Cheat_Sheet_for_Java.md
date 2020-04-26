@@ -543,7 +543,7 @@ There are a number of [guides](https://www.notsosecure.com/crafting-way-json-web
 
 ### How to Prevent
 
-The simplest way to prevent this attack is to ensure that the secret used to sign the JWTs is strong and unique, in order to make it harder for an attacker to crack. As this secret would never need to be typed by a human, it should be at least 64 characters and generated using a [secure source of randomness](Cryptographic_Storage_Cheat_Sheet.md#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng).
+The simplest way to prevent this attack is to ensure that the secret used to sign the JWTs is strong and unique, in order to make it harder for an attacker to crack. As this secret would never need to be typed by a human, it should be at least 64 characters, and generated using a [secure source of randomness](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
 
 Alternatively, consider the use of tokens that are signed with RSA rather than using an HMAC and secret key.
 
