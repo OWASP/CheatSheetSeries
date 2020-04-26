@@ -218,7 +218,7 @@ Sorting applied on the name is an alphabetical one.
 * Kevin Wall - kevin@owasp.org
 * Ricardo Iramar - ricardo.iramar@gmail.com
 
-**[Protect FileUpload Against Malicious File](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Protect_FileUpload_Against_Malicious_File.md)**
+**Protect FileUpload Against Malicious File**
 * Dominique Righetto - dominique.righetto@owasp.org
 
 **[Query Parameterization Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Query_Parameterization_Cheat_Sheet.md)**

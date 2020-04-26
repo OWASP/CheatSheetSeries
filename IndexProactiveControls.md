@@ -90,7 +90,7 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://owasp.
 
 [OS Command Injection Defense Cheat Sheet](cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md)
 
-[Protect FileUpload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md)
+[File Upload Cheat Sheet](cheatsheets/File_Upload_Cheat_Sheet.md)
 
 [REST Security Cheat Sheet (Input Validation)](cheatsheets/REST_Security_Cheat_Sheet.md#input-validation)
 
