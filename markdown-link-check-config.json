@@ -1,24 +1,21 @@
 {
-    "ignorePatterns": [
+  "ignorePatterns": [
     {
-        "pattern": "^bundle.zip"
-
+      "pattern": "^bundle.zip"
     },
     {
-        "pattern": "^News.xml"
-
+      "pattern": "^News.xml"
     },
     {
-        "pattern": "^\/"
-
+      "pattern": "^/"
     }
-    ],
-    "httpHeaders": [{
-        "urls": [
-            "https://", "http://"
-        ],
-        "headers": {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"
-        }
-    }]
+  ],
+  "httpHeaders": [
+    {
+      "urls": ["https://", "http://"],
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"
+      }
+    }
+  ]
 }
