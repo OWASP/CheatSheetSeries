@@ -1051,10 +1051,10 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p><em>XML eXternal Entity injection</em> (XXE), which is now part of the <a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project" target="_blank">OWASP Top 10</a> via the point <strong>A4</strong>, is a type of attack against an application that parses XML input.</p>
+<p><em>XML eXternal Entity injection</em> (XXE), which is now part of the <a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29" target="_blank">OWASP Top 10</a> via the point <strong>A4</strong>, is a type of attack against an application that parses XML input.</p>
 <p>XXE issue is referenced under the ID <a href="https://cwe.mitre.org/data/definitions/611.html" target="_blank">611</a> in the <a href="https://cwe.mitre.org/index.html" target="_blank">Common Weakness Enumeration</a> referential.</p>
 <p>This attack occurs when untrusted XML input containing a <strong>reference to an external entity is processed by a weakly configured XML parser</strong>.</p>
-<p>This attack may lead to the disclosure of confidential data, denial of service, <a href="https://www.owasp.org/index.php/Server_Side_Request_Forgery" target="_blank">Server Side Request Forgery</a> (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.</p>
+<p>This attack may lead to the disclosure of confidential data, denial of service, <a href="https://owasp.org/www-community/attacks/Server_Side_Request_Forgery" target="_blank">Server Side Request Forgery</a> (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.</p>
 <p>For more information on XXE, please visit <a href="https://en.wikipedia.org/wiki/XML_external_entity_attack" target="_blank">XML External Entity (XXE)</a>.</p>
 <h1 id="general-guidance"><a name="general-guidance" class="plugin-anchor" href="#general-guidance"><i class="fa fa-link" aria-hidden="true"></i></a>General Guidance</h1>
 <p>The safest way to prevent XXE is always to disable DTDs (External Entities) completely. Depending on the parser, the method should be similar to the following:</p>
@@ -1168,18 +1168,18 @@ String FEATURE = <span class="hljs-keyword">null</span>;
 <span class="hljs-comment">// Load XML file or stream using a XXE agnostic configured parser...</span>
 DocumentBuilder safebuilder = dbf.newDocumentBuilder();
 </code></pre>
-<p><a href="http://xerces.apache.org/xerces-j/" target="_blank">Xerces 1</a> <a href="http://xerces.apache.org/xerces-j/features.html" target="_blank">Features</a>:</p>
+<p><a href="https://xerces.apache.org/xerces-j/" target="_blank">Xerces 1</a> <a href="https://xerces.apache.org/xerces-j/features.html" target="_blank">Features</a>:</p>
 <ul>
-<li>Do not include external entities by setting <a href="http://xerces.apache.org/xerces-j/features.html#external-general-entities" target="_blank">this feature</a> to <code>false</code>.</li>
-<li>Do not include parameter entities by setting <a href="http://xerces.apache.org/xerces-j/features.html#external-parameter-entities" target="_blank">this feature</a> to <code>false</code>.</li>
-<li>Do not include external DTDs by setting <a href="http://xerces.apache.org/xerces-j/features.html#load-external-dtd" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Do not include external entities by setting <a href="https://xerces.apache.org/xerces-j/features.html#external-general-entities" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Do not include parameter entities by setting <a href="https://xerces.apache.org/xerces-j/features.html#external-parameter-entities" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Do not include external DTDs by setting <a href="https://xerces.apache.org/xerces-j/features.html#load-external-dtd" target="_blank">this feature</a> to <code>false</code>.</li>
 </ul>
-<p><a href="http://xerces.apache.org/xerces2-j/" target="_blank">Xerces 2</a> <a href="http://xerces.apache.org/xerces2-j/features.html" target="_blank">Features</a>:</p>
+<p><a href="https://xerces.apache.org/xerces2-j/" target="_blank">Xerces 2</a> <a href="https://xerces.apache.org/xerces2-j/features.html" target="_blank">Features</a>:</p>
 <ul>
-<li>Disallow an inline DTD by setting <a href="http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl" target="_blank">this feature</a> to <code>true</code>.</li>
-<li>Do not include external entities by setting <a href="http://xerces.apache.org/xerces2-j/features.html#external-general-entities" target="_blank">this feature</a> to <code>false</code>.</li>
-<li>Do not include parameter entities by setting <a href="http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities" target="_blank">this feature</a> to <code>false</code>.</li>
-<li>Do not include external DTDs by setting <a href="http://xerces.apache.org/xerces-j/features.html#load-external-dtd" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Disallow an inline DTD by setting <a href="https://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl" target="_blank">this feature</a> to <code>true</code>.</li>
+<li>Do not include external entities by setting <a href="https://xerces.apache.org/xerces2-j/features.html#external-general-entities" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Do not include parameter entities by setting <a href="https://xerces.apache.org/xerces2-j/features.html#external-parameter-entities" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Do not include external DTDs by setting <a href="https://xerces.apache.org/xerces-j/features.html#load-external-dtd" target="_blank">this feature</a> to <code>false</code>.</li>
 </ul>
 <p><strong>Note:</strong> The above defenses require Java 7 update 67, Java 8 update 20, or above, because the above countermeasures for <code>DocumentBuilderFactory</code> and SAXParserFactory are broken in earlier Java versions, per: <a href="http://www.cvedetails.com/cve/CVE-2014-6517/" target="_blank">CVE-2014-6517</a>.</p>
 <h2 id="xmlinputfactory-a-stax-parser"><a name="xmlinputfactory-a-stax-parser" class="plugin-anchor" href="#xmlinputfactory-a-stax-parser"><i class="fa fa-link" aria-hidden="true"></i></a>XMLInputFactory (a StAX parser)</h2>
@@ -1479,7 +1479,7 @@ XPathNavigator nav = doc.CreateNavigator();
 </ul>
 <p>However, to completely disable XXE in an <code>NSXMLDocument</code> in any version of iOS you simply specify <code>NSXMLNodeLoadExternalEntitiesNever</code> when creating the <code>NSXMLDocument</code>.</p>
 <h1 id="php"><a name="php" class="plugin-anchor" href="#php"><i class="fa fa-link" aria-hidden="true"></i></a>PHP</h1>
-<p>Per <a href="http://php.net/manual/en/function.libxml-disable-entity-loader.php" target="_blank">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</p>
+<p>Per <a href="https://www.php.net/manual/en/function.libxml-disable-entity-loader.php" target="_blank">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</p>
 <pre><code class="lang-php">libxml_disable_entity_loader(<span class="hljs-keyword">true</span>);
 </code></pre>
 <p>A description of how to abuse this in PHP is presented in a good <a href="https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/" target="_blank">SensePost article</a> describing a cool PHP based XXE vulnerability that was fixed in Facebook.</p>
@@ -1547,11 +1547,11 @@ XPathNavigator nav = doc.CreateNavigator();
 <h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
 <ul>
 <li><a href="https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/" target="_blank">XXE by InfoSecInstitute</a></li>
-<li><a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_%28XXE%29" target="_blank">OWASP Top 10-2017 A4: XML External Entities (XXE)</a></li>
+<li><a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29" target="_blank">OWASP Top 10-2017 A4: XML External Entities (XXE)</a></li>
 <li><a href="https://vsecurity.com//download/papers/XMLDTDEntityAttacks.pdf" target="_blank">Timothy Morgan&apos;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</a></li>
 <li><a href="https://find-sec-bugs.github.io/bugs.htm#XXE_SAXPARSER" target="_blank">FindSecBugs XXE Detection</a></li>
 <li><a href="https://github.com/ssexxe/XXEBugFind" target="_blank">XXEbugFind Tool</a></li>
-<li><a href="https://www.owasp.org/index.php/Testing_for_XML_Injection_%28OTG-INPVAL-008%29" target="_blank">Testing for XML Injection (OTG-INPVAL-008)</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection.html" target="_blank">Testing for XML Injection</a></li>
 </ul>
 
                                 
@@ -1596,7 +1596,7 @@ XPathNavigator nav = doc.CreateNavigator();
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"XML External Entity Prevention ","level":"1.69","depth":1,"next":{"title":"XML Security ","level":"1.70","depth":1,"path":"cheatsheets/XML_Security_Cheat_Sheet.md","ref":"cheatsheets/XML_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Web Service Security ","level":"1.68","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","mtime":"2020-04-15T18:37:53.003Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-15T18:38:26.107Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"XML External Entity Prevention ","level":"1.69","depth":1,"next":{"title":"XML Security ","level":"1.70","depth":1,"path":"cheatsheets/XML_Security_Cheat_Sheet.md","ref":"cheatsheets/XML_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Web Service Security ","level":"1.68","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","mtime":"2020-04-26T20:14:10.064Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-26T20:14:39.551Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

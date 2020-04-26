@@ -1052,7 +1052,7 @@
                                 
                                 <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
 <p>This article is focused on providing clear, simple, actionable guidance for providing Java Bean Validation security functionality in your applications.</p>
-<p>Bean validation (JSR303 aka <a href="http://beanvalidation.org/1.0/spec/" target="_blank">Bean Validation 1.0</a> /JSR349 aka <a href="http://beanvalidation.org/1.1/spec/" target="_blank">Bean Validation 1.1</a>) is one of the most common ways to perform <a href="https://www.owasp.org/index.php/Input_Validation_Cheat_Sheet" target="_blank">input validation</a> in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.</p>
+<p>Bean validation (JSR303 aka <a href="https://beanvalidation.org/1.0/spec/" target="_blank">Bean Validation 1.0</a> /JSR349 aka <a href="https://beanvalidation.org/1.1/spec/" target="_blank">Bean Validation 1.1</a>) is one of the most common ways to perform <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank">input validation</a> in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.</p>
 <p>One advantage of this approach is that the validation constraints and the corresponding validators are only written once, thus reducing duplication of effort and ensuring uniformity:</p>
 <h2 id="typical-validation"><a name="typical-validation" class="plugin-anchor" href="#typical-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Typical Validation</h2>
 <p><img src="../assets/Bean_Validation_Cheat_Sheet_Typical.png" alt="Typical"></p>
@@ -1074,7 +1074,7 @@
    ...
 &lt;/beans:beans&gt;
 </code></pre>
-<p>For more info, please see the <a href="http://hibernate.org/validator/documentation/getting-started/" target="_blank">setup guide</a></p>
+<p>For more info, please see the <a href="https://hibernate.org/validator/documentation/getting-started/" target="_blank">setup guide</a></p>
 <h1 id="basics"><a name="basics" class="plugin-anchor" href="#basics"><i class="fa fa-link" aria-hidden="true"></i></a>Basics</h1>
 <p>In order to get started using Bean Validation, you must add validation constraints (<code>@Pattern</code>, <code>@Digits</code>, <code>@Min</code>, <code>@Max</code>, <code>@Size</code>, <code>@Past</code>, <code>@Future</code>, <code>@CreditCardNumber</code>, <code>@Email</code>, <code>@URL</code>, etc.) to your model and then utilize the <code>@Valid</code> annotation when passing your model around in various application layers.</p>
 <p>Constraints can be applied in several places:</p>
@@ -1098,9 +1098,9 @@
 <p><strong>Data Type</strong>: </p>
 <p><code>CharSequence</code></p>
 <p><strong>Use</strong>: </p>
-<p>Checks if the annotated string matches the regular expression regex considering the given flag match. Please visit <a href="https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository" target="_blank">OWASP Validation Regex Repository</a> for other useful regex&apos;s.</p>
+<p>Checks if the annotated string matches the regular expression regex considering the given flag match. Please visit <a href="https://owasp.org/www-community/OWASP_Validation_Regex_Repository" target="_blank">OWASP Validation Regex Repository</a> for other useful regex&apos;s.</p>
 <p><strong>Reference</strong>:</p>
-<p><a href="http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
 <p><strong>Model</strong>:</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Pattern;
 
@@ -1153,7 +1153,7 @@
 <p><strong>Use</strong>: </p>
 <p>Checks whether the annotated value is a number having up to integer digits and fraction fractional digits</p>
 <p><strong>Reference</strong>:</p>
-<p><a href="http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
 <p><strong>Model</strong>:</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Digits;
 
@@ -1209,7 +1209,7 @@
 <p><strong>Use</strong>: </p>
 <p>Checks if the annotated element&apos;s size is between min and max (inclusive)</p>
 <p><strong>Reference</strong>:</p>
-<p><a href="http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
 <p><strong>Model</strong>:</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Size;
 
@@ -1266,7 +1266,7 @@ HttpServletResponse response)</span></span>{
 <p><strong>Use</strong>: </p>
 <p>Checks whether the annotated date is in the past / future</p>
 <p><strong>Reference</strong>:</p>
-<p><a href="http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
 <p><strong>Model</strong>:</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Past;
 <span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Future;
@@ -1337,7 +1337,7 @@ HttpServletResponse response)</span></span>{
 <p><strong>Use</strong>: </p>
 <p>Checks whether the annotated value is higher/lower than or equal to the specified minimum</p>
 <p><strong>Reference:</strong></p>
-<p><a href="http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
 <p><strong>Model</strong>:</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Min;
 <span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Max;
@@ -1388,7 +1388,7 @@ HttpServletResponse response)</span></span>{
 }
 </code></pre>
 <h2 id="cascading-constraints"><a name="cascading-constraints" class="plugin-anchor" href="#cascading-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Cascading Constraints</h2>
-<p>Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with <a href="http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch03.html#_cascaded_validation" target="_blank">@Valid</a></p>
+<p>Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch03.html#_cascaded_validation" target="_blank">@Valid</a></p>
 <h2 id="additional-constraints"><a name="additional-constraints" class="plugin-anchor" href="#additional-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Additional Constraints</h2>
 <p>In addition to providing the complete set of JSR303 constraints, Hibernate Validator also defines some additional constraints for convenience:</p>
 <ul>
@@ -1401,16 +1401,16 @@ HttpServletResponse response)</span></span>{
 <li><code>@ScriptAssert</code></li>
 <li><code>@URL</code></li>
 </ul>
-<p>Take a look at this <a href="http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints" target="_blank">table</a> for the complete list.</p>
+<p>Take a look at this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints" target="_blank">table</a> for the complete list.</p>
 <h1 id="custom-constraints"><a name="custom-constraints" class="plugin-anchor" href="#custom-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Custom Constraints</h1>
 <p>One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built in constraints.</p>
-<p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html" target="_blank">documentation</a>.</p>
+<p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html" target="_blank">documentation</a>.</p>
 <h1 id="error-messages"><a name="error-messages" class="plugin-anchor" href="#error-messages"><i class="fa fa-link" aria-hidden="true"></i></a>Error Messages</h1>
 <p>It is possible to specify a message ID with the validation annotation, so that error messages are customized :</p>
 <pre><code class="lang-java"><span class="hljs-meta">@Pattern</span>(regexp = <span class="hljs-string">&quot;[a-zA-Z0-9 ]&quot;</span>, message=<span class="hljs-string">&quot;article.title.error&quot;</span>)
 <span class="hljs-keyword">private</span> String articleTitle;
 </code></pre>
-<p>Spring MVC will then look up a message with id <em>article.title.error</em> in a defined MessageSource. More on this <a href="http://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/" target="_blank">documentation</a>.</p>
+<p>Spring MVC will then look up a message with id <em>article.title.error</em> in a defined MessageSource. More on this <a href="https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/" target="_blank">documentation</a>.</p>
 
                                 
                                 </section>
@@ -1454,7 +1454,7 @@ HttpServletResponse response)</span></span>{
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Bean Validation ","level":"1.11","depth":1,"next":{"title":"C-Based Toolchain Hardening","level":"1.12","depth":1,"path":"cheatsheets/C-Based_Toolchain_Hardening.md","ref":"cheatsheets/C-Based_Toolchain_Hardening.md","articles":[]},"previous":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Bean_Validation_Cheat_Sheet.md","mtime":"2020-04-15T18:37:53.003Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-15T18:38:26.107Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Bean Validation ","level":"1.11","depth":1,"next":{"title":"C-Based Toolchain Hardening","level":"1.12","depth":1,"path":"cheatsheets/C-Based_Toolchain_Hardening.md","ref":"cheatsheets/C-Based_Toolchain_Hardening.md","articles":[]},"previous":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Bean_Validation_Cheat_Sheet.md","mtime":"2020-04-26T20:14:10.064Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-26T20:14:39.551Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

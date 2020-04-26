@@ -1167,7 +1167,7 @@ SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scri
 <p>This virtual patch will inspect the <code>reqID</code> parameter value on the specified page and prevent any characters other than integers as input.</p>
 <ul>
 <li><strong>Note</strong> - You should make sure to assign rule IDs properly and track them in the bug tracking system.</li>
-<li><strong>Caution</strong>: There are numerous evasion vectors when creating virtual patches. Please consult the <a href="https://www.owasp.org/index.php/Virtual_Patching_Best_Practices" target="_blank">OWASP Best Practices: Virtual Patching document</a> for a more thorough discussion on countering evasion methods.</li>
+<li><strong>Caution</strong>: There are numerous evasion vectors when creating virtual patches. Please consult the <a href="https://owasp.org/www-community/Virtual_Patching_Best_Practices" target="_blank">OWASP Best Practices: Virtual Patching document</a> for a more thorough discussion on countering evasion methods.</li>
 </ul>
 <h3 id="negative-security-blacklist-virtual-patches"><a name="negative-security-blacklist-virtual-patches" class="plugin-anchor" href="#negative-security-blacklist-virtual-patches"><i class="fa fa-link" aria-hidden="true"></i></a>Negative Security (Blacklist) Virtual Patches</h3>
 <p>A negative security model (blacklist) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.</p>
@@ -1203,8 +1203,8 @@ SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scri
 <ul>
 <li>Web browser.</li>
 <li>Command line web clients such as Curl and Wget.</li>
-<li>Local Proxy Servers such as <a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project" target="_blank">OWASP ZAP</a>.</li>
-<li><a href="http://www.jwall.org/web/audit/viewer.jsp" target="_blank">ModSecurity AuditViewer</a> &#x2013; which allows you to load a ModSecurity audit log file, manipulate it and then re-inject the data back into any web server.</li>
+<li>Local Proxy Servers such as <a href="https://www.zaproxy.org/" target="_blank">OWASP ZAP</a>.</li>
+<li><a href="https://web.archive.org/web/20181011065823/http://www.jwall.org/web/audit/viewer.jsp" target="_blank">ModSecurity AuditViewer</a> &#x2013; which allows you to load a ModSecurity audit log file, manipulate it and then re-inject the data back into any web server.</li>
 </ul>
 <h2 id="testing-steps"><a name="testing-steps" class="plugin-anchor" href="#testing-steps"><i class="fa fa-link" aria-hidden="true"></i></a>Testing Steps</h2>
 <ul>
@@ -1220,8 +1220,8 @@ SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scri
 </ul>
 <h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
 <ul>
-<li><a href="https://www.owasp.org/index.php/Virtual_Patching_Best_Practices" target="_blank">OWASP Virtual Patching Best Practices</a>.</li>
-<li><a href="https://www.owasp.org/index.php/Category:OWASP_Securing_WebGoat_using_ModSecurity_Project" target="_blank">OWASP Securing WebGoat with ModSecurity</a>.</li>
+<li><a href="https://owasp.org/www-community/Virtual_Patching_Best_Practices" target="_blank">OWASP Virtual Patching Best Practices</a>.</li>
+<li><a href="https://wiki.owasp.org/index.php/Category:OWASP_Securing_WebGoat_using_ModSecurity_Project" target="_blank">OWASP Securing WebGoat with ModSecurity</a>.</li>
 </ul>
 
                                 
@@ -1266,7 +1266,7 @@ SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scri
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Virtual Patching ","level":"1.65","depth":1,"next":{"title":"Vulnerability Disclosure ","level":"1.66","depth":1,"path":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","ref":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","articles":[]},"previous":{"title":"User Privacy Protection ","level":"1.64","depth":1,"path":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","ref":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Virtual_Patching_Cheat_Sheet.md","mtime":"2020-04-15T18:37:53.003Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-15T18:38:26.107Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Virtual Patching ","level":"1.65","depth":1,"next":{"title":"Vulnerability Disclosure ","level":"1.66","depth":1,"path":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","ref":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","articles":[]},"previous":{"title":"User Privacy Protection ","level":"1.64","depth":1,"path":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","ref":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Virtual_Patching_Cheat_Sheet.md","mtime":"2020-04-26T20:14:10.064Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-26T20:14:39.551Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

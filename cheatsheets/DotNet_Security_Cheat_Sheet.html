@@ -1069,23 +1069,23 @@
 <h2 id="data-access"><a name="data-access" class="plugin-anchor" href="#data-access"><i class="fa fa-link" aria-hidden="true"></i></a>Data Access</h2>
 <ul>
 <li>Use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlcommand.prepare?view=netframework-4.7.2" target="_blank">Parameterized SQL</a> commands for all data access, without exception.</li>
-<li>Do not use <a href="http://msdn.microsoft.com/en-us/library/system.data.sqlclient.sqlcommand.aspx" target="_blank">SqlCommand</a> with a string parameter made up of a <a href="https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca2100-review-sql-queries-for-security-vulnerabilities?view=vs-2017" target="_blank">concatenated SQL String</a>.</li>
-<li>Whitelist allowable values coming from the user. Use enums, <a href="http://msdn.microsoft.com/en-us/library/f02979c7.aspx" target="_blank">TryParse</a> or lookup values to assure that the data coming from the user is as expected.<ul>
-<li>Enums are still vulnerable to unexpected values because .NET only validates a successful cast to the underlying data type, integer by default. <a href="https://msdn.microsoft.com/en-us/library/system.enum.isdefined" target="_blank">Enum.IsDefined</a> can validate whether the input value is valid within the list of defined constants.</li>
+<li>Do not use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlcommand" target="_blank">SqlCommand</a> with a string parameter made up of a <a href="https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca2100-review-sql-queries-for-security-vulnerabilities?view=vs-2017" target="_blank">concatenated SQL String</a>.</li>
+<li>Whitelist allowable values coming from the user. Use enums, <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32.tryparse#System_Int32_TryParse_System_String_System_Int32__" target="_blank">TryParse</a> or lookup values to assure that the data coming from the user is as expected.<ul>
+<li>Enums are still vulnerable to unexpected values because .NET only validates a successful cast to the underlying data type, integer by default. <a href="https://docs.microsoft.com/en-us/dotnet/api/system.enum.isdefined" target="_blank">Enum.IsDefined</a> can validate whether the input value is valid within the list of defined constants.</li>
 </ul>
 </li>
 <li>Apply the principle of least privilege when setting up the Database User in your database of choice. The database user should only be able to access items that make sense for the use case.</li>
-<li>Use of the <a href="http://msdn.microsoft.com/en-us/data/ef.aspx" target="_blank">Entity Framework</a> is a very effective <a href="https://www.owasp.org/index.php/SQL_Injection" target="_blank">SQL injection</a> prevention mechanism. <strong>Remember that building your own ad hoc queries in Entity Framework is just as susceptible to SQLi as a plain SQL query</strong>.</li>
+<li>Use of the <a href="https://docs.microsoft.com/en-us/ef/" target="_blank">Entity Framework</a> is a very effective <a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank">SQL injection</a> prevention mechanism. <strong>Remember that building your own ad hoc queries in Entity Framework is just as susceptible to SQLi as a plain SQL query</strong>.</li>
 <li>When using SQL Server, prefer <a href="https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/using-integrated-authentication?view=sql-server-2017" target="_blank">integrated authentication</a> over <a href="https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-2017#connecting-through-sql-server-authentication" target="_blank">SQL authentication</a>.</li>
-<li>Use <a href="https://msdn.microsoft.com/en-us/library/mt163865.aspx" target="_blank">Always Encrypted</a> where possible for sensitive data (SQL Server 2016 and SQL Azure),</li>
+<li>Use <a href="https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/always-encrypted-database-engine" target="_blank">Always Encrypted</a> where possible for sensitive data (SQL Server 2016 and SQL Azure),</li>
 </ul>
 <h2 id="encryption"><a name="encryption" class="plugin-anchor" href="#encryption"><i class="fa fa-link" aria-hidden="true"></i></a>Encryption</h2>
 <ul>
 <li><strong>Never, ever write your own encryption.</strong></li>
-<li>Use the <a href="http://msdn.microsoft.com/en-us/library/ms995355.aspx" target="_blank">Windows Data Protection API (DPAPI)</a> for secure local storage of sensitive data.</li>
+<li>Use the <a href="https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection" target="_blank">Windows Data Protection API (DPAPI)</a> for secure local storage of sensitive data.</li>
 <li>Use a strong hash algorithm.<ul>
-<li>In .NET (both Framework and Core) the strongest hashing algorithm for general hashing requirements is <a href="http://msdn.microsoft.com/en-us/library/system.security.cryptography.sha512.aspx" target="_blank">System.Security.Cryptography.SHA512</a>.</li>
-<li>In the .NET framework the strongest algorithm for password hashing is PBKDF2, implemented as <a href="http://msdn.microsoft.com/en-us/library/system.security.cryptography.rfc2898derivebytes(v=vs.110" target="_blank">System.Security.Cryptography.Rfc2898DeriveBytes</a>.aspx).</li>
+<li>In .NET (both Framework and Core) the strongest hashing algorithm for general hashing requirements is <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.sha512" target="_blank">System.Security.Cryptography.SHA512</a>.</li>
+<li>In the .NET framework the strongest algorithm for password hashing is PBKDF2, implemented as <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rfc2898derivebytes" target="_blank">System.Security.Cryptography.Rfc2898DeriveBytes</a>.</li>
 <li>In .NET Core the strongest algorithm for password hashing is PBKDF2, implemented as <a href="https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing" target="_blank">Microsoft.AspNetCore.Cryptography.KeyDerivation.Pbkdf2</a> which has several significant advantages over <code>Rfc2898DeriveBytes</code>.</li>
 <li>When using a hashing function to hash non-unique inputs such as passwords, use a salt value added to the original value before hashing.</li>
 </ul>
@@ -1106,10 +1106,10 @@
 <p>ASP.NET Web Forms is the original browser-based application development API for the .NET framework, and is still the most common enterprise platform for web application development.</p>
 <ul>
 <li>Always use <a href="http://support.microsoft.com/kb/324069" target="_blank">HTTPS</a>.</li>
-<li>Enable <a href="http://msdn.microsoft.com/en-us/library/system.web.configuration.httpcookiessection.requiressl.aspx" target="_blank">requireSSL</a> on cookies and form elements and <a href="http://msdn.microsoft.com/en-us/library/system.web.configuration.httpcookiessection.httponlycookies.aspx" target="_blank">HttpOnly</a> on cookies in the web.config.</li>
-<li>Implement <a href="https://msdn.microsoft.com/en-us/data/h0hfz6fc(v=vs.110" target="_blank">customErrors</a>).</li>
+<li>Enable <a href="https://docs.microsoft.com/en-us/dotnet/api/system.web.configuration.httpcookiessection.requiressl" target="_blank">requireSSL</a> on cookies and form elements and <a href="https://docs.microsoft.com/en-us/dotnet/api/system.web.configuration.httpcookiessection.httponlycookies" target="_blank">HttpOnly</a> on cookies in the web.config.</li>
+<li>Implement <a href="https://docs.microsoft.com/en-us/dotnet/api/system.web.configuration.customerror" target="_blank">customErrors</a>.</li>
 <li>Make sure <a href="http://www.iis.net/configreference/system.webserver/tracing" target="_blank">tracing</a> is turned off.</li>
-<li>While viewstate isn&apos;t always appropriate for web development, using it can provide CSRF mitigation. To make the ViewState protect against CSRF attacks you need to set the <a href="http://msdn.microsoft.com/en-us/library/ms972969.aspx#securitybarriers_topic2" target="_blank">ViewStateUserKey</a>:</li>
+<li>While viewstate isn&apos;t always appropriate for web development, using it can provide CSRF mitigation. To make the ViewState protect against CSRF attacks you need to set the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.web.ui.page.viewstateuserkey" target="_blank">ViewStateUserKey</a>:</li>
 </ul>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-title">OnInit</span>(<span class="hljs-params">EventArgs e</span>) </span>{
     <span class="hljs-keyword">base</span>.OnInit(e); 
@@ -1238,7 +1238,7 @@
 <li>Do not disable <a href="http://www.asp.net/whitepapers/request-validation" target="_blank">validateRequest</a> in the <code>web.config</code> or the page setup. This value enables limited XSS protection in ASP.NET and should be left intact as it provides partial prevention of Cross Site Scripting. Complete request validation is recommended in addition to the built in protections.</li>
 <li>The 4.5 version of the .NET Frameworks includes the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.web.security.antixss.antixssencoder?view=netframework-4.7.2" target="_blank">AntiXssEncoder</a> library, which has a comprehensive input encoding library for the prevention of XSS. Use it.</li>
 <li>Whitelist allowable values anytime user input is accepted.</li>
-<li>Validate the URI format using <a href="http://msdn.microsoft.com/en-us/library/system.uri.iswellformeduristring.aspx" target="_blank">Uri.IsWellFormedUriString</a>.</li>
+<li>Validate the URI format using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.uri.iswellformeduristring" target="_blank">Uri.IsWellFormedUriString</a>.</li>
 </ul>
 <h2 id="forms-authentication"><a name="forms-authentication" class="plugin-anchor" href="#forms-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>Forms authentication</h2>
 <ul>
@@ -1399,7 +1399,7 @@ app.UseCsp(opts =&gt; opts
  .ScriptSources(s =&gt; s.Self())
  );
 </code></pre>
-<p>For more information about headers can be found <a href="https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#xpcdp" target="_blank">here</a>.</p>
+<p>For more information about headers can be found <a href="https://owasp.org/www-project-secure-headers/" target="_blank">here</a>.</p>
 <h2 id="a4-xml-external-entities-xxe"><a name="a4-xml-external-entities-xxe" class="plugin-anchor" href="#a4-xml-external-entities-xxe"><i class="fa fa-link" aria-hidden="true"></i></a>A4 XML External Entities (XXE)</h2>
 <p>Please refer to the XXE cheat sheet so more detailed information, which can be found <a href="XML_External_Entity_Prevention_Cheat_Sheet.html#net">here</a>.</p>
 <p>XXE attacks occur when an XML parse does not properly process user input that contains external entity declaration in the doctype of an XML payload.</p>
@@ -1695,8 +1695,8 @@ If a deserialized hostile object tries to initiate a system processes or access 
 <p>Logging levels for ILogger are listed below, in order of high to low importance:</p>
 <h3 id="monitoring"><a name="monitoring" class="plugin-anchor" href="#monitoring"><i class="fa fa-link" aria-hidden="true"></i></a>Monitoring</h3>
 <p>Monitoring allow us to validate the performance and health of a running system through key performance indicators.</p>
-<p>In .NET a great option to add monitoring capabilities is <a href="https://docs.microsoft.com/en-us/azure/application-insights/app-insights-asp-net-core" target="_blank">Application Insights</a>.</p>
-<p>More information about Logging and Monitoring can be found <a href="https://microsoft.github.io/code-with-engineering-playbook/Engineering/DevOpsLoggingDetailsCSharp.html" target="_blank">here</a>.</p>
+<p>In .NET a great option to add monitoring capabilities is <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-core" target="_blank">Application Insights</a>.</p>
+<p>More information about Logging and Monitoring can be found <a href="https://github.com/microsoft/code-with-engineering-playbook/tree/master/observability" target="_blank">here</a>.</p>
 <h1 id="owasp-2013"><a name="owasp-2013" class="plugin-anchor" href="#owasp-2013"><i class="fa fa-link" aria-hidden="true"></i></a>OWASP 2013</h1>
 <p>Below is vulnerability not discussed in OWASP 2017</p>
 <h2 id="a10-unvalidated-redirects-and-forwards"><a name="a10-unvalidated-redirects-and-forwards" class="plugin-anchor" href="#a10-unvalidated-redirects-and-forwards"><i class="fa fa-link" aria-hidden="true"></i></a>A10 Unvalidated redirects and forwards</h2>
@@ -1748,7 +1748,7 @@ If a deserialized hostile object tries to initiate a system processes or access 
 <li>Keep in mind that the only safe way to pass a request in RESTful services is via <code>HTTP POST</code>, with <code>TLS enabled</code>. GETs are visible in the <code>querystring</code>, and a lack of TLS means the body can be intercepted.</li>
 <li>Avoid <a href="https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.basichttpbinding?view=netframework-4.7.2" target="_blank">BasicHttpBinding</a>. It has no default security configuration. Use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.wshttpbinding?view=netframework-4.7.2" target="_blank">WSHttpBinding</a> instead.</li>
 <li>Use at least two security modes for your binding. Message security includes security provisions in the headers. Transport security means use of SSL. <a href="https://docs.microsoft.com/en-us/dotnet/framework/wcf/samples/ws-transport-with-message-credential" target="_blank">TransportWithMessageCredential</a> combines the two.</li>
-<li>Test your WCF implementation with a fuzzer like the <a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project" target="_blank">ZAP</a>.</li>
+<li>Test your WCF implementation with a fuzzer like the <a href="https://www.zaproxy.org/" target="_blank">ZAP</a>.</li>
 </ul>
 
                                 
@@ -1793,7 +1793,7 @@ If a deserialized hostile object tries to initiate a system processes or access 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"DotNet Security ","level":"1.26","depth":1,"next":{"title":"Error Handling ","level":"1.27","depth":1,"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","ref":"cheatsheets/Error_Handling_Cheat_Sheet.md","articles":[]},"previous":{"title":"Docker Security ","level":"1.25","depth":1,"path":"cheatsheets/Docker_Security_Cheat_Sheet.md","ref":"cheatsheets/Docker_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","mtime":"2020-04-15T18:37:53.003Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-15T18:38:26.107Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"DotNet Security ","level":"1.26","depth":1,"next":{"title":"Error Handling ","level":"1.27","depth":1,"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","ref":"cheatsheets/Error_Handling_Cheat_Sheet.md","articles":[]},"previous":{"title":"Docker Security ","level":"1.25","depth":1,"path":"cheatsheets/Docker_Security_Cheat_Sheet.md","ref":"cheatsheets/Docker_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","mtime":"2020-04-26T20:14:10.064Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-26T20:14:39.551Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -1054,7 +1054,7 @@
 <p>This document has for objective to provide some tips to handle <em>Injection</em> into Java application code.</p>
 <p>Sample codes used in tips are located <a href="https://github.com/righettod/injection-cheat-sheets" target="_blank">here</a>.</p>
 <h1 id="what-is-injection-"><a name="what-is-injection-" class="plugin-anchor" href="#what-is-injection-"><i class="fa fa-link" aria-hidden="true"></i></a>What is Injection ?</h1>
-<p><a href="https://www.owasp.org/index.php/Top_10_2007-Injection_Flaws" target="_blank">Injection</a> in OWASP Top 10 is defined as following:</p>
+<p><a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection" target="_blank">Injection</a> in OWASP Top 10 is defined as following:</p>
 <p><em>Consider anyone who can send untrusted data to the system, including external users, internal users, and administrators.</em></p>
 <h1 id="general-advices-to-prevent-injection"><a name="general-advices-to-prevent-injection" class="plugin-anchor" href="#general-advices-to-prevent-injection"><i class="fa fa-link" aria-hidden="true"></i></a>General advices to prevent Injection</h1>
 <p>The following point can be applied, in a general way, to prevent <em>Injection</em> issue:</p>
@@ -1177,7 +1177,7 @@ Assert.assertTrue(host.isReachable(<span class="hljs-number">5000</span>));
 </code></pre>
 <h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
 <ul>
-<li><a href="https://www.owasp.org/index.php/Command_Injection" target="_blank">Command Injection</a></li>
+<li><a href="https://owasp.org/www-community/attacks/Command_Injection" target="_blank">Command Injection</a></li>
 </ul>
 <h2 id="xml-xpath-injection"><a name="xml-xpath-injection" class="plugin-anchor" href="#xml-xpath-injection"><i class="fa fa-link" aria-hidden="true"></i></a>XML: XPath Injection</h2>
 <h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
@@ -1246,7 +1246,7 @@ Assert.assertTrue(book.getTextContent().contains(<span class="hljs-string">&quot
 </code></pre>
 <h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
 <ul>
-<li><a href="https://www.owasp.org/index.php/XPATH_Injection" target="_blank">XPATH Injection</a></li>
+<li><a href="https://owasp.org/www-community/attacks/XPATH_Injection" target="_blank">XPATH Injection</a></li>
 </ul>
 <h2 id="htmljavascriptcss"><a name="htmljavascriptcss" class="plugin-anchor" href="#htmljavascriptcss"><i class="fa fa-link" aria-hidden="true"></i></a>HTML/JavaScript/CSS</h2>
 <h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
@@ -1297,7 +1297,7 @@ Assert.assertEquals(finalSafeOutputExpected, safeOutput);
 </code></pre>
 <h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
 <ul>
-<li><a href="https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29" target="_blank">XSS</a></li>
+<li><a href="https://owasp.org/www-community/attacks/xss/" target="_blank">XSS</a></li>
 <li><a href="https://github.com/owasp/java-html-sanitizer" target="_blank">OWASP Java HTML Sanitizer</a></li>
 <li><a href="https://github.com/owasp/owasp-java-encoder" target="_blank">OWASP Java Encoder</a></li>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank">Java RegEx</a></li>
@@ -1353,13 +1353,13 @@ Assert.assertTrue(userInput.length() &lt;= <span class="hljs-number">50</span>);
 </code></pre>
 <h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
 <ul>
-<li><a href="https://www.owasp.org/index.php/Testing_for_NoSQL_injection" target="_blank">Testing for NoSQL injection</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection.html" target="_blank">Testing for NoSQL injection</a></li>
 <li><a href="https://ckarande.gitbooks.io/owasp-nodegoat-tutorial/content/tutorial/a1_-_sql_and_nosql_injection.html" target="_blank">SQL and NoSQL Injection</a></li>
 <li><a href="https://arxiv.org/ftp/arxiv/papers/1506/1506.04082.pdf" target="_blank">No SQL, No Injection?</a></li>
 </ul>
 <h2 id="log-injection"><a name="log-injection" class="plugin-anchor" href="#log-injection"><i class="fa fa-link" aria-hidden="true"></i></a>Log Injection</h2>
 <h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
-<p><a href="https://www.owasp.org/index.php/Log_Injection" target="_blank">Log Injection</a> occurs when an application includes untrusted data in an application log message (e.g., an attacker can cause an additional log entry that looks like it came from a completely different user, if they can inject CRLF characters in the untrusted data). More information about this attack is available on the OWASP <a href="https://www.owasp.org/index.php/Log_Injection" target="_blank">Log Injection</a> page.</p>
+<p><a href="https://owasp.org/www-community/attacks/Log_Injection" target="_blank">Log Injection</a> occurs when an application includes untrusted data in an application log message (e.g., an attacker can cause an additional log entry that looks like it came from a completely different user, if they can inject CRLF characters in the untrusted data). More information about this attack is available on the OWASP <a href="https://owasp.org/www-community/attacks/Log_Injection" target="_blank">Log Injection</a> page.</p>
 <h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
 <p>To prevent an attacker from writing malicious content into the application log, apply defenses such as:</p>
 <ul>
@@ -1402,7 +1402,7 @@ logger.info(logMessage);
 ...
 </code></pre>
 <h3 id="example-using-logback-with-the-owasp-security-logging-library"><a name="example-using-logback-with-the-owasp-security-logging-library" class="plugin-anchor" href="#example-using-logback-with-the-owasp-security-logging-library"><i class="fa fa-link" aria-hidden="true"></i></a>Example using Logback with the OWASP Security Logging library</h3>
-<p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging" target="_blank">CRLFConverter</a>, provided by the <a href="https://www.owasp.org/index.php/OWASP_Security_Logging_Project" target="_blank">OWASP Security Logging Project</a>, and the <em>-500msg</em> message size limit:</p>
+<p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging" target="_blank">CRLFConverter</a>, provided by the <a href="https://owasp.org/www-project-security-logging/" target="_blank">OWASP Security Logging Project</a>, and the <em>-500msg</em> message size limit:</p>
 <pre><code class="lang-xml"><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span><span class="hljs-meta">?&gt;</span></span>
 <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span>
     <span class="hljs-comment">&lt;!-- Define the CRLFConverter --&gt;</span>
@@ -1500,7 +1500,7 @@ other log viewing/analysis tools that don&apos;t expect the log data to be pre-H
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Injection Prevention  in Java","level":"1.33","depth":1,"next":{"title":"Input Validation ","level":"1.34","depth":1,"path":"cheatsheets/Input_Validation_Cheat_Sheet.md","ref":"cheatsheets/Input_Validation_Cheat_Sheet.md","articles":[]},"previous":{"title":"Injection Prevention ","level":"1.32","depth":1,"path":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md","mtime":"2020-04-15T18:37:53.003Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-15T18:38:26.107Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Injection Prevention  in Java","level":"1.33","depth":1,"next":{"title":"Input Validation ","level":"1.34","depth":1,"path":"cheatsheets/Input_Validation_Cheat_Sheet.md","ref":"cheatsheets/Input_Validation_Cheat_Sheet.md","articles":[]},"previous":{"title":"Injection Prevention ","level":"1.32","depth":1,"path":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md","mtime":"2020-04-26T20:14:10.064Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-26T20:14:39.551Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -1096,7 +1096,7 @@ that lead to proper protection of these critical business use cases.
 </code></pre><p><a href="https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements" target="_blank">Synopsys source</a></p>
 <h2 id="how-to-define-the-list-of-abuse-cases"><a name="how-to-define-the-list-of-abuse-cases" class="plugin-anchor" href="#how-to-define-the-list-of-abuse-cases"><i class="fa fa-link" aria-hidden="true"></i></a>How to define the list of Abuse Cases?</h2>
 <p>There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).</p>
-<p>The project <a href="https://www.owasp.org/index.php/OWASP_SAMM_Project" target="_blank">OWASP Open SAMM</a> proposes the following approach in the <em>Activity A</em> of the Security Practice <em>Threat Assessment</em> for the Maturity level 2:</p>
+<p>The project <a href="https://owasp.org/www-project-samm/" target="_blank">OWASP Open SAMM</a> proposes the following approach in the <em>Activity A</em> of the Security Practice <em>Threat Assessment</em> for the Maturity level 2:</p>
 <pre><code>Further considering the threats to the organization, conduct a more formal analysis to determine
 potential misuse or abuse of functionality. Typically, this process begins with identification of
 normal usage scenarios, e.g. use-case diagrams if available.
@@ -1115,7 +1115,7 @@ cases can be combined with existing threat models.
 After initial creation, abuse-case models should be updated for active projects during the design
 phase. For existing projects, new requirements should be analyzed for potential abuse, and existing
 projects should opportunistically build abuse-cases for established functionality where practical.
-</code></pre><p>Open SAMM source: <a href="https://www.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2" target="_blank">Threat Assessment Level 2 Activity A</a></p>
+</code></pre><p>Open SAMM source: <a href="https://wiki.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2" target="_blank">Threat Assessment Level 2 Activity A</a></p>
 <p>Another way to achieve the building of the list can be the following (more bottom-up and collaboratively oriented):</p>
 <p>Make a workshop that includes people with the following profiles:</p>
 <ul>
@@ -1245,8 +1245,8 @@ projects should opportunistically build abuse-cases for established functionalit
 </ol>
 <p>If the presence of offensives is not possible then you can use the following references to identify the applicable attacks on your features:</p>
 <ul>
-<li><a href="https://www.owasp.org/index.php/OWASP_Automated_Threats_to_Web_Applications" target="_blank">OWASP Automated Threats to Web Applications</a></li>
-<li><a href="https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents" target="_blank">OWASP Testing Guide</a></li>
+<li><a href="https://owasp.org/www-project-automated-threats-to-web-applications/" target="_blank">OWASP Automated Threats to Web Applications</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/" target="_blank">OWASP Testing Guide</a></li>
 <li><a href="https://github.com/OWASP/owasp-mstg" target="_blank">OWASP Mobile Testing Guide</a></li>
 <li><a href="https://capec.mitre.org/" target="_blank">Common Attack Pattern Enumeration and Classification (CAPEC)</a></li>
 </ul>
@@ -1304,7 +1304,7 @@ used during the next workshop in combination with input from offensives people.
 </ul>
 <p>Adding automated tests also allow teams to track that countermeasures against the abuse cases are still effective/in place during a maintenance or bug fixing phase of a project (to prevent accidental removal/disabling). It is also useful when a <a href="https://continuousdelivery.com/" target="_blank">Continuous Delivery</a> approach is used, to ensure that all abuse cases protections are in place before opening access to the application.</p>
 <h1 id="example-of-derivation-of-abuse-cases-as-user-stories"><a name="example-of-derivation-of-abuse-cases-as-user-stories" class="plugin-anchor" href="#example-of-derivation-of-abuse-cases-as-user-stories"><i class="fa fa-link" aria-hidden="true"></i></a>Example of derivation of Abuse Cases as User Stories</h1>
-<p>The following section show an example of derivation of Abuse Cases as User Stories, here using the <a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project" target="_blank">OWASP TOP 10</a> as input source.</p>
+<p>The following section show an example of derivation of Abuse Cases as User Stories, here using the <a href="https://owasp.org/www-project-top-ten/" target="_blank">OWASP TOP 10</a> as input source.</p>
 <p>Threat Oriented Personas:</p>
 <ul>
 <li>Malicious User</li>
@@ -1313,7 +1313,7 @@ used during the next workshop in combination with input from offensives people.
 </ul>
 <h2 id="a12017-injection"><a name="a12017-injection" class="plugin-anchor" href="#a12017-injection"><i class="fa fa-link" aria-hidden="true"></i></a>A1:2017-Injection</h2>
 <p><em>Epic:</em></p>
-<p>Almost any source of data can be an injection vector, environment variables, parameters, external and internal web services, and all types of users. <a href="https://www.owasp.org/index.php/Injection_Flaws" target="_blank">Injection</a> flaws occur when an attacker can send hostile data to an interpreter.</p>
+<p>Almost any source of data can be an injection vector, environment variables, parameters, external and internal web services, and all types of users. <a href="https://owasp.org/www-community/Injection_Flaws" target="_blank">Injection</a> flaws occur when an attacker can send hostile data to an interpreter.</p>
 <p><em>Abuse Case:</em></p>
 <p>As an attacker, I will perform an injection attack (SQL, LDAP, XPath, or NoSQL queries, OS commands, XML parsers, SMTP headers, expression languages, and ORM queries) against input fields of the User or API interfaces</p>
 <h2 id="a22017-broken-authentication"><a name="a22017-broken-authentication" class="plugin-anchor" href="#a22017-broken-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>A2:2017-Broken Authentication</h2>
@@ -1454,7 +1454,7 @@ used during the next workshop in combination with input from offensives people.
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Abuse Case ","level":"1.6","depth":1,"next":{"title":"Access Control ","level":"1.7","depth":1,"path":"cheatsheets/Access_Control_Cheat_Sheet.md","ref":"cheatsheets/Access_Control_Cheat_Sheet.md","articles":[]},"previous":{"title":"AJAX Security ","level":"1.5","depth":1,"path":"cheatsheets/AJAX_Security_Cheat_Sheet.md","ref":"cheatsheets/AJAX_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Abuse_Case_Cheat_Sheet.md","mtime":"2020-04-15T18:37:53.003Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-15T18:38:26.107Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Abuse Case ","level":"1.6","depth":1,"next":{"title":"Access Control ","level":"1.7","depth":1,"path":"cheatsheets/Access_Control_Cheat_Sheet.md","ref":"cheatsheets/Access_Control_Cheat_Sheet.md","articles":[]},"previous":{"title":"AJAX Security ","level":"1.5","depth":1,"path":"cheatsheets/AJAX_Security_Cheat_Sheet.md","ref":"cheatsheets/AJAX_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Abuse_Case_Cheat_Sheet.md","mtime":"2020-04-26T20:14:10.064Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-26T20:14:39.551Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
