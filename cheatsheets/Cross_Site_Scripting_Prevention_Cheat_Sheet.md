@@ -311,7 +311,7 @@ If your application handles markup -- untrusted input that is supposed to contai
 
 **[HtmlSanitizer](https://github.com/mganss/HtmlSanitizer)**
 
-An open-source .Net library. The HTML is cleaned with a white list approach. All allowed tags and attributes can be configured. The library is unit tested with the OWASP [XSS Filter Evasion Cheat Sheet](https://owasp.org/www-community/attacks/xss/_Filter_Evasion_Cheat_Sheet)
+An open-source .Net library. The HTML is cleaned with a white list approach. All allowed tags and attributes can be configured. The library is unit tested with the OWASP [XSS Filter Evasion Cheat Sheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet)
 
 ```csharp
 var sanitizer = new HtmlSanitizer();
