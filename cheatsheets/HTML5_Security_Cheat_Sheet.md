@@ -15,7 +15,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 - Don't assume you have control over the `data` attribute. A single [Cross Site Scripting](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) flaw in the sending page allows an attacker to send messages of any given format.
 - Both pages should only interpret the exchanged messages as **data**. Never evaluate passed messages as code (e.g. via `eval()`) or insert it to a page DOM (e.g. via `innerHTML`), as that would create a DOM-based XSS vulnerability. For more information see [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md).
 - To assign the data value to an element, instead of using a insecure method like `element.innerHTML=data;`, use the safer option: `element.textContent=data;`
-- Check the origin properly exactly to match the FQDN(s) you expect. Note that the following code: `if(message.origin.indexOf(".owasp.org")!=-1) { /* ... */ }` is very insecure and will not have the desired behavior as `www.owasp.org.attacker.com` will match.
+- Check the origin properly exactly to match the FQDN(s) you expect. Note that the following code: `if(message.origin.indexOf(".owasp.org")!=-1) { /* ... */ }` is very insecure and will not have the desired behavior as `owasp.org.attacker.com` will match.
 - If you need to embed external content/untrusted gadgets and allow user-controlled scripts (which is highly discouraged), consider using a JavaScript rewriting framework such as [Google Caja](http://code.google.com/p/google-caja/) or check the information on [sandboxed frames](HTML5_Security_Cheat_Sheet.md#sandboxed-frames).
 
 ## Cross Origin Resource Sharing
@@ -52,8 +52,8 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 - Also known as Offline Storage, Web Storage. Underlying storage mechanism may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it's recommended not to store any sensitive information in local storage.
 - Use the object sessionStorage instead of localStorage if persistent storage is not needed. sessionStorage object is available only to that window/tab until the window is closed.
-- A single [Cross Site Scripting](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29) can be used to steal all the data in these objects, so again it's recommended not to store sensitive information in local storage.
-- A single [Cross Site Scripting](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29) can be used to load malicious data into these objects too, so don't consider objects in these to be trusted.
+- A single [Cross Site Scripting](https://owasp.org/www-community/attacks/xss/) can be used to steal all the data in these objects, so again it's recommended not to store sensitive information in local storage.
+- A single [Cross Site Scripting](https://owasp.org/www-community/attacks/xss/) can be used to load malicious data into these objects too, so don't consider objects in these to be trusted.
 - Pay extra attention to "localStorage.getItem" and "setItem" calls implemented in HTML5 page. It helps in detecting when developers build solutions that put sensitive information in local storage, which is a bad practice.
 - Do not store session identifiers in local storage as the data is always accessible by JavaScript. Cookies can mitigate this risk using the `httpOnly` flag.
 - There is no way to restrict the visibility of an object to a specific path like with the attribute path of HTTP Cookies, every object is shared within an origin and protected with the Same Origin Policy. Avoid host multiple applications on the same origin, all of them would share the same localStorage object, use different subdomains instead.
@@ -63,7 +63,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 - On November 2010, the W3C announced Web SQL Database (relational SQL database) as a deprecated specification. A new standard Indexed Database API or IndexedDB (formerly WebSimpleDB) is actively developed, which provides key/value database storage and methods for performing advanced queries.
 - Underlying storage mechanisms may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it's recommended not to store any sensitive information in local storage.
 - If utilized, WebDatabase content on the client side can be vulnerable to SQL injection and needs to have proper validation and parameterization.
-- Like Local Storage, a single [Cross Site Scripting](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29) can be used to load malicious data into a web database as well. Don't consider data in these to be trusted.
+- Like Local Storage, a single [Cross Site Scripting](https://owasp.org/www-community/attacks/xss/) can be used to load malicious data into a web database as well. Don't consider data in these to be trusted.
 
 # Geolocation
 
@@ -77,7 +77,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 # Tabnabbing
 
-Attack is described in detail in this [article](https://www.owasp.org/index.php/Reverse_Tabnabbing).
+Attack is described in detail in this [article](https://owasp.org/www-community/attacks/Reverse_Tabnabbing).
 
 To summarize, it's the capacity to act on parent page's content or location from a newly opened page via the back link exposed by the **opener** javascript object instance.
 
@@ -105,7 +105,7 @@ function openPopup(url, name, windowFeatures){
 }
 ```
 
-- Add the HTTP response header `Referrer-Policy: no-referrer` to every HTTP response sent by the application ([Header Referrer-Policy information](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#rp). This configuration will ensure that no referrer information is sent along with requests from the page.
+- Add the HTTP response header `Referrer-Policy: no-referrer` to every HTTP response sent by the application ([Header Referrer-Policy information](https://owasp.org/www-project-secure-headers/). This configuration will ensure that no referrer information is sent along with requests from the page.
 
 Compatibility matrix:
 
@@ -156,7 +156,7 @@ Text areas and input fields for PII (name, email, address, phone number) and log
 
 # HTTP Headers to enhance security
 
-Consult the project [OWASP Secure Headers](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers) in order to obtains the list of HTTP security headers that an application should use to enable defenses at browser level.
+Consult the project [OWASP Secure Headers](https://owasp.org/www-project-secure-headers/) in order to obtains the list of HTTP security headers that an application should use to enable defenses at browser level.
 
 # WebSocket implementation hints
 

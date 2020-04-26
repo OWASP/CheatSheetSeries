@@ -288,8 +288,8 @@ Legal, regulatory and contractual obligations may impact on these periods.
 
 # Related articles
 
-- OWASP [ESAPI Documentation](http://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API).
-- OWASP [Logging Project](https://www.owasp.org/index.php/Category:OWASP_Logging_Project).
+- OWASP [ESAPI Documentation](https://owasp.org/www-project-enterprise-security-api/).
+- OWASP [Logging Project](https://owasp.org/www-project-security-logging/).
 - IETF [syslog protocol](https://tools.ietf.org/rfc/rfc5424.txt).
 - Mitre [Common Event Expression (CEE)](http://cee.mitre.org/) (as of 2014 no longer actively developed).
 - NIST [SP 800-92 Guide to Computer Security Log Management](http://csrc.nist.gov/publications/nistpubs/800-92/SP800-92.pdf).

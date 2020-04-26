@@ -15,8 +15,8 @@ For detailed guides about strong cryptography and best practices, read the follo
 1.  [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md).
 2.  [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
 3.  [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md).
-4.  [Guide to Cryptography](https://www.owasp.org/index.php/Guide_to_Cryptography).
-5.  [Testing for TLS/SSL](https://www.owasp.org/index.php/Testing_for_SSL-TLS_%28OWASP-CM-001%29).
+4.  [Guide to Cryptography](https://wiki.owasp.org/index.php/Guide_to_Cryptography).
+5.  [Testing for TLS/SSL](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_SSL_TLS_Ciphers_Insufficient_Transport_Layer_Protection.html).
 
 ## Support HTTP Strict Transport Security
 
@@ -46,7 +46,7 @@ For details regarding certificate pinning, please refer to the following:
 
 1. [OWASP Certificate Pinning Cheat Sheet](Pinning_Cheat_Sheet.md).
 2. [Public Key Pinning Extension for HTTP RFC](https://tools.ietf.org/html/rfc7469).
-3. [Securing the SSL channel against man-in-the-middle attacks: Future technologies - HTTP Strict Transport Security and and Pinning of Certs, by Tobias Gondrom](https://www.owasp.org/images/4/4b/OWASP_defending-MITMA_APAC2012.pdf).
+3. [Securing the SSL channel against man-in-the-middle attacks: Future technologies - HTTP Strict Transport Security and and Pinning of Certs, by Tobias Gondrom](https://owasp.org/www-pdf-archive/OWASP_defending-MITMA_APAC2012.pdf).
 
 ## Panic Modes
 

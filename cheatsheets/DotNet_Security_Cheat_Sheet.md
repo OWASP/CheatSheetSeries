@@ -32,7 +32,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 - Whitelist allowable values coming from the user. Use enums, [TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.int32.tryparse#System_Int32_TryParse_System_String_System_Int32__) or lookup values to assure that the data coming from the user is as expected.
     - Enums are still vulnerable to unexpected values because .NET only validates a successful cast to the underlying data type, integer by default. [Enum.IsDefined](https://msdn.microsoft.com/en-us/library/system.enum.isdefined) can validate whether the input value is valid within the list of defined constants.
 - Apply the principle of least privilege when setting up the Database User in your database of choice. The database user should only be able to access items that make sense for the use case.
-- Use of the [Entity Framework](http://msdn.microsoft.com/en-us/data/ef.aspx) is a very effective [SQL injection](https://www.owasp.org/index.php/SQL_Injection) prevention mechanism. **Remember that building your own ad hoc queries in Entity Framework is just as susceptible to SQLi as a plain SQL query**.
+- Use of the [Entity Framework](http://msdn.microsoft.com/en-us/data/ef.aspx) is a very effective [SQL injection](https://owasp.org/www-community/attacks/SQL_Injection) prevention mechanism. **Remember that building your own ad hoc queries in Entity Framework is just as susceptible to SQLi as a plain SQL query**.
 - When using SQL Server, prefer [integrated authentication](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/using-integrated-authentication?view=sql-server-2017) over [SQL authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-2017#connecting-through-sql-server-authentication).
 - Use [Always Encrypted](https://msdn.microsoft.com/en-us/library/mt163865.aspx) where possible for sensitive data (SQL Server 2016 and SQL Azure),
 
@@ -415,7 +415,7 @@ app.UseCsp(opts => opts
  );
 ```
 
-For more information about headers can be found [here](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#xpcdp).
+For more information about headers can be found [here](https://owasp.org/www-project-secure-headers/).
 
 ## A4 XML External Entities (XXE)
 
@@ -912,4 +912,4 @@ For more information on all of the above and code samples incorporated into a sa
 - Keep in mind that the only safe way to pass a request in RESTful services is via `HTTP POST`, with `TLS enabled`. GETs are visible in the `querystring`, and a lack of TLS means the body can be intercepted.
 - Avoid [BasicHttpBinding](https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.basichttpbinding?view=netframework-4.7.2). It has no default security configuration. Use [WSHttpBinding](https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.wshttpbinding?view=netframework-4.7.2) instead.
 - Use at least two security modes for your binding. Message security includes security provisions in the headers. Transport security means use of SSL. [TransportWithMessageCredential](https://docs.microsoft.com/en-us/dotnet/framework/wcf/samples/ws-transport-with-message-credential) combines the two.
-- Test your WCF implementation with a fuzzer like the [ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project).
+- Test your WCF implementation with a fuzzer like the [ZAP](https://www.zaproxy.org/).

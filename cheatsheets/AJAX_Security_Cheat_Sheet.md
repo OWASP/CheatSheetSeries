@@ -18,7 +18,7 @@ When using data to build HTML, script, CSS, XML, JSON, etc. make sure you take i
 
 Data should be properly encoded before used in this manner to prevent injection style issues, and to make sure the logical meaning is preserved.
 
-[Check out the OWASP Java Encoder Project.](https://www.owasp.org/index.php/OWASP_Java_Encoder_Project)
+[Check out the OWASP Java Encoder Project.](https://owasp.org/www-project-java-encoder/)
 
 ### Don't rely on client logic for security
 

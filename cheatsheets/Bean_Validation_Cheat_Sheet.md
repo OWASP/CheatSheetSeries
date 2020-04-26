@@ -2,7 +2,7 @@
 
 This article is focused on providing clear, simple, actionable guidance for providing Java Bean Validation security functionality in your applications.
 
-Bean validation (JSR303 aka [Bean Validation 1.0](https://beanvalidation.org/1.0/spec/) /JSR349 aka [Bean Validation 1.1](https://beanvalidation.org/1.1/spec/)) is one of the most common ways to perform [input validation](https://www.owasp.org/index.php/Input_Validation_Cheat_Sheet) in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.
+Bean validation (JSR303 aka [Bean Validation 1.0](https://beanvalidation.org/1.0/spec/) /JSR349 aka [Bean Validation 1.1](https://beanvalidation.org/1.1/spec/)) is one of the most common ways to perform [input validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.
 
 One advantage of this approach is that the validation constraints and the corresponding validators are only written once, thus reducing duplication of effort and ensuring uniformity:
 
@@ -74,7 +74,7 @@ When it comes to error handling, the Hibernate Validator returns a `BindingResul
 
 **Use**: 
 
-Checks if the annotated string matches the regular expression regex considering the given flag match. Please visit [OWASP Validation Regex Repository](https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository) for other useful regex's.
+Checks if the annotated string matches the regular expression regex considering the given flag match. Please visit [OWASP Validation Regex Repository](https://owasp.org/www-community/OWASP_Validation_Regex_Repository) for other useful regex's.
 
 **Reference**:
 

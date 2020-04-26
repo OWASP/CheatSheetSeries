@@ -69,7 +69,7 @@ Application layer attacks focus on rendering applications unavailable by exhaust
 
 ## Input validation
 
-- **Limit file upload size and extensions** (resource exhaustion) to prevent DoS on file space storage or other web application functions which will use the upload as input (e.g. image resizing, PDF creation, etc.)        - [Checklist](https://www.owasp.org/index.php/Unrestricted_File_Upload).
+- **Limit file upload size and extensions** (resource exhaustion) to prevent DoS on file space storage or other web application functions which will use the upload as input (e.g. image resizing, PDF creation, etc.)        - [Checklist](https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload).
 - **Limit total request size** (resource exhaustion) to make it harder for resource consuming DoS attack to succeed.
 - **Prevent input based resource allocation** (resource exhaustion).
 - **Prevent input based function and threading interaction** (resource exhaustion). User input could influence how many times a function needs to be executed, or how intensive the CPU consumption becomes. Depending on (unfiltered) user input for resource allocation could allow a DoS scenario through resource exhaustion.

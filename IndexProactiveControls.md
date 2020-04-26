@@ -14,7 +14,7 @@
 
 # Objective
 
-This cheatsheet will help users of the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) identify which cheatsheets map to each proactive controls item. This mapping is based the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) version 3.0 (2018).
+This cheatsheet will help users of the [OWASP Proactive Controls](https://owasp.org/www-project-proactive-controls/) identify which cheatsheets map to each proactive controls item. This mapping is based the [OWASP Proactive Controls](https://owasp.org/www-project-proactive-controls/) version 3.0 (2018).
 
 # 1. Define Security Requirements
 

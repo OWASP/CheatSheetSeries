@@ -1,6 +1,6 @@
 # Introduction
 
-This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://www.owasp.org/index.php/Clickjacking), also known as UI redress attacks.
+This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking), also known as UI redress attacks.
 
 There are three main mechanisms that can be used to defend against these attacks:
 

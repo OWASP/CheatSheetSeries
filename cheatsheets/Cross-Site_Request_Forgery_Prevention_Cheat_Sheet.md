@@ -60,8 +60,8 @@ Synchronizer token defenses have been built into many frameworks. It is strongly
 
 External components that add CSRF defenses to existing applications are also recommended. Examples:
 
-- For Java: OWASP [CSRF Guard](https://www.owasp.org/index.php/CSRF_Guard) or [Spring Security](https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html)
-- For PHP and Apache: [CSRFProtector Project](https://www.owasp.org/index.php/CSRFProtector_Project)
+- For Java: OWASP [CSRF Guard](https://owasp.org/www-project-csrfguard/) or [Spring Security](https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html)
+- For PHP and Apache: [CSRFProtector Project](https://owasp.org/www-project-csrfprotector/)
 
 ### Synchronizer Token Pattern
 

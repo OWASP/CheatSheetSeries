@@ -48,7 +48,7 @@ Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given
 in D:\app\index_new.php on line 188
 ```    
 
-The [OWASP Testing Guide](https://www.owasp.org/index.php/Testing_Information_Gathering) provides different techniques to obtain technical information from an application.
+The [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/01-Information_Gathering/) provides different techniques to obtain technical information from an application.
 
 # Objective
 

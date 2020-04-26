@@ -11,7 +11,7 @@ Sorting applied on the name is an alphabetical one.
 **[Abuse Case Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Abuse_Case_Cheat_Sheet.md)**
 * Dominique Righetto - dominique.righetto@owasp.org
 * James Robinson - jrobinson@netskope.com
-* [Rick Mitchell](https://www.owasp.org/index.php/User:Rick.mitchell)
+* Rick Mitchell
 
 **[Access Control Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Access_Control_Cheat_Sheet.md)**
 * Adinath Raveendra Raj - adinath@acciente.com
@@ -313,7 +313,7 @@ Sorting applied on the name is an alphabetical one.
 * Ryan Barnett - ryan.barnett@owasp.org
 
 **[Vulnerability Disclosure Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md)**
-* [OWASP Montréal](https://www.owasp.org/index.php/Montréal) chapter
+* [OWASP Montréal](https://owasp.org/www-chapter-montreal/) chapter
 * [@el_d33](https://twitter.com/el_d33)
 * [gosecure.ca](https://gosecure.net/)
 

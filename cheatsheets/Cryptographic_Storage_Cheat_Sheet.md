@@ -220,9 +220,9 @@ To perform the strong key management functions we have seen in requirement 3.6 w
 
 ## Documentation
 
-- [Testing for SSL-TLS](https://www.owasp.org/index.php/Testing_for_SSL-TLS_%28OWASP-CM-001%29)
-- [Guide to Cryptography](https://www.owasp.org/index.php/Guide_to_Cryptography)
-- [Application Security Verification Standard (ASVS) – Communication Security Verification Requirements (V10)](http://www.owasp.org/index.php/ASVS)
+- [Testing for SSL-TLS](https://wiki.owasp.org/index.php/Testing_for_SSL-TLS_%28OWASP-CM-001%29)
+- [Guide to Cryptography](https://wiki.owasp.org/index.php/Guide_to_Cryptography)
+- [Application Security Verification Standard (ASVS) – Communication Security Verification Requirements (V9)](https://github.com/OWASP/ASVS/blob/v4.0.1/4.0/en/0x17-V9-Communications.md)
 - [SSLLabs wiki](https://github.com/ssllabs/research/wiki)
 - [Mozilla TLS wiki](https://wiki.mozilla.org/Security/Server_Side_TLS)
 - [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)

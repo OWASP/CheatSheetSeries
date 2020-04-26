@@ -1,8 +1,8 @@
 # Introduction
 
-When looking at XSS (Cross-Site Scripting), there are three generally recognized forms of [XSS](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29):
-* [Reflected or Stored](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29#Stored_and_Reflected_XSS_Attacks)
-* [DOM Based XSS](https://www.owasp.org/index.php/DOM_Based_XSS). 
+When looking at XSS (Cross-Site Scripting), there are three generally recognized forms of [XSS](https://owasp.org/www-community/attacks/xss/):
+* [Reflected or Stored](https://owasp.org/www-community/attacks/xss/#stored-and-reflected-xss-attacks)
+* [DOM Based XSS](https://owasp.org/www-community/attacks/DOM_Based_XSS). 
 
 The [XSS Prevention Cheatsheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) does an excellent job of addressing Reflected and Stored XSS. This cheatsheet addresses DOM (Document Object Model) based XSS and is an extension (and assumes comprehension of) the [XSS Prevention Cheatsheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
@@ -364,7 +364,7 @@ If **A** is double JavaScript encoded then the following **if** check will retur
 
 This brings up an interesting design point. Ideally, the correct way to apply encoding and avoid the problem stated above is to server-side encode for the output context where data is introduced into the application. 
 
-Then client-side encode (using a JavaScript encoding library such as [ESAPI4JS](https://www.owasp.org/index.php/ESAPI_JavaScript_Readme)) for the individual subcontext (DOM methods) which untrusted data is passed to. [ESAPI4JS](https://www.owasp.org/index.php/ESAPI_JavaScript_Readme) and [jQuery Encoder](https://github.com/chrisisbeef/jquery-encoder/blob/master/src/jquery.jquery-encoder.js) are two client side encoding libraries developed by Chris Schmidt.
+Then client-side encode (using a JavaScript encoding library such as [ESAPI4JS](https://owasp.org/www-project-enterprise-security-api/)) for the individual subcontext (DOM methods) which untrusted data is passed to. [ESAPI4JS](https://owasp.org/www-project-enterprise-security-api/) and [jQuery Encoder](https://github.com/chrisisbeef/jquery-encoder/blob/master/src/jquery.jquery-encoder.js) are two client side encoding libraries developed by Chris Schmidt.
 
 Here are some examples of how they are used:
 
@@ -494,8 +494,8 @@ Function myFunction (url,name) {
 
 There are a number of open source encoding libraries out there:
 
-1. OWASP [ESAPI](https://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API)
-2. OWASP [Java Encoder](https://www.owasp.org/index.php/OWASP_Java_Encoder_Project)
+1. OWASP [ESAPI](https://owasp.org/www-project-enterprise-security-api/)
+2. OWASP [Java Encoder](https://owasp.org/www-project-java-encoder/)
 3. Apache Commons Text [StringEscapeUtils](https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/StringEscapeUtils.html), replace one from [Apache Commons Lang3](https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringEscapeUtils.html)
 4. [Jtidy](http://jtidy.sourceforge.net/)
 5. Your company's custom implementation.
