@@ -133,7 +133,7 @@ Services including script code (e.g. JavaScript) in their responses must be espe
 
 To make sure the content of a given resources is interpreted correctly by the browser, the server should always send the `Content-Type` header with the correct content type, and preferably the `Content-Type` header should include a charset. The server should also send the `X-Content-Type-Options: nosniff` [security header](https://owasp.org/www-project-secure-headers/) to make sure the browser does not try to detect a different `Content-Type` than what is actually sent (can lead to XSS).
 
-Additionally the server should send the `X-Frame-Options: deny` [security header](https://owasp.org/www-project-secure-headers/s) to protect against drag'n drop clickjacking attacks in older browsers.
+Additionally the server should send the `X-Frame-Options: deny` [security header](https://owasp.org/www-project-secure-headers/) to protect against drag'n drop clickjacking attacks in older browsers.
 
 # CORS
 
