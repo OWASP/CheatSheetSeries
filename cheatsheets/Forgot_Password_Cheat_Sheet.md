@@ -45,7 +45,7 @@ Of course, by all means, once a user's password has been reset, the randomly-gen
 
 Step 4 requires input of the code sent in step 3 in the existing session where the challenge questions were answered in step 2, and allows the user to reset his password. Display a simple HTML form with one input field for the code, one for the new password, and one to confirm the new password. Verify the correct code is provided and be sure to enforce all password complexity requirements that exist in other areas of the application. 
 
-As before, avoid sending the username as a parameter when the form is submitted. Finally, it's critical to have a check to prevent a user from accessing this last step without first completing steps 1 and 2 correctly. Otherwise, a [forced browsing](https://www.owasp.org/index.php/Forced_browsing) attack may be possible. Ensure the user changes their password and does not simply surf to another page in the application. 
+As before, avoid sending the username as a parameter when the form is submitted. Finally, it's critical to have a check to prevent a user from accessing this last step without first completing steps 1 and 2 correctly. Otherwise, a [forced browsing](https://owasp.org/www-community/attacks/Forced_browsing) attack may be possible. Ensure the user changes their password and does not simply surf to another page in the application. 
 
 The reset must be performed before any other operations can be performed by the user.
 

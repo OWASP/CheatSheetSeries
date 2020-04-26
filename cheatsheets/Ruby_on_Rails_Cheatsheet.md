@@ -20,7 +20,7 @@ open("\| os command here")
 
 While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, a whitelist of possible values should be used and any input should be validated as thoroughly as possible.
 
-The guides from [Rails](https://guides.rubyonrails.org/security.html#command-line-injection) and [OWASP](https://www.owasp.org/index.php/Command_Injection) contain further information on command injection.
+The guides from [Rails](https://guides.rubyonrails.org/security.html#command-line-injection) and [OWASP](https://owasp.org/www-community/attacks/Command_Injection) contain further information on command injection.
 
 ## SQL Injection
 
@@ -39,7 +39,7 @@ Here is the idiom for building this kind of statement:
 @projects = Project.where("name like ?", "%#{params[:name]}%")
 ```
 
-Use caution not to build SQL statements based on user controlled input. A list of more realistic and detailed examples is here: [rails-sqli.org](https://rails-sqli.org). OWASP has extensive information about [SQL Injection](https://www.owasp.org/index.php/SQL_Injection).
+Use caution not to build SQL statements based on user controlled input. A list of more realistic and detailed examples is here: [rails-sqli.org](https://rails-sqli.org). OWASP has extensive information about [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection).
 
 ## Cross-site Scripting (XSS)
 
@@ -95,7 +95,7 @@ Using [Content Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) 
 
 [Brakeman scanner](https://github.com/presidentbeef/brakeman) helps in finding XSS problems in Rails apps.
 
-OWASP provides more general information about XSS in a top level page: [Cross-site Scripting (XSS)](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29).
+OWASP provides more general information about XSS in a top level page: [Cross-site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/).
 
 ## Sessions
 
@@ -220,7 +220,7 @@ By default, Ruby on Rails apps use a RESTful URI structure. That means that path
 
 It is also possible, and probably recommended, to consider resource-based access control libraries such as [cancancan](https://github.com/CanCanCommunity/cancancan) (cancan replacement) or [pundit](https://github.com/elabs/pundit) to do this. This ensures that all operations on a database object are authorized by the business logic of the application.
 
-More general information about this class of vulnerability is in the [OWASP Top 10 Page](https://www.owasp.org/index.php/Top_10_2010-A4-Insecure_Direct_Object_References).
+More general information about this class of vulnerability is in the [OWASP Top 10 Page](https://wiki.owasp.org/index.php/Top_10_2010-A4-Insecure_Direct_Object_References).
 
 ## CSRF (Cross Site Request Forgery)
 
@@ -231,7 +231,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 ```
 
-Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API's or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29) protection for the show method.
+Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API's or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide [CSRF](https://owasp.org/www-community/attacks/csrf) protection for the show method.
 
 ``` ruby
 class ProjectController < ApplicationController
@@ -242,7 +242,7 @@ Also note that by default Rails does not provide CSRF protection for any HTTP `G
 
 **Note:** if you use token authentication only, there is no need to protect from CSRF in controllers like this. If cookie-based authentication is used on some paths, then the protections is still required on them.
 
-There is a top level OWASP page for [Cross-Site Request Forgery (CSRF)](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29).
+There is a top level OWASP page for [Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf).
 
 ## Redirects and Forwards
 
@@ -385,7 +385,7 @@ ActionDispatch::Response.default_headers = {
 }
 ```
 
-[Strict transport security](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#hsts) is a special case, it is set in an environment file (e.g. `production.rb`)
+[Strict transport security](https://owasp.org/www-project-secure-headers/#headers-link) is a special case, it is set in an environment file (e.g. `production.rb`)
 
 ```ruby
 config.force_ssl = true
@@ -458,7 +458,7 @@ Launched in May 2013 and very similar to brakeman scanner, the [dawnscanner](htt
 # Related Articles and References
 
 - [The Official Rails Security Guide](https://guides.rubyonrails.org/security.html)
-- [OWASP Ruby on Rails Security Guide](https://www.owasp.org/index.php/Category:OWASP_Ruby_on_Rails_Security_Guide_V2)
+- [OWASP Ruby on Rails Security Guide](https://owasp.org/www-pdf-archive/Rails_Security_2.pdf)
 - [The Ruby Security Reviewers Guide](http://code.google.com/p/ruby-security/wiki/Guide)
 - [The Ruby on Rails Security Mailing List](https://groups.google.com/forum/?fromgroups#!forum/rubyonrails-security)
 - [Rails Insecure Defaults](https://codeclimate.com/blog/rails-insecure-defaults/)

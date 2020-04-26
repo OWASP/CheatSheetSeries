@@ -15,8 +15,8 @@ Most of the projects use third-party dependencies to delegate handling of differ
 It's a good approach because it allows the development team to focus on the real application code supporting the expected business feature. The dependency brings forth an expected downside where the security posture of the real application is now resting on it.
 
 This aspect is referenced in the following projects:
-* [OWASP TOP 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_2017_Project) under the point *[A9 - Using Components with Known Vulnerabilities](https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities)*.
-* [OWASP Application Security Verification Standard Project](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project) under the section *V14.2 Dependency*.
+* [OWASP TOP 10 2017](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/) under the point *[A9 - Using Components with Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities.html)*.
+* [OWASP Application Security Verification Standard Project](https://owasp.org/www-project-application-security-verification-standard/) under the section *V14.2 Dependency*.
 
 Based on this context, it's important for a project to ensure that all the third-party dependencies implemented are clean of any security issue, and if they happen to contain any security issues, the development team needs to be aware of it and apply the required mitigation measures to secure the affected application.
 
@@ -227,7 +227,7 @@ It's important to ensure, during the selection process of a vulnerable dependenc
 * Support for flagging an issue raised on a component as a [false-positive](https://www.whitehatsec.com/glossary/content/false-positive).
 
 * Free
-    * [OWASP Dependency Check](https://www.owasp.org/index.php/OWASP_Dependency_Check): 
+    * [OWASP Dependency Check](https://owasp.org/www-project-dependency-check/): 
         * Full support: Java, .Net.
         * Experimental support: Python, Ruby, PHP (composer), NodeJS, C, C++.
     * [NPM Audit](https://docs.npmjs.com/cli/audit)

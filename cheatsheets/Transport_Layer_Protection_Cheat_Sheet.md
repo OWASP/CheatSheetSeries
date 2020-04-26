@@ -61,7 +61,7 @@ As well as the vulnerabilities in the SSL and TLS protocols, there have also bee
 
 ## Test the Server Configuration
 
-Once the server has been hardened, the configuration should be tested. The [OWASP Testing Guide chapter on SSL/TLS Testing](https://www.owasp.org/index.php/Testing_for_SSL-TLS_%28OWASP-CM-001%29) contains further information on testing.
+Once the server has been hardened, the configuration should be tested. The [OWASP Testing Guide chapter on SSL/TLS Testing](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_SSL_TLS_Ciphers_Insufficient_Transport_Layer_Protection.html) contains further information on testing.
 
 There are a number of online tools that can be used to quickly validate the configuration of a server, including:
 
@@ -70,7 +70,7 @@ There are a number of online tools that can be used to quickly validate the conf
 
 Additionally, there are a number of offline tools that can be used:
 
-- [O-Saft - OWASP SSL advanced forensic tool](https://www.owasp.org/index.php/O-Saft)
+- [O-Saft - OWASP SSL advanced forensic tool](https://wiki.owasp.org/index.php/O-Saft)
 - [testssl.sh - Testing any TLS/SSL encryption](https://testssl.sh)
 - [SSLScan - Fast SSL Scanner](https://github.com/rbsec/sslscan)
 - [SSLyze](https://github.com/iSECPartners/sslyze)
@@ -101,7 +101,7 @@ Additionally, when creating the certificate, the following should be taken into 
 
 ## Carefully Consider the use of Wildcard Certificates
 
-Wildcard certificates can be convenient, however they violate [the principal of least privilege](https://www.owasp.org/index.php/Least_privilege), as a single certificate is valid for all subdomains of a domain (such as *.example.org). Where multiple systems are sharing a wildcard certificate, the likelihood that the private key for the certificate is compromised increases, as the key may be present on multiple systems. Additionally, the value of this key is significantly increased, making it a more attractive target for attackers.
+Wildcard certificates can be convenient, however they violate [the principal of least privilege](https://wiki.owasp.org/index.php/Least_privilege), as a single certificate is valid for all subdomains of a domain (such as *.example.org). Where multiple systems are sharing a wildcard certificate, the likelihood that the private key for the certificate is compromised increases, as the key may be present on multiple systems. Additionally, the value of this key is significantly increased, making it a more attractive target for attackers.
 
 The issues around the use of wildcard certificates are complicated, and there are [various](https://blog.sean-wright.com/wildcard-certs-not-quite-the-star/) other [discussions](https://gist.github.com/joepie91/7e5cad8c0726fd6a5e90360a754fc568) of them online.
 
@@ -174,11 +174,11 @@ Expires: 0
 
 ## Use HTTP Strict Transport Security
 
-HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS, and also prevents the user from bypassing certificate warnings. See the [HTTP Strict Transport Security cheatsheet](https://www.owasp.org/index.php/HTTP_Strict_Transport_Security) for further information on implementing HSTS.
+HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS, and also prevents the user from bypassing certificate warnings. See the [HTTP Strict Transport Security cheatsheet](HTTP_Strict_Transport_Security_Cheat_Sheet.md) for further information on implementing HSTS.
 
 ## Consider Using Public Key Pinning
 
-HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the [Certificate and Public Key Pinning article](https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning#HTTP_pinning) for further information in implementing HPKP.
+HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the [Certificate and Public Key Pinning article](https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning#http-pinning) for further information in implementing HPKP.
 
 HPKP is controversial, and that while it is currently supported in Firefox and some other browsers, it has been removed from [Chrome](https://www.chromestatus.com/feature/5903385005916160), and is considered deprecated by [Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins). As such, careful consideration of the risks should be made before implementing it.
 
@@ -203,8 +203,8 @@ However, they should be considered for high-value applications or APIs, especial
 # Related Articles
 
 - OWASP - [TLS Cipher String Cheat Sheet](TLS_Cipher_String_Cheat_Sheet.md)
-- OWASP - [Testing for SSL-TLS](https://www.owasp.org/index.php/Testing_for_SSL-TLS_%28OWASP-CM-001%29), and OWASP [Guide to Cryptography](https://www.owasp.org/index.php/Guide_to_Cryptography)
-- OWASP - [Application Security Verification Standard (ASVS) - Communication Security Verification Requirements (V10)](http://www.owasp.org/index.php/ASVS)
+- OWASP - [Testing for SSL-TLS](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_SSL_TLS_Ciphers_Insufficient_Transport_Layer_Protection.html), and OWASP [Guide to Cryptography](https://wiki.owasp.org/index.php/Guide_to_Cryptography)
+- OWASP - [Application Security Verification Standard (ASVS) - Communication Security Verification Requirements (V9)](https://github.com/OWASP/ASVS/blob/v4.0.1/4.0/en/0x17-V9-Communications.md)
 - Mozilla - [Mozilla Recommended Configurations](https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations)
 - NIST - [SP 800-52 Rev. 1 Guidelines for the Selection, Configuration, and Use of Transport Layer Security (TLS) Implementations](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-52r2.pdf)
 - NIST - [NIST SP 800-57 Recommendation for Key Management, Revision 3](http://csrc.nist.gov/publications/nistpubs/800-57/sp800-57_part1_rev3_general.pdf), [Public DRAFT](http://csrc.nist.gov/publications/PubsDrafts.html#SP-800-57-Part%203-Rev.1)

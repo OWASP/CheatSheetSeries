@@ -8,7 +8,7 @@ Input validation is performed to ensure only properly formed data is entering th
 
 Data from all potentially untrusted sources should be subject to input validation, including not only Internet-facing web clients but also backend feeds over extranets, from [suppliers, partners, vendors or regulators](https://badcyber.com/several-polish-banks-hacked-information-stolen-by-unknown-attackers/), each of which may be compromised on their own and start sending malformed data.
 
-Input Validation should not be used as the *primary* method of preventing [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), [SQL Injection](SQL_Injection_Prevention_Cheat_Sheet.md) and other attacks which are covered in respective [cheat sheets](https://www.owasp.org/index.php/OWASP_Cheat_Sheet_Series) but can significantly contribute to reducing their impact if implemented properly.
+Input Validation should not be used as the *primary* method of preventing [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), [SQL Injection](SQL_Injection_Prevention_Cheat_Sheet.md) and other attacks which are covered in respective [cheat sheets](https://cheatsheetseries.owasp.org/) but can significantly contribute to reducing their impact if implemented properly.
 
 # Input validation strategies
 
@@ -35,7 +35,7 @@ Input validation can be implemented using any programming technique that allows 
 
 It is a common mistake to use black list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters. 
 
-Plus, such filters frequently prevent authorized input, like `O'Brian`, where the `'` character is fully legitimate. For more information on XSS filter evasion please see the [this wiki page](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet).
+Plus, such filters frequently prevent authorized input, like `O'Brian`, where the `'` character is fully legitimate. For more information on XSS filter evasion please see the [this wiki page](https://owasp.org/www-community/xss-filter-evasion-cheatsheet).
 
 White list validation is appropriate for all input fields provided by the user. White list validation involves defining exactly what IS authorized, and by definition, everything else is not authorized. 
 
@@ -57,13 +57,13 @@ The primary means of input validation for free-form text input should be:
 
 References: 
 
-- [Input validation of free-form Unicode text in Python](https://ipsec.pl/python/2017/input-validation-free-form-unicode-text-python.html)
+- [Input validation of free-form Unicode text in Python](https://web.archive.org/web/20170717174432/https://ipsec.pl/python/2017/input-validation-free-form-unicode-text-python.html/)
 
 ## Regular expressions
 
 Developing regular expressions can be complicated, and is well beyond the scope of this cheat sheet.
 
-There are lots of resources on the internet about how to write regular expressions, including this [site](https://www.regular-expressions.info/) and the [OWASP Validation Regex Repository](https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository).
+There are lots of resources on the internet about how to write regular expressions, including this [site](https://www.regular-expressions.info/) and the [OWASP Validation Regex Repository](https://owasp.org/www-community/OWASP_Validation_Regex_Repository).
 
 In summary, input validation should:
 
@@ -132,7 +132,7 @@ Detailed information on XSS prevention here: [OWASP XSS Prevention Cheat Sheet](
 
 Many websites allow users to upload files, such as a profile picture or more. This section helps provide that feature securely.
 
-Additional information on upload protection here: [File Upload Protection Cheat Sheet](Protect_FileUpload_Against_Malicious_File.md).
+Check the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md).
 
 ## Upload Verification
 

@@ -48,7 +48,7 @@ Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given
 in D:\app\index_new.php on line 188
 ```    
 
-The [OWASP Testing Guide](https://www.owasp.org/index.php/Testing_Information_Gathering) provides different techniques to obtain technical information from an application.
+The [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/01-Information_Gathering/) provides different techniques to obtain technical information from an application.
 
 # Objective
 
@@ -109,7 +109,7 @@ response.setStatus(200);
 
 ## Java SpringMVC/SpringBoot web application
 
-With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](http://spring.io/projects/spring-boot), you can define a global error handler by simply implementing the following kind of class in your project.
+With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](https://spring.io/projects/spring-boot), you can define a global error handler by simply implementing the following kind of class in your project.
 
 We indicate to the handler, via the annotation [@ExceptionHandler](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html), to act when any exception extending the class *java.lang.Exception* is thrown by the application.
 
@@ -149,7 +149,7 @@ public class RestResponseEntityExceptionHandler {
 
 References:
 
-- [Exception handling with Spring](http://www.baeldung.com/exception-handling-for-rest-with-spring)
+- [Exception handling with Spring](https://www.baeldung.com/exception-handling-for-rest-with-spring)
 - [Exception handling with SpringBoot](https://www.toptal.com/java/spring-boot-rest-api-error-handling)
 
 ## ASP NET Core web application

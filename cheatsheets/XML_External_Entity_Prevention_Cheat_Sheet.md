@@ -1,12 +1,12 @@
 # Introduction
 
-*XML eXternal Entity injection* (XXE), which is now part of the [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) via the point **A4**, is a type of attack against an application that parses XML input.
+*XML eXternal Entity injection* (XXE), which is now part of the [OWASP Top 10](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29) via the point **A4**, is a type of attack against an application that parses XML input.
 
 XXE issue is referenced under the ID [611](https://cwe.mitre.org/data/definitions/611.html) in the [Common Weakness Enumeration](https://cwe.mitre.org/index.html) referential.
 
 This attack occurs when untrusted XML input containing a **reference to an external entity is processed by a weakly configured XML parser**.
 
-This attack may lead to the disclosure of confidential data, denial of service, [Server Side Request Forgery](https://www.owasp.org/index.php/Server_Side_Request_Forgery) (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.
+This attack may lead to the disclosure of confidential data, denial of service, [Server Side Request Forgery](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery) (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.
 
 For more information on XXE, please visit [XML External Entity (XXE)](https://en.wikipedia.org/wiki/XML_external_entity_attack).
 
@@ -152,18 +152,18 @@ try {
 DocumentBuilder safebuilder = dbf.newDocumentBuilder();
 ```
 
-[Xerces 1](http://xerces.apache.org/xerces-j/) [Features](http://xerces.apache.org/xerces-j/features.html):
+[Xerces 1](https://xerces.apache.org/xerces-j/) [Features](https://xerces.apache.org/xerces-j/features.html):
 
-- Do not include external entities by setting [this feature](http://xerces.apache.org/xerces-j/features.html#external-general-entities) to `false`.
-- Do not include parameter entities by setting [this feature](http://xerces.apache.org/xerces-j/features.html#external-parameter-entities) to `false`.
-- Do not include external DTDs by setting [this feature](http://xerces.apache.org/xerces-j/features.html#load-external-dtd) to `false`.
+- Do not include external entities by setting [this feature](https://xerces.apache.org/xerces-j/features.html#external-general-entities) to `false`.
+- Do not include parameter entities by setting [this feature](https://xerces.apache.org/xerces-j/features.html#external-parameter-entities) to `false`.
+- Do not include external DTDs by setting [this feature](https://xerces.apache.org/xerces-j/features.html#load-external-dtd) to `false`.
 
-[Xerces 2](http://xerces.apache.org/xerces2-j/) [Features](http://xerces.apache.org/xerces2-j/features.html):
+[Xerces 2](https://xerces.apache.org/xerces2-j/) [Features](https://xerces.apache.org/xerces2-j/features.html):
 
-- Disallow an inline DTD by setting [this feature](http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl) to `true`.
-- Do not include external entities by setting [this feature](http://xerces.apache.org/xerces2-j/features.html#external-general-entities) to `false`.
-- Do not include parameter entities by setting [this feature](http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities) to `false`.
-- Do not include external DTDs by setting [this feature](http://xerces.apache.org/xerces-j/features.html#load-external-dtd) to `false`.
+- Disallow an inline DTD by setting [this feature](https://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl) to `true`.
+- Do not include external entities by setting [this feature](https://xerces.apache.org/xerces2-j/features.html#external-general-entities) to `false`.
+- Do not include parameter entities by setting [this feature](https://xerces.apache.org/xerces2-j/features.html#external-parameter-entities) to `false`.
+- Do not include external DTDs by setting [this feature](https://xerces.apache.org/xerces-j/features.html#load-external-dtd) to `false`.
 
 **Note:** The above defenses require Java 7 update 67, Java 8 update 20, or above, because the above countermeasures for `DocumentBuilderFactory` and SAXParserFactory are broken in earlier Java versions, per: [CVE-2014-6517](http://www.cvedetails.com/cve/CVE-2014-6517/).
 
@@ -546,7 +546,7 @@ However, to completely disable XXE in an `NSXMLDocument` in any version of iOS y
 
 # PHP
 
-Per [the PHP documentation](http://php.net/manual/en/function.libxml-disable-entity-loader.php), the following should be set when using the default PHP XML parser in order to prevent XXE:
+Per [the PHP documentation](https://www.php.net/manual/en/function.libxml-disable-entity-loader.php), the following should be set when using the default PHP XML parser in order to prevent XXE:
 
 ``` php
 libxml_disable_entity_loader(true);
@@ -575,8 +575,8 @@ To protect your application from the applicable attacks, [two packages](https://
 # References
 
 - [XXE by InfoSecInstitute](https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/)
-- [OWASP Top 10-2017 A4: XML External Entities (XXE)](https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_%28XXE%29)
+- [OWASP Top 10-2017 A4: XML External Entities (XXE)](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29)
 - [Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"](https://vsecurity.com//download/papers/XMLDTDEntityAttacks.pdf)
 - [FindSecBugs XXE Detection](https://find-sec-bugs.github.io/bugs.htm#XXE_SAXPARSER)
 - [XXEbugFind Tool](https://github.com/ssexxe/XXEBugFind)
-- [Testing for XML Injection (OTG-INPVAL-008)](https://www.owasp.org/index.php/Testing_for_XML_Injection_%28OTG-INPVAL-008%29)
+- [Testing for XML Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection.html)

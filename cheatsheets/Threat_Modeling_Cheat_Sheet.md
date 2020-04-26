@@ -187,8 +187,8 @@ Work on minimizing the number of threat agents by:
 
 The user of this cheat can depend on the following list of risks and threat libraries sources to define the possible threats an application might be facing:
 
-1.  Risks with [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project).
-2.  Testing Procedure with [OWASP ASVS](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project).
+1.  Risks with [OWASP Top 10](https://owasp.org/www-project-top-ten/).
+2.  Testing Procedure with [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/).
 3.  Risks with [SANS Top 25](https://www.sans.org/top25-software-errors).
 4.  Microsoft [STRIDE](https://en.wikipedia.org/wiki/STRIDE_%28security%29).
 
@@ -258,7 +258,7 @@ Application security risk assessments are not enough because they are very binar
 R = (T * V * P * I) / Countermeasures
 ```
 
-For more details [about PASTA](https://www.owasp.org/images/a/aa/AppSecEU2012_PASTA.pdf).
+For more details [about PASTA](https://owasp.org/www-pdf-archive/AppSecEU2012_PASTA.pdf).
 
 ## Rank Risks
 

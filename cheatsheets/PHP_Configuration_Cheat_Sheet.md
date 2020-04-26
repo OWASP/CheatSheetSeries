@@ -14,7 +14,7 @@ For general PHP codebase security please refer to the two following great guides
 
 Some of following settings need to be adapted to your system, in particular `session.save_path`, `session.cookie_path` (e.g. `/var/www/mysite`), and `session.cookie_domain` (e.g. `ExampleSite.com`). 
 
-You should also be running PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the [PHP Manual](http://www.php.net/manual/ini.core.php) for a complete reference on every value in the php.ini configuration file.
+You should also be running PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the [PHP Manual](https://www.php.net/manual/ini.core.php) for a complete reference on every value in the php.ini configuration file.
 
 You can find a copy of the following values in a ready-to-go php.ini file [here](https://github.com/danehrlich1/very-secure-php-ini).
 
@@ -110,6 +110,6 @@ html_errors             = Off
 
 ## Suhosin
 
-[Suhosin](http://www.hardened-php.net/suhosin/index.html) is a patch to PHP which provides a number of hardening and security features that are not available in the default PHP build. However, Suhosin only works with PHP 5, which is **unsupported** and **should not be used**.
+[Suhosin](https://www.hardened-php.net/suhosin/index.html) is a patch to PHP which provides a number of hardening and security features that are not available in the default PHP build. However, Suhosin only works with PHP 5, which is **unsupported** and **should not be used**.
 
 There are a number of projects that have attempted to implement similar features for PHP 7 such as [Snuffleupagus](https://snuffleupagus.readthedocs.io/) and [Suhosin-ng](https://github.com/sektioneins/suhosin-ng/wiki/News), but these are both in the pre-release stage, and as such **should not be used in production**.
