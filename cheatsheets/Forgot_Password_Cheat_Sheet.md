@@ -26,7 +26,7 @@ This can be done through any of the following methods:
 - One Time Password (OTP).
 - URL tokens.
 - Security Questions.
-- Offline pin codes.
+- Offline backup codes.
 
 ## Methods Implementation
 
@@ -69,7 +69,7 @@ After sending the URL token to the user through a side-channel, *e.g.* through e
 
 Kindly refer to the [Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) for further guidance.
 
-### Pin Codes
+### Backup Codes
 
 <!--Under study to provide good practices that are being used-->
 
