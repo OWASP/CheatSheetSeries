@@ -46,9 +46,15 @@ One implementation can be found over for [Authy](https://www.twilio.com/docs/aut
 
 ### URL Tokens
 
-URL tokens provide access control to the user by sending a URL with a short-lived token.
+URL tokens provide access control to the user by sending a URL with a token appended in the querystring.
 
-<!-- tokens best practices -->
+The token needs to follow secure practices:
+
+1. Randomly generated with a [CSPRNG](https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator) (*e.g.* [secrets](https://docs.python.org/3/library/secrets.html) library in Python)
+2. Long enough to avoid brute-force attacks (16 characters (128 bits) should be the minimum used)
+3. Short token lifetime (*e.g.* 30 minutes)
+4. Linked to the user requesting the token in the database
+5. One time use (should be removed from the database once used)
 
 After sending the URL token to the user through a side-channel, _e.g._ through email, the user will:
 
