@@ -42,7 +42,7 @@ For a better description of OTP generation, refer to the [MFA CS](https://cheats
 
 One implementation can be found over for [Authy](https://www.twilio.com/docs/authy/tutorials/two-factor-authentication-python-flask). If you don't want to rely on applications (such as Authy, Google/Microsoft Authenticator, etc.), you can generate QR codes and send them from the server for the user to scan using their device. The following python library, [pyotp](https://github.com/pyauth/pyotp), helps the developer implement any of the methods discussed in this section.
 
-> OTPs can be sent through other channels as well, such as emails and SMSs. Various attacks and weaknesses have been identified in such technologies that it is preferrable not to use them for OTPs.
+> OTPs can be sent through other channels as well, such as emails and SMSs. Various attacks and weaknesses have been identified in SMS that it is preferrable not to use them for OTPs.
 
 ### URL Tokens
 
