@@ -112,7 +112,7 @@
 
 [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md).
 
-[Protect FileUpload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md). ![Java](assets/Index_Java.png) 
+[File Upload Cheat Sheet](cheatsheets/File_Upload_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
 
 # Q
 

@@ -2,7 +2,7 @@
 
 This article is focused on providing clear, simple, actionable guidance for providing Java Bean Validation security functionality in your applications.
 
-Bean validation (JSR303 aka [Bean Validation 1.0](http://beanvalidation.org/1.0/spec/) /JSR349 aka [Bean Validation 1.1](http://beanvalidation.org/1.1/spec/)) is one of the most common ways to perform [input validation](https://www.owasp.org/index.php/Input_Validation_Cheat_Sheet) in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.
+Bean validation (JSR303 aka [Bean Validation 1.0](https://beanvalidation.org/1.0/spec/) /JSR349 aka [Bean Validation 1.1](https://beanvalidation.org/1.1/spec/)) is one of the most common ways to perform [input validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.
 
 One advantage of this approach is that the validation constraints and the corresponding validators are only written once, thus reducing duplication of effort and ensuring uniformity:
 
@@ -38,7 +38,7 @@ Enable bean validation support in Spring's **context.xml**:
 </beans:beans>
 ```
 
-For more info, please see the [setup guide](http://hibernate.org/validator/documentation/getting-started/)
+For more info, please see the [setup guide](https://hibernate.org/validator/documentation/getting-started/)
 
 # Basics
 
@@ -74,11 +74,11 @@ When it comes to error handling, the Hibernate Validator returns a `BindingResul
 
 **Use**: 
 
-Checks if the annotated string matches the regular expression regex considering the given flag match. Please visit [OWASP Validation Regex Repository](https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository) for other useful regex's.
+Checks if the annotated string matches the regular expression regex considering the given flag match. Please visit [OWASP Validation Regex Repository](https://owasp.org/www-community/OWASP_Validation_Regex_Repository) for other useful regex's.
 
 **Reference**:
 
-[Documentation](http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
+[Documentation](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
 
 **Model**:
 
@@ -146,7 +146,7 @@ Checks whether the annotated value is a number having up to integer digits and f
 
 **Reference**:
 
-[Documentation](http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
+[Documentation](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
 
 **Model**:
 
@@ -217,7 +217,7 @@ Checks if the annotated element's size is between min and max (inclusive)
 
 **Reference**:
 
-[Documentation](http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
+[Documentation](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
 
 **Model**:
 
@@ -289,7 +289,7 @@ Checks whether the annotated date is in the past / future
 
 **Reference**:
 
-[Documentation](http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
+[Documentation](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
 
 **Model**:
 
@@ -376,7 +376,7 @@ Checks whether the annotated value is higher/lower than or equal to the specifie
 
 **Reference:**
 
-[Documentation](http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
+[Documentation](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
 
 **Model**:
 
@@ -435,7 +435,7 @@ public class ReviewController {
 
 ## Cascading Constraints
 
-Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with [@Valid](http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch03.html#_cascaded_validation)
+Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with [@Valid](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch03.html#_cascaded_validation)
 
 ## Additional Constraints
 
@@ -450,13 +450,13 @@ In addition to providing the complete set of JSR303 constraints, Hibernate Valid
 - `@ScriptAssert`
 - `@URL`
 
-Take a look at this [table](http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints) for the complete list.
+Take a look at this [table](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints) for the complete list.
 
 # Custom Constraints
 
 One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built in constraints.
 
-Creating custom constraints is beyond the scope of this guide. Please see this [documentation](http://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html).
+Creating custom constraints is beyond the scope of this guide. Please see this [documentation](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html).
 
 # Error Messages
 
@@ -467,4 +467,4 @@ It is possible to specify a message ID with the validation annotation, so that e
 private String articleTitle;
 ```
 
-Spring MVC will then look up a message with id *article.title.error* in a defined MessageSource. More on this [documentation](http://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/).
+Spring MVC will then look up a message with id *article.title.error* in a defined MessageSource. More on this [documentation](https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/).

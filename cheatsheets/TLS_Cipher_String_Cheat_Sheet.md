@@ -124,7 +124,7 @@ SSLCipherSuite 'DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AE
 **Remarks:**
 
 - The cipher string is compiled as a whitelist of individual ciphers to get a better compatibility even with old versions of OpenSSL.
-- Monitor the performance of your server, e.g. the TLS handshake with DHE hinders the CPU about 2.4 times more than ECDHE, cf. *[Vincent Bernat, 2011](http://vincent.bernat.im/en/blog/2011-ssl-perfect-forward-secrecy.html#some-benchmarks)*, *[nmav's Blog, 2011](http://nmav.gnutls.org/2011/12/price-to-pay-for-perfect-forward.html)*.
+- Monitor the performance of your server, e.g. the TLS handshake with DHE hinders the CPU about 2.4 times more than ECDHE, cf. *[Vincent Bernat, 2011](http://vincent.bernat.im/en/blog/2011-ssl-perfect-forward-secrecy.html#some-benchmarks)*, *[nmav's Blog, 2011](https://nikmav.blogspot.com/2011/12/price-to-pay-for-perfect-forward.html)*.
 - Verify your cipher string using your crypto library, e.g. openssl using cipher string 'B':
 
 ```text

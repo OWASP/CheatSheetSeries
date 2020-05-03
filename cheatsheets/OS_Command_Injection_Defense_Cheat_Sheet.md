@@ -38,7 +38,7 @@ If there are available libraries or APIs for the language you used, this is the 
 
 **TODO: To enhance.**
 
-For examples, see [escapeshellarg()](http://php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](http://php.net/manual/en/function.escapeshellcmd.php) in PHP.
+For examples, see [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](https://www.php.net/manual/en/function.escapeshellcmd.php) in PHP.
 
 ## Defense option 3: Parameterization in conjunction with Input Validation
 
@@ -198,13 +198,13 @@ process.Start();
 
 ## PHP
 
-In PHP use [escapeshellarg()](http://php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](http://php.net/manual/en/function.escapeshellcmd.php) rather than [exec()](http://php.net/manual/en/function.exec.php), [system()](http://php.net/manual/en/function.system.php), [passthru()](http://php.net/manual/en/function.passthru.php).
+In PHP use [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](https://www.php.net/manual/en/function.escapeshellcmd.php) rather than [exec()](https://www.php.net/manual/en/function.exec.php), [system()](https://www.php.net/manual/en/function.system.php), [passthru()](https://www.php.net/manual/en/function.passthru.php).
 
 # Related articles
 
 ## Description of Command Injection Vulnerability
 
-- OWASP [Command Injection](https://www.owasp.org/index.php/Command_Injection).
+- OWASP [Command Injection](https://owasp.org/www-community/attacks/Command_Injection).
 
 ## How to Avoid Vulnerabilities
 
@@ -212,11 +212,11 @@ In PHP use [escapeshellarg()](http://php.net/manual/en/function.escapeshellarg.p
 
 ## How to Review Code
 
-- OWASP [Reviewing Code for OS Injection](https://www.owasp.org/index.php/Reviewing_Code_for_OS_Injection).
+- OWASP [Reviewing Code for OS Injection](https://wiki.owasp.org/index.php/Reviewing_Code_for_OS_Injection).
 
 ## How to Test
 
-- [OWASP Testing Guide](https://www.owasp.org/index.php/OWASP_Testing_Project) article on [Testing for Command Injection](https://www.owasp.org/index.php/Testing_for_Command_Injection_%28OTG-INPVAL-013%29).
+- [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) article on [Testing for Command Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/12-Testing_for_Command_Injection.html).
 
 ## External References
 

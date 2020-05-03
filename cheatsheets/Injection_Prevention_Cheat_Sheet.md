@@ -1,6 +1,6 @@
 # Introduction
 
-This article is focused on providing clear, simple, actionable guidance for preventing the entire category of Injection flaws in your applications. Injection attacks, especially [SQL Injection](https://www.owasp.org/index.php/SQL_Injection), are unfortunately very common.
+This article is focused on providing clear, simple, actionable guidance for preventing the entire category of Injection flaws in your applications. Injection attacks, especially [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection), are unfortunately very common.
 
 Application accessibility is a very important factor in protection and prevention of injection flaws. Only the minority of all applications within a company/enterprise are developed in house, where as most applications are from external sources. Open source applications give at least the opportunity to fix problems, but closed source applications need a different approach to injection flaws.
 
@@ -58,7 +58,7 @@ Auditors should always look for uses of sp_execute, execute or exec within SQL S
 
 **Automated Exploitation**
 
-Most of the situation and techniques below here can be performed in a automated way using some tools. In this article the tester can find information how to perform an automated auditing using [SQLMap](https://www.owasp.org/index.php/Automated_Audit_using_SQLMap)
+Most of the situation and techniques below here can be performed in a automated way using some tools. In this article the tester can find information how to perform an automated auditing using [SQLMap](https://wiki.owasp.org/index.php/Automated_Audit_using_SQLMap)
 
 Equally Static Code Analysis Data flow rules can detect of unsanitized user controlled input can change the SQL query.
 
@@ -143,9 +143,9 @@ try {
 
 ### LDAP Injection
 
-LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements through techniques similar to [SQL Injection](https://www.owasp.org/index.php/SQL_Injection). LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. For more information on LDAP Injection attacks, visit [LDAP injection](https://www.owasp.org/index.php/LDAP_injection).
+LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements through techniques similar to [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection). LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. For more information on LDAP Injection attacks, visit [LDAP injection](https://owasp.org/www-community/attacks/LDAP_Injection).
 
-[LDAP injection](https://www.owasp.org/index.php/LDAP_injection) attacks are common due to two factors:
+[LDAP injection](https://owasp.org/www-community/attacks/LDAP_Injection) attacks are common due to two factors:
 
 1. The lack of safer, parameterized LDAP query interfaces
 2. The widespread use of LDAP to authenticate users to systems.
@@ -158,7 +158,7 @@ Please check for any queries to the LDAP escape special characters, see [here](L
 
 **Automated Exploitation**
 
-Scanner module of tool like OWASP [ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) have module to detect LDAP injection issue.
+Scanner module of tool like OWASP [ZAP](https://www.zaproxy.org/) have module to detect LDAP injection issue.
 
 #### Remediation
 

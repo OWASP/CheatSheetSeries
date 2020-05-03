@@ -18,7 +18,7 @@ When using data to build HTML, script, CSS, XML, JSON, etc. make sure you take i
 
 Data should be properly encoded before used in this manner to prevent injection style issues, and to make sure the logical meaning is preserved.
 
-[Check out the OWASP Java Encoder Project.](https://www.owasp.org/index.php/OWASP_Java_Encoder_Project)
+[Check out the OWASP Java Encoder Project.](https://owasp.org/www-project-java-encoder/)
 
 ### Don't rely on client logic for security
 
@@ -63,7 +63,7 @@ Take a look at the [Cross-Site Request Forgery (CSRF) Prevention](Cross-Site_Req
 
 #### Review AngularJS JSON Hijacking Defense Mechanism
 
-See the [JSON Vulnerability Protection](https://docs.angularjs.org/api/ng/service/$http) section of the AngularJS documentation.
+See the [JSON Vulnerability Protection](https://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection) section of the AngularJS documentation.
 
 #### Always return JSON with an Object on the outside
 

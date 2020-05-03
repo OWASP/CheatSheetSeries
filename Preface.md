@@ -11,7 +11,7 @@ You can download this site [here](bundle.zip).
 An ATOM feed is available [here](News.xml) with the latest updates.
 
 Project leaders:
-- [Jim Manico](https://www.owasp.org/index.php/User:Jmanico)
+- [Jim Manico](https://github.com/jmanico)
 - [Elie Saad](https://github.com/ThunderSon)
 
 Core team:

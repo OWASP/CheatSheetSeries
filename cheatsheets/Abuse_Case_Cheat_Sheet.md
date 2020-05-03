@@ -68,7 +68,7 @@ that lead to proper protection of these critical business use cases.
 
 There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).
 
-The project [OWASP Open SAMM](https://www.owasp.org/index.php/OWASP_SAMM_Project) proposes the following approach in the *Activity A* of the Security Practice *Threat Assessment* for the Maturity level 2:
+The project [OWASP Open SAMM](https://owasp.org/www-project-samm/) proposes the following approach in the *Activity A* of the Security Practice *Threat Assessment* for the Maturity level 2:
 
 ```
 Further considering the threats to the organization, conduct a more formal analysis to determine
@@ -91,7 +91,7 @@ phase. For existing projects, new requirements should be analyzed for potential 
 projects should opportunistically build abuse-cases for established functionality where practical.
 ```
 
-Open SAMM source: [Threat Assessment Level 2 Activity A](https://www.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2)
+Open SAMM source: [Threat Assessment Level 2 Activity A](https://wiki.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2)
 
 Another way to achieve the building of the list can be the following (more bottom-up and collaboratively oriented):
 
@@ -186,8 +186,8 @@ For each feature, follow this flow:
 
 If the presence of offensives is not possible then you can use the following references to identify the applicable attacks on your features:
 
--   [OWASP Automated Threats to Web Applications](https://www.owasp.org/index.php/OWASP_Automated_Threats_to_Web_Applications)
--   [OWASP Testing Guide](https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents)
+-   [OWASP Automated Threats to Web Applications](https://owasp.org/www-project-automated-threats-to-web-applications/)
+-   [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/stable/)
 -   [OWASP Mobile Testing Guide](https://github.com/OWASP/owasp-mstg)
 -   [Common Attack Pattern Enumeration and Classification (CAPEC)](https://capec.mitre.org/)
 
@@ -249,7 +249,7 @@ Adding automated tests also allow teams to track that countermeasures against th
 
 # Example of derivation of Abuse Cases as User Stories
 
-The following section show an example of derivation of Abuse Cases as User Stories, here using the [OWASP TOP 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) as input source.
+The following section show an example of derivation of Abuse Cases as User Stories, here using the [OWASP TOP 10](https://owasp.org/www-project-top-ten/) as input source.
 
 Threat Oriented Personas:
 
@@ -261,7 +261,7 @@ Threat Oriented Personas:
 
 *Epic:*
 
-Almost any source of data can be an injection vector, environment variables, parameters, external and internal web services, and all types of users. [Injection](https://www.owasp.org/index.php/Injection_Flaws) flaws occur when an attacker can send hostile data to an interpreter.
+Almost any source of data can be an injection vector, environment variables, parameters, external and internal web services, and all types of users. [Injection](https://owasp.org/www-community/Injection_Flaws) flaws occur when an attacker can send hostile data to an interpreter.
 
 *Abuse Case:*
 

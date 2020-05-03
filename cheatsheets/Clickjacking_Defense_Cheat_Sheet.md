@@ -1,6 +1,6 @@
 # Introduction
 
-This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://www.owasp.org/index.php/Clickjacking), also known as UI redress attacks.
+This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking), also known as UI redress attacks.
 
 There are three main mechanisms that can be used to defend against these attacks:
 
@@ -60,7 +60,7 @@ References:
 
 - [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/HTTP/X-Frame-Options)
 - [IETF Draft](http://datatracker.ietf.org/doc/draft-ietf-websec-x-frame-options/)
-- [X-Frame-Options Compatibility Test](http://erlend.oftedal.no/blog/tools/xframeoptions/) - Check this for the LATEST browser support info for the X-Frame-Options header
+- [X-Frame-Options Compatibility Test](https://erlend.oftedal.no/blog/tools/xframeoptions/) - Check this for the LATEST browser support info for the X-Frame-Options header
 
 ## Implementation
 
@@ -127,10 +127,6 @@ Then, delete that style by its ID immediately after in the script:
 ```
 
 This way, everything can be in the document HEAD and you only need one method/taglib in your API.
-
-Reference:
-
-- [https://www.codemagi.com/blog/post/194](http://web.archive.org/web/20170430064506/https://www.codemagi.com/blog/post/194)
 
 # window.confirm() Protection
 

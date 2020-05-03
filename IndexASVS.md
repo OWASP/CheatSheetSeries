@@ -91,7 +91,7 @@
 
 # Objective
 
-The objective of this index is to help an OWASP [Application Security Verification Standard](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project)  (ASVS) user clearly identify which cheat sheets are useful for each section during his or her usage of the ASVS.
+The objective of this index is to help an OWASP [Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/) (ASVS) user clearly identify which cheat sheets are useful for each section during his or her usage of the ASVS.
 
 This index is based on the version 4.x of the ASVS.
 

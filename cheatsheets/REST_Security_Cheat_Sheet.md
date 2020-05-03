@@ -86,7 +86,7 @@ In Java EE in particular, this can be difficult to implement properly. See [Bypa
 - Define an appropriate request size limit and reject requests exceeding the limit with HTTP response status 413 Request Entity Too Large.
 - Consider logging input validation failures. Assume that someone who is performing hundreds of failed input validations per second is up to no good.
 - Have a look at input validation cheat sheet for comprehensive explanation.
-- Use a secure parser for parsing the incoming messages. If you are using XML, make sure to use a parser that is not vulnerable to [XXE](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing) and similar attacks.
+- Use a secure parser for parsing the incoming messages. If you are using XML, make sure to use a parser that is not vulnerable to [XXE](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing) and similar attacks.
 
 # Validate content types
 
@@ -98,7 +98,7 @@ A REST request or response body should match the intended content type in the he
 
 - Reject requests containing unexpected or missing content type headers with HTTP response status `406 Unacceptable` or `415 Unsupported Media Type`.
 - For XML content types ensure appropriate XML parser hardening, see the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md).
-- Avoid accidentally exposing unintended content types by explicitly defining content types e.g. [Jersey](https://jersey.github.io/) (Java) `@consumes("application/json"); @produces("application/json")`. This avoids [XXE-attack](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing) vectors for example.
+- Avoid accidentally exposing unintended content types by explicitly defining content types e.g. [Jersey](https://jersey.github.io/) (Java) `@consumes("application/json"); @produces("application/json")`. This avoids [XXE-attack](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing) vectors for example.
 
 ## Send safe response content types
 
@@ -131,9 +131,9 @@ Services including script code (e.g. JavaScript) in their responses must be espe
 
 # Security headers
 
-To make sure the content of a given resources is interpreted correctly by the browser, the server should always send the `Content-Type` header with the correct content type, and preferably the `Content-Type` header should include a charset. The server should also send the `X-Content-Type-Options: nosniff` [security header](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers) to make sure the browser does not try to detect a different `Content-Type` than what is actually sent (can lead to XSS).
+To make sure the content of a given resources is interpreted correctly by the browser, the server should always send the `Content-Type` header with the correct content type, and preferably the `Content-Type` header should include a charset. The server should also send the `X-Content-Type-Options: nosniff` [security header](https://owasp.org/www-project-secure-headers/) to make sure the browser does not try to detect a different `Content-Type` than what is actually sent (can lead to XSS).
 
-Additionally the server should send the `X-Frame-Options: deny` [security header](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers) to protect against drag'n drop clickjacking attacks in older browsers.
+Additionally the server should send the `X-Frame-Options: deny` [security header](https://owasp.org/www-project-secure-headers/) to protect against drag'n drop clickjacking attacks in older browsers.
 
 # CORS
 

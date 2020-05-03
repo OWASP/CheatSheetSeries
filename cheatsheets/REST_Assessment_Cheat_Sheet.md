@@ -20,8 +20,8 @@ RESTful web services (often called simply REST) are a light weight variant of We
     - No application utilizes all the available functions and parameters exposed by the service
     - Those used are often activated dynamically by client side code and not as links in pages.
     - The client application is often not a web application and does not allow inspection of the activating link or even relevant code.
-- The parameters are none standard making it hard to determine what is just part of the URL or a constant header and what is a parameter worth [fuzzing](https://www.owasp.org/index.php/Fuzzing).
-- As a machine interface the number of parameters used can be very large, for example a JSON structure may include dozens of parameters. [fuzzing](https://www.owasp.org/index.php/Fuzzing) each one significantly lengthen the time required for testing.
+- The parameters are none standard making it hard to determine what is just part of the URL or a constant header and what is a parameter worth [fuzzing](https://owasp.org/www-community/Fuzzing).
+- As a machine interface the number of parameters used can be very large, for example a JSON structure may include dozens of parameters. [fuzzing](https://owasp.org/www-community/Fuzzing) each one significantly lengthen the time required for testing.
 - Custom authentication mechanisms require reverse engineering and make popular tools not useful as they cannot track a login session.
 
 # How to pentest a RESTful web service?
@@ -34,7 +34,7 @@ This information will ensure fuller coverage of the attack surface. Such informa
 - A developer guide for using the service may be less detailed but will commonly be found, and might even be considered *black box*.
 - Application source or configuration - in many frameworks, including dotNet ,the REST service definition might be easily obtained from configuration files rather than from code.
 
-Collect full requests using a [proxy](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) - while always an important pen testing step, this is more important for REST based applications as the application UI may not give clues on the actual attack surface. 
+Collect full requests using a [proxy](https://www.zaproxy.org/) - while always an important pen testing step, this is more important for REST based applications as the application UI may not give clues on the actual attack surface. 
 
 Note that the proxy must be able to collect full requests and not just URLs as REST services utilize more than just GET parameters.
 
@@ -52,13 +52,13 @@ Analyze collected requests to determine the attack surface:
 
 Verify non-standard parameters: in some cases (but not all), setting the value of a URL segment suspected of being a parameter to a value expected to be invalid can help determine if it is a path elements of a parameter. If a path element, the web server will return a *404* message, while for an invalid value to a parameter the answer would be an application level message as the value is legal at the web server level.
 
-Analyzing collected requests to optimize [fuzzing](https://www.owasp.org/index.php/Fuzzing) - after identifying potential parameters to fuzz, analyze the collected values for each to determine:
+Analyzing collected requests to optimize [fuzzing](https://owasp.org/www-community/Fuzzing) - after identifying potential parameters to fuzz, analyze the collected values for each to determine:
 
-- Valid vs. invalid values, so that [fuzzing](https://www.owasp.org/index.php/Fuzzing) can focus on marginal invalid values. 
+- Valid vs. invalid values, so that [fuzzing](https://owasp.org/www-community/Fuzzing) can focus on marginal invalid values. 
     - For example sending *0* for a value found to be always a positive integer.
 - Sequences allowing to fuzz beyond the range presumably allocated to the current user.
 
-Lastly, when [fuzzing](https://www.owasp.org/index.php/Fuzzing), don't forget to emulate the authentication mechanism used.
+Lastly, when [fuzzing](https://owasp.org/www-community/Fuzzing), don't forget to emulate the authentication mechanism used.
 
 # Related Resources
 

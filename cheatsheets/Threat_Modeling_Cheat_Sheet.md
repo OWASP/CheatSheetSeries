@@ -141,13 +141,17 @@ In this step, Data Flow Diagram should be divided in the context of Model, View,
 
 If you don’t like to manually draw your DFD; there are several tools available that could be used:
 
+#### OWASP Threat Dragon
+
+The OWASP [Threat Dragon project](https://owasp.org/www-project-threat-dragon/) is a cross platform tool that runs on Linux, MacOS and Windows 10. Threat Dragon (TD) is used to create threat model diagrams and to record possible threats and decide on their mitigations using STRIDE methodology. TD is both a [web application](https://github.com/mike-goodwin/owasp-threat-dragon/releases/tag/v1.1) and a [desktop application](https://github.com/mike-goodwin/owasp-threat-dragon-desktop/releases/tag/v1.1); in active development with version 1.1 released in March 2020.
+
 #### Poirot
 
 The Poirot tool isolates and diagnoses defects through fault modeling and simulation. Along with a carefully selected partitioning strategy, functional and sequential test pattern applications show success with circuits having a high degree of observability.
 
-#### MS Threat modeling
+#### MS TMT
 
-A tool that helps in finding threats in the design phase of software projects.
+The Microsoft Threat Modeling Tool (TMT) helps find threats in the design phase of software projects. It is one of the longest lived threat modeling tools, having been introduced as Microsoft SDL in 2008, and is actively supported; [version 7.3](https://aka.ms/threatmodelingtool) was released March 2020. It runs only on Windows 10 Anniversary Update or later, and so is difficult to use on MacOS or Linux.
 
 ## Define Data Flow over your DFD
 
@@ -183,8 +187,8 @@ Work on minimizing the number of threat agents by:
 
 The user of this cheat can depend on the following list of risks and threat libraries sources to define the possible threats an application might be facing:
 
-1.  Risks with [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project).
-2.  Testing Procedure with [OWASP ASVS](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project).
+1.  Risks with [OWASP Top 10](https://owasp.org/www-project-top-ten/).
+2.  Testing Procedure with [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/).
 3.  Risks with [SANS Top 25](https://www.sans.org/top25-software-errors).
 4.  Microsoft [STRIDE](https://en.wikipedia.org/wiki/STRIDE_%28security%29).
 
@@ -254,7 +258,7 @@ Application security risk assessments are not enough because they are very binar
 R = (T * V * P * I) / Countermeasures
 ```
 
-For more details [about PASTA](https://www.owasp.org/images/a/aa/AppSecEU2012_PASTA.pdf).
+For more details [about PASTA](https://owasp.org/www-pdf-archive/AppSecEU2012_PASTA.pdf).
 
 ## Rank Risks
 
