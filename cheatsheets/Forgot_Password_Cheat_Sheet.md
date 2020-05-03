@@ -56,7 +56,7 @@ The token needs to follow secure practices:
 4. Linked to the user requesting the token in the database
 5. One time use (should be removed from the database once used)
 
-After sending the URL token to the user through a side-channel, _e.g._ through email, the user will:
+After sending the URL token to the user through a side-channel, *e.g.* through email, the user will:
 
 1. Access the URL with the attached token.
 2. Set the token in a cookie (recommended), or the client-storage mechanism that your application uses.
