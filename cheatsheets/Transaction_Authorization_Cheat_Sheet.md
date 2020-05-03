@@ -46,7 +46,7 @@ If a transaction authentication process requires a user to enter transaction dat
 
 ## 1.2 Change of authorization token should be authorized using the current authorization token
 
-When a user is allowed to change authorization token by using the application interface, the operation should be authorized by using his current authorization credentials (as is the case with [password change procedure](https://www.owasp.org/index.php/Testing_for_weak_password_change_or_reset_functionalities_%28OTG-AUTHN-009%29#Test_Password_Change)). For example: when a user changes a phone number for SMS codes an authorization SMS code should be sent to the current phone number.
+When a user is allowed to change authorization token by using the application interface, the operation should be authorized by using his current authorization credentials (as is the case with [password change procedure](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/04-Authentication_Testing/09-Testing_for_Weak_Password_Change_or_Reset_Functionalities.html)). For example: when a user changes a phone number for SMS codes an authorization SMS code should be sent to the current phone number.
 
 ## 1.3 Change of authorization method should be authorized using the current authorization method
 
@@ -85,7 +85,7 @@ As for [all other security controls](https://cwe.mitre.org/data/definitions/602.
 
 To achieve this, security programming best practices should be applied, such as:
 
-- [Default deny](https://www.owasp.org/index.php/Positive_security_model).
+- [Default deny](https://wiki.owasp.org/index.php/Positive_security_model).
 - Avoiding debugging functionality in production code.
 
 To avoid tampering, additional safeguards should be considered. For example by cryptographically protecting the data for confidentiality and integrity and while decrypting and verifying the data server side.
@@ -117,7 +117,7 @@ Transaction authorization is usually performed in multiple steps, e.g.:
 5. The user responds with the authorization credentials.
 6. The application validates authorization and executes a transaction.
 
-An application should process such business logic flow in sequential step order and preventing a user from performing these steps out of order or in even skipping any of these steps (see [OWASP ASVS](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project) requirement **15.1**).
+An application should process such business logic flow in sequential step order and preventing a user from performing these steps out of order or in even skipping any of these steps (see [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/) requirement **15.1**).
 
 This should protect against attack techniques such as:
 
@@ -177,7 +177,7 @@ References and future reading:
 - Jakub Kałużny, Mateusz Olejarka: [Script-based Malware Detection in Online Banking Security Overview](http://www.securing.pl/en/script-based-malware-detection-in-online-banking-security-overview/index.html).
 - [List of websites and whether or not they support 2FA](https://twofactorauth.org/).
 - Laerte Peotta, Marcelo D. Holtz, Bernardo M. David, Flavio G. Deus, Rafael Timóteo de Sousa Jr: [A Formal Classification Of Internet Banking Attacks and Vulnerabilities](http://airccse.org/journal/jcsit/0211ijcsit13.pdf).
-- Marco Morana, Tony Ucedavelez: [Threat Modeling of Banking Malware-Based Attacks](https://www.owasp.org/images/5/5f/Marco_Morana_and_Tony_UV_-_Threat_Modeling_of_Banking_Malware.pdf).
-- OWASP [Anti-Malware - Knowledge Base](https://www.owasp.org/index.php/OWASP_Anti-Malware_-_Knowledge_Base).
-- OWASP [Anti-Malware Project - Awareness Program](https://www.owasp.org/index.php/OWASP_Anti-Malware_Project_-_Awareness_Program).
+- Marco Morana, Tony Ucedavelez: [Threat Modeling of Banking Malware-Based Attacks](https://owasp.org/www-pdf-archive/Marco_Morana_and_Tony_UV_-_Threat_Modeling_of_Banking_Malware.pdf).
+- OWASP [Anti-Malware - Knowledge Base](https://wiki.owasp.org/index.php/OWASP_Anti-Malware_-_Knowledge_Base).
+- OWASP [Anti-Malware Project - Awareness Program](https://wiki.owasp.org/index.php/OWASP_Anti-Malware_Project_-_Awareness_Program).
 - Arjan Blom , Gerhard de Koning Gans , Erik Poll , Joeri de Ruiter , and Roel Verdult: [Designed to Fail - A USB-Connected Reader for Online Banking](http://www.cs.ru.nl/~rverdult/Designed_to_Fail_A_USB-Connected_Reader_for_Online_Banking-NORDSEC_2012.pdf).

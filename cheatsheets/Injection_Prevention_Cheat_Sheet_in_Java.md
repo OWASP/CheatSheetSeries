@@ -6,7 +6,7 @@ Sample codes used in tips are located [here](https://github.com/righettod/inject
 
 # What is Injection ?
 
-[Injection](https://www.owasp.org/index.php/Top_10_2007-Injection_Flaws) in OWASP Top 10 is defined as following:
+[Injection](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection) in OWASP Top 10 is defined as following:
 
 *Consider anyone who can send untrusted data to the system, including external users, internal users, and administrators.*
 
@@ -159,7 +159,7 @@ Assert.assertTrue(host.isReachable(5000));
 
 ### References
 
-- [Command Injection](https://www.owasp.org/index.php/Command_Injection)
+- [Command Injection](https://owasp.org/www-community/attacks/Command_Injection)
 
 ## XML: XPath Injection
 
@@ -240,7 +240,7 @@ Assert.assertTrue(book.getTextContent().contains("Ralls, Kim"));
 
 ### References
 
-- [XPATH Injection](https://www.owasp.org/index.php/XPATH_Injection)
+- [XPATH Injection](https://owasp.org/www-community/attacks/XPATH_Injection)
 
 ## HTML/JavaScript/CSS
 
@@ -299,7 +299,7 @@ Assert.assertEquals(finalSafeOutputExpected, safeOutput);
 
 ### References
 
-- [XSS](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29)
+- [XSS](https://owasp.org/www-community/attacks/xss/)
 - [OWASP Java HTML Sanitizer](https://github.com/owasp/java-html-sanitizer)
 - [OWASP Java Encoder](https://github.com/owasp/owasp-java-encoder)
 - [Java RegEx](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html)
@@ -365,7 +365,7 @@ try(MongoClient mongoClient = new MongoClient()){
 
 ### References
 
-- [Testing for NoSQL injection](https://www.owasp.org/index.php/Testing_for_NoSQL_injection)
+- [Testing for NoSQL injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection.html)
 - [SQL and NoSQL Injection](https://ckarande.gitbooks.io/owasp-nodegoat-tutorial/content/tutorial/a1_-_sql_and_nosql_injection.html)
 - [No SQL, No Injection?](https://arxiv.org/ftp/arxiv/papers/1506/1506.04082.pdf)
 
@@ -373,7 +373,7 @@ try(MongoClient mongoClient = new MongoClient()){
 
 ### Symptom
 
-[Log Injection](https://www.owasp.org/index.php/Log_Injection) occurs when an application includes untrusted data in an application log message (e.g., an attacker can cause an additional log entry that looks like it came from a completely different user, if they can inject CRLF characters in the untrusted data). More information about this attack is available on the OWASP [Log Injection](https://www.owasp.org/index.php/Log_Injection) page.
+[Log Injection](https://owasp.org/www-community/attacks/Log_Injection) occurs when an application includes untrusted data in an application log message (e.g., an attacker can cause an additional log entry that looks like it came from a completely different user, if they can inject CRLF characters in the untrusted data). More information about this attack is available on the OWASP [Log Injection](https://owasp.org/www-community/attacks/Log_Injection) page.
 
 ### How to prevent
 
@@ -426,7 +426,7 @@ logger.info(logMessage);
 
 ### Example using Logback with the OWASP Security Logging library
 
-Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the [CRLFConverter](https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging), provided by the [OWASP Security Logging Project](https://www.owasp.org/index.php/OWASP_Security_Logging_Project), and the *-500msg* message size limit:
+Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the [CRLFConverter](https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging), provided by the [OWASP Security Logging Project](https://owasp.org/www-project-security-logging/), and the *-500msg* message size limit:
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>

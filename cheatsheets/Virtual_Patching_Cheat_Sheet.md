@@ -149,7 +149,7 @@ SecRule REQUEST_URI "@contains /wp-content/plugins/levelfourstorefront/scripts/a
 This virtual patch will inspect the `reqID` parameter value on the specified page and prevent any characters other than integers as input.
 
 - **Note** - You should make sure to assign rule IDs properly and track them in the bug tracking system.
-- **Caution**: There are numerous evasion vectors when creating virtual patches. Please consult the [OWASP Best Practices: Virtual Patching document](https://www.owasp.org/index.php/Virtual_Patching_Best_Practices) for a more thorough discussion on countering evasion methods.
+- **Caution**: There are numerous evasion vectors when creating virtual patches. Please consult the [OWASP Best Practices: Virtual Patching document](https://owasp.org/www-community/Virtual_Patching_Best_Practices) for a more thorough discussion on countering evasion methods.
 
 ### Negative Security (Blacklist) Virtual Patches
 
@@ -206,8 +206,8 @@ In order to accurately test out the newly created virtual patches, it may be nec
 
 - Web browser.
 - Command line web clients such as Curl and Wget.
-- Local Proxy Servers such as [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project).
-- [ModSecurity AuditViewer](http://www.jwall.org/web/audit/viewer.jsp) – which allows you to load a ModSecurity audit log file, manipulate it and then re-inject the data back into any web server.
+- Local Proxy Servers such as [OWASP ZAP](https://www.zaproxy.org/).
+- [ModSecurity AuditViewer](https://web.archive.org/web/20181011065823/http://www.jwall.org/web/audit/viewer.jsp) – which allows you to load a ModSecurity audit log file, manipulate it and then re-inject the data back into any web server.
 
 ## Testing Steps
 
@@ -223,5 +223,5 @@ In order to accurately test out the newly created virtual patches, it may be nec
 
 # References
 
-- [OWASP Virtual Patching Best Practices](https://www.owasp.org/index.php/Virtual_Patching_Best_Practices).
-- [OWASP Securing WebGoat with ModSecurity](https://www.owasp.org/index.php/Category:OWASP_Securing_WebGoat_using_ModSecurity_Project).
+- [OWASP Virtual Patching Best Practices](https://owasp.org/www-community/Virtual_Patching_Best_Practices).
+- [OWASP Securing WebGoat with ModSecurity](https://wiki.owasp.org/index.php/Category:OWASP_Securing_WebGoat_using_ModSecurity_Project).

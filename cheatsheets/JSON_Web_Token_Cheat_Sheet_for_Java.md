@@ -315,7 +315,7 @@ This attack occurs when an attacker has access to a token (or a set of tokens) a
 
 A way to protect against this attack is to cipher the token using, for example, a symmetric algorithm.
 
-It's also important to protect the ciphered data against attack like [Padding Oracle](https://www.owasp.org/index.php/Testing_for_Padding_Oracle_%28OTG-CRYPST-002%29) or any other attack using cryptanalysis.
+It's also important to protect the ciphered data against attack like [Padding Oracle](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle.html) or any other attack using cryptanalysis.
 
 In order to achieve all these goals, the *AES-[GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)* algorithm is used which provides *Authenticated Encryption with Associated Data*.
 
@@ -467,7 +467,7 @@ This occurs when an application stores the token in a manner exhibiting the foll
 1.  Add it as a *Bearer* HTTP `Authentication` header with JavaScript when calling services.
 1.  Add [fingerprint](JSON_Web_Token_Cheat_Sheet_for_Java.md#token-sidejacking) information to the token.
 
-By storing the token in browser *sessionStorage* container it exposes the token to being stolen through a XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#csp) to harden the execution context.
+By storing the token in browser *sessionStorage* container it exposes the token to being stolen through a XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) to harden the execution context.
 
 *Note:*
 

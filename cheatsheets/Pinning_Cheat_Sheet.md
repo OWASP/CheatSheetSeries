@@ -1,8 +1,8 @@
 # Introduction
 
-The Pinning Cheat Sheet is a technical guide to implementing certificate and public key pinning as discussed at the Virginia chapter's presentation [Securing Wireless Channels in the Mobile Space](https://www.owasp.org/images/8/8f/Securing-Wireless-Channels-in-the-Mobile-Space.ppt). This guide is focused on providing clear, simple, actionable guidance for securing the channel in a hostile environment where actors could be malicious and the conference of trust a liability.
+The Pinning Cheat Sheet is a technical guide to implementing certificate and public key pinning as discussed at the Virginia chapter's presentation [Securing Wireless Channels in the Mobile Space](https://wiki.owasp.org/images/8/8f/Securing-Wireless-Channels-in-the-Mobile-Space.ppt). This guide is focused on providing clear, simple, actionable guidance for securing the channel in a hostile environment where actors could be malicious and the conference of trust a liability.
 
-A verbose article is available at [Certificate and Public Key Pinning](https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning). The article includes additional topics, such as Alternatives to Pinning, Ephemeral Keys, Pinning Gaps, Revocation, and X509 Validation.
+A verbose article is available at [Certificate and Public Key Pinning](https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning). The article includes additional topics, such as Alternatives to Pinning, Ephemeral Keys, Pinning Gaps, Revocation, and X509 Validation.
 
 # What's the problem?
 
@@ -121,8 +121,8 @@ Otherwise, you can validate certificates by yourself using [ses.setCertificateVe
 
 # References
 
-- OWASP [Injection Theory](https://www.owasp.org/index.php/Injection_Theory)
-- OWASP [Data Validation](https://www.owasp.org/index.php/Data_Validation)
+- OWASP [Injection Theory](https://owasp.org/www-community/Injection_Theory)
+- OWASP [Data Validation](https://wiki.owasp.org/index.php/Data_Validation)
 - OWASP [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)
 - OWASP [Mobile Security Testing Guide](https://github.com/OWASP/owasp-mstg)
 - IETF [RFC 1421 (PEM Encoding)](http://www.ietf.org/rfc/rfc1421.txt)

@@ -1,14 +1,14 @@
 # Introduction
 
-This article provides a simple positive model for preventing [XSS](https://www.owasp.org/index.php/XSS) using output escaping/encoding properly. While there are a huge number of XSS attack vectors, following a few simple rules can completely defend against this serious attack.
+This article provides a simple positive model for preventing [XSS](https://owasp.org/www-community/attacks/xss/) using output escaping/encoding properly. While there are a huge number of XSS attack vectors, following a few simple rules can completely defend against this serious attack.
 
 This article does not explore the technical or business impact of XSS. Suffice it to say that it can lead to an attacker gaining the ability to do anything a victim can do through their browser.
 
-Both [reflected and stored XSS](https://www.owasp.org/index.php/XSS#Stored_and_Reflected_XSS_Attacks_) can be addressed by performing the appropriate validation and escaping on the server-side. [DOM Based XSS](https://www.owasp.org/index.php/DOM_Based_XSS) can be addressed with a special subset of rules described in the [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md).
+Both [reflected and stored XSS](https://owasp.org/www-community/attacks/xss/#stored-and-reflected-xss-attacks) can be addressed by performing the appropriate validation and escaping on the server-side. [DOM Based XSS](https://owasp.org/www-community/attacks/DOM_Based_XSS) can be addressed with a special subset of rules described in the [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md).
 
-For a cheatsheet on the attack vectors related to XSS, please refer to the [XSS Filter Evasion Cheat Sheet](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet). More background on browser security and the various browsers can be found in the [Browser Security Handbook](https://code.google.com/archive/p/browsersec/).
+For a cheatsheet on the attack vectors related to XSS, please refer to the [XSS Filter Evasion Cheat Sheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet). More background on browser security and the various browsers can be found in the [Browser Security Handbook](https://code.google.com/archive/p/browsersec/).
 
-Before reading this cheatsheet, it is important to have a fundamental understanding of [Injection Theory](https://www.owasp.org/index.php/Injection_Theory).
+Before reading this cheatsheet, it is important to have a fundamental understanding of [Injection Theory](https://owasp.org/www-community/Injection_Theory).
 
 ## A Positive XSS Prevention Model
 
@@ -31,7 +31,7 @@ Writing these encoders is not tremendously difficult, but there are quite a few 
 
 Microsoft provides an encoding library named the [Microsoft Anti-Cross Site Scripting Library](https://archive.codeplex.com/?p=wpl) for the .NET platform and ASP.NET Framework has built-in [ValidateRequest](https://msdn.microsoft.com/en-us/library/ms972969.aspx#securitybarriers_topic6) function that provides **limited** sanitization.
 
-The [OWASP Java Encoder Project](https://www.owasp.org/index.php/OWASP_Java_Encoder_Project) provides a high-performance encoding library for Java.
+The [OWASP Java Encoder Project](https://owasp.org/www-project-java-encoder/) provides a high-performance encoding library for Java.
 
 # XSS Prevention Rules
 
@@ -174,7 +174,7 @@ Except for alphanumeric characters, escape all characters less than 256 with the
 
 If an event handler is properly quoted, breaking out requires the corresponding quote. However, we have intentionally made this rule quite broad because event handler attributes are often left unquoted. Unquoted attributes can be broken out of with many characters including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`.
 
-Also, a `</script>` closing tag will close a script block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note this is an aggressive escaping policy that over-encodes. If there is a guarantee that proper quoting is accomplished then a much smaller character set is needed. Please look at the [OWASP Java Encoder](https://www.owasp.org/index.php/OWASP_Java_Encoder_Project#tab=Use_the_Java_Encoder_Project) JavaScript escaping examples for examples of proper JavaScript use that requires minimal escaping.
+Also, a `</script>` closing tag will close a script block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note this is an aggressive escaping policy that over-encodes. If there is a guarantee that proper quoting is accomplished then a much smaller character set is needed. Please look at the [OWASP Java Encoder](https://wiki.owasp.org/index.php/OWASP_Java_Encoder_Project#tab=Use_the_Java_Encoder_Project) JavaScript escaping examples for examples of proper JavaScript use that requires minimal escaping.
 
 ### RULE \#3.1 - HTML escape JSON values in an HTML context and read the data with JSON.parse
 
@@ -311,7 +311,7 @@ If your application handles markup -- untrusted input that is supposed to contai
 
 **[HtmlSanitizer](https://github.com/mganss/HtmlSanitizer)**
 
-An open-source .Net library. The HTML is cleaned with a white list approach. All allowed tags and attributes can be configured. The library is unit tested with the OWASP [XSS Filter Evasion Cheat Sheet](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet)
+An open-source .Net library. The HTML is cleaned with a white list approach. All allowed tags and attributes can be configured. The library is unit tested with the OWASP [XSS Filter Evasion Cheat Sheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet)
 
 ```csharp
 var sanitizer = new HtmlSanitizer();
@@ -319,7 +319,7 @@ sanitizer.AllowedAttributes.Add("class");
 var sanitized = sanitizer.Sanitize(html);
 ```
 
-**[OWASP Java HTML Sanitizer](https://www.owasp.org/index.php/OWASP_Java_HTML_Sanitizer_Project)**
+**[OWASP Java HTML Sanitizer](https://owasp.org/www-project-java-html-sanitizer/)**
 
 ```java
 import org.owasp.html.Sanitizers;
@@ -354,7 +354,7 @@ For details on what DOM-based XSS is, and defenses against this type of XSS flaw
 
 ## Bonus Rule \#1: Use HTTPOnly cookie flag
 
-Preventing all XSS flaws in an application is hard, as you can see. To help mitigate the impact of an XSS flaw on your site, OWASP also recommends you set the HTTPOnly flag on your session cookie and any custom cookies you have that are not accessed by any JavaScript you wrote. This cookie flag is typically on by default in .NET apps, but in other languages you have to set it manually. For more details on the HTTPOnly cookie flag, including what it does, and how to use it, see the OWASP article on [HTTPOnly](https://www.owasp.org/index.php/HTTPOnly).
+Preventing all XSS flaws in an application is hard, as you can see. To help mitigate the impact of an XSS flaw on your site, OWASP also recommends you set the HTTPOnly flag on your session cookie and any custom cookies you have that are not accessed by any JavaScript you wrote. This cookie flag is typically on by default in .NET apps, but in other languages you have to set it manually. For more details on the HTTPOnly cookie flag, including what it does, and how to use it, see the OWASP article on [HTTPOnly](https://owasp.org/www-community/HttpOnly).
 
 ## Bonus Rule \#2: Implement Content Security Policy
 
@@ -432,21 +432,21 @@ The purpose of output encoding (as it relates to Cross Site Scripting) is to con
 
 The following article describes how to exploit different kinds of XSS Vulnerabilities that this article was created to help you avoid:
 
-- OWASP: [XSS Filter Evasion Cheat Sheet](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet) - Based on - [RSnake's: "XSS Cheat Sheet"](https://www.in-secure.org/misc/xss/xss.html).
+- OWASP: [XSS Filter Evasion Cheat Sheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet).
 
 **Description of XSS Vulnerabilities**
 
-- OWASP article on [XSS](https://www.owasp.org/index.php/XSS) Vulnerabilities.
+- OWASP article on [XSS](https://owasp.org/www-community/attacks/xss/) Vulnerabilities.
 
 **Discussion on the Types of XSS Vulnerabilities**
 
-- [Types of Cross-Site Scripting](https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting).
+- [Types of Cross-Site Scripting](https://owasp.org/www-community/Types_of_Cross-Site_Scripting).
 
 **How to Review Code for Cross-site scripting Vulnerabilities**
 
-- [OWASP Code Review Guide](https://www.owasp.org/index.php/:Category:OWASP_Code_Review_Project) article on [Reviewing Code for Cross-site scripting](https://www.owasp.org/index.php/Reviewing_Code_for_Cross-site_scripting) Vulnerabilities.
+- [OWASP Code Review Guide](https://owasp.org/www-project-code-review-guide/) article on [Reviewing Code for Cross-site scripting](https://wiki.owasp.org/index.php/Reviewing_Code_for_Cross-site_scripting) Vulnerabilities.
 
 **How to Test for Cross-site scripting Vulnerabilities**
 
-- [OWASP Testing Guide](https://www.owasp.org/index.php/:Category:OWASP_Testing_Project) article on [Testing for Cross site scripting](https://www.owasp.org/index.php/Testing_for_Cross_site_scripting) Vulnerabilities.
-- [XSS Experimental Minimal Encoding Rules](https://www.owasp.org/index.php/XSS_Experimental_Minimal_Encoding_Rules)
+- [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) article on [Testing for Cross site scripting](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/11-Client_Side_Testing/README.html) Vulnerabilities.
+- [XSS Experimental Minimal Encoding Rules](https://wiki.owasp.org/index.php/XSS_Experimental_Minimal_Encoding_Rules)

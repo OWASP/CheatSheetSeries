@@ -1,0 +1,41 @@
+name: Markdown Link Check
+
+on:
+  push:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+    - name: Setup Action
+      uses: actions/checkout@v1
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Install dependencies
+      run: npm install -g markdown-link-check
+    - name: Run link check
+      run: npm run-script link-check
+    - name: Show broken links
+      if: failure()
+      run: |
+        cat log | awk -v RS="FILE:" 'match($0, /(\S*\.md).*\[✖\].*(\d*\slinks\schecked\.)(.*)/, arr ) { print "FILE:"arr[1] arr[3] > "brokenlinks"}'
+        rm -f err log
+        cat brokenlinks
+        links=`cat brokenlinks`
+        links="${links//'%'/'%25'}"
+        links="${links//$'\n'/'%0A'}"
+        links="${links//$'\r'/'%0D'}"
+        echo ::set-output name=links::**Following links are broken:** %0A$links
+    - name: Send comment to PR with broken links
+      if: failure() && github.event_name == 'pull_request'
+      uses: thollander/actions-comment-pull-request@master
+      with:
+        message: ${{ steps.brokenlinks.outputs.links }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
