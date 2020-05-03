@@ -100,3 +100,5 @@ These codes should be designed securely:
 - Send the user an email that their password has been reset.
 - Ask the user to re-login. Don't auto-login users on password reset!
 - Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
+- Employ proper [Input Validation](Input_Validation_Cheat_Sheet.md).
+- Employ security measures to prevent brute-force attacks, such as rate limiting and Captchas.
