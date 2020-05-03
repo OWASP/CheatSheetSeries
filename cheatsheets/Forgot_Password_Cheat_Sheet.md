@@ -65,6 +65,8 @@ After sending the URL token to the user through a side-channel, *e.g.* through e
 
 ### Security Questions
 
+> This method should not be used as the sole method to reset a password or MFA, and should be used in conjunction with other methods.
+
 Kindly refer to the [Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) for further guidance.
 
 ### Pin Codes
