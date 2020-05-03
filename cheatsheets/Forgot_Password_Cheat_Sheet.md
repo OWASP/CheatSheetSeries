@@ -71,7 +71,17 @@ Kindly refer to the [Security Questions Cheat Sheet](Choosing_and_Using_Security
 
 ### Backup Codes
 
-<!--Under study to provide good practices that are being used-->
+Backup codes should be provided to the user upon registering their MFA method and the user should store them offline in a secure place (password managers). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
+
+These codes should be designed securely:
+
+- Minimum length of 8 digits, 12 for improved security.
+- Randomly generated and unique (CSPRNG use is recommended).
+- Should be stored in a secure fashion, refer to the [Password Storage CS](Password_Storage_Cheat_Sheet.md) for secure practices.
+  - If the service allows users to view the backup codes, the codes should be [securely stored](Cryptographic_Storage_Cheat_Sheet.md) and access should only happen in an authenticated session after asking for a user identifier (password, email token, etc.).
+- One time use.
+- Linked to the user.
+- A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
 
 ## Operational Tasks
 
