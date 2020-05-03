@@ -4,7 +4,7 @@
 
 In order to implement a proper user management system, almost all systems integrate a **Forgot Password/MFA?** service, which allows the user to request a reset to their password or MFA whenever they forget any of them, or if their account ever gets breached.
 
-As much as is this functionality looks straight-forward and easy to implement, the details of its implementation makes it a sweet spot for security attacks, such as the renowned [user enumeration attack](https://www.owasp.org/index.php/Testing_for_User_Enumeration_and_Guessable_User_Account_%28OWASP-AT-002%29).
+As much as is this functionality looks straight-forward and easy to implement, the details of its implementation makes it a sweet spot for security attacks, such as the renowned [user enumeration attack](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.html).
 
 The following short guidelines can be used as a quick reference to protect the forgot password or MFA service:
 
@@ -49,7 +49,7 @@ OTP is the best method in order to implement a secure forgot password service th
 
 The two most famous methods are Time-OTP ([TOTP](https://tools.ietf.org/html/rfc6238)), or HMAC-OTP ([HOTP](https://tools.ietf.org/html/rfc4226)). The main difference is in the counter, where TOTP focuses on the Unix time, and HOTP has a counter that gets incremented on every user call to generate the OTP.
 
-For a better description of OTP generation, refer to the [MFA CS](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html#something-you-have), where the pros and cons of every implementation are provided.
+For a better description of OTP generation, refer to the [MFA CS](Multifactor_Authentication_Cheat_Sheet#something-you-have), where the pros and cons of every implementation are provided.
 
 One implementation can be found over for [Authy](https://www.twilio.com/docs/authy/tutorials/two-factor-authentication-python-flask). If you don't want to rely on applications (such as Authy, Google/Microsoft Authenticator, etc.), you can generate QR codes and send them from the server for the user to scan using their device. The following python library, [pyotp](https://github.com/pyauth/pyotp), helps the developer implement any of the methods discussed in this section.
 
