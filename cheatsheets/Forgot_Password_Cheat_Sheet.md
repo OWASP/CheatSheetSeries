@@ -49,7 +49,7 @@ OTP is the best method in order to implement a secure forgot password service th
 
 The two most famous methods are Time-OTP ([TOTP](https://tools.ietf.org/html/rfc6238)), or HMAC-OTP ([HOTP](https://tools.ietf.org/html/rfc4226)). The main difference is in the counter, where TOTP focuses on the Unix time, and HOTP has a counter that gets incremented on every user call to generate the OTP.
 
-For a better description of OTP generation, refer to the [MFA CS](Multifactor_Authentication_Cheat_Sheet#something-you-have), where the pros and cons of every implementation are provided.
+For a better description of OTP generation, refer to the [MFA CS](Multifactor_Authentication_Cheat_Sheet.md#something-you-have), where the pros and cons of every implementation are provided.
 
 One implementation can be found over for [Authy](https://www.twilio.com/docs/authy/tutorials/two-factor-authentication-python-flask). If you don't want to rely on applications (such as Authy, Google/Microsoft Authenticator, etc.), you can generate QR codes and send them from the server for the user to scan using their device. The following python library, [pyotp](https://github.com/pyauth/pyotp), helps the developer implement any of the methods discussed in this section.
 
