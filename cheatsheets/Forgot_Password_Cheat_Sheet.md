@@ -28,6 +28,8 @@ This can be done through any of the following methods:
 - Security Questions.
 - Offline backup codes.
 
+> These methods can be used together, and it is recommended most of the times. Make sure that the user always have a mean to recover their account.
+
 ## Methods Implementation
 
 In order to implement the forgot password service, the developer needs to choose one of the proposed [methods](#methods).
@@ -88,3 +90,4 @@ These codes should be designed securely:
 - Ask the user if they want to invaldiate all of the sessions, or invalidate the sessions by default without prompting the user.
 - Send the user an email that their password has been reset.
 - Ask the user to re-login. Don't auto-login users on password reset!
+- Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
