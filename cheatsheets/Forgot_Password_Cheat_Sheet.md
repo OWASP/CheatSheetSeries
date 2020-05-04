@@ -39,6 +39,28 @@ This can be done through any of the following methods:
 
 > These methods can be used together and many times it is recommended to do so. No matter what you must ensure that a user always has a way to recover their account.
 
+## Tokens and Codes Secure Practices
+
+It is essential to employ security practices for the reset codes and tokens that will be used in the methods.
+
+**Common secure practices**:
+
+- Randomly generated with a [CSPRNG](https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator) (*e.g.* [secrets](https://docs.python.org/3/library/secrets.html) library in Python).
+- Short lifetime (*e.g.* 30 minutes).
+- Linked to the user requesting the token in the database.
+- One time use (should be removed from the database once used).
+- Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
+
+**Tokens secure practices**:
+
+- Long enough to avoid brute-force attacks (16 characters should be the minimum used).
+
+**Codes secure practices**:
+
+- Minimum length of 8 digits, 12 for improved security.
+- If the service allows users to view the backup codes, the codes should be [securely stored](Cryptographic_Storage_Cheat_Sheet.md) and access should only happen in an authenticated session after asking for a user identifier (password, email token, etc.).
+- A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
+
 ## Methods Implementation
 
 In order to implement the forgot password service, the developer needs to choose one of the proposed [methods](#methods).
@@ -59,14 +81,6 @@ One implementation can be found over for [Authy](https://www.twilio.com/docs/aut
 
 URL tokens provide access control to the user by sending a URL with a token appended in the querystring.
 
-The token needs to follow secure practices:
-
-- Randomly generated with a [CSPRNG](https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator) (*e.g.* [secrets](https://docs.python.org/3/library/secrets.html) library in Python).
-- Long enough to avoid brute-force attacks (16 characters (128 bits) should be the minimum used).
-- Short token lifetime (*e.g.* 30 minutes).
-- Linked to the user requesting the token in the database.
-- One time use (should be removed from the database once used).
-
 After sending the URL token to the user through a side-channel, *e.g.* through email, the user will:
 
 1. Access the URL with the attached token.
@@ -84,21 +98,11 @@ Kindly refer to the [Security Questions Cheat Sheet](Choosing_and_Using_Security
 
 Backup codes should be provided to the user upon registering their MFA method and the user should store them offline in a secure place (password managers). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
 
-These codes should be designed securely:
-
-- Minimum length of 8 digits, 12 for improved security.
-- Randomly generated and unique (CSPRNG use is recommended).
-- Should be stored in a secure fashion, refer to the [Password Storage CS](Password_Storage_Cheat_Sheet.md) for secure practices.
-  - If the service allows users to view the backup codes, the codes should be [securely stored](Cryptographic_Storage_Cheat_Sheet.md) and access should only happen in an authenticated session after asking for a user identifier (password, email token, etc.).
-- One time use.
-- Linked to the user.
-- A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
 
 ## Operational Tasks
 
 - Ask the user if they want to invalidate all of the sessions, or invalidate the sessions by default without prompting the user.
 - Send the user an email that their password has been reset.
 - Ask the user to re-login. Don't auto-login users on password reset!
-- Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
 - Employ proper [Input Validation](Input_Validation_Cheat_Sheet.md).
 - Employ security measures to prevent brute-force attacks, such as rate limiting and Captchas.
