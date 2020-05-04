@@ -393,9 +393,7 @@ Also remember to keep your framework updated to the latest version with all poss
 
 ## X-XSS-Protection Header
 
-The `X-XSS-Protection` header has been deprecated by modern browsers and its use can introduce additional security issues. As such, it is no longer recommended and should be disabled (X-XSS-Protection: 0).
-
-For references:
+The `X-XSS-Protection` header has been deprecated by modern browsers and its use can introduce **additional** security issues on the client side. As such, it is recommended to set the header as `X-XSS-Protection: 0` in order to disable the XSS Auditor, and not allow it to take the default behavior of the browser handling the response. Check the below references for a better understanding on this topic:
 
 - [Google Chrome’s XSS Auditor goes back to filter mode](https://portswigger.net/daily-swig/google-chromes-xss-auditor-goes-back-to-filter-mode)
 - [Chrome removed the XSS Auditor](https://www.chromestatus.com/feature/5021976655560704)
