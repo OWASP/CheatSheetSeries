@@ -408,12 +408,9 @@ helmet.xframe('sameorigin'); // SAMEORIGIN
 helmet.xframe('allow-from', 'http://alloweduri.com'); //ALLOW-FROM uri
 ```
 
-- **[X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection):** As described in [XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#bonus-rule-4-use-the-x-xss-protection-response-header), this header enables browsers to stop loading pages when browsers detect reflected cross-site scripting attacks. In order to implement this header in your application, you can use the following code:
+- **[X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection):** As described in the [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md#x-xss-protection-header), this header should be set to `0` to disable the XSS Auditor.
 
-```JavaScript
-var xssFilter = require('x-xss-protection');
-app.use(xssFilter());
-```
+> An [issue](https://github.com/helmetjs/x-xss-protection/issues/14) was created in the [helmetjs](https://github.com/helmetjs/) project to be able to set the header to `0`. Once it's updated, this section will be updated to inform the user to disable the XSS auditor properly using helmetjs.
 
 - **[X-Content-Type-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options):** Even if the server sets a valid `Content-Type` header in the response, browsers may try to sniff the MIME type of the requested resource. This header is a way to stop this behavior and tell the browser not to change MIME types specified in `Content-Type` header. It can be configured in the following way:
 

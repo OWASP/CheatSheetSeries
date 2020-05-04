@@ -372,13 +372,7 @@ Will instruct web browser to load all resources only from the page's origin and 
 
 Many web application frameworks provide automatic contextual escaping functionality such as [AngularJS strict contextual escaping](https://docs.angularjs.org/api/ng/service/$sce) and [Go Templates](https://golang.org/pkg/html/template/). Use these technologies when you can.
 
-## Bonus Rule \#4: Use the X-XSS-Protection Response Header
-
-This HTTP [response header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) enables the Cross-site scripting (XSS) filter built into some modern web browsers. This header is usually enabled by default anyway, so the role of this header is to re-enable the filter for this particular website if it was disabled by the user.
-
-Note that Firefox never supported X-XSS-Protection and Chrome and Edge have announced they are dropping support for it.
-
-## Bonus Rule \#5: Properly use modern JS frameworks
+## Bonus Rule \#4: Properly use modern JS frameworks
 
 Modern JavaScript frameworks have pretty good XSS protection built in.
 Usually framework API allows bypassing that protection in order to render unescaped HTML or include executable code.
@@ -395,7 +389,18 @@ If you **really** have to use them remember that now all the data must be [sanit
 
 Avoid template injection in Angular by building with `--prod` parameter (`ng build --prod`).
 
-Also remember to keep your framework updated to the latest version with all possible bug fixes. 
+Also remember to keep your framework updated to the latest version with all possible bug fixes.
+
+## X-XSS-Protection Header
+
+The `X-XSS-Protection` header has been deprecated by modern browsers and its use can introduce **additional** security issues on the client side. As such, it is recommended to set the header as `X-XSS-Protection: 0` in order to disable the XSS Auditor, and not allow it to take the default behavior of the browser handling the response. Check the below references for a better understanding on this topic:
+
+- [Google Chrome’s XSS Auditor goes back to filter mode](https://portswigger.net/daily-swig/google-chromes-xss-auditor-goes-back-to-filter-mode)
+- [Chrome removed the XSS Auditor](https://www.chromestatus.com/feature/5021976655560704)
+- [Firefox does not implement the XSSAuditor](https://bugzilla.mozilla.org/show_bug.cgi?id=528661)
+- [Edge retired their XSS filter](https://blogs.windows.com/windowsexperience/2018/07/25/announcing-windows-10-insider-preview-build-17723-and-build-18204/)
+- [OWASP ZAP deprecated the scan for the header](https://github.com/zaproxy/zaproxy/issues/5849)
+- [SecurityHeaders.com no longer scans for the header](https://scotthelme.co.uk/security-headers-updates/#removing-the-x-xss-protection-header)
 
 # XSS Prevention Rules Summary
 
