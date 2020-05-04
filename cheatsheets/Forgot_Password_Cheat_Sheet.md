@@ -4,7 +4,7 @@
 
 In order to implement a proper user management system, almost all systems integrate a **Forgot Password/MFA?** service, which allows the user to request a reset to their password or MFA whenever they forget any of them, or if their account ever gets breached.
 
-As much as is this functionality looks straight-forward and easy to implement, the details of its implementation makes it a sweet spot for security attacks, such as the renowned [user enumeration attack](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.html).
+Even though this functionality looks straightforward and easy to implement, the details of its implementation makes it a sweet spot for security attacks, such as the renowned [user enumeration attack](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.html).
 
 The following short guidelines can be used as a quick reference to protect the forgot password or MFA service:
 
@@ -28,7 +28,7 @@ The following short guidelines can be used as a quick reference to protect the f
 
 ## Methods
 
-In order to allow a user to request a password or MFA reset, you will need to have some way to identify the user, or a mean to reach out to them through a side-channel.
+In order to allow a user to request a password or MFA reset, you will need to have some way to identify the user, or a means to reach out to them through a side-channel.
 
 This can be done through any of the following methods:
 
@@ -37,7 +37,7 @@ This can be done through any of the following methods:
 - Security Questions.
 - Offline backup codes.
 
-> These methods can be used together, and it is recommended most of the times. Make sure that the user always have a mean to recover their account.
+> These methods can be used together and many times it is recommended to do so. No matter what you must ensure that a user always has a way to recover their account.
 
 ## Methods Implementation
 
@@ -53,7 +53,7 @@ For a better description of OTP generation, refer to the [MFA CS](Multifactor_Au
 
 One implementation can be found over for [Authy](https://www.twilio.com/docs/authy/tutorials/two-factor-authentication-python-flask). If you don't want to rely on applications (such as Authy, Google/Microsoft Authenticator, etc.), you can generate QR codes and send them from the server for the user to scan using their device. The following python library, [pyotp](https://github.com/pyauth/pyotp), helps the developer implement any of the methods discussed in this section.
 
-> OTPs can be sent through other channels as well, such as emails and SMSs. Various attacks and weaknesses have been identified in SMS that it is preferrable not to use them for OTPs.
+> OTPs can be sent through other channels as well, such as emails and SMSs. [Various attacks and weaknesses](https://en.wikipedia.org/wiki/SIM_swap_scam) have been identified in SMS that it is [preferrable not to use them for OTPs](https://auth0.com/blog/why-sms-multi-factor-still-matters/).
 
 ### URL Tokens
 
@@ -96,7 +96,7 @@ These codes should be designed securely:
 
 ## Operational Tasks
 
-- Ask the user if they want to invaldiate all of the sessions, or invalidate the sessions by default without prompting the user.
+- Ask the user if they want to invalidate all of the sessions, or invalidate the sessions by default without prompting the user.
 - Send the user an email that their password has been reset.
 - Ask the user to re-login. Don't auto-login users on password reset!
 - Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
