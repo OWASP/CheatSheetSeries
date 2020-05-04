@@ -26,6 +26,36 @@ The following short guidelines can be used as a quick reference to protect the f
     + [Backup Codes](#backup-codes)
   * [Operational Tasks](#operational-tasks)
 
+## Forgot Password Service
+
+The service providing the Forgot Password functionality should follow secure practices on three stages.
+
+> Security considerations for properly handling tokens and codes on the backend are discussed in the [methods' implementation](#methods-implementation) section.
+
+### Forgot Password Request
+
+The user uses the forgot password service and inputs their username or email. To ensure the security on this stage, the below should implemented:
+
+- Unified user message, whether the user exists or not.
+- Unified time for the user response. A quick exit method should not be used if a user doesn't exist and an email is not sent.
+- Rate-limiting (*e.g.* Captchas, blocking IPs for a period of time, etc.) to protect the application against brute-force attacks.
+- Employ proper [Input Validation](Input_Validation_Cheat_Sheet.md) on the sent field.
+
+### Code or Token Insertion
+
+After a user uses the service to reset their password, a code or token is provided to the user following one of the [methods](#methods) discussed later on in this document. In order to securely handle that token or code once the user inserts it, the same security practices employed for the [forgot password request](#forgot-password-request) should be used.
+
+### User Resets Password
+
+Once the user is validated through the provided token or code, they should reset their password to a new secure one. In order to secure this last step, the measures should be taken:
+
+- Validate that a secure password policy is in place.
+- The user should confirm the password they set by writing it twice.
+- Update and store the password following [secure practices](Password_Storage_Cheat_Sheet.md).
+- Send the user an email informing them that their password has been reset.
+- Ask the user to re-login. Don't auto-login users on password reset!
+- Ask the user if they want to invalidate all of the sessions, or invalidate the sessions by default without prompting the user.
+
 ## Methods
 
 In order to allow a user to request a password reset, you will need to have some way to identify the user, or a means to reach out to them through a side-channel.
@@ -99,11 +129,3 @@ Kindly refer to the [Security Questions Cheat Sheet](Choosing_and_Using_Security
 ### Backup Codes
 
 Backup codes should be provided to the user upon registering where the user should store them offline in a secure place (password managers). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
-
-## Operational Tasks
-
-- Ask the user if they want to invalidate all of the sessions, or invalidate the sessions by default without prompting the user.
-- Send the user an email that their password has been reset.
-- Ask the user to re-login. Don't auto-login users on password reset!
-- Employ proper [Input Validation](Input_Validation_Cheat_Sheet.md).
-- Employ security measures to prevent brute-force attacks, such as rate limiting and Captchas.
