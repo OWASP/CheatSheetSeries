@@ -1,16 +1,16 @@
-# Forgot Password and MFA Cheat Sheet
+# Forgot Password Cheat Sheet
 
 ## Introduction
 
-In order to implement a proper user management system, almost all systems integrate a **Forgot Password/MFA?** service, which allows the user to request a reset to their password or MFA whenever they forget any of them, or if their account ever gets breached.
+In order to implement a proper user management system, almost all systems integrate a **Forgot Password?** service, which allows the user to request a reset to their password whenever they forget any of them, or if their account ever gets breached.
 
 Even though this functionality looks straightforward and easy to implement, the details of its implementation makes it a sweet spot for security attacks, such as the renowned [user enumeration attack](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.html).
 
-The following short guidelines can be used as a quick reference to protect the forgot password or MFA service:
+The following short guidelines can be used as a quick reference to protect the forgot password service:
 
 - **Unified user message, whether the user exists or not.**
 - **Ensure that the time taken for the user response message is uniform.**
-- **Use a side-channel to communicate the method to reset their password or MFA.**
+- **Use a side-channel to communicate the method to reset their password.**
 - **For critical services and applications, MFA should be used.**
 
 ## Content
@@ -28,7 +28,7 @@ The following short guidelines can be used as a quick reference to protect the f
 
 ## Methods
 
-In order to allow a user to request a password or MFA reset, you will need to have some way to identify the user, or a means to reach out to them through a side-channel.
+In order to allow a user to request a password reset, you will need to have some way to identify the user, or a means to reach out to them through a side-channel.
 
 This can be done through any of the following methods:
 
@@ -67,7 +67,7 @@ In order to implement the forgot password service, the developer needs to choose
 
 ### One Time Password
 
-OTP is the best method in order to implement a secure forgot password service that triggers as a 2FA functionality.
+One Time Password (OTP) is the best method in order to implement a secure forgot password service that triggers as a 2FA functionality.
 
 The two most famous methods are Time-OTP ([TOTP](https://tools.ietf.org/html/rfc6238)), or HMAC-OTP ([HOTP](https://tools.ietf.org/html/rfc4226)). The main difference is in the counter, where TOTP focuses on the Unix time, and HOTP has a counter that gets incremented on every user call to generate the OTP.
 
@@ -77,11 +77,13 @@ One implementation can be found over for [Authy](https://www.twilio.com/docs/aut
 
 > OTPs can be sent through other channels as well, such as emails and SMSs. [Various attacks and weaknesses](https://en.wikipedia.org/wiki/SIM_swap_scam) have been identified in SMS that it is [preferrable not to use them for OTPs](https://auth0.com/blog/why-sms-multi-factor-still-matters/).
 
-### URL Tokens
+### URL Tokens or Codes
 
-URL tokens provide access control to the user by sending a URL with a token appended in the querystring.
+URL tokens provide access control to the user by sending a URL with a token appended in the querystring, or by sending a code. They are both sent through a side-channel, *e.g.* email.
 
-After sending the URL token to the user through a side-channel, *e.g.* through email, the user will:
+If a code is provided to the user, the user will have to provide that code manually to the application.
+
+If a URL with a token is provided to the user, the user will have to follow the below steps:
 
 1. Access the URL with the attached token.
 2. Set the token in a cookie (recommended), or the client-storage mechanism that your application uses.
@@ -90,14 +92,13 @@ After sending the URL token to the user through a side-channel, *e.g.* through e
 
 ### Security Questions
 
-> This method should not be used as the sole method to reset a password or MFA, and should be used in conjunction with other methods.
+> This method should not be used as the sole method to reset a password, and should be used in conjunction with other methods.
 
 Kindly refer to the [Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) for further guidance.
 
 ### Backup Codes
 
-Backup codes should be provided to the user upon registering their MFA method and the user should store them offline in a secure place (password managers). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
-
+Backup codes should be provided to the user upon registering where the user should store them offline in a secure place (password managers). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
 
 ## Operational Tasks
 
