@@ -15,16 +15,20 @@ The following short guidelines can be used as a quick reference to protect the f
 
 ## Content
 
-- [Forgot Password and MFA Cheat Sheet](#forgot-password-and-mfa-cheat-sheet)
+- [Forgot Password Cheat Sheet](#forgot-password-cheat-sheet)
   * [Introduction](#introduction)
   * [Content](#content)
+  * [Forgot Password Service](#forgot-password-service)
+    + [Forgot Password Request](#forgot-password-request)
+    + [Code or Token Activation](#code-or-token-activation)
+    + [User Resets Password](#user-resets-password)
   * [Methods](#methods)
+  * [Tokens and Codes Secure Practices](#tokens-and-codes-secure-practices)
   * [Methods Implementation](#methods-implementation)
     + [One Time Password](#one-time-password)
-    + [URL Tokens](#url-tokens)
+    + [URL Tokens or Codes](#url-tokens-or-codes)
     + [Security Questions](#security-questions)
     + [Backup Codes](#backup-codes)
-  * [Operational Tasks](#operational-tasks)
 
 ## Forgot Password Service
 
