@@ -41,9 +41,11 @@ The user uses the forgot password service and inputs their username or email. To
 - Rate-limiting (*e.g.* Captchas, blocking IPs for a period of time, etc.) to protect the application against brute-force attacks.
 - Employ proper [Input Validation](Input_Validation_Cheat_Sheet.md) on the sent field.
 
-### Code or Token Insertion
+### Code or Token Activation
 
-After a user uses the service to reset their password, a code or token is provided to the user following one of the [methods](#methods) discussed later on in this document. In order to securely handle that token or code once the user inserts it, the same security practices employed for the [forgot password request](#forgot-password-request) should be used.
+After a user uses the service to reset their password, a code or token is provided to the user following one of the [methods](#methods) discussed later on in this document. In order to securely handle that token or code once the user inserts it, the same security practices employed for the [forgot password request](#forgot-password-request) should be used with one additional measure that should be used when sending the code or token in the querystring:
+
+- The service should redirect the user after using that token and replacing it with a cookie in order to avoid [Cross-domain Referer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage). This [attack](https://hackerone.com/reports/209352) occurs when private information is sent in the querystring, and third party services are called, thus *leaking* the querystring in the `Referer` header.
 
 ### User Resets Password
 
