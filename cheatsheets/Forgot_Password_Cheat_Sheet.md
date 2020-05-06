@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In order to implement a proper user management system, almost all systems integrate a **Forgot Password?** service, which allows the user to request a reset to their password whenever they forget any of them, or if their account ever gets breached.
+In order to implement a proper user management system, almost all systems integrate a **Forgot Password** service, which allows the user to request a reset to their password whenever they forget any of them, or if their account ever gets breached.
 
 Even though this functionality looks straightforward and easy to implement, the details of its implementation makes it a sweet spot for security attacks, such as the renowned [user enumeration attack](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.html).
 
@@ -109,7 +109,7 @@ The two most famous methods are Time-OTP ([TOTP](https://tools.ietf.org/html/rfc
 
 For a better description of OTP generation, refer to the [MFA CS](Multifactor_Authentication_Cheat_Sheet.md#something-you-have), where the pros and cons of every implementation are provided.
 
-One implementation can be found over for [Authy](https://www.twilio.com/docs/authy/tutorials/two-factor-authentication-python-flask). If you don't want to rely on applications (such as Authy, Google/Microsoft Authenticator, etc.), you can generate QR codes and send them from the server for the user to scan using their device. The following python library, [pyotp](https://github.com/pyauth/pyotp), helps the developer implement any of the methods discussed in this section.
+One implementation can be found over for [Authy](https://www.twilio.com/docs/authy/tutorials/two-factor-authentication-python-flask). If you don't want to rely on applications (such as Authy, Google/Microsoft Authenticator, etc.), there are libraries like pyotp, which helps the developer implement on their own any of the methods discussed in this section.
 
 > OTPs can be sent through other channels as well, such as emails and SMSs. [Various attacks and weaknesses](https://en.wikipedia.org/wiki/SIM_swap_scam) have been identified in SMS that it is [preferrable not to use them for OTPs](https://auth0.com/blog/why-sms-multi-factor-still-matters/).
 
