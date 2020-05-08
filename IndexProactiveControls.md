@@ -1,5 +1,6 @@
 # Table of contents
 
+- [Table of contents](#table-of-contents)
 - [Objective](#objective)
 - [1. Define Security Requirements](#1-define-security-requirements)
 - [2. Leverage Security Frameworks and Libraries](#2-leverage-security-frameworks-and-libraries)
