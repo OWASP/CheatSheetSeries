@@ -52,8 +52,8 @@ jobs:
       uses: actions/checkout@v1
     - name: Install dependencies
       run: sudo apt-get install -y unzip zip
-    - name: Swith to offline website (gh-pages) branch
-      run: git checkout gh-pages
+    - name: Swith to offline website (gh-pages-mkdocs) branch
+      run: git checkout gh-pages-mkdocs
     - name: Remove previous version website files
       run: |
         rm -rf assets 1>/dev/null 2>&1
@@ -77,17 +77,17 @@ jobs:
         mv site/* .
         upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md
         rm -rf site
-    - name: Commit changes to gh-pages
+    - name: Commit changes to gh-pages-mkdocs
       run: |
         git config --global user.email "action@github.com"
         git config --global user.name "GitHub Action"
         git add --all .
         git commit -a -m "Deploy the generated website via Github Actions"
-    - name: Publish the build to gh-pages
+    - name: Publish the build to gh-pages-mkdocs
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: gh-pages
+        branch: gh-pages-mkdocs
     - name: Send update to Slack
       uses: innocarpe/actions-slack@v1
       with:
