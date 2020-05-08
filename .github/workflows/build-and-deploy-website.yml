@@ -58,7 +58,6 @@ jobs:
       run: |
         rm -rf assets 1>/dev/null 2>&1
         rm -rf cheatsheets 1>/dev/null 2>&1
-        rm -rf img 1>/dev/null 2>&1
         rm -rf search 1>/dev/null 2>&1
         rm *.html 1>/dev/null 2>&1
         rm *.xml 1>/dev/null 2>&1

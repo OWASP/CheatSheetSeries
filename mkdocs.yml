@@ -1,12 +1,13 @@
 site_name: OWASP Cheat Sheet Series
 site_description: Website with the collection of all the cheat sheets of the project.
 docs_dir: cheatsheets/
-use_directory_urls: false
 plugins:
     - search:
         prebuild_index: true
 theme:
     name: material
+    favicon: assets/WebSite_Favicon.png
+    logo: 'assets/OWASP_Logo_Transp.png'
 markdown_extensions:
     - codehilite
     - pymdownx.emoji:
