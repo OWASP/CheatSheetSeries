@@ -14,6 +14,9 @@ echo "Step 1/6: Init work folder."
 rm -rf $WORK 1>/dev/null 2>&1
 mkdir $WORK
 mkdir $WORK/cheatsheets
+mkdir $WORK/custom_theme
+mkdir $WORK/custom_theme/img
+mkdir $WORK/custom_theme/css
 
 echo "Step 2/6: Generate the summary markdown page "
 python Update_CheatSheets_Index.py
@@ -29,6 +32,12 @@ cp -r ../assets $WORK/cheatsheets/assets
 cp ../Index.md $WORK/cheatsheets/glossary.md
 cp ../IndexASVS.md $WORK/cheatsheets/IndexASVS.md
 cp ../IndexProactiveControls.md $WORK/cheatsheets/IndexProactiveControls.md
+
+cp ../assets/WebSite_Favicon.ico $WORK/custom_theme/img/favicon.ico
+cp ../assets/WebSite_Favicon.png $WORK/custom_theme/img/apple-touch-icon-precomposed-152.png
+
+cp ./404.html $WORK/custom_theme
+cp ./404.css $WORK/custom_theme/css
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OSX
@@ -85,6 +94,7 @@ fi
 
 echo "Step 6/6 Cleanup."
 rm -rf cheatsheets
+rm -rf custom_theme
 rm mkdocs.yml
 
 echo "Generation finished to the folder: $WORK/$GENERATED_SITE"

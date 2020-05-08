@@ -5,13 +5,23 @@ plugins:
     - search:
         prebuild_index: true
 theme:
-    name: material
-    favicon: assets/WebSite_Favicon.png
-    logo: 'assets/OWASP_Logo_Transp.png'
+    name: readthedocs
+    custom_dir: custom_theme/
+    highlightjs: true
+    sticky_navigation: false
 markdown_extensions:
-    - codehilite
-    - pymdownx.emoji:
-        emoji_index: !!python/name:pymdownx.emoji.twemoji
-        emoji_generator: !!python/name:pymdownx.emoji.to_svg
     - toc:
         permalink: true
+
+#For material
+#theme:
+#    name: material
+#    favicon: assets/WebSite_Favicon.png
+#    logo: 'assets/OWASP_Logo_Transp.png'
+#markdown_extensions:
+#    - codehilite
+#    - pymdownx.emoji:
+#        emoji_index: !!python/name:pymdownx.emoji.twemoji
+#        emoji_generator: !!python/name:pymdownx.emoji.to_svg
+#    - toc:
+#        permalink: true
