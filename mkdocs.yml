@@ -4,12 +4,15 @@ docs_dir: cheatsheets/
 plugins:
     - search:
         prebuild_index: true
-# theme:
+theme:
 #     name: readthedocs
 #     custom_dir: custom_theme/
 #     highlightjs: true
 #     sticky_navigation: false
 # markdown_extensions:
+#     - pymdownx.emoji:
+#        emoji_index: !!python/name:pymdownx.emoji.twemoji
+#        emoji_generator: !!python/name:pymdownx.emoji.to_alt
 #     - toc:
 #         permalink: true
 
