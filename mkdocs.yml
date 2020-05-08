@@ -1,0 +1,16 @@
+site_name: OWASP Cheat Sheet Series
+site_description: Website with the collection of all the cheat sheets of the project.
+docs_dir: cheatsheets/
+use_directory_urls: false
+plugins:
+    - search:
+        prebuild_index: true
+theme:
+    name: material
+markdown_extensions:
+    - codehilite
+    - pymdownx.emoji:
+        emoji_index: !!python/name:pymdownx.emoji.twemoji
+        emoji_generator: !!python/name:pymdownx.emoji.to_svg
+    - toc:
+        permalink: true
