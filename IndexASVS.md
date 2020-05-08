@@ -430,11 +430,9 @@ None.
 
 ## V12.1 File Upload Requirements
 
-[Protect File Upload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md).
+None.
 
 ## V12.2 File Integrity Requirements
-
-[Protect File Upload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md).
 
 [Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md).
 
