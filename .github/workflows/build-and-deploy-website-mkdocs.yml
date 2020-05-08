@@ -27,9 +27,9 @@ jobs:
     - name: Install python mkdocs dependencies
       run: pip install mkdocs mkdocs-material pymdown-extensions
     - name: Set permission for build script
-      run: chmod +x scripts/Generate_Site_MkDocs.sh
+      run: chmod +x scripts/Generate_Site_mkDocs.sh
     - name: Run build script
-      run: cd scripts && bash Generate_Site_MkDocs.sh
+      run: cd scripts && bash Generate_Site_mkDocs.sh
     - name: List generated files
       run: ls -al generated/site/
     - name: Create bundle
