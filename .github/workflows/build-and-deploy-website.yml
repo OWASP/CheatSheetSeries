@@ -59,6 +59,13 @@ jobs:
         rm -rf assets 1>/dev/null 2>&1
         rm -rf cheatsheets 1>/dev/null 2>&1
         rm -rf search 1>/dev/null 2>&1
+        rm -rf IndexASVS 1>/dev/null 2>&1
+        rm -rf IndexProactiveControls 1>/dev/null 2>&1
+        rm -rf glossary 1>/dev/null 2>&1
+        rm -rf css 1>/dev/null 2>&1
+        rm -rf fonts 1>/dev/null 2>&1
+        rm -rf img 1>/dev/null 2>&1
+        rm -rf js 1>/dev/null 2>&1
         rm *.html 1>/dev/null 2>&1
         rm *.xml 1>/dev/null 2>&1
         rm *.gz 1>/dev/null 2>&1
