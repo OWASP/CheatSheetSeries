@@ -58,9 +58,11 @@ jobs:
       run: |
         rm -rf assets 1>/dev/null 2>&1
         rm -rf cheatsheets 1>/dev/null 2>&1
-        rm -rf gitbook 1>/dev/null 2>&1
-        rm index.html 1>/dev/null 2>&1
-        rm search_index.json 1>/dev/null 2>&1
+        rm -rf img 1>/dev/null 2>&1
+        rm -rf search 1>/dev/null 2>&1
+        rm *.html 1>/dev/null 2>&1
+        rm *.xml 1>/dev/null 2>&1
+        rm *.gz 1>/dev/null 2>&1
     - name: Download new build from artifact
       uses: actions/download-artifact@v1
       with:
