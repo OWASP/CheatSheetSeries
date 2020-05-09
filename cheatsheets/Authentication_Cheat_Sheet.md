@@ -127,7 +127,7 @@ ENDIF
 
 It can be clearly seen that if the user doesn't exist, the application will directly throw an error. Otherwise, when the user exists and the password doesn't, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.
 
-* Second implementation without relying on the "quick exit" approach:
+- Second implementation without relying on the "quick exit" approach:
 
 ```
 password_hash=HASH(password)

@@ -15,8 +15,8 @@ Most of the projects use third-party dependencies to delegate handling of differ
 It's a good approach because it allows the development team to focus on the real application code supporting the expected business feature. The dependency brings forth an expected downside where the security posture of the real application is now resting on it.
 
 This aspect is referenced in the following projects:
-* [OWASP TOP 10 2017](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/) under the point *[A9 - Using Components with Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities.html)*.
-* [OWASP Application Security Verification Standard Project](https://owasp.org/www-project-application-security-verification-standard/) under the section *V14.2 Dependency*.
+- [OWASP TOP 10 2017](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/) under the point *[A9 - Using Components with Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities.html)*.
+- [OWASP Application Security Verification Standard Project](https://owasp.org/www-project-application-security-verification-standard/) under the section *V14.2 Dependency*.
 
 Based on this context, it's important for a project to ensure that all the third-party dependencies implemented are clean of any security issue, and if they happen to contain any security issues, the development team needs to be aware of it and apply the required mitigation measures to secure the affected application.
 
@@ -82,8 +82,8 @@ Update the version of the dependency in the project on a testing environment.
 **Step 2:**
 
 Prior to running the tests, 2 output paths are possible:
-* All tests succeed, and thus the update can be pushed to production.
-* One or several tests failed, several output paths are possible:
+- All tests succeed, and thus the update can be pushed to production.
+- One or several tests failed, several output paths are possible:
     * Failure is due to change in some function calls (_e.g._ signature, argument, package, etc.). The development team must update their code to fit the new library. Once that is done, re-run the tests.
     * Technical incompatibility of the released dependency (_e.g._ require a more recent runtime version) which leads to the following actions:
         1. Raise the issue to the provider.
@@ -98,9 +98,9 @@ Provider informs the team that it will take a while to fix the issue and, so, a 
 ### Ideal condition of application of the approach
 
 Provider can share any of the below with the development team:
-* The exploitation code.
-* The list of impacted functions by the vulnerability.
-* A workaround to prevent the exploitation of the issue.
+- The exploitation code.
+- The list of impacted functions by the vulnerability.
+- A workaround to prevent the exploitation of the issue.
 
 ### Approach
 
@@ -150,8 +150,8 @@ In this case the only information given to the development team is the [CVE](htt
 
 **Notes:** 
 
-* This case is really complex and time consuming and is generally used as last resort.
-* If the impacted dependency is an open source library then we, the development team, can create a patch and create [pull request](https://help.github.com/en/articles/about-pull-requests) - that way we can protect our company/application from the source as well as helping others secure their applications.
+- This case is really complex and time consuming and is generally used as last resort.
+- If the impacted dependency is an open source library then we, the development team, can create a patch and create [pull request](https://help.github.com/en/articles/about-pull-requests) - that way we can protect our company/application from the source as well as helping others secure their applications.
 
 ### Ideal condition of application of the approach
 
@@ -162,8 +162,8 @@ Nothing specific because here we are in a *patch yourself* condition.
 **Step 1:**
 
 If we are in this case due to one of the following conditions, it's a good idea to start a parallel study to find another component better maintained or if it's a commercial component with support **then put pressure** on the provider with the help of your [Chief Risk Officer](https://en.wikipedia.org/wiki/Chief_risk_officer) (fallback possible to [Chief Information Security Officer](https://en.wikipedia.org/wiki/Chief_information_security_officer)):
-* Provider does not want to fix the issue.
-* Provider does not answer at all.
+- Provider does not want to fix the issue.
+- Provider does not answer at all.
 
 In all cases, here, we need to handle the vulnerability right now.
 
@@ -201,8 +201,8 @@ If you have a set of automated unit or integration or functional or security tes
 ### Context
 
 The vulnerable dependency is found during one of the following situation in which the provider is not aware of the vulnerability:
-* Via the discovery of a full disclosure post on the Internet.
-* During a penetration test.
+- Via the discovery of a full disclosure post on the Internet.
+- During a penetration test.
 
 ### Ideal condition of application of the approach
 
@@ -223,23 +223,23 @@ Using the information from the full disclosure post or the pentester's exploitat
 This section lists several tools that can used to analyse the dependencies used by a project in order to detect the vulnerabilities.
 
 It's important to ensure, during the selection process of a vulnerable dependency detection tool, that this one:
-* Uses several reliable input sources in order to handle both vulnerability disclosure ways.
-* Support for flagging an issue raised on a component as a [false-positive](https://www.whitehatsec.com/glossary/content/false-positive).
+- Uses several reliable input sources in order to handle both vulnerability disclosure ways.
+- Support for flagging an issue raised on a component as a [false-positive](https://www.whitehatsec.com/glossary/content/false-positive).
 
-* Free
-    * [OWASP Dependency Check](https://owasp.org/www-project-dependency-check/): 
-        * Full support: Java, .Net.
-        * Experimental support: Python, Ruby, PHP (composer), NodeJS, C, C++.
-    * [NPM Audit](https://docs.npmjs.com/cli/audit)
-        * Full support: NodeJS, JavaScript.
-        * HTML report available via this [module](https://www.npmjs.com/package/npm-audit-html).
-    * [OWASP Dependency Track](https://dependencytrack.org/) can be used to manage vulnerable dependencies across an organization.
-* Commercial
-    * [Snyk](https://snyk.io/) (open source and free option available):
-        * [Full support](https://snyk.io/docs/) for many languages and package manager. 
-    * [JFrog XRay](https://jfrog.com/xray/):
-        * [Full support](https://jfrog.com/integration/) for many languages and package manager. 
-    * [Renovate](https://renovatebot.com) (allow to detect old dependencies):
-        * [Full support](https://renovatebot.com/docs/) for many languages and package manager. 
-    * [Requires.io](https://requires.io/) (allow to detect old dependencies - open source and free option available):
-        * [Full support](https://requires.io/features/): Python only.
+- Free
+    - [OWASP Dependency Check](https://owasp.org/www-project-dependency-check/): 
+        - Full support: Java, .Net.
+        - Experimental support: Python, Ruby, PHP (composer), NodeJS, C, C++.
+    - [NPM Audit](https://docs.npmjs.com/cli/audit)
+        - Full support: NodeJS, JavaScript.
+        - HTML report available via this [module](https://www.npmjs.com/package/npm-audit-html).
+    - [OWASP Dependency Track](https://dependencytrack.org/) can be used to manage vulnerable dependencies across an organization.
+- Commercial
+    - [Snyk](https://snyk.io/) (open source and free option available):
+        - [Full support](https://snyk.io/docs/) for many languages and package manager. 
+    - [JFrog XRay](https://jfrog.com/xray/):
+        - [Full support](https://jfrog.com/integration/) for many languages and package manager. 
+    - [Renovate](https://renovatebot.com) (allow to detect old dependencies):
+        - [Full support](https://renovatebot.com/docs/) for many languages and package manager. 
+    - [Requires.io](https://requires.io/) (allow to detect old dependencies - open source and free option available):
+        - [Full support](https://requires.io/features/): Python only.

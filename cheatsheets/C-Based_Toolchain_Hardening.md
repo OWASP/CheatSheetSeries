@@ -398,8 +398,8 @@ GCC C Warning Options table:
 
 ![GCCCWarningOptionsTable](../assets/C-Based_Toolchain_Hardening_GCCCWarningOptionsTable.png)
 
-* [AddressSanitizer](https://github.com/google/sanitizers)
-* [ThreadSanitizer](https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual)
+- [AddressSanitizer](https://github.com/google/sanitizers)
+- [ThreadSanitizer](https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual)
 
 a) Unlike Clang and -Weverything, GCC does not provide a switch to truly enable all warnings.
 b) -fstack-protector guards functions with high risk objects such as C strings, while -fstack-protector-all guards all objects.

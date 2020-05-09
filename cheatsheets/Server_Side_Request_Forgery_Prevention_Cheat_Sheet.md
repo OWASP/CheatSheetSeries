@@ -8,26 +8,29 @@ This cheat sheet will focus on the defensive point of view and will not explain 
 
 ## Contents
 
-- [Context](#context)
-- [Overview of a SSRF common flow](#overview-of-a-ssrf-common-flow)
-- [Cases](#cases)
-  * [Case 1 - Application can send request only to identified and trusted applications](#case-1---application-can-send-request-only-to-identified-and-trusted-applications)
-    + [Example](#example)
-    + [Available protections](#available-protections)
-      - [Application layer](#application-layer)
-        * [String](#string)
-        * [IP address](#ip-address)
-        * [Domain name](#domain-name)
-        * [URL](#url)
-      - [Network layer](#network-layer)
-  * [Case 2 - Application can send requests to ANY external IP address or domain name](#case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name)
-    + [Challenges in blocking URLs at application layer](#challenges-in-blocking-urls-at-application-layer)
-    + [Available protections](#available-protections-1)
-      - [Application layer](#application-layer-1)
-      - [Network layer](#network-layer-1)
-- [IMDSv2 in AWS](#imdsv2-in-aws)
-- [References](#references)
-- [Tools and code used for schemas](#tools-and-code-used-for-schemas)
+- [Server-Side Request Forgery Cheat Sheet](#server-side-request-forgery-cheat-sheet)
+  - [Introduction](#introduction)
+  - [Contents](#contents)
+  - [Context](#context)
+  - [Overview of a SSRF common flow](#overview-of-a-ssrf-common-flow)
+  - [Cases](#cases)
+    - [Case 1 - Application can send request only to identified and trusted applications](#case-1---application-can-send-request-only-to-identified-and-trusted-applications)
+      - [Example](#example)
+      - [Available protections](#available-protections)
+        - [Application layer](#application-layer)
+          - [String](#string)
+          - [IP address](#ip-address)
+          - [Domain name](#domain-name)
+          - [URL](#url)
+        - [Network layer](#network-layer)
+    - [Case 2 - Application can send requests to ANY external IP address or domain name](#case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name)
+      - [Challenges in blocking URLs at application layer](#challenges-in-blocking-urls-at-application-layer)
+      - [Available protections](#available-protections-1)
+        - [Application layer](#application-layer-1)
+        - [Network layer](#network-layer-1)
+  - [IMDSv2 in AWS](#imdsv2-in-aws)
+  - [References](#references)
+  - [Tools and code used for schemas](#tools-and-code-used-for-schemas)
 
 ## Context
 
@@ -42,14 +45,14 @@ SSRF is an attack vector that abuses an application to interact with the interna
 
 *Notes:* 
 
-* SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (*e.g.* FTP, SMB, SMTP, etc.) and schemes (*e.g.* `file://`, `phar://`, `gopher://`, `data://`, `dict://`, etc.). The protocol/scheme usage is highly dependent on the application's requirements.
-* If the application is vulnerable to [XML eXternal Entity (XXE) injection](https://portswigger.net/web-security/xxe) then it can by exploited to perform a [SSRF attack](https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks), take a look at the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md) to learn how to prevent the exposure to XXE.
+- SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (*e.g.* FTP, SMB, SMTP, etc.) and schemes (*e.g.* `file://`, `phar://`, `gopher://`, `data://`, `dict://`, etc.). The protocol/scheme usage is highly dependent on the application's requirements.
+- If the application is vulnerable to [XML eXternal Entity (XXE) injection](https://portswigger.net/web-security/xxe) then it can by exploited to perform a [SSRF attack](https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks), take a look at the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md) to learn how to prevent the exposure to XXE.
 
 ## Cases
 
 Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:
-* Application can send request only to **identified and trusted applications**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
-* Application can send requests to **ANY external IP address or domain name**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is not available.
+- Application can send request only to **identified and trusted applications**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
+- Application can send requests to **ANY external IP address or domain name**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is not available.
 
 Because these two cases are very different, this cheat sheet will describe defences against them separately.
 
@@ -80,10 +83,10 @@ Based on that point, the following question comes to mind: *How to perform this 
 As [Orange Tsai](https://twitter.com/orange_8361) shows in his [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf), depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the [whitelisting approach](Input_Validation_Cheat_Sheet.md#whitelisting-vs-blacklisting) when input validation is used because, most of the time, the format of the information expected from the user is globally know.
 
 The request sent to the internal application will be based on the following information:
-* String containing business data.
-* IP address (V4 or V6).
-* Domain name.
-* URL.
+- String containing business data.
+- IP address (V4 or V6).
+- Domain name.
+- URL.
 
 **Note:** Disable the support for the following of the [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in your web client in order to prevent the bypass of the input validation described in the section `Exploitation tricks > Bypassing restrictions > Input validation > Unsafe redirect` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf).
 
@@ -117,16 +120,16 @@ The first layer of validation can be applied using libraries that ensure the sec
 
 > Verification of the proposed libraries has been performed regarding the exposure to bypasses (Hex, Octal, Dword, URL and Mixed encoding) described in this [article](https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b).
 
-* **JAVA:** Method [InetAddressValidator.isValid](http://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/InetAddressValidator.html#isValid(java.lang.String)) from the [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/) library.
+- **JAVA:** Method [InetAddressValidator.isValid](http://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/InetAddressValidator.html#isValid(java.lang.String)) from the [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/) library.
     * **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
-* **.NET**: Method [IPAddress.TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8) from the SDK.
+- **.NET**: Method [IPAddress.TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8) from the SDK.
     * **It is exposed** to bypass using Hex, Octal, Dword and Mixed encoding but **NOT** the URL encoding.
     * As whitelisting is used here, any bypass tentative will be blocked during the comparison against the allowed list of IP addresses.
-* **JavaScript**: Library [ip-address](https://www.npmjs.com/package/ip-address).
+- **JavaScript**: Library [ip-address](https://www.npmjs.com/package/ip-address).
     * **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
-* **Python**: Module [ipaddress](https://docs.python.org/3/library/ipaddress.html) from the SDK.
+- **Python**: Module [ipaddress](https://docs.python.org/3/library/ipaddress.html) from the SDK.
     * **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
-* **Ruby**: Class [IPAddr](https://ruby-doc.org/stdlib-2.0.0/libdoc/ipaddr/rdoc/IPAddr.html) from the SDK.
+- **Ruby**: Class [IPAddr](https://ruby-doc.org/stdlib-2.0.0/libdoc/ipaddr/rdoc/IPAddr.html) from the SDK.
     * **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 
 > **Use the output value of the method/library as the IP address to compare against the whitelist.**
@@ -136,9 +139,9 @@ After ensuring the validity of the incoming IP address, the second layer of vali
 ###### Domain name
 
 In the attempt of validating domain names, it is apparent to do a DNS resolution in order to verify the existence of the domain. In general, it is not a bad idea, yet it opens up the application to attacks depending on the configuration used regarding the DNS servers used for the domain name resolution:
-* It can disclose information to external DNS resolvers.
-* It can be used by an attacker to bind a legit domain name to an internal IP address. See the section `Exploitation tricks > Bypassing restrictions > Input validation > DNS pinning` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf).
-* It can be used, by an attacker, to deliver a malicious payload to the internal DNS resolvers as well as to the API (SDK or third-party) used by the application to handle the DNS communication and then, potentially, trigger a vulnerability in one of these components.
+- It can disclose information to external DNS resolvers.
+- It can be used by an attacker to bind a legit domain name to an internal IP address. See the section `Exploitation tricks > Bypassing restrictions > Input validation > DNS pinning` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf).
+- It can be used, by an attacker, to deliver a malicious payload to the internal DNS resolvers as well as to the API (SDK or third-party) used by the application to handle the DNS communication and then, potentially, trigger a vulnerability in one of these components.
 
 In the context of SSRF, there are 2 validations to perform:
 
@@ -149,11 +152,11 @@ Similar to the IP address validation, the first layer of validation can be appli
 
 > Verification of the proposed libraries has been performed to ensure that the proposed functions do not perform any DNS resolution query.
 
-* **JAVA:** Method [DomainValidator.isValid](https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html#isValid(java.lang.String)) from the [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/) library.
-* **.NET**: Method [Uri.CheckHostName](https://docs.microsoft.com/en-us/dotnet/api/system.uri.checkhostname?view=netframework-4.8) from the SDK. 
-* **JavaScript**: Library [is-valid-domain](https://www.npmjs.com/package/is-valid-domain).
-* **Python**: Module [validators.domain](https://validators.readthedocs.io/en/latest/#module-validators.domain).
-* **Ruby**: No valid dedicated gem has been found.
+- **JAVA:** Method [DomainValidator.isValid](https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html#isValid(java.lang.String)) from the [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/) library.
+- **.NET**: Method [Uri.CheckHostName](https://docs.microsoft.com/en-us/dotnet/api/system.uri.checkhostname?view=netframework-4.8) from the SDK. 
+- **JavaScript**: Library [is-valid-domain](https://www.npmjs.com/package/is-valid-domain).
+- **Python**: Module [validators.domain](https://validators.readthedocs.io/en/latest/#module-validators.domain).
+- **Ruby**: No valid dedicated gem has been found.
     * [domainator](https://github.com/mhuggins/domainator), [public_suffix](https://github.com/weppos/publicsuffix-ruby) and [addressable](https://github.com/sporkmonger/addressable) has been tested but unfortunately they all consider `<script>alert(1)</script>.owasp.org` as a valid domain name. 
     * This regex, taken from [here](https://stackoverflow.com/a/26987741), can be used: `^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$`
 
@@ -286,8 +289,8 @@ This case happens when a user can control an URL to an **External** resource and
 In this scenario, *External* refers to any IP that doesn't belong to the internal network, and should be reached by going over the public internet.
 
 Thus, the call from the *Vulnerable Application*: 
-* **Is NOT** targeting one of the IP/domain *located inside* the company's global network.
-* Uses a convention defined between the *VulnerableApplication* and the expected IP/domain in order to *prove* that the call has been legitimately initiated.
+- **Is NOT** targeting one of the IP/domain *located inside* the company's global network.
+- Uses a convention defined between the *VulnerableApplication* and the expected IP/domain in order to *prove* that the call has been legitimately initiated.
 
 #### Challenges in blocking URLs at application layer
 
@@ -295,8 +298,8 @@ Based on the business requirements of the above mentioned applications, the whit
 
 Here is why filtering URLs is hard at the Application layer:
 
-* It implies that the application must be able to detect, at the code level, that the provided IP (V4 + V6) is not part of the official [private networks ranges](https://en.wikipedia.org/wiki/Private_network) including also *localhost* and *IPv4/v6 Link-Local* addresses. Not every SDK provides a built-in feature for this kind of verification, and leaves the handling up to the developer to understand all of its pitfalls and possible values, which makes it a demanding task.
-* Same remark for domain name: The company must maintain a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain names.
+- It implies that the application must be able to detect, at the code level, that the provided IP (V4 + V6) is not part of the official [private networks ranges](https://en.wikipedia.org/wiki/Private_network) including also *localhost* and *IPv4/v6 Link-Local* addresses. Not every SDK provides a built-in feature for this kind of verification, and leaves the handling up to the developer to understand all of its pitfalls and possible values, which makes it a demanding task.
+- Same remark for domain name: The company must maintain a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain names.
 
 #### Available protections
 
@@ -409,8 +412,8 @@ Article about [IMDSv2](https://aws.amazon.com/blogs/security/defense-in-depth-op
 
 ## Tools and code used for schemas
 
-* [Mermaid Online Editor](https://mermaidjs.github.io/mermaid-live-editor) and [Mermaid documentation](https://mermaidjs.github.io/).
-* [Draw.io Online Editor](https://www.draw.io/).
+- [Mermaid Online Editor](https://mermaidjs.github.io/mermaid-live-editor) and [Mermaid documentation](https://mermaidjs.github.io/).
+- [Draw.io Online Editor](https://www.draw.io/).
 
 Mermaid code for SSRF common flow (printscreen are used to capture PNG image inserted into this cheat sheet):
 
