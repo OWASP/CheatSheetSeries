@@ -56,6 +56,7 @@ jobs:
       run: git checkout gh-pages
     - name: Remove previous version website files
       run: |
+        shopt -s extglob
         rm -rdfv !("CNAME"|"robots.txt")
     - name: Download new build from artifact
       uses: actions/download-artifact@v1
