@@ -1,4 +1,6 @@
-# Introduction
+# Error Handling Cheat Sheet
+
+## Introduction
 
 Error handling is a part of the overall security of an application. Except in movies, an attack always begins with a **Reconnaissance** phase in which the attacker will try to gather as much technical information (often *name* and *version* properties) as possible about the target, such as the application server, frameworks, libraries, etc.
 
@@ -6,7 +8,7 @@ Unhandled errors can assist an attacker in this initial phase, which is very imp
 
 The following [link](https://cipher.com/blog/a-complete-guide-to-the-phases-of-penetration-testing/) provides a description of the different phases of an attack.
 
-# Context
+## Context
 
 Issues at the error handling level can reveal a lot of information about the target and can also be used to identify injection points in the target's features.
 
@@ -44,13 +46,13 @@ note: The full stack trace of the root cause is available in the Apache Tomcat/7
 Below is an example of disclosure of a SQL query error, along with the site installation path, that can be used to identify an injection point:
 
 ```text
-Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given 
+Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given
 in D:\app\index_new.php on line 188
-```    
+```
 
 The [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/01-Information_Gathering/) provides different techniques to obtain technical information from an application.
 
-# Objective
+## Objective
 
 The article shows how to configure a global error handler at the configuration level when possible, otherwise at code level, in different technologies, in order to ensure that if an unexpected error occurs then a generic response is returned by the application but the error is traced on server side for investigation.
 
@@ -62,11 +64,11 @@ As most recent application topologies are *API based*, we assume in this article
 
 For the error logging operation itself, the [logging cheat sheet](Logging_Cheat_Sheet.md) should be used. This article focuses on the error handling part.
 
-# Proposition
+## Proposition
 
 For each technology, a setup will be proposed with configuration and code snippet.
 
-## Java classic web application
+### Java classic web application
 
 For this kind of application, a global error handler can be configured at the **web.xml** deployment descriptor level.
 
@@ -78,8 +80,8 @@ Configuration of the redirection into the **web.xml** file:
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ns="http://java.sun.com/xml/ns/javaee" 
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ns="http://java.sun.com/xml/ns/javaee"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 version="3.0">
 ...
     <error-page>
@@ -93,7 +95,7 @@ version="3.0">
 Content of the **error.jsp** file:
 
 ``` java
-<%@ page language="java" isErrorPage="true" contentType="application/json; charset=UTF-8" 
+<%@ page language="java" isErrorPage="true" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 String errorMessage = exception.getMessage();
@@ -107,7 +109,7 @@ response.setStatus(200);
 {"message":"An error occur, please retry"}
 ```
 
-## Java SpringMVC/SpringBoot web application
+### Java SpringMVC/SpringBoot web application
 
 With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](https://spring.io/projects/spring-boot), you can define a global error handler by simply implementing the following kind of class in your project.
 
@@ -140,7 +142,7 @@ public class RestResponseEntityExceptionHandler {
         responseHeaders.set("X-ERROR", "true");
         JSONObject responseBody = new JSONObject();
         responseBody.put("message", "An error occur, please retry");
-        ResponseEntity<JSONObject> response = new ResponseEntity<>(responseBody, responseHeaders, 
+        ResponseEntity<JSONObject> response = new ResponseEntity<>(responseBody, responseHeaders,
                                                                    HttpStatus.OK);
         return (ResponseEntity) response;
     }
@@ -152,7 +154,7 @@ References:
 - [Exception handling with Spring](https://www.baeldung.com/exception-handling-for-rest-with-spring)
 - [Exception handling with SpringBoot](https://www.toptal.com/java/spring-boot-rest-api-error-handling)
 
-## ASP NET Core web application
+### ASP NET Core web application
 
 With [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.2), you can define a global error handler by indicating that the exception handler is a dedicated API Controller.
 
@@ -194,7 +196,7 @@ namespace MyProject.Controllers
             //Log the exception via the content of the variable named "exception" if it is not NULL
             //...
             //We build a generic response with a JSON format because we are in a REST API app context
-            //We also add an HTTP response header to indicate to the client app that the response 
+            //We also add an HTTP response header to indicate to the client app that the response
             //is an error
             var responseBody = new Dictionary<String, String>{ {
                 "message", "An error occur, please retry"
@@ -226,7 +228,7 @@ namespace MyProject
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             //First we configure the error handler middleware!
-            //We enable the global error handler in others environments than DEV 
+            //We enable the global error handler in others environments than DEV
             //because debug page are useful during implementation
             if (env.IsDevelopment())
             {
@@ -234,7 +236,7 @@ namespace MyProject
             }
             else
             {
-                //Our global handler is defined on "/api/error" URL so we indicate to the 
+                //Our global handler is defined on "/api/error" URL so we indicate to the
                 //exception handler to call this API controller
                 //on any unexpected exception raised by the application
                 app.UseExceptionHandler("/api/error");
@@ -252,7 +254,7 @@ References:
 
 - [Exception handling with ASP.Net Core](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-2.1)
 
-## ASP NET Web API web application
+### ASP NET Web API web application
 
 With [ASP.NET Web API](https://www.asp.net/web-api) (from the standard .NET framework and not from the .NET Core framework), you can define and register handlers in order to trace and handle any error that occurs in the application.
 
@@ -327,14 +329,14 @@ namespace MyProject.Security
             public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
             {
                 //We build a generic response with a JSON format because we are in a REST API app context
-                //We also add an HTTP response header to indicate to the client app that the response 
+                //We also add an HTTP response header to indicate to the client app that the response
                 //is an error
                 var responseBody = new Dictionary<String, String>{ {
                     "message", "An error occur, please retry"
                 } };
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
                 response.Headers.Add("X-ERROR", "true");
-                response.Content = new StringContent(JsonConvert.SerializeObject(responseBody), 
+                response.Content = new StringContent(JsonConvert.SerializeObject(responseBody),
                                                      Encoding.UTF8, "application/json");
                 return Task.FromResult(response);
             }
@@ -370,6 +372,6 @@ References:
 
 - [Exception handling with ASP.Net Web API](https://exceptionnotfound.net/the-asp-net-web-api-exception-handling-pipeline-a-guided-tour/)
 
-# Sources of the prototype
+## Sources of the prototype
 
 The source code of all the sandbox projects created to find the right setup to use is stored in this [GitHub repository](https://github.com/righettod/poc-error-handling).

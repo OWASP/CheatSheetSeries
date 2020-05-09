@@ -1,4 +1,6 @@
-# Purpose and audience
+# Transaction Authorization Cheat Sheet
+
+## Purpose and audience
 
 The Purpose of this cheat sheet is to provide guidelines on how to securely implement transaction authorization to protect it from being bypassed. These guidelines can be used by:
 
@@ -6,9 +8,9 @@ The Purpose of this cheat sheet is to provide guidelines on how to securely impl
 - **Developers** – to design and implement transaction authorization without vulnerabilities.
 - **Pentesters** – to test for transaction authorization security.
 
-# Introduction
+## Introduction
 
-Some applications use a second factor to check whether an authorized user is performing sensitive operations. A common example is wire transfer authorization, typically used in online or mobile banking applications. 
+Some applications use a second factor to check whether an authorized user is performing sensitive operations. A common example is wire transfer authorization, typically used in online or mobile banking applications.
 
 For the purpose of this document we will call that process: *transaction authorization*.
 
@@ -24,9 +26,9 @@ Some of these can be implemented on a physical device or in a mobile application
 
 Transaction authorization is implemented in order to protect for unauthorized wire transfers as a result of attacks using malware, phishing, password or session hijacking, CSRF, XSS, etc.. Unfortunately, as with any piece of code, this protection can be improperly implemented and as a result it might be possible to bypass this safeguard.
 
-# 1. Functional Guidelines
+## 1. Functional Guidelines
 
-## 1.1 Transaction authorization method has to allow a user to identify and acknowledge significant transaction data
+### 1.1 Transaction authorization method has to allow a user to identify and acknowledge significant transaction data
 
 User's computers cannot be trusted due to malware threats. Hence a method that prevents a user from identifying transaction on an external device cannot be considered as secure. Transaction data should be presented and acknowledged using an external authorization component.
 
@@ -44,17 +46,17 @@ In general, significant transaction data should always be presented as an inhere
 
 If a transaction authentication process requires a user to enter transaction data into an external device, the user should be prompted for providing specific value (e.g. a target account number). Entering a value without meaningful prompt could be easily abused by malware using social engineering techniques as described in the example in paragraph 1.4. Also, for more detailed discussion of input overloading problems, see [here](http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf).
 
-## 1.2 Change of authorization token should be authorized using the current authorization token
+### 1.2 Change of authorization token should be authorized using the current authorization token
 
 When a user is allowed to change authorization token by using the application interface, the operation should be authorized by using his current authorization credentials (as is the case with [password change procedure](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/04-Authentication_Testing/09-Testing_for_Weak_Password_Change_or_Reset_Functionalities.html)). For example: when a user changes a phone number for SMS codes an authorization SMS code should be sent to the current phone number.
 
-## 1.3 Change of authorization method should be authorized using the current authorization method
+### 1.3 Change of authorization method should be authorized using the current authorization method
 
 Some applications allow a user to chose between multiple methods of transaction authorization. In such cases, the user should authorize the change in authorization method using his current authorization method. Otherwise, malware may change the authorization method to the most vulnerable method.
 
 Additionally, the application should inform the user about the potential dangers associated to the selected authorization method.
 
-## 1.4 Users should be able to easily distinguish the authentication process from the transaction authorization process
+### 1.4 Users should be able to easily distinguish the authentication process from the transaction authorization process
 
 Malware can trick users in authorizing fraudulent operations, when an application requires a user to perform the same actions for authentication as for transaction authorization. Consider the following example:
 
@@ -69,13 +71,13 @@ Safeguards should allow the user to easily distinguish authentication from trans
 - Or using different actions in an external security component (e.g. different mode of operation in CAP reader),
 - Or presenting the user a clear message about what he/she is "signing" (What You See Is What You Sign Principle).
 
-## 1.5 Each transaction should be authorized using unique authorization credentials
+### 1.5 Each transaction should be authorized using unique authorization credentials
 
 Some applications are asking for transaction authorization credentials only once, e.g. static password, code sent through SMS, token response. Afterwards a user is able to authorize any transaction during the whole user's session or at least he has to reuse the same credentials each time he needs to authorize a transaction. Such behavior is not sufficient to prevent malware attacks because malware will sniff such credentials and use them to authorize any transaction without the user's knowledge.
 
-# 2. Non-functional guidelines
+## 2. Non-functional guidelines
 
-## 2.1 Authorization should be performed and enforced server-side
+### 2.1 Authorization should be performed and enforced server-side
 
 As for [all other security controls](https://cwe.mitre.org/data/definitions/602.html) transaction authorization should be enforced server-side. By no means it should be possible to influence the authorization result by altering data which flows from a client to a server, e.g. by:
 
@@ -90,23 +92,23 @@ To achieve this, security programming best practices should be applied, such as:
 
 To avoid tampering, additional safeguards should be considered. For example by cryptographically protecting the data for confidentiality and integrity and while decrypting and verifying the data server side.
 
-## 2.2 Authorization method should be enforced server side
+### 2.2 Authorization method should be enforced server side
 
 When multiple transaction authorization methods are available to the user. The server should enforce the use of the current authorization method chosen by the user in the application settings or enforced by application policies. It should be impossible to change an authorization method by manipulating the parameters provided from the client. Otherwise, malware can downgrade an authorization method to a less or even the least secure authorization method.
 
 This is especially important when an application is developed to add a new, more secure authorization method. It is not very rare,that a new authorization method is built on top of an old code base. As a result, when a client is sending parameters using the old method, the transaction may be authorized, despite the fact that the user has already switched to a new method.
 
-## 2.3 Transaction verification data should be generated server-side
+### 2.3 Transaction verification data should be generated server-side
 
 When significant transaction data are transmitted programmatically to an authorization component, extra care should be put into denying client modifications on the transaction data at authorization. Significant transaction data that has to be verified by the user, should be generated and stored on a server, then passed to an authorization component without any possibility of tampering by the client.
 
 A common anti pattern is to collect significant transaction data client-side and pass it to the server. In such cases, malware can manipulate these data and as a result, show faked transaction data in an authorization component.
 
-## 2.4 Application should prevent authorization credentials brute-forcing
+### 2.4 Application should prevent authorization credentials brute-forcing
 
 When transaction authorization credentials are sent to the server for verification, an application has to prevent brute-forcing. The transaction authorization process must be restarted after number of failed authorization attempts. In addition other anti brute-forcing and anti-automation techniques should be considered to prevent an attacker from automating his attacks,see [OWASP Authentication Cheat Sheet](Authentication_Cheat_Sheet.md#prevent-brute-force-attacks).
 
-## 2.5 Application should control which transaction state transitions are allowed
+### 2.5 Application should control which transaction state transitions are allowed
 
 Transaction authorization is usually performed in multiple steps, e.g.:
 
@@ -124,7 +126,7 @@ This should protect against attack techniques such as:
 - Overwriting transaction data before user will enter the authorization credentials,
 - Skipping transaction authorization.
 
-## 2.6 Transaction data should be protected against modification
+### 2.6 Transaction data should be protected against modification
 
 The transaction authorization process should protect against attack scenarios that modify transaction data after the initial entry by the user. For example, a bad implementation of a transaction authorization process may allow the following attacks (for reference, see steps of transaction authorization described in paragraph 2.5):
 
@@ -137,26 +139,26 @@ The protection against modification could be implemented using various technique
 - Any modification of transaction data should trigger reset of the authorization process.
 - Any attempts to modify transaction data after the initial entry by the user is a symptom of tinkering with an application and should be logged, monitored and carefully investigated.
 
-## 2.7 Confidentiality of the transaction data should be protected during any client / server communications
+### 2.7 Confidentiality of the transaction data should be protected during any client / server communications
 
 The transaction authorization process should protect the privacy of transaction data being presented to the user to authorize i.e. at section 2.5, steps 2 and 4.
 
-## 2.8 When a transaction is executed, the system should check whether it was authorized
+### 2.8 When a transaction is executed, the system should check whether it was authorized
 
 The result of the transaction entry and the authorization process described in paragraph 2.5 is the transaction execution. Just before the transaction is executed there should be a final control gate which verifies whether the transaction was properly authorized by the user. Such control, tied to execution, should prevent attacks such as:
 
 - Time of Check to Time of Use (TOCTOU) – example in paragraph 2.6
 - Skipping authorization check in the transaction entry process (see. paragraph 2.5)
 
-## 2.9 Authorization credentials should be valid only by limited period of time
+### 2.9 Authorization credentials should be valid only by limited period of time
 
 In some malware attacks scenarios, authorization credentials entered by the user is passed to malware command and control server (C&C) and then used from an attacker-controlled machine. Such a process is often performed manually by an attacker. To make such attacks difficult, the server should allow authorizing the transaction only in a limited time window between generating of challenge or OTP and the transaction authorization. Additionally, such safeguard will also aid in preventing resource exhaustion attacks. The time window should be carefully selected to not disrupt normal users' behavior.
 
-## 2.10 Authorization credentials should be unique for every operation
+### 2.10 Authorization credentials should be unique for every operation
 
 To prevent all sorts of replay attacks, authorization credentials should be unique for every operation. It could be achieved using different methods depending on the applied transaction authorization mechanism. For example: using a timestamp, a sequence number or a random value in signed transaction data or as a part of a challenge.
 
-# Remarks
+## Remarks
 
 We identify other issues that should be taken into consideration while implementing transaction authorization. However we deem to be beyond the scope of this cheat sheet:
 
@@ -169,9 +171,10 @@ We identify other issues that should be taken into consideration while implement
 - Protection of the signing keys using a second factor either be password, biometric, etc..
 - Protection of the signing keys leveraging secure elements (TEE, TPM, Smart card..)
 
-# References and future reading
+## References and future reading
 
 References and future reading:
+
 - Wojciech Dworakowski: [E-banking transaction authorization - possible vulnerabilities, security verification and best practices for implementation. Presentation from AppSec EU 2015](http://www.slideshare.net/wojdwo/ebanking-transaction-authorization-appsec-eu-2015-amsterdam).
 - Saar Drimer, Steven J. Murdoch, and Ross Anderson: [Optimised to Fail - Card Readers for Online Banking](http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf).
 - Jakub Kałużny, Mateusz Olejarka: [Script-based Malware Detection in Online Banking Security Overview](http://www.securing.pl/en/script-based-malware-detection-in-online-banking-security-overview/index.html).
