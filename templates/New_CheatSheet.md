@@ -4,10 +4,7 @@
 
 * Use this [editor and validation policy](https://github.com/OWASP/CheatSheetSeries#editor--validation-policy).
 * Use these [format rules](https://github.com/OWASP/CheatSheetSeries#conversion-rules).
-
-# `Topic` Cheat Sheet
-
-**Replace `Topic` with the topic you're tackling, such as `Authentication` and remove this line**
+* The name of your sheet sheet must reflect the `Topic` you're tackling, such as `Authentication` . It will be the title and index of it in the glossary
 
 ## Introduction
 
