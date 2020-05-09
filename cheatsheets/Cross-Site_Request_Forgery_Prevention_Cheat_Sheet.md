@@ -1,3 +1,5 @@
+# Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet
+
 ## Introduction
 
 [Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf) is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user's web browser to perform an unwanted action on a trusted site when the user is authenticated. A CSRF attack works because browser requests automatically include all cookies including session cookies. Therefore, if the user is authenticated to the site, the site cannot distinguish between legitimate requests and forged requests.
@@ -21,33 +23,32 @@ In short, the following principles should be followed to defend against CSRF:
 
 ## Contents
 
-- [Introduction](#introduction)
-- [Contents](#contents)
 - [Token Based Mitigation](#token-based-mitigation)
-  - [Use Built-In Or Existing CSRF Implementations for CSRF Protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection)
-  - [Synchronizer Token Pattern](#synchronizer-token-pattern)
-  - [Encryption based Token Pattern](#encryption-based-token-pattern)
-  - [HMAC Based Token Pattern](#hmac-based-token-pattern)
+  * [Use Build-In Or Existing CSRF Implementations for CSRF Protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection)
+  * [Synchronizer Token Pattern](#synchronizer-token-pattern)
+  * [Encryption based Token Pattern](#encryption-based-token-pattern)
+  * [HMAC Based Token Pattern](#hmac-based-token-pattern)
 - [Defense In Depth Techniques](#defense-in-depth-techniques)
-  - [SameSite Cookie Attribute](#samesite-cookie-attribute)
-  - [Verifying Origin With Standard Headers](#verifying-origin-with-standard-headers)
-    - [Identifying Source Origin (via Origin/Referer header)](#identifying-source-origin-via-originreferer-header)
-    - [Identifying the Target Origin](#identifying-the-target-origin)
-  - [Double Submit Cookie](#double-submit-cookie)
-    - [Cookie with __Host- prefix](#cookie-with-host--prefix)
-  - [Use of Custom Request Headers](#use-of-custom-request-headers)
-  - [User Interaction Based CSRF Defense](#user-interaction-based-csrf-defense)
+  * [SameSite Cookie Attribute](#samesite-cookie-attribute)
+  * [Verifying Origin With Standard Headers](#verifying-origin-with-standard-headers)
+    + [Identifying Source Origin (via Origin/Referer header)](#identifying-source-origin--via-origin-referer-header-)
+    + [Identifying the Target Origin](#identifying-the-target-origin)
+  * [Double Submit Cookie](#double-submit-cookie)
+    + [Cookie with __Host- prefix](#cookie-with---host--prefix)
+  * [Use of Custom Request Headers](#use-of-custom-request-headers)
+  * [User Interaction Based CSRF Defense](#user-interaction-based-csrf-defense)
 - [Login CSRF](#login-csrf)
 - [Java Reference Example](#java-reference-example)
 - [JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header](#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header)
-  - [Storing the CSRF Token Value in the DOM](#storing-the-csrf-token-value-in-the-dom)
-  - [Overriding Defaults to Set Custom Header](#overriding-defaults-to-set-custom-header)
-    - [XMLHttpRequest (Native JavaScript)](#xmlhttprequest-native-javascript)
-    - [AngularJS](#angularjs)
-    - [Axios](#axios)
-    - [JQuery](#jquery)
+  * [Storing the CSRF Token Value in the DOM](#storing-the-csrf-token-value-in-the-dom)
+  * [Overriding Defaults to Set Custom Header](#overriding-defaults-to-set-custom-header)
+    + [XMLHttpRequest (Native JavaScript)](#xmlhttprequest--native-javascript-)
+    + [AngularJS](#angularjs)
+    + [Axios](#axios)
+    + [JQuery](#jquery)
 - [References](#references)
-  - [CSRF](#csrf)
+  * [CSRF](#csrf)
+  * [Cookie Prefixes](#cookie-prefixes)
 
 ## Token Based Mitigation
 

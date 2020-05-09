@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 The goal of this `CSS` (Not [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), but [Cascading Style Sheet](https://www.w3schools.com/css/css_intro.asp)) Cheat Sheet is to inform Programmers, Testers, Security Analysts, Front-End Developers and anyone who is interested in Web Application Security to use these recommendations or requirements in order to achieve better security when authoring `Cascading Style Sheets`.
 
@@ -37,7 +37,7 @@ In a nutshell, having global styling could reveal sensitive information that cou
 
 Let's say, Santhosh has this habit of writing the descriptive selector names like `.profileSettings,` `exportUserData,` `.changePassword,` `.oldPassword,` `.newPassword,` `.confirmNewPassword` etc. Good programmers like to keep code readable and usable by other Code Reviewers of the team. The risk is that attackers could map these selectors to actual features of a web application.
 
-## Defensive Mechanisms to Mitigate Attacker's Motivation
+# Defensive Mechanisms to Mitigate Attacker's Motivation
 
 ## Defense Mechanism
 

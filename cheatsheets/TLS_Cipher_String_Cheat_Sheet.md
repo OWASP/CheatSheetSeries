@@ -1,8 +1,8 @@
-## Introduction
+# Introduction
 
 This article is focused on providing clear and simple examples for the cipher string. They are based on different scenarios where you use the Transport Layer Security (TLS) protocol.
 
-## Recommendations for a cipher string
+# Recommendations for a cipher string
 
 ## Scenarios
 
@@ -100,13 +100,13 @@ Other option: *Delete this two ciphers from your list*.
 | Legacy<br>(D) | `TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
 <!-- markdownlint-enable MD033 -->
 
-## How to use this Cipher Strings?
+# How to use this Cipher Strings?
 
 Inform yourself how to securely configure the settings for the services or hardware that you do use, e.g. *[BetterCrypto.org: Applied Crypto Hardening (DRAFT)](https://bettercrypto.org)*, *[Mozilla: Security/Server Side TLS](https://wiki.mozilla.org/Security/Server_Side_TLS)*. 
 
 We recommend to use one of the cipher strings described above.
 
-## Example configs
+# Example configs
 
 ## Apache
 
@@ -145,7 +145,7 @@ openssl ciphers -V "DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RS
 
 **CAUTION:** You must **not** use legacy versions of OpenSSL if you use this cipher string! We strongly recommend to verify if it works!
 
-## Related Articles
+# Related Articles
 
 - [OWASP: Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md).
 - [BetterCrypto.org: Applied Crypto Hardening (DRAFT)](https://bettercrypto.org).

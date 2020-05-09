@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 This cheatsheet is focused on providing clear, simple, actionable guidance for preventing LDAP Injection flaws in your applications.
 
@@ -21,7 +21,7 @@ Additional Defenses:
 
 - Use a framework (like [LINQtoAD](https://archive.codeplex.com/?p=linqtoad)) that escapes automatically.
 
-## Primary Defenses
+# Primary Defenses
 
 ## Defense Option 1: Escape all variables using the right LDAP encoding function
 
@@ -96,7 +96,7 @@ To minimize the potential damage of a successful LDAP injection attack, you shou
 
 Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-## Related Articles
+# Related Articles
 
 - OWASP article on [LDAP Injection](https://owasp.org/www-community/attacks/LDAP_Injection) Vulnerabilities.
 - OWASP article on [Preventing LDAP Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.html).

@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 *XML eXternal Entity injection* (XXE), which is now part of the [OWASP Top 10](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29) via the point **A4**, is a type of attack against an application that parses XML input.
 
@@ -10,7 +10,7 @@ This attack may lead to the disclosure of confidential data, denial of service, 
 
 For more information on XXE, please visit [XML External Entity (XXE)](https://en.wikipedia.org/wiki/XML_external_entity_attack).
 
-## General Guidance
+# General Guidance
 
 The safest way to prevent XXE is always to disable DTDs (External Entities) completely. Depending on the parser, the method should be similar to the following:
 
@@ -22,7 +22,7 @@ Disabling [DTD](https://www.w3schools.com/xml/xml_dtd.asp)s also makes the parse
 
 Detailed XXE Prevention guidance for a number of languages and commonly used XML parsers in those languages is provided below.
 
-## C/C++
+# C/C++
 
 ## libxml2
 
@@ -74,7 +74,7 @@ SAX2XMLReader* reader = XMLReaderFactory::createXMLReader();
 parser->setFeature(XMLUni::fgXercesDisableDefaultEntityResolution, true);
 ```
 
-## Java
+# Java
 
 Java applications using XML libraries are particularly vulnerable to XXE because the default settings for most Java XML parsers is to have XXE enabled. To use these parsers safely, you have to explicitly disable XXE in the parser you use. The following describes how to disable XXE in the most commonly used XML parsers for Java.
 
@@ -383,7 +383,7 @@ So, per the [Spring OXM CVE writeup](https://pivotal.io/security/cve-2013-4152),
 
 Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor **prior to version 1.3.3** are vulnerable to XXE, and should be upgraded to the latest version. For additional information, check the official [XML configuration file](https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html)
 
-## .NET
+# .NET
 
 The following information for XXE injection in .NET is directly from this [web application of unit tests by Dean Fleming](https://github.com/deanf1/dotnet-security-unit-tests).
 
@@ -523,7 +523,7 @@ It is safe by default because the default parser of the `Transform()` methods is
 
 Some of the `Transform()` methods accept an `XmlReader` or `IXPathNavigable` (e.g., `XmlDocument`) as an input, and if you pass in an unsafe XML Parser then the `Transform` will also be unsafe.
 
-## iOS
+# iOS
 
 ## libxml2
 
@@ -544,7 +544,7 @@ Per the 'NSXMLDocument External Entity Restriction API' section of this [page](h
 
 However, to completely disable XXE in an `NSXMLDocument` in any version of iOS you simply specify `NSXMLNodeLoadExternalEntitiesNever` when creating the `NSXMLDocument`.
 
-## PHP
+# PHP
 
 Per [the PHP documentation](https://www.php.net/manual/en/function.libxml-disable-entity-loader.php), the following should be set when using the default PHP XML parser in order to prevent XXE:
 
@@ -554,7 +554,7 @@ libxml_disable_entity_loader(true);
 
 A description of how to abuse this in PHP is presented in a good [SensePost article](https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/) describing a cool PHP based XXE vulnerability that was fixed in Facebook.
 
-## Python
+# Python
 
 The Python 3 official documentation contains a section on [xml vulnerabilities](https://docs.python.org/3/library/xml.html#xml-vulnerabilities). For Python 2, you can refer to this [page](https://docs.Python.org/2/library/xml.html#xml-vulnerabilities). 
 
@@ -572,7 +572,7 @@ The following table gives an overview of various modules in Python 3 used for XM
 
 To protect your application from the applicable attacks, [two packages](https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages) exist to help you sanitize your input and protect your application against DDoS and remote attacks.
 
-## References
+# References
 
 - [XXE by InfoSecInstitute](https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/)
 - [OWASP Top 10-2017 A4: XML External Entities (XXE)](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29)

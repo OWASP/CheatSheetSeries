@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 When looking at XSS (Cross-Site Scripting), there are three generally recognized forms of [XSS](https://owasp.org/www-community/attacks/xss/):
 * [Reflected or Stored](https://owasp.org/www-community/attacks/xss/#stored-and-reflected-xss-attacks)
@@ -36,7 +36,7 @@ The following is an example vulnerability which occurs in the JavaScript context
 
 Let's look at the individual subcontexts of the execution context in turn.
 
-## RULE \#1 - HTML Escape then JavaScript Escape Before Inserting Untrusted Data into HTML Subcontext within the Execution Context
+# RULE \#1 - HTML Escape then JavaScript Escape Before Inserting Untrusted Data into HTML Subcontext within the Execution Context
 
 There are several methods and attributes which can be used to directly render HTML content within JavaScript. These methods constitute the HTML Subcontext within the Execution Context. If these methods are provided with untrusted input, then an XSS vulnerability could result. For example:
 
@@ -75,7 +75,7 @@ To make dynamic updates to HTML in the DOM safe, we recommend:
 
 **Note:** The `Encoder.encodeForHTML()` and `Encoder.encodeForJS()` are just notional encoders. Various options for actual encoders are listed later in this document.
 
-## RULE \#2 - JavaScript Escape Before Inserting Untrusted Data into HTML Attribute Subcontext within the Execution Context
+# RULE \#2 - JavaScript Escape Before Inserting Untrusted Data into HTML Attribute Subcontext within the Execution Context
 
 The HTML attribute *subcontext* within the *execution* context is divergent from the standard encoding rules. This is because the rule to HTML attribute encode in an HTML attribute rendering context is necessary in order to mitigate attacks which try to exit out of an HTML attributes or try to add additional attributes which could lead to XSS. 
 
@@ -109,7 +109,7 @@ The problem is that if companyName had the value "Johnson & Johnson". What would
 
 It is important to note that when setting an HTML attribute which does not execute code, the value is set directly within the object attribute of the HTML element so there is no concerns with injecting up.
 
-## RULE \#3 - Be Careful when Inserting Untrusted Data into the Event Handler and JavaScript code Subcontexts within an Execution Context
+# RULE \#3 - Be Careful when Inserting Untrusted Data into the Event Handler and JavaScript code Subcontexts within an Execution Context
 
 Putting dynamic data within JavaScript code is especially dangerous because JavaScript encoding has different semantics for JavaScript encoded data when compared to other encodings. In many cases, JavaScript encoding does not stop attacks within an execution context. For example, a JavaScript encoded string will execute even though it is JavaScript encoded.
 
@@ -217,7 +217,7 @@ HTML encoded example to highlight a fundamental difference with JavaScript encod
 
 If HTML encoding followed the same semantics as JavaScript encoding. The line above could have possibly worked to render a link. This difference makes JavaScript encoding a less viable weapon in our fight against XSS.
 
-## RULE \#4 - JavaScript Escape Before Inserting Untrusted Data into the CSS Attribute Subcontext within the Execution Context
+# RULE \#4 - JavaScript Escape Before Inserting Untrusted Data into the CSS Attribute Subcontext within the Execution Context
 
 Normally executing JavaScript from a CSS context required either passing `javascript:attackCode()` to the CSS `url()` method or invoking the CSS `expression()` method passing JavaScript code to be directly executed. 
 
@@ -227,7 +227,7 @@ From my experience, calling the `expression()` function from an execution contex
 document.body.style.backgroundImage = "url(<%=Encoder.encodeForJS(Encoder.encodeForURL(companyName))%>)";
 ```
 
-## RULE \#5 - URL Escape then JavaScript Escape Before Inserting Untrusted Data into URL Attribute Subcontext within the Execution Context
+# RULE \#5 - URL Escape then JavaScript Escape Before Inserting Untrusted Data into URL Attribute Subcontext within the Execution Context
 
 The logic which parses URLs in both execution and rendering contexts looks to be the same. Therefore there is little change in the encoding rules for URL attributes in an execution (DOM) context.
 
@@ -241,7 +241,7 @@ document.body.appendChild(x);
 
 If you utilize fully qualified URLs then this will break the links as the colon in the protocol identifier (`http:` or `javascript:`) will be URL encoded preventing the `http` and `javascript` protocols from being invoked.
 
-## RULE \#6 - Populate the DOM using safe JavaScript functions or properties
+# RULE \#6 - Populate the DOM using safe JavaScript functions or properties
 
 The most fundamental safe way to populate the DOM with untrusted data is to use the safe assignment property `textContent`. 
 
@@ -253,7 +253,7 @@ element.textContent = untrustedData;  //does not execute code
 </script>
 ```
 
-## RULE \#7 - Fixing DOM Cross-site Scripting Vulnerabilities
+# RULE \#7 - Fixing DOM Cross-site Scripting Vulnerabilities
 
 The best way to fix DOM based cross-site scripting is to use the right output method (sink). For example if you want to use user input to write in a `div tag` element don't use `innerHtml`, instead use `innerText` or `textContent`. This will solve the problem, and it is the right way to re-mediate DOM based XSS vulnerabilities.
 
@@ -271,7 +271,7 @@ document.getElementById("contentholder").textContent = document.baseURI;
 
 It does the same thing but this time it is not vulnerable to DOM based cross-site scripting vulnerabilities.
 
-## Guidelines for Developing Secure Applications Utilizing JavaScript
+# Guidelines for Developing Secure Applications Utilizing JavaScript
 
 DOM based XSS is extremely difficult to mitigate against because of its large attack surface and lack of standardization across browsers. 
 
@@ -450,7 +450,7 @@ Run your JavaScript in a ECMAScript 5 [canopy](https://github.com/jcoglan/canopy
 
 Don't `eval()` JSON to convert it to native JavaScript objects. Instead use `JSON.toJSON()` and `JSON.parse()` (Chris Schmidt).
 
-## Common Problems Associated with Mitigating DOM Based XSS
+# Common Problems Associated with Mitigating DOM Based XSS
 
 ## Complex Contexts
 

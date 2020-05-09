@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 Error handling is a part of the overall security of an application. Except in movies, an attack always begins with a **Reconnaissance** phase in which the attacker will try to gather as much technical information (often *name* and *version* properties) as possible about the target, such as the application server, frameworks, libraries, etc.
 
@@ -6,7 +6,7 @@ Unhandled errors can assist an attacker in this initial phase, which is very imp
 
 The following [link](https://cipher.com/blog/a-complete-guide-to-the-phases-of-penetration-testing/) provides a description of the different phases of an attack.
 
-## Context
+# Context
 
 Issues at the error handling level can reveal a lot of information about the target and can also be used to identify injection points in the target's features.
 
@@ -50,7 +50,7 @@ in D:\app\index_new.php on line 188
 
 The [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/01-Information_Gathering/) provides different techniques to obtain technical information from an application.
 
-## Objective
+# Objective
 
 The article shows how to configure a global error handler at the configuration level when possible, otherwise at code level, in different technologies, in order to ensure that if an unexpected error occurs then a generic response is returned by the application but the error is traced on server side for investigation.
 
@@ -62,7 +62,7 @@ As most recent application topologies are *API based*, we assume in this article
 
 For the error logging operation itself, the [logging cheat sheet](Logging_Cheat_Sheet.md) should be used. This article focuses on the error handling part.
 
-## Proposition
+# Proposition
 
 For each technology, a setup will be proposed with configuration and code snippet.
 
@@ -370,6 +370,6 @@ References:
 
 - [Exception handling with ASP.Net Web API](https://exceptionnotfound.net/the-asp-net-web-api-exception-handling-pipeline-a-guided-tour/)
 
-## Sources of the prototype
+# Sources of the prototype
 
 The source code of all the sandbox projects created to find the right setup to use is stored in this [GitHub repository](https://github.com/righettod/poc-error-handling).

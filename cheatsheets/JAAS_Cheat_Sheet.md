@@ -1,4 +1,4 @@
-## Introduction - What is JAAS authentication?
+# Introduction - What is JAAS authentication?
 
 The process of verifying the identity of a user or another system is authentication. 
 
@@ -12,7 +12,7 @@ The JAAS authentication lifecycle:
 4.  Call `LoginContext.login()` for each LoginModule.
 5.  If login successful then call `LoginContext.commit()` else call `LoginContext.abort()`
 
-## Configuration file
+# Configuration file
 
 The JAAS configuration file contains a `LoginModule` stanza for each `LoginModule` available for logging on to the application.
 
@@ -33,7 +33,7 @@ The word required indicates the `LoginContext`'s `login()` method must be succes
 
 They are defined by the `LoginModule` and their usage is managed inside the `LoginModule`. Note, Options are Configured using key-value pairing such as `debug="true"` and the key and value should be separated by a `=` sign.
 
-## Main.java (The client)
+# Main.java (The client)
 
 - Execution syntax:
 
@@ -56,7 +56,7 @@ Where:
 - The value in succeeded Option is returned from `loginContext.login()`.
 - If the login was successful, a subject was created.
 
-## LoginModule.java
+# LoginModule.java
 
 A `LoginModule` must have the following authentication methods:
 
@@ -152,7 +152,7 @@ public boolean logout() {
 }
 ```
 
-## CallbackHandler.java
+# CallbackHandler.java
 
 The `callbackHandler` is in a source (`.java`) file separate from any single `LoginModule` so that it can service a multitude of LoginModules with differing callback objects:
 
@@ -174,11 +174,11 @@ public void handle(Callback[] callbacks) {
 }
 ```    
 
-## Related Articles
+# Related Articles
 
 - [JAAS in Action](https://jaasbook.wordpress.com/2009/09/27/intro/), Michael Coté, posted on September 27, 2009, URL as 5/14/2012.
 - Pistoia Marco, Nagaratnam Nataraj, Koved Larry, Nadalin Anthony from book ["Enterprise Java Security" - Addison-Wesley, 2004](https://www.oreilly.com/library/view/enterprise-javatm-security/0321118898/).
 
-## Disclosure
+# Disclosure
 
 All of the code in the attached JAAS cheat sheet has been copied verbatim from this [free source](https://jaasbook.wordpress.com/2009/09/27/intro/).

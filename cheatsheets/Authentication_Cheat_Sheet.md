@@ -1,10 +1,10 @@
-## Introduction
+# Introduction
 
 **Authentication** is the process of verifying that an individual, entity or website is whom it claims to be. Authentication in the context of web applications is commonly performed by submitting a username or ID and one or more items of private information that only a given user should know.
 
 **Session Management** is a process by which a server maintains the state of an entity interacting with it. This is required for a server to remember how to react to subsequent requests throughout a transaction. Sessions are maintained on the server by a session identifier which can be passed back and forward between the client and server when transmitting and receiving requests. Sessions should be unique per user and computationally very difficult to predict. The [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md) contains further guidance on the best practices in this area.
 
-## Authentication General Guidelines
+# Authentication General Guidelines
 
 ## User IDs
 
@@ -224,7 +224,7 @@ It may be more user-friendly to only require a CAPTCHA be solved after a small n
 
 The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does **not** constitute multi-factor authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so they must be carefully chosen. The [Choosing and Using Security Questions cheat sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) contains further guidance on this.
 
-## Logging and Monitoring
+# Logging and Monitoring
 
 Enable logging and monitoring of authentication functions to detect attacks/failures on a real-time basis
 
@@ -232,7 +232,7 @@ Enable logging and monitoring of authentication functions to detect attacks/fail
 - Ensure that all password failures are logged and reviewed
 - Ensure that all account lockouts are logged and reviewed
 
-## Use of authentication protocols that require no password
+# Use of authentication protocols that require no password
 
 While authentication through a user/password combination and using multi-factor authentication is considered generally secure, there are use cases where it isn't considered the best option or even safe. Examples of this are third party applications that desire connecting to the web application, either from a mobile device, another website, desktop or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn't in your control. For this, and other use cases, there are several authentication protocols that can protect you from exposing your users' data to attackers.
 
@@ -270,7 +270,7 @@ UAF takes advantage of existing security technologies present on devices for aut
 
 U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides **protection against phishing** by using the URL of the website to look up the stored authentication key.
 
-## Password Managers
+# Password Managers
 
 Password managers are programs, browser plugins or web services that automate management of large number of different credentials. Most password managers have functionality to allow users to easily use them on websites, either by pasting the passwords into the login form, or by simulating the user typing them in.
 

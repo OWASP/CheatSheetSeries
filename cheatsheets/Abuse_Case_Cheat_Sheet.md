@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 Often when the security level of an application is mentioned in requirements, the following *expressions* are met:
 
@@ -11,7 +11,7 @@ These security requirements are too generic, and thus useless for a development 
 
 In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context.
 
-## Objective
+# Objective
 
 The objective of this cheat sheet is to provide an explanation of about what an **Abuse Case** is, why abuse cases are important when considering the security of an application, and further finally, to provide a proposal for a pragmatic approach to building  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).
 
@@ -25,7 +25,7 @@ proposed to its context/culture in order to, finally, build its own method.
 This cheat sheet can be seen as a getting-started tutorial.
 ```
 
-## Context & approach
+# Context & approach
 
 ## Why clearly identify the attacks?
 
@@ -128,7 +128,7 @@ The following figure provides an overview of the chaining of the different steps
 
 ![Overview Schema](../assets/Abuse_Case_Cheat_Sheet_Overview.png)
 
-## Proposal
+# Proposal
 
 The proposal will focus on the output of the workshop explained in the previous section.
 
@@ -247,7 +247,7 @@ Validations can be of the following kinds:
 
 Adding automated tests also allow teams to track that countermeasures against the abuse cases are still effective/in place during a maintenance or bug fixing phase of a project (to prevent accidental removal/disabling). It is also useful when a [Continuous Delivery](https://continuousdelivery.com/) approach is used, to ensure that all abuse cases protections are in place before opening access to the application.
 
-## Example of derivation of Abuse Cases as User Stories
+# Example of derivation of Abuse Cases as User Stories
 
 The following section show an example of derivation of Abuse Cases as User Stories, here using the [OWASP TOP 10](https://owasp.org/www-project-top-ten/) as input source.
 
@@ -449,7 +449,7 @@ Exploitation of insufficient logging and monitoring is the bedrock of nearly eve
 
 As an attacker, I attack an organization and the logs, monitoring systems, and teams do not see or respond to my attacks.
 
-## Sources of the schemas
+# Sources of the schemas
 
 All figures were created using https://www.draw.io/ site and exported (as PNG image) for integration into this article.
 

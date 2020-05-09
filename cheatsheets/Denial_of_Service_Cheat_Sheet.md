@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 This sheet is focused on providing an overall, common overview with an informative, straight to the point guidance to propose angles on how to battle denial of service (DoS) attacks on different layers. It is by no means complete, however, it should serve as an indicator to inform the reader and to introduce a workable methodology to tackle this issue.
 
@@ -42,7 +42,7 @@ In ARP poisoning attacks a malicious actor sends spoofed ARP (Address Resolution
 
 Packet filtering technology can be used to inspect packets in transit to identify and block offending ARP packets. Another approach is to use static ARP tables but they prove difficult to be maintained.
 
-## Application attacks
+# Application attacks
 
 Application layer attacks focus on rendering applications unavailable by exhausting resources or by making it unusable in a functional way. These attacks do not have to consume the network bandwidth to be effective. Rather they place an operational strain on the application server in such a way that the server becomes unavailable, unusable or non-functional. All attacks exploiting weaknesses on OSI layer 7 protocol stack are generally categorised as application attacks. They are most challenging to identify/mitigate.
 
@@ -80,7 +80,7 @@ Application layer attacks focus on rendering applications unavailable by exhaust
 - **Authentication as a means to expose functionality**
 - **User lockout** is a scenario where an attacker can take advantage of the application security mechanisms to cause DoS by abusing the login failure.
 
-## Network attacks
+# Network attacks
 
 **TODO:** (Develop text) Attacks where network bandwidth gets saturation. Volumetric in nature. Amplification techniques make these attacks effective.
 
@@ -114,6 +114,6 @@ Rate limiting is the process of controlling traffic rate from and to a server or
 - **Filter services** support different mechanics to filter out malicious or non compliant traffic
 - **Comply with relevant data protection/privacy laws** - a lot of providers route traffic through USA/UK
 
-## Related Articles
+# Related Articles
 
 * [CERT-EU Whitepaper](http://cert.europa.eu/static/WhitePapers/CERT-EU-SWP_14_09_DDoS_final.pdf)

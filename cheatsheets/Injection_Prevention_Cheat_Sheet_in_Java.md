@@ -1,16 +1,16 @@
-## Introduction
+# Introduction
 
 This document has for objective to provide some tips to handle *Injection* into Java application code.
 
 Sample codes used in tips are located [here](https://github.com/righettod/injection-cheat-sheets).
 
-## What is Injection ?
+# What is Injection ?
 
 [Injection](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection) in OWASP Top 10 is defined as following:
 
 *Consider anyone who can send untrusted data to the system, including external users, internal users, and administrators.*
 
-## General advices to prevent Injection
+# General advices to prevent Injection
 
 The following point can be applied, in a general way, to prevent *Injection* issue:
 
@@ -19,7 +19,7 @@ The following point can be applied, in a general way, to prevent *Injection* iss
 
 Additional advices are provided on this [cheatsheet](Input_Validation_Cheat_Sheet.md).
 
-## Specific Injection types
+# Specific Injection types
 
 *Examples in this section will be provided in Java technology (see Maven project associated) but advices are applicable to others technologies like .Net / PHP / Ruby / Python...*
 

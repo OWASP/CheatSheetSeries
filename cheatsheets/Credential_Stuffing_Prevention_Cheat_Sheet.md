@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 This cheatsheet covers defences against two common types of authentication-related attacks: credential stuffing and password spraying. Although these are separate, distinct attacks, in many cases the defences that would be implemented to protect against them are the same, and they would also be effective at protecting against brute-force attacks. A summary of these different attacks is listed below:
 
@@ -8,7 +8,7 @@ This cheatsheet covers defences against two common types of authentication-relat
 | Credential Stuffing | Testing username/password pairs obtained from the breach of another site. |
 | Password Spraying | Testing a single weak password against a large number of different accounts.|
 
-## Multi-Factor Authentication
+# Multi-Factor Authentication
 
 Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including credential stuffing and password spraying, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
 
@@ -23,7 +23,7 @@ In order to balance security and usability, multi-factor authentication can be c
 
 Additionally, for enterprise applications, known trusted IP ranges could be added to a whitelist so that MFA is not required when users connect from these ranges.
 
-## Alternative Defenses
+# Alternative Defenses
 
 Where it is not possible to implement MFA, there are many alternative defenses that can be used to protect against credential stuffing and password spraying. In isolation none of these are as effective as MFA, however if multiple defenses are implemented in a layered approach, they can provide a reasonable degree of protection. In many cases, these mechanisms will also protect against brute-force or password spraying attacks.
 
@@ -79,7 +79,7 @@ Credential stuffing attacks rely on not just the re-use of passwords between mul
 
 Requiring users to create their own username when registering on the website makes it harder for an attacker to obtain valid username and password pairs for credential stuffing, as many of the available credential lists only include email addresses. Providing the user with a generated username can provide a higher degree of protection (as users are likely to choose the same username on most websites), but is user friendly. Additionally, care needs to be taken to ensure that the generated username is not predictable (such as being based on the user's full name, or sequential numeric IDs), as this could make enumerating valid usernames for a password spraying attack easier.
 
-## Defense in Depth
+# Defense in Depth
 
 The following mechanisms are not sufficient to prevent credential stuffing or password spraying attacks; however they can be used to make the attacks more time consuming or technically difficult to implement. This can be useful to defend against opportunistic attackers, who use off-the-shelf tools and are likely to be discouraged by any technical barriers, but will not be sufficient against a more targeted attack.
 
@@ -107,7 +107,7 @@ For example, it would generally not be appropriate to notify a user that there h
 
 Details related to current or recent logins should also be made visible to the user. For example, when they login to the application, the date, time and location of their previous login attempt could be displayed to them. Additionally, if the application supports concurrent sessions, the user should be able to view a list of all active sessions, and to terminate any other sessions that are not legitimate.
 
-## References
+# References
 
 - [OWASP Credential Stuffing Article](https://owasp.org/www-community/attacks/Credential_stuffing)
 - [OWASP Automated Threats to Web Applications](https://owasp.org/www-project-automated-threats-to-web-applications/)

@@ -1,10 +1,10 @@
-## Introduction
+# Introduction
 
 Authorizations definition and implementation is one of the important protection measure of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to go live, the most significant number of issues related to authorization came in the maintenance lifetime of the application.
 
 This situation is often explained by the fact that features are added/modified and no review of the authorizations was performed on the application before the publishing of the new release, for cost or time issue reason.
 
-## Context
+# Context
 
 In order to try to address this situation, it's can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations definition.
 
@@ -14,7 +14,7 @@ The representation of the different combinations of these 2 dimensions is often 
 
 During a test of an authorization, a **Logical Role** is also called a **Point Of View**.
 
-## Objective
+# Objective
 
 This article describe a proposition of implementation in order to automate the tests of an *authorization matrix*.
 
@@ -22,7 +22,7 @@ This article use the assumption that 2 dimensions are used to represents an auth
 
 The objective is to provide starting ideas/hints in order to create a tailored way of testing of the authorization matrix for the target application.
 
-## Proposition
+# Proposition
 
 In order to achieve the full automation of the evaluation of the *authorization matrix*, the following actions has been performed:
 
@@ -394,7 +394,7 @@ Access issues detected using the BASIC USER point of view:
     a response code 200 that is not the expected one (403 expected).
 ```
 
-## Rendering of the authorization matrix for audit / review
+# Rendering of the authorization matrix for audit / review
 
 Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.
 
@@ -508,6 +508,6 @@ Example of the rendering:
 
 ![RenderingExample](../assets/Authorization_Testing_Automation_AutomationRendering.png)
 
-## Sources of the prototype
+# Sources of the prototype
 
 [Github repository](https://github.com/righettod/poc-authz-testing)

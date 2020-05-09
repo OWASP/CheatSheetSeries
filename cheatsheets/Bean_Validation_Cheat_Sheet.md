@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 This article is focused on providing clear, simple, actionable guidance for providing Java Bean Validation security functionality in your applications.
 
@@ -14,7 +14,7 @@ One advantage of this approach is that the validation constraints and the corres
 
 ![JSR](../assets/Bean_Validation_Cheat_Sheet_JSR.png)
 
-## Setup
+# Setup
 
 The examples in this guide use Hibernate Validator (the reference implementation for Bean Validation 1.1).
 
@@ -40,7 +40,7 @@ Enable bean validation support in Spring's **context.xml**:
 
 For more info, please see the [setup guide](https://hibernate.org/validator/documentation/getting-started/)
 
-## Basics
+# Basics
 
 In order to get started using Bean Validation, you must add validation constraints (`@Pattern`, `@Digits`, `@Min`, `@Max`, `@Size`, `@Past`, `@Future`, `@CreditCardNumber`, `@Email`, `@URL`, etc.) to your model and then utilize the `@Valid` annotation when passing your model around in various application layers.
 
@@ -60,7 +60,7 @@ For the sake of simplicity all the examples below feature field constraints and 
 
 When it comes to error handling, the Hibernate Validator returns a `BindingResult` object which contains a `List<ObjectError>`. The examples below feature simplistic error handling, while a production ready application would have a more elaborate design that takes care of logging and error page redirection.
 
-## Pre-defined Constraints
+# Pre-defined Constraints
 
 ## @Pattern
 
@@ -452,13 +452,13 @@ In addition to providing the complete set of JSR303 constraints, Hibernate Valid
 
 Take a look at this [table](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints) for the complete list.
 
-## Custom Constraints
+# Custom Constraints
 
 One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built in constraints.
 
 Creating custom constraints is beyond the scope of this guide. Please see this [documentation](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html).
 
-## Error Messages
+# Error Messages
 
 It is possible to specify a message ID with the validation annotation, so that error messages are customized :
 

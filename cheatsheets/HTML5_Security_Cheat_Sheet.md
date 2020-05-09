@@ -1,8 +1,8 @@
-## Introduction
+# Introduction
 
 The following cheat sheet serves as a guide for implementing HTML 5 in a secure fashion.
 
-## Communication APIs
+# Communication APIs
 
 ## Web Messaging
 
@@ -46,7 +46,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 - As mentioned before, process the messages (`event.data`) as data and never evaluate the content as HTML or script code.
 - Always check the origin attribute of the message (`event.origin`) to ensure the message is coming from a trusted domain. Use a whitelist approach.
 
-## Storage APIs
+# Storage APIs
 
 ## Local Storage
 
@@ -65,17 +65,17 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 - If utilized, WebDatabase content on the client side can be vulnerable to SQL injection and needs to have proper validation and parameterization.
 - Like Local Storage, a single [Cross Site Scripting](https://owasp.org/www-community/attacks/xss/) can be used to load malicious data into a web database as well. Don't consider data in these to be trusted.
 
-## Geolocation
+# Geolocation
 
 - The Geolocation RFC recommends that the user agent ask the user's permission before calculating location. Whether or how this decision is remembered varies from browser to browser. Some user agents require the user to visit the page again in order to turn off the ability to get the user's location without asking, so for privacy reasons, it's recommended to require user input before calling `getCurrentPosition` or `watchPosition`.
 
-## Web Workers
+# Web Workers
 
 - Web Workers are allowed to use `XMLHttpRequest` object to perform in-domain and Cross Origin Resource Sharing requests. See relevant section of this Cheat Sheet to ensure CORS security.
 - While Web Workers don't have access to DOM of the calling page, malicious Web Workers can use excessive CPU for computation, leading to Denial of Service condition or abuse Cross Origin Resource Sharing for further exploitation. Ensure code in all Web Workers scripts is not malevolent. Don't allow creating Web Worker scripts from user supplied input.
 - Validate messages exchanged with a Web Worker. Do not try to exchange snippets of JavaScript for evaluation e.g. via `eval()` as that could introduce a [DOM Based XSS](DOM_based_XSS_Prevention_Cheat_Sheet.md) vulnerability.
 
-## Tabnabbing
+# Tabnabbing
 
 Attack is described in detail in this [article](https://owasp.org/www-community/attacks/Reverse_Tabnabbing).
 
@@ -113,7 +113,7 @@ Compatibility matrix:
 - [noreferrer](https://caniuse.com/#search=noreferrer)
 - [referrer-policy](https://caniuse.com/#feat=referrer-policy)
 
-## Sandboxed frames
+# Sandboxed frames
 
 - Use the `sandbox` attribute of an `iframe` for untrusted content.
 - The `sandbox` attribute of an `iframe` enables restrictions on content within an `iframe`. The following restrictions are active when the `sandbox` attribute is set:
@@ -128,7 +128,7 @@ It is possible to have a [fine-grained control](https://html.spec.whatwg.org/mul
 - In old versions of user agents where this feature is not supported, this attribute will be ignored. Use this feature as an additional layer of protection or check if the browser supports sandboxed frames and only show the untrusted content if supported.
 - Apart from this attribute, to prevent Clickjacking attacks and unsolicited framing it is encouraged to use the header `X-Frame-Options` which supports the `deny` and `same-origin` values. Other solutions like framebusting `if(window!==window.top) { window.top.location=location;}` are not recommended.
 
-## Credential and Personally Identifiable Information (PII) Input hints
+# Credential and Personally Identifiable Information (PII) Input hints
 
 - Protect the input values from being cached by the browser. 
 
@@ -145,20 +145,20 @@ Text areas and input fields for PII (name, email, address, phone number) and log
 - `autocorrect="off"`
 - `autocapitalize="off"`
 
-## Offline Applications
+# Offline Applications
 
 - Whether the user agent requests permission from the user to store data for offline browsing and when this cache is deleted, varies from one browser to the next. Cache poisoning is an issue if a user connects through insecure networks, so for privacy reasons it is encouraged to require user input before sending any `manifest` file.
 - Users should only cache trusted websites and clean the cache after browsing through open or insecure networks.
 
-## Progressive Enhancements and Graceful Degradation Risks
+# Progressive Enhancements and Graceful Degradation Risks
 
 - The best practice now is to determine the capabilities that a browser supports and augment with some type of substitute for capabilities that are not directly supported. This may mean an onion-like element, e.g. falling through to a Flash Player if the `<video>` tag is unsupported, or it may mean additional scripting code from various sources that should be code reviewed.
 
-## HTTP Headers to enhance security
+# HTTP Headers to enhance security
 
 Consult the project [OWASP Secure Headers](https://owasp.org/www-project-secure-headers/) in order to obtains the list of HTTP security headers that an application should use to enable defenses at browser level.
 
-## WebSocket implementation hints
+# WebSocket implementation hints
 
 In addition to the elements mentioned above, this is the list of areas for which caution must be taken during the implementation.
 

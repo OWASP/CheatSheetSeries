@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection) is one of the most dangerous web vulnerabilities. So much so that it's the [\#1 item in the OWASP Top 10](https://wiki.owasp.org/index.php/Top_10_2013-A1-Injection). 
 
@@ -6,7 +6,7 @@ It represents a serious threat because SQL Injection allows evil attacker code t
 
 This cheat sheet is a derivative work of the [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md).
 
-## Parameterized Query Examples
+# Parameterized Query Examples
 
 SQL Injection is best prevented through the use of [*parameterized queries*](SQL_Injection_Prevention_Cheat_Sheet.md). The following chart demonstrates, with real-world code samples, how to build parameterized queries in most of the common web languages. The purpose of these code samples is to demonstrate to the web developer how to avoid SQL Injection when building database queries within a web application.
 
@@ -79,15 +79,15 @@ command.Parameters["@CustomerId"].Value = 1;
 ### Using Ruby with ActiveRecord
 
 ```ruby
-## Create
+# Create
 Project.create!(:name => 'owasp')
-## Read
+# Read
 Project.all(:conditions => "name = ?", name)
 Project.all(:conditions => { :name => name })
 Project.where("name = :name", :name => name)
-## Update
+# Update
 project.update_attributes(:name => 'owasp')
-## Delete
+# Delete
 Project.delete(:name => 'name')
 ``` 
 
@@ -185,7 +185,7 @@ PROCEDURE SafeGetBalanceQuery(@UserID varchar(20), @Dept varchar(10)) AS BEGIN
 END
 ```
 
-## References
+# References
 
 - [The Bobby Tables site (inspired by the XKCD webcomic) has numerous examples in different languages of parameterized Prepared Statements and Stored Procedures](http://bobby-tables.com/)
 - OWASP [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md)

@@ -1,11 +1,11 @@
-## Introduction
+# Introduction
 
 Specifications for XML and XML schemas include multiple security flaws. At the same time, these specifications provide the tools required to protect XML applications. Even though we use XML schemas to define the security of XML documents, they can be used to perform a variety of attacks: file retrieval, server side request forgery, port scanning, or brute forcing. This cheat sheet exposes how to exploit the different possibilities in libraries and software divided in two sections:
 
 - **Malformed XML Documents**: vulnerabilities using not well formed documents.
 - **Invalid XML Documents**: vulnerabilities using documents that do not have the expected structure.
 
-## Malformed XML Documents
+# Malformed XML Documents
 
 The W3C XML specification defines a set of principles that XML documents must follow to be considered well formed. When a document violates any of these principles, it must be considered a fatal error and the data it contains is considered malformed. Multiple tactics will cause a malformed document: removing an ending tag, rearranging the order of elements into a nonsensical structure, introducing forbidden characters, and so on. The XML parser should stop execution once detecting a fatal error. The document should not undergo any additional processing, and the application should display an error message.
 
@@ -69,7 +69,7 @@ A coercive attack in XML involves parsing deeply nested XML documents without th
 
 Unexpected consequences may result from manipulating documents using parsers that do not follow W3C specifications. It may be possible to achieve crashes and/or code execution when the software does not properly verify how to handle incorrect XML structures. Feeding the software with fuzzed XML documents may expose this behavior.
 
-## Invalid XML Documents
+# Invalid XML Documents
 
 Attackers may introduce unexpected values in documents to take advantage of an application that does not verify whether the document contains a valid set of values. Schemas specify restrictions that help identify whether documents are valid. A valid document is well formed and complies with the restrictions of a schema, and more than one schema can be used to validate a document. These restrictions may appear in multiple files, either using a single schema language or relying on the strengths of the different schema languages.
 

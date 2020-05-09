@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking), also known as UI redress attacks.
 
@@ -10,7 +10,7 @@ There are three main mechanisms that can be used to defend against these attacks
 
 Note that these mechanisms are all independent of each other, and where possible more than one of them should be implemented in order to provide defense in depth.
 
-## Defending with Content Security Policy (CSP) frame-ancestors directive
+# Defending with Content Security Policy (CSP) frame-ancestors directive
 
 The `frame-ancestors` directive can be used in a Content-Security-Policy HTTP response header to indicate whether or not a browser should be allowed to render a page in a `<frame>` or `<iframe>`. Sites can use this to avoid Clickjacking attacks by ensuring that their content is not embedded into other sites.
 
@@ -38,7 +38,7 @@ See the following documentation for further details and more complex examples:
 - **Browser support:** CSP frame-ancestors is not supported by all the major browsers yet.
 - **X-Frame-Options takes priority:** [Section "Relation to X-Frame-Options" of the CSP Spec](https://w3c.github.io/webappsec/specs/content-security-policy/#frame-ancestors-and-frame-options) says: "*If a resource is delivered with an policy that includes a directive named frame-ancestors and whose disposition is "enforce", then the X-Frame-Options header MUST be ignored*", but Chrome 40 & Firefox 35 ignore the frame-ancestors directive and follow the X-Frame-Options header instead.
 
-## Defending with X-Frame-Options Response Headers
+# Defending with X-Frame-Options Response Headers
 
 The `X-Frame-Options` HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a `<frame>` or `<iframe>`. Sites can use this to avoid Clickjacking attacks, by ensuring that their content is not embedded into other sites. Set the X-Frame-Options header for all responses containing HTML content. The possible values are "DENY", "SAMEORIGIN", or "ALLOW-FROM uri"
 
@@ -83,7 +83,7 @@ Meta-tags that attempt to apply the X-Frame-Options directive DO NOT WORK. For e
 - **X-Frame-Options Deprecated** While the X-Frame-Options header is supported by the major browsers, it was never standardized and has been deprecated in favour of the frame-ancestors directive from the CSP Level 2 specification.
 - **Proxies** Web proxies are notorious for adding and stripping headers. If a web proxy strips the X-Frame-Options header then the site loses its framing protection.
 
-## Defending with SameSite Cookies
+# Defending with SameSite Cookies
 
 The `SameSite` cookie attribute defined in [RFC 6265bis](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7) is primarily intended to defend against [cross-site request forgery (CSRF)](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md#samesite-cookie-attribute); however it can also provide protection against Clickjacking attacks.
 
@@ -99,7 +99,7 @@ Additionally, while `SameSite` attribute is supported by [most modern browsers](
 
 The use of this attribute should be considered as part of a defence-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.
 
-## Best-for-now Legacy Browser Frame Breaking Script
+# Best-for-now Legacy Browser Frame Breaking Script
 
 One way to defend against clickjacking is to include a "frame-breaker" script in each page that should not be framed. The following methodology will prevent a webpage from being framed even in legacy browsers, that do not support the X-Frame-Options-Header.
 
@@ -128,7 +128,7 @@ Then, delete that style by its ID immediately after in the script:
 
 This way, everything can be in the document HEAD and you only need one method/taglib in your API.
 
-## window.confirm() Protection
+# window.confirm() Protection
 
 The use of X-Frame-Options or a frame-breaking script is a more fail-safe method of clickjacking protection. However, in scenarios where content must be frameable, then a `window.confirm()` can be used to help mitigate Clickjacking by informing the user of the action they are about to perform.
 
@@ -145,7 +145,7 @@ Invoking `window.confirm()` will display a popup that cannot be framed. If the `
 </script>
 ```
 
-## Insecure Non-Working Scripts DO NOT USE
+# Insecure Non-Working Scripts DO NOT USE
 
 Consider the following snippet which is **NOT recommended** for defending against clickjacking:
 

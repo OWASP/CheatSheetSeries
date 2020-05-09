@@ -1,10 +1,10 @@
-## Introduction
+# Introduction
 
 Docker containers are the most popular containerisation technology. Used properly can increase level of security (in comparison to running application directly on the host). On the other hand some misconfigurations can lead to downgrade level of security or even introduce new vulnerabilities.
 
 The aim of this cheat sheet is to provide an easy to use list of common security mistakes and good practices that will help you securing your Docker containers.
 
-## Rules
+# Rules
 
 ## RULE \#0 - Keep Host and Docker up to date
 
@@ -253,6 +253,6 @@ References:
  - [Configuring Logging Drivers](https://docs.docker.com/config/containers/logging/configure/)
  - [View logs for a container or service](https://docs.docker.com/config/containers/logging/)
 
-## Related Projects
+# Related Projects
 
 [OWASP Docker Top 10](https://github.com/OWASP/Docker-Security)

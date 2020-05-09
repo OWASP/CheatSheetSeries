@@ -1,10 +1,10 @@
-## Introduction
+# Introduction
 
 HTTP [Strict Transport Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) (also named **HSTS**) is an opt-in security enhancement that is specified by a web application through the use of a special response header. Once a supported browser receives this header that browser will prevent any communications from being sent over HTTP to the specified domain and will instead send all communications over HTTPS. It also prevents HTTPS click through prompts on browsers.
 
 The specification has been released and published end of 2012 as [RFC 6797](http://tools.ietf.org/html/rfc6797) (HTTP Strict Transport Security (HSTS)) by the IETF.
 
-## Threats
+# Threats
 
 HSTS addresses the following threats:
 
@@ -15,7 +15,7 @@ HSTS addresses the following threats:
 - A man-in-the-middle attacker attempts to intercept traffic from a victim user using an invalid certificate and hopes the user will accept the bad certificate
     - HSTS does not allow a user to override the invalid certificate message
 
-## Examples
+# Examples
 
 Simple example, using a long (1 year = 31536000 seconds) max-age. This example is dangerous since it lacks `includeSubDomains`:
 
@@ -37,17 +37,17 @@ This example is useful if all present and future subdomains will be HTTPS. In th
 
 The `preload` flag indicates the site owner's consent to have their domain preloaded. The site owner still needs to then go and submit the domain to the list.
 
-## Problems
+# Problems
 
 Site owners can use HSTS to identify users without cookies. This can lead to a significant privacy leak. Take a look [here](http://www.leviathansecurity.com/blog/the-double-edged-sword-of-hsts-persistence-and-privacy) for more details.
 
 Cookies can be manipulated from sub-domains, so omitting the `includeSubDomains` option permits a broad range of cookie-related attacks that HSTS would otherwise prevent by requiring a valid certificate for a subdomain. Ensuring the `secure` flag is set on all cookies will also prevent, some, but not all, of the same attacks.
 
-## Browser Support
+# Browser Support
 
 As of September 2019 HSTS is supported by [all modern browsers](https://caniuse.com/#feat=stricttransportsecurity), with the only notable exception being Opera Mini.
 
-## References
+# References
 
 - [Chromium Projects/HSTS](https://www.chromium.org/hsts/)
 - [OWASP TLS Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)

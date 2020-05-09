@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 This cheat sheet provides guidance on how to implement transport layer protection for an application using Transport Layer Security (TLS). When correctly implemented, TLS can provides a number of security benefits:
 
@@ -17,7 +17,7 @@ For [various reasons](http://tim.dierks.org/2014/05/security-standards-and-name-
 
 The terms "SSL", "SSL/TLS" and "TLS" are frequently used interchangeably, and in many cases "SSL" is used when referring to the more modern TLS protocol. This cheatsheet will use the term "TLS" except where referring to the legacy protocols.
 
-## Server Configuration
+# Server Configuration
 
 ## Only Support Strong Protocols
 
@@ -75,7 +75,7 @@ Additionally, there are a number of offline tools that can be used:
 - [SSLScan - Fast SSL Scanner](https://github.com/rbsec/sslscan)
 - [SSLyze](https://github.com/iSECPartners/sslyze)
 
-## Certificates
+# Certificates
 
 ## Use Strong Keys and Protect Them
 
@@ -144,7 +144,7 @@ Historically these displayed differently in the browser, often showing the compa
 
 There is no security downside to the use of EV certificates. However, as they are significantly more expensive than domain validated certificates, an assessment should be made to determine whether they provide any additional value
 
-## Application
+# Application
 
 ## Use TLS For All Pages
 
@@ -200,7 +200,7 @@ Client certificates are rarely used on public systems due to a number of issues:
 
 However, they should be considered for high-value applications or APIs, especially where there are a small number of technically sophisticated users, or where all users are part of the same organisation.
 
-## Related Articles
+# Related Articles
 
 - OWASP - [TLS Cipher String Cheat Sheet](TLS_Cipher_String_Cheat_Sheet.md)
 - OWASP - [Testing for SSL-TLS](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_SSL_TLS_Ciphers_Insufficient_Transport_Layer_Protection.html), and OWASP [Guide to Cryptography](https://wiki.owasp.org/index.php/Guide_to_Cryptography)

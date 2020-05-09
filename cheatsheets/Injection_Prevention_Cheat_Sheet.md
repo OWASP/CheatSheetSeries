@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 This article is focused on providing clear, simple, actionable guidance for preventing the entire category of Injection flaws in your applications. Injection attacks, especially [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection), are unfortunately very common.
 
@@ -8,7 +8,7 @@ Injection flaws occur when an application sends untrusted data to an interpreter
 
 Depending on the accessibility different actions must be taken in order to fix them. It is always the best way to fix the problem in source code itself, or even redesign some parts of the applications. But if the source code is not available or it is simply uneconomical to fix legacy software only virtual patching makes sense.
 
-## Application Types
+# Application Types
 
 Three classes of applications can usually be seen within a company. Those 3 types are needed to identify the actions which need to take place in order to prevent/fix injection flaws.
 
@@ -24,7 +24,7 @@ An already productive application, which can be easily adapted. A Model-View-Con
 
 A productive application which cannot or only with difficulty be modified.
 
-## Forms of Injection
+# Forms of Injection
 
 There are several forms of injection targeting different technologies including SQL queries, LDAP queries, XPath queries and OS commands.
 
@@ -298,7 +298,7 @@ Process p = pb.start();
 
 Web applications often communicate with network daemons (like SMTP, IMAP, FTP) where user input becomes part of the communication stream. Here it is possible to inject command sequences to abuse an established session.
 
-## Injection Prevention Rules
+# Injection Prevention Rules
 
 ## Rule \#1 (Perform proper input validation):
 
@@ -312,7 +312,7 @@ The preferred option is to use a safe API which avoids the use of the interprete
 
 If a parameterized API is not available, you should carefully escape special characters using the specific escape syntax for that interpreter.
 
-## Other Injection Cheatsheets
+# Other Injection Cheatsheets
 
 [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md)
 

@@ -1,12 +1,12 @@
-## Introduction
+# Introduction
 
 This article brings forth a way to integrate the `defense in depth` concept to the client-side of web applications. By injecting the Content-Security-Policy (CSP) headers from the server, the browser is aware and capable of protecting the user from dynamic calls that will load content into the page currently being visited.
 
-## Context
+# Context
 
 The increase in XSS and clickjacking vulnerabilities demands a more `defense in depth` security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.
 
-## Defense in Depth
+# Defense in Depth
 
 A strong CSP provides an effective second layer of protection against various types of vulnerabilities, including XSS. Although it may not be possible to fully mitigate these issues, a CSP can make it significantly harder for an attacker to actually exploit them.
 
@@ -14,7 +14,7 @@ Even on a fully static website, which does not accept any user input, a CSP can 
 
 However, CSP **should not** be relied upon as the only defensive mechanism on a website. It is still vital that other protective controls are implemented, such as those discussed in the [Cross-Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
-## Policy Delivery
+# Policy Delivery
 
 CSP can be delivered to the user agent in different techniques.
 1. `Content-Security-Policy` HTTP response header field. This is the most preferred technique.
@@ -29,7 +29,7 @@ The following are headers for CSP.
 - `Content-Security-Policy-Report-Only` : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking ("fail open") and a report is sent to the URL designated by the `report-uri` directive. This is often used as a precursor to utilizing CSP in blocking mode ("fail closed")
 - `DO NOT` use X-Content-Security-Policy or X-WebKit-CSP. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.
 
-## CSP Directives
+# CSP Directives
 
 Multiple types of directives exist that allow the developer to granularly control the flow of the policies.
 
@@ -120,7 +120,7 @@ They can be used in dynamic script blocks in combination with `strict-dynamic`. 
 
 For more details on strict-dynamic, check out [strict-dynamic usage](https://w3c.github.io/webappsec-csp/#strict-dynamic-usage).
 
-## CSP Sample Policies
+# CSP Sample Policies
 
 ## Basic CSP Policy
 
@@ -219,7 +219,7 @@ This should be replaced by `addEventListener` calls:
 
 > `document.getElementById("button1").addEventListener('click', doSomething);`
 
-## References
+# References
 
 - [CSP with Google](https://csp.withgoogle.com/docs/index.html)
 - [CSP Level 3 W3C](https://www.w3.org/TR/CSP3/)

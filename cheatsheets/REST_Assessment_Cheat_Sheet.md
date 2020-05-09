@@ -1,10 +1,10 @@
-## About RESTful Web Services
+# About RESTful Web Services
 
 Web Services are an implementation of web technology used for machine to machine communication. As such they are used for Inter application communication, Web 2.0 and Mashups and by desktop and mobile applications to call a server. 
 
 RESTful web services (often called simply REST) are a light weight variant of Web Services based on the RESTful design pattern. In practice RESTful web services utilizes HTTP requests that are similar to regular HTTP calls in contrast with other Web Services technologies such as SOAP which utilizes a complex protocol.
 
-## Key relevant properties of RESTful web services
+# Key relevant properties of RESTful web services
 
 - Use of HTTP methods (`GET`, `POST`, `PUT` and `DELETE`) as the primary verb for the requested operation.
 - Non-standard parameters specifications:
@@ -14,7 +14,7 @@ RESTful web services (often called simply REST) are a light weight variant of We
 - Custom authentication and session management, often utilizing custom security tokens: this is needed as machine to machine communication does not allow for login sequences.
 - Lack of formal documentation. A [proposed standard for describing RESTful web services called WADL](http://www.w3.org/Submission/wadl/) was submitted by Sun Microsystems but was never officially adapted.
 
-## The challenge of security testing RESTful web services
+# The challenge of security testing RESTful web services
 
 - Inspecting the application does not reveal the attack surface, I.e. the URLs and parameter structure used by the RESTful web service. The reasons are:
     - No application utilizes all the available functions and parameters exposed by the service
@@ -24,7 +24,7 @@ RESTful web services (often called simply REST) are a light weight variant of We
 - As a machine interface the number of parameters used can be very large, for example a JSON structure may include dozens of parameters. [fuzzing](https://owasp.org/www-community/Fuzzing) each one significantly lengthen the time required for testing.
 - Custom authentication mechanisms require reverse engineering and make popular tools not useful as they cannot track a login session.
 
-## How to pentest a RESTful web service?
+# How to pentest a RESTful web service?
 
 Determine the attack surface through documentation - RESTful pen testing might be better off if some level of white box testing is allowed and you can get information about the service. 
 
@@ -60,7 +60,7 @@ Analyzing collected requests to optimize [fuzzing](https://owasp.org/www-communi
 
 Lastly, when [fuzzing](https://owasp.org/www-community/Fuzzing), don't forget to emulate the authentication mechanism used.
 
-## Related Resources
+# Related Resources
 
 - [REST Security Cheat Sheet](REST_Security_Cheat_Sheet.md) - the other side of this cheat sheet
 - [RESTful services, web security blind spot](https://xiom.com/2016/10/31/restful-services-web-security-blind-spot/) - a presentation (including video) elaborating on most of the topics on this cheat sheet.

@@ -1,8 +1,8 @@
-## Introduction
+# Introduction
 
 This OWASP Cheat Sheet introduces mitigation methods that web developers may utilize in order to protect their users from a vast array of potential threats and aggressions that might try to undermine their privacy and anonymity. This cheat sheet focuses on privacy and anonymity threats that users might face by using online services, especially in contexts such as social networking and communication platforms.
 
-## Guidelines
+# Guidelines
 
 ## Strong Cryptography
 

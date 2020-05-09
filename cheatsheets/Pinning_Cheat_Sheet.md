@@ -1,14 +1,14 @@
-## Introduction
+# Introduction
 
 The Pinning Cheat Sheet is a technical guide to implementing certificate and public key pinning as discussed at the Virginia chapter's presentation [Securing Wireless Channels in the Mobile Space](https://wiki.owasp.org/images/8/8f/Securing-Wireless-Channels-in-the-Mobile-Space.ppt). This guide is focused on providing clear, simple, actionable guidance for securing the channel in a hostile environment where actors could be malicious and the conference of trust a liability.
 
 A verbose article is available at [Certificate and Public Key Pinning](https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning). The article includes additional topics, such as Alternatives to Pinning, Ephemeral Keys, Pinning Gaps, Revocation, and X509 Validation.
 
-## What's the problem?
+# What's the problem?
 
 Users, developers, and applications expect end-to-end security on their secure channels, but some secure channels are not meeting the expectation. Specifically, channels built using well known protocols such as VPN, SSL, and TLS can be vulnerable to a number of attacks.
 
-## What Is Pinning?
+# What Is Pinning?
 
 Pinning is the process of associating a host with their *expected* X509 certificate or public key. Once a certificate or public key is known or seen for a host, the certificate or public key is associated or 'pinned' to the host. If more than one certificate or public key is acceptable, then the program holds a *pinset* (taking from [Jon Larimer and Kenny Root Google I/O talk](https://developers.google.com/events/io/sessions/gooio2012/107/)). In this case, the advertised identity must match one of the elements in the pinset.
 
@@ -28,7 +28,7 @@ The idea is to re-use the exiting protocols and infrastructure, but use them in 
 
 To harden the channel, the program would take advantage of the `OnConnect` callback offered by a library, framework or platform. In the callback, the program would verify the remote host's identity by validating its certificate or public key.
 
-## What Should Be Pinned?
+# What Should Be Pinned?
 
 The first thing to decide is what should be pinned. For this choice, you have two options: 
 
@@ -70,7 +70,7 @@ Hashing also provides three additional benefits. First, hashing allows you to an
 
 Finally, an organization might want to supply a reserve (or back-up) identity in case the primary identity is compromised. Hashing ensures your adversaries do not see the reserved certificate or public key in advance of its use. In fact, Google's IETF draft *websec-key-pinning* uses the technique.
 
-## Examples of Pinning
+# Examples of Pinning
 
 This section discusses certificate and public key pinning in Android Java, iOS, .Net, and OpenSSL. Code has been omitted for brevity, but the key points for the platform are highlighted.
 
@@ -119,7 +119,7 @@ Download: [OpenSSL sample program](../assets/Pinning_Cheat_Sheet_Certificate_Ope
 
 Otherwise, you can validate certificates by yourself using [ses.setCertificateVerifyProc(proc)](https://electronjs.org/docs/api/session#sessetcertificateverifyprocproc).
 
-## References
+# References
 
 - OWASP [Injection Theory](https://owasp.org/www-community/Injection_Theory)
 - OWASP [Data Validation](https://wiki.owasp.org/index.php/Data_Validation)

@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 C-Based Toolchain Hardening is a treatment of project settings that will help you deliver reliable and secure code when using C, C++ and Objective C languages in a number of development environments. This article will examine Microsoft and GCC toolchains for the C, C++ and Objective C languages. It will guide you through the steps you should take to create executables with firmer defensive postures and increased integration with the available platform security. Effectively configuring the toolchain also means your project will enjoy a number of benefits during development, including enhanced warnings and static analysis, and self-debugging code.
 
@@ -12,7 +12,7 @@ The OWASP [ESAPI C++](https://code.google.com/p/owasp-esapi-cplusplus/source) pr
 
 Finally, a Cheat Sheet is available for those who desire a terse treatment of the material. Please visit [C-Based Toolchain Hardening Cheat Sheet](C-Based_Toolchain_Hardening_Cheat_Sheet.md) for the abbreviated version.
 
-## Wisdom
+# Wisdom
 
 Code **must** be correct. It **should** be secure. It **can** be efficient.
 
@@ -20,7 +20,7 @@ Code **must** be correct. It **should** be secure. It **can** be efficient.
 
 [Dr. Gary McGraw](https://en.wikipedia.org/wiki/Gary_McGraw): *"Thou shalt not rely solely on security features and functions to build secure software as security is an emergent property of the entire system and thus relies on building and integrating all parts properly"*.
 
-## Configuration
+# Configuration
 
 Configuration is the first opportunity to configure your project for success. Not only do you have to configure your project to meet reliability and security goals, you must also configure integrated libraries properly. You typically have has three choices. First, you can use auto-configuration utilities if on Linux or Unix. Second, you can write a makefile by hand. This is predominant on Linux, Mac OS X, and Unix, but it applies to Windows as well. Finally, you can use an integrated development environment or IDE.
 
@@ -119,7 +119,7 @@ Make is one of the earliest build systems dating back to the 1970s. Its availabl
 Consider what happens when you: (1) type `make` `debug`, and then type `make` `release`. Each build would require different `CFLAGS` due to optimizations and level of debug support. In your makefile, you would extract the relevant target and set `CFLAGS` and `CXXFLAGS` similar to below (taken from [ESAPI C++ Makefile](https://code.google.com/archive/p/owasp-esapi-cplusplus/source/default/source)):
 
 ```text
-## Makefile
+# Makefile
 DEBUG_GOALS = $(filter $(MAKECMDGOALS), debug)
 ifneq ($(DEBUG_GOALS),)
     WANT_DEBUG := 1
@@ -146,8 +146,8 @@ ifeq ($(WANT_TEST),1)
 endif
 …
 
-## Merge ESAPI flags with user supplied flags. We perform the extra step to ensure
-## user options follow our options, which should give user option's a preference.
+# Merge ESAPI flags with user supplied flags. We perform the extra step to ensure
+# user options follow our options, which should give user option's a preference.
 override CFLAGS := $(ESAPI_CFLAGS) $(CFLAGS)
 override CXXFLAGS := $(ESAPI_CXXFLAGS) $(CXXFLAGS)
 override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
@@ -204,7 +204,7 @@ $ nm /usr/local/ssl/iphoneos/lib/libcrypto.a 2>/dev/null | egrep -i "(COMP_CTX_n
 
 Even more egregious is the answer given to auditors who specifically ask about configurations and protocols: "we don't use weak/wounded/broken ciphers" or "we follow best practices." The use of compression tells the auditor that you are using wounded protocol in an insecure configuration and you don't follow best practices. That will likely set off alarm bells, and ensure the auditor dives deeper on more items.
 
-## Preprocessor
+# Preprocessor
 
 The preprocessor is crucial to setting up a project for success. The C committee provided one macro - `NDEBUG` - and the macro can be used to derive a number of configurations and drive engineering processes. Unfortunately, the committee also left many related items to chance, which has resulted in programmers abusing builtin facilities. This section will help you set up you projects to integrate well with other projects and ensure reliability and security.
 
@@ -220,16 +220,16 @@ In addition to `NDEBUG` (Release) and `DEBUG` (Debug), you have two additional c
 // Only one or the other, but not both
 #if (defined(DEBUG) || defined(_DEBUG)) && (defined(NDEBUG) 
                                            || defined(_NDEBUG))
-## error Both DEBUG and NDEBUG are defined.
+# error Both DEBUG and NDEBUG are defined.
 #endif
 
 // The only time we switch to debug is when asked. 
 // NDEBUG or {nothing} results
 // in release build (fewer surprises at runtime).
 #if defined(DEBUG) || defined(_DEBUG)
-## define ESAPI_BUILD_DEBUG 1
+# define ESAPI_BUILD_DEBUG 1
 #else
-## define ESAPI_BUILD_RELEASE 1
+# define ESAPI_BUILD_RELEASE 1
 #endif
 ```    
 
@@ -255,7 +255,7 @@ ESAPI C++ supplies its own assert with the behavior described above. In the code
 // than calling abort(). Useful when examining negative 
 // test cases from the command line.
 #if (defined(ESAPI_BUILD_DEBUG) && defined(ESAPI_OS_STARNIX))
-##  define ESAPI_ASSERT1(exp) {                                    \
+#  define ESAPI_ASSERT1(exp) {                                    \
     if(!(exp)) {                                                  \
         std::ostringstream oss;                                     \
         oss << "Assertion failed: " << (char*)(__FILE__) << "("     \
@@ -265,7 +265,7 @@ ESAPI C++ supplies its own assert with the behavior described above. In the code
         raise(SIGTRAP);                                             \
     }                                                             \
     }
-##  define ESAPI_ASSERT2(exp, msg) {                               \
+#  define ESAPI_ASSERT2(exp, msg) {                               \
     if(!(exp)) {                                                  \
         std::ostringstream oss;                                     \
         oss << "Assertion failed: " << (char*)(__FILE__) << "("     \
@@ -276,15 +276,15 @@ ESAPI C++ supplies its own assert with the behavior described above. In the code
     }                                                             \
     }
 #elif (defined(ESAPI_BUILD_DEBUG) && defined(ESAPI_OS_WINDOWS))
-##  define ESAPI_ASSERT1(exp)      assert(exp)
-##  define ESAPI_ASSERT2(exp, msg) assert(exp)
+#  define ESAPI_ASSERT1(exp)      assert(exp)
+#  define ESAPI_ASSERT2(exp, msg) assert(exp)
 #else
-##  define ESAPI_ASSERT1(exp)      ((void)(exp))
-##  define ESAPI_ASSERT2(exp, msg) ((void)(exp))
+#  define ESAPI_ASSERT1(exp)      ((void)(exp))
+#  define ESAPI_ASSERT2(exp, msg) ((void)(exp))
 #endif
 
 #if !defined(ASSERT)
-##  define ASSERT(exp)     ESAPI_ASSERT1(exp)
+#  define ASSERT(exp)     ESAPI_ASSERT1(exp)
 #endif
 ```
 
@@ -354,7 +354,7 @@ d) *N* is 0644 by default, which means everyone has some access.
 
 e) Force temporary tables into memory (no unencrypted data to disk).
 
-## Compiler and Linker
+# Compiler and Linker
 
 Compiler writers provide a rich set of warnings from the analysis of code during compilation. Both GCC and Visual Studio have static analysis capabilities to help find mistakes early in the development process. The built in static analysis capabilities of GCC and Visual Studio are usually sufficient to ensure proper API usage and catch a number of mistakes such as using an uninitialized variable or comparing a negative signed int and a positive unsigned int.
 
@@ -474,7 +474,7 @@ ifeq ($(GNU_LD216_OR_LATER),1)
     MY_LD_FLAGS += -pie
 endif
 
-## Use 'override' to honor the user's command line
+# Use 'override' to honor the user's command line
 override CFLAGS := $(MY_CC_FLAGS) $(CFLAGS)
 override CXXFLAGS := $(MY_CC_FLAGS) $(CXXFLAGS)
 override LDFLAGS := $(MY_LD_FLAGS) $(LDFLAGS)
@@ -628,7 +628,7 @@ The problem is pandemic, and not just boring user land programs. Projects which 
 
 Unlike other examples, the above code will not debug itself, and you will have to set breakpoints and trace calls to determine the point of first failure. (And the code above gambles that the truncated file does not exist or is not under an adversary's control by blindly performing the `open`).
 
-## Runtime
+# Runtime
 
 The previous sections concentrated on setting up your project for success. This section will examine additional hints for running with increased diagnostics and defenses. Not all platforms are created equal - GNU Linux is difficult to impossible to [add hardening to a program after compiling and static linking](https://sourceware.org/ml/binutils/2012-03/msg00309.html); while Windows allows post-build hardening through a download. Remember, the goal is to find the point of first failure quickly so you can improve the reliability and security of the code.
 

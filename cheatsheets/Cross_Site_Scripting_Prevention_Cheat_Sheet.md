@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 This article provides a simple positive model for preventing [XSS](https://owasp.org/www-community/attacks/xss/) using output escaping/encoding properly. While there are a huge number of XSS attack vectors, following a few simple rules can completely defend against this serious attack.
 
@@ -33,7 +33,7 @@ Microsoft provides an encoding library named the [Microsoft Anti-Cross Site Scri
 
 The [OWASP Java Encoder Project](https://owasp.org/www-project-java-encoder/) provides a high-performance encoding library for Java.
 
-## XSS Prevention Rules
+# XSS Prevention Rules
 
 The following rules are intended to prevent all XSS in your application. While these rules do not allow absolute freedom in putting untrusted data into an HTML document, they should cover the vast majority of common use cases. You do not have to allow **all** the rules in your organization. Many organizations may find that **allowing only Rule \#1 and Rule \#2 are sufficient for their needs**. Please add a note to the discussion page if there is an additional context that is often required and can be secured with escaping.
 
@@ -402,7 +402,7 @@ The `X-XSS-Protection` header has been deprecated by modern browsers and its use
 - [OWASP ZAP deprecated the scan for the header](https://github.com/zaproxy/zaproxy/issues/5849)
 - [SecurityHeaders.com no longer scans for the header](https://scotthelme.co.uk/security-headers-updates/#removing-the-x-xss-protection-header)
 
-## XSS Prevention Rules Summary
+# XSS Prevention Rules Summary
 
 | Data Type | Context                                  | Code Sample                                                                                                        | Defense                                                                                                                                                                                        |
 |-----------|------------------------------------------|--------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -419,7 +419,7 @@ The following snippets of HTML demonstrate how to safely render untrusted data i
 
 **Safe HTML Attributes include:** `align`, `alink`, `alt`, `bgcolor`, `border`, `cellpadding`, `cellspacing`, `class`, `color`, `cols`, `colspan`, `coords`, `dir`, `face`, `height`, `hspace`, `ismap`, `lang`, `marginheight`, `marginwidth`, `multiple`, `nohref`, `noresize`, `noshade`, `nowrap`, `ref`, `rel`, `rev`, `rows`, `rowspan`, `scrolling`, `shape`, `span`, `summary`, `tabindex`, `title`, `usemap`, `valign`, `value`, `vlink`, `vspace`, `width`.
 
-## Output Encoding Rules Summary
+# Output Encoding Rules Summary
 
 The purpose of output encoding (as it relates to Cross Site Scripting) is to convert untrusted input into a safe form where the input is displayed as **data** to the user without executing as **code** in the browser. The following charts details a list of critical output encoding methods needed to stop Cross Site Scripting.
 
@@ -431,7 +431,7 @@ The purpose of output encoding (as it relates to Cross Site Scripting) is to con
 | JavaScript Encoding     | Except for alphanumeric characters, escape all characters with the `\uXXXX` unicode escaping format (**X** = Integer).                                                                                                                                                                                                               |
 | CSS Hex Encoding        | CSS escaping supports `\XX` and `\XXXXXX`. Using a two character escape can  cause problems if the next character continues the escape sequence.  There are two solutions (a) Add a space after the CSS escape (will be  ignored by the CSS parser) (b) use the full amount of CSS escaping  possible by zero padding the value. |
 
-## Related Articles
+# Related Articles
 
 **XSS Attack Cheat Sheet**
 

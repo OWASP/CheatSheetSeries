@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 This page intends to provide quick basic .NET security tips for developers.
 
@@ -21,7 +21,7 @@ Receive security notifications by selecting the "Watch" button at the following 
 - [.NET Core Security Announcements](https://github.com/dotnet/announcements/issues?q=is%3Aopen+is%3Aissue+label%3ASecurity)
 - [ASP.NET Core & Entity Framework Core Security Announcements](https://github.com/aspnet/Announcements/issues?q=is%3Aopen+is%3Aissue+label%3ASecurity)
 
-## .NET Framework Guidance
+# .NET Framework Guidance
 
 The .NET Framework is the set of APIs that support an advanced type system, data, graphics, network, file handling and most of the rest of what is needed to write enterprise apps in the Microsoft ecosystem. It is a nearly ubiquitous library that is strongly named and versioned at the assembly level.
 
@@ -55,7 +55,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
     - Encrypt sensitive parts of the `web.config` using `aspnet_regiis -pe` ([command line help](https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80))).
 - For Click Once applications the .Net Framework should be upgraded to use version `4.6.2` to ensure `TLS 1.1/1.2` support.
 
-## ASP NET Web Forms Guidance
+# ASP NET Web Forms Guidance
 
 ASP.NET Web Forms is the original browser-based application development API for the .NET framework, and is still the most common enterprise platform for web application development.
 
@@ -215,7 +215,7 @@ HttpContext.Current.Response.Headers.Remove("Server");
 - Explicitly authorize resource requests.
 - Leverage role based authorization using `User.Identity.IsInRole`.
 
-## ASP NET MVC Guidance
+# ASP NET MVC Guidance
 
 ASP.NET MVC (Model–View–Controller) is a contemporary web application framework that uses more standardized HTTP communication than the Web Forms postback model.
 
@@ -851,7 +851,7 @@ In .NET a great option to add monitoring capabilities is [Application Insights](
 
 More information about Logging and Monitoring can be found [here](https://github.com/microsoft/code-with-engineering-playbook/tree/master/observability).
 
-## OWASP 2013
+# OWASP 2013
 
 Below is vulnerability not discussed in OWASP 2017
 
@@ -897,12 +897,12 @@ More information:
 
 For more information on all of the above and code samples incorporated into a sample MVC5 application with an enhanced security baseline go to [Security Essentials Baseline project](http://github.com/johnstaveley/SecurityEssentials/)
 
-## XAML Guidance
+# XAML Guidance
 
 - Work within the constraints of Internet Zone security for your application.
 - Use ClickOnce deployment. For enhanced permissions, use permission elevation at runtime or trusted application deployment at install time.
 
-## Windows Forms Guidance
+# Windows Forms Guidance
 
 - Use partial trust when possible. Partially trusted Windows applications reduce the attack surface of an application. Manage a list of what permissions your app must use, and what it may use, and then make the request for those permissions declaratively at run time.
 - Use ClickOnce deployment. For enhanced permissions, use permission elevation at runtime or trusted application deployment at install time.

@@ -1,3 +1,5 @@
+# Server-Side Request Forgery Cheat Sheet
+
 ## Introduction
 
 The objective of the cheat sheet is to provide advices regarding the protection against [Server Side Request Forgery](https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/) (SSRF) attack.
@@ -193,14 +195,14 @@ Unfortunately here, the application is still vulnerable to the `DNS pinning` byp
 The following Python3 script can be used, as a starting point, for the monitoring mentioned above:
 
 ```python
-## Dependencies: pip install ipaddress dnspython
+# Dependencies: pip install ipaddress dnspython
 import ipaddress
 import dns.resolver
 
-## Configure the whitelist to check
+# Configure the whitelist to check
 DOMAINS_WHITELIST = ["owasp.org", "labslinux"]
 
-## Configure the DNS resolver to use for all DNS queries
+# Configure the DNS resolver to use for all DNS queries
 DNS_RESOLVER = dns.resolver.Resolver()
 DNS_RESOLVER.nameservers = ["1.1.1.1"]
 

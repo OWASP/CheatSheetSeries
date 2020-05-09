@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 
 Tags, aka marketing tags, analytics tags etc. are small bits of javascript on a web page. They can also be HTML image elements when javascript is disabled. The reason for them is to collect data on the web user actions and browsing context for use by the web page owner in marketing.
 
@@ -12,7 +12,7 @@ Analytics tags send information back to a marketing information database; inform
 
 The term **host** refers to the original site the user goes to, such as a shopping or news site, that contains or retrieves and executes third party javascript tag for marketing analysis of the user actions.
 
-## Major risks
+# Major risks
 
 The single greatest risk is a compromise of the third party javascript server, and the injection of malicious javascript into the original tag javascript. This has happened in 2018 and likely earlier.
 
@@ -54,7 +54,7 @@ A typical case is the current situation with major news/press sites that invoke 
 
 Typical defenses include, but are not restricted to: in-house script mirroring (to prevent leakage of HTTP requests to 3rd parties). Users can reduce their profiling by random clicking links on leaking websites/applications (such as press/news websites) to reduce profiling. See below for more details.
 
-## 3rd Party JavaScript Deployment Architectures
+# 3rd Party JavaScript Deployment Architectures
 
 There are three basic deployment mechanisms for **tags**. These mechanisms can be combined with each other.
 
@@ -152,7 +152,7 @@ The host developers have to work with the tag manager or aggregator to agree on 
 
 The tag manager or aggregator has to work with the vendor to agree on the protocol to send the data to the vendor: what URL, parameters, format etc. Does the vendor have an API?
 
-## Security Defense Considerations
+# Security Defense Considerations
 
 ## Server Direct Data Layer
 
@@ -264,7 +264,7 @@ This technique creates iFrames that run asynchronously in relation to the main p
 
 You can have the agreement or request for proposal with the 3rd parties require evidence that they have implemented secure coding and general corporate server access security. But in particular you need to determine the monitoring and control of their source code in order to prevent and detect malicious changes to that javascript.
 
-## MarTechSec
+# MarTechSec
 
 Marketing Technology Security
 
@@ -276,7 +276,7 @@ This refers to all aspects of reducing the risk from marketing javascript. Contr
 4. Technical controls for malicious javascript identification; [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity).
 5. Technical controls including client side javascript malicious behavior in penetration testing requirements.
 
-## MarSecOps
+# MarSecOps
 
 Marketing Security Operations
 
@@ -292,7 +292,7 @@ The most complete and preventive controls for any site containing non-trivial ma
 
 The MarSecOps requirements to implement technical controls at the speed of change that marketing wants or without a significant number of dedicated resources, can make data layer and Subresource Integrity controls impractical.
 
-## References
+# References
 
 - [Widespread XSS Vulnerabilities in Ad Network Code Affecting Top Tier Publishers, Retailers](https://randywestergren.com/widespread-xss-vulnerabilities-ad-network-code-affecting-top-tier-publishers-retailers/).
 - [Inside and Beyond Ticketmaster: The Many Breaches of Magecart](https://www.riskiq.com/blog/labs/magecart-ticketmaster-breach/).
