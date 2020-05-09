@@ -35,7 +35,7 @@ cp ../IndexProactiveControls.md $WORK/cheatsheets/IndexProactiveControls.md
 cp ../assets/WebSite_Favicon.ico $WORK/custom_theme/img/favicon.ico
 cp ../assets/WebSite_Favicon.png $WORK/custom_theme/img/apple-touch-icon-precomposed-152.png
 
-cp ./404.html $WORK/custom_theme
+cp ./404.html $WORK/custom_theme/
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OSX
