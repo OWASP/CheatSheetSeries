@@ -1,10 +1,10 @@
-# Introduction
+## Introduction
 
 This *Cheatsheet* intends to provide quick basic Ruby on Rails security tips for developers. It complements, augments or emphasizes points brought up in the [Rails security guide](https://guides.rubyonrails.org/security.html) from rails core.
 
 The Rails framework abstracts developers from quite a bit of tedious work and provides the means to accomplish complex tasks quickly and with ease. New developers, those unfamiliar with the inner-workings of Rails, likely need a basic set of guidelines to secure fundamental aspects of their application. The intended purpose of this doc is to be that guide.
 
-# Items
+## Items
 
 ## Command Injection
 
@@ -46,13 +46,13 @@ Use caution not to build SQL statements based on user controlled input. A list o
 By default, protection against XSS comes as the default behavior. When string data is shown in views, it is escaped prior to being sent back to the browser. This goes a long way, but there are common cases where developers bypass this protection - for example to enable rich text editing. In the event that you want to pass variables to the front end with tags intact, it is tempting to do the following in your .erb file (ruby markup).
 
 ``` ruby
-# Wrong! Do not do this!
+## Wrong! Do not do this!
 <%= raw @product.name %>
 
-# Wrong! Do not do this!
+## Wrong! Do not do this!
 <%= @product.name.html_safe %>
 
-# Wrong! Do not do this!
+## Wrong! Do not do this!
 <%= content_tag @product.name %>
 ```
 
@@ -62,7 +62,7 @@ Unfortunately, any field that uses `raw`, `html_safe`, `content_tag` or similar 
 
 ``` ruby
 content_tag("/><script>alert('hack!');</script>") # XSS example
-# produces: </><script>alert('hack!');</script>><//><script>alert('hack!');</script>>
+## produces: </><script>alert('hack!');</script>><//><script>alert('hack!');</script>>
 ```
 
 The method `html_safe` of String is somewhat confusingly named. It means that we know for sure the content of the string is safe to include in HTML without escaping. **This method itself is un-safe!**
@@ -87,8 +87,8 @@ Newer Rails versions escape such links in a better way.
 
 ``` ruby
 link_to "Personal Website", 'javascript:alert(1);'.html_safe()
-# Will generate:
-# "<a href="javascript:alert(1);">Personal Website</a>"
+## Will generate:
+## "<a href="javascript:alert(1);">Personal Website</a>"
 ```
 
 Using [Content Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) Policy is one more security measure to forbid execution for links starting with `javascript:` .
@@ -114,9 +114,9 @@ There is an [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
 As with all sensitive data, start securing your authentication with enabling TLS in your configuration:
 
 ``` ruby
-# config/environments/production.rb
-# Force all access to the app over SSL, use Strict-Transport-Security,
-# and use secure cookies
+## config/environments/production.rb
+## Force all access to the app over SSL, use Strict-Transport-Security,
+## and use secure cookies
 config.force_ssl = true
 ```
 
@@ -167,7 +167,7 @@ end
 And configure the required password complexity:
 
 ``` ruby
-# in config/initializers/devise.rb
+## in config/initializers/devise.rb
 Devise.setup do \|config\|
   # zxcvbn score for devise
   config.min_password_score = 4 # complexity score here.
@@ -277,8 +277,8 @@ Example:
 ``` ruby
 require 'uri'
 host = URI.parse("#{params[:url]}").host
-# this can be vulnerable to javascript://trusted.com/%0Aalert(0)
-# so check .scheme and .port too
+## this can be vulnerable to javascript://trusted.com/%0Aalert(0)
+## so check .scheme and .port too
 validation_routine(host) if host
 def validation_routine(host)
   # Validation routine where we use  \A and \z as anchors *not* ^ and $
@@ -433,7 +433,7 @@ Typically, the following config causes the 10 stretches for production: `/config
 config.stretches = Rails.env.test? ? 1 : 10
 ```
 
-# Updating Rails and Having a Process for Updating Dependencies
+## Updating Rails and Having a Process for Updating Dependencies
 
 In early 2013, a number of critical vulnerabilities were identified in the Rails Framework. Organizations that had fallen behind current versions had more trouble updating and harder decisions along the way, including patching the source code for the framework itself.
 
@@ -445,7 +445,7 @@ In general, it is important to have a process for updating dependencies. An exam
 - Every week important security vulnerabilities are taken into account and potentially trigger an update.
 - In EXCEPTIONAL conditions, emergency updates may need to be applied.
 
-# Tools
+## Tools
 
 Use [brakeman](https://brakemanscanner.org/), an open source code analysis tool for Rails applications, to identify many potential issues. It will not necessarily produce comprehensive security findings, but it can find easily exposed issues. A great way to see potential issues in Rails is to review the brakeman documentation of warning types.
 
@@ -455,7 +455,7 @@ Another area of tooling is the security testing tool [Gauntlt](http://gauntlt.or
 
 Launched in May 2013 and very similar to brakeman scanner, the [dawnscanner](https://github.com/thesp0nge/dawnscanner) rubygem is a static analyzer for security issues that work with Rails, Sinatra and Padrino web applications. Version 1.6.6 has more than 235 ruby specific CVE security checks.
 
-# Related Articles and References
+## Related Articles and References
 
 - [The Official Rails Security Guide](https://guides.rubyonrails.org/security.html)
 - [OWASP Ruby on Rails Security Guide](https://owasp.org/www-pdf-archive/Rails_Security_2.pdf)

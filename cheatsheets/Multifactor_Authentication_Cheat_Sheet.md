@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 Multifactor authentication (MFA), or Two-Factor Authentication (2FA) is when a user is required to present more than one type of evidence in order to authenticate on a system. There are four different types of evidence (or factors) that can be used, listed in the table below:
 
@@ -13,7 +13,7 @@ It should be emphasised that while requiring multiple examples of a single facto
 
 Additionally, while the following sections discuss the disadvantage and weaknesses of various different types of MFA, in many cases these are only relevant against targeted attacks. **Any MFA is better than no MFA**.
 
-# Contents
+## Contents
 
 - [Advantages](#advantages)
 - [Disadvantages](#disadvantages)
@@ -40,13 +40,13 @@ Additionally, while the following sections discuss the disadvantage and weakness
   - [Source IP Ranges](#source-ip-ranges)
   - [Geolocation](#geolocation)
 
-# Advantages
+## Advantages
 
 The most common way that user accounts get compromised on applications is through weak, re-used or stolen passwords. Despite any technical security controls implemented on the application, users are liable to choose weak passwords, or to use the same password on different applications. As developers or system administrators, it should be assumed that users' passwords will be compromised as some point, and the system should be designed in order to defend against this.
 
 Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force, [credential stuffing](Credential_Stuffing_Prevention_Cheat_Sheet.md) and password spraying, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984).
 
-# Disadvantages
+## Disadvantages
 
 The biggest disadvantage of MFA is the increase in management complexity for both administrators and end users. Many less technical users may find it difficult to configure and use MFA. Additionally, there are a number of other common issues encountered:
 
@@ -57,7 +57,7 @@ The biggest disadvantage of MFA is the increase in management complexity for bot
 - Processes implemented to allow users to bypass or reset MFA may be exploitable by attackers.
 - Requiring MFA may prevent some users from accessing the application.
 
-# Quick Recommendations
+## Quick Recommendations
 
 Exactly when and how MFA is implemented in an application will vary on a number of different factors, including the threat model of the application, the technical level of the users, and the level of administrative control over the users. These need to be considered on a per-application basis.
 
@@ -69,7 +69,7 @@ However, the following recommendations are generally appropriate for most applic
 - Allow the user to remember the use of MFA in their browser, so they are not prompted every time they login.
 - Implement a secure process to allow users to reset their MFA.
 
-# Implementing MFA
+## Implementing MFA
 
 ## When to Require MFA
 
@@ -131,7 +131,7 @@ Some suggestions of possible methods include:
 - Requiring the user contact the support team and having a rigorous process in place to verify their identity.
 - Requiring another trusted user to vouch for them.
 
-# Something You Know
+## Something You Know
 
 The most common type of authentication is based on something the users knows - typically a password. The biggest advantage of this factor is that it has very low requirements for both the developers and the end user, as it does not require any special hardware, or integration with other services.
 
@@ -170,7 +170,7 @@ Security questions require the user to choose (or create) a number of questions 
 - Questions must be carefully chosen so that users will remember answers years later.
 - Susceptible to phishing.
 
-# Something You Have
+## Something You Have
 
 The second factor is something that the user possesses. This could be a physical item (such as a hardware token), a digital item (such as a certificate or private key), or based on the ownership of a mobile phone, phone number, or email address (such as SMS or a software token installed on the phone, or an email with a single-use verification code).
 
@@ -305,7 +305,7 @@ Email verification requires that the user enters a code or clicks a link sent to
 - Email may be received by the same device the user is authenticating from.
 - Susceptible to phishing.
 
-# Something You Are
+## Something You Are
 
 The final factor in the traditional view of MFA is something you are - which is one of the physical attributes of the users (often called biometrics). Biometrics are rarely used in web applications due to the requirement for users to have specific hardware.
 
@@ -329,7 +329,7 @@ The are a number of common types of biometrics that are used, including:
 - Modern browsers do not have native support, so custom client-side software is required.
 - If compromised, biometric data can be difficult to change.
 
-# Location
+## Location
 
 The use of location as a fourth factor for MFA is not fully accepted;  however, it is increasingly be used for authentication. It is sometimes argued that location is used when deciding whether or not to require MFA (as discussed [above](#when-to-require-mfa)) however this is effectively the same as considering it to be a factor in its own right. Two prominent examples of this are the [Conditional Access Policies](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/overview) available in Microsoft Azure, and the [Network Unlock](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock) functionality in BitLocker.
 

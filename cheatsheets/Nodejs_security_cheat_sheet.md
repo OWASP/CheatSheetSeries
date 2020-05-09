@@ -1,16 +1,16 @@
-# Introduction
+## Introduction
 
 This cheat sheet lists the things one can use when developing secure Node.js applications. Each item has a brief explanation and solution that is specific to Node.js environment.
 
-# Context
+## Context
 
 Node.js applications are increasing in number and they are no different from other frameworks and programming languages. Node.js applications are also prone to all kinds of web application vulnerabilities.
 
-# Objective
+## Objective
 
 This cheat sheet aims to provide a list of best practices to follow during development of Node.js applications.
 
-# Recommendations
+## Recommendations
 
 There are several different recommendations to enhance security of your Node.js applications. There are categorized as:
 
@@ -531,6 +531,6 @@ function func() {
 
 This list has mainly focused on issues that are common in Node.js applications. Also, recommendations against these issues are given specific to Node.js environment. Apart from these, there are general [security by design principles](https://wiki.owasp.org/index.php/Security_by_Design_Principles) that apply to web applications regardless of technologies used in application server. You should also keep those principles in mind while developing your applications. Also, you can always refer to [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) to learn more about web application vulnerabilities and mitigation techniques used against them.
 
-# Additional resources about Node.js security
+## Additional resources about Node.js security
 
 [Awesome Node.js Security resources](https://github.com/lirantal/awesome-nodejs-security)

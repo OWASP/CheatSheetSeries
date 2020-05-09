@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 This cheat sheet is focused on providing developers with concentrated guidance on building application logging mechanisms, especially related to security logging. 
 
@@ -6,7 +6,7 @@ Many systems enable network device, operating system, web server, mail server an
 
 Application logging should be consistent within the application, consistent across an organization's application portfolio and use industry standards where relevant, so the logged event data can be consumed, correlated, analyzed and managed by a wide variety of systems.
 
-# Purpose
+## Purpose
 
 Application logging should be always be included for security events. Application logs are invaluable data for:
 
@@ -38,7 +38,7 @@ For example a [PCIDSS](https://www.pcisecuritystandards.org/pci_security/) audit
 
 Use knowledge of the intended purposes to guide what, when and how much. The remainder of this cheat sheet primarily discusses security event logging.
 
-# Design, implementation and testing
+## Design, implementation and testing
 
 ## Event data sources
 
@@ -234,7 +234,7 @@ Logging functionality and systems must be included in code review, application t
 - Verify access controls on the event log data
 - If log data is utilized in any action against users (e.g. blocking access, account lock-out), ensure this cannot be used to cause denial of service (DoS) of other users
 
-# Deployment and operation
+## Deployment and operation
 
 ## Release
 
@@ -286,7 +286,7 @@ Log data, temporary debug logs, and backups/copies/extractions, must not be dest
 
 Legal, regulatory and contractual obligations may impact on these periods.
 
-# Related articles
+## Related articles
 
 - OWASP [ESAPI Documentation](https://owasp.org/www-project-enterprise-security-api/).
 - OWASP [Logging Project](https://owasp.org/www-project-security-logging/).

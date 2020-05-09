@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 This article is focused on providing clear, simple, actionable guidance for preventing SQL Injection flaws in your applications. [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection) attacks are unfortunately very common, and this is due to two factors:
 
@@ -39,7 +39,7 @@ try {
 ...
 ```
 
-# Primary Defenses
+## Primary Defenses
 
 ## Defense Option 1: Prepared Statements (with Parameterized Queries)
 
@@ -378,7 +378,7 @@ while ($row = $result->fetch_assoc()) {
 
 PDO is the universal option. If you're connecting to a database other than MySQL, you can refer to a driver-specific second option (e.g. pg_prepare() and pg_execute() for PostgreSQL).
 
-# Additional Defenses
+## Additional Defenses
 
 Beyond adopting one of the four primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:
 
@@ -417,7 +417,7 @@ The designer could use views to compensate for this limitation; revoke all acces
 
 In addition to being a primary defense when nothing else is possible (e.g., when a bind variable isn't legal), input validation can also be a secondary defense used to detect unauthorized input before it is passed to the SQL query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md). Proceed with caution here. Validated data is not necessarily safe to insert into SQL queries via string building.
 
-# Related Articles
+## Related Articles
 
 **SQL Injection Attack Cheat Sheets**
 

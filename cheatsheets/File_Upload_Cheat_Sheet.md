@@ -1,5 +1,3 @@
-# File Upload Cheat Sheet
-
 ## Introduction
 
 File upload is becoming a more and more essential part of any application, where the user is able to upload their photo, their CV, or a video showcasing a project they are working on. The application should be able to fend off bogus and malicious files in a way to keep the application and the users safe.

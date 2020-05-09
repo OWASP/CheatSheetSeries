@@ -1,12 +1,12 @@
-# Introduction
+## Introduction
 
 This article provides a simple model to follow when implementing a *forgot password* web application feature.
 
-# The Problem
+## The Problem
 
 There is no industry standard for implementing a **Forgot Password** feature. The result is that you see applications forcing users to jump through myriad hoops involving emails, special URLs, temporary passwords, personal security questions, and so on. In the end you have to reset it to a new value.
 
-# Steps
+## Steps
 
 ## Step 1) Gather Identity Data or Security Questions
 
@@ -53,7 +53,7 @@ The reset must be performed before any other operations can be performed by the 
 
 It is important to keep audit records when password change requests were submitted. This includes whether or not security questions were answered, when reset messages were sent to users and when users utilize them. It is especially important to log failed attempts to answer security questions and failed attempted use of expired tokens. This data can be used to detect abuse and malicious behavior. Data such as time, IP address, and browser information can be used to spot trends of suspicious use.
 
-# Other Considerations
+## Other Considerations
 
 - Whenever a successful password reset occurs, all other sessions should be invalidated. Note the current session is already authenticated and does not require a login prompt.
 - Strength of questions used for reset should vary based on the nature of the credential. Administrator credentials should have a higher requirement.

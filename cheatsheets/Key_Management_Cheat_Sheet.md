@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 This Key Management Cheat Sheet provides developers with guidance for implementation of cryptographic key management within an application in a secure manner. It is important to document and harmonize rules and practices for:
 
@@ -7,13 +7,13 @@ This Key Management Cheat Sheet provides developers with guidance for implementa
 3. key storage
 4. key agreement
 
-# General Guidelines and Considerations
+## General Guidelines and Considerations
 
 Formulate a plan for the overall organization's cryptographic strategy to guide developers working on different applications and ensure that each application's cryptographic capability meets minimum requirements and best practices. 
 
 Identify the cryptographic and key management requirements for your application and map all components that process or store cryptographic key material.
 
-# Key Selection
+## Key Selection
 
 Selection of the cryptographic and key management algorithms to use within a given application should begin with an understanding of the objectives of the application. 
 
@@ -128,7 +128,7 @@ There are several reasons for this:
 
 According to `NIST SP800-133`, cryptographic modules are the set of hardware, software, and/or firmware that implements security functions (including cryptographic algorithms and key generation) and is contained within a cryptographic module boundary to provide protection of the keys.
 
-# Key Management Lifecycle Best Practices
+## Key Management Lifecycle Best Practices
 
 ## Generation
 
@@ -234,7 +234,7 @@ The compromise-recovery plan should contain:
     3.  Identification of all signatures that may be invalid, due to the compromise of a signing key.
     4.  Distribution of new keying material, if required.
 
-# Trust Stores
+## Trust Stores
 
 1. Design controls to secure the trust store against injection of 3rd party root certificates. The access controls are managed and enforced on an entity and application basis.
 2. Implement integrity controls on objects stored in the trust store.
@@ -242,11 +242,11 @@ The compromise-recovery plan should contain:
 4. Setup strict policies and procedures for exporting key material from applications to network applications and other components.
 5. Implement a secure process for updating the trust store.
 
-# Cryptographic Key Management Libraries
+## Cryptographic Key Management Libraries
 
 Use only reputable crypto libraries that are well maintained and updated, as well as tested and validated by 3rd party organizations (e.g., `NIST`/`FIPS`)
 
-# Documentation
+## Documentation
 
 - [The definitive guide to encryption key management fundamentals](https://info.townsendsecurity.com/definitive-guide-to-encryption-key-management-fundamentals).
 - [Practical cryptography for developers](https://cryptobook.nakov.com/).

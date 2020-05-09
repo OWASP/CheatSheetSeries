@@ -1,10 +1,10 @@
-# Introduction
+## Introduction
 
 Unvalidated redirects and forwards are possible when a web application accepts untrusted input that could cause the web application to redirect the request to a URL contained within untrusted input. By modifying untrusted URL input to a malicious site, an attacker may successfully launch a phishing scam and steal user credentials. 
 
 Because the server name in the modified link is identical to the original site, phishing attempts may have a more trustworthy appearance. Unvalidated redirect and forward attacks can also be used to maliciously craft a URL that would pass the application's access control check and then forward the attacker to privileged functions that they would normally not be able to access.
 
-# Safe URL Redirects
+## Safe URL Redirects
 
 When we want to redirect a user automatically to another page (without an action of the visitor such as clicking on a hyperlink) you might implement a code such as the following:
 
@@ -39,7 +39,7 @@ redirect_to login_path
 
 In the examples above, the URL is being explicitly declared in the code and cannot be manipulated by an attacker.
 
-# Dangerous URL Redirects
+## Dangerous URL Redirects
 
 The following examples demonstrate unsafe redirect and forward code.
 
@@ -154,7 +154,7 @@ public class ForwardServlet extends HttpServlet
 }
 ```
 
-# Preventing Unvalidated Redirects and Forwards
+## Preventing Unvalidated Redirects and Forwards
 
 Safe use of redirects and forwards can be done in a number of ways:
 
@@ -178,7 +178,7 @@ When attempting to validate and sanitise user-input to determine whether the URL
 - Data URIs such as `data:text/html,<script>alert(document.domain)</script>` should be blocked
 - URIs containing CRLF characters can lead to header injection or response splitting attacks, and should be blocked.
 
-# References
+## References
 
 - [CWE Entry 601 on Open Redirects](http://cwe.mitre.org/data/definitions/601.html).
 - [WASC Article on URL Redirector Abuse](http://projects.webappsec.org/w/page/13246981/URL%20Redirector%20Abuse)

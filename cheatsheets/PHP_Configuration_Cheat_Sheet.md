@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 This page is meant to help those configuring PHP and the web server it is running on to be very secure.
 
@@ -8,7 +8,7 @@ For general PHP codebase security please refer to the two following great guides
 - [Paragonie's 2018 PHP Security Guide](https://paragonie.com/blog/2017/12/2018-guide-building-secure-php-software)
 - [Awesome PHP Security](https://github.com/guardrailsio/awesome-php-security)
 
-# PHP Configuration and Deployment
+## PHP Configuration and Deployment
 
 ## php.ini
 

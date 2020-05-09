@@ -1,4 +1,4 @@
-# Purpose and audience
+## Purpose and audience
 
 The Purpose of this cheat sheet is to provide guidelines on how to securely implement transaction authorization to protect it from being bypassed. These guidelines can be used by:
 
@@ -6,7 +6,7 @@ The Purpose of this cheat sheet is to provide guidelines on how to securely impl
 - **Developers** – to design and implement transaction authorization without vulnerabilities.
 - **Pentesters** – to test for transaction authorization security.
 
-# Introduction
+## Introduction
 
 Some applications use a second factor to check whether an authorized user is performing sensitive operations. A common example is wire transfer authorization, typically used in online or mobile banking applications. 
 
@@ -24,7 +24,7 @@ Some of these can be implemented on a physical device or in a mobile application
 
 Transaction authorization is implemented in order to protect for unauthorized wire transfers as a result of attacks using malware, phishing, password or session hijacking, CSRF, XSS, etc.. Unfortunately, as with any piece of code, this protection can be improperly implemented and as a result it might be possible to bypass this safeguard.
 
-# 1. Functional Guidelines
+## 1. Functional Guidelines
 
 ## 1.1 Transaction authorization method has to allow a user to identify and acknowledge significant transaction data
 
@@ -73,7 +73,7 @@ Safeguards should allow the user to easily distinguish authentication from trans
 
 Some applications are asking for transaction authorization credentials only once, e.g. static password, code sent through SMS, token response. Afterwards a user is able to authorize any transaction during the whole user's session or at least he has to reuse the same credentials each time he needs to authorize a transaction. Such behavior is not sufficient to prevent malware attacks because malware will sniff such credentials and use them to authorize any transaction without the user's knowledge.
 
-# 2. Non-functional guidelines
+## 2. Non-functional guidelines
 
 ## 2.1 Authorization should be performed and enforced server-side
 
@@ -156,7 +156,7 @@ In some malware attacks scenarios, authorization credentials entered by the user
 
 To prevent all sorts of replay attacks, authorization credentials should be unique for every operation. It could be achieved using different methods depending on the applied transaction authorization mechanism. For example: using a timestamp, a sequence number or a random value in signed transaction data or as a part of a challenge.
 
-# Remarks
+## Remarks
 
 We identify other issues that should be taken into consideration while implementing transaction authorization. However we deem to be beyond the scope of this cheat sheet:
 
@@ -169,7 +169,7 @@ We identify other issues that should be taken into consideration while implement
 - Protection of the signing keys using a second factor either be password, biometric, etc..
 - Protection of the signing keys leveraging secure elements (TEE, TPM, Smart card..)
 
-# References and future reading
+## References and future reading
 
 References and future reading:
 - Wojciech Dworakowski: [E-banking transaction authorization - possible vulnerabilities, security verification and best practices for implementation. Presentation from AppSec EU 2015](http://www.slideshare.net/wojdwo/ebanking-transaction-authorization-appsec-eu-2015-amsterdam).

@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 ## Definition
 
@@ -86,7 +86,7 @@ In 2012, GitHub was hacked using mass assignment. A user was able to upload his 
 - Blacklist the non-bindable, sensitive fields.
 - Use [Data Transfer Objects](https://martinfowler.com/eaaCatalog/dataTransferObject.html) (DTOs).
 
-# General Solutions
+## General Solutions
 
 An architectural approach is to create Data Transfer Objects and avoid binding input directly to domain objects. Only the fields that are meant to be editable by the user are included in the DTO.
 
@@ -102,7 +102,7 @@ public class UserRegistrationFormDTO {
 }
 ```
 
-# Language & Framework specific solutions
+## Language & Framework specific solutions
 
 ## Spring MVC
 
@@ -276,6 +276,6 @@ Take a look [here](http://json-lib.sourceforge.net/advanced.html) for the docume
 
 Take a look [here](http://flexjson.sourceforge.net/#Serialization) for the documentation.
 
-# References and future reading
+## References and future reading
 
 - [Mass Assignment, Rails and You](https://code.tutsplus.com/tutorials/mass-assignment-rails-and-you--net-31695)

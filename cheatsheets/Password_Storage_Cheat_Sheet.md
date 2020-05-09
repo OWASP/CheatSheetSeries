@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 As the majority of users will re-use passwords between different applications, it is important to store passwords in a way that prevents them from being obtained by an attacker, even if the application or database is compromised. As with most areas of cryptography, there are many different factors that need to be considered, but fortunately, the majority of modern languages and frameworks provide built-in functionality to help store passwords, which handles much of the complexity.
 
@@ -9,7 +9,7 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 - **Use a [salt](#salting) (modern algorithms do this for you automatically).**
 - **Consider using a [pepper](#peppering) to provide an additional layer of security.**
 
-# Contents
+## Contents
 
 - [Background](#background)
   - [Hashing vs Encryption](#hashing-vs-encryption)
@@ -31,7 +31,7 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
   - [Upgrading Legacy Hashes](#upgrading-legacy-hashes)
   - [Custom Algorithms](#custom-algorithms)
 
-# Background
+## Background
 
 ## Hashing vs Encryption
 
@@ -72,7 +72,7 @@ The cracking process is not guaranteed to be successful, and the success rate wi
 
 Strong passwords stored with modern hashing algorithms should be effectively impossible for an attacker to crack.
 
-# Hashing Concepts
+## Hashing Concepts
 
 ## Salting
 
@@ -147,7 +147,7 @@ Finally, when using pre-hashing ensure that the output for the first hashing alg
 
 As such, the preferred option should generally be to limit the maximum password length. Pre-hashing of passwords should only be performed where there is a specific requirement to do so, and appropriate steps have been taking to mitigate the issues discussed above.
 
-# Password Hashing Algorithms
+## Password Hashing Algorithms
 
 ## Modern Algorithms
 

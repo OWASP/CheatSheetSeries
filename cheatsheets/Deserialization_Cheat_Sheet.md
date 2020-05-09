@@ -1,8 +1,8 @@
-# Introduction
+## Introduction
 
 This article is focused on providing clear, actionable guidance for safely deserializing untrusted data in your applications.
 
-# What is Deserialization?
+## What is Deserialization?
 
 **Serialization** is the process of turning some object into a data format that can be restored later. People often serialize objects in order to save them to storage, or to send as part of communications. 
 
@@ -12,7 +12,7 @@ However, many programming languages offer a native capability for serializing ob
 
 Unfortunately, the features of these native deserialization mechanisms can be repurposed for malicious effect when operating on untrusted data. Attacks against deserializers have been found to allow denial-of-service, access control, and remote code execution (RCE) attacks.
 
-# Guidance on Deserializing Objects Safely
+## Guidance on Deserializing Objects Safely
 
 The following language-specific guidance attempts to enumerate safe methodologies for deserializing data that can't be trusted.
 
@@ -254,7 +254,7 @@ Try to keep any code that might create potential gadgets separate from any code 
 - `System.Data.DataViewManager, System.Xml.XmlDocument/XmlDataDocument`
 - `System.Management.Automation.PSObject`
 
-# Language-Agnostic Methods for Deserializing Safely
+## Language-Agnostic Methods for Deserializing Safely
 
 ## Using Alternative Data Formats
 
@@ -266,13 +266,13 @@ Many applications rely on a [data-transfer object pattern](https://en.wikipedia.
 
 If the application knows before deserialization which messages will need to be processed, they could sign them as part of the serialization process. The application could then to choose not to deserialize any message which didn't have an authenticated signature.
 
-# Mitigation Tools/Libraries
+## Mitigation Tools/Libraries
 
 - [Java secure deserialization library](https://github.com/ikkisoft/SerialKiller)
 - [SWAT](https://github.com/cschneider4711/SWAT) (Serial Whitelist Application Trainer)
 - [NotSoSerial](https://github.com/kantega/notsoserial)
 
-# Detection Tools
+## Detection Tools
 
 - [Java deserialization cheat sheet aimed at pen testers](https://github.com/GrrrDog/Java-Deserialization-Cheat-Sheet)
 - [A proof-of-concept tool for generating payloads that exploit unsafe Java object deserialization.](https://github.com/frohoff/ysoserial)
@@ -291,7 +291,7 @@ If the application knows before deserialization which messages will need to be p
     - [SuperSerial](https://github.com/DirectDefense/SuperSerial)
     - [SuperSerial-Active](https://github.com/DirectDefense/SuperSerial-Active)
 
-# References
+## References
 
 - [Java-Deserialization-Cheat-Sheet](https://github.com/GrrrDog/Java-Deserialization-Cheat-Sheet)
 - [Deserialization of untrusted data](https://owasp.org/www-community/vulnerabilities/Deserialization_of_untrusted_data)

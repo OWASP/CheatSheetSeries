@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 **Web Authentication, Session Management, and Access Control**:
 
@@ -16,7 +16,7 @@ The session ID or token binds the user authentication credentials (in the form o
 
 The disclosure, capture, prediction, brute force, or fixation of the session ID will lead to session hijacking (or sidejacking) attacks, where an attacker is able to fully impersonate a victim user in the web application. Attackers can perform two types of session hijacking attacks, targeted or generic. In a targeted attack, the attacker's goal is to impersonate a specific (or privileged) web application victim user. For generic attacks, the attacker's goal is to impersonate (or get access as) any valid or legitimate user in the web application.
 
-# Session ID Properties
+## Session ID Properties
 
 In order to keep the authenticated state and track the users progress within the web application, applications provide users with a **session identifier** (session ID or token) that is assigned at session creation time, and is shared and exchanged by the user and the web application for the duration of the session (it is sent on every HTTP request). The session ID is a `name=value` pair.
 
@@ -66,7 +66,7 @@ The stored information can include the client IP address, User-Agent, e-mail, us
 
 It is recommended to create cryptographically strong session IDs through the usage of cryptographic hash functions such as SHA256.
 
-# Session Management Implementation
+## Session Management Implementation
 
 The session management implementation defines the exchange mechanism that will be used between the user and the web application to share and continuously exchange the session ID. There are multiple mechanisms available in HTTP to maintain session state within web applications, such as cookies (standard HTTP header), URL parameters (URL rewriting – [RFC2396](https://www.ietf.org/rfc/rfc2396.txt)), URL arguments on GET requests, body arguments on POST requests, such as hidden form fields (HTML forms), or proprietary HTTP headers.
 
@@ -110,7 +110,7 @@ See the OWASP [Transport Layer Protection Cheat Sheet](Transport_Layer_Protectio
 
 It is important to emphasize that TLS does not protect against session ID prediction, brute force, client-side tampering or fixation; however, it does provide effective protection against an attacker intercepting or stealing session IDs through a man in the middle attack.
 
-# Cookies
+## Cookies
 
 The session ID exchange mechanism based on cookies provides multiple security features in the form of cookie attributes that can be used to protect the exchange of the session ID:
 
@@ -163,7 +163,7 @@ Typically, session management capabilities to track users after authentication m
 - Ensure entire cookie should be encrypted if sensitive data is persisted in the cookie
 - Define all cookies being used by the application, their name and why they are needed
 
-# HTML5 Web Storage API
+## HTML5 Web Storage API
 
 The Web Hypertext Application Technology Working Group (WHATWG) describes the HTML5 Web Storage APIs, `localStorage` and `sessionStorage`, as mechanisms for storing name-value pairs client-side.
 Unlike HTTP cookies, the contents of `localStorage` and `sessionStorage` are not automatically shared within requests or responses by the browser and are used for storing data client-side.
@@ -220,7 +220,7 @@ Due to the potential to access Web Storage APIs via an XSS attack, session ident
 - [SessionStorage API](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
 - [WHATWG Web Storage Spec](https://html.spec.whatwg.org/multipage/webstorage.html#webstorage)
 
-# Session ID Life Cycle
+## Session ID Life Cycle
 
 ## Session ID Generation and Verification: Permissive and Strict Session Management
 
@@ -252,7 +252,7 @@ It is very common for web applications to set a user cookie pre-authentication o
 
 Web applications should try to avoid the same cookie name for different paths or domain scopes within the same web application, as this increases the complexity of the solution and potentially introduces scoping issues.
 
-# Session Expiration
+## Session Expiration
 
 In order to minimize the time period an attacker can launch attacks over active sessions and hijack them, it is mandatory to set expiration timeouts for every session, establishing the amount of time a session will remain active. Insufficient session expiration by the web application increases the exposure of other session-based attacks, as for the attacker to be able to reuse a valid session ID and hijack the associated session, it must still be active.
 
@@ -308,7 +308,7 @@ Even after the session has been closed, it might be possible to access the priva
 
 Independently of the cache policy defined by the web application, if caching web application contents is allowed, the session IDs must never be cached, so it is highly recommended to use the `Cache-Control: no-cache="Set-Cookie, Set-Cookie2"` directive, to allow web clients to cache everything except the session ID (see [here](https://stackoverflow.com/a/41352418)).
 
-# Additional Client-Side Defenses for Session Management
+## Additional Client-Side Defenses for Session Management
 
 Web applications can complement the previously described session management defenses with additional countermeasures on the client side. Client-side protections, typically in the form of JavaScript checks and verifications, are not bullet proof and can easily be defeated by a skilled attacker, but can introduce another layer of defense that has to be bypassed by intruders.
 
@@ -334,7 +334,7 @@ JavaScript code can be used by the web application in all (or critical) pages to
 
 The benefit of enhancing the server-side idle timeout functionality with client-side code is that the user can see that the session has finished due to inactivity, or even can be notified in advance that the session is about to expire through a count down timer and warning messages. This user-friendly approach helps to avoid loss of work in web pages that require extensive input data due to server-side silently expired sessions.
 
-# Session Attacks Detection
+## Session Attacks Detection
 
 ## Session ID Guessing and Brute Force Detection
 
@@ -370,7 +370,7 @@ It is the web application design decision to determine if multiple simultaneous 
 
 It is recommended for web applications to add user capabilities that allow checking the details of active sessions at any time, monitor and alert the user about concurrent logons, provide user features to remotely terminate sessions manually, and track account activity history (logbook) by recording multiple client details such as IP address, User-Agent, login date and time, idle time, etc.
 
-# Session Management WAF Protections
+## Session Management WAF Protections
 
 There are situations where the web application source code is not available or cannot be modified, or when the changes required to implement the multiple security recommendations and best practices detailed above imply a full redesign of the web application architecture, and therefore, cannot be easily implemented in the short term. 
 

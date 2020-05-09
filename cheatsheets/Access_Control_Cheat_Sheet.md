@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 This article is focused on providing clear, simple, actionable guidance for providing access control security in your applications. The objective is to provide guidance to developers, reviewers, designers, architects on designing, creating and maintaining access controls in web applications.
 
@@ -14,7 +14,7 @@ Why do we need an access control policy for web development?
 
 The intention of having an access control policy is to ensure that security requirements are described clearly to architects, designers, developers and support team, such that access control functionality is designed and implemented in a consistent manner.
 
-# Role-Based Access Control (RBAC)
+## Role-Based Access Control (RBAC)
 
 In Role-Based Access Control (RBAC), access decisions are based on an individual's roles and responsibilities within the organization or user base.
 
@@ -43,7 +43,7 @@ The areas of caution while using RBAC are:
 - When a user changes his role to another one, the administrator must make sure that the earlier access is revoked such that at any given point of time, a user is assigned to only those roles on a need to know basis.
 - Assurance for RBAC must be carried out using strict access control reviews.
 
-# Discretionary Access Control (DAC)
+## Discretionary Access Control (DAC)
 
 Discretionary Access Control (DAC) is a means of restricting access to information based on the identity of users and/or membership in certain groups. Access decisions are typically based on the authorizations granted to a user based on the credentials he presented at the time of authentication (user name, password, hardware/software token, etc.). In most typical DAC models, the owner of the information or any resource is able to change its permissions at his discretion (thus the name).
 
@@ -67,7 +67,7 @@ The areas of caution while using DAC are:
 - While granting trusts
 - Assurance for DAC must be carried out using strict access control reviews.
 
-# Mandatory Access Control (MAC)
+## Mandatory Access Control (MAC)
 
 Mandatory Access Control (MAC) ensures that the enforcement of organizational security policy does not rely on voluntary web application user compliance. MAC secures information by assigning sensitivity labels on information and comparing this to the level of sensitivity a user is operating at. MAC is usually appropriate for extremely secure systems, including multilevel secure military applications or mission-critical data applications.
 
@@ -87,7 +87,7 @@ The areas of caution while using MAC are:
 - Classification and sensitivity assignment at an appropriate and pragmatic level
 - Assurance for MAC must be carried out to ensure that the classification of the objects is at the appropriate level.
 
-# Permission Based Access Control
+## Permission Based Access Control
 
 The key concept in Permission Based Access Control is the abstraction of application actions into a set of *permissions*. A *permission* may be represented simply as a string-based name, for example, "READ". Access decisions are made by checking if the current user *has* the permission associated with the requested application action.
 

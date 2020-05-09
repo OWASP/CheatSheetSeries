@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 The objective of the cheat sheet is to provide a proposal of approach regarding the handling of vulnerable third-party dependencies when they are detected, and this, depending on different situation.
 
@@ -8,7 +8,7 @@ The cheat sheet is not tools oriented but it contains a [tools](#Tools) section 
 
 Proposals mentioned in this cheat sheet are not silver-bullet (recipes that work in all situations) yet can be used as a foundation and adapted to your context.
 
-# Context
+## Context
 
 Most of the projects use third-party dependencies to delegate handling of different kind of operations, _e.g._ generation of document in a specific format, HTTP communications, data parsing of a specific format, etc.
 
@@ -26,7 +26,7 @@ It's highly recommended to perform automated analysis of the dependencies from t
 
 In the rest of the cheat sheet, when we refer to *development team* then we assume that the team contains a member with the required application security skills or can refer to someone in the company having these kind of skills to analyse the vulnerability impacting the dependency.
 
-# Remark about the detection
+## Remark about the detection
 
 It's important to keep in mind the different ways in which a security issue is handled after its discovery. 
 
@@ -51,11 +51,11 @@ The researcher decides to release all the information including exploitation cod
 
 Here a CVE is not always created then the vulnerability is not always in the CVE global database causing the detection tools to be potentially blind about unless the tools use other input sources.
 
-# Remark about the security issue handling decision
+## Remark about the security issue handling decision
 
 When a security issue is detected, it's possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the [Chief Risk Officer](https://en.wikipedia.org/wiki/Chief_risk_officer) (fallback possible to [Chief Information Security Officer](https://en.wikipedia.org/wiki/Chief_information_security_officer)) of the company based on technical feedback from the development team that have analysed the issue (see the *[Cases](#cases)* section) as well as the CVE's [CVSS](https://www.first.org/cvss/user-guide) score indicators.
 
-# Cases
+## Cases
 
 When a security issue is detected, the development team can meet one of the situations (named *Case* in the rest of the cheat sheet) presented in the sub sections below.
 
@@ -218,7 +218,7 @@ Inform the provider about the vulnerability by sharing the post with them.
 
 Using the information from the full disclosure post or the pentester's exploitation feedback, if the provider collaborates then apply [Case 2](#case-2), otherwise apply [Case 3](#case-3), and instead of analyzing the CVE information, the team needs to analyze the information from the full disclosure post/pentester's exploitation feedback.
 
-# Tools
+## Tools
 
 This section lists several tools that can used to analyse the dependencies used by a project in order to detect the vulnerabilities.
 

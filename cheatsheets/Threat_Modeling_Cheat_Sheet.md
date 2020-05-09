@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 Objective of the Threat Modelling Control Cheat Sheet – To provide guidance to architects, designers and reviewers, on deriving threat models for applications.
 
@@ -11,7 +11,7 @@ This cheat sheet provides guidance to assess existing apps as well as new apps. 
 
 Following the guidance in this cheat sheet, the assessors will list all possible risks and then verifies whether there are enough security controls to protect against these risks. The assessor will then give better recommendations on how to mitigate these risks. It will help the assessor discover logical attacks. In general, the threat modeling will help designers, architects and assessors discover logical attacks.
 
-# Preparation
+## Preparation
 
 ## Understand Risk Management Basics in the context of Application Security
 
@@ -39,7 +39,7 @@ Understand the Relation between Risk, Threats, and Vulnerabilities.
 
 Before starting the threat modeling process; it is important to identify business objectives of the applications, and identify security & compliance requirements. This is very important to be defined in advance to help to evaluate the impact of any vulnerability during the risk analysis process.
 
-# Identify application design
+## Identify application design
 
 Understanding application design is a key activity to perform application threat modeling. It will enable the user of this cheat sheet to draw an accurate data flow diagram. Therefore, it will be easier to identify all possible risks. Moreover, the more the user of this cheat sheet understands application design, the better they will understand logical application attacks. The objective of the design document is to enumerate application components.
 
@@ -103,7 +103,7 @@ Create a physical map of the Target of Evaluation
 
 **Related Artifacts**:  Use-Case Model, Use-Case documents
 
-# Decompose and Model the System
+## Decompose and Model the System
 
 Gain an understanding of how the system works to perform a threat model, it is important to understand how the system works and interacts with its ecosystem. To start with creating a high-level information flow diagram, like the following:
 
@@ -173,7 +173,7 @@ Highlight Authorization per user role, for example, defining app users’ role, 
 
 Define the interfaces through which potential attackers can interact with the application or supply them with data.
 
-# Identify Threat Agents
+## Identify Threat Agents
 
 ## Define all possible threats
 
@@ -212,7 +212,7 @@ TODO
 
 In most cases after defining the attack vectors, the compromised user role could lead to further attacks into the application. For example, assuming that an internet banking user credentials could be compromised, the user of this cheat sheet has to then redefine the attack vectors that could result from compromising the user’s credentials and so on.
 
-# Write your Threat traceability matrix
+## Write your Threat traceability matrix
 
 ## Define the Impact and Probability for each threat
 
@@ -269,7 +269,7 @@ Using risk matrix rank risks from most severe to least severe based on Means, Mo
 - Risk Value: 19 to 36 &rarr; Risk Level: **Medium**
 - Risk Value: 37 to 54 &rarr; Risk Level: **High**
 
-# Determine countermeasures and mitigation.
+## Determine countermeasures and mitigation.
 
 Identify risk owners and agree on risk mitigation with risk owners and stakeholders. Provide the needed controls in forms of code upgrades and configuration updates to reduce risks to acceptable levels.
 
@@ -308,7 +308,7 @@ After applying the mitigation and measuring the new risk value, the user of this
 
 TODO
 
-# Appendix
+## Appendix
 
 TODO: *Sample Design for Implementation View in 4+1 Model*
 

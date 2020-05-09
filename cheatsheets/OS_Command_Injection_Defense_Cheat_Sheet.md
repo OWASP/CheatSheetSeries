@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 Command injection (or OS Command Injection) is a type of injection where the software, that constructs a system command using externally influenced input, does not correctly neutralizes the input from special elements that can modify the initially intended command.
 
@@ -24,7 +24,7 @@ Now, both the *Calculator* application and the value *test* are displayed:
 
 The problem is exacerbated if the compromised process does not follow the principle of least privilege principle and attacker-controlled commands end up running with special system privileges that increases the amount of damage.
 
-# Primary Defenses
+## Primary Defenses
 
 ## Defense Option 1: Avoid calling OS commands directly
 
@@ -62,7 +62,7 @@ If it is considered unavoidable the call to a system command incorporated with u
 & |  ; $ > < ` \ !
 ```
 
-# Additional Defenses
+## Additional Defenses
 
 On top of primary defences, parameterizations and input validation, we also recommend adopting all of these additional defenses in order to provide defense in depth.
 
@@ -71,7 +71,7 @@ These additional defenses are:
 - Applications should run using the lowest privileges that are required to accomplish the necessary tasks.
 - If possible, create isolated accounts with limited privileges that are only used for a single task.
 
-# Code examples
+## Code examples
 
 ## Java
 
@@ -200,7 +200,7 @@ process.Start();
 
 In PHP use [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](https://www.php.net/manual/en/function.escapeshellcmd.php) rather than [exec()](https://www.php.net/manual/en/function.exec.php), [system()](https://www.php.net/manual/en/function.system.php), [passthru()](https://www.php.net/manual/en/function.passthru.php).
 
-# Related articles
+## Related articles
 
 ## Description of Command Injection Vulnerability
 

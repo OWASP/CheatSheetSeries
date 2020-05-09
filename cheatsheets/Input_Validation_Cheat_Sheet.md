@@ -1,8 +1,8 @@
-# Introduction
+## Introduction
 
 This article is focused on providing clear, simple, actionable guidance for providing Input Validation security functionality in your applications.
 
-# Goals of Input Validation
+## Goals of Input Validation
 
 Input validation is performed to ensure only properly formed data is entering the workflow in an information system, preventing malformed data from persisting in the database and triggering malfunction of various downstream components. Input validation should happen as early as possible in the data flow, preferably as soon as the data is received from the external party.
 
@@ -10,7 +10,7 @@ Data from all potentially untrusted sources should be subject to input validatio
 
 Input Validation should not be used as the *primary* method of preventing [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), [SQL Injection](SQL_Injection_Prevention_Cheat_Sheet.md) and other attacks which are covered in respective [cheat sheets](https://cheatsheetseries.owasp.org/) but can significantly contribute to reducing their impact if implemented properly.
 
-# Input validation strategies
+## Input validation strategies
 
 Input validation should be applied on both **syntactical** and **Semantic** level. 
 
@@ -20,7 +20,7 @@ Input validation should be applied on both **syntactical** and **Semantic** leve
 
 It is always recommended to prevent attacks as early as possible in the processing of the user's (attacker's) request. Input validation can be used to detect unauthorized input before it is processed by the application.
 
-# Implementing input validation
+## Implementing input validation
 
 Input validation can be implemented using any programming technique that allows effective enforcement of syntactic and semantic correctness, for example:
 
@@ -71,7 +71,7 @@ In summary, input validation should:
 - Define the allowed set of characters to be accepted.
 - Define a minimum and maximum length for the data (e.g. `{1,25}` ).
 
-# White List Regular Expression Examples
+## White List Regular Expression Examples
 
 Validating a U.S. Zip Code (5 digits plus optional -4)
 
@@ -112,15 +112,15 @@ Some white list validators have also been predefined in various open source pack
 
 - [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/)
 
-# Client Side vs Server Side Validation
+## Client Side vs Server Side Validation
 
 Be aware that any JavaScript input validation performed on the client can be bypassed by an attacker that disables JavaScript or uses a Web Proxy. Ensure that any input validation performed on the client is also performed on the server.
 
-# Validating Rich User Content
+## Validating Rich User Content
 
 It is very difficult to validate rich content submitted by a user. For more information, please see the XSS cheatsheet on [Sanitizing HTML Markup with a Library Designed for the Job](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
-# Preventing XSS and Content Security Policy
+## Preventing XSS and Content Security Policy
 
 All user data controlled must be encoded when returned in the html page to prevent the execution of malicious data (e.g. XSS). For example `<script>` would be returned as `&lt;script&gt;`
 
@@ -128,7 +128,7 @@ The type of encoding is specific to the context of the page where the user contr
 
 Detailed information on XSS prevention here: [OWASP XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 
-# File Upload Validation
+## File Upload Validation
 
 Many websites allow users to upload files, such as a profile picture or more. This section helps provide that feature securely.
 
@@ -164,7 +164,7 @@ The upload feature should be using a whitelist approach to only allow specific f
 - Set the extension of the stored image to be a valid image extension based on the detected content type of the image from image processing (e.g. do not just trust the header from the upload).
 - Ensure the detected content type of the image is within a list of defined image types (jpg, png, etc)
 
-# Email Address Validation
+## Email Address Validation
 
 ## Syntactic Validation
 
