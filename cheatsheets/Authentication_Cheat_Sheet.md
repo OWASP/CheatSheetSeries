@@ -25,12 +25,9 @@ A key concern when using passwords for authentication is password strength. A "s
 
 - Password Length
     - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
-    - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. Typical maximum length is 128 characters. It is important to set a maximum password length to prevent [long password Denial of Service attacks](https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/).
-    - Some password hashes such as Bcrypt truncate the input, so a shorter maximum length may be required, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#maximum-password-lengths).
+    - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. A common maximum length is 64 characters due to limitations in certain hashing algorithms, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.html#maximum-password-lengths). It is important to set a maximum password length to prevent [long password Denial of Service attacks](https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/).
 
-      When selecting a maximum password length, consider whether the hashing algorithm to be used has any limitations because some [have a maximum password length](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length/39851#39851).
-
-- Do not truncate passwords. Make sure that every character the user types in is actually included in the password.
+- Do not silently truncate passwords. If the user enters a password that is longer than that maximum permitted length then return an error message explaining to them what the problem is.
 
 - Allow usage of **all** characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted.
 
@@ -278,7 +275,7 @@ Web applications should at least not make password managers job more difficult t
 
 - Use standard HTML forms for username and password input with appropriate `type` attributes.
   - Avoid plugin-based login pages (such as Flash or Silverlight).
-- Allow long passwords (at least 64 characters).
+- Implement a reasonable maximum password length, such as 64 characters, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.html#maximum-password-lengths).
 - Allow any printable characters to be used in passwords.
 - Allow users to paste into the username and password fields.
 - Allow users to navigate between the username and password field with a single press of the `Tab` key.
