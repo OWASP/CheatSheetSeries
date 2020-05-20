@@ -275,7 +275,7 @@ Web applications should at least not make password managers job more difficult t
 
 - Use standard HTML forms for username and password input with appropriate `type` attributes.
   - Avoid plugin-based login pages (such as Flash or Silverlight).
-- Implement a reasonable maximum password length, such as 64 characters, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.html#maximum-password-lengths).
+- Implement a reasonable maximum password length, such as 64 characters, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#maximum-password-lengths).
 - Allow any printable characters to be used in passwords.
 - Allow users to paste into the username and password fields.
 - Allow users to navigate between the username and password field with a single press of the `Tab` key.
