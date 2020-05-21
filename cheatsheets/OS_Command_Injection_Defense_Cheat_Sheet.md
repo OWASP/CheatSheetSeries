@@ -18,7 +18,7 @@ However, if the supplied value has been tampered with, and now it is:
 calc & echo "test"
 ```
 
-when executed, it changes the meaning of the initial intended value. 
+when executed, it changes the meaning of the initial intended value.
 
 Now, both the *Calculator* application and the value *test* are displayed:
 
