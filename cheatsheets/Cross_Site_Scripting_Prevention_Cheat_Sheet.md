@@ -436,7 +436,7 @@ The purpose of output encoding (as it relates to Cross Site Scripting) is to con
 
 ## Related Articles
 
-**XSS Attack Cheat Sheet*:*
+**XSS Attack Cheat Sheet:**
 
 The following article describes how to exploit different kinds of XSS Vulnerabilities that this article was created to help you avoid:
 
