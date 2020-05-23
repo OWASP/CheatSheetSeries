@@ -1050,10 +1050,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="ldap-injection-prevention-cheat-sheet"><a name="ldap-injection-prevention-cheat-sheet" class="plugin-anchor" href="#ldap-injection-prevention-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>LDAP Injection Prevention Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>This cheatsheet is focused on providing clear, simple, actionable guidance for preventing LDAP Injection flaws in your applications.</p>
-<p>LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it&apos;s possible to modify LDAP statements through techniques similar to <a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank">SQL Injection</a>. </p>
-<p>LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. </p>
+<p>LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it&apos;s possible to modify LDAP statements through techniques similar to <a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank">SQL Injection</a>.</p>
+<p>LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree.</p>
 <p>For more information on LDAP Injection attacks, visit <a href="https://owasp.org/www-community/attacks/LDAP_Injection" target="_blank">LDAP injection</a>.</p>
 <p><a href="https://owasp.org/www-community/attacks/LDAP_Injection" target="_blank">LDAP injection</a> attacks are common due to two factors:</p>
 <ol>
@@ -1068,19 +1069,19 @@
 <ul>
 <li>Use a framework (like <a href="https://archive.codeplex.com/?p=linqtoad" target="_blank">LINQtoAD</a>) that escapes automatically.</li>
 </ul>
-<h1 id="primary-defenses"><a name="primary-defenses" class="plugin-anchor" href="#primary-defenses"><i class="fa fa-link" aria-hidden="true"></i></a>Primary Defenses</h1>
-<h2 id="defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function"><a name="defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function" class="plugin-anchor" href="#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 1: Escape all variables using the right LDAP encoding function</h2>
+<h2 id="primary-defenses"><a name="primary-defenses" class="plugin-anchor" href="#primary-defenses"><i class="fa fa-link" aria-hidden="true"></i></a>Primary Defenses</h2>
+<h3 id="defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function"><a name="defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function" class="plugin-anchor" href="#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 1: Escape all variables using the right LDAP encoding function</h3>
 <p>The main way LDAP stores names is based on DN (distinguished name). You can think of this like a unique identifier. These are sometimes used to access resources, like a username.</p>
 <p>A DN might look like this</p>
 <p><code>cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu</code></p>
 <p>or</p>
 <p><code>uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com</code></p>
-<p>There are certain characters that are considered special characters in a DN. </p>
+<p>There are certain characters that are considered special characters in a DN.</p>
 <p>The <a href="https://ldapwiki.com/wiki/DN%20Escape%20Values" target="_blank">exhaustive list</a> is the following: <code>\ # + &lt; &gt; , ; &quot; =</code> and leading or trailing spaces.</p>
-<p>Some &quot;special&quot; characters that are allowed in Distinguished Names and do not need to be escaped include: </p>
+<p>Some &quot;special&quot; characters that are allowed in Distinguished Names and do not need to be escaped include:</p>
 <pre><code class="lang-text">* ( ) . &amp; - _ [ ] ` ~ | @ $ % ^ ? : { } ! &apos;
 </code></pre>
-<p>Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users will certain attributes, you may do so with search filters. </p>
+<p>Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users will certain attributes, you may do so with search filters.</p>
 <p>In a search filter, you can use standard boolean logic to get a list of users matching an arbitrary constraint. Search filters are written in Polish notation AKA prefix notation.</p>
 <p>Example:</p>
 <pre><code class="lang-text">(&amp;(ou=Physics)(|
@@ -1089,30 +1090,30 @@
 ))
 </code></pre>
 <p>When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource.</p>
-<h3 id="safe-java-escaping-example"><a name="safe-java-escaping-example" class="plugin-anchor" href="#safe-java-escaping-example"><i class="fa fa-link" aria-hidden="true"></i></a>Safe Java Escaping Example</h3>
+<h4 id="safe-java-escaping-example"><a name="safe-java-escaping-example" class="plugin-anchor" href="#safe-java-escaping-example"><i class="fa fa-link" aria-hidden="true"></i></a>Safe Java Escaping Example</h4>
 <ul>
 <li><a href="https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534" target="_blank">Prevent LDAP injection</a>.</li>
 <li><a href="https://github.com/ESAPI/esapi-java-legacy/blob/develop/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java" target="_blank">Legacy OWASP ESAPI for Java DefaultEncoder which includes encodeForLDAP(String) and encodeForDN(String)</a>.</li>
 </ul>
-<h3 id="safe-c-sharp-net-tba-example"><a name="safe-c-sharp-net-tba-example" class="plugin-anchor" href="#safe-c-sharp-net-tba-example"><i class="fa fa-link" aria-hidden="true"></i></a>Safe C Sharp .NET TBA Example</h3>
-<p><a href="https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/" target="_blank">.NET AntiXSS</a> (now the Encoder class) has LDAP encoding functions including <code>Encoder.LdapFilterEncode(string)</code>, <code>Encoder.LdapDistinguishedNameEncode(string)</code> and <code>Encoder.LdapDistinguishedNameEncode(string, bool, bool)</code>. </p>
+<h4 id="safe-c-sharp-net-tba-example"><a name="safe-c-sharp-net-tba-example" class="plugin-anchor" href="#safe-c-sharp-net-tba-example"><i class="fa fa-link" aria-hidden="true"></i></a>Safe C Sharp .NET TBA Example</h4>
+<p><a href="https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/" target="_blank">.NET AntiXSS</a> (now the Encoder class) has LDAP encoding functions including <code>Encoder.LdapFilterEncode(string)</code>, <code>Encoder.LdapDistinguishedNameEncode(string)</code> and <code>Encoder.LdapDistinguishedNameEncode(string, bool, bool)</code>.</p>
 <p><code>Encoder.LdapFilterEncode</code> encodes input according to <a href="https://tools.ietf.org/search/rfc4515" target="_blank">RFC4515</a> where unsafe values are converted to <code>\XX</code> where <code>XX</code> is the representation of the unsafe character.</p>
 <p><code>Encoder.LdapDistinguishedNameEncode</code> encodes input according to <a href="https://tools.ietf.org/html/rfc2253" target="_blank">RFC2253</a> where unsafe characters are converted to <code>#XX</code> where <code>XX</code> is the representation of the unsafe character and the comma, plus, quote, slash, less than and great than signs are escaped using slash notation (<code>\X</code>). In addition to this a space or octothorpe (<code>#</code>) at the beginning of the input string is <code>\</code> escaped as is a space at the end of a string.</p>
 <p><code>LdapDistinguishedNameEncode(string, bool, bool)</code> is also provided so you may turn off the initial or final character escaping rules, for example if you are concatenating the escaped distinguished name fragment into the midst of a complete distinguished name.</p>
-<h2 id="defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection"><a name="defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection" class="plugin-anchor" href="#defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection</h2>
+<h3 id="defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection"><a name="defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection" class="plugin-anchor" href="#defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection</h3>
 <p>Safe NET Example</p>
 <p><a href="https://linqtoad.codeplex.com" target="_blank">LINQ to Active Directory</a> provides automatic LDAP encoding when building LDAP queries.</p>
-<h2 id="defense-option-3-additional-defenses"><a name="defense-option-3-additional-defenses" class="plugin-anchor" href="#defense-option-3-additional-defenses"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 3: Additional Defenses</h2>
+<h3 id="defense-option-3-additional-defenses"><a name="defense-option-3-additional-defenses" class="plugin-anchor" href="#defense-option-3-additional-defenses"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 3: Additional Defenses</h3>
 <p>Beyond adopting one of the two primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:</p>
 <ul>
 <li><strong>Least Privilege</strong></li>
 <li><strong>White List Input Validation</strong></li>
 </ul>
-<h3 id="least-privilege"><a name="least-privilege" class="plugin-anchor" href="#least-privilege"><i class="fa fa-link" aria-hidden="true"></i></a>Least Privilege</h3>
+<h4 id="least-privilege"><a name="least-privilege" class="plugin-anchor" href="#least-privilege"><i class="fa fa-link" aria-hidden="true"></i></a>Least Privilege</h4>
 <p>To minimize the potential damage of a successful LDAP injection attack, you should minimize the privileges assigned to the LDAP binding account in your environment.</p>
-<h3 id="white-list-input-validation"><a name="white-list-input-validation" class="plugin-anchor" href="#white-list-input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>White List Input Validation</h3>
+<h4 id="white-list-input-validation"><a name="white-list-input-validation" class="plugin-anchor" href="#white-list-input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>White List Input Validation</h4>
 <p>Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
-<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h1>
+<h2 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h2>
 <ul>
 <li>OWASP article on <a href="https://owasp.org/www-community/attacks/LDAP_Injection" target="_blank">LDAP Injection</a> Vulnerabilities.</li>
 <li>OWASP article on <a href="https://cheatsheetseries.owasp.org/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.html" target="_blank">Preventing LDAP Injection Prevention</a>.</li>
@@ -1161,7 +1162,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"LDAP Injection Prevention ","level":"1.39","depth":1,"next":{"title":"Logging ","level":"1.40","depth":1,"path":"cheatsheets/Logging_Cheat_Sheet.md","ref":"cheatsheets/Logging_Cheat_Sheet.md","articles":[]},"previous":{"title":"Key Management ","level":"1.38","depth":1,"path":"cheatsheets/Key_Management_Cheat_Sheet.md","ref":"cheatsheets/Key_Management_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"LDAP Injection Prevention ","level":"1.39","depth":1,"next":{"title":"Logging ","level":"1.40","depth":1,"path":"cheatsheets/Logging_Cheat_Sheet.md","ref":"cheatsheets/Logging_Cheat_Sheet.md","articles":[]},"previous":{"title":"Key Management ","level":"1.38","depth":1,"path":"cheatsheets/Key_Management_Cheat_Sheet.md","ref":"cheatsheets/Key_Management_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

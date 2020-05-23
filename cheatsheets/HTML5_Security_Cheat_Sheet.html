@@ -1050,10 +1050,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="html5-security-cheat-sheet"><a name="html5-security-cheat-sheet" class="plugin-anchor" href="#html5-security-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>HTML5 Security Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>The following cheat sheet serves as a guide for implementing HTML 5 in a secure fashion.</p>
-<h1 id="communication-apis"><a name="communication-apis" class="plugin-anchor" href="#communication-apis"><i class="fa fa-link" aria-hidden="true"></i></a>Communication APIs</h1>
-<h2 id="web-messaging"><a name="web-messaging" class="plugin-anchor" href="#web-messaging"><i class="fa fa-link" aria-hidden="true"></i></a>Web Messaging</h2>
+<h2 id="communication-apis"><a name="communication-apis" class="plugin-anchor" href="#communication-apis"><i class="fa fa-link" aria-hidden="true"></i></a>Communication APIs</h2>
+<h3 id="web-messaging"><a name="web-messaging" class="plugin-anchor" href="#web-messaging"><i class="fa fa-link" aria-hidden="true"></i></a>Web Messaging</h3>
 <p>Web Messaging (also known as Cross Domain Messaging) provides a means of messaging between documents from different origins in a way that is generally safer than the multiple hacks used in the past to accomplish this task. However, there are still some recommendations to keep in mind:</p>
 <ul>
 <li>When posting a message, explicitly state the expected origin as the second argument to <code>postMessage</code> rather than <code>*</code> in order to prevent sending the message to an unknown origin after a redirect or some other means of the target window&apos;s origin changing.</li>
@@ -1068,7 +1069,7 @@
 <li>Check the origin properly exactly to match the FQDN(s) you expect. Note that the following code: <code>if(message.origin.indexOf(&quot;.owasp.org&quot;)!=-1) { /* ... */ }</code> is very insecure and will not have the desired behavior as <code>owasp.org.attacker.com</code> will match.</li>
 <li>If you need to embed external content/untrusted gadgets and allow user-controlled scripts (which is highly discouraged), consider using a JavaScript rewriting framework such as <a href="http://code.google.com/p/google-caja/" target="_blank">Google Caja</a> or check the information on <a href="HTML5_Security_Cheat_Sheet.html#sandboxed-frames">sandboxed frames</a>.</li>
 </ul>
-<h2 id="cross-origin-resource-sharing"><a name="cross-origin-resource-sharing" class="plugin-anchor" href="#cross-origin-resource-sharing"><i class="fa fa-link" aria-hidden="true"></i></a>Cross Origin Resource Sharing</h2>
+<h3 id="cross-origin-resource-sharing"><a name="cross-origin-resource-sharing" class="plugin-anchor" href="#cross-origin-resource-sharing"><i class="fa fa-link" aria-hidden="true"></i></a>Cross Origin Resource Sharing</h3>
 <ul>
 <li>Validate URLs passed to <code>XMLHttpRequest.open</code>. Current browsers allow these URLs to be cross domain; this behavior can lead to code injection by a remote attacker. Pay extra attention to absolute URLs.</li>
 <li>Ensure that URLs responding with <code>Access-Control-Allow-Origin: *</code> do not include any sensitive content or information that might aid attacker in further attacks. Use the <code>Access-Control-Allow-Origin</code> header only on chosen URLs that need to be accessed cross-domain. Don&apos;t use the header for the whole domain.</li>
@@ -1078,7 +1079,7 @@
 <li>Discard requests received over plain HTTP with HTTPS origins to prevent mixed content bugs.</li>
 <li>Don&apos;t rely only on the Origin header for Access Control checks. Browser always sends this header in CORS requests, but may be spoofed outside the browser. Application-level protocols should be used to protect sensitive data.</li>
 </ul>
-<h2 id="websockets"><a name="websockets" class="plugin-anchor" href="#websockets"><i class="fa fa-link" aria-hidden="true"></i></a>WebSockets</h2>
+<h3 id="websockets"><a name="websockets" class="plugin-anchor" href="#websockets"><i class="fa fa-link" aria-hidden="true"></i></a>WebSockets</h3>
 <ul>
 <li>Drop backward compatibility in implemented client/servers and use only protocol versions above hybi-00. Popular Hixie-76 version (hiby-00) and older are outdated and insecure.</li>
 <li>The recommended version supported in latest versions of all current browsers is <a href="http://tools.ietf.org/html/rfc6455" target="_blank">RFC 6455</a> (supported by Firefox 11+, Chrome 16+, Safari 6, Opera 12.50, and IE10).</li>
@@ -1090,14 +1091,14 @@
 <li>When implementing servers, check the <code>Origin:</code> header in the Websockets handshake. Though it might be spoofed outside a browser, browsers always add the Origin of the page that initiated the Websockets connection.</li>
 <li>As a WebSockets client in a browser is accessible through JavaScript calls, all Websockets communication can be spoofed or hijacked through <a href="https://owasp.org/www-community/attacks/xss/" target="_blank">Cross Site Scripting</a>. Always validate data coming through a WebSockets connection.</li>
 </ul>
-<h2 id="server-sent-events"><a name="server-sent-events" class="plugin-anchor" href="#server-sent-events"><i class="fa fa-link" aria-hidden="true"></i></a>Server-Sent Events</h2>
+<h3 id="server-sent-events"><a name="server-sent-events" class="plugin-anchor" href="#server-sent-events"><i class="fa fa-link" aria-hidden="true"></i></a>Server-Sent Events</h3>
 <ul>
 <li>Validate URLs passed to the <code>EventSource</code> constructor, even though only same-origin URLs are allowed.</li>
 <li>As mentioned before, process the messages (<code>event.data</code>) as data and never evaluate the content as HTML or script code.</li>
 <li>Always check the origin attribute of the message (<code>event.origin</code>) to ensure the message is coming from a trusted domain. Use a whitelist approach.</li>
 </ul>
-<h1 id="storage-apis"><a name="storage-apis" class="plugin-anchor" href="#storage-apis"><i class="fa fa-link" aria-hidden="true"></i></a>Storage APIs</h1>
-<h2 id="local-storage"><a name="local-storage" class="plugin-anchor" href="#local-storage"><i class="fa fa-link" aria-hidden="true"></i></a>Local Storage</h2>
+<h2 id="storage-apis"><a name="storage-apis" class="plugin-anchor" href="#storage-apis"><i class="fa fa-link" aria-hidden="true"></i></a>Storage APIs</h2>
+<h3 id="local-storage"><a name="local-storage" class="plugin-anchor" href="#local-storage"><i class="fa fa-link" aria-hidden="true"></i></a>Local Storage</h3>
 <ul>
 <li>Also known as Offline Storage, Web Storage. Underlying storage mechanism may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it&apos;s recommended not to store any sensitive information in local storage.</li>
 <li>Use the object sessionStorage instead of localStorage if persistent storage is not needed. sessionStorage object is available only to that window/tab until the window is closed.</li>
@@ -1107,24 +1108,24 @@
 <li>Do not store session identifiers in local storage as the data is always accessible by JavaScript. Cookies can mitigate this risk using the <code>httpOnly</code> flag.</li>
 <li>There is no way to restrict the visibility of an object to a specific path like with the attribute path of HTTP Cookies, every object is shared within an origin and protected with the Same Origin Policy. Avoid host multiple applications on the same origin, all of them would share the same localStorage object, use different subdomains instead.</li>
 </ul>
-<h2 id="client-side-databases"><a name="client-side-databases" class="plugin-anchor" href="#client-side-databases"><i class="fa fa-link" aria-hidden="true"></i></a>Client-side databases</h2>
+<h3 id="client-side-databases"><a name="client-side-databases" class="plugin-anchor" href="#client-side-databases"><i class="fa fa-link" aria-hidden="true"></i></a>Client-side databases</h3>
 <ul>
 <li>On November 2010, the W3C announced Web SQL Database (relational SQL database) as a deprecated specification. A new standard Indexed Database API or IndexedDB (formerly WebSimpleDB) is actively developed, which provides key/value database storage and methods for performing advanced queries.</li>
 <li>Underlying storage mechanisms may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it&apos;s recommended not to store any sensitive information in local storage.</li>
 <li>If utilized, WebDatabase content on the client side can be vulnerable to SQL injection and needs to have proper validation and parameterization.</li>
 <li>Like Local Storage, a single <a href="https://owasp.org/www-community/attacks/xss/" target="_blank">Cross Site Scripting</a> can be used to load malicious data into a web database as well. Don&apos;t consider data in these to be trusted.</li>
 </ul>
-<h1 id="geolocation"><a name="geolocation" class="plugin-anchor" href="#geolocation"><i class="fa fa-link" aria-hidden="true"></i></a>Geolocation</h1>
+<h2 id="geolocation"><a name="geolocation" class="plugin-anchor" href="#geolocation"><i class="fa fa-link" aria-hidden="true"></i></a>Geolocation</h2>
 <ul>
 <li>The Geolocation RFC recommends that the user agent ask the user&apos;s permission before calculating location. Whether or how this decision is remembered varies from browser to browser. Some user agents require the user to visit the page again in order to turn off the ability to get the user&apos;s location without asking, so for privacy reasons, it&apos;s recommended to require user input before calling <code>getCurrentPosition</code> or <code>watchPosition</code>.</li>
 </ul>
-<h1 id="web-workers"><a name="web-workers" class="plugin-anchor" href="#web-workers"><i class="fa fa-link" aria-hidden="true"></i></a>Web Workers</h1>
+<h2 id="web-workers"><a name="web-workers" class="plugin-anchor" href="#web-workers"><i class="fa fa-link" aria-hidden="true"></i></a>Web Workers</h2>
 <ul>
 <li>Web Workers are allowed to use <code>XMLHttpRequest</code> object to perform in-domain and Cross Origin Resource Sharing requests. See relevant section of this Cheat Sheet to ensure CORS security.</li>
 <li>While Web Workers don&apos;t have access to DOM of the calling page, malicious Web Workers can use excessive CPU for computation, leading to Denial of Service condition or abuse Cross Origin Resource Sharing for further exploitation. Ensure code in all Web Workers scripts is not malevolent. Don&apos;t allow creating Web Worker scripts from user supplied input.</li>
 <li>Validate messages exchanged with a Web Worker. Do not try to exchange snippets of JavaScript for evaluation e.g. via <code>eval()</code> as that could introduce a <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM Based XSS</a> vulnerability.</li>
 </ul>
-<h1 id="tabnabbing"><a name="tabnabbing" class="plugin-anchor" href="#tabnabbing"><i class="fa fa-link" aria-hidden="true"></i></a>Tabnabbing</h1>
+<h2 id="tabnabbing"><a name="tabnabbing" class="plugin-anchor" href="#tabnabbing"><i class="fa fa-link" aria-hidden="true"></i></a>Tabnabbing</h2>
 <p>Attack is described in detail in this <a href="https://owasp.org/www-community/attacks/Reverse_Tabnabbing" target="_blank">article</a>.</p>
 <p>To summarize, it&apos;s the capacity to act on parent page&apos;s content or location from a newly opened page via the back link exposed by the <strong>opener</strong> javascript object instance.</p>
 <p>It applies to html link or a javascript <code>window.open</code> function using the attribute/instruction <code>target</code> to specify a <a href="https://www.w3schools.com/tags/att_a_target.asp" target="_blank">target loading location</a> that does not replace the current location and then makes the current window/tab available.</p>
@@ -1159,7 +1160,7 @@
 <li><a href="https://caniuse.com/#search=noreferrer" target="_blank">noreferrer</a></li>
 <li><a href="https://caniuse.com/#feat=referrer-policy" target="_blank">referrer-policy</a></li>
 </ul>
-<h1 id="sandboxed-frames"><a name="sandboxed-frames" class="plugin-anchor" href="#sandboxed-frames"><i class="fa fa-link" aria-hidden="true"></i></a>Sandboxed frames</h1>
+<h2 id="sandboxed-frames"><a name="sandboxed-frames" class="plugin-anchor" href="#sandboxed-frames"><i class="fa fa-link" aria-hidden="true"></i></a>Sandboxed frames</h2>
 <ul>
 <li>Use the <code>sandbox</code> attribute of an <code>iframe</code> for untrusted content.</li>
 <li>The <code>sandbox</code> attribute of an <code>iframe</code> enables restrictions on content within an <code>iframe</code>. The following restrictions are active when the <code>sandbox</code> attribute is set:<ol>
@@ -1176,9 +1177,9 @@
 <li>In old versions of user agents where this feature is not supported, this attribute will be ignored. Use this feature as an additional layer of protection or check if the browser supports sandboxed frames and only show the untrusted content if supported.</li>
 <li>Apart from this attribute, to prevent Clickjacking attacks and unsolicited framing it is encouraged to use the header <code>X-Frame-Options</code> which supports the <code>deny</code> and <code>same-origin</code> values. Other solutions like framebusting <code>if(window!==window.top) { window.top.location=location;}</code> are not recommended.</li>
 </ul>
-<h1 id="credential-and-personally-identifiable-information-pii-input-hints"><a name="credential-and-personally-identifiable-information-pii-input-hints" class="plugin-anchor" href="#credential-and-personally-identifiable-information-pii-input-hints"><i class="fa fa-link" aria-hidden="true"></i></a>Credential and Personally Identifiable Information (PII) Input hints</h1>
+<h2 id="credential-and-personally-identifiable-information-pii-input-hints"><a name="credential-and-personally-identifiable-information-pii-input-hints" class="plugin-anchor" href="#credential-and-personally-identifiable-information-pii-input-hints"><i class="fa fa-link" aria-hidden="true"></i></a>Credential and Personally Identifiable Information (PII) Input hints</h2>
 <ul>
-<li>Protect the input values from being cached by the browser. </li>
+<li>Protect the input values from being cached by the browser.</li>
 </ul>
 <blockquote>
 <p>Access a financial account from a public computer. Even though one is logged-off, the next person who uses the machine can log-in because the browser autocomplete functionality. To mitigate this, we tell the input fields not to assist in any way.</p>
@@ -1192,18 +1193,18 @@
 <li><code>autocorrect=&quot;off&quot;</code></li>
 <li><code>autocapitalize=&quot;off&quot;</code></li>
 </ul>
-<h1 id="offline-applications"><a name="offline-applications" class="plugin-anchor" href="#offline-applications"><i class="fa fa-link" aria-hidden="true"></i></a>Offline Applications</h1>
+<h2 id="offline-applications"><a name="offline-applications" class="plugin-anchor" href="#offline-applications"><i class="fa fa-link" aria-hidden="true"></i></a>Offline Applications</h2>
 <ul>
 <li>Whether the user agent requests permission from the user to store data for offline browsing and when this cache is deleted, varies from one browser to the next. Cache poisoning is an issue if a user connects through insecure networks, so for privacy reasons it is encouraged to require user input before sending any <code>manifest</code> file.</li>
 <li>Users should only cache trusted websites and clean the cache after browsing through open or insecure networks.</li>
 </ul>
-<h1 id="progressive-enhancements-and-graceful-degradation-risks"><a name="progressive-enhancements-and-graceful-degradation-risks" class="plugin-anchor" href="#progressive-enhancements-and-graceful-degradation-risks"><i class="fa fa-link" aria-hidden="true"></i></a>Progressive Enhancements and Graceful Degradation Risks</h1>
+<h2 id="progressive-enhancements-and-graceful-degradation-risks"><a name="progressive-enhancements-and-graceful-degradation-risks" class="plugin-anchor" href="#progressive-enhancements-and-graceful-degradation-risks"><i class="fa fa-link" aria-hidden="true"></i></a>Progressive Enhancements and Graceful Degradation Risks</h2>
 <ul>
 <li>The best practice now is to determine the capabilities that a browser supports and augment with some type of substitute for capabilities that are not directly supported. This may mean an onion-like element, e.g. falling through to a Flash Player if the <code>&lt;video&gt;</code> tag is unsupported, or it may mean additional scripting code from various sources that should be code reviewed.</li>
 </ul>
-<h1 id="http-headers-to-enhance-security"><a name="http-headers-to-enhance-security" class="plugin-anchor" href="#http-headers-to-enhance-security"><i class="fa fa-link" aria-hidden="true"></i></a>HTTP Headers to enhance security</h1>
+<h2 id="http-headers-to-enhance-security"><a name="http-headers-to-enhance-security" class="plugin-anchor" href="#http-headers-to-enhance-security"><i class="fa fa-link" aria-hidden="true"></i></a>HTTP Headers to enhance security</h2>
 <p>Consult the project <a href="https://owasp.org/www-project-secure-headers/" target="_blank">OWASP Secure Headers</a> in order to obtains the list of HTTP security headers that an application should use to enable defenses at browser level.</p>
-<h1 id="websocket-implementation-hints"><a name="websocket-implementation-hints" class="plugin-anchor" href="#websocket-implementation-hints"><i class="fa fa-link" aria-hidden="true"></i></a>WebSocket implementation hints</h1>
+<h2 id="websocket-implementation-hints"><a name="websocket-implementation-hints" class="plugin-anchor" href="#websocket-implementation-hints"><i class="fa fa-link" aria-hidden="true"></i></a>WebSocket implementation hints</h2>
 <p>In addition to the elements mentioned above, this is the list of areas for which caution must be taken during the implementation.</p>
 <ul>
 <li>Access filtering through the &quot;Origin&quot; HTTP request header</li>
@@ -1215,7 +1216,7 @@
 </ul>
 <p>The section below will propose some implementation hints for every area and will go along with an application example showing all the points described.</p>
 <p>The complete source code of the example application is available <a href="https://github.com/righettod/poc-websocket" target="_blank">here</a>.</p>
-<h2 id="access-filtering"><a name="access-filtering" class="plugin-anchor" href="#access-filtering"><i class="fa fa-link" aria-hidden="true"></i></a>Access filtering</h2>
+<h3 id="access-filtering"><a name="access-filtering" class="plugin-anchor" href="#access-filtering"><i class="fa fa-link" aria-hidden="true"></i></a>Access filtering</h3>
 <p>During a websocket channel initiation, the browser sends the <strong>Origin</strong> HTTP request header that contains the source domain initiation for the request to handshake. Even if this header can be spoofed in a forged HTTP request (not browser based), it cannot be overridden or forced in a browser context. It then represents a good candidate to apply filtering according to an expected value.</p>
 <p>An example of an attack using this vector, named <em>Cross-Site WebSocket Hijacking (CSWSH)</em>, is described <a href="https://www.christian-schneider.net/CrossSiteWebSocketHijacking.html" target="_blank">here</a>.</p>
 <p>The code below defines a configuration that applies filtering based on a &quot;whitelist&quot; of origins. This ensures that only allowed origins can establish a full handshake:</p>
@@ -1256,10 +1257,10 @@
         <span class="hljs-keyword">boolean</span> isAllowed = EXPECTED_ORIGINS.contains(originHeaderValue);
         String safeOriginValue = Encode.forHtmlContent(originHeaderValue);
         <span class="hljs-keyword">if</span> (isAllowed) {
-            LOG.info(<span class="hljs-string">&quot;[EndpointConfigurator] New handshake request received from {} and was accepted.&quot;</span>, 
+            LOG.info(<span class="hljs-string">&quot;[EndpointConfigurator] New handshake request received from {} and was accepted.&quot;</span>,
                       safeOriginValue);
         } <span class="hljs-keyword">else</span> {
-            LOG.warn(<span class="hljs-string">&quot;[EndpointConfigurator] New handshake request received from {} and was rejected !&quot;</span>, 
+            LOG.warn(<span class="hljs-string">&quot;[EndpointConfigurator] New handshake request received from {} and was rejected !&quot;</span>,
                       safeOriginValue);
         }
         <span class="hljs-keyword">return</span> isAllowed;
@@ -1267,7 +1268,7 @@
 
 }
 </code></pre>
-<h2 id="authentication-and-inputoutput-validation"><a name="authentication-and-inputoutput-validation" class="plugin-anchor" href="#authentication-and-inputoutput-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication and Input/Output validation</h2>
+<h3 id="authentication-and-inputoutput-validation"><a name="authentication-and-inputoutput-validation" class="plugin-anchor" href="#authentication-and-inputoutput-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication and Input/Output validation</h3>
 <p>When using websocket as communication channel, it&apos;s important to use an authentication method allowing the user to receive an access <em>Token</em> that is not automatically sent by the browser and then must be explicitly sent by the client code during each exchange.</p>
 <p><a href="https://jwt.io/introduction/" target="_blank">JSON Web Token</a> is a good candidate, because it allows the transport of access ticket information in a stateless and not alterable way. Moreover, it defines a validity timeframe. You can find additional information about JWT token hardening on this <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">cheat sheet</a>.</p>
 <p><a href="http://json-schema.org/" target="_blank">JSON Validation Schema</a> are used to define and validate the expected content in input and ouput messages.</p>
@@ -1293,8 +1294,8 @@
  * <span class="hljs-doctag">@see</span> &quot;http://docs.oracle.com/javaee/7/api/javax/websocket/server/ServerEndpointConfig.Configurator.html&quot;
  * <span class="hljs-doctag">@see</span> &quot;http://svn.apache.org/viewvc/tomcat/trunk/webapps/examples/WEB-INF/classes/websocket/&quot;
  */</span>
-<span class="hljs-meta">@ServerEndpoint</span>(value = <span class="hljs-string">&quot;/auth&quot;</span>, configurator = EndpointConfigurator.class, 
-subprotocols = {<span class="hljs-string">&quot;authentication&quot;</span>}, encoders = {AuthenticationResponseEncoder.class}, 
+<span class="hljs-meta">@ServerEndpoint</span>(value = <span class="hljs-string">&quot;/auth&quot;</span>, configurator = EndpointConfigurator.class,
+subprotocols = {<span class="hljs-string">&quot;authentication&quot;</span>}, encoders = {AuthenticationResponseEncoder.class},
 decoders = {AuthenticationRequestDecoder.class})
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthenticationEndpoint</span> </span>{
 
@@ -1310,7 +1311,7 @@ decoders = {AuthenticationRequestDecoder.class})
      */</span>
     <span class="hljs-meta">@OnOpen</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">(Session session)</span> </span>{
-        <span class="hljs-comment">//Define connection idle timeout and message limits in order to mitigate as much as possible </span>
+        <span class="hljs-comment">//Define connection idle timeout and message limits in order to mitigate as much as possible</span>
         <span class="hljs-comment">//DOS attacks using massive connection opening or massive big messages sending</span>
         <span class="hljs-keyword">int</span> msgMaxSize = <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>;<span class="hljs-comment">//1 MB</span>
         session.setMaxIdleTimeout(<span class="hljs-number">60000</span>);<span class="hljs-comment">//1 minute</span>
@@ -1320,7 +1321,7 @@ decoders = {AuthenticationRequestDecoder.class})
         LOG.info(<span class="hljs-string">&quot;[AuthenticationEndpoint] Session {} started&quot;</span>, session.getId());
         <span class="hljs-comment">//Affect a new message handler instance in order to process the exchange</span>
         session.addMessageHandler(<span class="hljs-keyword">new</span> AuthenticationMessageHandler(session.getBasicRemote()));
-        LOG.info(<span class="hljs-string">&quot;[AuthenticationEndpoint] Session {} message handler affected for processing&quot;</span>, 
+        LOG.info(<span class="hljs-string">&quot;[AuthenticationEndpoint] Session {} message handler affected for processing&quot;</span>,
                   session.getId());
     }
 
@@ -1343,7 +1344,7 @@ decoders = {AuthenticationRequestDecoder.class})
      */</span>
     <span class="hljs-meta">@OnClose</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onClose</span><span class="hljs-params">(Session session, CloseReason closeReason)</span> </span>{
-        LOG.info(<span class="hljs-string">&quot;[AuthenticationEndpoint] Session {} closed: {}&quot;</span>, session.getId(), 
+        LOG.info(<span class="hljs-string">&quot;[AuthenticationEndpoint] Session {} closed: {}&quot;</span>, session.getId(),
                   closeReason.getReasonPhrase());
     }
 
@@ -1472,7 +1473,7 @@ decoders = {AuthenticationRequestDecoder.class})
      * Verify the validity of the provided JWT token
      *
      * <span class="hljs-doctag">@param</span> token JWT token encoded to verify
-     * <span class="hljs-doctag">@return</span> The verified and decoded token with user authentication and 
+     * <span class="hljs-doctag">@return</span> The verified and decoded token with user authentication and
      * authorization (access level) information
      * <span class="hljs-doctag">@throws</span> Exception If any error occur during the token validation
      */</span>
@@ -1483,7 +1484,7 @@ decoders = {AuthenticationRequestDecoder.class})
     }
 
     <span class="hljs-comment">/**
-     * Load the JWT secret used to sign token using a byte array for secret storage in order 
+     * Load the JWT secret used to sign token using a byte array for secret storage in order
      * to avoid persistent string in memory
      *
      * <span class="hljs-doctag">@return</span> The secret as byte array
@@ -1557,7 +1558,7 @@ decoders = {AuthenticationRequestDecoder.class})
 <span class="hljs-comment">/**
  * Decode JSON text representation to an AuthenticationRequest object
  * &lt;p&gt;
- * As there&apos;s one instance of the decoder class by endpoint session so we can use the 
+ * As there&apos;s one instance of the decoder class by endpoint session so we can use the
  * JsonSchema as decoder instance variable.
  */</span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthenticationRequestDecoder</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Decoder</span>.<span class="hljs-title">Text</span>&lt;<span class="hljs-title">AuthenticationRequest</span>&gt; </span>{
@@ -1586,12 +1587,12 @@ decoders = {AuthenticationRequestDecoder.class})
     <span class="hljs-function"><span class="hljs-keyword">public</span> AuthenticationRequest <span class="hljs-title">decode</span><span class="hljs-params">(String s)</span> <span class="hljs-keyword">throws</span> DecodeException </span>{
         <span class="hljs-keyword">try</span> {
             <span class="hljs-comment">//Validate the provided representation against the dedicated schema</span>
-            <span class="hljs-comment">//Use validation mode with report in order to enable further inspection/tracing </span>
+            <span class="hljs-comment">//Use validation mode with report in order to enable further inspection/tracing</span>
             <span class="hljs-comment">//of the error details</span>
-            <span class="hljs-comment">//Moreover the validation method &quot;validInstance()&quot; generate a NullPointerException </span>
+            <span class="hljs-comment">//Moreover the validation method &quot;validInstance()&quot; generate a NullPointerException</span>
             <span class="hljs-comment">//if the representation do not respect the expected schema</span>
             <span class="hljs-comment">//so it&apos;s more proper to use the validation method with report</span>
-            ProcessingReport validationReport = <span class="hljs-keyword">this</span>.validationSchema.validate(JsonLoader.fromString(s), 
+            ProcessingReport validationReport = <span class="hljs-keyword">this</span>.validationSchema.validate(JsonLoader.fromString(s),
                                                                                <span class="hljs-keyword">true</span>);
             <span class="hljs-comment">//Ensure there no error</span>
             <span class="hljs-keyword">if</span> (!validationReport.isSuccess()) {
@@ -1599,7 +1600,7 @@ decoders = {AuthenticationRequestDecoder.class})
                 <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> DecodeException(s, <span class="hljs-string">&quot;Validation of the provided representation failed !&quot;</span>);
             }
         } <span class="hljs-keyword">catch</span> (IOException | ProcessingException e) {
-            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> DecodeException(s, <span class="hljs-string">&quot;Cannot validate the provided representation to a&quot;</span> 
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> DecodeException(s, <span class="hljs-string">&quot;Cannot validate the provided representation to a&quot;</span>
                                       + <span class="hljs-string">&quot; JSON valid representation !&quot;</span>, e);
         }
 
@@ -1613,13 +1614,13 @@ decoders = {AuthenticationRequestDecoder.class})
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">willDecode</span><span class="hljs-params">(String s)</span> </span>{
         <span class="hljs-keyword">boolean</span> canDecode = <span class="hljs-keyword">false</span>;
 
-        <span class="hljs-comment">//If the provided JSON representation is empty/null then we indicate that </span>
+        <span class="hljs-comment">//If the provided JSON representation is empty/null then we indicate that</span>
         <span class="hljs-comment">//representation cannot be decoded to our expected object</span>
         <span class="hljs-keyword">if</span> (s == <span class="hljs-keyword">null</span> || s.trim().isEmpty()) {
             <span class="hljs-keyword">return</span> canDecode;
         }
 
-        <span class="hljs-comment">//Try to cast the provided JSON representation to our object to validate at least </span>
+        <span class="hljs-comment">//Try to cast the provided JSON representation to our object to validate at least</span>
         <span class="hljs-comment">//the structure (content validation is done during decoding)</span>
         <span class="hljs-keyword">try</span> {
             AuthenticationRequest test = <span class="hljs-keyword">new</span> Gson().fromJson(s, AuthenticationRequest.class);
@@ -1666,7 +1667,7 @@ decoders = {AuthenticationRequestDecoder.class})
 <span class="hljs-comment">/**
  * Encode AuthenticationResponse object to JSON text representation.
  * &lt;p&gt;
- * As there one instance of the encoder class by endpoint session so we can use 
+ * As there one instance of the encoder class by endpoint session so we can use
  * the JsonSchema as encoder instance variable.
  */</span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthenticationResponseEncoder</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Encoder</span>.<span class="hljs-title">Text</span>&lt;<span class="hljs-title">AuthenticationResponse</span>&gt; </span>{
@@ -1697,9 +1698,9 @@ decoders = {AuthenticationRequestDecoder.class})
         String json = <span class="hljs-keyword">new</span> Gson().toJson(object);
         <span class="hljs-keyword">try</span> {
             <span class="hljs-comment">//Validate the generated representation against the dedicated schema</span>
-            <span class="hljs-comment">//Use validation mode with report in order to enable further inspection/tracing </span>
+            <span class="hljs-comment">//Use validation mode with report in order to enable further inspection/tracing</span>
             <span class="hljs-comment">//of the error details</span>
-            <span class="hljs-comment">//Moreover the validation method &quot;validInstance()&quot; generate a NullPointerException </span>
+            <span class="hljs-comment">//Moreover the validation method &quot;validInstance()&quot; generate a NullPointerException</span>
             <span class="hljs-comment">//if the representation do not respect the expected schema</span>
             <span class="hljs-comment">//so it&apos;s more proper to use the validation method with report</span>
             ProcessingReport validationReport = <span class="hljs-keyword">this</span>.validationSchema.validate(JsonLoader.fromString(json),
@@ -1736,10 +1737,10 @@ decoders = {AuthenticationRequestDecoder.class})
 }
 </code></pre>
 <p>Note that the same approach is used in the messages handling part of the POC. All messages exchanged between the client and the server are systematically validated using the same way, using dedicated JSON schemas linked to messages dedicated Encoder/Decoder (serialization/deserialization).</p>
-<h2 id="authorization-and-access-token-explicit-invalidation"><a name="authorization-and-access-token-explicit-invalidation" class="plugin-anchor" href="#authorization-and-access-token-explicit-invalidation"><i class="fa fa-link" aria-hidden="true"></i></a>Authorization and access token explicit invalidation</h2>
+<h3 id="authorization-and-access-token-explicit-invalidation"><a name="authorization-and-access-token-explicit-invalidation" class="plugin-anchor" href="#authorization-and-access-token-explicit-invalidation"><i class="fa fa-link" aria-hidden="true"></i></a>Authorization and access token explicit invalidation</h3>
 <p>Authorization information is stored in the access token using the JWT <em>Claim</em> feature (in the POC the name of the claim is <em>access_level</em>). Authorization is validated when a request is received and before any other action using the user input information.</p>
-<p>The access token is passed with every message sent to the message endpoint and a blacklist is used in order to allow the user to request an explicit token invalidation. </p>
-<p>Explicit token invalidation is interesting from a user&apos;s point of view because, often when tokens are used, the validity timeframe of the token is relatively long (it&apos;s common to see a valid timeframe superior to 1 hour) so it&apos;s important to allow a user to have a way to indicate to the system &quot;OK, I have finished my exchange with you, so you can close our exchange session and cleanup associated links&quot;. </p>
+<p>The access token is passed with every message sent to the message endpoint and a blacklist is used in order to allow the user to request an explicit token invalidation.</p>
+<p>Explicit token invalidation is interesting from a user&apos;s point of view because, often when tokens are used, the validity timeframe of the token is relatively long (it&apos;s common to see a valid timeframe superior to 1 hour) so it&apos;s important to allow a user to have a way to indicate to the system &quot;OK, I have finished my exchange with you, so you can close our exchange session and cleanup associated links&quot;.</p>
 <p>It also helps the user to revoke itself of current access if a malicious concurrent access is detected using the same token (case of token stealing).</p>
 <p><strong>Token blacklist</strong> - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> org.apache.commons.jcs.JCS;
@@ -1751,18 +1752,18 @@ decoders = {AuthenticationRequestDecoder.class})
 <span class="hljs-keyword">import</span> java.security.NoSuchAlgorithmException;
 
 <span class="hljs-comment">/**
- * Utility class to manage the access token that have been declared as no 
+ * Utility class to manage the access token that have been declared as no
  * more usable (explicit user logout)
  */</span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AccessTokenBlacklistUtils</span> </span>{
     <span class="hljs-comment">/**
-     * Message content send by user that indicate that the access token that 
+     * Message content send by user that indicate that the access token that
      * come along the message must be blacklisted for further usage
      */</span>
     <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG = <span class="hljs-string">&quot;INVALIDATE_TOKEN&quot;</span>;
 
     <span class="hljs-comment">/**
-     * Use cache to store blacklisted token hash in order to avoid memory exhaustion and be consistent 
+     * Use cache to store blacklisted token hash in order to avoid memory exhaustion and be consistent
      * because token are valid 30 minutes so the item live in cache 60 minutes
      */</span>
     <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> CacheAccess&lt;String, String&gt; TOKEN_CACHE;
@@ -1894,7 +1895,7 @@ decoders = {AuthenticationRequestDecoder.class})
                 MessageUtils.MESSAGES_DB.put(decodedToken.getSubject(), <span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
             }
 
-            <span class="hljs-comment">//Add message to the list of message of the user if the message is a not a token invalidation </span>
+            <span class="hljs-comment">//Add message to the list of message of the user if the message is a not a token invalidation</span>
             <span class="hljs-comment">//order otherwise add the token to the blacklist</span>
             <span class="hljs-keyword">if</span> (AccessTokenBlacklistUtils.MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG
                 .equalsIgnoreCase(message.getContent().trim())) {
@@ -1909,7 +1910,7 @@ decoders = {AuthenticationRequestDecoder.class})
                 MessageUtils.MESSAGES_DB.get(decodedToken.getSubject())
                 .forEach(s -&gt; messages.add(String.format(<span class="hljs-string">&quot;(%s): %s&quot;</span>, decodedToken.getSubject(), s)));
             } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (accessLevel.asString().equals(AccessLevel.ADMIN.name())) {
-                MessageUtils.MESSAGES_DB.forEach((k, v) -&gt; 
+                MessageUtils.MESSAGES_DB.forEach((k, v) -&gt;
                 v.forEach(s -&gt; messages.add(String.format(<span class="hljs-string">&quot;(%s): %s&quot;</span>, k, s))));
             }
 
@@ -1938,7 +1939,7 @@ decoders = {AuthenticationRequestDecoder.class})
     }
 }
 </code></pre>
-<h2 id="confidentiality-and-integrity"><a name="confidentiality-and-integrity" class="plugin-anchor" href="#confidentiality-and-integrity"><i class="fa fa-link" aria-hidden="true"></i></a>Confidentiality and Integrity</h2>
+<h3 id="confidentiality-and-integrity"><a name="confidentiality-and-integrity" class="plugin-anchor" href="#confidentiality-and-integrity"><i class="fa fa-link" aria-hidden="true"></i></a>Confidentiality and Integrity</h3>
 <p>If the raw version of the protocol is used (protocol <code>ws://</code>) then the transfered data is exposed to eavesdropping and potential on-the-fly alteration.</p>
 <p>Example of capture using <a href="https://www.wireshark.org/" target="_blank">Wireshark</a> and searching for password exchanges in the stored PCAP file, not printable characters has been explicitly removed from the command result:</p>
 <pre><code class="lang-shell">$ grep -aE &apos;(password)&apos; capture.pcap
@@ -1958,7 +1959,7 @@ decoders = {AuthenticationRequestDecoder.class})
     <span class="hljs-keyword">if</span>(session.isSecure()) {
         session.addMessageHandler(<span class="hljs-keyword">new</span> AuthenticationMessageHandler(session.getBasicRemote()));
     }<span class="hljs-keyword">else</span>{
-        LOG.info(<span class="hljs-string">&quot;[AuthenticationEndpoint] Session {} do not use a secure channel so no message handler &quot;</span> + 
+        LOG.info(<span class="hljs-string">&quot;[AuthenticationEndpoint] Session {} do not use a secure channel so no message handler &quot;</span> +
                  <span class="hljs-string">&quot;was affected for processing and session was explicitly closed !&quot;</span>, session.getId());
         <span class="hljs-keyword">try</span>{
             session.close(<span class="hljs-keyword">new</span> CloseReason(CloseReason.CloseCodes.CANNOT_ACCEPT,<span class="hljs-string">&quot;Insecure channel used !&quot;</span>));
@@ -2015,7 +2016,7 @@ decoders = {AuthenticationRequestDecoder.class})
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"HTML5 Security ","level":"1.30","depth":1,"next":{"title":"HTTP Strict Transport Security ","level":"1.31","depth":1,"path":"cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md","ref":"cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Forgot Password ","level":"1.29","depth":1,"path":"cheatsheets/Forgot_Password_Cheat_Sheet.md","ref":"cheatsheets/Forgot_Password_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/HTML5_Security_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"HTML5 Security ","level":"1.30","depth":1,"next":{"title":"HTTP Strict Transport Security ","level":"1.31","depth":1,"path":"cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md","ref":"cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Forgot Password ","level":"1.29","depth":1,"path":"cheatsheets/Forgot_Password_Cheat_Sheet.md","ref":"cheatsheets/Forgot_Password_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/HTML5_Security_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

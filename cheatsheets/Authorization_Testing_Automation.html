@@ -1050,19 +1050,20 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="authorization-testing-automation"><a name="authorization-testing-automation" class="plugin-anchor" href="#authorization-testing-automation"><i class="fa fa-link" aria-hidden="true"></i></a>Authorization Testing Automation</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>Authorizations definition and implementation is one of the important protection measure of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to go live, the most significant number of issues related to authorization came in the maintenance lifetime of the application.</p>
 <p>This situation is often explained by the fact that features are added/modified and no review of the authorizations was performed on the application before the publishing of the new release, for cost or time issue reason.</p>
-<h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
+<h2 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h2>
 <p>In order to try to address this situation, it&apos;s can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations definition.</p>
 <p>An authorization is often composed by 2 elements (also named dimensions): The <strong>Feature</strong> and the <strong>Logical Role</strong> that can access it (sometime a third dimension named <strong>Data</strong> is added in order to define a access that include a filtering at business data level).</p>
 <p>The representation of the different combinations of these 2 dimensions is often named an <strong>Authorization matrix</strong> and is often formalized in an Microsoft Excel file.</p>
 <p>During a test of an authorization, a <strong>Logical Role</strong> is also called a <strong>Point Of View</strong>.</p>
-<h1 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h1>
+<h2 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h2>
 <p>This article describe a proposition of implementation in order to automate the tests of an <em>authorization matrix</em>.</p>
 <p>This article use the assumption that 2 dimensions are used to represents an authorization for the technical proposition described and take as example a application exposing REST services.</p>
 <p>The objective is to provide starting ideas/hints in order to create a tailored way of testing of the authorization matrix for the target application.</p>
-<h1 id="proposition"><a name="proposition" class="plugin-anchor" href="#proposition"><i class="fa fa-link" aria-hidden="true"></i></a>Proposition</h1>
+<h2 id="proposition"><a name="proposition" class="plugin-anchor" href="#proposition"><i class="fa fa-link" aria-hidden="true"></i></a>Proposition</h2>
 <p>In order to achieve the full automation of the evaluation of the <em>authorization matrix</em>, the following actions has been performed:</p>
 <ol>
 <li><p>Formalize the authorization matrix in a pivot format file allowing:</p>
@@ -1080,7 +1081,7 @@
 </ol>
 </li>
 </ol>
-<h2 id="authorization-matrix-pivot-file"><a name="authorization-matrix-pivot-file" class="plugin-anchor" href="#authorization-matrix-pivot-file"><i class="fa fa-link" aria-hidden="true"></i></a>Authorization matrix pivot file</h2>
+<h3 id="authorization-matrix-pivot-file"><a name="authorization-matrix-pivot-file" class="plugin-anchor" href="#authorization-matrix-pivot-file"><i class="fa fa-link" aria-hidden="true"></i></a>Authorization matrix pivot file</h3>
 <p>The XML format has been used to formalize the authorization matrix.</p>
 <p>The XML structure contains 3 main sections:</p>
 <ul>
@@ -1089,7 +1090,9 @@
 <li>Node <strong>services-testing</strong>: This node provide a test payload for each service if the service use input data other than coming from url or path.</li>
 </ul>
 <p>This is an example of the XML used to represents the authorization:</p>
-<p><em>Placeholders (values between {}) are used to mark location where test value must be placed by the integration tests if needed</em></p>
+<blockquote>
+<p>Placeholders (values between {}) are used to mark location where test value must be placed by the integration tests if needed</p>
+</blockquote>
 <pre><code class="lang-xml">  <span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span><span class="hljs-meta">?&gt;</span></span>
   <span class="hljs-comment">&lt;!--
       This file materialize the authorization matrix for the different 
@@ -1108,35 +1111,35 @@
       provide a list+explanation
       of the different roles (authorization level) --&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">roles</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ANONYMOUS&quot;</span> 
+          <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ANONYMOUS&quot;</span>
           <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;Indicate that no authorization is needed&quot;</span>/&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;BASIC&quot;</span> 
+          <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;BASIC&quot;</span>
           <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;Role affected to a standard user (lowest access right just above anonymous)&quot;</span>/&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span> 
+          <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span>
           <span class="hljs-attr">description</span>=<span class="hljs-string">&quot;Role affected to a administrator user (highest access right)&quot;</span>/&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-name">roles</span>&gt;</span>
 
       <span class="hljs-comment">&lt;!-- List and describe the available services exposed by the system and the associated 
       logical role(s) that can call them --&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">services</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ReadSingleMessage&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/{messageId}&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;GET&quot;</span> 
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ReadSingleMessage&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/{messageId}&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;GET&quot;</span>
           <span class="hljs-attr">http-response-code-for-access-allowed</span>=<span class="hljs-string">&quot;200&quot;</span> <span class="hljs-attr">http-response-code-for-access-denied</span>=<span class="hljs-string">&quot;403&quot;</span>&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ANONYMOUS&quot;</span>/&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;BASIC&quot;</span>/&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span>/&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ReadAllMessages&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;GET&quot;</span> 
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ReadAllMessages&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;GET&quot;</span>
           <span class="hljs-attr">http-response-code-for-access-allowed</span>=<span class="hljs-string">&quot;200&quot;</span> <span class="hljs-attr">http-response-code-for-access-denied</span>=<span class="hljs-string">&quot;403&quot;</span>&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ANONYMOUS&quot;</span>/&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;BASIC&quot;</span>/&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span>/&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;CreateMessage&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;PUT&quot;</span> 
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;CreateMessage&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;PUT&quot;</span>
           <span class="hljs-attr">http-response-code-for-access-allowed</span>=<span class="hljs-string">&quot;200&quot;</span> <span class="hljs-attr">http-response-code-for-access-denied</span>=<span class="hljs-string">&quot;403&quot;</span>&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;BASIC&quot;</span>/&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span>/&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
-          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;DeleteMessage&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/{messageId}&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;DELETE&quot;</span> 
+          <span class="hljs-tag">&lt;<span class="hljs-name">service</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;DeleteMessage&quot;</span> <span class="hljs-attr">uri</span>=<span class="hljs-string">&quot;/{messageId}&quot;</span> <span class="hljs-attr">http-method</span>=<span class="hljs-string">&quot;DELETE&quot;</span>
           <span class="hljs-attr">http-response-code-for-access-allowed</span>=<span class="hljs-string">&quot;200&quot;</span> <span class="hljs-attr">http-response-code-for-access-denied</span>=<span class="hljs-string">&quot;403&quot;</span>&gt;</span>
               <span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ADMIN&quot;</span>/&gt;</span>
           <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span>
@@ -1162,7 +1165,7 @@
 
   <span class="hljs-tag">&lt;/<span class="hljs-name">authorization-matrix</span>&gt;</span>
 </code></pre>
-<h2 id="integration-tests"><a name="integration-tests" class="plugin-anchor" href="#integration-tests"><i class="fa fa-link" aria-hidden="true"></i></a>Integration tests</h2>
+<h3 id="integration-tests"><a name="integration-tests" class="plugin-anchor" href="#integration-tests"><i class="fa fa-link" aria-hidden="true"></i></a>Integration tests</h3>
 <p>Integration tests are implemented using a maximum of factorized code and one test case by <strong>Point Of View (POV)</strong> has been created in order to group the verifications by profile of access level (logical role) and facilitate the rendering/identification of the errors.</p>
 <p>Parsing, object mapping and access to the authorization matrix information has been implemented using XML marshalling/unmarshalling built-in features provided by the technology used to implements the tests (JAXB here) in order to limit the code to the one in charge of performing the tests.</p>
 <p>This the implementation of the integration tests case class:</p>
@@ -1213,7 +1216,7 @@
        */</span>
       <span class="hljs-meta">@BeforeClass</span>
       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">globalInit</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
-          <span class="hljs-keyword">try</span> (FileInputStream fis = <span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-keyword">new</span> File(<span class="hljs-string">&quot;authorization-matrix.xml&quot;</span>))) { 
+          <span class="hljs-keyword">try</span> (FileInputStream fis = <span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-keyword">new</span> File(<span class="hljs-string">&quot;authorization-matrix.xml&quot;</span>))) {
               SAXParserFactory spf = SAXParserFactory.newInstance();
               spf.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
               spf.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
@@ -1406,23 +1409,24 @@
   }
 </code></pre>
 <p>In case of detection of a authorization issue(s) the output is the following:</p>
-<pre><code>testAccessUsingAnonymousUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  
+<pre><code class="lang-java">testAccessUsingAnonymousUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  
 Time elapsed: 1.009 s  ### FAILURE
 java.lang.AssertionError:
 Access issues detected using the ANONYMOUS USER point of view:
-    The service &apos;DeleteMessage&apos; when called with POV &apos;ANONYMOUS&apos; return 
+    The service &apos;DeleteMessage&apos; when called with POV &apos;ANONYMOUS&apos; return
     a response code 200 that is not the expected one (403 expected).
 
-    The service &apos;CreateMessage&apos; when called with POV &apos;ANONYMOUS&apos; return 
+    The service &apos;CreateMessage&apos; when called with POV &apos;ANONYMOUS&apos; return
     a response code 200 that is not the expected one (403 expected).
 
 testAccessUsingBasicUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  
 Time elapsed: 0.05 s  ### FAILURE!
 java.lang.AssertionError:
 Access issues detected using the BASIC USER point of view:
-    The service &apos;DeleteMessage&apos; when called with POV &apos;BASIC&apos; return 
+    The service &apos;DeleteMessage&apos; when called with POV &apos;BASIC&apos; return
     a response code 200 that is not the expected one (403 expected).
-</code></pre><h1 id="rendering-of-the-authorization-matrix-for-audit--review"><a name="rendering-of-the-authorization-matrix-for-audit--review" class="plugin-anchor" href="#rendering-of-the-authorization-matrix-for-audit--review"><i class="fa fa-link" aria-hidden="true"></i></a>Rendering of the authorization matrix for audit / review</h1>
+</code></pre>
+<h2 id="rendering-of-the-authorization-matrix-for-audit--review"><a name="rendering-of-the-authorization-matrix-for-audit--review" class="plugin-anchor" href="#rendering-of-the-authorization-matrix-for-audit--review"><i class="fa fa-link" aria-hidden="true"></i></a>Rendering of the authorization matrix for audit / review</h2>
 <p>Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.</p>
 <p>The Following XSL stylesheet can be used:</p>
 <pre><code class="lang-xslt">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
@@ -1431,9 +1435,9 @@ Access issues detected using the BASIC USER point of view:
     &lt;html&gt;
       &lt;head&gt;
         &lt;title&gt;Authorization Matrix&lt;/title&gt;
-        &lt;link rel=&quot;stylesheet&quot; 
-        href=&quot;https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css&quot; 
-        integrity=&quot;sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ&quot; 
+        &lt;link rel=&quot;stylesheet&quot;
+        href=&quot;https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css&quot;
+        integrity=&quot;sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ&quot;
         crossorigin=&quot;anonymous&quot; /&gt;
       &lt;/head&gt;
       &lt;body&gt;
@@ -1529,7 +1533,7 @@ Access issues detected using the BASIC USER point of view:
 </code></pre>
 <p>Example of the rendering:</p>
 <p><img src="../assets/Authorization_Testing_Automation_AutomationRendering.png" alt="RenderingExample"></p>
-<h1 id="sources-of-the-prototype"><a name="sources-of-the-prototype" class="plugin-anchor" href="#sources-of-the-prototype"><i class="fa fa-link" aria-hidden="true"></i></a>Sources of the prototype</h1>
+<h2 id="sources-of-the-prototype"><a name="sources-of-the-prototype" class="plugin-anchor" href="#sources-of-the-prototype"><i class="fa fa-link" aria-hidden="true"></i></a>Sources of the prototype</h2>
 <p><a href="https://github.com/righettod/poc-authz-testing" target="_blank">Github repository</a></p>
 
                                 
@@ -1574,7 +1578,7 @@ Access issues detected using the BASIC USER point of view:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"next":{"title":"Bean Validation ","level":"1.11","depth":1,"path":"cheatsheets/Bean_Validation_Cheat_Sheet.md","ref":"cheatsheets/Bean_Validation_Cheat_Sheet.md","articles":[]},"previous":{"title":"Authentication ","level":"1.9","depth":1,"path":"cheatsheets/Authentication_Cheat_Sheet.md","ref":"cheatsheets/Authentication_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authorization_Testing_Automation.md","mtime":"2020-05-21T06:56:52.187Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"next":{"title":"Bean Validation ","level":"1.11","depth":1,"path":"cheatsheets/Bean_Validation_Cheat_Sheet.md","ref":"cheatsheets/Bean_Validation_Cheat_Sheet.md","articles":[]},"previous":{"title":"Authentication ","level":"1.9","depth":1,"path":"cheatsheets/Authentication_Cheat_Sheet.md","ref":"cheatsheets/Authentication_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authorization_Testing_Automation.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

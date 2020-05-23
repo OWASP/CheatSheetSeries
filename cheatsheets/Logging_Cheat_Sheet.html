@@ -1050,11 +1050,12 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>This cheat sheet is focused on providing developers with concentrated guidance on building application logging mechanisms, especially related to security logging. </p>
+                                <h1 id="logging-cheat-sheet"><a name="logging-cheat-sheet" class="plugin-anchor" href="#logging-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Logging Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+<p>This cheat sheet is focused on providing developers with concentrated guidance on building application logging mechanisms, especially related to security logging.</p>
 <p>Many systems enable network device, operating system, web server, mail server and database server logging, but often custom application event logging is missing, disabled or poorly configured. It provides much greater insight than infrastructure logging alone. Web application (e.g. web site or web service) logging is much more than having web server logs enabled (e.g. using Extended Log File Format).</p>
 <p>Application logging should be consistent within the application, consistent across an organization&apos;s application portfolio and use industry standards where relevant, so the logged event data can be consumed, correlated, analyzed and managed by a wide variety of systems.</p>
-<h1 id="purpose"><a name="purpose" class="plugin-anchor" href="#purpose"><i class="fa fa-link" aria-hidden="true"></i></a>Purpose</h1>
+<h2 id="purpose"><a name="purpose" class="plugin-anchor" href="#purpose"><i class="fa fa-link" aria-hidden="true"></i></a>Purpose</h2>
 <p>Application logging should be always be included for security events. Application logs are invaluable data for:</p>
 <ul>
 <li>Identifying security incidents</li>
@@ -1077,13 +1078,13 @@
 <li>Legally sanctioned interception of data e.g application-layer wire-tapping</li>
 <li>Other business-specific requirements</li>
 </ul>
-<p>Process monitoring, audit and transaction logs/trails etc are usually collected for different purposes than security event logging, and this often means they should be kept separate. </p>
-<p>The types of events and details collected will tend to be different. </p>
-<p>For example a <a href="https://www.pcisecuritystandards.org/pci_security/" target="_blank">PCIDSS</a> audit log will contain a chronological record of activities to provide an independently verifiable trail that permits reconstruction, review and examination to determine the original sequence of attributable transactions. It is important not to log too much, or too little. </p>
+<p>Process monitoring, audit and transaction logs/trails etc are usually collected for different purposes than security event logging, and this often means they should be kept separate.</p>
+<p>The types of events and details collected will tend to be different.</p>
+<p>For example a <a href="https://www.pcisecuritystandards.org/pci_security/" target="_blank">PCIDSS</a> audit log will contain a chronological record of activities to provide an independently verifiable trail that permits reconstruction, review and examination to determine the original sequence of attributable transactions. It is important not to log too much, or too little.</p>
 <p>Use knowledge of the intended purposes to guide what, when and how much. The remainder of this cheat sheet primarily discusses security event logging.</p>
-<h1 id="design-implementation-and-testing"><a name="design-implementation-and-testing" class="plugin-anchor" href="#design-implementation-and-testing"><i class="fa fa-link" aria-hidden="true"></i></a>Design, implementation and testing</h1>
-<h2 id="event-data-sources"><a name="event-data-sources" class="plugin-anchor" href="#event-data-sources"><i class="fa fa-link" aria-hidden="true"></i></a>Event data sources</h2>
-<p>The application itself has access to a wide range of information events that should be used to generate log entries. Thus, the primary event data source is the application code itself. </p>
+<h2 id="design-implementation-and-testing"><a name="design-implementation-and-testing" class="plugin-anchor" href="#design-implementation-and-testing"><i class="fa fa-link" aria-hidden="true"></i></a>Design, implementation and testing</h2>
+<h3 id="event-data-sources"><a name="event-data-sources" class="plugin-anchor" href="#event-data-sources"><i class="fa fa-link" aria-hidden="true"></i></a>Event data sources</h3>
+<p>The application itself has access to a wide range of information events that should be used to generate log entries. Thus, the primary event data source is the application code itself.</p>
 <p>The application has the most information about the user (e.g. identity, roles, permissions) and the context of the event (target, action, outcomes), and often this data is not available to either infrastructure devices, or even closely-related applications.</p>
 <p>Other sources of information about application usage that could also be considered are:</p>
 <ul>
@@ -1098,11 +1099,11 @@
 <li>Other applications e.g. fraud monitoring, CRM</li>
 <li>Operating system e.g. mobile platform</li>
 </ul>
-<p>The degree of confidence in the event information has to be considered when including event data from systems in a different trust zone. Data may be missing, modified, forged, replayed and could be malicious &#x2013; it must always be treated as untrusted data. </p>
+<p>The degree of confidence in the event information has to be considered when including event data from systems in a different trust zone. Data may be missing, modified, forged, replayed and could be malicious &#x2013; it must always be treated as untrusted data.</p>
 <p>Consider how the source can be verified, and how integrity and non-repudiation can be enforced.</p>
-<h2 id="where-to-record-event-data"><a name="where-to-record-event-data" class="plugin-anchor" href="#where-to-record-event-data"><i class="fa fa-link" aria-hidden="true"></i></a>Where to record event data</h2>
-<p>Applications commonly write event log data to the file system or a database (SQL or NoSQL). Applications installed on desktops and on mobile devices may use local storage and local databases, as well as sending data to remote storage. </p>
-<p>Your selected framework may limit the available choices. All types of applications may send event data to remote systems (instead of or as well as more local storage). </p>
+<h3 id="where-to-record-event-data"><a name="where-to-record-event-data" class="plugin-anchor" href="#where-to-record-event-data"><i class="fa fa-link" aria-hidden="true"></i></a>Where to record event data</h3>
+<p>Applications commonly write event log data to the file system or a database (SQL or NoSQL). Applications installed on desktops and on mobile devices may use local storage and local databases, as well as sending data to remote storage.</p>
+<p>Your selected framework may limit the available choices. All types of applications may send event data to remote systems (instead of or as well as more local storage).</p>
 <p>This could be a centralized log collection and management system (e.g. SIEM or SEM) or another application elsewhere. Consider whether the application can simply send its event stream, unbuffered, to stdout, for management by the execution environment.</p>
 <ul>
 <li>When using the file system, it is preferable to use a separate partition than those used by the operating system, other application files and user generated content<ul>
@@ -1114,9 +1115,9 @@
 <li>Use standard formats over secure protocols to record and send event data, or log files, to other systems e.g. Common Log File System (CLFS) or Common Event Format (CEF) over syslog; standard formats facilitate integration with centralised logging services</li>
 </ul>
 <p>Consider separate files/tables for extended event information such as error stack traces or a record of HTTP request and response headers and bodies.</p>
-<h2 id="which-events-to-log"><a name="which-events-to-log" class="plugin-anchor" href="#which-events-to-log"><i class="fa fa-link" aria-hidden="true"></i></a>Which events to log</h2>
-<p>The level and content of security monitoring, alerting and reporting needs to be set during the requirements and design stage of projects, and should be proportionate to the information security risks. This can then be used to define what should be logged. </p>
-<p>There is no one size fits all solution, and a blind checklist approach can lead to unnecessary &quot;alarm fog&quot; that means real problems go undetected. </p>
+<h3 id="which-events-to-log"><a name="which-events-to-log" class="plugin-anchor" href="#which-events-to-log"><i class="fa fa-link" aria-hidden="true"></i></a>Which events to log</h3>
+<p>The level and content of security monitoring, alerting and reporting needs to be set during the requirements and design stage of projects, and should be proportionate to the information security risks. This can then be used to define what should be logged.</p>
+<p>There is no one size fits all solution, and a blind checklist approach can lead to unnecessary &quot;alarm fog&quot; that means real problems go undetected.</p>
 <p>Where possible, always log:</p>
 <ul>
 <li>Input validation failures e.g. protocol violations, unacceptable encodings, invalid parameter names and values</li>
@@ -1139,9 +1140,9 @@
 <li>Modifications to configuration</li>
 <li>Application code file and/or memory changes</li>
 </ul>
-<h2 id="event-attributes"><a name="event-attributes" class="plugin-anchor" href="#event-attributes"><i class="fa fa-link" aria-hidden="true"></i></a>Event attributes</h2>
-<p>Each log entry needs to include sufficient information for the intended subsequent monitoring and analysis. It could be full content data, but is more likely to be an extract or just summary properties. </p>
-<p>The application logs must record &quot;when, where, who and what&quot; for each event. </p>
+<h3 id="event-attributes"><a name="event-attributes" class="plugin-anchor" href="#event-attributes"><i class="fa fa-link" aria-hidden="true"></i></a>Event attributes</h3>
+<p>Each log entry needs to include sufficient information for the intended subsequent monitoring and analysis. It could be full content data, but is more likely to be an extract or just summary properties.</p>
+<p>The application logs must record &quot;when, where, who and what&quot; for each event.</p>
 <p>The properties for these will be different depending on the architecture, class of application and host system/device, but often include the following:</p>
 <ul>
 <li>When<ul>
@@ -1191,7 +1192,7 @@
 <p>For more information on these, see the &quot;other&quot; related articles listed at the end, especially the comprehensive article by Anton Chuvakin and Gunnar Peterson.</p>
 <p><strong>Note A:</strong> The &quot;Interaction identifier&quot; is a method of linking all (relevant) events for a single user interaction (e.g. desktop application form submission, web page request, mobile app button click, web service call). The application knows all these events relate to the same interaction, and this should be recorded instead of losing the information and forcing subsequent correlation techniques to re-construct the separate events. For example a single SOAP request may have multiple input validation failures and they may span a small range of times. As another example, an output validation failure may occur much later than the input submission for a long-running &quot;saga request&quot; submitted by the application to a database server.</p>
 <p><strong>Note B:</strong> Each organisation should ensure it has a consistent, and documented, approach to classification of events (type, confidence, severity), the syntax of descriptions, and field lengths &amp; data types including the format used for dates/times.</p>
-<h2 id="data-to-exclude"><a name="data-to-exclude" class="plugin-anchor" href="#data-to-exclude"><i class="fa fa-link" aria-hidden="true"></i></a>Data to exclude</h2>
+<h3 id="data-to-exclude"><a name="data-to-exclude" class="plugin-anchor" href="#data-to-exclude"><i class="fa fa-link" aria-hidden="true"></i></a>Data to exclude</h3>
 <p>Never log data unless it is legally sanctioned. For example intercepting some communications, monitoring employees, and collecting some data without consent may all be illegal.</p>
 <p>Never exclude any events from &quot;known&quot; users such as other internal systems, &quot;trusted&quot; third parties, search engine robots, uptime/process and other remote monitoring systems, pen testers, auditors. However, you may want to include a classification flag for each of these in the recorded data.</p>
 <p>The following should not usually be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed or encrypted:</p>
@@ -1218,7 +1219,7 @@
 </ul>
 <p>Consider using personal data de-identification techniques such as deletion, scrambling or pseudonymization of direct and indirect identifiers where the individual&apos;s identity is not required, or the risk is considered too great.</p>
 <p>In some systems, sanitization can be undertaken post log collection, and prior to log display.</p>
-<h2 id="customizable-logging"><a name="customizable-logging" class="plugin-anchor" href="#customizable-logging"><i class="fa fa-link" aria-hidden="true"></i></a>Customizable logging</h2>
+<h3 id="customizable-logging"><a name="customizable-logging" class="plugin-anchor" href="#customizable-logging"><i class="fa fa-link" aria-hidden="true"></i></a>Customizable logging</h3>
 <p>It may be desirable to be able to alter the level of logging (type of events based on severity or threat level, amount of detail recorded). If this is implemented, ensure that:</p>
 <ul>
 <li>The default level must provide sufficient detail for business needs</li>
@@ -1226,9 +1227,9 @@
 <li>Alterations to the level/extent of logging must be intrinsic to the application (e.g. undertaken automatically by the application based on an approved algorithm) or follow change management processes (e.g. changes to configuration data, modification of source code)</li>
 <li>The logging level must be verified periodically</li>
 </ul>
-<h2 id="event-collection"><a name="event-collection" class="plugin-anchor" href="#event-collection"><i class="fa fa-link" aria-hidden="true"></i></a>Event collection</h2>
-<p>If your development framework supports suitable logging mechanisms use, or build upon that. Otherwise, implement an application-wide log handler which can be called from other modules/components. </p>
-<p>Document the interface referencing the organisation-specific event classification and description syntax requirements. </p>
+<h3 id="event-collection"><a name="event-collection" class="plugin-anchor" href="#event-collection"><i class="fa fa-link" aria-hidden="true"></i></a>Event collection</h3>
+<p>If your development framework supports suitable logging mechanisms use, or build upon that. Otherwise, implement an application-wide log handler which can be called from other modules/components.</p>
+<p>Document the interface referencing the organisation-specific event classification and description syntax requirements.</p>
 <p>If possible create this log handler as a standard module that can is thoroughly tested, deployed in multiple application, and added to a list of approved &amp; recommended modules.</p>
 <ul>
 <li>Perform input validation on event data from other trust zones to ensure it is in the correct format (and consider alerting and not logging if there is an input validation failure)</li>
@@ -1241,7 +1242,7 @@
 <p><strong>Note C:</strong> This is not always possible where the application is running on a device under some other party&apos;s control (e.g. on an individual&apos;s mobile phone, on a remote customer&apos;s workstation which is on another corporate network). In these cases attempt to measure the time offset, or record a confidence level in the event time stamp.</p>
 <p>Where possible record data in a standard format, or at least ensure it can be exported/broadcast using an industry-standard format.</p>
 <p>In some cases, events may be relayed or collected together in intermediate points. In the latter some data may be aggregated or summarized before forwarding on to a central repository and analysis system.</p>
-<h2 id="verification"><a name="verification" class="plugin-anchor" href="#verification"><i class="fa fa-link" aria-hidden="true"></i></a>Verification</h2>
+<h3 id="verification"><a name="verification" class="plugin-anchor" href="#verification"><i class="fa fa-link" aria-hidden="true"></i></a>Verification</h3>
 <p>Logging functionality and systems must be included in code review, application testing and security verification processes:</p>
 <ul>
 <li>Ensure the logging is working correctly and as specified</li>
@@ -1255,19 +1256,19 @@
 <li>Verify access controls on the event log data</li>
 <li>If log data is utilized in any action against users (e.g. blocking access, account lock-out), ensure this cannot be used to cause denial of service (DoS) of other users</li>
 </ul>
-<h1 id="deployment-and-operation"><a name="deployment-and-operation" class="plugin-anchor" href="#deployment-and-operation"><i class="fa fa-link" aria-hidden="true"></i></a>Deployment and operation</h1>
-<h2 id="release"><a name="release" class="plugin-anchor" href="#release"><i class="fa fa-link" aria-hidden="true"></i></a>Release</h2>
+<h2 id="deployment-and-operation"><a name="deployment-and-operation" class="plugin-anchor" href="#deployment-and-operation"><i class="fa fa-link" aria-hidden="true"></i></a>Deployment and operation</h2>
+<h3 id="release"><a name="release" class="plugin-anchor" href="#release"><i class="fa fa-link" aria-hidden="true"></i></a>Release</h3>
 <ul>
 <li>Provide security configuration information by adding details about the logging mechanisms to release documentation</li>
 <li>Brief the application/process owner about the application logging mechanisms</li>
 <li>Ensure the outputs of the monitoring (see below) are integrated with incident response processes</li>
 </ul>
-<h2 id="operation"><a name="operation" class="plugin-anchor" href="#operation"><i class="fa fa-link" aria-hidden="true"></i></a>Operation</h2>
+<h3 id="operation"><a name="operation" class="plugin-anchor" href="#operation"><i class="fa fa-link" aria-hidden="true"></i></a>Operation</h3>
 <p>Enable processes to detect whether logging has stopped, and to identify tampering or unauthorized access and deletion (see protection below).</p>
-<h2 id="protection"><a name="protection" class="plugin-anchor" href="#protection"><i class="fa fa-link" aria-hidden="true"></i></a>Protection</h2>
-<p>The logging mechanisms and collected event data must be protected from mis-use such as tampering in transit, and unauthorized access, modification and deletion once stored. Logs may contain personal and other sensitive information, or the data may contain information regarding the application&apos;s code and logic. </p>
-<p>In addition, the collected information in the logs may itself have business value (to competitors, gossip-mongers, journalists and activists) such as allowing the estimate of revenues, or providing performance information about employees. </p>
-<p>This data may be held on end devices, at intermediate points, in centralized repositories and in archives and backups. </p>
+<h3 id="protection"><a name="protection" class="plugin-anchor" href="#protection"><i class="fa fa-link" aria-hidden="true"></i></a>Protection</h3>
+<p>The logging mechanisms and collected event data must be protected from mis-use such as tampering in transit, and unauthorized access, modification and deletion once stored. Logs may contain personal and other sensitive information, or the data may contain information regarding the application&apos;s code and logic.</p>
+<p>In addition, the collected information in the logs may itself have business value (to competitors, gossip-mongers, journalists and activists) such as allowing the estimate of revenues, or providing performance information about employees.</p>
+<p>This data may be held on end devices, at intermediate points, in centralized repositories and in archives and backups.</p>
 <p>Consider whether parts of the data may need to be excluded, masked, sanitized, hashed or encrypted during examination or extraction.</p>
 <p>At rest:</p>
 <ul>
@@ -1283,7 +1284,7 @@
 <li>Perform due diligence checks (regulatory and security) before sending event data to third parties</li>
 </ul>
 <p>See <code>NIST SP 800-92</code> Guide to Computer Security Log Management for more guidance.</p>
-<h2 id="monitoring-of-events"><a name="monitoring-of-events" class="plugin-anchor" href="#monitoring-of-events"><i class="fa fa-link" aria-hidden="true"></i></a>Monitoring of events</h2>
+<h3 id="monitoring-of-events"><a name="monitoring-of-events" class="plugin-anchor" href="#monitoring-of-events"><i class="fa fa-link" aria-hidden="true"></i></a>Monitoring of events</h3>
 <p>The logged event data needs to be available to review and there are processes in place for appropriate monitoring, alerting and reporting:</p>
 <ul>
 <li>Incorporate the application logging into any existing log management systems/infrastructure e.g. centralized logging and analysis systems</li>
@@ -1291,10 +1292,10 @@
 <li>Enable alerting and signal the responsible teams about more serious events immediately</li>
 <li>Share relevant event information with other detection systems, to related organizations and centralized intelligence gathering/sharing systems</li>
 </ul>
-<h2 id="disposal-of-logs"><a name="disposal-of-logs" class="plugin-anchor" href="#disposal-of-logs"><i class="fa fa-link" aria-hidden="true"></i></a>Disposal of logs</h2>
-<p>Log data, temporary debug logs, and backups/copies/extractions, must not be destroyed before the duration of the required data retention period, and must not be kept beyond this time. </p>
+<h3 id="disposal-of-logs"><a name="disposal-of-logs" class="plugin-anchor" href="#disposal-of-logs"><i class="fa fa-link" aria-hidden="true"></i></a>Disposal of logs</h3>
+<p>Log data, temporary debug logs, and backups/copies/extractions, must not be destroyed before the duration of the required data retention period, and must not be kept beyond this time.</p>
 <p>Legal, regulatory and contractual obligations may impact on these periods.</p>
-<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related articles</h1>
+<h2 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related articles</h2>
 <ul>
 <li>OWASP <a href="https://owasp.org/www-project-enterprise-security-api/" target="_blank">ESAPI Documentation</a>.</li>
 <li>OWASP <a href="https://owasp.org/www-project-security-logging/" target="_blank">Logging Project</a>.</li>
@@ -1352,7 +1353,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Logging ","level":"1.40","depth":1,"next":{"title":"Mass Assignment ","level":"1.41","depth":1,"path":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","ref":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","articles":[]},"previous":{"title":"LDAP Injection Prevention ","level":"1.39","depth":1,"path":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Logging_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Logging ","level":"1.40","depth":1,"next":{"title":"Mass Assignment ","level":"1.41","depth":1,"path":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","ref":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","articles":[]},"previous":{"title":"LDAP Injection Prevention ","level":"1.39","depth":1,"path":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Logging_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -1050,12 +1050,13 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="vulnerable-dependency-management-cheat-sheet"><a name="vulnerable-dependency-management-cheat-sheet" class="plugin-anchor" href="#vulnerable-dependency-management-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Vulnerable Dependency Management Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>The objective of the cheat sheet is to provide a proposal of approach regarding the handling of vulnerable third-party dependencies when they are detected, and this, depending on different situation.</p>
 <p>The cheat sheet is not tools oriented but it contains a <a href="#Tools">tools</a> section informing the reader about free and commercial solutions that can be used to detect vulnerable dependencies, depending on the level of support on the technologies at hand</p>
-<p><strong>Note:</strong> </p>
+<p><strong>Note:</strong></p>
 <p>Proposals mentioned in this cheat sheet are not silver-bullet (recipes that work in all situations) yet can be used as a foundation and adapted to your context.</p>
-<h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
+<h2 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h2>
 <p>Most of the projects use third-party dependencies to delegate handling of different kind of operations, <em>e.g.</em> generation of document in a specific format, HTTP communications, data parsing of a specific format, etc.</p>
 <p>It&apos;s a good approach because it allows the development team to focus on the real application code supporting the expected business feature. The dependency brings forth an expected downside where the security posture of the real application is now resting on it.</p>
 <p>This aspect is referenced in the following projects:</p>
@@ -1065,35 +1066,35 @@
 </ul>
 <p>Based on this context, it&apos;s important for a project to ensure that all the third-party dependencies implemented are clean of any security issue, and if they happen to contain any security issues, the development team needs to be aware of it and apply the required mitigation measures to secure the affected application.</p>
 <p>It&apos;s highly recommended to perform automated analysis of the dependencies from the birth of the project. Indeed, if this task is added at the middle or end of the project, it can imply a huge amount of work to handle all the issues identified and that will in turn impose a huge burden on the development team and might to blocking the advancement of the project at hand.</p>
-<p><strong>Note:</strong> </p>
+<p><strong>Note:</strong></p>
 <p>In the rest of the cheat sheet, when we refer to <em>development team</em> then we assume that the team contains a member with the required application security skills or can refer to someone in the company having these kind of skills to analyse the vulnerability impacting the dependency.</p>
-<h1 id="remark-about-the-detection"><a name="remark-about-the-detection" class="plugin-anchor" href="#remark-about-the-detection"><i class="fa fa-link" aria-hidden="true"></i></a>Remark about the detection</h1>
-<p>It&apos;s important to keep in mind the different ways in which a security issue is handled after its discovery. </p>
-<h2 id="1-responsible-disclosure"><a name="1-responsible-disclosure" class="plugin-anchor" href="#1-responsible-disclosure"><i class="fa fa-link" aria-hidden="true"></i></a>1. Responsible disclosure</h2>
+<h2 id="remark-about-the-detection"><a name="remark-about-the-detection" class="plugin-anchor" href="#remark-about-the-detection"><i class="fa fa-link" aria-hidden="true"></i></a>Remark about the detection</h2>
+<p>It&apos;s important to keep in mind the different ways in which a security issue is handled after its discovery.</p>
+<h3 id="1-responsible-disclosure"><a name="1-responsible-disclosure" class="plugin-anchor" href="#1-responsible-disclosure"><i class="fa fa-link" aria-hidden="true"></i></a>1. Responsible disclosure</h3>
 <p>See a description <a href="https://en.wikipedia.org/wiki/Responsible_disclosure" target="_blank">here</a>.</p>
-<p>A researcher discovers a vulnerability in a component, and after collaboration with the component provider, they issue a <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a> (sometimes a specific vulnerability identifier to the provider is created but generally a CVE identifier is preferred) associated to the issue allowing the public referencing of the issue as well as the available fixation/mitigation. </p>
+<p>A researcher discovers a vulnerability in a component, and after collaboration with the component provider, they issue a <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a> (sometimes a specific vulnerability identifier to the provider is created but generally a CVE identifier is preferred) associated to the issue allowing the public referencing of the issue as well as the available fixation/mitigation.</p>
 <p>If in case the provider doesn&apos;t properly cooperate with the researcher, the following results are expected:</p>
 <ul>
 <li>CVE gets accepted by the vendor yet the provider <a href="https://www.excellium-services.com/cert-xlm-advisory/cve-2019-7161/" target="_blank">refuses to fix the issue</a>.</li>
 <li>Most of the time, if the researcher doesn&apos;t receive back a response in 30 days, they go ahead and do a <a href="#2.-full-disclosure">full disclosure</a> of the vulnerability.</li>
 </ul>
 <p>Here, the vulnerability is always referenced in the <a href="https://nvd.nist.gov/vuln/data-feeds" target="_blank">CVE global database</a> used, generally, by the detection tools as one of the several input sources used.</p>
-<h2 id="2-full-disclosure"><a name="2-full-disclosure" class="plugin-anchor" href="#2-full-disclosure"><i class="fa fa-link" aria-hidden="true"></i></a>2. Full disclosure</h2>
+<h3 id="2-full-disclosure"><a name="2-full-disclosure" class="plugin-anchor" href="#2-full-disclosure"><i class="fa fa-link" aria-hidden="true"></i></a>2. Full disclosure</h3>
 <p>See a description <a href="https://en.wikipedia.org/wiki/Full_disclosure" target="_blank">here</a>, into the section named <strong>Computers</strong> about <strong>Computer Security</strong>.</p>
 <p>The researcher decides to release all the information including exploitation code/method on services like <a href="https://seclists.org/fulldisclosure/" target="_blank">Full Disclosure mailing list</a>, <a href="https://www.exploit-db.com" target="_blank">Exploit-DB</a>.</p>
 <p>Here a CVE is not always created then the vulnerability is not always in the CVE global database causing the detection tools to be potentially blind about unless the tools use other input sources.</p>
-<h1 id="remark-about-the-security-issue-handling-decision"><a name="remark-about-the-security-issue-handling-decision" class="plugin-anchor" href="#remark-about-the-security-issue-handling-decision"><i class="fa fa-link" aria-hidden="true"></i></a>Remark about the security issue handling decision</h1>
+<h2 id="remark-about-the-security-issue-handling-decision"><a name="remark-about-the-security-issue-handling-decision" class="plugin-anchor" href="#remark-about-the-security-issue-handling-decision"><i class="fa fa-link" aria-hidden="true"></i></a>Remark about the security issue handling decision</h2>
 <p>When a security issue is detected, it&apos;s possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the <a href="https://en.wikipedia.org/wiki/Chief_risk_officer" target="_blank">Chief Risk Officer</a> (fallback possible to <a href="https://en.wikipedia.org/wiki/Chief_information_security_officer" target="_blank">Chief Information Security Officer</a>) of the company based on technical feedback from the development team that have analysed the issue (see the <em><a href="#cases">Cases</a></em> section) as well as the CVE&apos;s <a href="https://www.first.org/cvss/user-guide" target="_blank">CVSS</a> score indicators.</p>
-<h1 id="cases"><a name="cases" class="plugin-anchor" href="#cases"><i class="fa fa-link" aria-hidden="true"></i></a>Cases</h1>
+<h2 id="cases"><a name="cases" class="plugin-anchor" href="#cases"><i class="fa fa-link" aria-hidden="true"></i></a>Cases</h2>
 <p>When a security issue is detected, the development team can meet one of the situations (named <em>Case</em> in the rest of the cheat sheet) presented in the sub sections below.</p>
-<p>If the vulnerably impact a <a href="https://en.wikipedia.org/wiki/Transitive_dependency" target="_blank">transitive dependency</a> then the action will be taken on the direct dependency of the project because acting on a transitive dependency often impact the stability of the application. </p>
+<p>If the vulnerably impact a <a href="https://en.wikipedia.org/wiki/Transitive_dependency" target="_blank">transitive dependency</a> then the action will be taken on the direct dependency of the project because acting on a transitive dependency often impact the stability of the application.</p>
 <p>Acting on a on a transitive dependency require the development team to fully understand the complete relation/communication/usage from the project first level dependency until the dependency impacted by the security vulnerability, this task is very time consuming.</p>
-<h2 id="case-1"><a name="case-1" class="plugin-anchor" href="#case-1"><i class="fa fa-link" aria-hidden="true"></i></a>Case 1</h2>
-<h3 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h3>
+<h3 id="case-1"><a name="case-1" class="plugin-anchor" href="#case-1"><i class="fa fa-link" aria-hidden="true"></i></a>Case 1</h3>
+<h4 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h4>
 <p>Patched version of the component has been released by the provider.</p>
-<h3 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h3>
+<h4 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h4>
 <p>Set of automated unit or integration or functional or security tests exist for the features of the application using the impacted dependency allowing to validate that the feature is operational.</p>
-<h3 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h3>
+<h4 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h4>
 <p><strong>Step 1:</strong></p>
 <p>Update the version of the dependency in the project on a testing environment.</p>
 <p><strong>Step 2:</strong></p>
@@ -1110,20 +1111,20 @@
 </ul>
 </li>
 </ul>
-<h2 id="case-2"><a name="case-2" class="plugin-anchor" href="#case-2"><i class="fa fa-link" aria-hidden="true"></i></a>Case 2</h2>
-<h3 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h3>
+<h3 id="case-2"><a name="case-2" class="plugin-anchor" href="#case-2"><i class="fa fa-link" aria-hidden="true"></i></a>Case 2</h3>
+<h4 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h4>
 <p>Provider informs the team that it will take a while to fix the issue and, so, a patched version will not be available before months.</p>
-<h3 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h3>
+<h4 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h4>
 <p>Provider can share any of the below with the development team:</p>
 <ul>
 <li>The exploitation code.</li>
 <li>The list of impacted functions by the vulnerability.</li>
 <li>A workaround to prevent the exploitation of the issue.</li>
 </ul>
-<h3 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h3>
+<h4 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h4>
 <p><strong>Step 1:</strong></p>
 <p>If a workaround is provided, it should be applied and validated on the testing environment, and thereafter deployed to production.</p>
-<p>If the provider has given the team a list of the impacted functions, protective code must wrap the calls to these functions to ensure that the input and the output data is safe. </p>
+<p>If the provider has given the team a list of the impacted functions, protective code must wrap the calls to these functions to ensure that the input and the output data is safe.</p>
 <p>Moreover, security devices, such as the Web Application Firewall (WAF), can handle such issues by protecting the internal applications through parameter validation and by generating detection rules for those specific libraries. Yet, in this cheat sheet, the focus is set on the application level in order to patch the vulnerability as close as possible to the source.</p>
 <p><em>Example using java code in which the impacted function suffers from a <a href="https://www.netsparker.com/blog/web-security/remote-code-evaluation-execution/" target="_blank">Remote Code Execution</a> issue:</em></p>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">callFunctionWithRCEIssue</span><span class="hljs-params">(String externalInput)</span></span>{
@@ -1142,20 +1143,20 @@
 <p><strong>Step 2:</strong></p>
 <p>If the provider has provided the team with the exploitation code, and the team made a security wrapper around the vulnerable library/code, execute the exploitation code in order to ensure that the library is now secure and doesn&apos;t affect the application.</p>
 <p>If you have a set of automated unit or integration or functional or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.</p>
-<p>Add a comment in the project <em>README</em> explaining that the issue (specify the related <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a>) is handled during the waiting time of a patched version because the detection tool will continue to raise an alert on this dependency. </p>
+<p>Add a comment in the project <em>README</em> explaining that the issue (specify the related <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a>) is handled during the waiting time of a patched version because the detection tool will continue to raise an alert on this dependency.</p>
 <p><strong>Note:</strong> You can add the dependency to the ignore list but the ignore scope for this dependency must only cover the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a> related to the vulnerability because a dependency can be impacted by several vulnerabilities having each one its own <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a>.</p>
-<h2 id="case-3"><a name="case-3" class="plugin-anchor" href="#case-3"><i class="fa fa-link" aria-hidden="true"></i></a>Case 3</h2>
-<h3 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h3>
+<h3 id="case-3"><a name="case-3" class="plugin-anchor" href="#case-3"><i class="fa fa-link" aria-hidden="true"></i></a>Case 3</h3>
+<h4 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h4>
 <p>Provider inform the team that he cannot fix the issue, so no patched version will be released at all (applies also if provider does not want to fix the issue or does not answer at all).</p>
 <p>In this case the only information given to the development team is the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures" target="_blank">CVE</a>.</p>
-<p><strong>Notes:</strong> </p>
+<p><strong>Notes:</strong></p>
 <ul>
 <li>This case is really complex and time consuming and is generally used as last resort.</li>
 <li>If the impacted dependency is an open source library then we, the development team, can create a patch and create <a href="https://help.github.com/en/articles/about-pull-requests" target="_blank">pull request</a> - that way we can protect our company/application from the source as well as helping others secure their applications.</li>
 </ul>
-<h3 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h3>
+<h4 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h4>
 <p>Nothing specific because here we are in a <em>patch yourself</em> condition.</p>
-<h3 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h3>
+<h4 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h4>
 <p><strong>Step 1:</strong></p>
 <p>If we are in this case due to one of the following conditions, it&apos;s a good idea to start a parallel study to find another component better maintained or if it&apos;s a commercial component with support <strong>then put pressure</strong> on the provider with the help of your <a href="https://en.wikipedia.org/wiki/Chief_risk_officer" target="_blank">Chief Risk Officer</a> (fallback possible to <a href="https://en.wikipedia.org/wiki/Chief_information_security_officer" target="_blank">Chief Information Security Officer</a>):</p>
 <ul>
@@ -1171,28 +1172,28 @@
 <p><em>Example:</em></p>
 <p>The team has an application using the Jackson API in a version exposed to the <a href="https://nvd.nist.gov/vuln/detail/CVE-2016-3720" target="_blank">CVE-2016-3720</a>.</p>
 <p>The description of the CVE is as follows:</p>
-<pre><code class="lang-text">XML external entity (XXE) vulnerability in XmlMapper in the Data format extension for Jackson 
+<pre><code class="lang-text">XML external entity (XXE) vulnerability in XmlMapper in the Data format extension for Jackson
 (aka jackson-dataformat-xml) allows attackers to have unspecified impact via unknown vectors.
 </code></pre>
 <p>Based on these information, the team determines that the necessary patching will be to add a <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">pre-validation of any XML data</a> passed to the Jakson API to prevent <a href="https://www.acunetix.com/blog/articles/xml-external-entity-xxe-vulnerabilities/" target="_blank">XML external entity (XXE)</a> vulnerability.</p>
 <p><strong>Step 3:</strong></p>
 <p>If possible, create a unit test that mimics the vulnerability in order to ensure that the patch is effective and have a way to continuously ensure that the patch is in place during the evolution of the project.</p>
 <p>If you have a set of automated unit or integration or functional or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.</p>
-<h2 id="case-4"><a name="case-4" class="plugin-anchor" href="#case-4"><i class="fa fa-link" aria-hidden="true"></i></a>Case 4</h2>
-<h3 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h3>
+<h3 id="case-4"><a name="case-4" class="plugin-anchor" href="#case-4"><i class="fa fa-link" aria-hidden="true"></i></a>Case 4</h3>
+<h4 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h4>
 <p>The vulnerable dependency is found during one of the following situation in which the provider is not aware of the vulnerability:</p>
 <ul>
 <li>Via the discovery of a full disclosure post on the Internet.</li>
 <li>During a penetration test.</li>
 </ul>
-<h3 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h3>
+<h4 id="ideal-condition-of-application-of-the-approach"><a name="ideal-condition-of-application-of-the-approach" class="plugin-anchor" href="#ideal-condition-of-application-of-the-approach"><i class="fa fa-link" aria-hidden="true"></i></a>Ideal condition of application of the approach</h4>
 <p>Provider collaborates with you after being notified of the vulnerability.</p>
-<h3 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h3>
+<h4 id="approach"><a name="approach" class="plugin-anchor" href="#approach"><i class="fa fa-link" aria-hidden="true"></i></a>Approach</h4>
 <p><strong>Step 1:</strong></p>
 <p>Inform the provider about the vulnerability by sharing the post with them.</p>
 <p><strong>Step 2:</strong></p>
 <p>Using the information from the full disclosure post or the pentester&apos;s exploitation feedback, if the provider collaborates then apply <a href="#case-2">Case 2</a>, otherwise apply <a href="#case-3">Case 3</a>, and instead of analyzing the CVE information, the team needs to analyze the information from the full disclosure post/pentester&apos;s exploitation feedback.</p>
-<h1 id="tools"><a name="tools" class="plugin-anchor" href="#tools"><i class="fa fa-link" aria-hidden="true"></i></a>Tools</h1>
+<h2 id="tools"><a name="tools" class="plugin-anchor" href="#tools"><i class="fa fa-link" aria-hidden="true"></i></a>Tools</h2>
 <p>This section lists several tools that can used to analyse the dependencies used by a project in order to detect the vulnerabilities.</p>
 <p>It&apos;s important to ensure, during the selection process of a vulnerable dependency detection tool, that this one:</p>
 <ul>
@@ -1201,7 +1202,7 @@
 </li>
 <li><p>Free</p>
 <ul>
-<li><a href="https://owasp.org/www-project-dependency-check/" target="_blank">OWASP Dependency Check</a>: <ul>
+<li><a href="https://owasp.org/www-project-dependency-check/" target="_blank">OWASP Dependency Check</a>:<ul>
 <li>Full support: Java, .Net.</li>
 <li>Experimental support: Python, Ruby, PHP (composer), NodeJS, C, C++.</li>
 </ul>
@@ -1216,15 +1217,15 @@
 </li>
 <li>Commercial<ul>
 <li><a href="https://snyk.io/" target="_blank">Snyk</a> (open source and free option available):<ul>
-<li><a href="https://snyk.io/docs/" target="_blank">Full support</a> for many languages and package manager. </li>
+<li><a href="https://snyk.io/docs/" target="_blank">Full support</a> for many languages and package manager.</li>
 </ul>
 </li>
 <li><a href="https://jfrog.com/xray/" target="_blank">JFrog XRay</a>:<ul>
-<li><a href="https://jfrog.com/integration/" target="_blank">Full support</a> for many languages and package manager. </li>
+<li><a href="https://jfrog.com/integration/" target="_blank">Full support</a> for many languages and package manager.</li>
 </ul>
 </li>
 <li><a href="https://renovatebot.com" target="_blank">Renovate</a> (allow to detect old dependencies):<ul>
-<li><a href="https://renovatebot.com/docs/" target="_blank">Full support</a> for many languages and package manager. </li>
+<li><a href="https://renovatebot.com/docs/" target="_blank">Full support</a> for many languages and package manager.</li>
 </ul>
 </li>
 <li><a href="https://requires.io/" target="_blank">Requires.io</a> (allow to detect old dependencies - open source and free option available):<ul>
@@ -1277,7 +1278,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Vulnerable Dependency Management ","level":"1.67","depth":1,"next":{"title":"Web Service Security ","level":"1.68","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Vulnerability Disclosure ","level":"1.66","depth":1,"path":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","ref":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Vulnerable Dependency Management ","level":"1.67","depth":1,"next":{"title":"Web Service Security ","level":"1.68","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Vulnerability Disclosure ","level":"1.66","depth":1,"path":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","ref":"cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

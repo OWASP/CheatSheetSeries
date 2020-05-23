@@ -1050,7 +1050,8 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="multifactor-authentication-cheat-sheet"><a name="multifactor-authentication-cheat-sheet" class="plugin-anchor" href="#multifactor-authentication-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Multifactor Authentication Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>Multifactor authentication (MFA), or Two-Factor Authentication (2FA) is when a user is required to present more than one type of evidence in order to authenticate on a system. There are four different types of evidence (or factors) that can be used, listed in the table below:</p>
 <table>
 <thead>
@@ -1080,7 +1081,7 @@
 </table>
 <p>It should be emphasised that while requiring multiple examples of a single factor (such as needing both a password and a PIN) <strong>does not constitute MFA</strong>, although it may provide some security benefits over a simple password.</p>
 <p>Additionally, while the following sections discuss the disadvantage and weaknesses of various different types of MFA, in many cases these are only relevant against targeted attacks. <strong>Any MFA is better than no MFA</strong>.</p>
-<h1 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h1>
+<h2 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h2>
 <ul>
 <li><a href="#advantages">Advantages</a></li>
 <li><a href="#disadvantages">Disadvantages</a></li>
@@ -1117,10 +1118,10 @@
 </ul>
 </li>
 </ul>
-<h1 id="advantages"><a name="advantages" class="plugin-anchor" href="#advantages"><i class="fa fa-link" aria-hidden="true"></i></a>Advantages</h1>
+<h2 id="advantages"><a name="advantages" class="plugin-anchor" href="#advantages"><i class="fa fa-link" aria-hidden="true"></i></a>Advantages</h2>
 <p>The most common way that user accounts get compromised on applications is through weak, re-used or stolen passwords. Despite any technical security controls implemented on the application, users are liable to choose weak passwords, or to use the same password on different applications. As developers or system administrators, it should be assumed that users&apos; passwords will be compromised as some point, and the system should be designed in order to defend against this.</p>
 <p>Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force, <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">credential stuffing</a> and password spraying, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984" target="_blank">99.9% of account compromises</a>.</p>
-<h1 id="disadvantages"><a name="disadvantages" class="plugin-anchor" href="#disadvantages"><i class="fa fa-link" aria-hidden="true"></i></a>Disadvantages</h1>
+<h2 id="disadvantages"><a name="disadvantages" class="plugin-anchor" href="#disadvantages"><i class="fa fa-link" aria-hidden="true"></i></a>Disadvantages</h2>
 <p>The biggest disadvantage of MFA is the increase in management complexity for both administrators and end users. Many less technical users may find it difficult to configure and use MFA. Additionally, there are a number of other common issues encountered:</p>
 <ul>
 <li>Types of MFA that require users to have specific hardware can introduce significant costs and administrative overheads.</li>
@@ -1130,7 +1131,7 @@
 <li>Processes implemented to allow users to bypass or reset MFA may be exploitable by attackers.</li>
 <li>Requiring MFA may prevent some users from accessing the application.</li>
 </ul>
-<h1 id="quick-recommendations"><a name="quick-recommendations" class="plugin-anchor" href="#quick-recommendations"><i class="fa fa-link" aria-hidden="true"></i></a>Quick Recommendations</h1>
+<h2 id="quick-recommendations"><a name="quick-recommendations" class="plugin-anchor" href="#quick-recommendations"><i class="fa fa-link" aria-hidden="true"></i></a>Quick Recommendations</h2>
 <p>Exactly when and how MFA is implemented in an application will vary on a number of different factors, including the threat model of the application, the technical level of the users, and the level of administrative control over the users. These need to be considered on a per-application basis.</p>
 <p>However, the following recommendations are generally appropriate for most applications, and provide an initial starting point to consider.</p>
 <ul>
@@ -1140,8 +1141,8 @@
 <li>Allow the user to remember the use of MFA in their browser, so they are not prompted every time they login.</li>
 <li>Implement a secure process to allow users to reset their MFA.</li>
 </ul>
-<h1 id="implementing-mfa"><a name="implementing-mfa" class="plugin-anchor" href="#implementing-mfa"><i class="fa fa-link" aria-hidden="true"></i></a>Implementing MFA</h1>
-<h2 id="when-to-require-mfa"><a name="when-to-require-mfa" class="plugin-anchor" href="#when-to-require-mfa"><i class="fa fa-link" aria-hidden="true"></i></a>When to Require MFA</h2>
+<h2 id="implementing-mfa"><a name="implementing-mfa" class="plugin-anchor" href="#implementing-mfa"><i class="fa fa-link" aria-hidden="true"></i></a>Implementing MFA</h2>
+<h3 id="when-to-require-mfa"><a name="when-to-require-mfa" class="plugin-anchor" href="#when-to-require-mfa"><i class="fa fa-link" aria-hidden="true"></i></a>When to Require MFA</h3>
 <p>The most important place to require MFA on an application is when the user logs in. However, depending on the functionality available, it may also be appropriate to require MFA for performing sensitive actions, such as:</p>
 <ul>
 <li>Changing passwords or security questions.</li>
@@ -1150,7 +1151,7 @@
 <li>Elevating a user session to an administrative session.</li>
 </ul>
 <p>If the application provides multiple ways for a user to authenticate these should all require MFA, or have other protections implemented. A common area that is missed is if the application provides a separate API that can be used to login, or has an associated mobile application.</p>
-<h2 id="improving-usability"><a name="improving-usability" class="plugin-anchor" href="#improving-usability"><i class="fa fa-link" aria-hidden="true"></i></a>Improving Usability</h2>
+<h3 id="improving-usability"><a name="improving-usability" class="plugin-anchor" href="#improving-usability"><i class="fa fa-link" aria-hidden="true"></i></a>Improving Usability</h3>
 <p>Having to frequently login with MFA creates an additional burden for users, and may cause them to disable MFA on the application. A number of mechanisms can be used to try and reduce the level of annoyance that MFA causes. However, these types of measures do decrease the security provided by MFA, so need to be risk assessed to find a reasonable balance of security and usability for the application.</p>
 <ul>
 <li>Remembering the user&apos;s browser so they don&apos;t need to use MFA every time.<ul>
@@ -1170,7 +1171,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="failed-login-attempts"><a name="failed-login-attempts" class="plugin-anchor" href="#failed-login-attempts"><i class="fa fa-link" aria-hidden="true"></i></a>Failed Login Attempts</h2>
+<h3 id="failed-login-attempts"><a name="failed-login-attempts" class="plugin-anchor" href="#failed-login-attempts"><i class="fa fa-link" aria-hidden="true"></i></a>Failed Login Attempts</h3>
 <p>When a user enters their password, but fails to authenticate using a second factor, this could mean one of two things:</p>
 <ul>
 <li>The user has lost their second factor, or doesn&apos;t have it available (for example, they don&apos;t have their mobile phone, or have no signal).</li>
@@ -1189,7 +1190,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="resetting-mfa"><a name="resetting-mfa" class="plugin-anchor" href="#resetting-mfa"><i class="fa fa-link" aria-hidden="true"></i></a>Resetting MFA</h2>
+<h3 id="resetting-mfa"><a name="resetting-mfa" class="plugin-anchor" href="#resetting-mfa"><i class="fa fa-link" aria-hidden="true"></i></a>Resetting MFA</h3>
 <p>One of the biggest challenges with implementing MFA is handling users who forget or lose their second factors. There are many ways this could happen, such as:</p>
 <ul>
 <li>Re-installing a workstation without backing up digital certificates.</li>
@@ -1206,49 +1207,49 @@
 <li>Requiring the user contact the support team and having a rigorous process in place to verify their identity.</li>
 <li>Requiring another trusted user to vouch for them.</li>
 </ul>
-<h1 id="something-you-know"><a name="something-you-know" class="plugin-anchor" href="#something-you-know"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Know</h1>
+<h2 id="something-you-know"><a name="something-you-know" class="plugin-anchor" href="#something-you-know"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Know</h2>
 <p>The most common type of authentication is based on something the users knows - typically a password. The biggest advantage of this factor is that it has very low requirements for both the developers and the end user, as it does not require any special hardware, or integration with other services.</p>
-<h2 id="passwords-and-pins"><a name="passwords-and-pins" class="plugin-anchor" href="#passwords-and-pins"><i class="fa fa-link" aria-hidden="true"></i></a>Passwords and PINs</h2>
+<h3 id="passwords-and-pins"><a name="passwords-and-pins" class="plugin-anchor" href="#passwords-and-pins"><i class="fa fa-link" aria-hidden="true"></i></a>Passwords and PINs</h3>
 <p>Passwords and PINs are the most common form of authentication due to the simplicity of implementing them. The <a href="Authentication_Cheat_Sheet.html#implement-proper-password-strength-controls">Authentication Cheat Sheet</a> has guidance on how to implement a strong password policy, and the <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> has guidance on how to securely store passwords.</p>
 <p>Most multifactor authentication systems make use of a password, as well as at least one other factor.</p>
 <p>It should be noted that PINs, &quot;secret words&quot; and other similar type of information are all effectively the same as passwords. Using two different types of passwords <strong>does not constitute MFA</strong>.</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>Simple and well understood.</li>
 <li>Native support in every authentication framework.</li>
 <li>Easy to implement.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>Users are prone to choosing weak passwords.</li>
 <li>Passwords are commonly re-used between systems.</li>
 <li>Susceptible to phishing.</li>
 </ul>
-<h2 id="security-questions"><a name="security-questions" class="plugin-anchor" href="#security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Security Questions</h2>
+<h3 id="security-questions"><a name="security-questions" class="plugin-anchor" href="#security-questions"><i class="fa fa-link" aria-hidden="true"></i></a>Security Questions</h3>
 <p>Security questions require the user to choose (or create) a number of questions that only they will know the answer to. These are effectively the same as passwords, although they are generally considered weaker. The <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">Choosing and Using Security Questions Cheat Sheet</a> contains further guidance on how to implement these securely.</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>Simple and well understood.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>Questions often have easily guessable answers.</li>
 <li>Answers to questions can often be obtained from social media or other sources.</li>
 <li>Questions must be carefully chosen so that users will remember answers years later.</li>
 <li>Susceptible to phishing.</li>
 </ul>
-<h1 id="something-you-have"><a name="something-you-have" class="plugin-anchor" href="#something-you-have"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Have</h1>
+<h2 id="something-you-have"><a name="something-you-have" class="plugin-anchor" href="#something-you-have"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Have</h2>
 <p>The second factor is something that the user possesses. This could be a physical item (such as a hardware token), a digital item (such as a certificate or private key), or based on the ownership of a mobile phone, phone number, or email address (such as SMS or a software token installed on the phone, or an email with a single-use verification code).</p>
 <p>If properly implemented then this can be significantly more difficult for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.</p>
 <p>The requirement to have a second factor can also limit certain types of users&apos; ability to access a service. For example, if a user does not have access to a mobile phone, many types of MFA will not be available for them.</p>
-<h2 id="hardware-otp-tokens"><a name="hardware-otp-tokens" class="plugin-anchor" href="#hardware-otp-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Hardware OTP Tokens</h2>
+<h3 id="hardware-otp-tokens"><a name="hardware-otp-tokens" class="plugin-anchor" href="#hardware-otp-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Hardware OTP Tokens</h3>
 <p>Physical hardware OTP tokens can be used which generate constantly changing numeric codes, which must be submitted when authentication on the application. Most most well-known of these is the <a href="https://en.wikipedia.org/wiki/RSA_SecurID" target="_blank">RSA SecureID</a>, which generates a six digit number that changes every 60 seconds.</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>As the tokens are separate physical devices, they are almost impossible for an attacker to compromise remotely.</li>
 <li>Tokens can be used without requiring the user to have a mobile phone or other device.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>Deploying physical tokens to users is expensive and complicated.</li>
 <li>If a user loses their token it could take a significant amount of time to purchase and ship them a new one.</li>
@@ -1256,17 +1257,17 @@
 <li>Stolen tokens can be used without a PIN or device unlock code.</li>
 <li>Susceptible to phishing (although short-lived).</li>
 </ul>
-<h2 id="software-totp-tokens"><a name="software-totp-tokens" class="plugin-anchor" href="#software-totp-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Software TOTP Tokens</h2>
+<h3 id="software-totp-tokens"><a name="software-totp-tokens" class="plugin-anchor" href="#software-totp-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Software TOTP Tokens</h3>
 <p>A cheaper and easier alternative to hardware tokens is using software to generate Time-based One Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.</p>
 <p>Most websites use standardised TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>The absence of physical tokens greatly reduces the cost and administrative overhead of implementing the system.</li>
 <li>When users lose access to their TOTP app, a new one can be configured without needing to ship a physical token to them.</li>
 <li>TOTP is widely used, and many users will already have at least one TOTP app installed.</li>
 <li>As long as the user has a screen lock on their phone, an attacker will be unable to use the code if they steal the phone.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>TOTP apps are usually installed on mobile devices, which are vulnerable to compromise.</li>
 <li>The TOTP app may be installed on the same mobile device (or workstation) that is used to authenticate.</li>
@@ -1275,60 +1276,60 @@
 <li>If the user&apos;s mobile device is lost, stolen or out of battery, they will be unable to authenticate.</li>
 <li>Susceptible to phishing (although short-lived).</li>
 </ul>
-<h2 id="hardware-u2f-tokens"><a name="hardware-u2f-tokens" class="plugin-anchor" href="#hardware-u2f-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Hardware U2F Tokens</h2>
+<h3 id="hardware-u2f-tokens"><a name="hardware-u2f-tokens" class="plugin-anchor" href="#hardware-u2f-tokens"><i class="fa fa-link" aria-hidden="true"></i></a>Hardware U2F Tokens</h3>
 <p>Hardware U2F tokens communicate with the users workstation over USB or NFC, and implement challenge-response based authentication, rather than requiring the user to manually enter the code. This would typically be done by the user pressing a button on the token, or tapping it against their NFC reader.</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>Longer codes can be used, which may provide a higher level of security.</li>
 <li>Users can simply press a button rather than typing in a code.</li>
 <li>Resistant to phishing.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>As with hardware OTP tokens, the use of physical tokens introduces significant costs and administrative overheads.</li>
 <li>Stolen tokens can be used without a PIN or device unlock code.</li>
 <li>As the tokens are usually connected to the workstation via USB, users are more likely to forget them.</li>
 </ul>
-<h2 id="certificates"><a name="certificates" class="plugin-anchor" href="#certificates"><i class="fa fa-link" aria-hidden="true"></i></a>Certificates</h2>
+<h3 id="certificates"><a name="certificates" class="plugin-anchor" href="#certificates"><i class="fa fa-link" aria-hidden="true"></i></a>Certificates</h3>
 <p>Digital certificates are files that are stored on the user&apos;s device which are automatically provided alongside the user&apos;s password when authenticating. The most common type is X.509 certificates (discussed in the <a href="Transport_Layer_Protection_Cheat_Sheet.html#consider-the-use-of-client-side-certificates">Transport Layer Protection Cheat Sheet</a>), more commonly known as client certificates.</p>
 <p>Certificates are supported by all major web browsers, and once installed require no further interaction from the user. The certificates should be linked to an individual&apos;s user account in order to prevent users from trying to authenticate against other accounts.</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>There is no need to purchase and manage hardware tokens.</li>
 <li>Once installed, certificates are very simple for users.</li>
 <li>Certificates can be centrally managed and revoked.</li>
 <li>Resistant to phishing.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>Using digital certificates requires backend PKI system.</li>
 <li>Installing certificates can be difficult for users, particularly in a highly restricted environment.</li>
 <li>Enterprise proxy servers which perform SSL decryption will prevent he use of certificates.</li>
 <li>The certificates are stored on the user&apos;s workstation, and as such can be stolen if their system is compromised.</li>
 </ul>
-<h2 id="smartcards"><a name="smartcards" class="plugin-anchor" href="#smartcards"><i class="fa fa-link" aria-hidden="true"></i></a>Smartcards</h2>
+<h3 id="smartcards"><a name="smartcards" class="plugin-anchor" href="#smartcards"><i class="fa fa-link" aria-hidden="true"></i></a>Smartcards</h3>
 <p>Smartcards are credit-card size cards with a chip containing a digital certificate for the user, which is unlocked with a PIN. They are commonly used for operating system authentication, but are rarely used in web applications.</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>Stolen smartcards cannot be used without the PIN.</li>
 <li>Smartcards can be used across multiple applications and systems.</li>
 <li>Resistant to phishing.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>Managing and distributing smartcards has the same costs and overheads as hardware tokens.</li>
 <li>Smartcards are not natively supported by modern browsers, so require third party software.</li>
 <li>Although most business-class laptops have smartcard readers built in, home systems often do not.</li>
 <li>The use of smartcards requires functioning backend PKI systems.</li>
 </ul>
-<h2 id="sms-messages-and-phone-calls"><a name="sms-messages-and-phone-calls" class="plugin-anchor" href="#sms-messages-and-phone-calls"><i class="fa fa-link" aria-hidden="true"></i></a>SMS Messages and Phone Calls</h2>
+<h3 id="sms-messages-and-phone-calls"><a name="sms-messages-and-phone-calls" class="plugin-anchor" href="#sms-messages-and-phone-calls"><i class="fa fa-link" aria-hidden="true"></i></a>SMS Messages and Phone Calls</h3>
 <p>SMS messages or phone calls can be used to provide users with a single-use code that they must submit as a second factor.</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>Relatively simple to implement.</li>
 <li>Requires user to link their account to a mobile number.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>Requires the user to have a mobile device or landline.</li>
 <li>Require user to have signal to receive the call or message.</li>
@@ -1337,14 +1338,14 @@
 <li>SMS messages may be received on the same device the user is authenticating from.</li>
 <li>Susceptible to phishing.</li>
 </ul>
-<h2 id="email"><a name="email" class="plugin-anchor" href="#email"><i class="fa fa-link" aria-hidden="true"></i></a>Email</h2>
+<h3 id="email"><a name="email" class="plugin-anchor" href="#email"><i class="fa fa-link" aria-hidden="true"></i></a>Email</h3>
 <p>Email verification requires that the user enters a code or clicks a link sent to their email address. There is some debate as to whether email constitutes a form of MFA, because if the user does not have MFA configured on their email account, it simply requires knowledge of the user&apos;s email password (which is often the same as their application password). However, it is included here for completeness.</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>Very easy to implement.</li>
 <li>No requirements for separate hardware or a mobile device.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>Relies entirely on the security of the email account, which often lacks MFA.</li>
 <li>Email passwords are commonly the same as application passwords.</li>
@@ -1352,9 +1353,9 @@
 <li>Email may be received by the same device the user is authenticating from.</li>
 <li>Susceptible to phishing.</li>
 </ul>
-<h1 id="something-you-are"><a name="something-you-are" class="plugin-anchor" href="#something-you-are"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Are</h1>
+<h2 id="something-you-are"><a name="something-you-are" class="plugin-anchor" href="#something-you-are"><i class="fa fa-link" aria-hidden="true"></i></a>Something You Are</h2>
 <p>The final factor in the traditional view of MFA is something you are - which is one of the physical attributes of the users (often called biometrics). Biometrics are rarely used in web applications due to the requirement for users to have specific hardware.</p>
-<h2 id="biometrics"><a name="biometrics" class="plugin-anchor" href="#biometrics"><i class="fa fa-link" aria-hidden="true"></i></a>Biometrics</h2>
+<h3 id="biometrics"><a name="biometrics" class="plugin-anchor" href="#biometrics"><i class="fa fa-link" aria-hidden="true"></i></a>Biometrics</h3>
 <p>The are a number of common types of biometrics that are used, including:</p>
 <ul>
 <li>Fingerprint scans</li>
@@ -1362,40 +1363,40 @@
 <li>Iris scans</li>
 <li>Handprint scans</li>
 </ul>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>Well-implemented biometrics are hard to spoof, and require a targeted attack.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>Require manual enrolment of the user&apos;s physical attributes.</li>
 <li>Custom (sometimes expensive) hardware is often required to read biometrics.</li>
 <li>Modern browsers do not have native support, so custom client-side software is required.</li>
 <li>If compromised, biometric data can be difficult to change.</li>
 </ul>
-<h1 id="location"><a name="location" class="plugin-anchor" href="#location"><i class="fa fa-link" aria-hidden="true"></i></a>Location</h1>
+<h2 id="location"><a name="location" class="plugin-anchor" href="#location"><i class="fa fa-link" aria-hidden="true"></i></a>Location</h2>
 <p>The use of location as a fourth factor for MFA is not fully accepted;  however, it is increasingly be used for authentication. It is sometimes argued that location is used when deciding whether or not to require MFA (as discussed <a href="#when-to-require-mfa">above</a>) however this is effectively the same as considering it to be a factor in its own right. Two prominent examples of this are the <a href="https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/overview" target="_blank">Conditional Access Policies</a> available in Microsoft Azure, and the <a href="https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock" target="_blank">Network Unlock</a> functionality in BitLocker.</p>
 <p>When talking about location, access to the application that the user is authenticating against is not usually considered (as this would always be the case, and as such is relatively meaningless).</p>
-<h2 id="source-ip-ranges"><a name="source-ip-ranges" class="plugin-anchor" href="#source-ip-ranges"><i class="fa fa-link" aria-hidden="true"></i></a>Source IP Ranges</h2>
+<h3 id="source-ip-ranges"><a name="source-ip-ranges" class="plugin-anchor" href="#source-ip-ranges"><i class="fa fa-link" aria-hidden="true"></i></a>Source IP Ranges</h3>
 <p>The source IP address the user is connecting from can be used as a factor, typically in a white-list based approach. This could either be based on a static white-list (such as corporate office ranges) or a dynamic white-list (such as previous IP addresses the user has authenticated from).</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>Very easy for users.</li>
 <li>Requires minimal configuration and management from administrative staff.</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>Doesn&apos;t provide any protection if the user&apos;s system is compromised.</li>
 <li>Doesn&apos;t provide any protection against rogue insiders.</li>
 <li>Trusted IP addresses must be carefully restricted (for example, if the open guest WiFi uses the main corporate IP range).</li>
 </ul>
-<h2 id="geolocation"><a name="geolocation" class="plugin-anchor" href="#geolocation"><i class="fa fa-link" aria-hidden="true"></i></a>Geolocation</h2>
+<h3 id="geolocation"><a name="geolocation" class="plugin-anchor" href="#geolocation"><i class="fa fa-link" aria-hidden="true"></i></a>Geolocation</h3>
 <p>Rather than using the exact IP address of the user, the geographic location that the IP address is registered to can be used. This is less precise, but may be more feasible to implement in environments where IP addresses are not static. A common usage would be to require additional authentication factors when an authentication attempt is made from outside of the user&apos;s normal country.</p>
-<h3 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h3>
+<h4 id="pros"><a name="pros" class="plugin-anchor" href="#pros"><i class="fa fa-link" aria-hidden="true"></i></a>Pros</h4>
 <ul>
 <li>Very easy for users</li>
 </ul>
-<h3 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h3>
+<h4 id="cons"><a name="cons" class="plugin-anchor" href="#cons"><i class="fa fa-link" aria-hidden="true"></i></a>Cons</h4>
 <ul>
 <li>Doesn&apos;t provide any protection if the user&apos;s system is compromised.</li>
 <li>Doesn&apos;t provide any protection against rogue insiders.</li>
@@ -1444,7 +1445,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Multifactor Authentication ","level":"1.43","depth":1,"next":{"title":"Nodejs security cheat sheet","level":"1.44","depth":1,"path":"cheatsheets/Nodejs_security_cheat_sheet.md","ref":"cheatsheets/Nodejs_security_cheat_sheet.md","articles":[]},"previous":{"title":"Microservices based Security Arch Doc ","level":"1.42","depth":1,"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","ref":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Multifactor_Authentication_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Multifactor Authentication ","level":"1.43","depth":1,"next":{"title":"Nodejs security cheat sheet","level":"1.44","depth":1,"path":"cheatsheets/Nodejs_security_cheat_sheet.md","ref":"cheatsheets/Nodejs_security_cheat_sheet.md","articles":[]},"previous":{"title":"Microservices based Security Arch Doc ","level":"1.42","depth":1,"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","ref":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Multifactor_Authentication_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

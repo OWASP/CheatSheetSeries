@@ -1050,19 +1050,20 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<h2 id="definition"><a name="definition" class="plugin-anchor" href="#definition"><i class="fa fa-link" aria-hidden="true"></i></a>Definition</h2>
-<p>Software frameworks sometime allow developers to automatically bind HTTP request parameters into program code variables or objects to make using that framework easier on developers. This can sometimes cause harm. </p>
-<p>Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended. </p>
+                                <h1 id="mass-assignment-cheat-sheet"><a name="mass-assignment-cheat-sheet" class="plugin-anchor" href="#mass-assignment-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Mass Assignment Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+<h3 id="definition"><a name="definition" class="plugin-anchor" href="#definition"><i class="fa fa-link" aria-hidden="true"></i></a>Definition</h3>
+<p>Software frameworks sometime allow developers to automatically bind HTTP request parameters into program code variables or objects to make using that framework easier on developers. This can sometimes cause harm.</p>
+<p>Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended.</p>
 <p>This is called a <strong>Mass Assignment</strong> vulnerability.</p>
-<h2 id="alternative-names"><a name="alternative-names" class="plugin-anchor" href="#alternative-names"><i class="fa fa-link" aria-hidden="true"></i></a>Alternative Names</h2>
+<h3 id="alternative-names"><a name="alternative-names" class="plugin-anchor" href="#alternative-names"><i class="fa fa-link" aria-hidden="true"></i></a>Alternative Names</h3>
 <p>Depending on the language/framework in question, this vulnerability can have several <a href="https://cwe.mitre.org/data/definitions/915.html" target="_blank">alternative names</a>:</p>
 <ul>
 <li><strong>Mass Assignment:</strong> Ruby on Rails, NodeJS.</li>
 <li><strong>Autobinding:</strong> Spring MVC, ASP NET MVC.</li>
 <li><strong>Object injection:</strong> PHP.</li>
 </ul>
-<h2 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h2>
+<h3 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h3>
 <p>Suppose there is a form for editing a user&apos;s account information:</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span>
      <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;userid&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span>
@@ -1083,7 +1084,7 @@
 </code></pre>
 <p>Here is the controller handling the request:</p>
 <pre><code class="lang-java"><span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">&quot;/addUser&quot;</span>, method = RequestMethod.POST)
-<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">submit</span><span class="hljs-params">(User user)</span> </span>{   
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">submit</span><span class="hljs-params">(User user)</span> </span>{
    userService.add(user);
    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;successPage&quot;</span>;
 }
@@ -1098,22 +1099,22 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com
 ...
 userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmin=true
 </code></pre>
-<h2 id="exploitability"><a name="exploitability" class="plugin-anchor" href="#exploitability"><i class="fa fa-link" aria-hidden="true"></i></a>Exploitability</h2>
+<h3 id="exploitability"><a name="exploitability" class="plugin-anchor" href="#exploitability"><i class="fa fa-link" aria-hidden="true"></i></a>Exploitability</h3>
 <p>This functionality becomes exploitable when:</p>
 <ul>
 <li>Attacker can guess common sensitive fields.</li>
 <li>Attacker has access to source code and can review the models for sensitive fields.</li>
 <li>AND the object with sensitive fields has an empty constructor.</li>
 </ul>
-<h2 id="github-case-study"><a name="github-case-study" class="plugin-anchor" href="#github-case-study"><i class="fa fa-link" aria-hidden="true"></i></a>GitHub case study</h2>
+<h3 id="github-case-study"><a name="github-case-study" class="plugin-anchor" href="#github-case-study"><i class="fa fa-link" aria-hidden="true"></i></a>GitHub case study</h3>
 <p>In 2012, GitHub was hacked using mass assignment. A user was able to upload his public key to any organization and thus make any subsequent changes in their repositories. <a href="https://blog.github.com/2012-03-04-public-key-security-vulnerability-and-mitigation/" target="_blank">GitHub&apos;s Blog Post</a>.</p>
-<h2 id="solutions"><a name="solutions" class="plugin-anchor" href="#solutions"><i class="fa fa-link" aria-hidden="true"></i></a>Solutions</h2>
+<h3 id="solutions"><a name="solutions" class="plugin-anchor" href="#solutions"><i class="fa fa-link" aria-hidden="true"></i></a>Solutions</h3>
 <ul>
 <li>Whitelist the bindable, non-sensitive fields.</li>
 <li>Blacklist the non-bindable, sensitive fields.</li>
 <li>Use <a href="https://martinfowler.com/eaaCatalog/dataTransferObject.html" target="_blank">Data Transfer Objects</a> (DTOs).</li>
 </ul>
-<h1 id="general-solutions"><a name="general-solutions" class="plugin-anchor" href="#general-solutions"><i class="fa fa-link" aria-hidden="true"></i></a>General Solutions</h1>
+<h2 id="general-solutions"><a name="general-solutions" class="plugin-anchor" href="#general-solutions"><i class="fa fa-link" aria-hidden="true"></i></a>General Solutions</h2>
 <p>An architectural approach is to create Data Transfer Objects and avoid binding input directly to domain objects. Only the fields that are meant to be editable by the user are included in the DTO.</p>
 <pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserRegistrationFormDTO</span> </span>{
  <span class="hljs-keyword">private</span> String userid;
@@ -1125,9 +1126,9 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
  <span class="hljs-comment">//Getters &amp; Setters</span>
 }
 </code></pre>
-<h1 id="language--framework-specific-solutions"><a name="language--framework-specific-solutions" class="plugin-anchor" href="#language--framework-specific-solutions"><i class="fa fa-link" aria-hidden="true"></i></a>Language &amp; Framework specific solutions</h1>
-<h2 id="spring-mvc"><a name="spring-mvc" class="plugin-anchor" href="#spring-mvc"><i class="fa fa-link" aria-hidden="true"></i></a>Spring MVC</h2>
-<h3 id="whitelisting"><a name="whitelisting" class="plugin-anchor" href="#whitelisting"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelisting</h3>
+<h2 id="language--framework-specific-solutions"><a name="language--framework-specific-solutions" class="plugin-anchor" href="#language--framework-specific-solutions"><i class="fa fa-link" aria-hidden="true"></i></a>Language &amp; Framework specific solutions</h2>
+<h3 id="spring-mvc"><a name="spring-mvc" class="plugin-anchor" href="#spring-mvc"><i class="fa fa-link" aria-hidden="true"></i></a>Spring MVC</h3>
+<h4 id="whitelisting"><a name="whitelisting" class="plugin-anchor" href="#whitelisting"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelisting</h4>
 <pre><code class="lang-java"><span class="hljs-meta">@Controller</span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span>
 </span>{
@@ -1140,7 +1141,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 }
 </code></pre>
 <p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setAllowedFields-java.lang.String...-" target="_blank">here</a> for the documentation.</p>
-<h3 id="blacklisting"><a name="blacklisting" class="plugin-anchor" href="#blacklisting"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklisting</h3>
+<h4 id="blacklisting"><a name="blacklisting" class="plugin-anchor" href="#blacklisting"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklisting</h4>
 <pre><code class="lang-java"><span class="hljs-meta">@Controller</span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span>
 </span>{
@@ -1153,8 +1154,8 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 }
 </code></pre>
 <p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setDisallowedFields-java.lang.String...-" target="_blank">here</a> for the documentation.</p>
-<h2 id="nodejs--mongoose"><a name="nodejs--mongoose" class="plugin-anchor" href="#nodejs--mongoose"><i class="fa fa-link" aria-hidden="true"></i></a>NodeJS + Mongoose</h2>
-<h3 id="whitelisting"><a name="whitelisting" class="plugin-anchor" href="#whitelisting"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelisting</h3>
+<h3 id="nodejs--mongoose"><a name="nodejs--mongoose" class="plugin-anchor" href="#nodejs--mongoose"><i class="fa fa-link" aria-hidden="true"></i></a>NodeJS + Mongoose</h3>
+<h4 id="whitelisting"><a name="whitelisting" class="plugin-anchor" href="#whitelisting"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelisting</h4>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> UserSchema = <span class="hljs-keyword">new</span> mongoose.Schema({
     userid: <span class="hljs-built_in">String</span>,
     password: <span class="hljs-built_in">String</span>,
@@ -1172,7 +1173,7 @@ _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;u
 <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">new</span> User(_.pick(req.body, User.userCreateSafeFields));
 </code></pre>
 <p>Take a look <a href="http://underscorejs.org/#pick" target="_blank">here</a> for the documentation.</p>
-<h3 id="blacklisting"><a name="blacklisting" class="plugin-anchor" href="#blacklisting"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklisting</h3>
+<h4 id="blacklisting"><a name="blacklisting" class="plugin-anchor" href="#blacklisting"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklisting</h4>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> massAssign = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;mongoose-mass-assign&apos;</span>);
 
 <span class="hljs-keyword">var</span> UserSchema = <span class="hljs-keyword">new</span> mongoose.Schema({
@@ -1198,14 +1199,14 @@ user.massAssign(req.body);
 User.update({ <span class="hljs-string">&apos;_id&apos;</span>: someId }, { $set: User.massUpdate(input) }, <span class="hljs-built_in">console</span>.log);
 </code></pre>
 <p>Take a look <a href="https://www.npmjs.com/package/mongoose-mass-assign" target="_blank">here</a> for the documentation.</p>
-<h2 id="ruby-on-rails"><a name="ruby-on-rails" class="plugin-anchor" href="#ruby-on-rails"><i class="fa fa-link" aria-hidden="true"></i></a>Ruby On Rails</h2>
+<h3 id="ruby-on-rails"><a name="ruby-on-rails" class="plugin-anchor" href="#ruby-on-rails"><i class="fa fa-link" aria-hidden="true"></i></a>Ruby On Rails</h3>
 <p>Take a look <a href="https://guides.rubyonrails.org/v3.2.9/security.html#mass-assignment" target="_blank">here</a> for the documentation.</p>
-<h2 id="django"><a name="django" class="plugin-anchor" href="#django"><i class="fa fa-link" aria-hidden="true"></i></a>Django</h2>
+<h3 id="django"><a name="django" class="plugin-anchor" href="#django"><i class="fa fa-link" aria-hidden="true"></i></a>Django</h3>
 <p>Take a look <a href="https://coffeeonthekeyboard.com/mass-assignment-security-part-10-855/" target="_blank">here</a> for the documentation.</p>
-<h2 id="asp-net"><a name="asp-net" class="plugin-anchor" href="#asp-net"><i class="fa fa-link" aria-hidden="true"></i></a>ASP NET</h2>
+<h3 id="asp-net"><a name="asp-net" class="plugin-anchor" href="#asp-net"><i class="fa fa-link" aria-hidden="true"></i></a>ASP NET</h3>
 <p>Take a look <a href="https://odetocode.com/Blogs/scott/archive/2012/03/11/complete-guide-to-mass-assignment-in-asp-net-mvc.aspx" target="_blank">here</a> for the documentation.</p>
-<h2 id="php-laravel--eloquent"><a name="php-laravel--eloquent" class="plugin-anchor" href="#php-laravel--eloquent"><i class="fa fa-link" aria-hidden="true"></i></a>PHP Laravel + Eloquent</h2>
-<h3 id="whitelisting"><a name="whitelisting" class="plugin-anchor" href="#whitelisting"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelisting</h3>
+<h3 id="php-laravel--eloquent"><a name="php-laravel--eloquent" class="plugin-anchor" href="#php-laravel--eloquent"><i class="fa fa-link" aria-hidden="true"></i></a>PHP Laravel + Eloquent</h3>
+<h4 id="whitelisting"><a name="whitelisting" class="plugin-anchor" href="#whitelisting"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelisting</h4>
 <pre><code class="lang-php"><span class="hljs-meta">&lt;?php</span>
 
 <span class="hljs-keyword">namespace</span> <span class="hljs-title">App</span>;
@@ -1223,7 +1224,7 @@ User.update({ <span class="hljs-string">&apos;_id&apos;</span>: someId }, { $set
 }
 </code></pre>
 <p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment" target="_blank">here</a> for the documentation.</p>
-<h3 id="blacklisting"><a name="blacklisting" class="plugin-anchor" href="#blacklisting"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklisting</h3>
+<h4 id="blacklisting"><a name="blacklisting" class="plugin-anchor" href="#blacklisting"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklisting</h4>
 <pre><code class="lang-php"><span class="hljs-meta">&lt;?php</span>
 
 <span class="hljs-keyword">namespace</span> <span class="hljs-title">App</span>;
@@ -1241,19 +1242,19 @@ User.update({ <span class="hljs-string">&apos;_id&apos;</span>: someId }, { $set
 }
 </code></pre>
 <p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment" target="_blank">here</a> for the documentation.</p>
-<h2 id="grails"><a name="grails" class="plugin-anchor" href="#grails"><i class="fa fa-link" aria-hidden="true"></i></a>Grails</h2>
+<h3 id="grails"><a name="grails" class="plugin-anchor" href="#grails"><i class="fa fa-link" aria-hidden="true"></i></a>Grails</h3>
 <p>Take a look <a href="http://spring.io/blog/2012/03/28/secure-data-binding-with-grails/" target="_blank">here</a> for the documentation.</p>
-<h2 id="play"><a name="play" class="plugin-anchor" href="#play"><i class="fa fa-link" aria-hidden="true"></i></a>Play</h2>
+<h3 id="play"><a name="play" class="plugin-anchor" href="#play"><i class="fa fa-link" aria-hidden="true"></i></a>Play</h3>
 <p>Take a look <a href="https://www.playframework.com/documentation/1.4.x/controllers#nobinding" target="_blank">here</a> for the documentation.</p>
-<h2 id="jackson-json-object-mapper"><a name="jackson-json-object-mapper" class="plugin-anchor" href="#jackson-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>Jackson (JSON Object Mapper)</h2>
+<h3 id="jackson-json-object-mapper"><a name="jackson-json-object-mapper" class="plugin-anchor" href="#jackson-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>Jackson (JSON Object Mapper)</h3>
 <p>Take a look <a href="https://www.baeldung.com/jackson-field-serializable-deserializable-or-not" target="_blank">here</a> and <a href="http://lifelongprogrammer.blogspot.com/2015/09/using-jackson-view-to-protect-mass-assignment.html" target="_blank">here</a> for the documentation.</p>
-<h2 id="gson-json-object-mapper"><a name="gson-json-object-mapper" class="plugin-anchor" href="#gson-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>GSON (JSON Object Mapper)</h2>
+<h3 id="gson-json-object-mapper"><a name="gson-json-object-mapper" class="plugin-anchor" href="#gson-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>GSON (JSON Object Mapper)</h3>
 <p>Take a look <a href="https://sites.google.com/site/gson/gson-user-guide#TOC-Excluding-Fields-From-Serialization-and-Deserialization" target="_blank">here</a> and <a href="https://stackoverflow.com/a/27986860" target="_blank">here</a> for the document.</p>
-<h2 id="json-lib-json-object-mapper"><a name="json-lib-json-object-mapper" class="plugin-anchor" href="#json-lib-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>JSON-Lib (JSON Object Mapper)</h2>
+<h3 id="json-lib-json-object-mapper"><a name="json-lib-json-object-mapper" class="plugin-anchor" href="#json-lib-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>JSON-Lib (JSON Object Mapper)</h3>
 <p>Take a look <a href="http://json-lib.sourceforge.net/advanced.html" target="_blank">here</a> for the documentation.</p>
-<h2 id="flexjson-json-object-mapper"><a name="flexjson-json-object-mapper" class="plugin-anchor" href="#flexjson-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>Flexjson (JSON Object Mapper)</h2>
+<h3 id="flexjson-json-object-mapper"><a name="flexjson-json-object-mapper" class="plugin-anchor" href="#flexjson-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>Flexjson (JSON Object Mapper)</h3>
 <p>Take a look <a href="http://flexjson.sourceforge.net/#Serialization" target="_blank">here</a> for the documentation.</p>
-<h1 id="references-and-future-reading"><a name="references-and-future-reading" class="plugin-anchor" href="#references-and-future-reading"><i class="fa fa-link" aria-hidden="true"></i></a>References and future reading</h1>
+<h2 id="references-and-future-reading"><a name="references-and-future-reading" class="plugin-anchor" href="#references-and-future-reading"><i class="fa fa-link" aria-hidden="true"></i></a>References and future reading</h2>
 <ul>
 <li><a href="https://code.tutsplus.com/tutorials/mass-assignment-rails-and-you--net-31695" target="_blank">Mass Assignment, Rails and You</a></li>
 </ul>
@@ -1300,7 +1301,7 @@ User.update({ <span class="hljs-string">&apos;_id&apos;</span>: someId }, { $set
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Mass Assignment ","level":"1.41","depth":1,"next":{"title":"Microservices based Security Arch Doc ","level":"1.42","depth":1,"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","ref":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","articles":[]},"previous":{"title":"Logging ","level":"1.40","depth":1,"path":"cheatsheets/Logging_Cheat_Sheet.md","ref":"cheatsheets/Logging_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Mass Assignment ","level":"1.41","depth":1,"next":{"title":"Microservices based Security Arch Doc ","level":"1.42","depth":1,"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","ref":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","articles":[]},"previous":{"title":"Logging ","level":"1.40","depth":1,"path":"cheatsheets/Logging_Cheat_Sheet.md","ref":"cheatsheets/Logging_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

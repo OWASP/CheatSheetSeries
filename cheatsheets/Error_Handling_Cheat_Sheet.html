@@ -1050,11 +1050,12 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="error-handling-cheat-sheet"><a name="error-handling-cheat-sheet" class="plugin-anchor" href="#error-handling-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Error Handling Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>Error handling is a part of the overall security of an application. Except in movies, an attack always begins with a <strong>Reconnaissance</strong> phase in which the attacker will try to gather as much technical information (often <em>name</em> and <em>version</em> properties) as possible about the target, such as the application server, frameworks, libraries, etc.</p>
 <p>Unhandled errors can assist an attacker in this initial phase, which is very important for the rest of the attack.</p>
 <p>The following <a href="https://cipher.com/blog/a-complete-guide-to-the-phases-of-penetration-testing/" target="_blank">link</a> provides a description of the different phases of an attack.</p>
-<h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
+<h2 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h2>
 <p>Issues at the error handling level can reveal a lot of information about the target and can also be used to identify injection points in the target&apos;s features.</p>
 <p>Below is an example of the disclosure of a technology stack, here the Struts2 and Tomcat versions, via an exception rendered to the user:</p>
 <pre><code class="lang-text">HTTP Status 500 - For input string: &quot;null&quot;
@@ -1085,26 +1086,26 @@ java.lang.NumberFormatException: For input string: &quot;null&quot;
 note: The full stack trace of the root cause is available in the Apache Tomcat/7.0.56 logs.
 </code></pre>
 <p>Below is an example of disclosure of a SQL query error, along with the site installation path, that can be used to identify an injection point:</p>
-<pre><code class="lang-text">Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given 
+<pre><code class="lang-text">Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given
 in D:\app\index_new.php on line 188
 </code></pre>
 <p>The <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/01-Information_Gathering/" target="_blank">OWASP Testing Guide</a> provides different techniques to obtain technical information from an application.</p>
-<h1 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h1>
+<h2 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h2>
 <p>The article shows how to configure a global error handler at the configuration level when possible, otherwise at code level, in different technologies, in order to ensure that if an unexpected error occurs then a generic response is returned by the application but the error is traced on server side for investigation.</p>
 <p>The following schema shows the target approach:</p>
 <p><img src="../assets/Error_Handling_Cheat_Sheet_Overview.png" alt="Overview"></p>
 <p>As most recent application topologies are <em>API based</em>, we assume in this article that the backend exposes only a REST API and does not contain any user interface content.</p>
 <p>For the error logging operation itself, the <a href="Logging_Cheat_Sheet.html">logging cheat sheet</a> should be used. This article focuses on the error handling part.</p>
-<h1 id="proposition"><a name="proposition" class="plugin-anchor" href="#proposition"><i class="fa fa-link" aria-hidden="true"></i></a>Proposition</h1>
+<h2 id="proposition"><a name="proposition" class="plugin-anchor" href="#proposition"><i class="fa fa-link" aria-hidden="true"></i></a>Proposition</h2>
 <p>For each technology, a setup will be proposed with configuration and code snippet.</p>
-<h2 id="java-classic-web-application"><a name="java-classic-web-application" class="plugin-anchor" href="#java-classic-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>Java classic web application</h2>
+<h3 id="java-classic-web-application"><a name="java-classic-web-application" class="plugin-anchor" href="#java-classic-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>Java classic web application</h3>
 <p>For this kind of application, a global error handler can be configured at the <strong>web.xml</strong> deployment descriptor level.</p>
 <p>We propose here a configuration that can be used from Servlet specification <em>version 2.5</em> and above.</p>
 <p>With this configuration, any unexpected error will cause a redirection to the page <strong>error.jsp</strong> in which the error will be traced and a generic response will be returned.</p>
 <p>Configuration of the redirection into the <strong>web.xml</strong> file:</p>
 <pre><code class="lang-xml"><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span><span class="hljs-meta">?&gt;</span></span>
-<span class="hljs-tag">&lt;<span class="hljs-name">web-app</span> <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="hljs-attr">ns</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee&quot;</span> 
-<span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;</span> 
+<span class="hljs-tag">&lt;<span class="hljs-name">web-app</span> <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="hljs-attr">ns</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee&quot;</span>
+<span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;</span>
 <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;3.0&quot;</span>&gt;</span>
 ...
     <span class="hljs-tag">&lt;<span class="hljs-name">error-page</span>&gt;</span>
@@ -1115,7 +1116,7 @@ in D:\app\index_new.php on line 188
 <span class="hljs-tag">&lt;/<span class="hljs-name">web-app</span>&gt;</span>
 </code></pre>
 <p>Content of the <strong>error.jsp</strong> file:</p>
-<pre><code class="lang-java">&lt;%@ page language=<span class="hljs-string">&quot;java&quot;</span> isErrorPage=<span class="hljs-string">&quot;true&quot;</span> contentType=<span class="hljs-string">&quot;application/json; charset=UTF-8&quot;</span> 
+<pre><code class="lang-java">&lt;%@ page language=<span class="hljs-string">&quot;java&quot;</span> isErrorPage=<span class="hljs-string">&quot;true&quot;</span> contentType=<span class="hljs-string">&quot;application/json; charset=UTF-8&quot;</span>
     pageEncoding=<span class="hljs-string">&quot;UTF-8&quot;</span>%&gt;
 &lt;%
 String errorMessage = exception.getMessage();
@@ -1128,7 +1129,7 @@ response.setStatus(<span class="hljs-number">200</span>);
 %&gt;
 {<span class="hljs-string">&quot;message&quot;</span>:<span class="hljs-string">&quot;An error occur, please retry&quot;</span>}
 </code></pre>
-<h2 id="java-springmvcspringboot-web-application"><a name="java-springmvcspringboot-web-application" class="plugin-anchor" href="#java-springmvcspringboot-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>Java SpringMVC/SpringBoot web application</h2>
+<h3 id="java-springmvcspringboot-web-application"><a name="java-springmvcspringboot-web-application" class="plugin-anchor" href="#java-springmvcspringboot-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>Java SpringMVC/SpringBoot web application</h3>
 <p>With <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html" target="_blank">SpringMVC</a> or <a href="https://spring.io/projects/spring-boot" target="_blank">SpringBoot</a>, you can define a global error handler by simply implementing the following kind of class in your project.</p>
 <p>We indicate to the handler, via the annotation <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html" target="_blank">@ExceptionHandler</a>, to act when any exception extending the class <em>java.lang.Exception</em> is thrown by the application.</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> net.minidev.json.JSONObject;
@@ -1157,7 +1158,7 @@ response.setStatus(<span class="hljs-number">200</span>);
         responseHeaders.set(<span class="hljs-string">&quot;X-ERROR&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);
         JSONObject responseBody = <span class="hljs-keyword">new</span> JSONObject();
         responseBody.put(<span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-string">&quot;An error occur, please retry&quot;</span>);
-        ResponseEntity&lt;JSONObject&gt; response = <span class="hljs-keyword">new</span> ResponseEntity&lt;&gt;(responseBody, responseHeaders, 
+        ResponseEntity&lt;JSONObject&gt; response = <span class="hljs-keyword">new</span> ResponseEntity&lt;&gt;(responseBody, responseHeaders,
                                                                    HttpStatus.OK);
         <span class="hljs-keyword">return</span> (ResponseEntity) response;
     }
@@ -1168,7 +1169,7 @@ response.setStatus(<span class="hljs-number">200</span>);
 <li><a href="https://www.baeldung.com/exception-handling-for-rest-with-spring" target="_blank">Exception handling with Spring</a></li>
 <li><a href="https://www.toptal.com/java/spring-boot-rest-api-error-handling" target="_blank">Exception handling with SpringBoot</a></li>
 </ul>
-<h2 id="asp-net-core-web-application"><a name="asp-net-core-web-application" class="plugin-anchor" href="#asp-net-core-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>ASP NET Core web application</h2>
+<h3 id="asp-net-core-web-application"><a name="asp-net-core-web-application" class="plugin-anchor" href="#asp-net-core-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>ASP NET Core web application</h3>
 <p>With <a href="https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.2" target="_blank">ASP.NET Core</a>, you can define a global error handler by indicating that the exception handler is a dedicated API Controller.</p>
 <p>Content of the API Controller dedicated to the error handling:</p>
 <pre><code class="lang-csharp"><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Authorization;
@@ -1206,7 +1207,7 @@ response.setStatus(<span class="hljs-number">200</span>);
             <span class="hljs-comment">//Log the exception via the content of the variable named &quot;exception&quot; if it is not NULL</span>
             <span class="hljs-comment">//...</span>
             <span class="hljs-comment">//We build a generic response with a JSON format because we are in a REST API app context</span>
-            <span class="hljs-comment">//We also add an HTTP response header to indicate to the client app that the response </span>
+            <span class="hljs-comment">//We also add an HTTP response header to indicate to the client app that the response</span>
             <span class="hljs-comment">//is an error</span>
             <span class="hljs-keyword">var</span> responseBody = <span class="hljs-keyword">new</span> Dictionary&lt;String, String&gt;{ {
                 <span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-string">&quot;An error occur, please retry&quot;</span>
@@ -1235,7 +1236,7 @@ response.setStatus(<span class="hljs-number">200</span>);
         <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IHostingEnvironment env</span>)
         </span>{
             <span class="hljs-comment">//First we configure the error handler middleware!</span>
-            <span class="hljs-comment">//We enable the global error handler in others environments than DEV </span>
+            <span class="hljs-comment">//We enable the global error handler in others environments than DEV</span>
             <span class="hljs-comment">//because debug page are useful during implementation</span>
             <span class="hljs-keyword">if</span> (env.IsDevelopment())
             {
@@ -1243,7 +1244,7 @@ response.setStatus(<span class="hljs-number">200</span>);
             }
             <span class="hljs-keyword">else</span>
             {
-                <span class="hljs-comment">//Our global handler is defined on &quot;/api/error&quot; URL so we indicate to the </span>
+                <span class="hljs-comment">//Our global handler is defined on &quot;/api/error&quot; URL so we indicate to the</span>
                 <span class="hljs-comment">//exception handler to call this API controller</span>
                 <span class="hljs-comment">//on any unexpected exception raised by the application</span>
                 app.UseExceptionHandler(<span class="hljs-string">&quot;/api/error&quot;</span>);
@@ -1260,7 +1261,7 @@ response.setStatus(<span class="hljs-number">200</span>);
 <ul>
 <li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-2.1" target="_blank">Exception handling with ASP.Net Core</a></li>
 </ul>
-<h2 id="asp-net-web-api-web-application"><a name="asp-net-web-api-web-application" class="plugin-anchor" href="#asp-net-web-api-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>ASP NET Web API web application</h2>
+<h3 id="asp-net-web-api-web-application"><a name="asp-net-web-api-web-application" class="plugin-anchor" href="#asp-net-web-api-web-application"><i class="fa fa-link" aria-hidden="true"></i></a>ASP NET Web API web application</h3>
 <p>With <a href="https://www.asp.net/web-api" target="_blank">ASP.NET Web API</a> (from the standard .NET framework and not from the .NET Core framework), you can define and register handlers in order to trace and handle any error that occurs in the application.</p>
 <p>Definition of the handler for the tracing of the error details:</p>
 <pre><code class="lang-csharp"><span class="hljs-keyword">using</span> System;
@@ -1328,14 +1329,14 @@ response.setStatus(<span class="hljs-number">200</span>);
             <span class="hljs-function"><span class="hljs-keyword">public</span> Task&lt;HttpResponseMessage&gt; <span class="hljs-title">ExecuteAsync</span>(<span class="hljs-params">CancellationToken cancellationToken</span>)
             </span>{
                 <span class="hljs-comment">//We build a generic response with a JSON format because we are in a REST API app context</span>
-                <span class="hljs-comment">//We also add an HTTP response header to indicate to the client app that the response </span>
+                <span class="hljs-comment">//We also add an HTTP response header to indicate to the client app that the response</span>
                 <span class="hljs-comment">//is an error</span>
                 <span class="hljs-keyword">var</span> responseBody = <span class="hljs-keyword">new</span> Dictionary&lt;String, String&gt;{ {
                     <span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-string">&quot;An error occur, please retry&quot;</span>
                 } };
                 HttpResponseMessage response = <span class="hljs-keyword">new</span> HttpResponseMessage(HttpStatusCode.OK);
                 response.Headers.Add(<span class="hljs-string">&quot;X-ERROR&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);
-                response.Content = <span class="hljs-keyword">new</span> StringContent(JsonConvert.SerializeObject(responseBody), 
+                response.Content = <span class="hljs-keyword">new</span> StringContent(JsonConvert.SerializeObject(responseBody),
                                                      Encoding.UTF8, <span class="hljs-string">&quot;application/json&quot;</span>);
                 <span class="hljs-keyword">return</span> Task.FromResult(response);
             }
@@ -1367,7 +1368,7 @@ response.setStatus(<span class="hljs-number">200</span>);
 <ul>
 <li><a href="https://exceptionnotfound.net/the-asp-net-web-api-exception-handling-pipeline-a-guided-tour/" target="_blank">Exception handling with ASP.Net Web API</a></li>
 </ul>
-<h1 id="sources-of-the-prototype"><a name="sources-of-the-prototype" class="plugin-anchor" href="#sources-of-the-prototype"><i class="fa fa-link" aria-hidden="true"></i></a>Sources of the prototype</h1>
+<h2 id="sources-of-the-prototype"><a name="sources-of-the-prototype" class="plugin-anchor" href="#sources-of-the-prototype"><i class="fa fa-link" aria-hidden="true"></i></a>Sources of the prototype</h2>
 <p>The source code of all the sandbox projects created to find the right setup to use is stored in this <a href="https://github.com/righettod/poc-error-handling" target="_blank">GitHub repository</a>.</p>
 
                                 
@@ -1412,7 +1413,7 @@ response.setStatus(<span class="hljs-number">200</span>);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Error Handling ","level":"1.27","depth":1,"next":{"title":"File Upload ","level":"1.28","depth":1,"path":"cheatsheets/File_Upload_Cheat_Sheet.md","ref":"cheatsheets/File_Upload_Cheat_Sheet.md","articles":[]},"previous":{"title":"DotNet Security ","level":"1.26","depth":1,"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","ref":"cheatsheets/DotNet_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Error Handling ","level":"1.27","depth":1,"next":{"title":"File Upload ","level":"1.28","depth":1,"path":"cheatsheets/File_Upload_Cheat_Sheet.md","ref":"cheatsheets/File_Upload_Cheat_Sheet.md","articles":[]},"previous":{"title":"DotNet Security ","level":"1.26","depth":1,"path":"cheatsheets/DotNet_Security_Cheat_Sheet.md","ref":"cheatsheets/DotNet_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Error_Handling_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

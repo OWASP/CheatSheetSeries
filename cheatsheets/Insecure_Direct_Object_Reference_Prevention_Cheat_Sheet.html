@@ -1050,10 +1050,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="insecure-direct-object-reference-prevention-cheat-sheet"><a name="insecure-direct-object-reference-prevention-cheat-sheet" class="plugin-anchor" href="#insecure-direct-object-reference-prevention-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Insecure Direct Object Reference Prevention Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p><strong>I</strong>nsecure <strong>D</strong>irect <strong>O</strong>bject <strong>R</strong>eference (called <strong>IDOR</strong> from here) occurs when a application exposes a reference to an internal implementation object. Using this way, it reveals the real identifier and format/pattern used of the element in the storage backend side. The most common example of it (although is not limited to this one) is a record identifier in a storage system (database, filesystem and so on).</p>
 <p>IDOR is referenced in element <a href="https://wiki.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References" target="_blank">A4</a> of the OWASP Top 10 in the 2013 edition.</p>
-<h1 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h1>
+<h2 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h2>
 <p>IDOR do not bring a direct security issue because, by itself, it reveals only the format/pattern used for the object identifier. IDOR bring, depending on the format/pattern in place, a capacity for the attacker to mount a enumeration attack in order to try to probe access to the associated objects.</p>
 <p>Enumeration attack can be described in the way in which the attacker build a collection of valid identifiers using the discovered format/pattern and test them against the application.</p>
 <p><strong>For example:</strong></p>
@@ -1065,7 +1066,7 @@ EMP-00002
 </code></pre>
 <p>Based on this, an attacker can build a collection of valid ID from <em>EMP-00000</em> to <em>EMP-99999</em>.</p>
 <p>To be exploited, an IDOR issue must be combined with an <a href="Access_Control_Cheat_Sheet.html">Access Control</a> issue because it&apos;s the Access Control issue that &quot;allow&quot; the attacker to access to the object for which he have guessed the identifier through is enumeration attack.</p>
-<h1 id="additional-remarks"><a name="additional-remarks" class="plugin-anchor" href="#additional-remarks"><i class="fa fa-link" aria-hidden="true"></i></a>Additional remarks</h1>
+<h2 id="additional-remarks"><a name="additional-remarks" class="plugin-anchor" href="#additional-remarks"><i class="fa fa-link" aria-hidden="true"></i></a>Additional remarks</h2>
 <p><strong>From Jeff Williams</strong>:</p>
 <p>Direct Object Reference is fundamentally a Access Control problem. We split it out to emphasize the difference between URL access control and data layer access control. You can&apos;t do anything about the data-layer problems with URL access control. And they&apos;re not really input validation problems either. But we see DOR manipulation all the time. If we list only &quot;Messed-up from the Floor-up Access Control&quot; then people will probably only put in SiteMinder or JEE declarative access control on URLs and call it a day. That&apos;s what we&apos;re trying to avoid.</p>
 <p><strong>From Eric Sheridan</strong>:</p>
@@ -1073,9 +1074,9 @@ EMP-00002
 <p>&quot;A direct object reference occurs when a developer exposes a reference to an internal implementation object, such as a file, directory, database record, or key, as a URL or form parameter.&quot;</p>
 <p>I&apos;m &quot;down&quot; with DOR&apos;s for files, directories, etc. But not so much for ALL databases primary keys. That&apos;s just insane, like you are suggesting. I think that anytime database primary keys are exposed, an access control rule is required. There is no way to practically DOR all database primary keys in a real enterprise or post-enterprise system.</p>
 <p>But, suppose a user has a list of accounts, like a bank where database id 23456 is their checking account. I&apos;d DOR that in a heartbeat. You need to be prudent about this.</p>
-<h1 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h1>
+<h2 id="objective"><a name="objective" class="plugin-anchor" href="#objective"><i class="fa fa-link" aria-hidden="true"></i></a>Objective</h2>
 <p>This article propose an idea to prevent the exposure of real identifier in a simple, portable and stateless way because the proposal need to handle Session and Session-less application topologies.</p>
-<h1 id="proposition"><a name="proposition" class="plugin-anchor" href="#proposition"><i class="fa fa-link" aria-hidden="true"></i></a>Proposition</h1>
+<h2 id="proposition"><a name="proposition" class="plugin-anchor" href="#proposition"><i class="fa fa-link" aria-hidden="true"></i></a>Proposition</h2>
 <p>The proposal use a hash to replace the direct identifier. This hash is salted with a value defined at application level in order support topology in which the application is deployed in multi-instances mode (case for production).</p>
 <p>Using a hash allow the following properties:</p>
 <ul>
@@ -1089,29 +1090,29 @@ EMP-00002
 <span class="hljs-keyword">import</span> java.security.NoSuchAlgorithmException;
 
 <span class="hljs-comment">/**
- * Handle the creation of ID that will be send to front end side 
+ * Handle the creation of ID that will be send to front end side
  * in order to prevent IDOR
  */</span>
 
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IDORUtil</span> </span>{
     <span class="hljs-comment">/**
-     * SALT used for the generation of the HASH of the real item identifier 
+     * SALT used for the generation of the HASH of the real item identifier
      * in order to prevent to forge it on front end side.
      */</span>
     <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String SALT = <span class="hljs-string">&quot;[READ_IT_FROM_APP_CONFIGURATION]&quot;</span>;
 
     <span class="hljs-comment">/**
-     * Compute a identifier that will be send to the front end and be used as item 
+     * Compute a identifier that will be send to the front end and be used as item
      * unique identifier on client side.
      *
-     * <span class="hljs-doctag">@param</span> realItemBackendIdentifier Identifier of the item on the backend storage 
+     * <span class="hljs-doctag">@param</span> realItemBackendIdentifier Identifier of the item on the backend storage
      *                                  (real identifier)
      * <span class="hljs-doctag">@return</span> A string representing the identifier to use
      * <span class="hljs-doctag">@throws</span> UnsupportedEncodingException If string&apos;s byte cannot be obtained
-     * <span class="hljs-doctag">@throws</span> NoSuchAlgorithmException If the hashing algorithm used is not 
+     * <span class="hljs-doctag">@throws</span> NoSuchAlgorithmException If the hashing algorithm used is not
      *                                  supported is not available
      */</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">computeFrontEndIdentifier</span><span class="hljs-params">(String realItemBackendIdentifier)</span> 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">computeFrontEndIdentifier</span><span class="hljs-params">(String realItemBackendIdentifier)</span>
      <span class="hljs-keyword">throws</span> NoSuchAlgorithmException, UnsupportedEncodingException </span>{
         String frontEndId = <span class="hljs-keyword">null</span>;
         <span class="hljs-keyword">if</span> (realItemBackendIdentifier != <span class="hljs-keyword">null</span> &amp;&amp; !realItemBackendIdentifier.trim().isEmpty()) {
@@ -1151,7 +1152,7 @@ EMP-00002
                 <span class="hljs-comment">//Add the computed ID and the associated item name to the result map</span>
                 result.put(frontEndId, m.getName());
             } <span class="hljs-keyword">catch</span> (Exception e) {
-                LOGGER.error(<span class="hljs-string">&quot;Error during ID generation for real ID {}: {}&quot;</span>, m.getBackendIdentifier(), 
+                LOGGER.error(<span class="hljs-string">&quot;Error during ID generation for real ID {}: {}&quot;</span>, m.getBackendIdentifier(),
                              e.getMessage());
             }
         });
@@ -1189,7 +1190,7 @@ EMP-00002
         <span class="hljs-keyword">return</span> match;
     }).findFirst();
 
-    <span class="hljs-comment">//We have marked the Backend Identifier class field as excluded </span>
+    <span class="hljs-comment">//We have marked the Backend Identifier class field as excluded</span>
     <span class="hljs-comment">//from the serialization</span>
     <span class="hljs-comment">//So we can send the object to front end through the serializer</span>
     <span class="hljs-keyword">return</span> movie.get();
@@ -1208,7 +1209,7 @@ EMP-00002
 ...
 }
 </code></pre>
-<h1 id="sources-of-the-prototype"><a name="sources-of-the-prototype" class="plugin-anchor" href="#sources-of-the-prototype"><i class="fa fa-link" aria-hidden="true"></i></a>Sources of the prototype</h1>
+<h2 id="sources-of-the-prototype"><a name="sources-of-the-prototype" class="plugin-anchor" href="#sources-of-the-prototype"><i class="fa fa-link" aria-hidden="true"></i></a>Sources of the prototype</h2>
 <p><a href="https://github.com/righettod/poc-idor" target="_blank">Github repository</a>.</p>
 
                                 
@@ -1253,7 +1254,7 @@ EMP-00002
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Insecure Direct Object Reference Prevention ","level":"1.35","depth":1,"next":{"title":"JAAS ","level":"1.36","depth":1,"path":"cheatsheets/JAAS_Cheat_Sheet.md","ref":"cheatsheets/JAAS_Cheat_Sheet.md","articles":[]},"previous":{"title":"Input Validation ","level":"1.34","depth":1,"path":"cheatsheets/Input_Validation_Cheat_Sheet.md","ref":"cheatsheets/Input_Validation_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Insecure Direct Object Reference Prevention ","level":"1.35","depth":1,"next":{"title":"JAAS ","level":"1.36","depth":1,"path":"cheatsheets/JAAS_Cheat_Sheet.md","ref":"cheatsheets/JAAS_Cheat_Sheet.md","articles":[]},"previous":{"title":"Input Validation ","level":"1.34","depth":1,"path":"cheatsheets/Input_Validation_Cheat_Sheet.md","ref":"cheatsheets/Input_Validation_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

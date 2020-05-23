@@ -1050,7 +1050,8 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="threat-modeling-cheat-sheet"><a name="threat-modeling-cheat-sheet" class="plugin-anchor" href="#threat-modeling-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Threat Modeling Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>Objective of the Threat Modelling Control Cheat Sheet &#x2013; To provide guidance to architects, designers and reviewers, on deriving threat models for applications.</p>
 <p>Audience for this cheat sheet</p>
 <ol>
@@ -1059,53 +1060,53 @@
 </ol>
 <p>This cheat sheet provides guidance to assess existing apps as well as new apps. The instructions in here will help designer and architects address applications risks in an early stage of the development life cycle to help developers consider these risks while writing the code. It will also help assessors to look at risks from a comprehensive perspective.</p>
 <p>Following the guidance in this cheat sheet, the assessors will list all possible risks and then verifies whether there are enough security controls to protect against these risks. The assessor will then give better recommendations on how to mitigate these risks. It will help the assessor discover logical attacks. In general, the threat modeling will help designers, architects and assessors discover logical attacks.</p>
-<h1 id="preparation"><a name="preparation" class="plugin-anchor" href="#preparation"><i class="fa fa-link" aria-hidden="true"></i></a>Preparation</h1>
-<h2 id="understand-risk-management-basics-in-the-context-of-application-security"><a name="understand-risk-management-basics-in-the-context-of-application-security" class="plugin-anchor" href="#understand-risk-management-basics-in-the-context-of-application-security"><i class="fa fa-link" aria-hidden="true"></i></a>Understand Risk Management Basics in the context of Application Security</h2>
+<h2 id="preparation"><a name="preparation" class="plugin-anchor" href="#preparation"><i class="fa fa-link" aria-hidden="true"></i></a>Preparation</h2>
+<h3 id="understand-risk-management-basics-in-the-context-of-application-security"><a name="understand-risk-management-basics-in-the-context-of-application-security" class="plugin-anchor" href="#understand-risk-management-basics-in-the-context-of-application-security"><i class="fa fa-link" aria-hidden="true"></i></a>Understand Risk Management Basics in the context of Application Security</h3>
 <p>Understand the Relation between Risk, Threats, and Vulnerabilities.</p>
-<h2 id="threat-modeling-terminologies"><a name="threat-modeling-terminologies" class="plugin-anchor" href="#threat-modeling-terminologies"><i class="fa fa-link" aria-hidden="true"></i></a>Threat Modeling Terminologies</h2>
+<h3 id="threat-modeling-terminologies"><a name="threat-modeling-terminologies" class="plugin-anchor" href="#threat-modeling-terminologies"><i class="fa fa-link" aria-hidden="true"></i></a>Threat Modeling Terminologies</h3>
 <p><em>Information Asset</em>, a body of knowledge that is organized and managed as a single entity. Like any other corporate asset, an organization&apos;s information assets have financial value.</p>
-<p><em>Threat Agent</em>, an individual or group that can manifest a threat. It is fundamental to identify who would want to exploit the assets of a company, and how they might use them against the company. </p>
+<p><em>Threat Agent</em>, an individual or group that can manifest a threat. It is fundamental to identify who would want to exploit the assets of a company, and how they might use them against the company.</p>
 <p><em>Attack Surface</em>, the sum of the different points (the &quot;attack vectors&quot;) where an unauthorized user (the &quot;attacker&quot;) can try to enter data to or extract data from an environment.</p>
 <p><em>Likelihood</em>, the possibility of a a threat event occurring where a threat actor will exploit a weakness. The likelihood of threat events resulting in adverse impacts estimates the possibility that a threat event would result in an actual outcome. The combined analysis of both threat assessment vectors impacts established an overall threat likelihood.</p>
 <p><em>Impact</em>, the potential damage (physical, logical, monetary loss, etc) of a threat event.</p>
 <p><em>Control</em> a safeguard or countermeasure to avoid, detect, counteract, or minimize security risks to information, computer systems, or other assets.</p>
 <p><em>Mitigation</em> A systematic reduction of risk or likelihood&apos;s impact to an asset.</p>
 <p><em>Tractability Matrix</em>, a grid that allows documentation and easy viewing of what is required for a system&apos;s security.</p>
-<h2 id="define-objectives"><a name="define-objectives" class="plugin-anchor" href="#define-objectives"><i class="fa fa-link" aria-hidden="true"></i></a>Define Objectives</h2>
+<h3 id="define-objectives"><a name="define-objectives" class="plugin-anchor" href="#define-objectives"><i class="fa fa-link" aria-hidden="true"></i></a>Define Objectives</h3>
 <p>Before starting the threat modeling process; it is important to identify business objectives of the applications, and identify security &amp; compliance requirements. This is very important to be defined in advance to help to evaluate the impact of any vulnerability during the risk analysis process.</p>
-<h1 id="identify-application-design"><a name="identify-application-design" class="plugin-anchor" href="#identify-application-design"><i class="fa fa-link" aria-hidden="true"></i></a>Identify application design</h1>
+<h2 id="identify-application-design"><a name="identify-application-design" class="plugin-anchor" href="#identify-application-design"><i class="fa fa-link" aria-hidden="true"></i></a>Identify application design</h2>
 <p>Understanding application design is a key activity to perform application threat modeling. It will enable the user of this cheat sheet to draw an accurate data flow diagram. Therefore, it will be easier to identify all possible risks. Moreover, the more the user of this cheat sheet understands application design, the better they will understand logical application attacks. The objective of the design document is to enumerate application components.</p>
-<h2 id="review-the-application-design-document"><a name="review-the-application-design-document" class="plugin-anchor" href="#review-the-application-design-document"><i class="fa fa-link" aria-hidden="true"></i></a>Review the application design document</h2>
+<h3 id="review-the-application-design-document"><a name="review-the-application-design-document" class="plugin-anchor" href="#review-the-application-design-document"><i class="fa fa-link" aria-hidden="true"></i></a>Review the application design document</h3>
 <p>If you are not performing threat modeling during the development (in the design phase) so you have to review the application design documents to understand the application structure and to help to generate the data flow diagram. If there are no available design documents so you have to create one. Move to the next section</p>
-<h2 id="create-design-documents"><a name="create-design-documents" class="plugin-anchor" href="#create-design-documents"><i class="fa fa-link" aria-hidden="true"></i></a>Create design documents</h2>
-<p>There are many ways to generate design documents; the <strong>4+1</strong> view model is one of the matured approaches to building your design document. </p>
+<h3 id="create-design-documents"><a name="create-design-documents" class="plugin-anchor" href="#create-design-documents"><i class="fa fa-link" aria-hidden="true"></i></a>Create design documents</h3>
+<p>There are many ways to generate design documents; the <strong>4+1</strong> view model is one of the matured approaches to building your design document.</p>
 <p>Reference to <strong>4+1</strong> view model of architecture <a href="https://en.wikipedia.org/wiki/4%2B1_architectural_view_model" target="_blank">here</a>.</p>
 <p>Please note that the <strong>4+1</strong> is comprehensive, you may use any other design model during this phase.</p>
 <p>The following subsections show the details about <strong>4+1</strong> approach and how this could help in the threat modeling process:</p>
-<h3 id="logical-view"><a name="logical-view" class="plugin-anchor" href="#logical-view"><i class="fa fa-link" aria-hidden="true"></i></a>Logical View</h3>
+<h4 id="logical-view"><a name="logical-view" class="plugin-anchor" href="#logical-view"><i class="fa fa-link" aria-hidden="true"></i></a>Logical View</h4>
 <p>Create a logical map of the Target of Evaluation.</p>
 <p><strong>Audience</strong>: Designers.</p>
 <p><strong>Area</strong>: Functional Requirements: describes the design&apos;s object model.</p>
 <p><strong>Related Artifacts</strong>: Design model</p>
-<h3 id="implementation-view"><a name="implementation-view" class="plugin-anchor" href="#implementation-view"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation View</h3>
+<h4 id="implementation-view"><a name="implementation-view" class="plugin-anchor" href="#implementation-view"><i class="fa fa-link" aria-hidden="true"></i></a>Implementation View</h4>
 <p><strong>Audience</strong>:  Programmers.</p>
 <p><strong>Area</strong>:  Software components: describes the layers and subsystems of the application.</p>
 <p><strong>Related Artifacts</strong>:  Implementation model, components</p>
 <p>Please refer to the image in the appendix section for sample design for the implementation view.</p>
-<h3 id="process-view"><a name="process-view" class="plugin-anchor" href="#process-view"><i class="fa fa-link" aria-hidden="true"></i></a>Process View</h3>
+<h4 id="process-view"><a name="process-view" class="plugin-anchor" href="#process-view"><i class="fa fa-link" aria-hidden="true"></i></a>Process View</h4>
 <p><strong>Audience</strong>:  Integrators.</p>
 <p><strong>Area</strong>:  Non-functional requirements: describes the design&apos;s concurrency and synchronization aspects.</p>
 <p><strong>Related Artifacts</strong>:  (no specific artifact).</p>
-<h3 id="deployment-view"><a name="deployment-view" class="plugin-anchor" href="#deployment-view"><i class="fa fa-link" aria-hidden="true"></i></a>Deployment View</h3>
+<h4 id="deployment-view"><a name="deployment-view" class="plugin-anchor" href="#deployment-view"><i class="fa fa-link" aria-hidden="true"></i></a>Deployment View</h4>
 <p>Create a physical map of the Target of Evaluation</p>
 <p><strong>Audience</strong>: Deployment managers.</p>
 <p><strong>Area</strong>: Topology: describes the mapping of the software onto the hardware and shows the system&apos;s distributed aspects.</p>
 <p><strong>Related Artifacts</strong>: Deployment model.</p>
-<h3 id="use-case-view"><a name="use-case-view" class="plugin-anchor" href="#use-case-view"><i class="fa fa-link" aria-hidden="true"></i></a>Use-Case View</h3>
+<h4 id="use-case-view"><a name="use-case-view" class="plugin-anchor" href="#use-case-view"><i class="fa fa-link" aria-hidden="true"></i></a>Use-Case View</h4>
 <p><strong>Audience</strong>: All the stakeholders of the system, including the end-users.</p>
 <p><strong>Area</strong>:  describes the set of scenarios and/or use cases that represent some significant, central functionality of the system.</p>
 <p><strong>Related Artifacts</strong>:  Use-Case Model, Use-Case documents</p>
-<h1 id="decompose-and-model-the-system"><a name="decompose-and-model-the-system" class="plugin-anchor" href="#decompose-and-model-the-system"><i class="fa fa-link" aria-hidden="true"></i></a>Decompose and Model the System</h1>
+<h2 id="decompose-and-model-the-system"><a name="decompose-and-model-the-system" class="plugin-anchor" href="#decompose-and-model-the-system"><i class="fa fa-link" aria-hidden="true"></i></a>Decompose and Model the System</h2>
 <p>Gain an understanding of how the system works to perform a threat model, it is important to understand how the system works and interacts with its ecosystem. To start with creating a high-level information flow diagram, like the following:</p>
 <ol>
 <li>Identify the trusted boundaries of your system/application/module/ecosystem that you may want to start off with.</li>
@@ -1116,37 +1117,37 @@
 <li>Identify the information elements and their classification as per your information classification policy</li>
 <li>Where possible add assets to the identified information flows.</li>
 </ol>
-<h2 id="define-and-evaluate-your-assets"><a name="define-and-evaluate-your-assets" class="plugin-anchor" href="#define-and-evaluate-your-assets"><i class="fa fa-link" aria-hidden="true"></i></a>Define and Evaluate your Assets</h2>
+<h3 id="define-and-evaluate-your-assets"><a name="define-and-evaluate-your-assets" class="plugin-anchor" href="#define-and-evaluate-your-assets"><i class="fa fa-link" aria-hidden="true"></i></a>Define and Evaluate your Assets</h3>
 <p>Assets involved in the information flow should be defined and evaluated according to their value of confidentiality, integrity and availability.</p>
-<h3 id="consider-data-in-transit-and-data-at-rest"><a name="consider-data-in-transit-and-data-at-rest" class="plugin-anchor" href="#consider-data-in-transit-and-data-at-rest"><i class="fa fa-link" aria-hidden="true"></i></a>Consider Data in transit and Data at rest</h3>
+<h4 id="consider-data-in-transit-and-data-at-rest"><a name="consider-data-in-transit-and-data-at-rest" class="plugin-anchor" href="#consider-data-in-transit-and-data-at-rest"><i class="fa fa-link" aria-hidden="true"></i></a>Consider Data in transit and Data at rest</h4>
 <p>Data protection in transit is the protection of this data while it&#x2019;s traveling from network to network or being transferred from a local storage device to a cloud storage device &#x2013; wherever data is moving, effective data protection measures for in-transit data are critical as data is often considered less secure while in motion.</p>
 <p>While data at rest is sometimes considered to be less vulnerable than data in transit, attackers often find data at rest a more valuable target than data in motion.</p>
 <p>The risk profile for data in transit or data at rest depends on the security measures that are in place to secure data in either state. Protecting sensitive data both in transit and at rest is imperative for modern enterprises as attackers find increasingly innovative ways to compromise systems and steal data.</p>
-<h2 id="create-an-information-flow-diagram"><a name="create-an-information-flow-diagram" class="plugin-anchor" href="#create-an-information-flow-diagram"><i class="fa fa-link" aria-hidden="true"></i></a>Create an information flow diagram</h2>
-<h3 id="whiteboard-your-architecture"><a name="whiteboard-your-architecture" class="plugin-anchor" href="#whiteboard-your-architecture"><i class="fa fa-link" aria-hidden="true"></i></a>Whiteboard Your Architecture</h3>
+<h3 id="create-an-information-flow-diagram"><a name="create-an-information-flow-diagram" class="plugin-anchor" href="#create-an-information-flow-diagram"><i class="fa fa-link" aria-hidden="true"></i></a>Create an information flow diagram</h3>
+<h4 id="whiteboard-your-architecture"><a name="whiteboard-your-architecture" class="plugin-anchor" href="#whiteboard-your-architecture"><i class="fa fa-link" aria-hidden="true"></i></a>Whiteboard Your Architecture</h4>
 <p>It is important to whiteboard system architecture by showing the major constraints and decisions in order to frame and start conversations. The value is actually twofold. If the architecture cannot be white-boarded, then it suggests that it is not well understood. If a clear and concise whiteboard diagram can be provided, others will understand it and it will be easier to communicate details.</p>
-<h3 id="manage-to-present-your-dfd-in-the-context-of-mvc"><a name="manage-to-present-your-dfd-in-the-context-of-mvc" class="plugin-anchor" href="#manage-to-present-your-dfd-in-the-context-of-mvc"><i class="fa fa-link" aria-hidden="true"></i></a>Manage to present your DFD in the context of MVC</h3>
+<h4 id="manage-to-present-your-dfd-in-the-context-of-mvc"><a name="manage-to-present-your-dfd-in-the-context-of-mvc" class="plugin-anchor" href="#manage-to-present-your-dfd-in-the-context-of-mvc"><i class="fa fa-link" aria-hidden="true"></i></a>Manage to present your DFD in the context of MVC</h4>
 <p>In this step, Data Flow Diagram should be divided in the context of Model, View, Controller (MVC).</p>
-<h3 id="use-tools-to-draw-your-diagram"><a name="use-tools-to-draw-your-diagram" class="plugin-anchor" href="#use-tools-to-draw-your-diagram"><i class="fa fa-link" aria-hidden="true"></i></a>Use tools to draw your diagram</h3>
+<h4 id="use-tools-to-draw-your-diagram"><a name="use-tools-to-draw-your-diagram" class="plugin-anchor" href="#use-tools-to-draw-your-diagram"><i class="fa fa-link" aria-hidden="true"></i></a>Use tools to draw your diagram</h4>
 <p>If you don&#x2019;t like to manually draw your DFD; there are several tools available that could be used:</p>
-<h4 id="owasp-threat-dragon"><a name="owasp-threat-dragon" class="plugin-anchor" href="#owasp-threat-dragon"><i class="fa fa-link" aria-hidden="true"></i></a>OWASP Threat Dragon</h4>
+<h5 id="owasp-threat-dragon"><a name="owasp-threat-dragon" class="plugin-anchor" href="#owasp-threat-dragon"><i class="fa fa-link" aria-hidden="true"></i></a>OWASP Threat Dragon</h5>
 <p>The OWASP <a href="https://owasp.org/www-project-threat-dragon/" target="_blank">Threat Dragon project</a> is a cross platform tool that runs on Linux, MacOS and Windows 10. Threat Dragon (TD) is used to create threat model diagrams and to record possible threats and decide on their mitigations using STRIDE methodology. TD is both a <a href="https://github.com/mike-goodwin/owasp-threat-dragon/releases/tag/v1.1" target="_blank">web application</a> and a <a href="https://github.com/mike-goodwin/owasp-threat-dragon-desktop/releases/tag/v1.1" target="_blank">desktop application</a>; in active development with version 1.1 released in March 2020.</p>
-<h4 id="poirot"><a name="poirot" class="plugin-anchor" href="#poirot"><i class="fa fa-link" aria-hidden="true"></i></a>Poirot</h4>
+<h5 id="poirot"><a name="poirot" class="plugin-anchor" href="#poirot"><i class="fa fa-link" aria-hidden="true"></i></a>Poirot</h5>
 <p>The Poirot tool isolates and diagnoses defects through fault modeling and simulation. Along with a carefully selected partitioning strategy, functional and sequential test pattern applications show success with circuits having a high degree of observability.</p>
-<h4 id="ms-tmt"><a name="ms-tmt" class="plugin-anchor" href="#ms-tmt"><i class="fa fa-link" aria-hidden="true"></i></a>MS TMT</h4>
+<h5 id="ms-tmt"><a name="ms-tmt" class="plugin-anchor" href="#ms-tmt"><i class="fa fa-link" aria-hidden="true"></i></a>MS TMT</h5>
 <p>The Microsoft Threat Modeling Tool (TMT) helps find threats in the design phase of software projects. It is one of the longest lived threat modeling tools, having been introduced as Microsoft SDL in 2008, and is actively supported; <a href="https://aka.ms/threatmodelingtool" target="_blank">version 7.3</a> was released March 2020. It runs only on Windows 10 Anniversary Update or later, and so is difficult to use on MacOS or Linux.</p>
-<h2 id="define-data-flow-over-your-dfd"><a name="define-data-flow-over-your-dfd" class="plugin-anchor" href="#define-data-flow-over-your-dfd"><i class="fa fa-link" aria-hidden="true"></i></a>Define Data Flow over your DFD</h2>
+<h3 id="define-data-flow-over-your-dfd"><a name="define-data-flow-over-your-dfd" class="plugin-anchor" href="#define-data-flow-over-your-dfd"><i class="fa fa-link" aria-hidden="true"></i></a>Define Data Flow over your DFD</h3>
 <p>Define Data Flows over the organization Data Flow Diagram.</p>
-<h2 id="define-trust-boundaries"><a name="define-trust-boundaries" class="plugin-anchor" href="#define-trust-boundaries"><i class="fa fa-link" aria-hidden="true"></i></a>Define Trust Boundaries</h2>
+<h3 id="define-trust-boundaries"><a name="define-trust-boundaries" class="plugin-anchor" href="#define-trust-boundaries"><i class="fa fa-link" aria-hidden="true"></i></a>Define Trust Boundaries</h3>
 <p>Define any distinct boundaries (External boundaries and Internal boundaries) within which a system trusts all sub-systems (including data).</p>
-<h2 id="define-applications-user-roles-and-trust-levels"><a name="define-applications-user-roles-and-trust-levels" class="plugin-anchor" href="#define-applications-user-roles-and-trust-levels"><i class="fa fa-link" aria-hidden="true"></i></a>Define applications user roles and trust levels</h2>
+<h3 id="define-applications-user-roles-and-trust-levels"><a name="define-applications-user-roles-and-trust-levels" class="plugin-anchor" href="#define-applications-user-roles-and-trust-levels"><i class="fa fa-link" aria-hidden="true"></i></a>Define applications user roles and trust levels</h3>
 <p>Define access rights that the application will grant to external entities and internal entities.</p>
-<h2 id="highlight-authorization-per-user-role-over-the-dfd"><a name="highlight-authorization-per-user-role-over-the-dfd" class="plugin-anchor" href="#highlight-authorization-per-user-role-over-the-dfd"><i class="fa fa-link" aria-hidden="true"></i></a>Highlight Authorization per user role over the DFD</h2>
+<h3 id="highlight-authorization-per-user-role-over-the-dfd"><a name="highlight-authorization-per-user-role-over-the-dfd" class="plugin-anchor" href="#highlight-authorization-per-user-role-over-the-dfd"><i class="fa fa-link" aria-hidden="true"></i></a>Highlight Authorization per user role over the DFD</h3>
 <p>Highlight Authorization per user role, for example, defining app users&#x2019; role, admins&#x2019; role, anonymous visitors&#x2019; role...etc.</p>
-<h2 id="define-application-entry-points"><a name="define-application-entry-points" class="plugin-anchor" href="#define-application-entry-points"><i class="fa fa-link" aria-hidden="true"></i></a>Define Application Entry points</h2>
+<h3 id="define-application-entry-points"><a name="define-application-entry-points" class="plugin-anchor" href="#define-application-entry-points"><i class="fa fa-link" aria-hidden="true"></i></a>Define Application Entry points</h3>
 <p>Define the interfaces through which potential attackers can interact with the application or supply them with data.</p>
-<h1 id="identify-threat-agents"><a name="identify-threat-agents" class="plugin-anchor" href="#identify-threat-agents"><i class="fa fa-link" aria-hidden="true"></i></a>Identify Threat Agents</h1>
-<h2 id="define-all-possible-threats"><a name="define-all-possible-threats" class="plugin-anchor" href="#define-all-possible-threats"><i class="fa fa-link" aria-hidden="true"></i></a>Define all possible threats</h2>
+<h2 id="identify-threat-agents"><a name="identify-threat-agents" class="plugin-anchor" href="#identify-threat-agents"><i class="fa fa-link" aria-hidden="true"></i></a>Identify Threat Agents</h2>
+<h3 id="define-all-possible-threats"><a name="define-all-possible-threats" class="plugin-anchor" href="#define-all-possible-threats"><i class="fa fa-link" aria-hidden="true"></i></a>Define all possible threats</h3>
 <p>Identify Possible Attackers threat agents that could exist within the Target of Evaluation. Use Means, Motive, and Opportunities to understand Threats posed by Attackers. Then associate threat agents with system components they can directly interact with.</p>
 <p>Work on minimizing the number of threat agents by:</p>
 <ul>
@@ -1161,27 +1162,27 @@
 <li>Risks with <a href="https://www.sans.org/top25-software-errors" target="_blank">SANS Top 25</a>.</li>
 <li>Microsoft <a href="https://en.wikipedia.org/wiki/STRIDE_%28security%29" target="_blank">STRIDE</a>.</li>
 </ol>
-<h2 id="map-threat-agents-to-application-entry-points"><a name="map-threat-agents-to-application-entry-points" class="plugin-anchor" href="#map-threat-agents-to-application-entry-points"><i class="fa fa-link" aria-hidden="true"></i></a>Map Threat agents to application Entry points</h2>
+<h3 id="map-threat-agents-to-application-entry-points"><a name="map-threat-agents-to-application-entry-points" class="plugin-anchor" href="#map-threat-agents-to-application-entry-points"><i class="fa fa-link" aria-hidden="true"></i></a>Map Threat agents to application Entry points</h3>
 <p>Map threat agents to the application entry point, whether it is a login process, a registration process or whatever it might be and consider insider Threats.</p>
-<h2 id="draw-attack-vectors-and-attacks-tree"><a name="draw-attack-vectors-and-attacks-tree" class="plugin-anchor" href="#draw-attack-vectors-and-attacks-tree"><i class="fa fa-link" aria-hidden="true"></i></a>Draw attack vectors and attacks tree</h2>
+<h3 id="draw-attack-vectors-and-attacks-tree"><a name="draw-attack-vectors-and-attacks-tree" class="plugin-anchor" href="#draw-attack-vectors-and-attacks-tree"><i class="fa fa-link" aria-hidden="true"></i></a>Draw attack vectors and attacks tree</h3>
 <p>During this phase conduct the following activities:</p>
 <ul>
 <li>Draw attack vectors and attacks tree.</li>
 <li>Identify Use Cases/Abuse Cases.</li>
 <li>Re-Define attack vectors to consider multi-step attacks.</li>
 </ul>
-<h2 id="mapping-abuse-cases-to-use-cases"><a name="mapping-abuse-cases-to-use-cases" class="plugin-anchor" href="#mapping-abuse-cases-to-use-cases"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping Abuse Cases to Use Cases</h2>
+<h3 id="mapping-abuse-cases-to-use-cases"><a name="mapping-abuse-cases-to-use-cases" class="plugin-anchor" href="#mapping-abuse-cases-to-use-cases"><i class="fa fa-link" aria-hidden="true"></i></a>Mapping Abuse Cases to Use Cases</h3>
 <p>TODO</p>
-<h2 id="re-define-attack-vectors"><a name="re-define-attack-vectors" class="plugin-anchor" href="#re-define-attack-vectors"><i class="fa fa-link" aria-hidden="true"></i></a>Re-Define attack vectors</h2>
+<h3 id="re-define-attack-vectors"><a name="re-define-attack-vectors" class="plugin-anchor" href="#re-define-attack-vectors"><i class="fa fa-link" aria-hidden="true"></i></a>Re-Define attack vectors</h3>
 <p>In most cases after defining the attack vectors, the compromised user role could lead to further attacks into the application. For example, assuming that an internet banking user credentials could be compromised, the user of this cheat sheet has to then redefine the attack vectors that could result from compromising the user&#x2019;s credentials and so on.</p>
-<h1 id="write-your-threat-traceability-matrix"><a name="write-your-threat-traceability-matrix" class="plugin-anchor" href="#write-your-threat-traceability-matrix"><i class="fa fa-link" aria-hidden="true"></i></a>Write your Threat traceability matrix</h1>
-<h2 id="define-the-impact-and-probability-for-each-threat"><a name="define-the-impact-and-probability-for-each-threat" class="plugin-anchor" href="#define-the-impact-and-probability-for-each-threat"><i class="fa fa-link" aria-hidden="true"></i></a>Define the Impact and Probability for each threat</h2>
+<h2 id="write-your-threat-traceability-matrix"><a name="write-your-threat-traceability-matrix" class="plugin-anchor" href="#write-your-threat-traceability-matrix"><i class="fa fa-link" aria-hidden="true"></i></a>Write your Threat traceability matrix</h2>
+<h3 id="define-the-impact-and-probability-for-each-threat"><a name="define-the-impact-and-probability-for-each-threat" class="plugin-anchor" href="#define-the-impact-and-probability-for-each-threat"><i class="fa fa-link" aria-hidden="true"></i></a>Define the Impact and Probability for each threat</h3>
 <p>Enumerate Attacks posed by the most dangerous attacker in designated areas of the logical and physical maps of the target of evaluation.</p>
 <p>Assume the attacker has a zero-day because he does. In this methodology, we assume compromise; because a zero-day will exist or already does exist (even if we don&apos;t know about it). This is about what can be done by skilled attackers, with much more time, money, motive and opportunity that we have.</p>
 <p>Use risk management methodology to determine the risk behind the threat</p>
 <p>Create risks in risk log for every identified threat or attack to any assets. A risk assessment methodology is followed in order to identify the risk level for each vulnerability and hence for each server.</p>
 <p>Here we will highlight two risk methodology that could be used:</p>
-<h3 id="dread"><a name="dread" class="plugin-anchor" href="#dread"><i class="fa fa-link" aria-hidden="true"></i></a>DREAD</h3>
+<h4 id="dread"><a name="dread" class="plugin-anchor" href="#dread"><i class="fa fa-link" aria-hidden="true"></i></a>DREAD</h4>
 <p><a href="https://en.wikipedia.org/wiki/DREAD_%28risk_assessment_model%29" target="_blank">DREAD</a>, is about evaluating each existing vulnerability using a mathematical formula to retrieve the vulnerability&#x2019;s corresponding risk. The <strong>DREAD</strong> formula is divided into 5 main categories:</p>
 <ul>
 <li><strong>D</strong>amage - how bad would an attack be?</li>
@@ -1194,15 +1195,15 @@
 <pre><code class="lang-text">Risk Value = (Damage + Affected users) x (Reproducibility + Exploitability + Discoverability).
 </code></pre>
 <p>Then the risk level is determined using defined thresholds below.</p>
-<h3 id="pasta"><a name="pasta" class="plugin-anchor" href="#pasta"><i class="fa fa-link" aria-hidden="true"></i></a>PASTA</h3>
+<h4 id="pasta"><a name="pasta" class="plugin-anchor" href="#pasta"><i class="fa fa-link" aria-hidden="true"></i></a>PASTA</h4>
 <p><a href="https://versprite.com/tag/pasta-threat-modeling/" target="_blank">PASTA</a>, Attack Simulation &amp; Threat Analysis (PASTA) is a complete methodology to perform application threat modeling. PASTA introduces a risk-centric methodology aimed at applying security countermeasures that are commensurate to the possible impact that could be sustained from defined threat models, vulnerabilities, weaknesses, and attack patterns.</p>
 <p>PASTA introduces a complete risk analysis and evaluation procedures that you can follow to evaluate the risk for each of the identified threat. The main difference in using PASTA Approach is that you should evaluate the impact early on in the analysis phase instead of addressing the impact at the step of evaluating the risk.</p>
 <p>The idea behind addressing the impact earlier in PASTA approach is that the audience that knows impact knows the consequences on a product or use case failures more than participants in the threat analysis phase.</p>
-<p>Application security risk assessments are not enough because they are very binary and leverage a control framework basis for denoting risks. It is recommended to contextually look at threats impacts, probability and effectiveness of countermeasures that may be present. </p>
+<p>Application security risk assessments are not enough because they are very binary and leverage a control framework basis for denoting risks. It is recommended to contextually look at threats impacts, probability and effectiveness of countermeasures that may be present.</p>
 <pre><code class="lang-text">R = (T * V * P * I) / Countermeasures
 </code></pre>
 <p>For more details <a href="https://owasp.org/www-pdf-archive/AppSecEU2012_PASTA.pdf" target="_blank">about PASTA</a>.</p>
-<h2 id="rank-risks"><a name="rank-risks" class="plugin-anchor" href="#rank-risks"><i class="fa fa-link" aria-hidden="true"></i></a>Rank Risks</h2>
+<h3 id="rank-risks"><a name="rank-risks" class="plugin-anchor" href="#rank-risks"><i class="fa fa-link" aria-hidden="true"></i></a>Rank Risks</h3>
 <p>Using risk matrix rank risks from most severe to least severe based on Means, Motive &amp; Opportunity. Below is a sample risk matrix table, depending on your risk approach you can define different risk ranking matrix:</p>
 <ul>
 <li>Risk Value: 01 to 12 &#x2192; Risk Level: <strong>Notice</strong></li>
@@ -1210,14 +1211,14 @@
 <li>Risk Value: 19 to 36 &#x2192; Risk Level: <strong>Medium</strong></li>
 <li>Risk Value: 37 to 54 &#x2192; Risk Level: <strong>High</strong></li>
 </ul>
-<h1 id="determine-countermeasures-and-mitigation"><a name="determine-countermeasures-and-mitigation" class="plugin-anchor" href="#determine-countermeasures-and-mitigation"><i class="fa fa-link" aria-hidden="true"></i></a>Determine countermeasures and mitigation.</h1>
+<h2 id="determine-countermeasures-and-mitigation"><a name="determine-countermeasures-and-mitigation" class="plugin-anchor" href="#determine-countermeasures-and-mitigation"><i class="fa fa-link" aria-hidden="true"></i></a>Determine countermeasures and mitigation</h2>
 <p>Identify risk owners and agree on risk mitigation with risk owners and stakeholders. Provide the needed controls in forms of code upgrades and configuration updates to reduce risks to acceptable levels.</p>
-<h2 id="identify-risk-owners"><a name="identify-risk-owners" class="plugin-anchor" href="#identify-risk-owners"><i class="fa fa-link" aria-hidden="true"></i></a>Identify risk owners</h2>
+<h3 id="identify-risk-owners"><a name="identify-risk-owners" class="plugin-anchor" href="#identify-risk-owners"><i class="fa fa-link" aria-hidden="true"></i></a>Identify risk owners</h3>
 <p>For the assessors: After defining and analyzing the risks, the assessor should be working on the mitigation plan by firstly identifying risk owners which is the personnel that is responsible for mitigating the risk. i.e. one of the information security team or the development team.</p>
 <p>For the designers or the architects: they should assign the risk mitigation to the development team to consider it while building the application.</p>
-<h2 id="agree-on-risk-mitigation-with-risk-owners-and-stakeholders"><a name="agree-on-risk-mitigation-with-risk-owners-and-stakeholders" class="plugin-anchor" href="#agree-on-risk-mitigation-with-risk-owners-and-stakeholders"><i class="fa fa-link" aria-hidden="true"></i></a>Agree on risk mitigation with risk owners and stakeholders</h2>
+<h3 id="agree-on-risk-mitigation-with-risk-owners-and-stakeholders"><a name="agree-on-risk-mitigation-with-risk-owners-and-stakeholders" class="plugin-anchor" href="#agree-on-risk-mitigation-with-risk-owners-and-stakeholders"><i class="fa fa-link" aria-hidden="true"></i></a>Agree on risk mitigation with risk owners and stakeholders</h3>
 <p>TODO</p>
-<h2 id="build-your-risk-treatment-strategy"><a name="build-your-risk-treatment-strategy" class="plugin-anchor" href="#build-your-risk-treatment-strategy"><i class="fa fa-link" aria-hidden="true"></i></a>Build your risk treatment strategy</h2>
+<h3 id="build-your-risk-treatment-strategy"><a name="build-your-risk-treatment-strategy" class="plugin-anchor" href="#build-your-risk-treatment-strategy"><i class="fa fa-link" aria-hidden="true"></i></a>Build your risk treatment strategy</h3>
 <ul>
 <li><strong>Reduce:</strong> building controls if the form of code upgrades, confirming a specific design for the application or building a specific configuration during the deployment phase to make sure that application risk is reduced.</li>
 <li><strong>Transfer:</strong> For a specific component in the application the risk can be transferred to an outsourced third party to develop that component and making sure that the third party is doing the right testing for the component; or during the deployment phase, outsourcing a third party to do the deployment and transferring that risk to that third party.</li>
@@ -1225,15 +1226,15 @@
 <li><strong>Accept:</strong> if the risk is within acceptable criteria set earlier, in that case, the designer risk owner can accept that risk.</li>
 </ul>
 <p>For the assessor, this is considered as the last step in the assessment process. The following steps should be conducted by the risk owner, however, the assessor shall engage in 6.5 (Testing risk treatment) to verify the remediation.</p>
-<h2 id="select-appropriate-controls-to-mitigate-the-risk"><a name="select-appropriate-controls-to-mitigate-the-risk" class="plugin-anchor" href="#select-appropriate-controls-to-mitigate-the-risk"><i class="fa fa-link" aria-hidden="true"></i></a>Select appropriate controls to mitigate the risk</h2>
+<h3 id="select-appropriate-controls-to-mitigate-the-risk"><a name="select-appropriate-controls-to-mitigate-the-risk" class="plugin-anchor" href="#select-appropriate-controls-to-mitigate-the-risk"><i class="fa fa-link" aria-hidden="true"></i></a>Select appropriate controls to mitigate the risk</h3>
 <p>Selecting one of the controls to reduce the risk, either by upgrading the code, or building a specific configuration during the deployment phase and so on.</p>
-<h2 id="test-risk-treatment-to-verify-remediation"><a name="test-risk-treatment-to-verify-remediation" class="plugin-anchor" href="#test-risk-treatment-to-verify-remediation"><i class="fa fa-link" aria-hidden="true"></i></a>Test risk treatment to verify remediation</h2>
+<h3 id="test-risk-treatment-to-verify-remediation"><a name="test-risk-treatment-to-verify-remediation" class="plugin-anchor" href="#test-risk-treatment-to-verify-remediation"><i class="fa fa-link" aria-hidden="true"></i></a>Test risk treatment to verify remediation</h3>
 <p>Mitigation controls will not vanish the risk completely, rather, it would just reduce the risk. In this case, the user of this cheat sheet should measure the value of the risk after applying the mitigation controls. The value of the risk should be reduced to the acceptable criteria set earlier.</p>
-<h2 id="reduce-risk-in-risk-log-for-verified-treated-risk"><a name="reduce-risk-in-risk-log-for-verified-treated-risk" class="plugin-anchor" href="#reduce-risk-in-risk-log-for-verified-treated-risk"><i class="fa fa-link" aria-hidden="true"></i></a>Reduce risk in risk log for verified treated risk</h2>
+<h3 id="reduce-risk-in-risk-log-for-verified-treated-risk"><a name="reduce-risk-in-risk-log-for-verified-treated-risk" class="plugin-anchor" href="#reduce-risk-in-risk-log-for-verified-treated-risk"><i class="fa fa-link" aria-hidden="true"></i></a>Reduce risk in risk log for verified treated risk</h3>
 <p>After applying the mitigation and measuring the new risk value, the user of this cheat sheet should update the risk log to verify that risk has been reduced.</p>
-<h2 id="periodically-retest-risk"><a name="periodically-retest-risk" class="plugin-anchor" href="#periodically-retest-risk"><i class="fa fa-link" aria-hidden="true"></i></a>Periodically retest risk</h2>
+<h3 id="periodically-retest-risk"><a name="periodically-retest-risk" class="plugin-anchor" href="#periodically-retest-risk"><i class="fa fa-link" aria-hidden="true"></i></a>Periodically retest risk</h3>
 <p>TODO</p>
-<h1 id="appendix"><a name="appendix" class="plugin-anchor" href="#appendix"><i class="fa fa-link" aria-hidden="true"></i></a>Appendix</h1>
+<h2 id="appendix"><a name="appendix" class="plugin-anchor" href="#appendix"><i class="fa fa-link" aria-hidden="true"></i></a>Appendix</h2>
 <p>TODO: <em>Sample Design for Implementation View in 4+1 Model</em></p>
 <p>TODO: <em>Sample Design for Implementation View in 4+1 Model</em></p>
 
@@ -1279,7 +1280,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Threat Modeling ","level":"1.60","depth":1,"next":{"title":"Transaction Authorization ","level":"1.61","depth":1,"path":"cheatsheets/Transaction_Authorization_Cheat_Sheet.md","ref":"cheatsheets/Transaction_Authorization_Cheat_Sheet.md","articles":[]},"previous":{"title":"Third Party Javascript Management ","level":"1.59","depth":1,"path":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","ref":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Threat_Modeling_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Threat Modeling ","level":"1.60","depth":1,"next":{"title":"Transaction Authorization ","level":"1.61","depth":1,"path":"cheatsheets/Transaction_Authorization_Cheat_Sheet.md","ref":"cheatsheets/Transaction_Authorization_Cheat_Sheet.md","articles":[]},"previous":{"title":"Third Party Javascript Management ","level":"1.59","depth":1,"path":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","ref":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Threat_Modeling_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

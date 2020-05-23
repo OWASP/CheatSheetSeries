@@ -1050,10 +1050,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p>Unvalidated redirects and forwards are possible when a web application accepts untrusted input that could cause the web application to redirect the request to a URL contained within untrusted input. By modifying untrusted URL input to a malicious site, an attacker may successfully launch a phishing scam and steal user credentials. </p>
+                                <h1 id="unvalidated-redirects-and-forwards-cheat-sheet"><a name="unvalidated-redirects-and-forwards-cheat-sheet" class="plugin-anchor" href="#unvalidated-redirects-and-forwards-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Unvalidated Redirects and Forwards Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+<p>Unvalidated redirects and forwards are possible when a web application accepts untrusted input that could cause the web application to redirect the request to a URL contained within untrusted input. By modifying untrusted URL input to a malicious site, an attacker may successfully launch a phishing scam and steal user credentials.</p>
 <p>Because the server name in the modified link is identical to the original site, phishing attempts may have a more trustworthy appearance. Unvalidated redirect and forward attacks can also be used to maliciously craft a URL that would pass the application&apos;s access control check and then forward the attacker to privileged functions that they would normally not be able to access.</p>
-<h1 id="safe-url-redirects"><a name="safe-url-redirects" class="plugin-anchor" href="#safe-url-redirects"><i class="fa fa-link" aria-hidden="true"></i></a>Safe URL Redirects</h1>
+<h2 id="safe-url-redirects"><a name="safe-url-redirects" class="plugin-anchor" href="#safe-url-redirects"><i class="fa fa-link" aria-hidden="true"></i></a>Safe URL Redirects</h2>
 <p>When we want to redirect a user automatically to another page (without an action of the visitor such as clicking on a hyperlink) you might implement a code such as the following:</p>
 <p>Java</p>
 <pre><code class="lang-java">response.sendRedirect(<span class="hljs-string">&quot;http://www.mysite.com&quot;</span>);
@@ -1073,9 +1074,9 @@ header(<span class="hljs-string">&quot;Location: http://www.mysite.com&quot;</sp
 <pre><code class="lang-ruby">redirect_to login_path
 </code></pre>
 <p>In the examples above, the URL is being explicitly declared in the code and cannot be manipulated by an attacker.</p>
-<h1 id="dangerous-url-redirects"><a name="dangerous-url-redirects" class="plugin-anchor" href="#dangerous-url-redirects"><i class="fa fa-link" aria-hidden="true"></i></a>Dangerous URL Redirects</h1>
+<h2 id="dangerous-url-redirects"><a name="dangerous-url-redirects" class="plugin-anchor" href="#dangerous-url-redirects"><i class="fa fa-link" aria-hidden="true"></i></a>Dangerous URL Redirects</h2>
 <p>The following examples demonstrate unsafe redirect and forward code.</p>
-<h2 id="dangerous-url-redirect-example-1"><a name="dangerous-url-redirect-example-1" class="plugin-anchor" href="#dangerous-url-redirect-example-1"><i class="fa fa-link" aria-hidden="true"></i></a>Dangerous URL Redirect Example 1</h2>
+<h3 id="dangerous-url-redirect-example-1"><a name="dangerous-url-redirect-example-1" class="plugin-anchor" href="#dangerous-url-redirect-example-1"><i class="fa fa-link" aria-hidden="true"></i></a>Dangerous URL Redirect Example 1</h3>
 <p>The following Java code receives the URL from the parameter named <code>url</code> (<a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-" target="_blank">GET or POST</a>) and redirects to that URL:</p>
 <pre><code class="lang-java">response.sendRedirect(request.getParameter(<span class="hljs-string">&quot;url&quot;</span>));
 </code></pre>
@@ -1090,12 +1091,12 @@ Response.Redirect(url);
 <p>And in Rails:</p>
 <pre><code class="lang-ruby">redirect_to params[<span class="hljs-symbol">:url</span>]
 </code></pre>
-<p>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site. </p>
+<p>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.</p>
 <p>If no validation is applied, a malicious user could create a hyperlink to redirect your users to an unvalidated malicious website, for example:</p>
 <pre><code class="lang-text"> http://example.com/example.php?url=http://malicious.example.com
 </code></pre>
 <p>The user sees the link directing to the original trusted site (<code>example.com</code>) and does not realize the redirection that could take place</p>
-<h2 id="dangerous-url-redirect-example-2"><a name="dangerous-url-redirect-example-2" class="plugin-anchor" href="#dangerous-url-redirect-example-2"><i class="fa fa-link" aria-hidden="true"></i></a>Dangerous URL Redirect Example 2</h2>
+<h3 id="dangerous-url-redirect-example-2"><a name="dangerous-url-redirect-example-2" class="plugin-anchor" href="#dangerous-url-redirect-example-2"><i class="fa fa-link" aria-hidden="true"></i></a>Dangerous URL Redirect Example 2</h3>
 <p><a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/preventing-open-redirection-attacks" target="_blank">ASP .NET MVC 1 &amp; 2 websites</a> are particularly vulnerable to open redirection attacks. In order to avoid this vulnerability, you need to apply MVC 3.</p>
 <p>The code for the LogOn action in an ASP.NET MVC 2 application is shown below. After a successful login, the controller returns a redirect to the returnUrl. You can see that no validation is being performed against the returnUrl parameter.</p>
 <p>ASP.NET MVC 2 LogOn action in <code>AccountController.cs</code> (see Microsoft Docs link provided above for the context):</p>
@@ -1126,26 +1127,26 @@ Response.Redirect(url);
    <span class="hljs-keyword">return</span> View(model);
  }
 </code></pre>
-<h2 id="dangerous-forward-example"><a name="dangerous-forward-example" class="plugin-anchor" href="#dangerous-forward-example"><i class="fa fa-link" aria-hidden="true"></i></a>Dangerous Forward Example</h2>
-<p>When applications allow user input to forward requests between different parts of the site, the application must check that the user is authorized to access the URL, perform the functions it provides, and it is an appropriate URL request. </p>
+<h3 id="dangerous-forward-example"><a name="dangerous-forward-example" class="plugin-anchor" href="#dangerous-forward-example"><i class="fa fa-link" aria-hidden="true"></i></a>Dangerous Forward Example</h3>
+<p>When applications allow user input to forward requests between different parts of the site, the application must check that the user is authorized to access the URL, perform the functions it provides, and it is an appropriate URL request.</p>
 <p>If the application fails to perform these checks, an attacker crafted URL may pass the application&apos;s access control check and then forward the attacker to an administrative function that is not normally permitted.</p>
-<p>Example: </p>
+<p>Example:</p>
 <pre><code class="lang-text">http://www.example.com/function.jsp?fwd=admin.jsp
 </code></pre>
 <p>The following code is a Java servlet that will receive a <code>GET</code> request with a url parameter named <code>fwd</code> in the request to forward to the address specified in the url parameter. The servlet will retrieve the url parameter value <a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-" target="_blank">from the request</a> and complete the server-side forward processing before responding to the browser.</p>
-<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ForwardServlet</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span> 
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ForwardServlet</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HttpServlet</span>
 </span>{
-  <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doGet</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> 
+  <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doGet</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span>
                     <span class="hljs-keyword">throws</span> ServletException, IOException </span>{
     String query = request.getQueryString();
-    <span class="hljs-keyword">if</span> (query.contains(<span class="hljs-string">&quot;fwd&quot;</span>)) 
+    <span class="hljs-keyword">if</span> (query.contains(<span class="hljs-string">&quot;fwd&quot;</span>))
     {
       String fwd = request.getParameter(<span class="hljs-string">&quot;fwd&quot;</span>);
-      <span class="hljs-keyword">try</span> 
+      <span class="hljs-keyword">try</span>
       {
         request.getRequestDispatcher(fwd).forward(request, response);
-      } 
-      <span class="hljs-keyword">catch</span> (ServletException e) 
+      }
+      <span class="hljs-keyword">catch</span> (ServletException e)
       {
         e.printStackTrace();
       }
@@ -1153,7 +1154,7 @@ Response.Redirect(url);
   }
 }
 </code></pre>
-<h1 id="preventing-unvalidated-redirects-and-forwards"><a name="preventing-unvalidated-redirects-and-forwards" class="plugin-anchor" href="#preventing-unvalidated-redirects-and-forwards"><i class="fa fa-link" aria-hidden="true"></i></a>Preventing Unvalidated Redirects and Forwards</h1>
+<h2 id="preventing-unvalidated-redirects-and-forwards"><a name="preventing-unvalidated-redirects-and-forwards" class="plugin-anchor" href="#preventing-unvalidated-redirects-and-forwards"><i class="fa fa-link" aria-hidden="true"></i></a>Preventing Unvalidated Redirects and Forwards</h2>
 <p>Safe use of redirects and forwards can be done in a number of ways:</p>
 <ul>
 <li>Simply avoid using redirects and forwards.</li>
@@ -1170,7 +1171,7 @@ Response.Redirect(url);
 </li>
 <li>Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.</li>
 </ul>
-<h2 id="validating-urls"><a name="validating-urls" class="plugin-anchor" href="#validating-urls"><i class="fa fa-link" aria-hidden="true"></i></a>Validating URLs</h2>
+<h3 id="validating-urls"><a name="validating-urls" class="plugin-anchor" href="#validating-urls"><i class="fa fa-link" aria-hidden="true"></i></a>Validating URLs</h3>
 <p>When attempting to validate and sanitise user-input to determine whether the URL is safe, wherever possible you should use a built in library or function to parse the URLs, such as <code>parse_url()</code> in PHP, rather than rolling your own parser using regex. Additionally, make sure that you take the following into account:</p>
 <ul>
 <li>Input starting with a <code>/</code> to redirect to local pages is <strong>not safe</strong>. <code>//example.org</code> is a valid URL.</li>
@@ -1179,7 +1180,7 @@ Response.Redirect(url);
 <li>Data URIs such as <code>data:text/html,&lt;script&gt;alert(document.domain)&lt;/script&gt;</code> should be blocked</li>
 <li>URIs containing CRLF characters can lead to header injection or response splitting attacks, and should be blocked.</li>
 </ul>
-<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<h2 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h2>
 <ul>
 <li><a href="http://cwe.mitre.org/data/definitions/601.html" target="_blank">CWE Entry 601 on Open Redirects</a>.</li>
 <li><a href="http://projects.webappsec.org/w/page/13246981/URL%20Redirector%20Abuse" target="_blank">WASC Article on URL Redirector Abuse</a></li>
@@ -1229,7 +1230,7 @@ Response.Redirect(url);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Unvalidated Redirects and Forwards ","level":"1.63","depth":1,"next":{"title":"User Privacy Protection ","level":"1.64","depth":1,"path":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","ref":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","articles":[]},"previous":{"title":"Transport Layer Protection ","level":"1.62","depth":1,"path":"cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md","ref":"cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Unvalidated Redirects and Forwards ","level":"1.63","depth":1,"next":{"title":"User Privacy Protection ","level":"1.64","depth":1,"path":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","ref":"cheatsheets/User_Privacy_Protection_Cheat_Sheet.md","articles":[]},"previous":{"title":"Transport Layer Protection ","level":"1.62","depth":1,"path":"cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md","ref":"cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -1050,13 +1050,14 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="tls-cipher-string-cheat-sheet"><a name="tls-cipher-string-cheat-sheet" class="plugin-anchor" href="#tls-cipher-string-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>TLS Cipher String Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>This article is focused on providing clear and simple examples for the cipher string. They are based on different scenarios where you use the Transport Layer Security (TLS) protocol.</p>
-<h1 id="recommendations-for-a-cipher-string"><a name="recommendations-for-a-cipher-string" class="plugin-anchor" href="#recommendations-for-a-cipher-string"><i class="fa fa-link" aria-hidden="true"></i></a>Recommendations for a cipher string</h1>
-<h2 id="scenarios"><a name="scenarios" class="plugin-anchor" href="#scenarios"><i class="fa fa-link" aria-hidden="true"></i></a>Scenarios</h2>
+<h2 id="recommendations-for-a-cipher-string"><a name="recommendations-for-a-cipher-string" class="plugin-anchor" href="#recommendations-for-a-cipher-string"><i class="fa fa-link" aria-hidden="true"></i></a>Recommendations for a cipher string</h2>
+<h3 id="scenarios"><a name="scenarios" class="plugin-anchor" href="#scenarios"><i class="fa fa-link" aria-hidden="true"></i></a>Scenarios</h3>
 <p>The cipher strings are based on the recommendation to setup your policy to get a whitelist for your ciphers as described in the <em><a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)</a></em>. The latest and strongest ciphers are solely available with TLSv1.2, older protocols don&apos;t support them. Please find enclosed all supported protocols by the scenario.</p>
 <p>We have not included any <code>ChaCha20-Poly1305</code> ciphers, yet. One reason is that we haven&apos;t found various assessments yet, the other is that implementations of new ciphers may be more buggy.</p>
-<p>Finally we have compiled the oldest versions of different client agents that are still compatible with a cipher string. We provide this information according to the ciphers and protocols supported by browsers, libraries, bots on the basis of <em><a href="https://www.ssllabs.com/ssltest/clients.html" target="_blank">ssllabs&apos;s list of user agent capabilities</a></em> and tests on our own. </p>
+<p>Finally we have compiled the oldest versions of different client agents that are still compatible with a cipher string. We provide this information according to the ciphers and protocols supported by browsers, libraries, bots on the basis of <em><a href="https://www.ssllabs.com/ssltest/clients.html" target="_blank">ssllabs&apos;s list of user agent capabilities</a></em> and tests on our own.</p>
 <p>We have checked this thoroughly, but please accept that all data is provided without any warranty of any kind. The list of the oldest supported clients assumes that the server supports all ciphers by the scenario (Please contact the authors if you find any errors or if you can provide additional data).</p>
 <p>The recommended cipher strings are based on different scenarios:</p>
 <p><strong>OWASP Cipher String &apos;A&apos;</strong> (Advanced, wide browser compatibility, e.g. to most newer browser versions):</p>
@@ -1092,8 +1093,8 @@
 <li>Plan to move to &apos;A&apos; for https or at least &apos;B&apos; otherwise in middle-term.</li>
 <li>Protocols: <code>TLSv1.3</code>, <code>TLSv1.2</code>, <code>TLSv1.1</code>, <code>TLSv1</code> (and newer or better).</li>
 </ul>
-<h2 id="table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-18"><a name="table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-18" class="plugin-anchor" href="#table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-18"><i class="fa fa-link" aria-hidden="true"></i></a>Table of the ciphers (and their priority from high (1) to low (e.g. 18))</h2>
-<p>IANA, OpenSSL and other crypto libraries use slightly different names for the same ciphers. </p>
+<h3 id="table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-18"><a name="table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-18" class="plugin-anchor" href="#table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-18"><i class="fa fa-link" aria-hidden="true"></i></a>Table of the ciphers (and their priority from high (1) to low (e.g. 18))</h3>
+<p>IANA, OpenSSL and other crypto libraries use slightly different names for the same ciphers.</p>
 <p>This table lists the names used by IANA and by openssl in brackets <code>[]</code>. Additional you can find the unambiguously hex values defined by IANA. Mozilla offers a larger <em><a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Cipher_names_correspondence_table" target="_blank">cipher names correspondence table</a></em>.</p>
 <!-- markdownlint-disable MD033 -->
 <table>
@@ -1280,10 +1281,10 @@
 </table>
 <!-- markdownlint-enable MD033 -->
 <p><strong>Remarks:</strong></p>
-<p>Elder versions of Internet-Explorer and Java do <strong>NOT</strong> support Diffie-Hellman parameters superior to 1024 bit. So the ciphers <code>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</code> and <code>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</code> were moved to the end to prevent possible incompatibility issues. </p>
+<p>Elder versions of Internet-Explorer and Java do <strong>NOT</strong> support Diffie-Hellman parameters superior to 1024 bit. So the ciphers <code>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</code> and <code>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</code> were moved to the end to prevent possible incompatibility issues.</p>
 <p>Other option: <em>Delete this two ciphers from your list</em>.</p>
-<h2 id="examples-for-cipher-strings"><a name="examples-for-cipher-strings" class="plugin-anchor" href="#examples-for-cipher-strings"><i class="fa fa-link" aria-hidden="true"></i></a>Examples for cipher strings</h2>
-<h3 id="openssl"><a name="openssl" class="plugin-anchor" href="#openssl"><i class="fa fa-link" aria-hidden="true"></i></a>OpenSSL</h3>
+<h3 id="examples-for-cipher-strings"><a name="examples-for-cipher-strings" class="plugin-anchor" href="#examples-for-cipher-strings"><i class="fa fa-link" aria-hidden="true"></i></a>Examples for cipher strings</h3>
+<h4 id="openssl"><a name="openssl" class="plugin-anchor" href="#openssl"><i class="fa fa-link" aria-hidden="true"></i></a>OpenSSL</h4>
 <!-- markdownlint-disable MD033 -->
 <table>
 <thead>
@@ -1312,18 +1313,18 @@
 </tbody>
 </table>
 <!-- markdownlint-enable MD033 -->
-<h1 id="how-to-use-this-cipher-strings"><a name="how-to-use-this-cipher-strings" class="plugin-anchor" href="#how-to-use-this-cipher-strings"><i class="fa fa-link" aria-hidden="true"></i></a>How to use this Cipher Strings?</h1>
-<p>Inform yourself how to securely configure the settings for the services or hardware that you do use, e.g. <em><a href="https://bettercrypto.org" target="_blank">BetterCrypto.org: Applied Crypto Hardening (DRAFT)</a></em>, <em><a href="https://wiki.mozilla.org/Security/Server_Side_TLS" target="_blank">Mozilla: Security/Server Side TLS</a></em>. </p>
+<h2 id="how-to-use-this-cipher-strings"><a name="how-to-use-this-cipher-strings" class="plugin-anchor" href="#how-to-use-this-cipher-strings"><i class="fa fa-link" aria-hidden="true"></i></a>How to use this Cipher Strings</h2>
+<p>Inform yourself how to securely configure the settings for the services or hardware that you do use, e.g. <em><a href="https://bettercrypto.org" target="_blank">BetterCrypto.org: Applied Crypto Hardening (DRAFT)</a></em>, <em><a href="https://wiki.mozilla.org/Security/Server_Side_TLS" target="_blank">Mozilla: Security/Server Side TLS</a></em>.</p>
 <p>We recommend to use one of the cipher strings described above.</p>
-<h1 id="example-configs"><a name="example-configs" class="plugin-anchor" href="#example-configs"><i class="fa fa-link" aria-hidden="true"></i></a>Example configs</h1>
-<h2 id="apache"><a name="apache" class="plugin-anchor" href="#apache"><i class="fa fa-link" aria-hidden="true"></i></a>Apache</h2>
+<h2 id="example-configs"><a name="example-configs" class="plugin-anchor" href="#example-configs"><i class="fa fa-link" aria-hidden="true"></i></a>Example configs</h2>
+<h3 id="apache"><a name="apache" class="plugin-anchor" href="#apache"><i class="fa fa-link" aria-hidden="true"></i></a>Apache</h3>
 <p><strong>Cipher String &apos;B&apos;:</strong></p>
 <pre><code class="lang-text">SSLProtocol +TLSv1.2                  # for Cipher-String &apos;A&apos;, &apos;B&apos;
-#SSLProtocol +TLSv1.2 +TLSv1.1 +TLSv1 # for Cipher-String &apos;C&apos;, &apos;D&apos;
+##SSLProtocol +TLSv1.2 +TLSv1.1 +TLSv1 # for Cipher-String &apos;C&apos;, &apos;D&apos;
 SSLCompression off
 SSLHonorCipherOrder on
 SSLCipherSuite &apos;DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256&apos;
-#add optionally &apos;:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA:!3DES&apos;
+##add optionally &apos;:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA:!3DES&apos;
 </code></pre>
 <p><strong>Remarks:</strong></p>
 <ul>
@@ -1332,9 +1333,9 @@ SSLCipherSuite &apos;DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-R
 <li>Verify your cipher string using your crypto library, e.g. openssl using cipher string &apos;B&apos;:</li>
 </ul>
 <pre><code class="lang-text">openssl ciphers -V &quot;DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256&quot;
-#add optionally &apos;:!aNULL:!eNULL:!LOW:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA&apos; to protect 
-#older Versions of OpenSSL
-#use openssl ciphers -v &quot;...&quot; for openssl &lt; 1.0.1:
+##add optionally &apos;:!aNULL:!eNULL:!LOW:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA&apos; to protect
+##older Versions of OpenSSL
+##use openssl ciphers -v &quot;...&quot; for openssl &lt; 1.0.1:
 
 0x00,0x9F - DHE-RSA-AES256-GCM-SHA384   TLSv1.2 Kx=DH     Au=RSA  Enc=AESGCM(256) Mac=AEAD
 0x00,0x9E - DHE-RSA-AES128-GCM-SHA256   TLSv1.2 Kx=DH     Au=RSA  Enc=AESGCM(128) Mac=AEAD
@@ -1346,7 +1347,7 @@ SSLCipherSuite &apos;DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-R
 0xC0,0x27 - ECDHE-RSA-AES128-SHA256     TLSv1.2 Kx=ECDH   Au=RSA  Enc=AES(128)    Mac=SHA256
 </code></pre>
 <p><strong>CAUTION:</strong> You must <strong>not</strong> use legacy versions of OpenSSL if you use this cipher string! We strongly recommend to verify if it works!</p>
-<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h1>
+<h2 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h2>
 <ul>
 <li><a href="Transport_Layer_Protection_Cheat_Sheet.html">OWASP: Transport Layer Protection Cheat Sheet</a>.</li>
 <li><a href="https://bettercrypto.org" target="_blank">BetterCrypto.org: Applied Crypto Hardening (DRAFT)</a>.</li>
@@ -1395,7 +1396,7 @@ SSLCipherSuite &apos;DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-R
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"TLS Cipher String ","level":"1.58","depth":1,"next":{"title":"Third Party Javascript Management ","level":"1.59","depth":1,"path":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","ref":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"Session Management ","level":"1.57","depth":1,"path":"cheatsheets/Session_Management_Cheat_Sheet.md","ref":"cheatsheets/Session_Management_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/TLS_Cipher_String_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"TLS Cipher String ","level":"1.58","depth":1,"next":{"title":"Third Party Javascript Management ","level":"1.59","depth":1,"path":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","ref":"cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"Session Management ","level":"1.57","depth":1,"path":"cheatsheets/Session_Management_Cheat_Sheet.md","ref":"cheatsheets/Session_Management_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/TLS_Cipher_String_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

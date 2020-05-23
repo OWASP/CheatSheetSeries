@@ -1050,7 +1050,8 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="php-configuration-cheat-sheet"><a name="php-configuration-cheat-sheet" class="plugin-anchor" href="#php-configuration-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>PHP Configuration Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>This page is meant to help those configuring PHP and the web server it is running on to be very secure.</p>
 <p>Below you will find information on the proper settings for the <code>php.ini</code> file and instructions on configuring Apache, Nginx, and Caddy web servers.</p>
 <p>For general PHP codebase security please refer to the two following great guides:</p>
@@ -1058,9 +1059,9 @@
 <li><a href="https://paragonie.com/blog/2017/12/2018-guide-building-secure-php-software" target="_blank">Paragonie&apos;s 2018 PHP Security Guide</a></li>
 <li><a href="https://github.com/guardrailsio/awesome-php-security" target="_blank">Awesome PHP Security</a></li>
 </ul>
-<h1 id="php-configuration-and-deployment"><a name="php-configuration-and-deployment" class="plugin-anchor" href="#php-configuration-and-deployment"><i class="fa fa-link" aria-hidden="true"></i></a>PHP Configuration and Deployment</h1>
-<h2 id="phpini"><a name="phpini" class="plugin-anchor" href="#phpini"><i class="fa fa-link" aria-hidden="true"></i></a>php.ini</h2>
-<p>Some of following settings need to be adapted to your system, in particular <code>session.save_path</code>, <code>session.cookie_path</code> (e.g. <code>/var/www/mysite</code>), and <code>session.cookie_domain</code> (e.g. <code>ExampleSite.com</code>). </p>
+<h2 id="php-configuration-and-deployment"><a name="php-configuration-and-deployment" class="plugin-anchor" href="#php-configuration-and-deployment"><i class="fa fa-link" aria-hidden="true"></i></a>PHP Configuration and Deployment</h2>
+<h3 id="phpini"><a name="phpini" class="plugin-anchor" href="#phpini"><i class="fa fa-link" aria-hidden="true"></i></a>php.ini</h3>
+<p>Some of following settings need to be adapted to your system, in particular <code>session.save_path</code>, <code>session.cookie_path</code> (e.g. <code>/var/www/mysite</code>), and <code>session.cookie_domain</code> (e.g. <code>ExampleSite.com</code>).</p>
 <p>You should also be running PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the <a href="https://www.php.net/manual/ini.core.php" target="_blank">PHP Manual</a> for a complete reference on every value in the php.ini configuration file.</p>
 <p>You can find a copy of the following values in a ready-to-go php.ini file <a href="https://github.com/danehrlich1/very-secure-php-ini" target="_blank">here</a>.</p>
 <h4 id="php-error-handling"><a name="php-error-handling" class="plugin-anchor" href="#php-error-handling"><i class="fa fa-link" aria-hidden="true"></i></a>PHP error handling</h4>
@@ -1072,7 +1073,7 @@ log_errors              = On
 error_log               = /valid_path/PHP-logs/php_error.log
 ignore_repeated_errors  = Off
 </code></pre>
-<p>Keep in mind that you need to have <code>display_errors</code> to <code>Off</code> on a production server and it&apos;s a good idea to frequently notice the logs. </p>
+<p>Keep in mind that you need to have <code>display_errors</code> to <code>Off</code> on a production server and it&apos;s a good idea to frequently notice the logs.</p>
 <h4 id="php-general-settings"><a name="php-general-settings" class="plugin-anchor" href="#php-general-settings"><i class="fa fa-link" aria-hidden="true"></i></a>PHP general settings</h4>
 <pre><code class="lang-text">doc_root                = /path/DocumentRoot/PHP-scripts/
 open_basedir            = /path/DocumentRoot/PHP-scripts/
@@ -1101,7 +1102,7 @@ disable_classes         =
 </code></pre>
 <p>These are dangerous PHP functions. You should disable all that you don&apos;t use.</p>
 <h4 id="php-session-handling"><a name="php-session-handling" class="plugin-anchor" href="#php-session-handling"><i class="fa fa-link" aria-hidden="true"></i></a>PHP session handling</h4>
-<p>Session settings are some of the MOST important values to concentrate on in configuring. It is a good practice to change <code>session.name</code> to something new. </p>
+<p>Session settings are some of the MOST important values to concentrate on in configuring. It is a good practice to change <code>session.name</code> to something new.</p>
 <pre><code class="lang-text"> session.save_path                = /path/PHP-session/
  session.name                     = myPHPSESSID
  session.auto_start               = Off
@@ -1111,11 +1112,11 @@ disable_classes         =
  session.use_strict_mode          = 1
  session.use_cookies              = 1
  session.use_only_cookies         = 1
- session.cookie_lifetime          = 14400 # 4 hours 
+ session.cookie_lifetime          = 14400 # 4 hours
  session.cookie_secure            = 1
  session.cookie_httponly          = 1
  session.cookie_samesite          = Strict
- session.cache_expire             = 30 
+ session.cache_expire             = 30
  session.sid_length               = 256
  session.sid_bits_per_character   = 6 # PHP 7.2+
  session.hash_function            = 1 # PHP 7.0-7.1
@@ -1130,7 +1131,7 @@ report_memleaks         = On
 track_errors            = Off
 html_errors             = Off
 </code></pre>
-<h2 id="suhosin"><a name="suhosin" class="plugin-anchor" href="#suhosin"><i class="fa fa-link" aria-hidden="true"></i></a>Suhosin</h2>
+<h3 id="suhosin"><a name="suhosin" class="plugin-anchor" href="#suhosin"><i class="fa fa-link" aria-hidden="true"></i></a>Suhosin</h3>
 <p><a href="https://www.hardened-php.net/suhosin/index.html" target="_blank">Suhosin</a> is a patch to PHP which provides a number of hardening and security features that are not available in the default PHP build. However, Suhosin only works with PHP 5, which is <strong>unsupported</strong> and <strong>should not be used</strong>.</p>
 <p>There are a number of projects that have attempted to implement similar features for PHP 7 such as <a href="https://snuffleupagus.readthedocs.io/" target="_blank">Snuffleupagus</a> and <a href="https://github.com/sektioneins/suhosin-ng/wiki/News" target="_blank">Suhosin-ng</a>, but these are both in the pre-release stage, and as such <strong>should not be used in production</strong>.</p>
 
@@ -1176,7 +1177,7 @@ html_errors             = Off
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PHP Configuration ","level":"1.46","depth":1,"next":{"title":"Password Storage ","level":"1.47","depth":1,"path":"cheatsheets/Password_Storage_Cheat_Sheet.md","ref":"cheatsheets/Password_Storage_Cheat_Sheet.md","articles":[]},"previous":{"title":"OS Command Injection Defense ","level":"1.45","depth":1,"path":"cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md","ref":"cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/PHP_Configuration_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PHP Configuration ","level":"1.46","depth":1,"next":{"title":"Password Storage ","level":"1.47","depth":1,"path":"cheatsheets/Password_Storage_Cheat_Sheet.md","ref":"cheatsheets/Password_Storage_Cheat_Sheet.md","articles":[]},"previous":{"title":"OS Command Injection Defense ","level":"1.45","depth":1,"path":"cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md","ref":"cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/PHP_Configuration_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

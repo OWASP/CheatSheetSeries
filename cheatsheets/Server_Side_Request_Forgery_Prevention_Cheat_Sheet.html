@@ -1050,7 +1050,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="server-side-request-forgery-cheat-sheet"><a name="server-side-request-forgery-cheat-sheet" class="plugin-anchor" href="#server-side-request-forgery-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Server-Side Request Forgery Cheat Sheet</h1>
+                                <h1 id="server-side-request-forgery-prevention-cheat-sheet"><a name="server-side-request-forgery-prevention-cheat-sheet" class="plugin-anchor" href="#server-side-request-forgery-prevention-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Server-Side Request Forgery Prevention Cheat Sheet</h1>
 <h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>The objective of the cheat sheet is to provide advices regarding the protection against <a href="https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/" target="_blank">Server Side Request Forgery</a> (SSRF) attack.</p>
 <p>This cheat sheet will focus on the defensive point of view and will not explain how to perform this attack. This <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a> from the security researcher <a href="https://twitter.com/orange_8361" target="_blank">Orange Tsai</a> as well as this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a> provide techniques on how to perform this kind of attack.</p>
@@ -1090,7 +1090,7 @@
 <li><a href="#tools-and-code-used-for-schemas">Tools and code used for schemas</a></li>
 </ul>
 <h2 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h2>
-<p>SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples: </p>
+<p>SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples:</p>
 <ul>
 <li>Image on external server (<em>e.g.</em> user enters image URL of their avatar for the application to download and use).</li>
 <li>Custom <a href="https://en.wikipedia.org/wiki/Webhook" target="_blank">WebHook</a> (user have to specify WebHook handlers or Callback URLs).</li>
@@ -1098,7 +1098,7 @@
 </ul>
 <h2 id="overview-of-a-ssrf-common-flow"><a name="overview-of-a-ssrf-common-flow" class="plugin-anchor" href="#overview-of-a-ssrf-common-flow"><i class="fa fa-link" aria-hidden="true"></i></a>Overview of a SSRF common flow</h2>
 <p><img src="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Common_Flow.png" alt="SSRF Common Flow"></p>
-<p><em>Notes:</em> </p>
+<p><em>Notes:</em></p>
 <ul>
 <li>SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (<em>e.g.</em> FTP, SMB, SMTP, etc.) and schemes (<em>e.g.</em> <code>file://</code>, <code>phar://</code>, <code>gopher://</code>, <code>data://</code>, <code>dict://</code>, etc.). The protocol/scheme usage is highly dependent on the application&apos;s requirements.</li>
 <li>If the application is vulnerable to <a href="https://portswigger.net/web-security/xxe" target="_blank">XML eXternal Entity (XXE) injection</a> then it can by exploited to perform a <a href="https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks" target="_blank">SSRF attack</a>, take a look at the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a> to learn how to prevent the exposure to XXE.</li>
@@ -1114,15 +1114,15 @@
 <p>Sometimes, an application need to perform request to another application, often located on another network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.</p>
 <h4 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h4>
 <blockquote>
-<p>Take the example of a web application that receives and uses personal information from a user, such as their firstname/lastname/birthdate to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands in order to process that data.</p>
-<p>Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system. </p>
-<p>The user leverages the web application as a proxy to the HR system.</p>
+<p>Take the example of a web application that receives and uses personal information from a user, such as their firstname/lastname/birthdate to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands in order to process that data.
+Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system.
+The user leverages the web application as a proxy to the HR system.</p>
 </blockquote>
 <p>The whitelist approach is a viable option in this case since the internal application called by the <em>VulnerableApplication</em> is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.</p>
 <h4 id="available-protections"><a name="available-protections" class="plugin-anchor" href="#available-protections"><i class="fa fa-link" aria-hidden="true"></i></a>Available protections</h4>
 <p>Several protective measures are possible at the <strong>Application</strong> and <strong>Network</strong> layers. In order to apply the <strong>defense in depth</strong> principle, both layers will be hardened against such attacks.</p>
 <h5 id="application-layer"><a name="application-layer" class="plugin-anchor" href="#application-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Application layer</h5>
-<p>The first level of protection that comes to mind is <a href="Input_Validation_Cheat_Sheet.html">Input validation</a>. </p>
+<p>The first level of protection that comes to mind is <a href="Input_Validation_Cheat_Sheet.html">Input validation</a>.</p>
 <p>Based on that point, the following question comes to mind: <em>How to perform this input validation?</em></p>
 <p>As <a href="https://twitter.com/orange_8361" target="_blank">Orange Tsai</a> shows in his <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a>, depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the <a href="Input_Validation_Cheat_Sheet.html#whitelisting-vs-blacklisting">whitelisting approach</a> when input validation is used because, most of the time, the format of the information expected from the user is globally know.</p>
 <p>The request sent to the internal application will be based on the following information:</p>
@@ -1134,7 +1134,7 @@
 </ul>
 <p><strong>Note:</strong> Disable the support for the following of the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections" target="_blank">redirection</a> in your web client in order to prevent the bypass of the input validation described in the section <code>Exploitation tricks &gt; Bypassing restrictions &gt; Input validation &gt; Unsafe redirect</code> of this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>.</p>
 <h6 id="string"><a name="string" class="plugin-anchor" href="#string"><i class="fa fa-link" aria-hidden="true"></i></a>String</h6>
-<p>In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected. </p>
+<p>In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected.</p>
 <p>A <a href="https://www.regular-expressions.info/" target="_blank">regex</a> can be used to ensure that data received is valid from a security point of view if the input data have a simple format (<em>e.g.</em> token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the <code>string</code> object because regex for complex formats are difficult to maintain and are highly error prone.</p>
 <p>User input is assumed to be non-network related and consists of the user&apos;s personal information.</p>
 <p>Example:</p>
@@ -1200,17 +1200,17 @@
 </blockquote>
 <ul>
 <li><strong>JAVA:</strong> Method <a href="https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html#isValid(java.lang.String" target="_blank">DomainValidator.isValid</a>) from the <a href="http://commons.apache.org/proper/commons-validator/" target="_blank">Apache Commons Validator</a> library.</li>
-<li><strong>.NET</strong>: Method <a href="https://docs.microsoft.com/en-us/dotnet/api/system.uri.checkhostname?view=netframework-4.8" target="_blank">Uri.CheckHostName</a> from the SDK. </li>
+<li><strong>.NET</strong>: Method <a href="https://docs.microsoft.com/en-us/dotnet/api/system.uri.checkhostname?view=netframework-4.8" target="_blank">Uri.CheckHostName</a> from the SDK.</li>
 <li><strong>JavaScript</strong>: Library <a href="https://www.npmjs.com/package/is-valid-domain" target="_blank">is-valid-domain</a>.</li>
 <li><strong>Python</strong>: Module <a href="https://validators.readthedocs.io/en/latest/#module-validators.domain" target="_blank">validators.domain</a>.</li>
 <li><strong>Ruby</strong>: No valid dedicated gem has been found.<ul>
-<li><a href="https://github.com/mhuggins/domainator" target="_blank">domainator</a>, <a href="https://github.com/weppos/publicsuffix-ruby" target="_blank">public_suffix</a> and <a href="https://github.com/sporkmonger/addressable" target="_blank">addressable</a> has been tested but unfortunately they all consider <code>&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org</code> as a valid domain name. </li>
+<li><a href="https://github.com/mhuggins/domainator" target="_blank">domainator</a>, <a href="https://github.com/weppos/publicsuffix-ruby" target="_blank">public_suffix</a> and <a href="https://github.com/sporkmonger/addressable" target="_blank">addressable</a> has been tested but unfortunately they all consider <code>&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org</code> as a valid domain name.</li>
 <li>This regex, taken from <a href="https://stackoverflow.com/a/26987741" target="_blank">here</a>, can be used: <code>^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$</code></li>
 </ul>
 </li>
 </ul>
 <p>Example of execution of the proposed regex for Ruby:</p>
-<pre><code class="lang-ruby">domain_names = [<span class="hljs-string">&quot;owasp.org&quot;</span>,<span class="hljs-string">&quot;owasp-test.org&quot;</span>,<span class="hljs-string">&quot;doc-test.owasp.org&quot;</span>,<span class="hljs-string">&quot;doc.owasp.org&quot;</span>, 
+<pre><code class="lang-ruby">domain_names = [<span class="hljs-string">&quot;owasp.org&quot;</span>,<span class="hljs-string">&quot;owasp-test.org&quot;</span>,<span class="hljs-string">&quot;doc-test.owasp.org&quot;</span>,<span class="hljs-string">&quot;doc.owasp.org&quot;</span>,
                 <span class="hljs-string">&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;</span>,<span class="hljs-string">&quot;&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org&quot;</span>]
 domain_names.each { |domain_name|
     <span class="hljs-keyword">if</span> ( domain_name =~ <span class="hljs-regexp">/^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$/</span> )
@@ -1267,7 +1267,7 @@ def verify_dns_records(domain, records, type):
                 ip = ipaddress.ip_address(value)
                 # See https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address.is_global
                 if not ip.is_global:
-                    print(&quot;[!] DNS record type &apos;%s&apos; for domain name &apos;%s&apos; resolve to 
+                    print(&quot;[!] DNS record type &apos;%s&apos; for domain name &apos;%s&apos; resolve to
                     a non public IP address &apos;%s&apos;!&quot; % (type, domain, value))
                     error_detected = True
             except ValueError:
@@ -1281,15 +1281,15 @@ def check():
     Return a boolean indicating if any error has been detected.
     &quot;&quot;&quot;
     error_detected = False
-    for domain in DOMAINS_WHITELIST:    
+    for domain in DOMAINS_WHITELIST:
         # Get the IPs of the current domain
         # See https://en.wikipedia.org/wiki/List_of_DNS_record_types
         try:
-            # A = IPv4 address record        
+            # A = IPv4 address record
             ip_v4_records = DNS_RESOLVER.query(domain, &quot;A&quot;)
         except Exception as e:
-            ip_v4_records = None            
-            print(&quot;[i] Cannot get A record for domain &apos;%s&apos;: %s\n&quot; % (domain,e))        
+            ip_v4_records = None
+            print(&quot;[i] Cannot get A record for domain &apos;%s&apos;: %s\n&quot; % (domain,e))
         try:
             # AAAA = IPv6 address record
             ip_v6_records = DNS_RESOLVER.query(domain, &quot;AAAA&quot;)
@@ -1297,7 +1297,7 @@ def check():
             ip_v6_records = None
             print(&quot;[i] Cannot get AAAA record for domain &apos;%s&apos;: %s\n&quot; % (domain,e))
         # Verify the IPs obtained
-        if verify_dns_records(domain, ip_v4_records, &quot;A&quot;) 
+        if verify_dns_records(domain, ip_v4_records, &quot;A&quot;)
         or verify_dns_records(domain, ip_v6_records, &quot;AAAA&quot;):
             error_detected = True
     return error_detected
@@ -1309,18 +1309,18 @@ if __name__== &quot;__main__&quot;:
         exit(0)
 </code></pre>
 <h6 id="url"><a name="url" class="plugin-anchor" href="#url"><i class="fa fa-link" aria-hidden="true"></i></a>URL</h6>
-<p>Do not accept complete URLs from the user because URL are difficult to validate and the parser can be abused depending on the technology used as showcased by the following <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a> of <a href="https://twitter.com/orange_8361" target="_blank">Orange Tsai</a>. </p>
+<p>Do not accept complete URLs from the user because URL are difficult to validate and the parser can be abused depending on the technology used as showcased by the following <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a> of <a href="https://twitter.com/orange_8361" target="_blank">Orange Tsai</a>.</p>
 <p>If network related information is really needed then only accept a valid IP address or domain name.</p>
 <h5 id="network-layer"><a name="network-layer" class="plugin-anchor" href="#network-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Network layer</h5>
 <p>The objective of the Network layer security is to prevent the <em>VulnerableApplication</em> from performing calls to arbitrary applications. Only allowed <em>routes</em> will be available for this application in order to limit its network access to only those that it should communicate with.</p>
-<p>The Firewall component, as a specific device or using the one provided within the operating system, will be used here to define the legitimate flows. </p>
+<p>The Firewall component, as a specific device or using the one provided within the operating system, will be used here to define the legitimate flows.</p>
 <p>In the schema below, a Firewall component is leveraged to limit the application&apos;s access, and in turn, limit the impact of an application vulnerable to SSRF:</p>
 <p><img src="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.png" alt="Case 1 for Network layer protection about flows that we want to prevent"></p>
 <p><a href="https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation" target="_blank">Network segregation</a> (see this set of <a href="https://www.cyber.gov.au/publications/network-segmentation-and-segregation" target="_blank">implementation advices</a>) can also be leveraged and <strong>is highly recommended in order to block illegitimate calls directly at network level itself</strong>.</p>
 <h3 id="case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name"><a name="case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name" class="plugin-anchor" href="#case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name"><i class="fa fa-link" aria-hidden="true"></i></a>Case 2 - Application can send requests to ANY external IP address or domain name</h3>
-<p>This case happens when a user can control an URL to an <strong>External</strong> resource and the application makes a request to this URL (e.g. in case of <a href="https://en.wikipedia.org/wiki/Webhook" target="_blank">WebHooks</a>). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing. </p>
+<p>This case happens when a user can control an URL to an <strong>External</strong> resource and the application makes a request to this URL (e.g. in case of <a href="https://en.wikipedia.org/wiki/Webhook" target="_blank">WebHooks</a>). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.</p>
 <p>In this scenario, <em>External</em> refers to any IP that doesn&apos;t belong to the internal network, and should be reached by going over the public internet.</p>
-<p>Thus, the call from the <em>Vulnerable Application</em>: </p>
+<p>Thus, the call from the <em>Vulnerable Application</em>:</p>
 <ul>
 <li><strong>Is NOT</strong> targeting one of the IP/domain <em>located inside</em> the company&apos;s global network.</li>
 <li>Uses a convention defined between the <em>VulnerableApplication</em> and the expected IP/domain in order to <em>prove</em> that the call has been legitimately initiated.</li>
@@ -1344,11 +1344,11 @@ if __name__== &quot;__main__&quot;:
 <ol>
 <li>The application will receive the IP address or domain name of the <em>TargetedApplication</em> and it will apply the first validation on the input data using the libraries/regex mentioned in this <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">section</a>.</li>
 <li>The second validation will be applied against the IP address or domain name of the <em>TargetedApplication</em> using the following blacklist approach:<ul>
-<li>For IP address: <ul>
+<li>For IP address:<ul>
 <li>The application will verify that it is a public one (see the hint provided in the next paragraph with the python code sample).</li>
 </ul>
 </li>
-<li>For domain name: <ol>
+<li>For domain name:<ol>
 <li>The application will verify that it is a public one by trying to resolve the domain name against the DNS resolver that will only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.</li>
 <li>To prevent the <code>DNS pinning</code> attack described in this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>, the application will retrieve all the IP addresses behind the domain name provided (taking records <em>A</em> + <em>AAAA</em> for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.</li>
 </ol>
@@ -1372,8 +1372,8 @@ if __name__== &quot;__main__&quot;:
     <span class="hljs-comment"># Build the list of IP prefix for V4 and V6 addresses</span>
     ip_prefix = []
     <span class="hljs-comment"># Add prefix for loopback addresses</span>
-    ip_prefix.append(<span class="hljs-string">&quot;127.&quot;</span>)    
-    ip_prefix.append(<span class="hljs-string">&quot;0.&quot;</span>)    
+    ip_prefix.append(<span class="hljs-string">&quot;127.&quot;</span>)
+    ip_prefix.append(<span class="hljs-string">&quot;0.&quot;</span>)
     <span class="hljs-comment"># Add IP V4 prefix for private addresses</span>
     <span class="hljs-comment"># See https://en.wikipedia.org/wiki/Private_network</span>
     ip_prefix.append(<span class="hljs-string">&quot;10.&quot;</span>)
@@ -1405,8 +1405,8 @@ if __name__== &quot;__main__&quot;:
     ip_prefix.append(<span class="hljs-string">&quot;ff&quot;</span>)
     ip_prefix.append(<span class="hljs-string">&quot;::1&quot;</span>)
     <span class="hljs-comment"># Verify the provided IP address</span>
-    <span class="hljs-comment"># Remove whitespace characters from the beginning/end of the string </span>
-    <span class="hljs-comment"># and convert it to lower case </span>
+    <span class="hljs-comment"># Remove whitespace characters from the beginning/end of the string</span>
+    <span class="hljs-comment"># and convert it to lower case</span>
     <span class="hljs-comment"># Lower case is for preventing any IPV6 case bypass using mixed case</span>
     <span class="hljs-comment"># depending on the source used to get the IP address</span>
     ip_to_verify = ip_address.strip().lower()
@@ -1421,7 +1421,7 @@ if __name__== &quot;__main__&quot;:
 <p>Similar to the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#network-layer">section</a>.</p>
 <h2 id="imdsv2-in-aws"><a name="imdsv2-in-aws" class="plugin-anchor" href="#imdsv2-in-aws"><i class="fa fa-link" aria-hidden="true"></i></a>IMDSv2 in AWS</h2>
 <p>In cloud environments SSRF is often used to access and steal credentaials and access tokens from metadata services (e.g. AWS Instance Metadata Service, Azure Instance Metadata Service, GCP metadata server).</p>
-<p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/" target="_blank">IMDSv2</a> is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF. </p>
+<p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/" target="_blank">IMDSv2</a> is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF.</p>
 <p>To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html" target="_blank">AWS documentation</a> for more details.</p>
 <h2 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h2>
 <p>Online version of the <a href="https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM" target="_blank">SSRF bible</a> (PDF version is used in this cheat sheet).</p>
@@ -1434,17 +1434,18 @@ if __name__== &quot;__main__&quot;:
 <li><a href="https://www.draw.io/" target="_blank">Draw.io Online Editor</a>.</li>
 </ul>
 <p>Mermaid code for SSRF common flow (printscreen are used to capture PNG image inserted into this cheat sheet):</p>
-<pre><code>sequenceDiagram
+<pre><code class="lang-text">sequenceDiagram
     participant Attacker
     participant VulnerableApplication
     participant TargetedApplication
     Attacker-&gt;&gt;VulnerableApplication: Crafted HTTP request
     VulnerableApplication-&gt;&gt;TargetedApplication: Request (HTTP, FTP...)
     Note left of TargetedApplication: Use payload included&lt;br&gt;into the request to&lt;br&gt;VulnerableApplication
-    TargetedApplication-&gt;&gt;VulnerableApplication: Response 
+    TargetedApplication-&gt;&gt;VulnerableApplication: Response
     VulnerableApplication-&gt;&gt;Attacker: Response
     Note left of VulnerableApplication: Include response&lt;br&gt;from the&lt;br&gt;TargetedApplication
-</code></pre><p>Draw.io schema XML code for the &quot;<a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.xml">case 1 for network layer protection about flows that we want to prevent</a>&quot; schema (printscreen are used to capture PNG image inserted into this cheat sheet).</p>
+</code></pre>
+<p>Draw.io schema XML code for the &quot;<a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.xml">case 1 for network layer protection about flows that we want to prevent</a>&quot; schema (printscreen are used to capture PNG image inserted into this cheat sheet).</p>
 
                                 
                                 </section>
@@ -1488,7 +1489,7 @@ if __name__== &quot;__main__&quot;:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Server Side Request Forgery Prevention ","level":"1.56","depth":1,"next":{"title":"Session Management ","level":"1.57","depth":1,"path":"cheatsheets/Session_Management_Cheat_Sheet.md","ref":"cheatsheets/Session_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"Securing Cascading Style Sheets ","level":"1.55","depth":1,"path":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","ref":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Server Side Request Forgery Prevention ","level":"1.56","depth":1,"next":{"title":"Session Management ","level":"1.57","depth":1,"path":"cheatsheets/Session_Management_Cheat_Sheet.md","ref":"cheatsheets/Session_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"Securing Cascading Style Sheets ","level":"1.55","depth":1,"path":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","ref":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

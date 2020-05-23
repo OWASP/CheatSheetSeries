@@ -1050,22 +1050,23 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
-<p><a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank">SQL Injection</a> is one of the most dangerous web vulnerabilities. So much so that it&apos;s the <a href="https://wiki.owasp.org/index.php/Top_10_2013-A1-Injection" target="_blank">#1 item in the OWASP Top 10</a>. </p>
-<p>It represents a serious threat because SQL Injection allows evil attacker code to change the structure of a web application&apos;s SQL statement in a way that can steal data, modify data, or potentially facilitate command injection to the underlying OS. </p>
+                                <h1 id="query-parameterization-cheat-sheet"><a name="query-parameterization-cheat-sheet" class="plugin-anchor" href="#query-parameterization-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Query Parameterization Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+<p><a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank">SQL Injection</a> is one of the most dangerous web vulnerabilities. So much so that it&apos;s the <a href="https://wiki.owasp.org/index.php/Top_10_2013-A1-Injection" target="_blank">#1 item in the OWASP Top 10</a>.</p>
+<p>It represents a serious threat because SQL Injection allows evil attacker code to change the structure of a web application&apos;s SQL statement in a way that can steal data, modify data, or potentially facilitate command injection to the underlying OS.</p>
 <p>This cheat sheet is a derivative work of the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
-<h1 id="parameterized-query-examples"><a name="parameterized-query-examples" class="plugin-anchor" href="#parameterized-query-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Parameterized Query Examples</h1>
+<h2 id="parameterized-query-examples"><a name="parameterized-query-examples" class="plugin-anchor" href="#parameterized-query-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Parameterized Query Examples</h2>
 <p>SQL Injection is best prevented through the use of <a href="SQL_Injection_Prevention_Cheat_Sheet.html"><em>parameterized queries</em></a>. The following chart demonstrates, with real-world code samples, how to build parameterized queries in most of the common web languages. The purpose of these code samples is to demonstrate to the web developer how to avoid SQL Injection when building database queries within a web application.</p>
-<h2 id="prepared-statement-examples"><a name="prepared-statement-examples" class="plugin-anchor" href="#prepared-statement-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Prepared Statement Examples</h2>
-<h3 id="using-java-built-in-feature"><a name="using-java-built-in-feature" class="plugin-anchor" href="#using-java-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using Java built-in feature</h3>
-<pre><code class="lang-java">String custname = request.getParameter(<span class="hljs-string">&quot;customerName&quot;</span>); 
+<h3 id="prepared-statement-examples"><a name="prepared-statement-examples" class="plugin-anchor" href="#prepared-statement-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Prepared Statement Examples</h3>
+<h4 id="using-java-built-in-feature"><a name="using-java-built-in-feature" class="plugin-anchor" href="#using-java-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using Java built-in feature</h4>
+<pre><code class="lang-java">String custname = request.getParameter(<span class="hljs-string">&quot;customerName&quot;</span>);
 String query = <span class="hljs-string">&quot;SELECT account_balance FROM user_data WHERE user_name = ? &quot;</span>;  
 PreparedStatement pstmt = connection.prepareStatement( query );
-pstmt.setString( <span class="hljs-number">1</span>, custname); 
+pstmt.setString( <span class="hljs-number">1</span>, custname);
 ResultSet results = pstmt.executeQuery( );
 </code></pre>
-<h3 id="using-java-with-hibernate"><a name="using-java-with-hibernate" class="plugin-anchor" href="#using-java-with-hibernate"><i class="fa fa-link" aria-hidden="true"></i></a>Using Java with Hibernate</h3>
-<pre><code class="lang-java"><span class="hljs-comment">//HQL </span>
+<h4 id="using-java-with-hibernate"><a name="using-java-with-hibernate" class="plugin-anchor" href="#using-java-with-hibernate"><i class="fa fa-link" aria-hidden="true"></i></a>Using Java with Hibernate</h4>
+<pre><code class="lang-java"><span class="hljs-comment">//HQL</span>
 <span class="hljs-meta">@Entity</span> <span class="hljs-comment">// declare as entity;</span>
 <span class="hljs-meta">@NamedQuery</span>(
  name=<span class="hljs-string">&quot;findByDescription&quot;</span>,
@@ -1077,9 +1078,9 @@ ResultSet results = pstmt.executeQuery( );
  <span class="hljs-keyword">private</span> String productDescription;
 }
 
-<span class="hljs-comment">// use case </span>
+<span class="hljs-comment">// use case</span>
 <span class="hljs-comment">// This should REALLY be validated too</span>
-String userSuppliedParameter = request.getParameter(<span class="hljs-string">&quot;Product-Description&quot;</span>); 
+String userSuppliedParameter = request.getParameter(<span class="hljs-string">&quot;Product-Description&quot;</span>);
 <span class="hljs-comment">// perform input validation to detect attacks</span>
 List&lt;Inventory&gt; list =
  session.getNamedQuery(<span class="hljs-string">&quot;findByDescription&quot;</span>)
@@ -1087,12 +1088,12 @@ List&lt;Inventory&gt; list =
 
 <span class="hljs-comment">//Criteria API</span>
 <span class="hljs-comment">// This should REALLY be validated too</span>
-String userSuppliedParameter = request.getParameter(<span class="hljs-string">&quot;Product-Description&quot;</span>); 
+String userSuppliedParameter = request.getParameter(<span class="hljs-string">&quot;Product-Description&quot;</span>);
 <span class="hljs-comment">// perform input validation to detect attacks</span>
 Inventory inv = (Inventory) session.createCriteria(Inventory.class).add
 (Restrictions.eq(<span class="hljs-string">&quot;productDescription&quot;</span>, userSuppliedParameter)).uniqueResult();
 </code></pre>
-<h3 id="using-net-built-in-feature"><a name="using-net-built-in-feature" class="plugin-anchor" href="#using-net-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using .NET built-in feature</h3>
+<h4 id="using-net-built-in-feature"><a name="using-net-built-in-feature" class="plugin-anchor" href="#using-net-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using .NET built-in feature</h4>
 <pre><code class="lang-csharp">String query = <span class="hljs-string">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span>;
 <span class="hljs-keyword">try</span> {
    OleDbCommand command = <span class="hljs-keyword">new</span> OleDbCommand(query, connection);
@@ -1103,59 +1104,59 @@ Inventory inv = (Inventory) session.createCriteria(Inventory.class).add
    <span class="hljs-comment">// error handling</span>
 }
 </code></pre>
-<h3 id="using-asp-net-built-in-feature"><a name="using-asp-net-built-in-feature" class="plugin-anchor" href="#using-asp-net-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using ASP .NET built-in feature</h3>
+<h4 id="using-asp-net-built-in-feature"><a name="using-asp-net-built-in-feature" class="plugin-anchor" href="#using-asp-net-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using ASP .NET built-in feature</h4>
 <pre><code class="lang-csharp"><span class="hljs-keyword">string</span> sql = <span class="hljs-string">&quot;SELECT * FROM Customers WHERE CustomerId = @CustomerId&quot;</span>;
 SqlCommand command = <span class="hljs-keyword">new</span> SqlCommand(sql);
 command.Parameters.Add(<span class="hljs-keyword">new</span> SqlParameter(<span class="hljs-string">&quot;@CustomerId&quot;</span>, System.Data.SqlDbType.Int));
 command.Parameters[<span class="hljs-string">&quot;@CustomerId&quot;</span>].Value = <span class="hljs-number">1</span>;
 </code></pre>
-<h3 id="using-ruby-with-activerecord"><a name="using-ruby-with-activerecord" class="plugin-anchor" href="#using-ruby-with-activerecord"><i class="fa fa-link" aria-hidden="true"></i></a>Using Ruby with ActiveRecord</h3>
-<pre><code class="lang-ruby"><span class="hljs-comment"># Create</span>
+<h4 id="using-ruby-with-activerecord"><a name="using-ruby-with-activerecord" class="plugin-anchor" href="#using-ruby-with-activerecord"><i class="fa fa-link" aria-hidden="true"></i></a>Using Ruby with ActiveRecord</h4>
+<pre><code class="lang-ruby"><span class="hljs-comment">## Create</span>
 Project.create!(<span class="hljs-symbol">:name</span> =&gt; <span class="hljs-string">&apos;owasp&apos;</span>)
-<span class="hljs-comment"># Read</span>
+<span class="hljs-comment">## Read</span>
 Project.all(<span class="hljs-symbol">:conditions</span> =&gt; <span class="hljs-string">&quot;name = ?&quot;</span>, name)
 Project.all(<span class="hljs-symbol">:conditions</span> =&gt; { <span class="hljs-symbol">:name</span> =&gt; name })
 Project.where(<span class="hljs-string">&quot;name = :name&quot;</span>, <span class="hljs-symbol">:name</span> =&gt; name)
-<span class="hljs-comment"># Update</span>
+<span class="hljs-comment">## Update</span>
 project.update_attributes(<span class="hljs-symbol">:name</span> =&gt; <span class="hljs-string">&apos;owasp&apos;</span>)
-<span class="hljs-comment"># Delete</span>
+<span class="hljs-comment">## Delete</span>
 Project.delete(<span class="hljs-symbol">:name</span> =&gt; <span class="hljs-string">&apos;name&apos;</span>)
 </code></pre>
-<h3 id="using-ruby-built-in-feature"><a name="using-ruby-built-in-feature" class="plugin-anchor" href="#using-ruby-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using Ruby built-in feature</h3>
+<h4 id="using-ruby-built-in-feature"><a name="using-ruby-built-in-feature" class="plugin-anchor" href="#using-ruby-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using Ruby built-in feature</h4>
 <pre><code class="lang-ruby">insert_new_user = db.prepare <span class="hljs-string">&quot;INSERT INTO users (name, age, gender) VALUES (?, ? ,?)&quot;</span>
 insert_new_user.execute <span class="hljs-string">&apos;aizatto&apos;</span>, <span class="hljs-string">&apos;20&apos;</span>, <span class="hljs-string">&apos;male&apos;</span>
 </code></pre>
-<h3 id="using-php-with-php-data-objects"><a name="using-php-with-php-data-objects" class="plugin-anchor" href="#using-php-with-php-data-objects"><i class="fa fa-link" aria-hidden="true"></i></a>Using PHP with PHP Data Objects</h3>
+<h4 id="using-php-with-php-data-objects"><a name="using-php-with-php-data-objects" class="plugin-anchor" href="#using-php-with-php-data-objects"><i class="fa fa-link" aria-hidden="true"></i></a>Using PHP with PHP Data Objects</h4>
 <pre><code class="lang-php">$stmt = $dbh-&gt;prepare(<span class="hljs-string">&quot;INSERT INTO REGISTRY (name, value) VALUES (:name, :value)&quot;</span>);
 $stmt-&gt;bindParam(<span class="hljs-string">&apos;:name&apos;</span>, $name);
 $stmt-&gt;bindParam(<span class="hljs-string">&apos;:value&apos;</span>, $value);
 </code></pre>
-<h3 id="using-cold-fusion-built-in-feature"><a name="using-cold-fusion-built-in-feature" class="plugin-anchor" href="#using-cold-fusion-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using Cold Fusion built-in feature</h3>
+<h4 id="using-cold-fusion-built-in-feature"><a name="using-cold-fusion-built-in-feature" class="plugin-anchor" href="#using-cold-fusion-built-in-feature"><i class="fa fa-link" aria-hidden="true"></i></a>Using Cold Fusion built-in feature</h4>
 <pre><code class="lang-coldfusion">&lt;cfquery name = &quot;getFirst&quot; dataSource = &quot;cfsnippets&quot;&gt;
     SELECT * FROM #strDatabasePrefix#_courses WHERE intCourseID =
     &lt;cfqueryparam value = #intCourseID# CFSQLType = &quot;CF_SQL_INTEGER&quot;&gt;
 &lt;/cfquery&gt;
 </code></pre>
-<h3 id="using-perl-with-database-independent-interface"><a name="using-perl-with-database-independent-interface" class="plugin-anchor" href="#using-perl-with-database-independent-interface"><i class="fa fa-link" aria-hidden="true"></i></a>Using PERL with Database Independent Interface</h3>
+<h4 id="using-perl-with-database-independent-interface"><a name="using-perl-with-database-independent-interface" class="plugin-anchor" href="#using-perl-with-database-independent-interface"><i class="fa fa-link" aria-hidden="true"></i></a>Using PERL with Database Independent Interface</h4>
 <pre><code class="lang-perl"><span class="hljs-keyword">my</span> $sql = <span class="hljs-string">&quot;INSERT INTO foo (bar, baz) VALUES ( ?, ? )&quot;</span>;
 <span class="hljs-keyword">my</span> $sth = $dbh-&gt;prepare( $sql );
 $sth-&gt;execute( $bar, $baz );
 </code></pre>
-<h2 id="stored-procedure-examples"><a name="stored-procedure-examples" class="plugin-anchor" href="#stored-procedure-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Stored Procedure Examples</h2>
-<p>The SQL you write in your web application isn&apos;t the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities. </p>
-<p>To ensure this dynamic SQL is secure, you can parameterize this dynamic SQL too using bind variables. </p>
+<h3 id="stored-procedure-examples"><a name="stored-procedure-examples" class="plugin-anchor" href="#stored-procedure-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Stored Procedure Examples</h3>
+<p>The SQL you write in your web application isn&apos;t the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities.</p>
+<p>To ensure this dynamic SQL is secure, you can parameterize this dynamic SQL too using bind variables.</p>
 <p>Here are some examples of using bind variables in stored procedures in different databases.</p>
-<h3 id="oracle-using-plsql"><a name="oracle-using-plsql" class="plugin-anchor" href="#oracle-using-plsql"><i class="fa fa-link" aria-hidden="true"></i></a>Oracle using PL/SQL</h3>
-<h4 id="normal-stored-procedure"><a name="normal-stored-procedure" class="plugin-anchor" href="#normal-stored-procedure"><i class="fa fa-link" aria-hidden="true"></i></a>Normal Stored Procedure</h4>
+<h4 id="oracle-using-plsql"><a name="oracle-using-plsql" class="plugin-anchor" href="#oracle-using-plsql"><i class="fa fa-link" aria-hidden="true"></i></a>Oracle using PL/SQL</h4>
+<h5 id="normal-stored-procedure"><a name="normal-stored-procedure" class="plugin-anchor" href="#normal-stored-procedure"><i class="fa fa-link" aria-hidden="true"></i></a>Normal Stored Procedure</h5>
 <p>No dynamic SQL being created. Parameters passed in to stored procedures are naturally bound to their location within the query without anything special being required:</p>
-<pre><code class="lang-sql">PROCEDURE SafeGetBalanceQuery(UserID varchar, Dept varchar) AS <span class="hljs-keyword">BEGIN</span> 
+<pre><code class="lang-sql">PROCEDURE SafeGetBalanceQuery(UserID varchar, Dept varchar) AS <span class="hljs-keyword">BEGIN</span>
    <span class="hljs-keyword">SELECT</span> balance <span class="hljs-keyword">FROM</span> accounts_table <span class="hljs-keyword">WHERE</span> user_ID = UserID <span class="hljs-keyword">AND</span> department = Dept;
 <span class="hljs-keyword">END</span>;
 </code></pre>
-<h4 id="stored-procedure-using-bind-variables-in-sql-run-with-execute"><a name="stored-procedure-using-bind-variables-in-sql-run-with-execute" class="plugin-anchor" href="#stored-procedure-using-bind-variables-in-sql-run-with-execute"><i class="fa fa-link" aria-hidden="true"></i></a>Stored Procedure Using Bind Variables in SQL Run with EXECUTE</h4>
-<p>Bind variables are used to tell the database that the inputs to this dynamic SQL are &apos;data&apos; and not possibly code: </p>
-<pre><code class="lang-sql">PROCEDURE AnotherSafeGetBalanceQuery(UserID varchar, Dept varchar) 
-          AS stmt VARCHAR(400); result NUMBER; 
+<h5 id="stored-procedure-using-bind-variables-in-sql-run-with-execute"><a name="stored-procedure-using-bind-variables-in-sql-run-with-execute" class="plugin-anchor" href="#stored-procedure-using-bind-variables-in-sql-run-with-execute"><i class="fa fa-link" aria-hidden="true"></i></a>Stored Procedure Using Bind Variables in SQL Run with EXECUTE</h5>
+<p>Bind variables are used to tell the database that the inputs to this dynamic SQL are &apos;data&apos; and not possibly code:</p>
+<pre><code class="lang-sql">PROCEDURE AnotherSafeGetBalanceQuery(UserID varchar, Dept varchar)
+          AS stmt VARCHAR(400); result NUMBER;
 <span class="hljs-keyword">BEGIN</span>
    stmt := <span class="hljs-string">&apos;SELECT balance FROM accounts_table WHERE user_ID = :1
             AND department = :2&apos;</span>;
@@ -1163,25 +1164,25 @@ $sth-&gt;execute( $bar, $baz );
    RETURN result;
 <span class="hljs-keyword">END</span>;
 </code></pre>
-<h3 id="sql-server-using-transact-sql"><a name="sql-server-using-transact-sql" class="plugin-anchor" href="#sql-server-using-transact-sql"><i class="fa fa-link" aria-hidden="true"></i></a>SQL Server using Transact-SQL</h3>
-<h4 id="normal-stored-procedure"><a name="normal-stored-procedure" class="plugin-anchor" href="#normal-stored-procedure"><i class="fa fa-link" aria-hidden="true"></i></a>Normal Stored Procedure</h4>
+<h4 id="sql-server-using-transact-sql"><a name="sql-server-using-transact-sql" class="plugin-anchor" href="#sql-server-using-transact-sql"><i class="fa fa-link" aria-hidden="true"></i></a>SQL Server using Transact-SQL</h4>
+<h5 id="normal-stored-procedure"><a name="normal-stored-procedure" class="plugin-anchor" href="#normal-stored-procedure"><i class="fa fa-link" aria-hidden="true"></i></a>Normal Stored Procedure</h5>
 <p>No dynamic SQL being created. Parameters passed in to stored procedures are naturally bound to their location within the query without anything special being required:</p>
-<pre><code class="lang-sql">PROCEDURE SafeGetBalanceQuery(@UserID varchar(20), @Dept varchar(10)) AS <span class="hljs-keyword">BEGIN</span> 
+<pre><code class="lang-sql">PROCEDURE SafeGetBalanceQuery(@UserID varchar(20), @Dept varchar(10)) AS <span class="hljs-keyword">BEGIN</span>
    <span class="hljs-keyword">SELECT</span> balance <span class="hljs-keyword">FROM</span> accounts_table <span class="hljs-keyword">WHERE</span> user_ID = @UserID <span class="hljs-keyword">AND</span> department = @Dept
 <span class="hljs-keyword">END</span>
 </code></pre>
-<h4 id="stored-procedure-using-bind-variables-in-sql-run-with-exec"><a name="stored-procedure-using-bind-variables-in-sql-run-with-exec" class="plugin-anchor" href="#stored-procedure-using-bind-variables-in-sql-run-with-exec"><i class="fa fa-link" aria-hidden="true"></i></a>Stored Procedure Using Bind Variables in SQL Run with EXEC</h4>
+<h5 id="stored-procedure-using-bind-variables-in-sql-run-with-exec"><a name="stored-procedure-using-bind-variables-in-sql-run-with-exec" class="plugin-anchor" href="#stored-procedure-using-bind-variables-in-sql-run-with-exec"><i class="fa fa-link" aria-hidden="true"></i></a>Stored Procedure Using Bind Variables in SQL Run with EXEC</h5>
 <p>Bind variables are used to tell the database that the inputs to this dynamic SQL are &apos;data&apos; and not possibly code:</p>
 <pre><code class="lang-sql">PROCEDURE SafeGetBalanceQuery(@UserID varchar(20), @Dept varchar(10)) AS <span class="hljs-keyword">BEGIN</span>
    <span class="hljs-keyword">DECLARE</span> @<span class="hljs-keyword">sql</span> <span class="hljs-built_in">VARCHAR</span>(<span class="hljs-number">200</span>)
    <span class="hljs-keyword">SELECT</span> @<span class="hljs-keyword">sql</span> = <span class="hljs-string">&apos;SELECT balance FROM accounts_table WHERE &apos;</span>
                  + <span class="hljs-string">&apos;user_ID = @UID AND department = @DPT&apos;</span>
-   EXEC sp_executesql @<span class="hljs-keyword">sql</span>, 
+   EXEC sp_executesql @<span class="hljs-keyword">sql</span>,
                       <span class="hljs-string">&apos;@UID VARCHAR(20), @DPT VARCHAR(10)&apos;</span>,
                       @UID=@UserID, @DPT=@Dept
 <span class="hljs-keyword">END</span>
 </code></pre>
-<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<h2 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h2>
 <ul>
 <li><a href="http://bobby-tables.com/" target="_blank">The Bobby Tables site (inspired by the XKCD webcomic) has numerous examples in different languages of parameterized Prepared Statements and Stored Procedures</a></li>
 <li>OWASP <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a></li>
@@ -1229,7 +1230,7 @@ $sth-&gt;execute( $bar, $baz );
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Query Parameterization ","level":"1.49","depth":1,"next":{"title":"REST Assessment ","level":"1.50","depth":1,"path":"cheatsheets/REST_Assessment_Cheat_Sheet.md","ref":"cheatsheets/REST_Assessment_Cheat_Sheet.md","articles":[]},"previous":{"title":"Pinning ","level":"1.48","depth":1,"path":"cheatsheets/Pinning_Cheat_Sheet.md","ref":"cheatsheets/Pinning_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Query Parameterization ","level":"1.49","depth":1,"next":{"title":"REST Assessment ","level":"1.50","depth":1,"path":"cheatsheets/REST_Assessment_Cheat_Sheet.md","ref":"cheatsheets/REST_Assessment_Cheat_Sheet.md","articles":[]},"previous":{"title":"Pinning ","level":"1.48","depth":1,"path":"cheatsheets/Pinning_Cheat_Sheet.md","ref":"cheatsheets/Pinning_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

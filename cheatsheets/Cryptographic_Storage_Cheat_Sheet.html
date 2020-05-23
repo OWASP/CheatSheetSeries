@@ -1056,37 +1056,24 @@
 <p>Passwords should not be stored using reversible encryption - secure password hashing algorithms should be used instead. The <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> contains further guidance on storing passwords.</p>
 <h2 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h2>
 <ul>
-<li><a href="#cryptographic-storage-cheat-sheet">Cryptographic Storage Cheat Sheet</a><ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#contents">Contents</a></li>
-<li><a href="#architectural-design">Architectural Design</a><ul>
-<li><a href="#where-to-perform-encryption">Where to Perform Encryption</a></li>
-<li><a href="#minimise-the-storage-of-sensitive-information">Minimise the Storage of Sensitive Information</a></li>
-</ul>
-</li>
-<li><a href="#algorithms">Algorithms</a><ul>
-<li><a href="#custom-algorithms">Custom Algorithms</a></li>
-<li><a href="#cipher-modes">Cipher Modes</a></li>
-<li><a href="#secure-random-number-generation">Secure Random Number Generation</a><ul>
-<li><a href="#uuids-and-guids">UUIDs and GUIDs</a></li>
-</ul>
-</li>
-<li><a href="#defence-in-depth">Defence in Depth</a></li>
-</ul>
-</li>
-<li><a href="#key-management">Key Management</a><ul>
-<li><a href="#processes">Processes</a></li>
-<li><a href="#key-generation">Key Generation</a></li>
-<li><a href="#key-lifetimes-and-rotation">Key Lifetimes and Rotation</a></li>
-</ul>
-</li>
-<li><a href="#key-storage">Key Storage</a><ul>
-<li><a href="#separation-of-keys-and-data">Separation of Keys and Data</a></li>
-<li><a href="#encrypting-stored-keys">Encrypting Stored Keys</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#cryptographic-storage-cheat-sheet">Cryptographic Storage Cheat Sheet</a>
+-<a href="#introduction">Introduction</a>
+-<a href="#contents">Contents</a>
+-<a href="#architectural-design">Architectural Design</a>
+  -<a href="#where-to-perform-encryption">Where to Perform Encryption</a>
+  -<a href="#minimise-the-storage-of-sensitive-information">Minimise the Storage of Sensitive Information</a>
+-<a href="#algorithms">Algorithms</a>
+  -<a href="#custom-algorithms">Custom Algorithms</a>
+  -<a href="#cipher-modes">Cipher Modes</a>
+  -<a href="#secure-random-number-generation">Secure Random Number Generation</a><pre><code>- [UUIDs and GUIDs](#uuids-and-guids)
+</code></pre>  -<a href="#defence-in-depth">Defence in Depth</a>
+-<a href="#key-management">Key Management</a>
+  -<a href="#processes">Processes</a>
+  -<a href="#key-generation">Key Generation</a>
+  -<a href="#key-lifetimes-and-rotation">Key Lifetimes and Rotation</a>
+-<a href="#key-storage">Key Storage</a>
+  -<a href="#separation-of-keys-and-data">Separation of Keys and Data</a>
+  -<a href="#encrypting-stored-keys">Encrypting Stored Keys</a></li>
 </ul>
 <h2 id="architectural-design"><a name="architectural-design" class="plugin-anchor" href="#architectural-design"><i class="fa fa-link" aria-hidden="true"></i></a>Architectural Design</h2>
 <p>The first step in designing any application is to consider the overall architecture of the system, as this will have a huge impact on the technical implementation.</p>
@@ -1308,7 +1295,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Cryptographic Storage ","level":"1.20","depth":1,"next":{"title":"DOM based XSS Prevention ","level":"1.21","depth":1,"path":"cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md","ref":"cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Cross Site Scripting Prevention ","level":"1.19","depth":1,"path":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Cryptographic_Storage_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Cryptographic Storage ","level":"1.20","depth":1,"next":{"title":"DOM based XSS Prevention ","level":"1.21","depth":1,"path":"cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md","ref":"cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Cross Site Scripting Prevention ","level":"1.19","depth":1,"path":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Cryptographic_Storage_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

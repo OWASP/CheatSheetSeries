@@ -1050,7 +1050,8 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="key-management-cheat-sheet"><a name="key-management-cheat-sheet" class="plugin-anchor" href="#key-management-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Key Management Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>This Key Management Cheat Sheet provides developers with guidance for implementation of cryptographic key management within an application in a secure manner. It is important to document and harmonize rules and practices for:</p>
 <ol>
 <li>key life cycle management (generation, distribution, destruction)</li>
@@ -1058,13 +1059,13 @@
 <li>key storage</li>
 <li>key agreement</li>
 </ol>
-<h1 id="general-guidelines-and-considerations"><a name="general-guidelines-and-considerations" class="plugin-anchor" href="#general-guidelines-and-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>General Guidelines and Considerations</h1>
-<p>Formulate a plan for the overall organization&apos;s cryptographic strategy to guide developers working on different applications and ensure that each application&apos;s cryptographic capability meets minimum requirements and best practices. </p>
+<h2 id="general-guidelines-and-considerations"><a name="general-guidelines-and-considerations" class="plugin-anchor" href="#general-guidelines-and-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>General Guidelines and Considerations</h2>
+<p>Formulate a plan for the overall organization&apos;s cryptographic strategy to guide developers working on different applications and ensure that each application&apos;s cryptographic capability meets minimum requirements and best practices.</p>
 <p>Identify the cryptographic and key management requirements for your application and map all components that process or store cryptographic key material.</p>
-<h1 id="key-selection"><a name="key-selection" class="plugin-anchor" href="#key-selection"><i class="fa fa-link" aria-hidden="true"></i></a>Key Selection</h1>
-<p>Selection of the cryptographic and key management algorithms to use within a given application should begin with an understanding of the objectives of the application. </p>
-<p>For example, if the application is required to store data securely, then the developer should select an algorithm suite that supports the objective of data at rest protection security. Applications that are required to transmit and receive data would select an algorithm suite that supports the objective of data in transit protection. </p>
-<p>We have provided recommendations on the selection of crypto suites within an application based on application and security objectives. Application developers oftentimes begin the development of crypto and key management capabilities by examining what is available in a library. </p>
+<h2 id="key-selection"><a name="key-selection" class="plugin-anchor" href="#key-selection"><i class="fa fa-link" aria-hidden="true"></i></a>Key Selection</h2>
+<p>Selection of the cryptographic and key management algorithms to use within a given application should begin with an understanding of the objectives of the application.</p>
+<p>For example, if the application is required to store data securely, then the developer should select an algorithm suite that supports the objective of data at rest protection security. Applications that are required to transmit and receive data would select an algorithm suite that supports the objective of data in transit protection.</p>
+<p>We have provided recommendations on the selection of crypto suites within an application based on application and security objectives. Application developers oftentimes begin the development of crypto and key management capabilities by examining what is available in a library.</p>
 <p>However, an analysis of the real needs of the application should be conducted to determine the optimal key management approach. Begin by understanding the security objectives of the application which will then drive the selection of cryptographic protocols that are best suited. For example, the application may require:</p>
 <ol>
 <li>Confidentiality of data at rest and confidentiality of data in transit.</li>
@@ -1073,7 +1074,7 @@
 <li>Integrity of data in transit.</li>
 <li>Keys to create the data encryption keys.</li>
 </ol>
-<p>Once the understanding of the security needs of the application is achieved, developers can determine what protocols and algorithms are required. Once the protocols and algorithms are understood, you can begin to define the different types of keys that will support the application&apos;s objectives. </p>
+<p>Once the understanding of the security needs of the application is achieved, developers can determine what protocols and algorithms are required. Once the protocols and algorithms are understood, you can begin to define the different types of keys that will support the application&apos;s objectives.</p>
 <p>There are a diverse set of key types and certificates to consider, for example:</p>
 <ol>
 <li><strong>Encryption:</strong> <a href="https://en.wikipedia.org/wiki/Symmetric-key_algorithm" target="_blank">Symmetric</a> encryption keys, <a href="https://en.wikipedia.org/wiki/Public-key_cryptography" target="_blank">Asymmetric</a> encryption keys (public and private).</li>
@@ -1082,11 +1083,11 @@
 <li><strong>Integrity Protection:</strong> <a href="https://en.wikipedia.org/wiki/Message_authentication_code" target="_blank">Message Authentication Codes</a> (MACs).</li>
 <li><strong>Key Encryption Keys</strong>.</li>
 </ol>
-<h2 id="algorithms-and-protocols"><a name="algorithms-and-protocols" class="plugin-anchor" href="#algorithms-and-protocols"><i class="fa fa-link" aria-hidden="true"></i></a>Algorithms and Protocols</h2>
-<p>According to <code>NIST SP 800-57 Part 1</code>, many algorithms and schemes that provide a security service use a <a href="https://en.wikipedia.org/wiki/Hash_function" target="_blank">hash function</a> as a component of the algorithm. </p>
-<p>Hash functions can be found in digital signature algorithms (<code>FIPS186</code>), Keyed-Hash Message Authentication Codes (HMAC) (<code>FIPS198</code>), key-derivation functions/methods (<code>NIST Special Publications (SP) 800-56A, 800-56B, 800-56C and 800-108</code>), and random number generators (<code>NIST SP 800-90A</code>). Approved hash functions are defined in <code>FIPS180</code>. </p>
+<h3 id="algorithms-and-protocols"><a name="algorithms-and-protocols" class="plugin-anchor" href="#algorithms-and-protocols"><i class="fa fa-link" aria-hidden="true"></i></a>Algorithms and Protocols</h3>
+<p>According to <code>NIST SP 800-57 Part 1</code>, many algorithms and schemes that provide a security service use a <a href="https://en.wikipedia.org/wiki/Hash_function" target="_blank">hash function</a> as a component of the algorithm.</p>
+<p>Hash functions can be found in digital signature algorithms (<code>FIPS186</code>), Keyed-Hash Message Authentication Codes (HMAC) (<code>FIPS198</code>), key-derivation functions/methods (<code>NIST Special Publications (SP) 800-56A, 800-56B, 800-56C and 800-108</code>), and random number generators (<code>NIST SP 800-90A</code>). Approved hash functions are defined in <code>FIPS180</code>.</p>
 <p><code>NIST SP 800-57 Part 1</code> recognizes three basic classes of approved cryptographic algorithms: hash functions, symmetric- key algorithms and asymmetric-key algorithms. The classes are defined by the number of cryptographic keys that are used in conjunction with the algorithm.</p>
-<h3 id="cryptographic-hash-functions"><a name="cryptographic-hash-functions" class="plugin-anchor" href="#cryptographic-hash-functions"><i class="fa fa-link" aria-hidden="true"></i></a>Cryptographic hash functions</h3>
+<h4 id="cryptographic-hash-functions"><a name="cryptographic-hash-functions" class="plugin-anchor" href="#cryptographic-hash-functions"><i class="fa fa-link" aria-hidden="true"></i></a>Cryptographic hash functions</h4>
 <p>Cryptographic hash functions do not require keys. Hash functions generate a relatively small digest (hash value) from a (possibly) large input in a way that is fundamentally difficult to reverse (i.e., it is hard to find an input that will produce a given output). Hash functions are used as building blocks for key management, for example,</p>
 <ol>
 <li>To provide data authentication and integrity services (Section 4.2.3) &#x2013; the hash function is used with a key to generate a message authentication code.</li>
@@ -1094,8 +1095,8 @@
 <li>To derive keys in key-establishment algorithms (Section 4.2.5).</li>
 <li>To generate deterministic random numbers (Section 4.2.7).</li>
 </ol>
-<h3 id="symmetric-key-algorithms"><a name="symmetric-key-algorithms" class="plugin-anchor" href="#symmetric-key-algorithms"><i class="fa fa-link" aria-hidden="true"></i></a>Symmetric-key algorithms</h3>
-<p>Symmetric-key algorithms (sometimes known as secret-key algorithms) transform data in a way that is fundamentally difficult to undo without knowledge of a secret key. The key is &quot;symmetric&quot; because the same key is used for a cryptographic operation and its inverse (e.g., encryption and decryption). </p>
+<h4 id="symmetric-key-algorithms"><a name="symmetric-key-algorithms" class="plugin-anchor" href="#symmetric-key-algorithms"><i class="fa fa-link" aria-hidden="true"></i></a>Symmetric-key algorithms</h4>
+<p>Symmetric-key algorithms (sometimes known as secret-key algorithms) transform data in a way that is fundamentally difficult to undo without knowledge of a secret key. The key is &quot;symmetric&quot; because the same key is used for a cryptographic operation and its inverse (e.g., encryption and decryption).</p>
 <p>Symmetric keys are often known by more than one entity; however, the key shall not be disclosed to entities that are not authorized access to the data protected by that algorithm and key. Symmetric key algorithms are used, for example,</p>
 <ol>
 <li>To provide data confidentiality (Section 4.2.2); the same key is used to encrypt and decrypt data.</li>
@@ -1103,23 +1104,23 @@
 <li>As part of the key-establishment process (Section 4.2.5).</li>
 <li>To generate deterministic random numbers (Section 4.2.7).</li>
 </ol>
-<h3 id="asymmetric-key-algorithms"><a name="asymmetric-key-algorithms" class="plugin-anchor" href="#asymmetric-key-algorithms"><i class="fa fa-link" aria-hidden="true"></i></a>Asymmetric-key algorithms</h3>
+<h4 id="asymmetric-key-algorithms"><a name="asymmetric-key-algorithms" class="plugin-anchor" href="#asymmetric-key-algorithms"><i class="fa fa-link" aria-hidden="true"></i></a>Asymmetric-key algorithms</h4>
 <p>Asymmetric-key algorithms, commonly known as public-key algorithms, use two related keys (i.e., a key pair) to perform their functions: a public key and a private key. The public key may be known by anyone; the private key should be under the sole control of the entity that &quot;owns&quot; the key pair. Even though the public and private keys of a key pair are related, knowledge of the public key does not reveal the private key. Asymmetric algorithms are used, for example,</p>
 <ol>
 <li>To compute digital signatures (Section 4.2.4).</li>
 <li>To establish cryptographic keying material (Section 4.2.5).</li>
 <li>To generate random numbers (Section 4.2.7).</li>
 </ol>
-<h3 id="message-authentication-codes-macs"><a name="message-authentication-codes-macs" class="plugin-anchor" href="#message-authentication-codes-macs"><i class="fa fa-link" aria-hidden="true"></i></a>Message Authentication Codes (MACs)</h3>
-<p>Message Authentication Codes (MACs) provide data authentication and integrity. A MAC is a cryptographic checksum on the data that is used in order to provide assurance that the data has not changed and that the MAC was computed by the expected entity. </p>
-<p>Although message integrity is often provided using non-cryptographic techniques known as error detection codes, these codes can be altered by an adversary to effect an action to the adversary&apos;s benefit. The use of an approved cryptographic mechanism, such as a MAC, can alleviate this problem. </p>
+<h4 id="message-authentication-codes-macs"><a name="message-authentication-codes-macs" class="plugin-anchor" href="#message-authentication-codes-macs"><i class="fa fa-link" aria-hidden="true"></i></a>Message Authentication Codes (MACs)</h4>
+<p>Message Authentication Codes (MACs) provide data authentication and integrity. A MAC is a cryptographic checksum on the data that is used in order to provide assurance that the data has not changed and that the MAC was computed by the expected entity.</p>
+<p>Although message integrity is often provided using non-cryptographic techniques known as error detection codes, these codes can be altered by an adversary to effect an action to the adversary&apos;s benefit. The use of an approved cryptographic mechanism, such as a MAC, can alleviate this problem.</p>
 <p>In addition, the MAC can provide a recipient with assurance that the originator of the data is a key holder (i.e., an entity authorized to have the key). MACs are often used to authenticate the originator to the recipient when only those two parties share the MAC key.</p>
-<h3 id="digital-signatures"><a name="digital-signatures" class="plugin-anchor" href="#digital-signatures"><i class="fa fa-link" aria-hidden="true"></i></a>Digital Signatures</h3>
-<p><a href="https://en.wikipedia.org/wiki/Digital_signature" target="_blank">Digital signatures</a> are used to provide authentication, integrity and <a href="https://en.wikipedia.org/wiki/Non-repudiation" target="_blank">non-repudiation</a>. Digital signatures are used in conjunction with hash functions and are computed on data of any length (up to a limit that is determined by the hash function). </p>
+<h4 id="digital-signatures"><a name="digital-signatures" class="plugin-anchor" href="#digital-signatures"><i class="fa fa-link" aria-hidden="true"></i></a>Digital Signatures</h4>
+<p><a href="https://en.wikipedia.org/wiki/Digital_signature" target="_blank">Digital signatures</a> are used to provide authentication, integrity and <a href="https://en.wikipedia.org/wiki/Non-repudiation" target="_blank">non-repudiation</a>. Digital signatures are used in conjunction with hash functions and are computed on data of any length (up to a limit that is determined by the hash function).</p>
 <p><code>FIPS186</code> specifies algorithms that are approved for the computation of digital signatures.</p>
-<h3 id="key-encryption-keys"><a name="key-encryption-keys" class="plugin-anchor" href="#key-encryption-keys"><i class="fa fa-link" aria-hidden="true"></i></a>Key Encryption Keys</h3>
+<h4 id="key-encryption-keys"><a name="key-encryption-keys" class="plugin-anchor" href="#key-encryption-keys"><i class="fa fa-link" aria-hidden="true"></i></a>Key Encryption Keys</h4>
 <p>Symmetric key-wrapping keys are used to encrypt other keys using symmetric-key algorithms. Key-wrapping keys are also known as key encrypting keys.</p>
-<h2 id="key-strength"><a name="key-strength" class="plugin-anchor" href="#key-strength"><i class="fa fa-link" aria-hidden="true"></i></a>Key Strength</h2>
+<h3 id="key-strength"><a name="key-strength" class="plugin-anchor" href="#key-strength"><i class="fa fa-link" aria-hidden="true"></i></a>Key Strength</h3>
 <p>Review <code>NIST SP 800-57</code> (Recommendation for Key Management) for recommended guidelines on key strength for specific algorithm implementations. Also, consider these best practices:</p>
 <ol>
 <li>Establish what the application&apos;s minimum computational resistance to attack should be. Understanding the minimum computational resistance to attack should take into consideration the sophistication of your adversaries, how long data needs to be protected, where data is stored and if it is exposed. Identifying the computational resistance to attack will inform engineers as to the minimum length of the cryptographic key required to protect data over the life of that data. Consult <code>NIST SP 800-131a</code> for additional guidance on determining the appropriate key lengths for the algorithm of choice.</li>
@@ -1127,30 +1128,30 @@
 <li>When moving to <a href="https://en.wikipedia.org/wiki/Elliptic-curve_cryptography" target="_blank">Elliptic Curve-based algorithms</a>, choose a key length that meets or exceeds the comparative strength of other algorithms in use within your system. Refer to <code>NIST SP 800-57 Table 2</code>.</li>
 <li>Formulate a strategy for the overall organization&apos;s cryptographic strategy to guide developers working on different applications and ensure that each application&apos;s cryptographic capability meets minimum requirements and best practices.</li>
 </ol>
-<h2 id="memory-management-considerations"><a name="memory-management-considerations" class="plugin-anchor" href="#memory-management-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>Memory Management Considerations</h2>
-<p>Keys stored in memory for a long time can become &quot;burned in&quot;. This can be mitigated by splitting the key into components that are frequently updated. <code>NIST SP 800.57</code>). </p>
-<p>Loss or corruption of the memory media on which keys and/or certificates are stored, and recovery planning, according to <code>NIST SP 800.57</code>. </p>
+<h3 id="memory-management-considerations"><a name="memory-management-considerations" class="plugin-anchor" href="#memory-management-considerations"><i class="fa fa-link" aria-hidden="true"></i></a>Memory Management Considerations</h3>
+<p>Keys stored in memory for a long time can become &quot;burned in&quot;. This can be mitigated by splitting the key into components that are frequently updated. <code>NIST SP 800.57</code>).</p>
+<p>Loss or corruption of the memory media on which keys and/or certificates are stored, and recovery planning, according to <code>NIST SP 800.57</code>.</p>
 <p>Plan for the recovery from possible corruption of the memory media necessary for key or certificate generation, registration, and/or distribution systems, subsystems, or components as recommended in <code>NIST SP 800.57</code>.</p>
-<h2 id="perfect-forward-secrecy"><a name="perfect-forward-secrecy" class="plugin-anchor" href="#perfect-forward-secrecy"><i class="fa fa-link" aria-hidden="true"></i></a>Perfect Forward Secrecy</h2>
+<h3 id="perfect-forward-secrecy"><a name="perfect-forward-secrecy" class="plugin-anchor" href="#perfect-forward-secrecy"><i class="fa fa-link" aria-hidden="true"></i></a>Perfect Forward Secrecy</h3>
 <p><a href="https://en.wikipedia.org/wiki/Ephemeral_key" target="_blank">Ephemeral keys</a> can provide perfect forward secrecy protection, which means a compromise of the server&apos;s long term signing key does not compromise the confidentiality of past sessions. Refer to <a href="Transport_Layer_Protection_Cheat_Sheet.html">TLS cheat sheet</a>.</p>
-<h2 id="key-usage"><a name="key-usage" class="plugin-anchor" href="#key-usage"><i class="fa fa-link" aria-hidden="true"></i></a>Key Usage</h2>
-<p>According to NIST, in general, a single key should be used for only one purpose (e.g., encryption, authentication, key wrapping, random number generation, or digital signatures). </p>
+<h3 id="key-usage"><a name="key-usage" class="plugin-anchor" href="#key-usage"><i class="fa fa-link" aria-hidden="true"></i></a>Key Usage</h3>
+<p>According to NIST, in general, a single key should be used for only one purpose (e.g., encryption, authentication, key wrapping, random number generation, or digital signatures).</p>
 <p>There are several reasons for this:</p>
 <ol>
 <li>The use of the same key for two different cryptographic processes may weaken the security provided by one or both of the processes.</li>
 <li>Limiting the use of a key limits the damage that could be done if the key is compromised.</li>
 <li>Some uses of keys interfere with each other. For example, the length of time the key may be required for each use and purpose. Retention requirements of the data may differ for different data types.</li>
 </ol>
-<h2 id="cryptographic-module-topics"><a name="cryptographic-module-topics" class="plugin-anchor" href="#cryptographic-module-topics"><i class="fa fa-link" aria-hidden="true"></i></a>Cryptographic Module Topics</h2>
+<h3 id="cryptographic-module-topics"><a name="cryptographic-module-topics" class="plugin-anchor" href="#cryptographic-module-topics"><i class="fa fa-link" aria-hidden="true"></i></a>Cryptographic Module Topics</h3>
 <p>According to <code>NIST SP800-133</code>, cryptographic modules are the set of hardware, software, and/or firmware that implements security functions (including cryptographic algorithms and key generation) and is contained within a cryptographic module boundary to provide protection of the keys.</p>
-<h1 id="key-management-lifecycle-best-practices"><a name="key-management-lifecycle-best-practices" class="plugin-anchor" href="#key-management-lifecycle-best-practices"><i class="fa fa-link" aria-hidden="true"></i></a>Key Management Lifecycle Best Practices</h1>
-<h2 id="generation"><a name="generation" class="plugin-anchor" href="#generation"><i class="fa fa-link" aria-hidden="true"></i></a>Generation</h2>
-<p>Cryptographic keys shall be generated within cryptographic module with at least a <code>FIPS 140-2</code> compliance. For explanatory purposes, consider the cryptographic module in which a key is generated to be the key-generating module. </p>
-<p>Any random value required by the key-generating module shall be generated within that module; that is, the Random Bit Generator that generates the random value shall be implemented within cryptographic module with at least a <code>FIPS 140-2</code> compliance that generates the key. </p>
+<h2 id="key-management-lifecycle-best-practices"><a name="key-management-lifecycle-best-practices" class="plugin-anchor" href="#key-management-lifecycle-best-practices"><i class="fa fa-link" aria-hidden="true"></i></a>Key Management Lifecycle Best Practices</h2>
+<h3 id="generation"><a name="generation" class="plugin-anchor" href="#generation"><i class="fa fa-link" aria-hidden="true"></i></a>Generation</h3>
+<p>Cryptographic keys shall be generated within cryptographic module with at least a <code>FIPS 140-2</code> compliance. For explanatory purposes, consider the cryptographic module in which a key is generated to be the key-generating module.</p>
+<p>Any random value required by the key-generating module shall be generated within that module; that is, the Random Bit Generator that generates the random value shall be implemented within cryptographic module with at least a <code>FIPS 140-2</code> compliance that generates the key.</p>
 <p>Hardware cryptographic modules are preferred over software cryptographic modules for protection.</p>
-<h2 id="distribution"><a name="distribution" class="plugin-anchor" href="#distribution"><i class="fa fa-link" aria-hidden="true"></i></a>Distribution</h2>
+<h3 id="distribution"><a name="distribution" class="plugin-anchor" href="#distribution"><i class="fa fa-link" aria-hidden="true"></i></a>Distribution</h3>
 <p>The generated keys shall be transported (when necessary) using secure channels and shall be used by their associated cryptographic algorithm within at least a <code>FIPS 140-2</code> compliant cryptographic modules. For additional detail for the recommendations in this section refer to <code>NIST Special Paper 800-133</code>.</p>
-<h2 id="storage"><a name="storage" class="plugin-anchor" href="#storage"><i class="fa fa-link" aria-hidden="true"></i></a>Storage</h2>
+<h3 id="storage"><a name="storage" class="plugin-anchor" href="#storage"><i class="fa fa-link" aria-hidden="true"></i></a>Storage</h3>
 <ol>
 <li>Developers must understand where cryptographic keys are stored within the application. Understand what memory devices the keys are stored on.</li>
 <li>Keys must be protected on both volatile and persistent memory, ideally processed within secure cryptographic modules.</li>
@@ -1162,21 +1163,21 @@
 <li>Ensure that keys and cryptographic operation is done inside the sealed vault.</li>
 <li>All work should be done in the vault (such as key access, encryption, decryption, signing, etc).</li>
 </ol>
-<h2 id="escrow-and-backup"><a name="escrow-and-backup" class="plugin-anchor" href="#escrow-and-backup"><i class="fa fa-link" aria-hidden="true"></i></a>Escrow and Backup</h2>
-<p>Data that has been encrypted with lost cryptographic keys will never be recovered. Therefore, it is essential that the application incorporate a secure key backup capability, especially for applications that support data at rest encryption for long-term data stores. </p>
-<p>When backing up keys, ensure that the database that is used to store the keys is encrypted using at least a <code>FIPS 140-2</code> validated module. It is sometimes useful to escrow key material for use in investigations and for re-provisioning of key material to users in the event that the key is lost or corrupted. </p>
+<h3 id="escrow-and-backup"><a name="escrow-and-backup" class="plugin-anchor" href="#escrow-and-backup"><i class="fa fa-link" aria-hidden="true"></i></a>Escrow and Backup</h3>
+<p>Data that has been encrypted with lost cryptographic keys will never be recovered. Therefore, it is essential that the application incorporate a secure key backup capability, especially for applications that support data at rest encryption for long-term data stores.</p>
+<p>When backing up keys, ensure that the database that is used to store the keys is encrypted using at least a <code>FIPS 140-2</code> validated module. It is sometimes useful to escrow key material for use in investigations and for re-provisioning of key material to users in the event that the key is lost or corrupted.</p>
 <p>Never escrow keys used for performing digital signatures, but consider the need to escrow keys that support encryption. Oftentimes, escrow can be performed by the <a href="https://en.wikipedia.org/wiki/Certificate_authority" target="_blank">Certificate Authority</a> (CA) or key management system that provisions certificates and keys, however in some instances separate APIs must be implemented to allow the system to perform the escrow for the application.</p>
-<h2 id="accountability-and-audit"><a name="accountability-and-audit" class="plugin-anchor" href="#accountability-and-audit"><i class="fa fa-link" aria-hidden="true"></i></a>Accountability and Audit</h2>
-<p>Accountability involves the identification of those that have access to, or control of, cryptographic keys throughout their lifecycles. Accountability can be an effective tool to help prevent key compromises and to reduce the impact of compromises once they are detected. </p>
-<p>Although it is preferred that no humans are able to view keys, as a minimum, the key management system should account for all individuals who are able to view plaintext cryptographic keys. </p>
-<p>In addition, more sophisticated key-management systems may account for all individuals authorized to access or control any cryptographic keys, whether in plaintext or ciphertext form. </p>
+<h3 id="accountability-and-audit"><a name="accountability-and-audit" class="plugin-anchor" href="#accountability-and-audit"><i class="fa fa-link" aria-hidden="true"></i></a>Accountability and Audit</h3>
+<p>Accountability involves the identification of those that have access to, or control of, cryptographic keys throughout their lifecycles. Accountability can be an effective tool to help prevent key compromises and to reduce the impact of compromises once they are detected.</p>
+<p>Although it is preferred that no humans are able to view keys, as a minimum, the key management system should account for all individuals who are able to view plaintext cryptographic keys.</p>
+<p>In addition, more sophisticated key-management systems may account for all individuals authorized to access or control any cryptographic keys, whether in plaintext or ciphertext form.</p>
 <p>Accountability provides three significant advantages:</p>
 <ol>
 <li>It aids in the determination of when the compromise could have occurred and what individuals could have been involved.</li>
 <li>It tends to protect against compromise, because individuals with access to the key know that their access to the key is known.</li>
 <li>It is very useful in recovering from a detected key compromise to know where the key was used and what data or other keys were protected by the compromised key.</li>
 </ol>
-<p>Certain principles have been found to be useful in enforcing the accountability of cryptographic keys. These principles might not apply to all systems or all types of keys. </p>
+<p>Certain principles have been found to be useful in enforcing the accountability of cryptographic keys. These principles might not apply to all systems or all types of keys.</p>
 <p>Some of the principles that apply to long-term keys controlled by humans include:</p>
 <ol>
 <li>Uniquely identifying keys.</li>
@@ -1189,9 +1190,9 @@
 <li>The security plan and the procedures that are developed to support the plan should be periodically audited to ensure that they continue to support the Key Management Policy (<code>NIST SP 800-57 Part 2</code>).</li>
 <li>The protective mechanisms employed should be periodically reassessed with respect to the level of security that they provide and are expected to provide in the future, and that the mechanisms correctly and effectively support the appropriate policies.</li>
 </ol>
-<p>New technology developments and attacks should be taken into consideration. On a more frequent basis, the actions of the humans that use, operate and maintain the system should be reviewed to verify that the humans continue to follow established security procedures. </p>
+<p>New technology developments and attacks should be taken into consideration. On a more frequent basis, the actions of the humans that use, operate and maintain the system should be reviewed to verify that the humans continue to follow established security procedures.</p>
 <p>Strong cryptographic systems can be compromised by lax and inappropriate human actions. Highly unusual events should be noted and reviewed as possible indicators of attempted attacks on the system.</p>
-<h2 id="key-compromise-and-recovery"><a name="key-compromise-and-recovery" class="plugin-anchor" href="#key-compromise-and-recovery"><i class="fa fa-link" aria-hidden="true"></i></a>Key Compromise and Recovery</h2>
+<h3 id="key-compromise-and-recovery"><a name="key-compromise-and-recovery" class="plugin-anchor" href="#key-compromise-and-recovery"><i class="fa fa-link" aria-hidden="true"></i></a>Key Compromise and Recovery</h3>
 <p>The compromise of a key has the following implications:</p>
 <ol>
 <li>In general, the unauthorized disclosure of a key used to provide confidentiality protection (i.e., via encryption) means that all information encrypted by that key could be exposed or known by unauthorized entities. The disclosure of a Certificate of Authorities&apos;s private signature key means that an adversary can create fraudulent certificates and Certificate Revocation Lists (CRLs).</li>
@@ -1212,7 +1213,7 @@
 <li>The use of trusted timestamps for signed data. i. Destroying keys as soon as they are no longer needed.</li>
 <li>Creating a compromise-recovery plan, especially in the case of a CA compromise.</li>
 </ol>
-<p>A compromise-recovery plan is essential for restoring cryptographic security services in the event of a key compromise. A compromise-recovery plan shall be documented and easily accessible. </p>
+<p>A compromise-recovery plan is essential for restoring cryptographic security services in the event of a key compromise. A compromise-recovery plan shall be documented and easily accessible.</p>
 <p>The compromise-recovery plan should contain:</p>
 <ol>
 <li>The identification and contact info of the personnel to notify.</li>
@@ -1231,7 +1232,7 @@
 </ol>
 </li>
 </ol>
-<h1 id="trust-stores"><a name="trust-stores" class="plugin-anchor" href="#trust-stores"><i class="fa fa-link" aria-hidden="true"></i></a>Trust Stores</h1>
+<h2 id="trust-stores"><a name="trust-stores" class="plugin-anchor" href="#trust-stores"><i class="fa fa-link" aria-hidden="true"></i></a>Trust Stores</h2>
 <ol>
 <li>Design controls to secure the trust store against injection of 3rd party root certificates. The access controls are managed and enforced on an entity and application basis.</li>
 <li>Implement integrity controls on objects stored in the trust store.</li>
@@ -1239,9 +1240,9 @@
 <li>Setup strict policies and procedures for exporting key material from applications to network applications and other components.</li>
 <li>Implement a secure process for updating the trust store.</li>
 </ol>
-<h1 id="cryptographic-key-management-libraries"><a name="cryptographic-key-management-libraries" class="plugin-anchor" href="#cryptographic-key-management-libraries"><i class="fa fa-link" aria-hidden="true"></i></a>Cryptographic Key Management Libraries</h1>
+<h2 id="cryptographic-key-management-libraries"><a name="cryptographic-key-management-libraries" class="plugin-anchor" href="#cryptographic-key-management-libraries"><i class="fa fa-link" aria-hidden="true"></i></a>Cryptographic Key Management Libraries</h2>
 <p>Use only reputable crypto libraries that are well maintained and updated, as well as tested and validated by 3rd party organizations (e.g., <code>NIST</code>/<code>FIPS</code>)</p>
-<h1 id="documentation"><a name="documentation" class="plugin-anchor" href="#documentation"><i class="fa fa-link" aria-hidden="true"></i></a>Documentation</h1>
+<h2 id="documentation"><a name="documentation" class="plugin-anchor" href="#documentation"><i class="fa fa-link" aria-hidden="true"></i></a>Documentation</h2>
 <ul>
 <li><a href="https://info.townsendsecurity.com/definitive-guide-to-encryption-key-management-fundamentals" target="_blank">The definitive guide to encryption key management fundamentals</a>.</li>
 <li><a href="https://cryptobook.nakov.com/" target="_blank">Practical cryptography for developers</a>.</li>
@@ -1289,7 +1290,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Key Management ","level":"1.38","depth":1,"next":{"title":"LDAP Injection Prevention ","level":"1.39","depth":1,"path":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"JSON Web Token  for Java","level":"1.37","depth":1,"path":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","ref":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Key_Management_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Key Management ","level":"1.38","depth":1,"next":{"title":"LDAP Injection Prevention ","level":"1.39","depth":1,"path":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"JSON Web Token  for Java","level":"1.37","depth":1,"path":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","ref":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Key_Management_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

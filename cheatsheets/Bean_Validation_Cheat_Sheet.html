@@ -1050,15 +1050,16 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="bean-validation-cheat-sheet"><a name="bean-validation-cheat-sheet" class="plugin-anchor" href="#bean-validation-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Bean Validation Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>This article is focused on providing clear, simple, actionable guidance for providing Java Bean Validation security functionality in your applications.</p>
 <p>Bean validation (JSR303 aka <a href="https://beanvalidation.org/1.0/spec/" target="_blank">Bean Validation 1.0</a> /JSR349 aka <a href="https://beanvalidation.org/1.1/spec/" target="_blank">Bean Validation 1.1</a>) is one of the most common ways to perform <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank">input validation</a> in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.</p>
 <p>One advantage of this approach is that the validation constraints and the corresponding validators are only written once, thus reducing duplication of effort and ensuring uniformity:</p>
-<h2 id="typical-validation"><a name="typical-validation" class="plugin-anchor" href="#typical-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Typical Validation</h2>
+<h3 id="typical-validation"><a name="typical-validation" class="plugin-anchor" href="#typical-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Typical Validation</h3>
 <p><img src="../assets/Bean_Validation_Cheat_Sheet_Typical.png" alt="Typical"></p>
-<h2 id="bean-validation"><a name="bean-validation" class="plugin-anchor" href="#bean-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Bean Validation</h2>
+<h3 id="bean-validation"><a name="bean-validation" class="plugin-anchor" href="#bean-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Bean Validation</h3>
 <p><img src="../assets/Bean_Validation_Cheat_Sheet_JSR.png" alt="JSR"></p>
-<h1 id="setup"><a name="setup" class="plugin-anchor" href="#setup"><i class="fa fa-link" aria-hidden="true"></i></a>Setup</h1>
+<h2 id="setup"><a name="setup" class="plugin-anchor" href="#setup"><i class="fa fa-link" aria-hidden="true"></i></a>Setup</h2>
 <p>The examples in this guide use Hibernate Validator (the reference implementation for Bean Validation 1.1).</p>
 <p>Add Hibernate Validator to your <strong>pom.xml</strong>:</p>
 <pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
@@ -1075,7 +1076,7 @@
 &lt;/beans:beans&gt;
 </code></pre>
 <p>For more info, please see the <a href="https://hibernate.org/validator/documentation/getting-started/" target="_blank">setup guide</a></p>
-<h1 id="basics"><a name="basics" class="plugin-anchor" href="#basics"><i class="fa fa-link" aria-hidden="true"></i></a>Basics</h1>
+<h2 id="basics"><a name="basics" class="plugin-anchor" href="#basics"><i class="fa fa-link" aria-hidden="true"></i></a>Basics</h2>
 <p>In order to get started using Bean Validation, you must add validation constraints (<code>@Pattern</code>, <code>@Digits</code>, <code>@Min</code>, <code>@Max</code>, <code>@Size</code>, <code>@Past</code>, <code>@Future</code>, <code>@CreditCardNumber</code>, <code>@Email</code>, <code>@URL</code>, etc.) to your model and then utilize the <code>@Valid</code> annotation when passing your model around in various application layers.</p>
 <p>Constraints can be applied in several places:</p>
 <ul>
@@ -1091,13 +1092,13 @@
 </ul>
 <p>For the sake of simplicity all the examples below feature field constraints and all validation is triggered by the controller. Refer to the Bean Validation documentation for a full list of examples.</p>
 <p>When it comes to error handling, the Hibernate Validator returns a <code>BindingResult</code> object which contains a <code>List&lt;ObjectError&gt;</code>. The examples below feature simplistic error handling, while a production ready application would have a more elaborate design that takes care of logging and error page redirection.</p>
-<h1 id="pre-defined-constraints"><a name="pre-defined-constraints" class="plugin-anchor" href="#pre-defined-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Pre-defined Constraints</h1>
-<h2 id="pattern"><a name="pattern" class="plugin-anchor" href="#pattern"><i class="fa fa-link" aria-hidden="true"></i></a>@Pattern</h2>
-<p><strong>Annotation</strong>: </p>
+<h2 id="pre-defined-constraints"><a name="pre-defined-constraints" class="plugin-anchor" href="#pre-defined-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Pre-defined Constraints</h2>
+<h3 id="pattern"><a name="pattern" class="plugin-anchor" href="#pattern"><i class="fa fa-link" aria-hidden="true"></i></a>@Pattern</h3>
+<p><strong>Annotation</strong>:</p>
 <p><code>@Pattern(regex=,flag=)</code></p>
-<p><strong>Data Type</strong>: </p>
+<p><strong>Data Type</strong>:</p>
 <p><code>CharSequence</code></p>
-<p><strong>Use</strong>: </p>
+<p><strong>Use</strong>:</p>
 <p>Checks if the annotated string matches the regular expression regex considering the given flag match. Please visit <a href="https://owasp.org/www-community/OWASP_Validation_Regex_Repository" target="_blank">OWASP Validation Regex Repository</a> for other useful regex&apos;s.</p>
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
@@ -1107,13 +1108,13 @@
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Article</span>  </span>{  
  <span class="hljs-comment">//Constraint: Alpha Numeric article titles only using a regular expression</span>
  <span class="hljs-meta">@Pattern</span>(regexp = <span class="hljs-string">&quot;[a-zA-Z0-9 ]&quot;</span>)
- <span class="hljs-keyword">private</span> String articleTitle;     
+ <span class="hljs-keyword">private</span> String articleTitle;
  <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getArticleTitle</span><span class="hljs-params">()</span>  </span>{
   <span class="hljs-keyword">return</span>  articleTitle;
  }  
  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setArticleTitle</span><span class="hljs-params">(String  articleTitle)</span>  </span>{
    <span class="hljs-keyword">this</span>.articleTitle  =  articleTitle;
-  } 
+  }
 
   ...
 
@@ -1130,11 +1131,11 @@
 
  <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">&quot;/postArticle&quot;</span>,  method = RequestMethod.POST)
  <span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">postArticle</span><span class="hljs-params">(@Valid  Article  article,  BindingResult  result,  
- HttpServletResponse  response)</span> </span>{     
+ HttpServletResponse  response)</span> </span>{
   <span class="hljs-keyword">if</span> (result.hasErrors()) {
    String errorMessage  =  <span class="hljs-string">&quot;&quot;</span>;
    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-   List&lt;ObjectError&gt; errors = result.getAllErrors();        
+   List&lt;ObjectError&gt; errors = result.getAllErrors();
    <span class="hljs-keyword">for</span>(ObjectError  e :  errors) {
     errorMessage += <span class="hljs-string">&quot;ERROR: &quot;</span> +  e.getDefaultMessage();
    }
@@ -1145,19 +1146,19 @@
  }
 }
 </code></pre>
-<h2 id="digits"><a name="digits" class="plugin-anchor" href="#digits"><i class="fa fa-link" aria-hidden="true"></i></a>@Digits</h2>
-<p><strong>Annotation</strong>: </p>
+<h3 id="digits"><a name="digits" class="plugin-anchor" href="#digits"><i class="fa fa-link" aria-hidden="true"></i></a>@Digits</h3>
+<p><strong>Annotation</strong>:</p>
 <p><code>@Digits(integer=,fraction=)</code></p>
-<p><strong>Data Type</strong>: </p>
+<p><strong>Data Type</strong>:</p>
 <p><code>BigDecimal</code>, <code>BigInteger</code>, <code>CharSequence</code>, <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code> and the respective wrappers of the primitive types; Additionally supported by HV: any sub-type of Number</p>
-<p><strong>Use</strong>: </p>
+<p><strong>Use</strong>:</p>
 <p>Checks whether the annotated value is a number having up to integer digits and fraction fractional digits</p>
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
 <p><strong>Model</strong>:</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Digits;
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Customer</span> </span>{ 
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Customer</span> </span>{
   <span class="hljs-comment">//Constraint: Age can only be 3 digits long or less</span>
   <span class="hljs-meta">@Digits</span>(integer = <span class="hljs-number">3</span>, fraction = <span class="hljs-number">0</span>)
   <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;
@@ -1201,12 +1202,12 @@
  }
 }
 </code></pre>
-<h2 id="size"><a name="size" class="plugin-anchor" href="#size"><i class="fa fa-link" aria-hidden="true"></i></a>@Size</h2>
-<p><strong>Annotation</strong>: </p>
+<h3 id="size"><a name="size" class="plugin-anchor" href="#size"><i class="fa fa-link" aria-hidden="true"></i></a>@Size</h3>
+<p><strong>Annotation</strong>:</p>
 <p><code>@Size(min=,</code> <code>max=)</code></p>
-<p><strong>Data Type</strong>: </p>
+<p><strong>Data Type</strong>:</p>
 <p><code>CharSequence</code>, <code>Collection</code>, <code>Map</code> and <code>Arrays</code></p>
-<p><strong>Use</strong>: </p>
+<p><strong>Use</strong>:</p>
 <p>Checks if the annotated element&apos;s size is between min and max (inclusive)</p>
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
@@ -1240,7 +1241,7 @@
 ...
 
 <span class="hljs-meta">@RequestMapping</span>(value=<span class="hljs-string">&quot;/sendMessage&quot;</span>, method=RequestMethod.POST)
-<span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">sendMessage</span><span class="hljs-params">(@Valid Message message, BindingResult result, 
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">sendMessage</span><span class="hljs-params">(@Valid Message message, BindingResult result,
 HttpServletResponse response)</span></span>{
 
    <span class="hljs-keyword">if</span>(result.hasErrors()){
@@ -1251,19 +1252,19 @@ HttpServletResponse response)</span></span>{
          errorMessage+= <span class="hljs-string">&quot;ERROR: &quot;</span> + e.getDefaultMessage();
       }
       <span class="hljs-keyword">return</span> errorMessage;
-   } 
+   }
    <span class="hljs-keyword">else</span>{
       <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Validation Successful&quot;</span>;
    }
 }
 }
 </code></pre>
-<h2 id="past--future"><a name="past--future" class="plugin-anchor" href="#past--future"><i class="fa fa-link" aria-hidden="true"></i></a>@Past / @Future</h2>
-<p><strong>Annotation</strong>: </p>
+<h3 id="past--future"><a name="past--future" class="plugin-anchor" href="#past--future"><i class="fa fa-link" aria-hidden="true"></i></a>@Past / @Future</h3>
+<p><strong>Annotation</strong>:</p>
 <p><code>@Past,</code> <code>@Future</code></p>
-<p><strong>Data Type</strong>: </p>
+<p><strong>Data Type</strong>:</p>
 <p><code>java.util.Date</code>, <code>java.util.Calendar</code>, <code>java.time.chrono.ChronoZonedDateTime</code>, <code>java.time.Instant</code>, <code>java.time.OffsetDateTime</code></p>
-<p><strong>Use</strong>: </p>
+<p><strong>Use</strong>:</p>
 <p>Checks whether the annotated date is in the past / future</p>
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
@@ -1310,31 +1311,31 @@ HttpServletResponse response)</span></span>{
    ...
 
    <span class="hljs-meta">@RequestMapping</span>(value=<span class="hljs-string">&quot;/scheduleVisit&quot;</span>, method=RequestMethod.POST)
-   <span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">scheduleVisit</span><span class="hljs-params">(@Valid DoctorVisit doctorvisit, BindingResult result, 
+   <span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">scheduleVisit</span><span class="hljs-params">(@Valid DoctorVisit doctorvisit, BindingResult result,
    HttpServletResponse response)</span></span>{
 
       <span class="hljs-keyword">if</span>(result.hasErrors()){
          String errorMessage = <span class="hljs-string">&quot;&quot;</span>;
          response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-         List&lt;ObjectError&gt; errors = result.getAllErrors();    
+         List&lt;ObjectError&gt; errors = result.getAllErrors();
          <span class="hljs-keyword">for</span>( ObjectError e : errors){
             errorMessage+= <span class="hljs-string">&quot;ERROR: &quot;</span> + e.getDefaultMessage();
          }
          <span class="hljs-keyword">return</span> errorMessage;
-      } 
+      }
       <span class="hljs-keyword">else</span>{
          <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Validation Successful&quot;</span>;
       }
    }
 }
 </code></pre>
-<h2 id="combining-constraints"><a name="combining-constraints" class="plugin-anchor" href="#combining-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Combining Constraints</h2>
+<h3 id="combining-constraints"><a name="combining-constraints" class="plugin-anchor" href="#combining-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Combining Constraints</h3>
 <p>Validation annotations can be combined in any suitable way. For instance, to specify a valid reviewRating value between 1 and 5, specify the validation like this :</p>
-<p><strong>Annotation</strong>: </p>
+<p><strong>Annotation</strong>:</p>
 <p><code>@Min(value=),</code> <code>@Max(value=)</code></p>
-<p><strong>Data Type</strong>: </p>
+<p><strong>Data Type</strong>:</p>
 <p><code>BigDecimal</code>, <code>BigInteger</code>, <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code> and the respective wrappers of the primitive types; Additionally supported by HV: any sub-type of <code>CharSequence</code> (the numeric value represented by the character sequence is evaluated), any sub-type of Number</p>
-<p><strong>Use</strong>: </p>
+<p><strong>Use</strong>:</p>
 <p>Checks whether the annotated value is higher/lower than or equal to the specified minimum</p>
 <p><strong>Reference:</strong></p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
@@ -1355,7 +1356,7 @@ HttpServletResponse response)</span></span>{
 
  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setReviewRating</span><span class="hljs-params">(<span class="hljs-keyword">int</span> reviewRating)</span> </span>{
    <span class="hljs-keyword">this</span>.reviewRating = reviewRating;
-} 
+}
  ...
 }
 </code></pre>
@@ -1369,13 +1370,13 @@ HttpServletResponse response)</span></span>{
    ...
 
    <span class="hljs-meta">@RequestMapping</span>(value=<span class="hljs-string">&quot;/postReview&quot;</span>, method=RequestMethod.POST)
-   <span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">postReview</span><span class="hljs-params">(@Valid Review review, BindingResult result, 
+   <span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">postReview</span><span class="hljs-params">(@Valid Review review, BindingResult result,
    HttpServletResponse response)</span></span>{
 
       <span class="hljs-keyword">if</span>(result.hasErrors()){
          String errorMessage = <span class="hljs-string">&quot;&quot;</span>;
          response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-         List&lt;ObjectError&gt; errors = result.getAllErrors(); 
+         List&lt;ObjectError&gt; errors = result.getAllErrors();
          <span class="hljs-keyword">for</span>( ObjectError e : errors){
             errorMessage+= <span class="hljs-string">&quot;ERROR: &quot;</span> + e.getDefaultMessage();
          }
@@ -1387,9 +1388,9 @@ HttpServletResponse response)</span></span>{
    }
 }
 </code></pre>
-<h2 id="cascading-constraints"><a name="cascading-constraints" class="plugin-anchor" href="#cascading-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Cascading Constraints</h2>
+<h3 id="cascading-constraints"><a name="cascading-constraints" class="plugin-anchor" href="#cascading-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Cascading Constraints</h3>
 <p>Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch03.html#_cascaded_validation" target="_blank">@Valid</a></p>
-<h2 id="additional-constraints"><a name="additional-constraints" class="plugin-anchor" href="#additional-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Additional Constraints</h2>
+<h3 id="additional-constraints"><a name="additional-constraints" class="plugin-anchor" href="#additional-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Additional Constraints</h3>
 <p>In addition to providing the complete set of JSR303 constraints, Hibernate Validator also defines some additional constraints for convenience:</p>
 <ul>
 <li><code>@CreditCardNumber</code></li>
@@ -1402,10 +1403,10 @@ HttpServletResponse response)</span></span>{
 <li><code>@URL</code></li>
 </ul>
 <p>Take a look at this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints" target="_blank">table</a> for the complete list.</p>
-<h1 id="custom-constraints"><a name="custom-constraints" class="plugin-anchor" href="#custom-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Custom Constraints</h1>
+<h2 id="custom-constraints"><a name="custom-constraints" class="plugin-anchor" href="#custom-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Custom Constraints</h2>
 <p>One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built in constraints.</p>
 <p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html" target="_blank">documentation</a>.</p>
-<h1 id="error-messages"><a name="error-messages" class="plugin-anchor" href="#error-messages"><i class="fa fa-link" aria-hidden="true"></i></a>Error Messages</h1>
+<h2 id="error-messages"><a name="error-messages" class="plugin-anchor" href="#error-messages"><i class="fa fa-link" aria-hidden="true"></i></a>Error Messages</h2>
 <p>It is possible to specify a message ID with the validation annotation, so that error messages are customized :</p>
 <pre><code class="lang-java"><span class="hljs-meta">@Pattern</span>(regexp = <span class="hljs-string">&quot;[a-zA-Z0-9 ]&quot;</span>, message=<span class="hljs-string">&quot;article.title.error&quot;</span>)
 <span class="hljs-keyword">private</span> String articleTitle;
@@ -1454,7 +1455,7 @@ HttpServletResponse response)</span></span>{
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Bean Validation ","level":"1.11","depth":1,"next":{"title":"C-Based Toolchain Hardening","level":"1.12","depth":1,"path":"cheatsheets/C-Based_Toolchain_Hardening.md","ref":"cheatsheets/C-Based_Toolchain_Hardening.md","articles":[]},"previous":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Bean_Validation_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.187Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Bean Validation ","level":"1.11","depth":1,"next":{"title":"C-Based Toolchain Hardening","level":"1.12","depth":1,"path":"cheatsheets/C-Based_Toolchain_Hardening.md","ref":"cheatsheets/C-Based_Toolchain_Hardening.md","articles":[]},"previous":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Bean_Validation_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

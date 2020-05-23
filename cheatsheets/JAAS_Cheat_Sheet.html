@@ -1050,8 +1050,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction---what-is-jaas-authentication"><a name="introduction---what-is-jaas-authentication" class="plugin-anchor" href="#introduction---what-is-jaas-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction - What is JAAS authentication?</h1>
-<p>The process of verifying the identity of a user or another system is authentication. </p>
+                                <h1 id="jaas-cheat-sheet"><a name="jaas-cheat-sheet" class="plugin-anchor" href="#jaas-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>JAAS Cheat Sheet</h1>
+<h2 id="introduction---what-is-jaas-authentication"><a name="introduction---what-is-jaas-authentication" class="plugin-anchor" href="#introduction---what-is-jaas-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction - What is JAAS authentication</h2>
+<p>The process of verifying the identity of a user or another system is authentication.</p>
 <p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/jaas/JAASRefGuide.html" target="_blank">JAAS</a>, as an authentication framework manages the authenticated user&apos;s identity and credentials from login to logout.</p>
 <p>The JAAS authentication lifecycle:</p>
 <ol>
@@ -1061,7 +1062,7 @@
 <li>Call <code>LoginContext.login()</code> for each LoginModule.</li>
 <li>If login successful then call <code>LoginContext.commit()</code> else call <code>LoginContext.abort()</code></li>
 </ol>
-<h1 id="configuration-file"><a name="configuration-file" class="plugin-anchor" href="#configuration-file"><i class="fa fa-link" aria-hidden="true"></i></a>Configuration file</h1>
+<h2 id="configuration-file"><a name="configuration-file" class="plugin-anchor" href="#configuration-file"><i class="fa fa-link" aria-hidden="true"></i></a>Configuration file</h2>
 <p>The JAAS configuration file contains a <code>LoginModule</code> stanza for each <code>LoginModule</code> available for logging on to the application.</p>
 <p>A stanza from a JAAS configuration file:</p>
 <pre><code class="lang-text">Branches
@@ -1071,10 +1072,10 @@
     succeeded=true;
 }
 </code></pre>
-<p>Note the placement of the semicolons, terminating both <code>LoginModule</code> entries and stanzas. </p>
-<p>The word required indicates the <code>LoginContext</code>&apos;s <code>login()</code> method must be successful when logging in the user. The <code>LoginModule</code>-specific values <code>debug</code> and <code>succeeded</code> are passed to the <code>LoginModule</code>. </p>
+<p>Note the placement of the semicolons, terminating both <code>LoginModule</code> entries and stanzas.</p>
+<p>The word required indicates the <code>LoginContext</code>&apos;s <code>login()</code> method must be successful when logging in the user. The <code>LoginModule</code>-specific values <code>debug</code> and <code>succeeded</code> are passed to the <code>LoginModule</code>.</p>
 <p>They are defined by the <code>LoginModule</code> and their usage is managed inside the <code>LoginModule</code>. Note, Options are Configured using key-value pairing such as <code>debug=&quot;true&quot;</code> and the key and value should be separated by a <code>=</code> sign.</p>
-<h1 id="mainjava-the-client"><a name="mainjava-the-client" class="plugin-anchor" href="#mainjava-the-client"><i class="fa fa-link" aria-hidden="true"></i></a>Main.java (The client)</h1>
+<h2 id="mainjava-the-client"><a name="mainjava-the-client" class="plugin-anchor" href="#mainjava-the-client"><i class="fa fa-link" aria-hidden="true"></i></a>Main.java (The client)</h2>
 <ul>
 <li>Execution syntax:</li>
 </ul>
@@ -1100,7 +1101,7 @@ Where:
 <li>The value in succeeded Option is returned from <code>loginContext.login()</code>.</li>
 <li>If the login was successful, a subject was created.</li>
 </ul>
-<h1 id="loginmodulejava"><a name="loginmodulejava" class="plugin-anchor" href="#loginmodulejava"><i class="fa fa-link" aria-hidden="true"></i></a>LoginModule.java</h1>
+<h2 id="loginmodulejava"><a name="loginmodulejava" class="plugin-anchor" href="#loginmodulejava"><i class="fa fa-link" aria-hidden="true"></i></a>LoginModule.java</h2>
 <p>A <code>LoginModule</code> must have the following authentication methods:</p>
 <ul>
 <li><code>initialize()</code></li>
@@ -1109,7 +1110,7 @@ Where:
 <li><code>abort()</code></li>
 <li><code>logout()</code></li>
 </ul>
-<h2 id="initialize"><a name="initialize" class="plugin-anchor" href="#initialize"><i class="fa fa-link" aria-hidden="true"></i></a>initialize()</h2>
+<h3 id="initialize"><a name="initialize" class="plugin-anchor" href="#initialize"><i class="fa fa-link" aria-hidden="true"></i></a>initialize()</h3>
 <p>In <code>Main()</code>, after the <code>LoginContext</code> reads the correct stanza from the config file, the <code>LoginContext</code> instantiates the <code>LoginModule</code> specified in the stanza.</p>
 <ul>
 <li><code>initialize()</code> methods signature:<ul>
@@ -1131,7 +1132,7 @@ Where:
 </ul>
 </li>
 </ul>
-<h2 id="login"><a name="login" class="plugin-anchor" href="#login"><i class="fa fa-link" aria-hidden="true"></i></a>login()</h2>
+<h3 id="login"><a name="login" class="plugin-anchor" href="#login"><i class="fa fa-link" aria-hidden="true"></i></a>login()</h3>
 <p>Captures user supplied login information. The code snippet below declares an array of two callback objects which, when passed to the <code>callbackHandler.handle</code> method in the <code>callbackHandler.java</code> program, will be loaded with a user name and password provided interactively by the user:</p>
 <pre><code class="lang-java">NameCallback nameCB = <span class="hljs-keyword">new</span> NameCallback(<span class="hljs-string">&quot;Username&quot;</span>);
 PasswordCallback passwordCB = <span class="hljs-keyword">new</span> PasswordCallback (<span class="hljs-string">&quot;Password&quot;</span>, <span class="hljs-keyword">false</span>);
@@ -1148,14 +1149,14 @@ callbackHandler.handle (callbacks);
 <li>Compare <code>name</code> and <code>tempPW</code> to values stored in a repository such as LDAP.</li>
 <li>Set the value of the variable succeeded and return to <code>Main()</code>.</li>
 </ul>
-<h2 id="commit"><a name="commit" class="plugin-anchor" href="#commit"><i class="fa fa-link" aria-hidden="true"></i></a>commit()</h2>
-<p>Once the users credentials are successfully verified during <code>login()</code>, the JAAS authentication framework associates the credentials, as needed, with the subject. </p>
+<h3 id="commit"><a name="commit" class="plugin-anchor" href="#commit"><i class="fa fa-link" aria-hidden="true"></i></a>commit()</h3>
+<p>Once the users credentials are successfully verified during <code>login()</code>, the JAAS authentication framework associates the credentials, as needed, with the subject.</p>
 <p>There are two types of credentials, <strong>Public</strong> and <strong>Private</strong>:</p>
 <ul>
-<li>Public credentials include public keys. </li>
-<li>Private credentials include passwords and public keys. </li>
+<li>Public credentials include public keys.</li>
+<li>Private credentials include passwords and public keys.</li>
 </ul>
-<p>Principals (i.e. Identities the subject has other than their login name) such as employee number or membership ID in a user group are added to the subject. </p>
+<p>Principals (i.e. Identities the subject has other than their login name) such as employee number or membership ID in a user group are added to the subject.</p>
 <p>Below, is an example <code>commit()</code> method where first, for each group the authenticated user has membership in, the group name is added as a principal to the subject. The subject&apos;s username is then added to their public credentials.</p>
 <p>Code snippet setting then adding any principals and a public credentials to a subject:</p>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">commit</span><span class="hljs-params">()</span> </span>{
@@ -1171,11 +1172,11 @@ callbackHandler.handle (callbacks);
     }
 }
 </code></pre>
-<h2 id="abort"><a name="abort" class="plugin-anchor" href="#abort"><i class="fa fa-link" aria-hidden="true"></i></a>abort()</h2>
+<h3 id="abort"><a name="abort" class="plugin-anchor" href="#abort"><i class="fa fa-link" aria-hidden="true"></i></a>abort()</h3>
 <p>The <code>abort()</code> method is called when authentication doesn&apos;t succeed. Before the <code>abort()</code> method exits the <code>LoginModule</code>, care should be taken to reset state including the user name and password input fields.</p>
-<h2 id="logout"><a name="logout" class="plugin-anchor" href="#logout"><i class="fa fa-link" aria-hidden="true"></i></a>logout()</h2>
+<h3 id="logout"><a name="logout" class="plugin-anchor" href="#logout"><i class="fa fa-link" aria-hidden="true"></i></a>logout()</h3>
 <p>The release of the users principals and credentials when <code>LoginContext.logout</code> is called:</p>
-<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">logout</span><span class="hljs-params">()</span> </span>{ 
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">logout</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">if</span> (!subject.isReadOnly()) {
         Set principals = subject.getPrincipals(UserGroupPrincipal.class);
         subject.getPrincipals().removeAll(principals);
@@ -1187,7 +1188,7 @@ callbackHandler.handle (callbacks);
     }
 }
 </code></pre>
-<h1 id="callbackhandlerjava"><a name="callbackhandlerjava" class="plugin-anchor" href="#callbackhandlerjava"><i class="fa fa-link" aria-hidden="true"></i></a>CallbackHandler.java</h1>
+<h2 id="callbackhandlerjava"><a name="callbackhandlerjava" class="plugin-anchor" href="#callbackhandlerjava"><i class="fa fa-link" aria-hidden="true"></i></a>CallbackHandler.java</h2>
 <p>The <code>callbackHandler</code> is in a source (<code>.java</code>) file separate from any single <code>LoginModule</code> so that it can service a multitude of LoginModules with differing callback objects:</p>
 <ul>
 <li>Creates instance of the <code>CallbackHandler</code> class and has only one method, <code>handle()</code>.</li>
@@ -1206,12 +1207,12 @@ callbackHandler.handle (callbacks);
     }
 }
 </code></pre>
-<h1 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h1>
+<h2 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h2>
 <ul>
 <li><a href="https://jaasbook.wordpress.com/2009/09/27/intro/" target="_blank">JAAS in Action</a>, Michael Cot&#xE9;, posted on September 27, 2009, URL as 5/14/2012.</li>
 <li>Pistoia Marco, Nagaratnam Nataraj, Koved Larry, Nadalin Anthony from book <a href="https://www.oreilly.com/library/view/enterprise-javatm-security/0321118898/" target="_blank">&quot;Enterprise Java Security&quot; - Addison-Wesley, 2004</a>.</li>
 </ul>
-<h1 id="disclosure"><a name="disclosure" class="plugin-anchor" href="#disclosure"><i class="fa fa-link" aria-hidden="true"></i></a>Disclosure</h1>
+<h2 id="disclosure"><a name="disclosure" class="plugin-anchor" href="#disclosure"><i class="fa fa-link" aria-hidden="true"></i></a>Disclosure</h2>
 <p>All of the code in the attached JAAS cheat sheet has been copied verbatim from this <a href="https://jaasbook.wordpress.com/2009/09/27/intro/" target="_blank">free source</a>.</p>
 
                                 
@@ -1256,7 +1257,7 @@ callbackHandler.handle (callbacks);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"JAAS ","level":"1.36","depth":1,"next":{"title":"JSON Web Token  for Java","level":"1.37","depth":1,"path":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","ref":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","articles":[]},"previous":{"title":"Insecure Direct Object Reference Prevention ","level":"1.35","depth":1,"path":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/JAAS_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"JAAS ","level":"1.36","depth":1,"next":{"title":"JSON Web Token  for Java","level":"1.37","depth":1,"path":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","ref":"cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md","articles":[]},"previous":{"title":"Insecure Direct Object Reference Prevention ","level":"1.35","depth":1,"path":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/JAAS_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

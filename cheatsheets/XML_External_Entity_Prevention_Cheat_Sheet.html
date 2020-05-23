@@ -1050,20 +1050,21 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="xml-external-entity-prevention-cheat-sheet"><a name="xml-external-entity-prevention-cheat-sheet" class="plugin-anchor" href="#xml-external-entity-prevention-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>XML External Entity Prevention Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p><em>XML eXternal Entity injection</em> (XXE), which is now part of the <a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29" target="_blank">OWASP Top 10</a> via the point <strong>A4</strong>, is a type of attack against an application that parses XML input.</p>
 <p>XXE issue is referenced under the ID <a href="https://cwe.mitre.org/data/definitions/611.html" target="_blank">611</a> in the <a href="https://cwe.mitre.org/index.html" target="_blank">Common Weakness Enumeration</a> referential.</p>
 <p>This attack occurs when untrusted XML input containing a <strong>reference to an external entity is processed by a weakly configured XML parser</strong>.</p>
 <p>This attack may lead to the disclosure of confidential data, denial of service, <a href="https://owasp.org/www-community/attacks/Server_Side_Request_Forgery" target="_blank">Server Side Request Forgery</a> (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.</p>
 <p>For more information on XXE, please visit <a href="https://en.wikipedia.org/wiki/XML_external_entity_attack" target="_blank">XML External Entity (XXE)</a>.</p>
-<h1 id="general-guidance"><a name="general-guidance" class="plugin-anchor" href="#general-guidance"><i class="fa fa-link" aria-hidden="true"></i></a>General Guidance</h1>
+<h2 id="general-guidance"><a name="general-guidance" class="plugin-anchor" href="#general-guidance"><i class="fa fa-link" aria-hidden="true"></i></a>General Guidance</h2>
 <p>The safest way to prevent XXE is always to disable DTDs (External Entities) completely. Depending on the parser, the method should be similar to the following:</p>
 <pre><code class="lang-java">factory.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>, <span class="hljs-keyword">true</span>);
 </code></pre>
 <p>Disabling <a href="https://www.w3schools.com/xml/xml_dtd.asp" target="_blank">DTD</a>s also makes the parser secure against denial of services (DOS) attacks such as <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack" target="_blank">Billion Laughs</a>. If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that&apos;s specific to each parser.</p>
 <p>Detailed XXE Prevention guidance for a number of languages and commonly used XML parsers in those languages is provided below.</p>
-<h1 id="cc"><a name="cc" class="plugin-anchor" href="#cc"><i class="fa fa-link" aria-hidden="true"></i></a>C/C++</h1>
-<h2 id="libxml2"><a name="libxml2" class="plugin-anchor" href="#libxml2"><i class="fa fa-link" aria-hidden="true"></i></a>libxml2</h2>
+<h2 id="cc"><a name="cc" class="plugin-anchor" href="#cc"><i class="fa fa-link" aria-hidden="true"></i></a>C/C++</h2>
+<h3 id="libxml2"><a name="libxml2" class="plugin-anchor" href="#libxml2"><i class="fa fa-link" aria-hidden="true"></i></a>libxml2</h3>
 <p>The Enum <a href="http://xmlsoft.org/html/libxml-parser.html#xmlParserOption" target="_blank">xmlParserOption</a> should not have the following options defined:</p>
 <ul>
 <li><code>XML_PARSE_NOENT</code>: Expands entities and substitutes them with replacement text</li>
@@ -1086,7 +1087,7 @@
 <li><code>xmlReadIO</code></li>
 <li><code>xmlReadMemory</code></li>
 </ul>
-<h2 id="libxerces-c"><a name="libxerces-c" class="plugin-anchor" href="#libxerces-c"><i class="fa fa-link" aria-hidden="true"></i></a>libxerces-c</h2>
+<h3 id="libxerces-c"><a name="libxerces-c" class="plugin-anchor" href="#libxerces-c"><i class="fa fa-link" aria-hidden="true"></i></a>libxerces-c</h3>
 <p>Use of <code>XercesDOMParser</code> do this to prevent XXE:</p>
 <pre><code class="lang-cpp">XercesDOMParser *parser = <span class="hljs-keyword">new</span> XercesDOMParser;
 parser-&gt;setCreateEntityReferenceNodes(<span class="hljs-literal">true</span>);
@@ -1100,9 +1101,9 @@ parser-&gt;setDisableDefaultEntityResolution(<span class="hljs-literal">true</sp
 <pre><code class="lang-cpp">SAX2XMLReader* reader = XMLReaderFactory::createXMLReader();
 parser-&gt;setFeature(XMLUni::fgXercesDisableDefaultEntityResolution, <span class="hljs-literal">true</span>);
 </code></pre>
-<h1 id="java"><a name="java" class="plugin-anchor" href="#java"><i class="fa fa-link" aria-hidden="true"></i></a>Java</h1>
+<h2 id="java"><a name="java" class="plugin-anchor" href="#java"><i class="fa fa-link" aria-hidden="true"></i></a>Java</h2>
 <p>Java applications using XML libraries are particularly vulnerable to XXE because the default settings for most Java XML parsers is to have XXE enabled. To use these parsers safely, you have to explicitly disable XXE in the parser you use. The following describes how to disable XXE in the most commonly used XML parsers for Java.</p>
-<h2 id="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j"><a name="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j" class="plugin-anchor" href="#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j"><i class="fa fa-link" aria-hidden="true"></i></a>JAXP DocumentBuilderFactory, SAXParserFactory and DOM4J</h2>
+<h3 id="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j"><a name="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j" class="plugin-anchor" href="#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j"><i class="fa fa-link" aria-hidden="true"></i></a>JAXP DocumentBuilderFactory, SAXParserFactory and DOM4J</h3>
 <p><code>DocumentBuilderFactory,</code> <code>SAXParserFactory</code> and <code>DOM4J</code> <code>XML</code> Parsers can be configured using the same techniques to protect them against XXE.</p>
 <p>Only the <code>DocumentBuilderFactory</code> example is presented here. The JAXP <code>DocumentBuilderFactory</code> <a href="https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,%20boolean" target="_blank">setFeature</a>) method allows a developer to control which implementation-specific XML processor features are enabled or disabled.</p>
 <p>The features can either be set on the factory or the underlying <code>XMLReader</code> <a href="https://docs.oracle.com/javase/7/docs/api/org/xml/sax/XMLReader.html#setFeature%28java.lang.String,%20boolean%29" target="_blank">setFeature</a> method.</p>
@@ -1116,7 +1117,7 @@ parser-&gt;setFeature(XMLUni::fgXercesDisableDefaultEntityResolution, <span clas
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 String FEATURE = <span class="hljs-keyword">null</span>;
 <span class="hljs-keyword">try</span> {
-    <span class="hljs-comment">// This is the PRIMARY defense. If DTDs (doctypes) are disallowed, almost all </span>
+    <span class="hljs-comment">// This is the PRIMARY defense. If DTDs (doctypes) are disallowed, almost all</span>
     <span class="hljs-comment">// XML entity attacks are prevented</span>
     <span class="hljs-comment">// Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl</span>
     FEATURE = <span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>;
@@ -1152,7 +1153,7 @@ String FEATURE = <span class="hljs-keyword">null</span>;
     ...
 } <span class="hljs-keyword">catch</span> (ParserConfigurationException e) {
     <span class="hljs-comment">// This should catch a failed setFeature feature</span>
-    logger.info(<span class="hljs-string">&quot;ParserConfigurationException was thrown. The feature &apos;&quot;</span> + FEATURE 
+    logger.info(<span class="hljs-string">&quot;ParserConfigurationException was thrown. The feature &apos;&quot;</span> + FEATURE
     + <span class="hljs-string">&quot;&apos; is probably not supported by your XML processor.&quot;</span>);
     ...
 } <span class="hljs-keyword">catch</span> (SAXException e) {
@@ -1182,21 +1183,21 @@ DocumentBuilder safebuilder = dbf.newDocumentBuilder();
 <li>Do not include external DTDs by setting <a href="https://xerces.apache.org/xerces-j/features.html#load-external-dtd" target="_blank">this feature</a> to <code>false</code>.</li>
 </ul>
 <p><strong>Note:</strong> The above defenses require Java 7 update 67, Java 8 update 20, or above, because the above countermeasures for <code>DocumentBuilderFactory</code> and SAXParserFactory are broken in earlier Java versions, per: <a href="http://www.cvedetails.com/cve/CVE-2014-6517/" target="_blank">CVE-2014-6517</a>.</p>
-<h2 id="xmlinputfactory-a-stax-parser"><a name="xmlinputfactory-a-stax-parser" class="plugin-anchor" href="#xmlinputfactory-a-stax-parser"><i class="fa fa-link" aria-hidden="true"></i></a>XMLInputFactory (a StAX parser)</h2>
+<h3 id="xmlinputfactory-a-stax-parser"><a name="xmlinputfactory-a-stax-parser" class="plugin-anchor" href="#xmlinputfactory-a-stax-parser"><i class="fa fa-link" aria-hidden="true"></i></a>XMLInputFactory (a StAX parser)</h3>
 <p><a href="http://en.wikipedia.org/wiki/StAX" target="_blank">StAX</a> parsers such as <a href="http://docs.oracle.com/javase/7/docs/api/javax/xml/stream/XMLInputFactory.html" target="_blank"><code>XMLInputFactory</code></a> allow various properties and features to be set.</p>
 <p>To protect a Java <code>XMLInputFactory</code> from XXE, do this:</p>
 <pre><code class="lang-java"><span class="hljs-comment">// This disables DTDs entirely for that factory</span>
-xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, <span class="hljs-keyword">false</span>); 
+xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, <span class="hljs-keyword">false</span>);
 <span class="hljs-comment">// disable external entities</span>
 xmlInputFactory.setProperty(<span class="hljs-string">&quot;javax.xml.stream.isSupportingExternalEntities&quot;</span>, <span class="hljs-keyword">false</span>);
 </code></pre>
-<h2 id="transformerfactory"><a name="transformerfactory" class="plugin-anchor" href="#transformerfactory"><i class="fa fa-link" aria-hidden="true"></i></a>TransformerFactory</h2>
+<h3 id="transformerfactory"><a name="transformerfactory" class="plugin-anchor" href="#transformerfactory"><i class="fa fa-link" aria-hidden="true"></i></a>TransformerFactory</h3>
 <p>To protect a <code>javax.xml.transform.TransformerFactory</code> from XXE, do this:</p>
 <pre><code class="lang-java">TransformerFactory tf = TransformerFactory.newInstance();
 tf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
 tf.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, <span class="hljs-string">&quot;&quot;</span>);
 </code></pre>
-<h2 id="validator"><a name="validator" class="plugin-anchor" href="#validator"><i class="fa fa-link" aria-hidden="true"></i></a>Validator</h2>
+<h3 id="validator"><a name="validator" class="plugin-anchor" href="#validator"><i class="fa fa-link" aria-hidden="true"></i></a>Validator</h3>
 <p>To protect a <code>javax.xml.validation.Validator</code> from XXE, do this:</p>
 <pre><code class="lang-java">SchemaFactory factory = SchemaFactory.newInstance(<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>);
 Schema schema = factory.newSchema();
@@ -1204,14 +1205,14 @@ Validator validator = schema.newValidator();
 validator.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
 validator.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, <span class="hljs-string">&quot;&quot;</span>);
 </code></pre>
-<h2 id="schemafactory"><a name="schemafactory" class="plugin-anchor" href="#schemafactory"><i class="fa fa-link" aria-hidden="true"></i></a>SchemaFactory</h2>
+<h3 id="schemafactory"><a name="schemafactory" class="plugin-anchor" href="#schemafactory"><i class="fa fa-link" aria-hidden="true"></i></a>SchemaFactory</h3>
 <p>To protect a <code>javax.xml.validation.SchemaFactory</code> from XXE, do this:</p>
 <pre><code class="lang-java">SchemaFactory factory = SchemaFactory.newInstance(<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>);
 factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
 factory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, <span class="hljs-string">&quot;&quot;</span>);
 Schema schema = factory.newSchema(Source);
 </code></pre>
-<h2 id="saxtransformerfactory"><a name="saxtransformerfactory" class="plugin-anchor" href="#saxtransformerfactory"><i class="fa fa-link" aria-hidden="true"></i></a>SAXTransformerFactory</h2>
+<h3 id="saxtransformerfactory"><a name="saxtransformerfactory" class="plugin-anchor" href="#saxtransformerfactory"><i class="fa fa-link" aria-hidden="true"></i></a>SAXTransformerFactory</h3>
 <p>To protect a <code>javax.xml.transform.sax.SAXTransformerFactory</code> from XXE, do this:</p>
 <pre><code class="lang-java">SAXTransformerFactory sf = SAXTransformerFactory.newInstance();
 sf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
@@ -1224,23 +1225,23 @@ sf.newXMLFilter(Source);
 <li><code>javax.xml.XMLConstants.ACCESS_EXTERNAL_SCHEMA</code></li>
 <li><code>javax.xml.XMLConstants.ACCESS_EXTERNAL_STYLESHEET</code></li>
 </ul>
-<h2 id="xmlreader"><a name="xmlreader" class="plugin-anchor" href="#xmlreader"><i class="fa fa-link" aria-hidden="true"></i></a>XMLReader</h2>
+<h3 id="xmlreader"><a name="xmlreader" class="plugin-anchor" href="#xmlreader"><i class="fa fa-link" aria-hidden="true"></i></a>XMLReader</h3>
 <p>To protect a Java <code>org.xml.sax.XMLReader</code> from XXE, do this:</p>
 <pre><code class="lang-java">XMLReader reader = XMLReaderFactory.createXMLReader();
 reader.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>, <span class="hljs-keyword">true</span>);
 <span class="hljs-comment">// This may not be strictly required as DTDs shouldn&apos;t be allowed at all, per previous line.</span>
-reader.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>, <span class="hljs-keyword">false</span>); 
+reader.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>, <span class="hljs-keyword">false</span>);
 reader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
 reader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
 </code></pre>
-<h2 id="saxreader"><a name="saxreader" class="plugin-anchor" href="#saxreader"><i class="fa fa-link" aria-hidden="true"></i></a>SAXReader</h2>
+<h3 id="saxreader"><a name="saxreader" class="plugin-anchor" href="#saxreader"><i class="fa fa-link" aria-hidden="true"></i></a>SAXReader</h3>
 <p>To protect a Java <code>org.dom4j.io.SAXReader</code> from XXE, do this:</p>
 <pre><code class="lang-java">saxReader.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>, <span class="hljs-keyword">true</span>);
 saxReader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
 saxReader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
 </code></pre>
 <p>Based on testing, if you are missing one of these, you can still be vulnerable to an XXE attack.</p>
-<h2 id="saxbuilder"><a name="saxbuilder" class="plugin-anchor" href="#saxbuilder"><i class="fa fa-link" aria-hidden="true"></i></a>SAXBuilder</h2>
+<h3 id="saxbuilder"><a name="saxbuilder" class="plugin-anchor" href="#saxbuilder"><i class="fa fa-link" aria-hidden="true"></i></a>SAXBuilder</h3>
 <p>To protect a Java <code>org.jdom2.input.SAXBuilder</code> from XXE, do this:</p>
 <pre><code class="lang-java">SAXBuilder builder = <span class="hljs-keyword">new</span> SAXBuilder();
 builder.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>,<span class="hljs-keyword">true</span>);
@@ -1248,7 +1249,7 @@ builder.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/e
 builder.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
 Document doc = builder.build(<span class="hljs-keyword">new</span> File(fileName));
 </code></pre>
-<h2 id="no-op-entityresolver"><a name="no-op-entityresolver" class="plugin-anchor" href="#no-op-entityresolver"><i class="fa fa-link" aria-hidden="true"></i></a>No-op EntityResolver</h2>
+<h3 id="no-op-entityresolver"><a name="no-op-entityresolver" class="plugin-anchor" href="#no-op-entityresolver"><i class="fa fa-link" aria-hidden="true"></i></a>No-op EntityResolver</h3>
 <p>For APIs that take an <code>EntityResolver</code>, you can neutralize an XML parser&apos;s ability to resolve entities by <a href="https://wiki.sei.cmu.edu/confluence/display/java/IDS17-J.+Prevent+XML+External+Entity+Attacks" target="_blank">supplying a no-op implementation</a>:</p>
 <pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoOpEntityResolver</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">EntityResolver</span> </span>{
     <span class="hljs-function"><span class="hljs-keyword">public</span> InputSource <span class="hljs-title">resolveEntity</span><span class="hljs-params">(String publicId, String systemId)</span> </span>{
@@ -1266,7 +1267,7 @@ documentBuilder.setEntityResolver(<span class="hljs-keyword">new</span> NoOpEnti
 xmlReader.setEntityResolver(noop);
 documentBuilder.setEntityResolver(noop);
 </code></pre>
-<h2 id="jaxb-unmarshaller"><a name="jaxb-unmarshaller" class="plugin-anchor" href="#jaxb-unmarshaller"><i class="fa fa-link" aria-hidden="true"></i></a>JAXB Unmarshaller</h2>
+<h3 id="jaxb-unmarshaller"><a name="jaxb-unmarshaller" class="plugin-anchor" href="#jaxb-unmarshaller"><i class="fa fa-link" aria-hidden="true"></i></a>JAXB Unmarshaller</h3>
 <p>Since a <code>javax.xml.bind.Unmarshaller</code> parses XML and does not support any flags for disabling XXE, it&apos;s imperative to parse the untrusted XML through a configurable secure parser first, generate a source object as a result, and pass the source object to the Unmarshaller. For example:</p>
 <pre><code class="lang-java"><span class="hljs-comment">//Disable XXE</span>
 SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -1275,15 +1276,15 @@ spf.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/exter
 spf.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>, <span class="hljs-keyword">false</span>);
 
 <span class="hljs-comment">//Do unmarshall operation</span>
-Source xmlSource = <span class="hljs-keyword">new</span> SAXSource(spf.newSAXParser().getXMLReader(), 
+Source xmlSource = <span class="hljs-keyword">new</span> SAXSource(spf.newSAXParser().getXMLReader(),
                                 <span class="hljs-keyword">new</span> InputSource(<span class="hljs-keyword">new</span> StringReader(xml)));
 JAXBContext jc = JAXBContext.newInstance(Object.class);
 Unmarshaller um = jc.createUnmarshaller();
 um.unmarshal(xmlSource);
 </code></pre>
-<h3 id="java-8-and-up"><a name="java-8-and-up" class="plugin-anchor" href="#java-8-and-up"><i class="fa fa-link" aria-hidden="true"></i></a>Java 8 and up</h3>
+<h4 id="java-8-and-up"><a name="java-8-and-up" class="plugin-anchor" href="#java-8-and-up"><i class="fa fa-link" aria-hidden="true"></i></a>Java 8 and up</h4>
 <p>Since <a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8010393" target="_blank">JDK-8010393</a>, which is in OpenJDK 8 beta 86, <code>javax.xml.bind.Unmarshaller</code> instances are safe by default. The other classes mentioned here are still unsafe by default in Java 8.</p>
-<h2 id="xpathexpression"><a name="xpathexpression" class="plugin-anchor" href="#xpathexpression"><i class="fa fa-link" aria-hidden="true"></i></a>XPathExpression</h2>
+<h3 id="xpathexpression"><a name="xpathexpression" class="plugin-anchor" href="#xpathexpression"><i class="fa fa-link" aria-hidden="true"></i></a>XPathExpression</h3>
 <p>A <code>javax.xml.xpath.XPathExpression</code> can not be configured securely by itself, so the untrusted data must be parsed through another securable XML parser first.</p>
 <p>For example:</p>
 <pre><code class="lang-java">DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
@@ -1293,14 +1294,14 @@ DocumentBuilder builder = df.newDocumentBuilder();
 String result = <span class="hljs-keyword">new</span> XPathExpression().evaluate( builder.parse(
                             <span class="hljs-keyword">new</span> ByteArrayInputStream(xml.getBytes())) );
 </code></pre>
-<h2 id="javabeansxmldecoder"><a name="javabeansxmldecoder" class="plugin-anchor" href="#javabeansxmldecoder"><i class="fa fa-link" aria-hidden="true"></i></a>java.beans.XMLDecoder</h2>
+<h3 id="javabeansxmldecoder"><a name="javabeansxmldecoder" class="plugin-anchor" href="#javabeansxmldecoder"><i class="fa fa-link" aria-hidden="true"></i></a>java.beans.XMLDecoder</h3>
 <p>The <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/XMLDecoder.html#readObject--" target="_blank">readObject()</a> method in this class is fundamentally unsafe.</p>
 <p>Not only is the XML it parses subject to XXE, but the method can be used to construct any Java object, and <a href="http://stackoverflow.com/questions/14307442/is-it-safe-to-use-xmldecoder-to-read-document-files" target="_blank">execute arbitrary code as described here</a>.</p>
 <p>And there is no way to make use of this class safe except to trust or properly validate the input being passed into it.</p>
 <p>As such, we&apos;d strongly recommend completely avoiding the use of this class and replacing it with a safe or properly configured XML parser as described elsewhere in this cheat sheet.</p>
-<h2 id="other-xml-parsers"><a name="other-xml-parsers" class="plugin-anchor" href="#other-xml-parsers"><i class="fa fa-link" aria-hidden="true"></i></a>Other XML Parsers</h2>
+<h3 id="other-xml-parsers"><a name="other-xml-parsers" class="plugin-anchor" href="#other-xml-parsers"><i class="fa fa-link" aria-hidden="true"></i></a>Other XML Parsers</h3>
 <p>There are many 3rd party libraries that parse XML either directly or through their use of other libraries. Please test and verify their XML parser is secure against XXE by default. If the parser is not secure by default, look for flags supported by the parser to disable all possible external resource inclusions like the examples given above. If there&apos;s no control exposed to the outside, make sure the untrusted content is passed through a secure parser first and then passed to insecure 3rd party parser similar to how the Unmarshaller is secured.</p>
-<h3 id="spring-framework-mvcoxm-xxe-vulnerabilities"><a name="spring-framework-mvcoxm-xxe-vulnerabilities" class="plugin-anchor" href="#spring-framework-mvcoxm-xxe-vulnerabilities"><i class="fa fa-link" aria-hidden="true"></i></a>Spring Framework MVC/OXM XXE Vulnerabilities</h3>
+<h4 id="spring-framework-mvcoxm-xxe-vulnerabilities"><a name="spring-framework-mvcoxm-xxe-vulnerabilities" class="plugin-anchor" href="#spring-framework-mvcoxm-xxe-vulnerabilities"><i class="fa fa-link" aria-hidden="true"></i></a>Spring Framework MVC/OXM XXE Vulnerabilities</h4>
 <p>For example, some XXE vulnerabilities were found in <a href="https://pivotal.io/security/cve-2013-4152" target="_blank">Spring OXM</a> and <a href="https://pivotal.io/security/cve-2013-7315" target="_blank">Spring MVC</a>. The following versions of the Spring Framework are vulnerable to XXE:</p>
 <ul>
 <li><strong>3.0.0</strong> to <strong>3.2.3</strong> (Spring OXM &amp; Spring MVC)</li>
@@ -1308,8 +1309,8 @@ String result = <span class="hljs-keyword">new</span> XPathExpression().evaluate
 <li><strong>4.0.0.M1-4.0.0.M2</strong> (Spring MVC)</li>
 </ul>
 <p>There were other issues as well that were fixed later, so to fully address these issues, Spring recommends you upgrade to Spring Framework 3.2.8+ or 4.0.2+.</p>
-<p>For Spring OXM, this is referring to the use of org.springframework.oxm.jaxb.Jaxb2Marshaller. Note that the CVE for Spring OXM specifically indicates that 2 XML parsing situations are up to the developer to get right, and 2 are the responsibility of Spring and were fixed to address this CVE. </p>
-<p>Here&apos;s what they say: </p>
+<p>For Spring OXM, this is referring to the use of org.springframework.oxm.jaxb.Jaxb2Marshaller. Note that the CVE for Spring OXM specifically indicates that 2 XML parsing situations are up to the developer to get right, and 2 are the responsibility of Spring and were fixed to address this CVE.</p>
+<p>Here&apos;s what they say:</p>
 <p>Two situations developers must handle:</p>
 <ul>
 <li>For a <code>DOMSource</code>, the XML has already been parsed by user code and that code is responsible for protecting against XXE.</li>
@@ -1326,9 +1327,9 @@ Jaxb2Marshaller marshaller = <span class="hljs-keyword">new</span> Jaxb2Marshall
 marshaller.unmarshal(<span class="hljs-keyword">new</span> StreamSource(<span class="hljs-keyword">new</span> StringReader(some_string_containing_XML));
 </code></pre>
 <p>So, per the <a href="https://pivotal.io/security/cve-2013-4152" target="_blank">Spring OXM CVE writeup</a>, the above is now safe. But if you were to use a DOMSource or StAXSource instead, it would be up to you to configure those sources to be safe from XXE.</p>
-<h3 id="castor"><a name="castor" class="plugin-anchor" href="#castor"><i class="fa fa-link" aria-hidden="true"></i></a>Castor</h3>
+<h4 id="castor"><a name="castor" class="plugin-anchor" href="#castor"><i class="fa fa-link" aria-hidden="true"></i></a>Castor</h4>
 <p>Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor <strong>prior to version 1.3.3</strong> are vulnerable to XXE, and should be upgraded to the latest version. For additional information, check the official <a href="https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html" target="_blank">XML configuration file</a></p>
-<h1 id="net"><a name="net" class="plugin-anchor" href="#net"><i class="fa fa-link" aria-hidden="true"></i></a>.NET</h1>
+<h2 id="net"><a name="net" class="plugin-anchor" href="#net"><i class="fa fa-link" aria-hidden="true"></i></a>.NET</h2>
 <p>The following information for XXE injection in .NET is directly from this <a href="https://github.com/deanf1/dotnet-security-unit-tests" target="_blank">web application of unit tests by Dean Fleming</a>.</p>
 <p>This web application covers all currently supported .NET XML parsers, and has test cases for each demonstrating when they are safe from XXE injection and when they are not.</p>
 <p>Previously, this information was based on <a href="https://www.jardinesoftware.net/2016/05/26/xxe-and-net/" target="_blank">James Jardine&apos;s excellent .NET XXE article</a>.</p>
@@ -1400,45 +1401,45 @@ marshaller.unmarshal(<span class="hljs-keyword">new</span> StreamSource(<span cl
 </tr>
 </tbody>
 </table>
-<h2 id="linq-to-xml"><a name="linq-to-xml" class="plugin-anchor" href="#linq-to-xml"><i class="fa fa-link" aria-hidden="true"></i></a>LINQ to XML</h2>
+<h3 id="linq-to-xml"><a name="linq-to-xml" class="plugin-anchor" href="#linq-to-xml"><i class="fa fa-link" aria-hidden="true"></i></a>LINQ to XML</h3>
 <p>Both the <code>XElement</code> and <code>XDocument</code> objects in the <code>System.Xml.Linq</code> library are safe from XXE injection by default. <code>XElement</code> parses only the elements within the XML file, so DTDs are ignored altogether. <code>XDocument</code> has DTDs <a href="https://github.com/dotnet/docs/blob/master/docs/visual-basic/programming-guide/concepts/linq/linq-to-xml-security.md" target="_blank">disabled by default</a>, and is only unsafe if constructed with a different unsafe XML parser.</p>
-<h2 id="xmldictionaryreader"><a name="xmldictionaryreader" class="plugin-anchor" href="#xmldictionaryreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlDictionaryReader</h2>
+<h3 id="xmldictionaryreader"><a name="xmldictionaryreader" class="plugin-anchor" href="#xmldictionaryreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlDictionaryReader</h3>
 <p><code>System.Xml.XmlDictionaryReader</code> is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that &quot;CData elements not valid at top level of an XML document&quot;. It becomes unsafe if constructed with a different unsafe XML parser.</p>
-<h2 id="xmldocument"><a name="xmldocument" class="plugin-anchor" href="#xmldocument"><i class="fa fa-link" aria-hidden="true"></i></a>XmlDocument</h2>
+<h3 id="xmldocument"><a name="xmldocument" class="plugin-anchor" href="#xmldocument"><i class="fa fa-link" aria-hidden="true"></i></a>XmlDocument</h3>
 <p>Prior to .NET Framework version 4.5.2, <code>System.Xml.XmlDocument</code> is <strong>unsafe</strong> by default. The <code>XmlDocument</code> object has an <code>XmlResolver</code> object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this <code>XmlResolver</code> is set to null by default.</p>
 <p>The following example shows how it is made safe:</p>
 <pre><code class="lang-csharp"> <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">LoadXML</span>(<span class="hljs-params"></span>)
  </span>{
-   <span class="hljs-keyword">string</span> xxePayload = <span class="hljs-string">&quot;&lt;!DOCTYPE doc [&lt;!ENTITY win SYSTEM &apos;file:///C:/Users/testdata2.txt&apos;&gt;]&gt;&quot;</span> 
+   <span class="hljs-keyword">string</span> xxePayload = <span class="hljs-string">&quot;&lt;!DOCTYPE doc [&lt;!ENTITY win SYSTEM &apos;file:///C:/Users/testdata2.txt&apos;&gt;]&gt;&quot;</span>
                      + <span class="hljs-string">&quot;&lt;doc&gt;&amp;win;&lt;/doc&gt;&quot;</span>;
    <span class="hljs-keyword">string</span> xml = <span class="hljs-string">&quot;&lt;?xml version=&apos;1.0&apos; ?&gt;&quot;</span> + xxePayload;
 
    XmlDocument xmlDoc = <span class="hljs-keyword">new</span> XmlDocument();
    <span class="hljs-comment">// Setting this to NULL disables DTDs - Its NOT null by default.</span>
-   xmlDoc.XmlResolver = <span class="hljs-keyword">null</span>;   
+   xmlDoc.XmlResolver = <span class="hljs-keyword">null</span>;
    xmlDoc.LoadXml(xml);
    Console.WriteLine(xmlDoc.InnerText);
    Console.ReadLine();
  }
 </code></pre>
 <p><code>XmlDocument</code> can become unsafe if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx" target="_blank">referenced MSDN article</a>.</p>
-<h2 id="xmlnodereader"><a name="xmlnodereader" class="plugin-anchor" href="#xmlnodereader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlNodeReader</h2>
+<h3 id="xmlnodereader"><a name="xmlnodereader" class="plugin-anchor" href="#xmlnodereader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlNodeReader</h3>
 <p><code>System.Xml.XmlNodeReader</code> objects are safe by default and will ignore DTDs even when constructed with an unsafe parser or wrapped in another unsafe parser.</p>
-<h2 id="xmlreader"><a name="xmlreader" class="plugin-anchor" href="#xmlreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlReader</h2>
+<h3 id="xmlreader"><a name="xmlreader" class="plugin-anchor" href="#xmlreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlReader</h3>
 <p><code>System.Xml.XmlReader</code> objects are safe by default.</p>
 <p>They are set by default to have their ProhibitDtd property set to false in .NET Framework versions 4.0 and earlier, or their <code>DtdProcessing</code> property set to Prohibit in .NET versions 4.0 and later.</p>
 <p>Additionally, in .NET versions 4.5.2 and later, the <code>XmlReaderSettings</code> belonging to the <code>XmlReader</code> has its <code>XmlResolver</code> set to null by default, which provides an additional layer of safety.</p>
 <p>Therefore, <code>XmlReader</code> objects will only become unsafe in version 4.5.2 and up if both the <code>DtdProcessing</code> property is set to Parse and the <code>XmlReaderSetting</code>&apos;s <code>XmlResolver</code> is set to a nonnull XmlResolver with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx" target="_blank">referenced MSDN article</a>.</p>
-<h2 id="xmltextreader"><a name="xmltextreader" class="plugin-anchor" href="#xmltextreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlTextReader</h2>
+<h3 id="xmltextreader"><a name="xmltextreader" class="plugin-anchor" href="#xmltextreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlTextReader</h3>
 <p><code>System.Xml.XmlTextReader</code> is <strong>unsafe</strong> by default in .NET Framework versions prior to 4.5.2. Here is how to make it safe in various .NET versions:</p>
-<h3 id="prior-to-net-40"><a name="prior-to-net-40" class="plugin-anchor" href="#prior-to-net-40"><i class="fa fa-link" aria-hidden="true"></i></a>Prior to .NET 4.0</h3>
+<h4 id="prior-to-net-40"><a name="prior-to-net-40" class="plugin-anchor" href="#prior-to-net-40"><i class="fa fa-link" aria-hidden="true"></i></a>Prior to .NET 4.0</h4>
 <p>In .NET Framework versions prior to 4.0, DTD parsing behavior for <code>XmlReader</code> objects like <code>XmlTextReader</code> are controlled by the Boolean <code>ProhibitDtd</code> property found in the <code>System.Xml.XmlReaderSettings</code> and <code>System.Xml.XmlTextReader</code> classes.</p>
 <p>Set these values to true to disable inline DTDs completely.</p>
 <pre><code class="lang-csharp">XmlTextReader reader = <span class="hljs-keyword">new</span> XmlTextReader(stream);
 <span class="hljs-comment">// NEEDED because the default is FALSE!!</span>
 reader.ProhibitDtd = <span class="hljs-keyword">true</span>;
 </code></pre>
-<h3 id="net-40---net-452"><a name="net-40---net-452" class="plugin-anchor" href="#net-40---net-452"><i class="fa fa-link" aria-hidden="true"></i></a>.NET 4.0 - .NET 4.5.2</h3>
+<h4 id="net-40---net-452"><a name="net-40---net-452" class="plugin-anchor" href="#net-40---net-452"><i class="fa fa-link" aria-hidden="true"></i></a>.NET 4.0 - .NET 4.5.2</h4>
 <p>In .NET Framework version 4.0, DTD parsing behavior has been changed. The <code>ProhibitDtd</code> property has been deprecated in favor of the new <code>DtdProcessing</code> property.</p>
 <p>However, they didn&apos;t change the default settings so <code>XmlTextReader</code> is still vulnerable to XXE by default.</p>
 <p>Setting <code>DtdProcessing</code> to <code>Prohibit</code> causes the runtime to throw an exception if a <code>&lt;!DOCTYPE&gt;</code> element is present in the XML.</p>
@@ -1448,9 +1449,9 @@ reader.ProhibitDtd = <span class="hljs-keyword">true</span>;
 reader.DtdProcessing = DtdProcessing.Prohibit;
 </code></pre>
 <p>Alternatively, you can set the <code>DtdProcessing</code> property to <code>Ignore</code>, which will not throw an exception on encountering a <code>&lt;!DOCTYPE&gt;</code> element but will simply skip over it and not process it. Finally, you can set <code>DtdProcessing</code> to <code>Parse</code> if you do want to allow and process inline DTDs.</p>
-<h3 id="net-452-and-later"><a name="net-452-and-later" class="plugin-anchor" href="#net-452-and-later"><i class="fa fa-link" aria-hidden="true"></i></a>.NET 4.5.2 and later</h3>
+<h4 id="net-452-and-later"><a name="net-452-and-later" class="plugin-anchor" href="#net-452-and-later"><i class="fa fa-link" aria-hidden="true"></i></a>.NET 4.5.2 and later</h4>
 <p>In .NET Framework versions 4.5.2 and up, <code>XmlTextReader</code>&apos;s internal <code>XmlResolver</code> is set to null by default, making the <code>XmlTextReader</code> ignore DTDs by default. The <code>XmlTextReader</code> can become unsafe if if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings.</p>
-<h2 id="xpathnavigator"><a name="xpathnavigator" class="plugin-anchor" href="#xpathnavigator"><i class="fa fa-link" aria-hidden="true"></i></a>XPathNavigator</h2>
+<h3 id="xpathnavigator"><a name="xpathnavigator" class="plugin-anchor" href="#xpathnavigator"><i class="fa fa-link" aria-hidden="true"></i></a>XPathNavigator</h3>
 <p><code>System.Xml.XPath.XPathNavigator</code> is <strong>unsafe</strong> by default in .NET Framework versions prior to 4.5.2.</p>
 <p>This is due to the fact that it implements <code>IXPathNavigable</code> objects like <code>XmlDocument</code>, which are also unsafe by default in versions prior to 4.5.2.</p>
 <p>You can make <code>XPathNavigator</code> safe by giving it a safe parser like <code>XmlReader</code> (which is safe by default) in the <code>XPathDocument</code>&apos;s constructor.</p>
@@ -1460,16 +1461,16 @@ XPathDocument doc = <span class="hljs-keyword">new</span> XPathDocument(reader);
 XPathNavigator nav = doc.CreateNavigator();
 <span class="hljs-keyword">string</span> xml = nav.InnerXml.ToString();
 </code></pre>
-<h2 id="xslcompiledtransform"><a name="xslcompiledtransform" class="plugin-anchor" href="#xslcompiledtransform"><i class="fa fa-link" aria-hidden="true"></i></a>XslCompiledTransform</h2>
+<h3 id="xslcompiledtransform"><a name="xslcompiledtransform" class="plugin-anchor" href="#xslcompiledtransform"><i class="fa fa-link" aria-hidden="true"></i></a>XslCompiledTransform</h3>
 <p><code>System.Xml.Xsl.XslCompiledTransform</code> (an XML transformer) is safe by default as long as the parser it&apos;s given is safe.</p>
 <p>It is safe by default because the default parser of the <code>Transform()</code> methods is an <code>XmlReader</code>, which is safe by default (per above).</p>
 <p><a href="http://www.dotnetframework.org/default.aspx/4@0/4@0/DEVDIV_TFS/Dev10/Releases/RTMRel/ndp/fx/src/Xml/System/Xml/Xslt/XslCompiledTransform@cs/1305376/XslCompiledTransform@cs" target="_blank">The source code for this method is here.</a></p>
 <p>Some of the <code>Transform()</code> methods accept an <code>XmlReader</code> or <code>IXPathNavigable</code> (e.g., <code>XmlDocument</code>) as an input, and if you pass in an unsafe XML Parser then the <code>Transform</code> will also be unsafe.</p>
-<h1 id="ios"><a name="ios" class="plugin-anchor" href="#ios"><i class="fa fa-link" aria-hidden="true"></i></a>iOS</h1>
-<h2 id="libxml2"><a name="libxml2" class="plugin-anchor" href="#libxml2"><i class="fa fa-link" aria-hidden="true"></i></a>libxml2</h2>
+<h2 id="ios"><a name="ios" class="plugin-anchor" href="#ios"><i class="fa fa-link" aria-hidden="true"></i></a>iOS</h2>
+<h3 id="libxml2"><a name="libxml2" class="plugin-anchor" href="#libxml2"><i class="fa fa-link" aria-hidden="true"></i></a>libxml2</h3>
 <p>iOS includes the C/C++ libxml2 library described above, so that guidance applies if you are using libxml2 directly.</p>
 <p>However, the version of libxml2 provided up through iOS6 is prior to version 2.9 of libxml2 (which protects against XXE by default).</p>
-<h2 id="nsxmldocument"><a name="nsxmldocument" class="plugin-anchor" href="#nsxmldocument"><i class="fa fa-link" aria-hidden="true"></i></a>NSXMLDocument</h2>
+<h3 id="nsxmldocument"><a name="nsxmldocument" class="plugin-anchor" href="#nsxmldocument"><i class="fa fa-link" aria-hidden="true"></i></a>NSXMLDocument</h3>
 <p>iOS also provides an <code>NSXMLDocument</code> type, which is built on top of libxml2.</p>
 <p>However, <code>NSXMLDocument</code> provides some additional protections against XXE that aren&apos;t available in libxml2 directly.</p>
 <p>Per the &apos;NSXMLDocument External Entity Restriction API&apos; section of this <a href="https://developer.apple.com/library/ios/#releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html" target="_blank">page</a>:</p>
@@ -1478,13 +1479,13 @@ XPathNavigator nav = doc.CreateNavigator();
 <li>iOS5 and later: Only entities that don&apos;t require network access are loaded. (which is safer)</li>
 </ul>
 <p>However, to completely disable XXE in an <code>NSXMLDocument</code> in any version of iOS you simply specify <code>NSXMLNodeLoadExternalEntitiesNever</code> when creating the <code>NSXMLDocument</code>.</p>
-<h1 id="php"><a name="php" class="plugin-anchor" href="#php"><i class="fa fa-link" aria-hidden="true"></i></a>PHP</h1>
+<h2 id="php"><a name="php" class="plugin-anchor" href="#php"><i class="fa fa-link" aria-hidden="true"></i></a>PHP</h2>
 <p>Per <a href="https://www.php.net/manual/en/function.libxml-disable-entity-loader.php" target="_blank">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</p>
 <pre><code class="lang-php">libxml_disable_entity_loader(<span class="hljs-keyword">true</span>);
 </code></pre>
 <p>A description of how to abuse this in PHP is presented in a good <a href="https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/" target="_blank">SensePost article</a> describing a cool PHP based XXE vulnerability that was fixed in Facebook.</p>
-<h1 id="python"><a name="python" class="plugin-anchor" href="#python"><i class="fa fa-link" aria-hidden="true"></i></a>Python</h1>
-<p>The Python 3 official documentation contains a section on <a href="https://docs.python.org/3/library/xml.html#xml-vulnerabilities" target="_blank">xml vulnerabilities</a>. For Python 2, you can refer to this <a href="https://docs.Python.org/2/library/xml.html#xml-vulnerabilities" target="_blank">page</a>. </p>
+<h2 id="python"><a name="python" class="plugin-anchor" href="#python"><i class="fa fa-link" aria-hidden="true"></i></a>Python</h2>
+<p>The Python 3 official documentation contains a section on <a href="https://docs.python.org/3/library/xml.html#xml-vulnerabilities" target="_blank">xml vulnerabilities</a>. For Python 2, you can refer to this <a href="https://docs.Python.org/2/library/xml.html#xml-vulnerabilities" target="_blank">page</a>.</p>
 <blockquote>
 <p>The end of life for Python 2 is expected to be January 1st, 2020.</p>
 </blockquote>
@@ -1544,7 +1545,7 @@ XPathNavigator nav = doc.CreateNavigator();
 </tbody>
 </table>
 <p>To protect your application from the applicable attacks, <a href="https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages" target="_blank">two packages</a> exist to help you sanitize your input and protect your application against DDoS and remote attacks.</p>
-<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<h2 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h2>
 <ul>
 <li><a href="https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/" target="_blank">XXE by InfoSecInstitute</a></li>
 <li><a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29" target="_blank">OWASP Top 10-2017 A4: XML External Entities (XXE)</a></li>
@@ -1596,7 +1597,7 @@ XPathNavigator nav = doc.CreateNavigator();
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"XML External Entity Prevention ","level":"1.69","depth":1,"next":{"title":"XML Security ","level":"1.70","depth":1,"path":"cheatsheets/XML_Security_Cheat_Sheet.md","ref":"cheatsheets/XML_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Web Service Security ","level":"1.68","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"XML External Entity Prevention ","level":"1.69","depth":1,"next":{"title":"XML Security ","level":"1.70","depth":1,"path":"cheatsheets/XML_Security_Cheat_Sheet.md","ref":"cheatsheets/XML_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Web Service Security ","level":"1.68","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

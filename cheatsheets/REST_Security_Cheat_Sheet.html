@@ -1050,7 +1050,8 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="rest-security-cheat-sheet"><a name="rest-security-cheat-sheet" class="plugin-anchor" href="#rest-security-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>REST Security Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p><a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank">REST</a> (or <strong>RE</strong>presentational <strong>S</strong>tate <strong>T</strong>ransfer) is an architectural style first described in <a href="https://en.wikipedia.org/wiki/Roy_Fielding" target="_blank">Roy Fielding</a>&apos;s Ph.D. dissertation on <a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm" target="_blank">Architectural Styles and the Design of Network-based Software Architectures</a>.</p>
 <p>It evolved as Fielding wrote the HTTP/1.1 and URI specs and has been proven to be well-suited for developing distributed hypermedia applications. While REST is more widely applicable, it is most commonly used within the context of communicating with services via HTTP.</p>
 <p>The key abstraction of information in REST is a resource. A REST API resource is identified by a URI, usually a HTTP URL. REST components use connectors to perform actions on a resource by using a representation to capture the current or intended state of the resource and transferring that representation.</p>
@@ -1060,17 +1061,17 @@
 <p>In order to implement flows with REST APIs, resources are typically created, read, updated and deleted. For example, an ecommerce site may offer methods to create an empty shopping cart, to add items to the cart and to check out the cart. Each of these REST calls is stateless and the endpoint should check whether the caller is authorized to perform the requested operation.</p>
 <p>Another key feature of REST applications is the use of standard HTTP verbs and error codes in the pursuit or removing unnecessary variation among different services.</p>
 <p>Another key feature of REST applications is the use of <a href="https://en.wikipedia.org/wiki/HATEOAS" target="_blank">HATEOAS or Hypermedia As The Engine of Application State</a>. This provides REST applications a self-documenting nature making it easier for developers to interact with a REST service without prior knowledge.</p>
-<h1 id="https"><a name="https" class="plugin-anchor" href="#https"><i class="fa fa-link" aria-hidden="true"></i></a>HTTPS</h1>
+<h2 id="https"><a name="https" class="plugin-anchor" href="#https"><i class="fa fa-link" aria-hidden="true"></i></a>HTTPS</h2>
 <p>Secure REST services must only provide HTTPS endpoints. This protects authentication credentials in transit, for example passwords, API keys or JSON Web Tokens. It also allows clients to authenticate the service and guarantees integrity of the transmitted data.</p>
 <p>See the <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a> for additional information.</p>
 <p>Consider the use of mutually authenticated client-side certificates to provide additional protection for highly privileged web services.</p>
-<h1 id="access-control"><a name="access-control" class="plugin-anchor" href="#access-control"><i class="fa fa-link" aria-hidden="true"></i></a>Access Control</h1>
+<h2 id="access-control"><a name="access-control" class="plugin-anchor" href="#access-control"><i class="fa fa-link" aria-hidden="true"></i></a>Access Control</h2>
 <p>Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple micro services following the RESTful style.</p>
 <ul>
 <li>in order to minimize latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints</li>
 <li>user authentication should be centralised in a Identity Provider (IdP), which issues access tokens</li>
 </ul>
-<h1 id="jwt"><a name="jwt" class="plugin-anchor" href="#jwt"><i class="fa fa-link" aria-hidden="true"></i></a>JWT</h1>
+<h2 id="jwt"><a name="jwt" class="plugin-anchor" href="#jwt"><i class="fa fa-link" aria-hidden="true"></i></a>JWT</h2>
 <p>There seems to be a convergence towards using <a href="https://tools.ietf.org/html/rfc7519" target="_blank">JSON Web Tokens</a> (JWT) as the format for security tokens. JWTs are JSON data structures containing a set of claims that can be used for access control decisions. A cryptographic signature or message authentication code (MAC) can be used to protect the integrity of the JWT.</p>
 <ul>
 <li>Ensure JWTs are integrity protected by either a signature or a MAC. Do not allow the unsecured JWTs: <code>{&quot;alg&quot;:&quot;none&quot;}</code>.<ul>
@@ -1092,7 +1093,7 @@
 <li><code>nbf</code> or not before time - is the current time after the start of the validity period of this token?</li>
 </ul>
 <p>As JWTs contain details of the authenticated entity (user etc.) a disconnect can occur between the JWT and the current state of the users session, for example, if the session is terminated earlier than the expiration time due to an explicit logout or an idle timeout. When an explicit session termination event occurs, a digest or hash of any associated JWTs should be submitted to a blacklist on the API which will invalidate that JWT for any requests until the expiration of the token. See the <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html#token-explicit-revocation-by-the-user">JSON_Web_Token_Cheat_Sheet_for_Java</a> for further details.</p>
-<h1 id="api-keys"><a name="api-keys" class="plugin-anchor" href="#api-keys"><i class="fa fa-link" aria-hidden="true"></i></a>API Keys</h1>
+<h2 id="api-keys"><a name="api-keys" class="plugin-anchor" href="#api-keys"><i class="fa fa-link" aria-hidden="true"></i></a>API Keys</h2>
 <p>Public REST services without access control run the risk of being farmed leading to excessive bills for bandwidth or compute cycles. API keys can be used to mitigate this risk. They are also often used by organisation to monetize APIs; instead of blocking high-frequency calls, clients are given access in accordance to a purchased access plan.</p>
 <p>API keys can reduce the impact of denial-of-service attacks. However, when they are issued to third-party clients, they are relatively easy to compromise.</p>
 <ul>
@@ -1101,14 +1102,14 @@
 <li>Revoke the API key if the client violates the usage agreement.</li>
 <li>Do not rely exclusively on API keys to protect sensitive, critical or high-value resources.</li>
 </ul>
-<h1 id="restrict-http-methods"><a name="restrict-http-methods" class="plugin-anchor" href="#restrict-http-methods"><i class="fa fa-link" aria-hidden="true"></i></a>Restrict HTTP methods</h1>
+<h2 id="restrict-http-methods"><a name="restrict-http-methods" class="plugin-anchor" href="#restrict-http-methods"><i class="fa fa-link" aria-hidden="true"></i></a>Restrict HTTP methods</h2>
 <ul>
 <li>Apply a whitelist of permitted HTTP Methods e.g. <code>GET</code>, <code>POST</code>, <code>PUT</code>.</li>
 <li>Reject all requests not matching the whitelist with HTTP response code <code>405 Method not allowed</code>.</li>
 <li>Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record</li>
 </ul>
 <p>In Java EE in particular, this can be difficult to implement properly. See <a href="../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf">Bypassing Web Authentication and Authorization with HTTP Verb Tampering</a> for an explanation of this common misconfiguration.</p>
-<h1 id="input-validation"><a name="input-validation" class="plugin-anchor" href="#input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Input validation</h1>
+<h2 id="input-validation"><a name="input-validation" class="plugin-anchor" href="#input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Input validation</h2>
 <ul>
 <li>Do not trust input parameters/objects.</li>
 <li>Validate input: length / range / format and type.</li>
@@ -1121,18 +1122,18 @@
 <li>Have a look at input validation cheat sheet for comprehensive explanation.</li>
 <li>Use a secure parser for parsing the incoming messages. If you are using XML, make sure to use a parser that is not vulnerable to <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing" target="_blank">XXE</a> and similar attacks.</li>
 </ul>
-<h1 id="validate-content-types"><a name="validate-content-types" class="plugin-anchor" href="#validate-content-types"><i class="fa fa-link" aria-hidden="true"></i></a>Validate content types</h1>
+<h2 id="validate-content-types"><a name="validate-content-types" class="plugin-anchor" href="#validate-content-types"><i class="fa fa-link" aria-hidden="true"></i></a>Validate content types</h2>
 <p>A REST request or response body should match the intended content type in the header. Otherwise this could cause misinterpretation at the consumer/producer side and lead to code injection/execution.</p>
 <ul>
 <li>Document all supported content types in your API.</li>
 </ul>
-<h2 id="validate-request-content-types"><a name="validate-request-content-types" class="plugin-anchor" href="#validate-request-content-types"><i class="fa fa-link" aria-hidden="true"></i></a>Validate request content types</h2>
+<h3 id="validate-request-content-types"><a name="validate-request-content-types" class="plugin-anchor" href="#validate-request-content-types"><i class="fa fa-link" aria-hidden="true"></i></a>Validate request content types</h3>
 <ul>
 <li>Reject requests containing unexpected or missing content type headers with HTTP response status <code>406 Unacceptable</code> or <code>415 Unsupported Media Type</code>.</li>
 <li>For XML content types ensure appropriate XML parser hardening, see the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a>.</li>
 <li>Avoid accidentally exposing unintended content types by explicitly defining content types e.g. <a href="https://jersey.github.io/" target="_blank">Jersey</a> (Java) <code>@consumes(&quot;application/json&quot;); @produces(&quot;application/json&quot;)</code>. This avoids <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing" target="_blank">XXE-attack</a> vectors for example.</li>
 </ul>
-<h2 id="send-safe-response-content-types"><a name="send-safe-response-content-types" class="plugin-anchor" href="#send-safe-response-content-types"><i class="fa fa-link" aria-hidden="true"></i></a>Send safe response content types</h2>
+<h3 id="send-safe-response-content-types"><a name="send-safe-response-content-types" class="plugin-anchor" href="#send-safe-response-content-types"><i class="fa fa-link" aria-hidden="true"></i></a>Send safe response content types</h3>
 <p>It is common for REST services to allow multiple response types (e.g. <code>application/xml</code> or <code>application/json</code>, and the client specifies the preferred order of response types by the Accept header in the request.</p>
 <ul>
 <li><strong>Do NOT</strong> simply copy the <code>Accept</code> header to the <code>Content-type</code> header of the response.</li>
@@ -1142,34 +1143,34 @@
 <ul>
 <li>Ensure sending intended content type headers in your response matching your body content e.g. <code>application/json</code> and not <code>application/javascript</code>.</li>
 </ul>
-<h1 id="management-endpoints"><a name="management-endpoints" class="plugin-anchor" href="#management-endpoints"><i class="fa fa-link" aria-hidden="true"></i></a>Management endpoints</h1>
+<h2 id="management-endpoints"><a name="management-endpoints" class="plugin-anchor" href="#management-endpoints"><i class="fa fa-link" aria-hidden="true"></i></a>Management endpoints</h2>
 <ul>
 <li>Avoid exposing management endpoints via Internet.</li>
 <li>If management endpoints must be accessible via the Internet, make sure that users must use a strong authentication mechanism, e.g. multi-factor.</li>
 <li>Expose management endpoints via different HTTP ports or hosts preferably on a different NIC and restricted subnet.</li>
 <li>Restrict access to these endpoints by firewall rules  or use of access control lists.</li>
 </ul>
-<h1 id="error-handling"><a name="error-handling" class="plugin-anchor" href="#error-handling"><i class="fa fa-link" aria-hidden="true"></i></a>Error handling</h1>
+<h2 id="error-handling"><a name="error-handling" class="plugin-anchor" href="#error-handling"><i class="fa fa-link" aria-hidden="true"></i></a>Error handling</h2>
 <ul>
 <li>Respond with generic error messages - avoid revealing details of the failure unnecessarily.</li>
 <li>Do not pass technical details (e.g. call stacks or other internal hints) to the client.</li>
 </ul>
-<h1 id="audit-logs"><a name="audit-logs" class="plugin-anchor" href="#audit-logs"><i class="fa fa-link" aria-hidden="true"></i></a>Audit logs</h1>
+<h2 id="audit-logs"><a name="audit-logs" class="plugin-anchor" href="#audit-logs"><i class="fa fa-link" aria-hidden="true"></i></a>Audit logs</h2>
 <ul>
 <li>Write audit logs before and after security related events.</li>
 <li>Consider logging token validation errors in order to detect attacks.</li>
 <li>Take care of log injection attacks by sanitising log data beforehand.</li>
 </ul>
-<h1 id="security-headers"><a name="security-headers" class="plugin-anchor" href="#security-headers"><i class="fa fa-link" aria-hidden="true"></i></a>Security headers</h1>
+<h2 id="security-headers"><a name="security-headers" class="plugin-anchor" href="#security-headers"><i class="fa fa-link" aria-hidden="true"></i></a>Security headers</h2>
 <p>To make sure the content of a given resources is interpreted correctly by the browser, the server should always send the <code>Content-Type</code> header with the correct content type, and preferably the <code>Content-Type</code> header should include a charset. The server should also send the <code>X-Content-Type-Options: nosniff</code> <a href="https://owasp.org/www-project-secure-headers/" target="_blank">security header</a> to make sure the browser does not try to detect a different <code>Content-Type</code> than what is actually sent (can lead to XSS).</p>
 <p>Additionally the server should send the <code>X-Frame-Options: deny</code> <a href="https://owasp.org/www-project-secure-headers/" target="_blank">security header</a> to protect against drag&apos;n drop clickjacking attacks in older browsers.</p>
-<h1 id="cors"><a name="cors" class="plugin-anchor" href="#cors"><i class="fa fa-link" aria-hidden="true"></i></a>CORS</h1>
+<h2 id="cors"><a name="cors" class="plugin-anchor" href="#cors"><i class="fa fa-link" aria-hidden="true"></i></a>CORS</h2>
 <p>Cross-Origin Resource Sharing (CORS) is a W3C standard to flexibly specify what cross-domain requests are permitted. By delivering appropriate CORS Headers your REST API signals to the browser which domains, AKA origins, are allowed to make JavaScript calls to the REST service.</p>
 <ul>
 <li>Disable CORS headers if cross-domain calls are not supported/expected.</li>
 <li>Be as specific as possible and as general as necessary when setting the origins of cross-domain calls.</li>
 </ul>
-<h1 id="sensitive-information-in-http-requests"><a name="sensitive-information-in-http-requests" class="plugin-anchor" href="#sensitive-information-in-http-requests"><i class="fa fa-link" aria-hidden="true"></i></a>Sensitive information in HTTP requests</h1>
+<h2 id="sensitive-information-in-http-requests"><a name="sensitive-information-in-http-requests" class="plugin-anchor" href="#sensitive-information-in-http-requests"><i class="fa fa-link" aria-hidden="true"></i></a>Sensitive information in HTTP requests</h2>
 <p>RESTful web services should be careful to prevent leaking credentials. Passwords, security tokens, and API keys should not appear in the URL, as this can be captured in web server logs, which makes them intrinsically valuable.</p>
 <ul>
 <li>In <code>POST</code>/<code>PUT</code> requests sensitive data should be transferred in the request body or request headers.</li>
@@ -1180,7 +1181,7 @@
 <p><code>https://twitter.com/vanderaj/lists</code></p>
 <p><strong>NOT OK:</strong></p>
 <p><code>https://example.com/controller/123/action?apiKey=a53f435643de32</code> because API Key is into the URL.</p>
-<h1 id="http-return-code"><a name="http-return-code" class="plugin-anchor" href="#http-return-code"><i class="fa fa-link" aria-hidden="true"></i></a>HTTP Return Code</h1>
+<h2 id="http-return-code"><a name="http-return-code" class="plugin-anchor" href="#http-return-code"><i class="fa fa-link" aria-hidden="true"></i></a>HTTP Return Code</h2>
 <p>HTTP defines <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank">status code</a>. When designing REST API, don&apos;t just use <code>200</code> for success or <code>404</code> for error. Always use the semantically appropriate status code for the response.</p>
 <p>Here is a non-exhaustive selection of security related REST API <strong>status codes</strong>. Use it to ensure you return the correct code.</p>
 <table>
@@ -1328,7 +1329,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"REST Security ","level":"1.51","depth":1,"next":{"title":"Ruby on Rails Cheatsheet","level":"1.52","depth":1,"path":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","ref":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","articles":[]},"previous":{"title":"REST Assessment ","level":"1.50","depth":1,"path":"cheatsheets/REST_Assessment_Cheat_Sheet.md","ref":"cheatsheets/REST_Assessment_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/REST_Security_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"REST Security ","level":"1.51","depth":1,"next":{"title":"Ruby on Rails Cheatsheet","level":"1.52","depth":1,"path":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","ref":"cheatsheets/Ruby_on_Rails_Cheatsheet.md","articles":[]},"previous":{"title":"REST Assessment ","level":"1.50","depth":1,"path":"cheatsheets/REST_Assessment_Cheat_Sheet.md","ref":"cheatsheets/REST_Assessment_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/REST_Security_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

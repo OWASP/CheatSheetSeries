@@ -1050,28 +1050,29 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="injection-prevention-cheat-sheet-in-java"><a name="injection-prevention-cheat-sheet-in-java" class="plugin-anchor" href="#injection-prevention-cheat-sheet-in-java"><i class="fa fa-link" aria-hidden="true"></i></a>Injection Prevention Cheat Sheet in Java</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>This document has for objective to provide some tips to handle <em>Injection</em> into Java application code.</p>
 <p>Sample codes used in tips are located <a href="https://github.com/righettod/injection-cheat-sheets" target="_blank">here</a>.</p>
-<h1 id="what-is-injection-"><a name="what-is-injection-" class="plugin-anchor" href="#what-is-injection-"><i class="fa fa-link" aria-hidden="true"></i></a>What is Injection ?</h1>
+<h2 id="what-is-injection"><a name="what-is-injection" class="plugin-anchor" href="#what-is-injection"><i class="fa fa-link" aria-hidden="true"></i></a>What is Injection</h2>
 <p><a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection" target="_blank">Injection</a> in OWASP Top 10 is defined as following:</p>
 <p><em>Consider anyone who can send untrusted data to the system, including external users, internal users, and administrators.</em></p>
-<h1 id="general-advices-to-prevent-injection"><a name="general-advices-to-prevent-injection" class="plugin-anchor" href="#general-advices-to-prevent-injection"><i class="fa fa-link" aria-hidden="true"></i></a>General advices to prevent Injection</h1>
+<h2 id="general-advices-to-prevent-injection"><a name="general-advices-to-prevent-injection" class="plugin-anchor" href="#general-advices-to-prevent-injection"><i class="fa fa-link" aria-hidden="true"></i></a>General advices to prevent Injection</h2>
 <p>The following point can be applied, in a general way, to prevent <em>Injection</em> issue:</p>
 <ol>
 <li>Apply <strong>Input Validation</strong> (using whitelist approach) combined with <strong>Output Sanitizing+Escaping</strong> on user input/output.</li>
 <li>If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.</li>
 </ol>
 <p>Additional advices are provided on this <a href="Input_Validation_Cheat_Sheet.html">cheatsheet</a>.</p>
-<h1 id="specific-injection-types"><a name="specific-injection-types" class="plugin-anchor" href="#specific-injection-types"><i class="fa fa-link" aria-hidden="true"></i></a>Specific Injection types</h1>
+<h2 id="specific-injection-types"><a name="specific-injection-types" class="plugin-anchor" href="#specific-injection-types"><i class="fa fa-link" aria-hidden="true"></i></a>Specific Injection types</h2>
 <p><em>Examples in this section will be provided in Java technology (see Maven project associated) but advices are applicable to others technologies like .Net / PHP / Ruby / Python...</em></p>
-<h2 id="sql"><a name="sql" class="plugin-anchor" href="#sql"><i class="fa fa-link" aria-hidden="true"></i></a>SQL</h2>
-<h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
+<h3 id="sql"><a name="sql" class="plugin-anchor" href="#sql"><i class="fa fa-link" aria-hidden="true"></i></a>SQL</h3>
+<h4 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h4>
 <p>Injection of this type occur when the application use untrusted user input to build a SQL query using a String and execute it.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
+<h4 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h4>
 <p>Use <em>Query Parameterization</em> in order to prevent injection.</p>
-<h3 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h3>
-<pre><code class="lang-java"><span class="hljs-comment">/*No DB framework used here in order to show the real use of 
+<h4 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h4>
+<pre><code class="lang-java"><span class="hljs-comment">/*No DB framework used here in order to show the real use of
   Prepared Statement from Java API*/</span>
 <span class="hljs-comment">/*Open connection with H2 database and use it*/</span>
 Class.forName(<span class="hljs-string">&quot;org.h2.Driver&quot;</span>);
@@ -1125,16 +1126,16 @@ String jdbcUrl = <span class="hljs-string">&quot;jdbc:h2:file:&quot;</span> + <s
 
 }
 </code></pre>
-<h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
+<h4 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h4>
 <ul>
 <li><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a></li>
 </ul>
-<h2 id="jpa"><a name="jpa" class="plugin-anchor" href="#jpa"><i class="fa fa-link" aria-hidden="true"></i></a>JPA</h2>
-<h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
+<h3 id="jpa"><a name="jpa" class="plugin-anchor" href="#jpa"><i class="fa fa-link" aria-hidden="true"></i></a>JPA</h3>
+<h4 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h4>
 <p>Injection of this type occur when the application use untrusted user input to build a JPA query using a String and execute it. It&apos;s quite similar to SQL injection but here the altered language is not SQL but JPA QL.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
+<h4 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h4>
 <p>Use Java Persistence Query Language <strong>Query Parameterization</strong> in order to prevent injection.</p>
-<h3 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h3>
+<h4 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h4>
 <pre><code class="lang-java">EntityManager entityManager = <span class="hljs-keyword">null</span>;
 <span class="hljs-keyword">try</span> {
     <span class="hljs-comment">/* Get a ref on EntityManager to access DB */</span>
@@ -1159,32 +1160,32 @@ String jdbcUrl = <span class="hljs-string">&quot;jdbc:h2:file:&quot;</span> + <s
     }
 }
 </code></pre>
-<h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
+<h4 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h4>
 <ul>
 <li><a href="https://software-security.sans.org/developer-how-to/fix-sql-injection-in-java-persistence-api-jpa" target="_blank">SQLi and JPA</a></li>
 </ul>
-<h2 id="operating-system"><a name="operating-system" class="plugin-anchor" href="#operating-system"><i class="fa fa-link" aria-hidden="true"></i></a>Operating System</h2>
-<h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
+<h3 id="operating-system"><a name="operating-system" class="plugin-anchor" href="#operating-system"><i class="fa fa-link" aria-hidden="true"></i></a>Operating System</h3>
+<h4 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h4>
 <p>Injection of this type occur when the application use untrusted user input to build a Operating System command using a String and execute it.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
+<h4 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h4>
 <p>Use technology stack <strong>API</strong> in order to prevent injection.</p>
-<h3 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h3>
+<h4 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h4>
 <pre><code class="lang-java"><span class="hljs-comment">/* The context taken is, for example, to perform a PING against a computer.
 * The prevention is to use the feature provided by the Java API instead of building
 * a system command as String and execute it */</span>
 InetAddress host = InetAddress.getByName(<span class="hljs-string">&quot;localhost&quot;</span>);
 Assert.assertTrue(host.isReachable(<span class="hljs-number">5000</span>));
 </code></pre>
-<h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
+<h4 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h4>
 <ul>
 <li><a href="https://owasp.org/www-community/attacks/Command_Injection" target="_blank">Command Injection</a></li>
 </ul>
-<h2 id="xml-xpath-injection"><a name="xml-xpath-injection" class="plugin-anchor" href="#xml-xpath-injection"><i class="fa fa-link" aria-hidden="true"></i></a>XML: XPath Injection</h2>
-<h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
+<h3 id="xml-xpath-injection"><a name="xml-xpath-injection" class="plugin-anchor" href="#xml-xpath-injection"><i class="fa fa-link" aria-hidden="true"></i></a>XML: XPath Injection</h3>
+<h4 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h4>
 <p>Injection of this type occur when the application use untrusted user input to build a XPath query using a String and execute it.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
+<h4 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h4>
 <p>Use <strong>XPath Variable Resolver</strong> in order to prevent injection.</p>
-<h3 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h3>
+<h4 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h4>
 <p><strong>Variable Resolver</strong> implementation.</p>
 <pre><code class="lang-java"><span class="hljs-comment">/**
  * Resolver in order to define parameter for XPATH expression.
@@ -1244,16 +1245,16 @@ Assert.assertEquals(<span class="hljs-number">1</span>, nodesList.getLength());
 Element book = (Element)nodesList.item(<span class="hljs-number">0</span>);
 Assert.assertTrue(book.getTextContent().contains(<span class="hljs-string">&quot;Ralls, Kim&quot;</span>));
 </code></pre>
-<h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
+<h4 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h4>
 <ul>
 <li><a href="https://owasp.org/www-community/attacks/XPATH_Injection" target="_blank">XPATH Injection</a></li>
 </ul>
-<h2 id="htmljavascriptcss"><a name="htmljavascriptcss" class="plugin-anchor" href="#htmljavascriptcss"><i class="fa fa-link" aria-hidden="true"></i></a>HTML/JavaScript/CSS</h2>
-<h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
+<h3 id="htmljavascriptcss"><a name="htmljavascriptcss" class="plugin-anchor" href="#htmljavascriptcss"><i class="fa fa-link" aria-hidden="true"></i></a>HTML/JavaScript/CSS</h3>
+<h4 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h4>
 <p>Injection of this type occur when the application use untrusted user input to build a HTTP response and sent it to browser.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
+<h4 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h4>
 <p>Either apply strict input validation (whitelist approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).</p>
-<h3 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h3>
+<h4 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h4>
 <pre><code class="lang-java"><span class="hljs-comment">/*
 INPUT WAY: Receive data from user
 Here it&apos;s recommended to use strict input validation using whitelist approach.
@@ -1265,9 +1266,9 @@ String userInput = <span class="hljs-string">&quot;You user login is owasp-user0
 <span class="hljs-comment">/* First we check that the value contains only expected character*/</span>
 Assert.assertTrue(Pattern.matches(<span class="hljs-string">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span>, userInput));
 
-<span class="hljs-comment">/* If the first check pass then ensure that potential dangerous character 
+<span class="hljs-comment">/* If the first check pass then ensure that potential dangerous character
 that we have allowed for business requirement are not used in a dangerous way.
-For example here we have allowed the character &apos;-&apos;, and, this can 
+For example here we have allowed the character &apos;-&apos;, and, this can
 be used in SQL injection so, we
 ensure that this character is not used is a continuous form.
 Use the API COMMONS LANG v3 to help in String analysis...
@@ -1295,29 +1296,29 @@ safeOutput = Encode.forHtml(safeOutput);
 String finalSafeOutputExpected = <span class="hljs-string">&quot;You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;&quot;</span>;
 Assert.assertEquals(finalSafeOutputExpected, safeOutput);
 </code></pre>
-<h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
+<h4 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h4>
 <ul>
 <li><a href="https://owasp.org/www-community/attacks/xss/" target="_blank">XSS</a></li>
 <li><a href="https://github.com/owasp/java-html-sanitizer" target="_blank">OWASP Java HTML Sanitizer</a></li>
 <li><a href="https://github.com/owasp/owasp-java-encoder" target="_blank">OWASP Java Encoder</a></li>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank">Java RegEx</a></li>
 </ul>
-<h2 id="ldap"><a name="ldap" class="plugin-anchor" href="#ldap"><i class="fa fa-link" aria-hidden="true"></i></a>LDAP</h2>
+<h3 id="ldap"><a name="ldap" class="plugin-anchor" href="#ldap"><i class="fa fa-link" aria-hidden="true"></i></a>LDAP</h3>
 <p>A dedicated <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">cheatsheet</a> has been created.</p>
-<h2 id="nosql"><a name="nosql" class="plugin-anchor" href="#nosql"><i class="fa fa-link" aria-hidden="true"></i></a>NoSQL</h2>
-<h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
+<h3 id="nosql"><a name="nosql" class="plugin-anchor" href="#nosql"><i class="fa fa-link" aria-hidden="true"></i></a>NoSQL</h3>
+<h4 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h4>
 <p>Injection of this type occur when the application use untrusted user input to build a NoSQL API call expression.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
+<h4 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h4>
 <p>As there many NoSQL database system and each one use a API for call, it&apos;s important to ensure that user input received and used to build the API call expression do not contains any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It&apos;s also important to not use string concatenation to build API call expression but use the API to create the expression.</p>
-<h3 id="example---mongodb"><a name="example---mongodb" class="plugin-anchor" href="#example---mongodb"><i class="fa fa-link" aria-hidden="true"></i></a>Example - MongoDB</h3>
+<h4 id="example---mongodb"><a name="example---mongodb" class="plugin-anchor" href="#example---mongodb"><i class="fa fa-link" aria-hidden="true"></i></a>Example - MongoDB</h4>
 <pre><code class="lang-java"> <span class="hljs-comment">/* Here use MongoDB as target NoSQL DB */</span>
 String userInput = <span class="hljs-string">&quot;Brooklyn&quot;</span>;
 
-<span class="hljs-comment">/* First ensure that the input do no contains any special characters 
+<span class="hljs-comment">/* First ensure that the input do no contains any special characters
 for the current NoSQL DB call API,
 here they are: &apos; &quot; \ ; { } $
 */</span>
-<span class="hljs-comment">//Avoid regexp this time in order to made validation code </span>
+<span class="hljs-comment">//Avoid regexp this time in order to made validation code</span>
 <span class="hljs-comment">//more easy to read and understand...</span>
 ArrayList&lt;String&gt; specialCharsList = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;() { {
     add(<span class="hljs-string">&quot;&apos;&quot;</span>);
@@ -1351,23 +1352,23 @@ Assert.assertTrue(userInput.length() &lt;= <span class="hljs-number">50</span>);
     });
 }
 </code></pre>
-<h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
+<h4 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h4>
 <ul>
 <li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection.html" target="_blank">Testing for NoSQL injection</a></li>
 <li><a href="https://ckarande.gitbooks.io/owasp-nodegoat-tutorial/content/tutorial/a1_-_sql_and_nosql_injection.html" target="_blank">SQL and NoSQL Injection</a></li>
 <li><a href="https://arxiv.org/ftp/arxiv/papers/1506/1506.04082.pdf" target="_blank">No SQL, No Injection?</a></li>
 </ul>
-<h2 id="log-injection"><a name="log-injection" class="plugin-anchor" href="#log-injection"><i class="fa fa-link" aria-hidden="true"></i></a>Log Injection</h2>
-<h3 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h3>
+<h3 id="log-injection"><a name="log-injection" class="plugin-anchor" href="#log-injection"><i class="fa fa-link" aria-hidden="true"></i></a>Log Injection</h3>
+<h4 id="symptom"><a name="symptom" class="plugin-anchor" href="#symptom"><i class="fa fa-link" aria-hidden="true"></i></a>Symptom</h4>
 <p><a href="https://owasp.org/www-community/attacks/Log_Injection" target="_blank">Log Injection</a> occurs when an application includes untrusted data in an application log message (e.g., an attacker can cause an additional log entry that looks like it came from a completely different user, if they can inject CRLF characters in the untrusted data). More information about this attack is available on the OWASP <a href="https://owasp.org/www-community/attacks/Log_Injection" target="_blank">Log Injection</a> page.</p>
-<h3 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h3>
+<h4 id="how-to-prevent"><a name="how-to-prevent" class="plugin-anchor" href="#how-to-prevent"><i class="fa fa-link" aria-hidden="true"></i></a>How to prevent</h4>
 <p>To prevent an attacker from writing malicious content into the application log, apply defenses such as:</p>
 <ul>
 <li>Filter the user input used to prevent injection of <strong>C</strong>arriage <strong>R</strong>eturn (CR) or <strong>L</strong>ine <strong>F</strong>eed (LF) characters.</li>
 <li>Limit the size of the user input value used to create the log message.</li>
 <li>Make sure <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">all XSS defenses</a> are applied when viewing log files in a web browser.</li>
 </ul>
-<h3 id="example-using-log4j2"><a name="example-using-log4j2" class="plugin-anchor" href="#example-using-log4j2"><i class="fa fa-link" aria-hidden="true"></i></a>Example using Log4j2</h3>
+<h4 id="example-using-log4j2"><a name="example-using-log4j2" class="plugin-anchor" href="#example-using-log4j2"><i class="fa fa-link" aria-hidden="true"></i></a>Example using Log4j2</h4>
 <p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout\%7CLog4j2" target="_blank">Pattern <em>encode{}{CRLF}</em></a>, introduced in <a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api" target="_blank">Log4j2 v2.10.0</a>, and the <em>-500m</em> message size limit.:</p>
 <pre><code class="lang-xml"><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span><span class="hljs-meta">?&gt;</span></span>
 <span class="hljs-tag">&lt;<span class="hljs-name">Configuration</span> <span class="hljs-attr">status</span>=<span class="hljs-string">&quot;error&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;SecureLoggingPolicy&quot;</span>&gt;</span>
@@ -1395,13 +1396,13 @@ Assert.assertTrue(userInput.length() &lt;= <span class="hljs-number">50</span>);
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> org.apache.logging.log4j.LogManager;
 <span class="hljs-keyword">import</span> org.apache.logging.log4j.Logger;
 ...
-<span class="hljs-comment">// No special action needed because security actions are </span>
+<span class="hljs-comment">// No special action needed because security actions are</span>
 <span class="hljs-comment">// performed at the logging policy level</span>
 Logger logger = LogManager.getLogger(MyClass.class);
 logger.info(logMessage);
 ...
 </code></pre>
-<h3 id="example-using-logback-with-the-owasp-security-logging-library"><a name="example-using-logback-with-the-owasp-security-logging-library" class="plugin-anchor" href="#example-using-logback-with-the-owasp-security-logging-library"><i class="fa fa-link" aria-hidden="true"></i></a>Example using Logback with the OWASP Security Logging library</h3>
+<h4 id="example-using-logback-with-the-owasp-security-logging-library"><a name="example-using-logback-with-the-owasp-security-logging-library" class="plugin-anchor" href="#example-using-logback-with-the-owasp-security-logging-library"><i class="fa fa-link" aria-hidden="true"></i></a>Example using Logback with the OWASP Security Logging library</h4>
 <p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging" target="_blank">CRLFConverter</a>, provided by the <a href="https://owasp.org/www-project-security-logging/" target="_blank">OWASP Security Logging Project</a>, and the <em>-500msg</em> message size limit:</p>
 <pre><code class="lang-xml"><span class="php"><span class="hljs-meta">&lt;?</span>xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span><span class="hljs-meta">?&gt;</span></span>
 <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span>
@@ -1433,22 +1434,22 @@ logger.info(logMessage);
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> org.slf4j.Logger;
 <span class="hljs-keyword">import</span> org.slf4j.LoggerFactory;
 ...
-<span class="hljs-comment">// No special action needed because security actions </span>
+<span class="hljs-comment">// No special action needed because security actions</span>
 <span class="hljs-comment">// are performed at the logging policy level</span>
 Logger logger = LoggerFactory.getLogger(MyClass.class);
 logger.info(logMessage);
 ...
 </code></pre>
-<h3 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h3>
+<h4 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h4>
 <ul>
 <li><a href="https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout" target="_blank">PatternLayout</a> (See the <code>encode{}{CRLF}</code> function)</li>
 </ul>
-<pre><code class="lang-text">Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent log injection. 
+<pre><code class="lang-text">Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent log injection.
 
-It prevents XSS attacks against viewing logs using a browser. 
+It prevents XSS attacks against viewing logs using a browser.
 
-OWASP recommends defending against XSS attacks in such situations in the log viewer application itself, 
-not by preencoding all the log messages with HTML encoding as such log entries may be used/viewed in many 
+OWASP recommends defending against XSS attacks in such situations in the log viewer application itself,
+not by preencoding all the log messages with HTML encoding as such log entries may be used/viewed in many
 other log viewing/analysis tools that don&apos;t expect the log data to be pre-HTML encoded.
 </code></pre>
 <ul>
@@ -1500,7 +1501,7 @@ other log viewing/analysis tools that don&apos;t expect the log data to be pre-H
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Injection Prevention  in Java","level":"1.33","depth":1,"next":{"title":"Input Validation ","level":"1.34","depth":1,"path":"cheatsheets/Input_Validation_Cheat_Sheet.md","ref":"cheatsheets/Input_Validation_Cheat_Sheet.md","articles":[]},"previous":{"title":"Injection Prevention ","level":"1.32","depth":1,"path":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Injection Prevention  in Java","level":"1.33","depth":1,"next":{"title":"Input Validation ","level":"1.34","depth":1,"path":"cheatsheets/Input_Validation_Cheat_Sheet.md","ref":"cheatsheets/Input_Validation_Cheat_Sheet.md","articles":[]},"previous":{"title":"Injection Prevention ","level":"1.32","depth":1,"path":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

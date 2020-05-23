@@ -1050,10 +1050,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="about-restful-web-services"><a name="about-restful-web-services" class="plugin-anchor" href="#about-restful-web-services"><i class="fa fa-link" aria-hidden="true"></i></a>About RESTful Web Services</h1>
-<p>Web Services are an implementation of web technology used for machine to machine communication. As such they are used for Inter application communication, Web 2.0 and Mashups and by desktop and mobile applications to call a server. </p>
+                                <h1 id="rest-assessment-cheat-sheet"><a name="rest-assessment-cheat-sheet" class="plugin-anchor" href="#rest-assessment-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>REST Assessment Cheat Sheet</h1>
+<h2 id="about-restful-web-services"><a name="about-restful-web-services" class="plugin-anchor" href="#about-restful-web-services"><i class="fa fa-link" aria-hidden="true"></i></a>About RESTful Web Services</h2>
+<p>Web Services are an implementation of web technology used for machine to machine communication. As such they are used for Inter application communication, Web 2.0 and Mashups and by desktop and mobile applications to call a server.</p>
 <p>RESTful web services (often called simply REST) are a light weight variant of Web Services based on the RESTful design pattern. In practice RESTful web services utilizes HTTP requests that are similar to regular HTTP calls in contrast with other Web Services technologies such as SOAP which utilizes a complex protocol.</p>
-<h1 id="key-relevant-properties-of-restful-web-services"><a name="key-relevant-properties-of-restful-web-services" class="plugin-anchor" href="#key-relevant-properties-of-restful-web-services"><i class="fa fa-link" aria-hidden="true"></i></a>Key relevant properties of RESTful web services</h1>
+<h2 id="key-relevant-properties-of-restful-web-services"><a name="key-relevant-properties-of-restful-web-services" class="plugin-anchor" href="#key-relevant-properties-of-restful-web-services"><i class="fa fa-link" aria-hidden="true"></i></a>Key relevant properties of RESTful web services</h2>
 <ul>
 <li>Use of HTTP methods (<code>GET</code>, <code>POST</code>, <code>PUT</code> and <code>DELETE</code>) as the primary verb for the requested operation.</li>
 <li>Non-standard parameters specifications:<ul>
@@ -1065,7 +1066,7 @@
 <li>Custom authentication and session management, often utilizing custom security tokens: this is needed as machine to machine communication does not allow for login sequences.</li>
 <li>Lack of formal documentation. A <a href="http://www.w3.org/Submission/wadl/" target="_blank">proposed standard for describing RESTful web services called WADL</a> was submitted by Sun Microsystems but was never officially adapted.</li>
 </ul>
-<h1 id="the-challenge-of-security-testing-restful-web-services"><a name="the-challenge-of-security-testing-restful-web-services" class="plugin-anchor" href="#the-challenge-of-security-testing-restful-web-services"><i class="fa fa-link" aria-hidden="true"></i></a>The challenge of security testing RESTful web services</h1>
+<h2 id="the-challenge-of-security-testing-restful-web-services"><a name="the-challenge-of-security-testing-restful-web-services" class="plugin-anchor" href="#the-challenge-of-security-testing-restful-web-services"><i class="fa fa-link" aria-hidden="true"></i></a>The challenge of security testing RESTful web services</h2>
 <ul>
 <li>Inspecting the application does not reveal the attack surface, I.e. the URLs and parameter structure used by the RESTful web service. The reasons are:<ul>
 <li>No application utilizes all the available functions and parameters exposed by the service</li>
@@ -1077,30 +1078,30 @@
 <li>As a machine interface the number of parameters used can be very large, for example a JSON structure may include dozens of parameters. <a href="https://owasp.org/www-community/Fuzzing" target="_blank">fuzzing</a> each one significantly lengthen the time required for testing.</li>
 <li>Custom authentication mechanisms require reverse engineering and make popular tools not useful as they cannot track a login session.</li>
 </ul>
-<h1 id="how-to-pentest-a-restful-web-service"><a name="how-to-pentest-a-restful-web-service" class="plugin-anchor" href="#how-to-pentest-a-restful-web-service"><i class="fa fa-link" aria-hidden="true"></i></a>How to pentest a RESTful web service?</h1>
-<p>Determine the attack surface through documentation - RESTful pen testing might be better off if some level of white box testing is allowed and you can get information about the service. </p>
+<h2 id="how-to-pentest-a-restful-web-service"><a name="how-to-pentest-a-restful-web-service" class="plugin-anchor" href="#how-to-pentest-a-restful-web-service"><i class="fa fa-link" aria-hidden="true"></i></a>How to pentest a RESTful web service</h2>
+<p>Determine the attack surface through documentation - RESTful pen testing might be better off if some level of white box testing is allowed and you can get information about the service.</p>
 <p>This information will ensure fuller coverage of the attack surface. Such information to look for:</p>
 <ul>
 <li>Formal service description - While for other types of web services such as SOAP a formal description, usually in WSDL is often available, this is seldom the case for REST. That said, either WSDL 2.0 or WADL can describe REST and are sometimes used.</li>
 <li>A developer guide for using the service may be less detailed but will commonly be found, and might even be considered <em>black box</em>.</li>
 <li>Application source or configuration - in many frameworks, including dotNet ,the REST service definition might be easily obtained from configuration files rather than from code.</li>
 </ul>
-<p>Collect full requests using a <a href="https://www.zaproxy.org/" target="_blank">proxy</a> - while always an important pen testing step, this is more important for REST based applications as the application UI may not give clues on the actual attack surface. </p>
+<p>Collect full requests using a <a href="https://www.zaproxy.org/" target="_blank">proxy</a> - while always an important pen testing step, this is more important for REST based applications as the application UI may not give clues on the actual attack surface.</p>
 <p>Note that the proxy must be able to collect full requests and not just URLs as REST services utilize more than just GET parameters.</p>
 <p>Analyze collected requests to determine the attack surface:</p>
 <ul>
 <li>Look for non-standard parameters:<ul>
 <li>Look for abnormal HTTP headers - those would many times be header based parameters.</li>
-<li>Determine if a URL segment has a repeating pattern across URLs. Such patterns can include a date, a number or an ID like string and indicate that the URL segment is a URL embedded parameter. <ul>
+<li>Determine if a URL segment has a repeating pattern across URLs. Such patterns can include a date, a number or an ID like string and indicate that the URL segment is a URL embedded parameter.<ul>
 <li>For example: <code>http://server/srv/2013-10-21/use.php</code></li>
 </ul>
 </li>
 <li>Look for structured parameter values - those may be JSON, XML or a non-standard structure.</li>
-<li>If the last element of a URL does not have an extension, it may be a parameter. This is especially true if the application technology normally uses extensions or if a previous segment does have an extension. <ul>
+<li>If the last element of a URL does not have an extension, it may be a parameter. This is especially true if the application technology normally uses extensions or if a previous segment does have an extension.<ul>
 <li>For example: <code>http://server/svc/Grid.asmx/GetRelatedListItems</code></li>
 </ul>
 </li>
-<li>Look for highly varying URL segments - a single URL segment that has many values may be parameter and not a physical directory. <ul>
+<li>Look for highly varying URL segments - a single URL segment that has many values may be parameter and not a physical directory.<ul>
 <li>For example if the URL <code>http://server/src/XXXX/page</code> repeats with hundreds of value for <code>XXXX</code>, chances <code>XXXX</code> is a parameter.</li>
 </ul>
 </li>
@@ -1110,14 +1111,14 @@
 <p>Verify non-standard parameters: in some cases (but not all), setting the value of a URL segment suspected of being a parameter to a value expected to be invalid can help determine if it is a path elements of a parameter. If a path element, the web server will return a <em>404</em> message, while for an invalid value to a parameter the answer would be an application level message as the value is legal at the web server level.</p>
 <p>Analyzing collected requests to optimize <a href="https://owasp.org/www-community/Fuzzing" target="_blank">fuzzing</a> - after identifying potential parameters to fuzz, analyze the collected values for each to determine:</p>
 <ul>
-<li>Valid vs. invalid values, so that <a href="https://owasp.org/www-community/Fuzzing" target="_blank">fuzzing</a> can focus on marginal invalid values. <ul>
+<li>Valid vs. invalid values, so that <a href="https://owasp.org/www-community/Fuzzing" target="_blank">fuzzing</a> can focus on marginal invalid values.<ul>
 <li>For example sending <em>0</em> for a value found to be always a positive integer.</li>
 </ul>
 </li>
 <li>Sequences allowing to fuzz beyond the range presumably allocated to the current user.</li>
 </ul>
 <p>Lastly, when <a href="https://owasp.org/www-community/Fuzzing" target="_blank">fuzzing</a>, don&apos;t forget to emulate the authentication mechanism used.</p>
-<h1 id="related-resources"><a name="related-resources" class="plugin-anchor" href="#related-resources"><i class="fa fa-link" aria-hidden="true"></i></a>Related Resources</h1>
+<h2 id="related-resources"><a name="related-resources" class="plugin-anchor" href="#related-resources"><i class="fa fa-link" aria-hidden="true"></i></a>Related Resources</h2>
 <ul>
 <li><a href="REST_Security_Cheat_Sheet.html">REST Security Cheat Sheet</a> - the other side of this cheat sheet</li>
 <li><a href="https://xiom.com/2016/10/31/restful-services-web-security-blind-spot/" target="_blank">RESTful services, web security blind spot</a> - a presentation (including video) elaborating on most of the topics on this cheat sheet.</li>
@@ -1165,7 +1166,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"REST Assessment ","level":"1.50","depth":1,"next":{"title":"REST Security ","level":"1.51","depth":1,"path":"cheatsheets/REST_Security_Cheat_Sheet.md","ref":"cheatsheets/REST_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Query Parameterization ","level":"1.49","depth":1,"path":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","ref":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/REST_Assessment_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"REST Assessment ","level":"1.50","depth":1,"next":{"title":"REST Security ","level":"1.51","depth":1,"path":"cheatsheets/REST_Security_Cheat_Sheet.md","ref":"cheatsheets/REST_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Query Parameterization ","level":"1.49","depth":1,"path":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","ref":"cheatsheets/Query_Parameterization_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/REST_Assessment_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

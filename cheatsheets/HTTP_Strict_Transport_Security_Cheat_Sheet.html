@@ -1050,10 +1050,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h1>
+                                <h1 id="http-strict-transport-security-cheat-sheet"><a name="http-strict-transport-security-cheat-sheet" class="plugin-anchor" href="#http-strict-transport-security-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>HTTP Strict Transport Security Cheat Sheet</h1>
+<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
 <p>HTTP <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security" target="_blank">Strict Transport Security</a> (also named <strong>HSTS</strong>) is an opt-in security enhancement that is specified by a web application through the use of a special response header. Once a supported browser receives this header that browser will prevent any communications from being sent over HTTP to the specified domain and will instead send all communications over HTTPS. It also prevents HTTPS click through prompts on browsers.</p>
 <p>The specification has been released and published end of 2012 as <a href="http://tools.ietf.org/html/rfc6797" target="_blank">RFC 6797</a> (HTTP Strict Transport Security (HSTS)) by the IETF.</p>
-<h1 id="threats"><a name="threats" class="plugin-anchor" href="#threats"><i class="fa fa-link" aria-hidden="true"></i></a>Threats</h1>
+<h2 id="threats"><a name="threats" class="plugin-anchor" href="#threats"><i class="fa fa-link" aria-hidden="true"></i></a>Threats</h2>
 <p>HSTS addresses the following threats:</p>
 <ul>
 <li>User bookmarks or manually types <code>http://example.com</code> and is subject to a man-in-the-middle attacker<ul>
@@ -1069,26 +1070,26 @@
 </ul>
 </li>
 </ul>
-<h1 id="examples"><a name="examples" class="plugin-anchor" href="#examples"><i class="fa fa-link" aria-hidden="true"></i></a>Examples</h1>
+<h2 id="examples"><a name="examples" class="plugin-anchor" href="#examples"><i class="fa fa-link" aria-hidden="true"></i></a>Examples</h2>
 <p>Simple example, using a long (1 year = 31536000 seconds) max-age. This example is dangerous since it lacks <code>includeSubDomains</code>:</p>
 <p><code>Strict-Transport-Security: max-age=31536000</code></p>
 <p>This example is useful if all present and future subdomains will be HTTPS. This is a more secure option but will block access to certain pages that can only be served over HTTP:</p>
 <p><code>Strict-Transport-Security: max-age=31536000; includeSubDomains</code></p>
 <p>This example is useful if all present and future subdomains will be HTTPS. In this example we set a very short max-age in case of mistakes during initial rollout:</p>
 <p><code>Strict-Transport-Security: max-age=86400; includeSubDomains</code></p>
-<p><strong>Recommended:</strong> </p>
+<p><strong>Recommended:</strong></p>
 <ul>
 <li>If the site owner would like their domain to be included in the <a href="https://hstspreload.org" target="_blank">HSTS preload list</a> maintained by Chrome (and used by Firefox and Safari), then use the header below.</li>
 <li>Sending the <code>preload</code> directive from your site can have <strong>PERMANENT CONSEQUENCES</strong> and prevent users from accessing your site and any of its subdomains if you find you need to switch back to HTTP. Please read the details at <a href="https://hstspreload.org/#removal" target="_blank">preload removal</a> before sending the header with <code>preload</code>.</li>
 </ul>
 <p><code>Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</code></p>
 <p>The <code>preload</code> flag indicates the site owner&apos;s consent to have their domain preloaded. The site owner still needs to then go and submit the domain to the list.</p>
-<h1 id="problems"><a name="problems" class="plugin-anchor" href="#problems"><i class="fa fa-link" aria-hidden="true"></i></a>Problems</h1>
+<h2 id="problems"><a name="problems" class="plugin-anchor" href="#problems"><i class="fa fa-link" aria-hidden="true"></i></a>Problems</h2>
 <p>Site owners can use HSTS to identify users without cookies. This can lead to a significant privacy leak. Take a look <a href="http://www.leviathansecurity.com/blog/the-double-edged-sword-of-hsts-persistence-and-privacy" target="_blank">here</a> for more details.</p>
 <p>Cookies can be manipulated from sub-domains, so omitting the <code>includeSubDomains</code> option permits a broad range of cookie-related attacks that HSTS would otherwise prevent by requiring a valid certificate for a subdomain. Ensuring the <code>secure</code> flag is set on all cookies will also prevent, some, but not all, of the same attacks.</p>
-<h1 id="browser-support"><a name="browser-support" class="plugin-anchor" href="#browser-support"><i class="fa fa-link" aria-hidden="true"></i></a>Browser Support</h1>
+<h2 id="browser-support"><a name="browser-support" class="plugin-anchor" href="#browser-support"><i class="fa fa-link" aria-hidden="true"></i></a>Browser Support</h2>
 <p>As of September 2019 HSTS is supported by <a href="https://caniuse.com/#feat=stricttransportsecurity" target="_blank">all modern browsers</a>, with the only notable exception being Opera Mini.</p>
-<h1 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h1>
+<h2 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h2>
 <ul>
 <li><a href="https://www.chromium.org/hsts/" target="_blank">Chromium Projects/HSTS</a></li>
 <li><a href="Transport_Layer_Protection_Cheat_Sheet.html">OWASP TLS Protection Cheat Sheet</a></li>
@@ -1139,7 +1140,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"HTTP Strict Transport Security ","level":"1.31","depth":1,"next":{"title":"Injection Prevention ","level":"1.32","depth":1,"path":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"HTML5 Security ","level":"1.30","depth":1,"path":"cheatsheets/HTML5_Security_Cheat_Sheet.md","ref":"cheatsheets/HTML5_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md","mtime":"2020-05-21T06:56:52.191Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-21T06:57:19.747Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"HTTP Strict Transport Security ","level":"1.31","depth":1,"next":{"title":"Injection Prevention ","level":"1.32","depth":1,"path":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Injection_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"HTML5 Security ","level":"1.30","depth":1,"path":"cheatsheets/HTML5_Security_Cheat_Sheet.md","ref":"cheatsheets/HTML5_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md","mtime":"2020-05-23T19:53:09.599Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-23T19:53:35.607Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
