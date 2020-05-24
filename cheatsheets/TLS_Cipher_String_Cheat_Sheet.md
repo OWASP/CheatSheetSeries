@@ -1,16 +1,18 @@
-# Introduction
+# TLS Cipher String Cheat Sheet
+
+## Introduction
 
 This article is focused on providing clear and simple examples for the cipher string. They are based on different scenarios where you use the Transport Layer Security (TLS) protocol.
 
-# Recommendations for a cipher string
+## Recommendations for a cipher string
 
-## Scenarios
+### Scenarios
 
 The cipher strings are based on the recommendation to setup your policy to get a whitelist for your ciphers as described in the *[Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)](Transport_Layer_Protection_Cheat_Sheet.md)*. The latest and strongest ciphers are solely available with TLSv1.2, older protocols don't support them. Please find enclosed all supported protocols by the scenario.
 
 We have not included any `ChaCha20-Poly1305` ciphers, yet. One reason is that we haven't found various assessments yet, the other is that implementations of new ciphers may be more buggy.
 
-Finally we have compiled the oldest versions of different client agents that are still compatible with a cipher string. We provide this information according to the ciphers and protocols supported by browsers, libraries, bots on the basis of *[ssllabs's list of user agent capabilities](https://www.ssllabs.com/ssltest/clients.html)* and tests on our own. 
+Finally we have compiled the oldest versions of different client agents that are still compatible with a cipher string. We provide this information according to the ciphers and protocols supported by browsers, libraries, bots on the basis of *[ssllabs's list of user agent capabilities](https://www.ssllabs.com/ssltest/clients.html)* and tests on our own.
 
 We have checked this thoroughly, but please accept that all data is provided without any warranty of any kind. The list of the oldest supported clients assumes that the server supports all ciphers by the scenario (Please contact the authors if you find any errors or if you can provide additional data).
 
@@ -49,9 +51,9 @@ The recommended cipher strings are based on different scenarios:
 - Plan to move to 'A' for https or at least 'B' otherwise in middle-term.
 - Protocols: `TLSv1.3`, `TLSv1.2`, `TLSv1.1`, `TLSv1` (and newer or better).
 
-## Table of the ciphers (and their priority from high (1) to low (e.g. 18))
+### Table of the ciphers (and their priority from high (1) to low (e.g. 18))
 
-IANA, OpenSSL and other crypto libraries use slightly different names for the same ciphers. 
+IANA, OpenSSL and other crypto libraries use slightly different names for the same ciphers.
 
 This table lists the names used by IANA and by openssl in brackets `[]`. Additional you can find the unambiguously hex values defined by IANA. Mozilla offers a larger *[cipher names correspondence table](https://wiki.mozilla.org/Security/Server_Side_TLS#Cipher_names_correspondence_table)*.
 
@@ -83,13 +85,13 @@ This table lists the names used by IANA and by openssl in brackets `[]`. Additio
 
 **Remarks:**
 
-Elder versions of Internet-Explorer and Java do **NOT** support Diffie-Hellman parameters superior to 1024 bit. So the ciphers `TLS_DHE_RSA_WITH_AES_256_CBC_SHA` and `TLS_DHE_RSA_WITH_AES_128_CBC_SHA` were moved to the end to prevent possible incompatibility issues. 
+Elder versions of Internet-Explorer and Java do **NOT** support Diffie-Hellman parameters superior to 1024 bit. So the ciphers `TLS_DHE_RSA_WITH_AES_256_CBC_SHA` and `TLS_DHE_RSA_WITH_AES_128_CBC_SHA` were moved to the end to prevent possible incompatibility issues.
 
 Other option: *Delete this two ciphers from your list*.
 
-## Examples for cipher strings
+### Examples for cipher strings
 
-### OpenSSL
+#### OpenSSL
 
 <!-- markdownlint-disable MD033 -->
 | Cipher-String | OpenSSL syntax |
@@ -100,25 +102,25 @@ Other option: *Delete this two ciphers from your list*.
 | Legacy<br>(D) | `TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA` |
 <!-- markdownlint-enable MD033 -->
 
-# How to use this Cipher Strings?
+## How to use this Cipher Strings
 
-Inform yourself how to securely configure the settings for the services or hardware that you do use, e.g. *[BetterCrypto.org: Applied Crypto Hardening (DRAFT)](https://bettercrypto.org)*, *[Mozilla: Security/Server Side TLS](https://wiki.mozilla.org/Security/Server_Side_TLS)*. 
+Inform yourself how to securely configure the settings for the services or hardware that you do use, e.g. *[BetterCrypto.org: Applied Crypto Hardening (DRAFT)](https://bettercrypto.org)*, *[Mozilla: Security/Server Side TLS](https://wiki.mozilla.org/Security/Server_Side_TLS)*.
 
 We recommend to use one of the cipher strings described above.
 
-# Example configs
+## Example configs
 
-## Apache
+### Apache
 
 **Cipher String 'B':**
 
 ```text
 SSLProtocol +TLSv1.2                  # for Cipher-String 'A', 'B'
-#SSLProtocol +TLSv1.2 +TLSv1.1 +TLSv1 # for Cipher-String 'C', 'D'
+##SSLProtocol +TLSv1.2 +TLSv1.1 +TLSv1 # for Cipher-String 'C', 'D'
 SSLCompression off
 SSLHonorCipherOrder on
 SSLCipherSuite 'DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256'
-#add optionally ':!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA:!3DES' 
+##add optionally ':!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA:!3DES'
 ```
 
 **Remarks:**
@@ -129,9 +131,9 @@ SSLCipherSuite 'DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AE
 
 ```text
 openssl ciphers -V "DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256"
-#add optionally ':!aNULL:!eNULL:!LOW:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA' to protect 
-#older Versions of OpenSSL
-#use openssl ciphers -v "..." for openssl < 1.0.1:
+##add optionally ':!aNULL:!eNULL:!LOW:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:!ADH:!IDEA' to protect
+##older Versions of OpenSSL
+##use openssl ciphers -v "..." for openssl < 1.0.1:
 
 0x00,0x9F - DHE-RSA-AES256-GCM-SHA384   TLSv1.2 Kx=DH     Au=RSA  Enc=AESGCM(256) Mac=AEAD
 0x00,0x9E - DHE-RSA-AES128-GCM-SHA256   TLSv1.2 Kx=DH     Au=RSA  Enc=AESGCM(128) Mac=AEAD
@@ -145,7 +147,7 @@ openssl ciphers -V "DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RS
 
 **CAUTION:** You must **not** use legacy versions of OpenSSL if you use this cipher string! We strongly recommend to verify if it works!
 
-# Related Articles
+## Related Articles
 
 - [OWASP: Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md).
 - [BetterCrypto.org: Applied Crypto Hardening (DRAFT)](https://bettercrypto.org).

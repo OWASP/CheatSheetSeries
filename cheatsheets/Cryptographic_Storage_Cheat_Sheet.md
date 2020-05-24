@@ -9,24 +9,24 @@ Passwords should not be stored using reversible encryption - secure password has
 ## Contents
 
 - [Cryptographic Storage Cheat Sheet](#cryptographic-storage-cheat-sheet)
-  * [Introduction](#introduction)
-  * [Contents](#contents)
-  * [Architectural Design](#architectural-design)
-    + [Where to Perform Encryption](#where-to-perform-encryption)
-    + [Minimise the Storage of Sensitive Information](#minimise-the-storage-of-sensitive-information)
-  * [Algorithms](#algorithms)
-    + [Custom Algorithms](#custom-algorithms)
-    + [Cipher Modes](#cipher-modes)
-    + [Secure Random Number Generation](#secure-random-number-generation)
+  -[Introduction](#introduction)
+  -[Contents](#contents)
+  -[Architectural Design](#architectural-design)
+    -[Where to Perform Encryption](#where-to-perform-encryption)
+    -[Minimise the Storage of Sensitive Information](#minimise-the-storage-of-sensitive-information)
+  -[Algorithms](#algorithms)
+    -[Custom Algorithms](#custom-algorithms)
+    -[Cipher Modes](#cipher-modes)
+    -[Secure Random Number Generation](#secure-random-number-generation)
       - [UUIDs and GUIDs](#uuids-and-guids)
-    + [Defence in Depth](#defence-in-depth)
-  * [Key Management](#key-management)
-    + [Processes](#processes)
-    + [Key Generation](#key-generation)
-    + [Key Lifetimes and Rotation](#key-lifetimes-and-rotation)
-  * [Key Storage](#key-storage)
-    + [Separation of Keys and Data](#separation-of-keys-and-data)
-    + [Encrypting Stored Keys](#encrypting-stored-keys)
+    -[Defence in Depth](#defence-in-depth)
+  -[Key Management](#key-management)
+    -[Processes](#processes)
+    -[Key Generation](#key-generation)
+    -[Key Lifetimes and Rotation](#key-lifetimes-and-rotation)
+  -[Key Storage](#key-storage)
+    -[Separation of Keys and Data](#separation-of-keys-and-data)
+    -[Encrypting Stored Keys](#encrypting-stored-keys)
 
 ## Architectural Design
 
@@ -141,11 +141,11 @@ Where multiple keys are used (such as data separate data-encrypting and key-encr
 Encryption keys should be changed (or rotated) based on a number of different criteria:
 
 - If the previous key is known (or suspected) to have been compromised.
-  * This could also be caused by a someone who had access to the key leaving the organisation.
+  - This could also be caused by a someone who had access to the key leaving the organisation.
 - After a specified period of time has elapsed (known as the cryptoperiod).
-  * There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) for further guidance.
+  - There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) for further guidance.
 - After the key has been used to encrypt a specific amount of data.
-  * This would typically be `2^35` bytes (~34GB) for 64-bit keys and `2^68` bytes (~295 exabytes) for 128 bit keys.
+  - This would typically be `2^35` bytes (~34GB) for 64-bit keys and `2^68` bytes (~295 exabytes) for 128 bit keys.
 - If there is a significant change to the security provided by the algorithm (such as a new attack being announced).
 
 Once one of these criteria have been met, a new key should be generated and used for encrypting any new data. There are two main approaches for how existing data that was encrypted with the old key(s) should be handled:

@@ -1,4 +1,6 @@
-# Introduction
+# C-Based Toolchain Hardening
+
+## Introduction
 
 C-Based Toolchain Hardening is a treatment of project settings that will help you deliver reliable and secure code when using C, C++ and Objective C languages in a number of development environments. This article will examine Microsoft and GCC toolchains for the C, C++ and Objective C languages. It will guide you through the steps you should take to create executables with firmer defensive postures and increased integration with the available platform security. Effectively configuring the toolchain also means your project will enjoy a number of benefits during development, including enhanced warnings and static analysis, and self-debugging code.
 
@@ -12,7 +14,7 @@ The OWASP [ESAPI C++](https://code.google.com/p/owasp-esapi-cplusplus/source) pr
 
 Finally, a Cheat Sheet is available for those who desire a terse treatment of the material. Please visit [C-Based Toolchain Hardening Cheat Sheet](C-Based_Toolchain_Hardening_Cheat_Sheet.md) for the abbreviated version.
 
-# Wisdom
+## Wisdom
 
 Code **must** be correct. It **should** be secure. It **can** be efficient.
 
@@ -20,11 +22,11 @@ Code **must** be correct. It **should** be secure. It **can** be efficient.
 
 [Dr. Gary McGraw](https://en.wikipedia.org/wiki/Gary_McGraw): *"Thou shalt not rely solely on security features and functions to build secure software as security is an emergent property of the entire system and thus relies on building and integrating all parts properly"*.
 
-# Configuration
+## Configuration
 
 Configuration is the first opportunity to configure your project for success. Not only do you have to configure your project to meet reliability and security goals, you must also configure integrated libraries properly. You typically have has three choices. First, you can use auto-configuration utilities if on Linux or Unix. Second, you can write a makefile by hand. This is predominant on Linux, Mac OS X, and Unix, but it applies to Windows as well. Finally, you can use an integrated development environment or IDE.
 
-## Build Configurations
+### Build Configurations
 
 At this stage in the process, you should concentrate on configuring for two builds: Debug and Release. Debug will be used for development and include full instrumentation. Release will be configured for production. The difference between the two settings is usually *optimization level* and *debug level*. A third build configuration is Test, and its usually a special case of Release.
 
@@ -34,7 +36,7 @@ The Test configuration is often a Release configuration that makes everything pu
 
 [GCC 4.8](https://gcc.gnu.org/gcc-4.8/changes.html) introduced an optimization of `-Og`. Note that it is only an optimization, and still requires a customary debug level via `-g`.
 
-### Debug Builds
+#### Debug Builds
 
 Debug builds are where developers spend most of their time when vetting problems, so this build should concentrate forces and tools or be a 'force multiplier'. Though many do not realize, debug code is more highly valued than release code because its adorned with additional instrumentation. The debug instrumentation will cause a program to become nearly "self-debugging", and help you catch mistakes such as bad parameters, failed API calls, and memory problems.
 
@@ -44,7 +46,7 @@ For GCC, optimizations and debug symbolication are controlled through two switch
 
 ```text
 -O0 -g3 -ggdb
-```    
+```
 
 `-O0` turns off optimizations and `-g3` ensures maximum debug information is available. You may need to use `-O1` so some analysis is performed. Otherwise, your debug build will be missing a number of warnings not present in release builds. `-g3` ensures maximum debugging information is available for the debug session, including symbolic constants and `#defines`. `-ggdb` includes extensions to help with a debug session under GDB. For completeness, Jan Krachtovil stated `-ggdb` currently has no effect in a private email.
 
@@ -56,7 +58,7 @@ In addition, you should use other relevant flags, such as `-fno-omit-frame-point
 
 Finally, you should ensure your project includes additional diagnostic libraries, such as `dmalloc` and [Address Sanitizer](https://github.com/google/sanitizers/tree/master/address-sanitizer). A comparison of some memory checking tools can be found at [Comparison Of Memory Tools](https://github.com/google/sanitizers/wiki/AddressSanitizerComparisonOfMemoryTools). If you don't include additional diagnostics in debug builds, then you should start using them sinces its OK to find errors you are not looking for.
 
-### Release Builds
+#### Release Builds
 
 Release builds are what your customer receives. They are meant to be run on production hardware and servers, and they should be reliable, secure, and efficient. A stable release build is the product of the hard work and effort during development.
 
@@ -64,7 +66,7 @@ For release builds, you should use the following as part of `CFLAGS` and `CXXFLA
 
 ```text
 -On -g2
-```    
+```
 
 `-O`*`n`* sets optimizations for speed or size (for example, `-Os` or `-O2`), and `-g2` ensure debugging information is created.
 
@@ -76,7 +78,7 @@ If you have been relying on an `assert` and then a subsequent `abort()`, you hav
 
 For Windows, you would use `/Od` for debug builds; and `/Ox`, `/O2` or `/Os` for release builds. See Microsoft's [/O Options (Optimize Code)](https://docs.microsoft.com/en-us/cpp/build/reference/o-options-optimize-code) for details.
 
-### Test Builds
+#### Test Builds
 
 Test builds are used to provide heuristic validation by way of positive and negative test suites. Under a test configuration, all interfaces are tested to ensure they perform to specification and satisfaction. "Satisfaction" is subjective, but it should include no crashing and no trashing of your memory arena, even when faced with negative tests.
 
@@ -90,7 +92,7 @@ You should also change `__attribute__` `((visibility` `("hidden")))` to `__attri
 
 Nearly everyone gets a positive test right, so no more needs to be said. The negative self tests are much more interesting, and you should concentrate on trying to make your program fail so you can verify its fails gracefully. Remember, a bad guy is not going to be courteous when he attempts to cause your program to fail. And its your project that takes egg on the face by way of a bug report or guest appearance on [Full Disclosure](https://nmap.org/mailman/listinfo/fulldisclosure) or [Bugtraq](https://www.securityfocus.com/archive) - not `<some library>` you included.
 
-## Auto Tools
+### Auto Tools
 
 Auto configuration tools are popular on many Linux and Unix based systems, and the tools include *Autoconf*, *Automake*, *config*, and *Configure*. The tools work together to produce project files from scripts and template files. After the process completes, your project should be setup and ready to be made with `make`.
 
@@ -104,7 +106,7 @@ To demonstrate the first issue, confider your project with the following: `confi
 $ configure CFLAGS="-Wall -Wextra -Wconversion -fPIE -Wno-unused-parameter
     -Wformat=2 -Wformat-security -fstack-protector-all -Wstrict-overflow"
     LDFLAGS="-pie -z,noexecstack -z,noexecheap -z,relro -z,now"
-```        
+```
 
 For the second point, you will probably be disappointed to learn [Automake does not support the concept of configurations](https://lists.gnu.org/archive/html/automake/2012-12/msg00019.html). Its not entirely Autoconf's or Automake's fault - *Make* and its inability to detect changes is the underlying problem. Specifically, *Make* only [checks modification times of prerequisites and targets](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html), and does not check things like `CFLAGS` and `CXXFLAGS`. The net effect is you will not receive expected results when you issue `make` `debug` and then `make` `test` or `make` `release`.
 
@@ -112,14 +114,14 @@ Finally, you will probably be disappointed to learn tools such as Autoconf and A
 
 A recent discussion on the Automake mailing list illuminates the issue: *[Enabling compiler warning flags](https://lists.gnu.org/archive/html/autoconf/2012-12/msg00038.html)*. Attempts to improve default configurations were met with resistance and no action was taken. The resistance is often of the form, "`<some useful warning> also produces false positives`" or "`<some obscure platform> does not support <established security feature>`". Its noteworthy that David Wheeler, the author of *[Secure Programming for Linux and Unix HOWTO](https://www.dwheeler.com/secure-programs/)*, was one of the folks trying to improve the posture.
 
-## Makefiles
+### Makefiles
 
 Make is one of the earliest build systems dating back to the 1970s. Its available on Linux, Mac OS X and Unix, so you will frequently encounter projects using it. Unfortunately, Make has a number of short comings (*[Recursive Make Considered Harmful](https://embeddedartistry.com/blog/2017/04/10/recursive-make-considered-harmful/)* and *[What's Wrong With GNU make?](https://www.conifersystems.com/whitepapers/gnu-make/)*), and can cause some discomfort. Despite issues with Make, ESAPI C++ uses Make primarily for three reasons: first, its omnipresent; second, its easier to manage than the Auto Tools family; and third, `libtool` was out of the question.
 
 Consider what happens when you: (1) type `make` `debug`, and then type `make` `release`. Each build would require different `CFLAGS` due to optimizations and level of debug support. In your makefile, you would extract the relevant target and set `CFLAGS` and `CXXFLAGS` similar to below (taken from [ESAPI C++ Makefile](https://code.google.com/archive/p/owasp-esapi-cplusplus/source/default/source)):
 
 ```text
-# Makefile
+## Makefile
 DEBUG_GOALS = $(filter $(MAKECMDGOALS), debug)
 ifneq ($(DEBUG_GOALS),)
     WANT_DEBUG := 1
@@ -139,39 +141,39 @@ ifeq ($(WANT_RELEASE),1)
 endif
 
 ifeq ($(WANT_TEST),1)
-    ESAPI_CFLAGS += -DESAPI_NO_ASSERT=1 -g2 -ggdb -O2 -Dprivate=public 
+    ESAPI_CFLAGS += -DESAPI_NO_ASSERT=1 -g2 -ggdb -O2 -Dprivate=public
                                                       -Dprotected=public
-    ESAPI_CXXFLAGS += -DESAPI_NO_ASSERT=1 -g2 -ggdb -O2 -Dprivate=public 
+    ESAPI_CXXFLAGS += -DESAPI_NO_ASSERT=1 -g2 -ggdb -O2 -Dprivate=public
                                                         -Dprotected=public
 endif
 …
 
-# Merge ESAPI flags with user supplied flags. We perform the extra step to ensure
-# user options follow our options, which should give user option's a preference.
+## Merge ESAPI flags with user supplied flags. We perform the extra step to ensure
+## user options follow our options, which should give user option's a preference.
 override CFLAGS := $(ESAPI_CFLAGS) $(CFLAGS)
 override CXXFLAGS := $(ESAPI_CXXFLAGS) $(CXXFLAGS)
 override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 …
-```    
+```
 
 Make will first build the program in a debug configuration for a session under the debugger using a rule similar to:
 
 ```text
 %.cpp:%.o:
         $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
-```            
+```
 
 When you want the release build, Make will do nothing because it considers everything up to date despite the fact `CFLAGS` and `CXXFLAGS` have changed. Hence, your program will actually be in a debug configuration and risk a `SIGABRT` at runtime because debug instrumentation is present (recall `assert` calls `abort()` when `NDEBUG` is **not** defined). In essence, you have DoS'd yourself due to `make`.
 
 In addition, many projects do not honor the user's command line. ESAPI C++ does its best to ensure a user's flags are honored via `override` as shown above, but other projects do not. For example, consider a project that should be built with Position Independent Executable (PIE or ASLR) enabled and data execution prevention (DEP) enabled. Dismissing user settings combined with insecure out of the box settings (and not picking them up during auto-setup or auto-configure) means a program built with the following will likely have neither defense:
 
 ```bash
-$ make CFLAGS="-fPIE" CXXFLAGS="-fPIE" LDFLAGS="-pie -z,noexecstack, -z,noexecheap"
-```    
+make CFLAGS="-fPIE" CXXFLAGS="-fPIE" LDFLAGS="-pie -z,noexecstack, -z,noexecheap"
+```
 
 Defenses such as ASLR and DEP are especially important on Linux because [Data Execution - not Prevention - is the norm](https://linux.die.net/man/5/elf).
 
-## Integration
+### Integration
 
 Project level integration presents opportunities to harden your program or library with domain specific knowledge. For example, if the platform supports Position Independent Executables (PIE or ASLR) and data execution prevention (DEP), then you should integrate with it. The consequences of not doing so could result in exploitation. As a case in point, see KingCope's 0-days for MySQL in December, 2012 (CVE-2012-5579 and CVE-2012-5612, among others). Integration with platform security would have neutered a number of the 0-days.
 
@@ -182,17 +184,17 @@ In addition, project level integration is an opportunity to harden third party l
 Another example is including OpenSSL. You know (1) [SSLv2 is insecure](https://www.schneier.com/academic/paperfiles/paper-ssl-revised.pdf), (2) [SSLv3 is insecure](https://blog.qualys.com/ssllabs/2014/10/15/ssl-3-is-dead-killed-by-the-poodle-attack), and (3) [compression is insecure](https://arstechnica.com/security/2012/09/crime-hijacks-https-sessions/) (among others). In addition, suppose you don't use hardware and engines, and only allow static linking. Given the knowledge and specifications, you would configure the OpenSSL library as follows:
 
 ```bash
-$ Configure darwin64-x86_64-cc -no-hw -no-engine -no-comp -no-shared 
+$ Configure darwin64-x86_64-cc -no-hw -no-engine -no-comp -no-shared
     -no-dso -no-ssl2 -no-ssl3 --openssldir=…
-```    
+```
 
 *Note Well*: you might want engines, especially on Ivy Bridge microarchitectures (3rd generation Intel Core i5 and i7 processors). To have OpenSSL use the processor's random number generator (via the of `rdrand` instruction), you will need to call OpenSSL's `ENGINE_load_rdrand()` function and then `ENGINE_set_default` with `ENGINE_METHOD_RAND`. See [OpenSSL's Random Numbers](https://wiki.openssl.org/index.php/Random_Numbers) for details.
 
 If you configure without the switches, then you will likely have vulnerable code/libraries and risk failing an audit. If the program is a remote server, then the following command will reveal if compression is active on the channel:
 
 ```bash
-$ echo "GET / HTTP1.0" | openssl s_client -connect <nowiki>example.com:443</nowiki>
-```    
+echo "GET / HTTP1.0" | openssl s_client -connect <nowiki>example.com:443</nowiki>
+```
 
 `nm` or `openssl` `s_client` will show that compression is enabled in the client. In fact, any symbol within the `OPENSSL_NO_COMP` preprocessor macro will bear witness since `-no-comp` is translated into a `CFLAGS` define.
 
@@ -200,17 +202,17 @@ $ echo "GET / HTTP1.0" | openssl s_client -connect <nowiki>example.com:443</nowi
 $ nm /usr/local/ssl/iphoneos/lib/libcrypto.a 2>/dev/null | egrep -i "(COMP_CTX_new|COMP_CTX_free)"
 0000000000000110 T COMP_CTX_free
 0000000000000000 T COMP_CTX_new
-```    
+```
 
 Even more egregious is the answer given to auditors who specifically ask about configurations and protocols: "we don't use weak/wounded/broken ciphers" or "we follow best practices." The use of compression tells the auditor that you are using wounded protocol in an insecure configuration and you don't follow best practices. That will likely set off alarm bells, and ensure the auditor dives deeper on more items.
 
-# Preprocessor
+## Preprocessor
 
 The preprocessor is crucial to setting up a project for success. The C committee provided one macro - `NDEBUG` - and the macro can be used to derive a number of configurations and drive engineering processes. Unfortunately, the committee also left many related items to chance, which has resulted in programmers abusing builtin facilities. This section will help you set up you projects to integrate well with other projects and ensure reliability and security.
 
 There are three topics to discuss when hardening the preprocessor. The first is well defined configurations which produce well defined behaviors, the second is useful behavior from assert, and the third is proper use of macros when integrating vendor code and third party libraries.
 
-## Configurations
+### Configurations
 
 To remove ambiguity, you should recognize two configurations: Release and Debug. Release is for production code on live servers, and its behavior is requested via the C/C++ `NDEBUG` macro. Its also the only macro observed by the C and C++ Committees and Posix. Diametrically opposed to release is Debug. While there is a compelling argument for `!defined(NDEBUG)`, you should have an explicit macro for the configuration and that macro should be `DEBUG`. This is because vendors and outside libraries use `DEBUG` (or similar) macro for their configuration. For example, Carnegie Mellon's Mach kernel uses `DEBUG`, Microsoft's CRT uses [`_DEBUG`](https://www.microsoft.com/en-us/download/details.aspx?id=55979), and Wind River Workbench uses `DEBUG_MODE`.
 
@@ -218,24 +220,24 @@ In addition to `NDEBUG` (Release) and `DEBUG` (Debug), you have two additional c
 
 ```c
 // Only one or the other, but not both
-#if (defined(DEBUG) || defined(_DEBUG)) && (defined(NDEBUG) 
+##if (defined(DEBUG) || defined(_DEBUG)) && (defined(NDEBUG)
                                            || defined(_NDEBUG))
-# error Both DEBUG and NDEBUG are defined.
-#endif
+## error Both DEBUG and NDEBUG are defined.
+##endif
 
-// The only time we switch to debug is when asked. 
+// The only time we switch to debug is when asked.
 // NDEBUG or {nothing} results
 // in release build (fewer surprises at runtime).
-#if defined(DEBUG) || defined(_DEBUG)
-# define ESAPI_BUILD_DEBUG 1
-#else
-# define ESAPI_BUILD_RELEASE 1
-#endif
-```    
+##if defined(DEBUG) || defined(_DEBUG)
+## define ESAPI_BUILD_DEBUG 1
+##else
+## define ESAPI_BUILD_RELEASE 1
+##endif
+```
 
 When `DEBUG` is in effect, your code should receive full debug instrumentation, including the full force of assertions.
 
-## ASSERT
+### ASSERT
 
 Asserts will help you create self-debugging code by helping you find the point of first failure quickly and easily. Asserts should be used throughout your program, including parameter validation, return value checking and program state. The `assert` will silently guard your code through its lifetime. It will always be there, even when not debugging a specific component of a module. If you have thorough code coverage, you will spend less time debugging and more time developing because programs will debug themselves.
 
@@ -250,12 +252,12 @@ Since self-debugging programs are so powerful, you will have to have to supply y
 ESAPI C++ supplies its own assert with the behavior described above. In the code below, `ASSERT` raises `SIGTRAP` when in effect or it evaluates to `void` in other cases.
 
 ```c
-// A debug assert which should be sprinkled liberally. 
+// A debug assert which should be sprinkled liberally.
 // This assert fires and then continues rather
-// than calling abort(). Useful when examining negative 
+// than calling abort(). Useful when examining negative
 // test cases from the command line.
-#if (defined(ESAPI_BUILD_DEBUG) && defined(ESAPI_OS_STARNIX))
-#  define ESAPI_ASSERT1(exp) {                                    \
+##if (defined(ESAPI_BUILD_DEBUG) && defined(ESAPI_OS_STARNIX))
+##  define ESAPI_ASSERT1(exp) {                                    \
     if(!(exp)) {                                                  \
         std::ostringstream oss;                                     \
         oss << "Assertion failed: " << (char*)(__FILE__) << "("     \
@@ -265,7 +267,7 @@ ESAPI C++ supplies its own assert with the behavior described above. In the code
         raise(SIGTRAP);                                             \
     }                                                             \
     }
-#  define ESAPI_ASSERT2(exp, msg) {                               \
+##  define ESAPI_ASSERT2(exp, msg) {                               \
     if(!(exp)) {                                                  \
         std::ostringstream oss;                                     \
         oss << "Assertion failed: " << (char*)(__FILE__) << "("     \
@@ -275,17 +277,17 @@ ESAPI C++ supplies its own assert with the behavior described above. In the code
         raise(SIGTRAP);                                             \
     }                                                             \
     }
-#elif (defined(ESAPI_BUILD_DEBUG) && defined(ESAPI_OS_WINDOWS))
-#  define ESAPI_ASSERT1(exp)      assert(exp)
-#  define ESAPI_ASSERT2(exp, msg) assert(exp)
-#else
-#  define ESAPI_ASSERT1(exp)      ((void)(exp))
-#  define ESAPI_ASSERT2(exp, msg) ((void)(exp))
-#endif
+##elif (defined(ESAPI_BUILD_DEBUG) && defined(ESAPI_OS_WINDOWS))
+##  define ESAPI_ASSERT1(exp)      assert(exp)
+##  define ESAPI_ASSERT2(exp, msg) assert(exp)
+##else
+##  define ESAPI_ASSERT1(exp)      ((void)(exp))
+##  define ESAPI_ASSERT2(exp, msg) ((void)(exp))
+##endif
 
-#if !defined(ASSERT)
-#  define ASSERT(exp)     ESAPI_ASSERT1(exp)
-#endif
+##if !defined(ASSERT)
+##  define ASSERT(exp)     ESAPI_ASSERT1(exp)
+##endif
 ```
 
 At program startup, a `SIGTRAP` handler will be installed if one is not provided by another component:
@@ -334,7 +336,7 @@ Live hosts running production code should always define `NDEBUG` (i.e., release 
 
 For more reading on asserting effectively, please see one of John Robbin's books, such as *[Debugging Applications](https://www.amazon.com/dp/0735608865)*. John is a legendary bug slayer in Windows circles, and he will show you how to do nearly everything, from debugging a simple program to bug slaying in multithreaded programs.
 
-## Additional Macros
+### Additional Macros
 
 Additional macros include any macros needed to integrate properly and securely. It includes integrating the program with the platform (for example MFC or Cocoa/CocoaTouch) and libraries (for example, Crypto++ or OpenSSL). It can be a challenge because you have to have proficiency with your platform and all included libraries and frameworks. The list below illustrates the level of detail you will need when integrating.
 
@@ -354,7 +356,7 @@ d) *N* is 0644 by default, which means everyone has some access.
 
 e) Force temporary tables into memory (no unencrypted data to disk).
 
-# Compiler and Linker
+## Compiler and Linker
 
 Compiler writers provide a rich set of warnings from the analysis of code during compilation. Both GCC and Visual Studio have static analysis capabilities to help find mistakes early in the development process. The built in static analysis capabilities of GCC and Visual Studio are usually sufficient to ensure proper API usage and catch a number of mistakes such as using an uninitialized variable or comparing a negative signed int and a positive unsigned int.
 
@@ -364,7 +366,7 @@ Some in the development community resist static analysis or refute its results. 
 
 The following sections will detail steps for three platforms. First is a typical GNU Linux based distribution offering GCC and Binutils, second is Clang and Xcode, and third is modern Windows platforms.
 
-## Distribution Hardening
+### Distribution Hardening
 
 Before discussing GCC and Binutils, it would be a good time to point out some of the defenses discussed below are all ready present in a distribution. Unfortunately, its design by committee, so what is present is usually only a mild variation of what is available (this way, everyone is mildly offended). For those who are purely worried about performance, you might be surprised to learn you have already taken the small performance hint without even knowing.
 
@@ -377,14 +379,14 @@ $ gcc -dumpspecs
 …
 *link_ssp: %{fstack-protector:}
 
-*ssp_default: %{!fno-stack-protector:%{!fstack-protector-all: 
+*ssp_default: %{!fno-stack-protector:%{!fstack-protector-all:
               %{!ffreestanding:%{!nostdlib:-fstack-protector}}}}
 …
-```    
+```
 
 The "SSP" above stands for Stack Smashing Protector. SSP is a reimplementation of Hiroaki Etoh's work on IBM Pro Police Stack Detector. See Hiroaki Etoh's patch *[gcc stack-smashing protector](https://gcc.gnu.org/ml/gcc-patches/2001-06/msg01753.html)* and IBM's *[GCC extension for protecting applications from stack-smashing attacks](https://pdfs.semanticscholar.org/9d92/fa9eaa6ca12888d303deffe8bc392b85c09f.pdf)* for details.
 
-## GCC/Binutils
+### GCC/Binutils
 
 GCC (the compiler collection) and Binutils (the assemblers, linkers, and other tools) are separate projects that work together to produce a final executable. Both the compiler and linker offer options to help you write safer and more secure code. The linker will produce code which takes advantage of platform security features offered by the kernel and PaX, such as no-exec stacks and heaps (NX) and Position Independent Executable (PIE).
 
@@ -474,14 +476,14 @@ ifeq ($(GNU_LD216_OR_LATER),1)
     MY_LD_FLAGS += -pie
 endif
 
-# Use 'override' to honor the user's command line
+## Use 'override' to honor the user's command line
 override CFLAGS := $(MY_CC_FLAGS) $(CFLAGS)
 override CXXFLAGS := $(MY_CC_FLAGS) $(CXXFLAGS)
 override LDFLAGS := $(MY_LD_FLAGS) $(LDFLAGS)
 …
-```    
+```
 
-## Clang/Xcode
+### Clang/Xcode
 
 [Clang](https://clang.llvm.org) and [LLVM](https://llvm.org) have been aggressively developed since Apple lost its GPL compiler back in 2007 (due to Tivoization which resulted in GPLv3). Since that time, a number of developers and Goggle have joined the effort. While Clang will consume most (all?) GCC/Binutil flags and switches, the project supports a number of its own options, including a static analyzer. In addition, Clang is relatively easy to build with additional diagnostics, such as Dr. John Regher and Peng Li's [Integer Overflow Checker (IOC)](https://embed.cs.utah.edu/ioc/).
 
@@ -493,7 +495,7 @@ In addition to compiler warnings, both static analysis and additional security c
 
 ![XCode1](../assets/C-Based_Toolchain_Hardening_XCode1.png)
 
-## Visual Studio
+### Visual Studio
 
 Visual Studio offers a convenient Integrated Development Environment (IDE) for managing solutions and their settings. the section called "Visual Studio Options" discusses option which should be used with Visual Studio, and the section called "Project Properties" demonstrates incorporating those options into a solution's project.
 
@@ -509,14 +511,14 @@ a) When using /GS, there are a number of circumstances which affect the inclusio
 
 b) `#pragma` `strict_gs_check(on)` should be used sparingly, but is recommend in high risk situations, such as when a source file parses input from the internet.
 
-## Warn Suppression
+### Warn Suppression
 
 From the tables above, a lot of warnings have been enabled to help detect possible programming mistakes. The potential mistakes are detected via compiler which carries around a lot of contextual information during its code analysis phase. At times, you will receive spurious warnings because the compiler is not *that* smart. Its understandable and even a good thing (how would you like to be out of a job because a program writes its own programs?). At times you will have to learn how to work with the compiler's warning system to suppress warnings. Notice what was not said: turn off the warnings.
 
 Suppressing warnings placates the compiler for spurious noise so you can get to the issues that matter (you are separating the wheat from the chaff). This section will offer some hints and point out some potential minefields. First is an unused parameter (for example, `argc` or `argv`). Suppressing unused parameter warnings is especially helpful for C++ and interface programming, where parameters are often unused. For this warning, simply define an "UNUSED" macro and warp the parameter:
 
 ```c
-#define UNUSED_PARAMETER(x) ((void)x)
+##define UNUSED_PARAMETER(x) ((void)x)
 …
 
 int main(int argc, char* argv[])
@@ -525,7 +527,7 @@ int main(int argc, char* argv[])
     UNUSED_PARAMETER(argv);
     …
 }
-```    
+```
 
 A potential minefield lies near "comparing unsigned and signed" values, and `-Wconversion` will catch it for you. This is because C/C++ promotion rules state the signed value will be promoted to an unsigned value and then compared. That means `-1` `>` `1` after promotion! To fix this, you cannot blindly cast - you must first range test the value:
 
@@ -541,7 +543,7 @@ if(static_cast<unsigned int>(x) > y)
     cout << "x is greater than y" << endl;
 else
     cout << "x is not greater than y" << endl;
-```        
+```
 
 Notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with `x`. Just run the program and wait for it to tell you there is a problem. If there is a problem, the program will snap the debugger (and more importantly, not call a useless `abort()` as specified by Posix). It beats the snot out of `printf` that are removed when no longer needed or pollute outputs.
 
@@ -552,7 +554,7 @@ struct sockaddr_in addr;
 …
 
 addr.sin_port = htons(atoi(argv[2]));
-```    
+```
 
 The following would probably serve you much better. Notice `atoi` and fiends are not used because they can silently fail. In addition, the code is instrumented so you don't need to waste a lot of time debugging potential problems:
 
@@ -583,7 +585,7 @@ if(!(t < static_cast<long long>(numeric_limits<unsigned int>::max())))
 // OK to use port
 unsigned short port = static_cast<unsigned short>(t);
 …
-```    
+```
 
 Again, notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with `port`. This code will continue checking conditions, years after being instrumented (assuming to wrote code to read a config file early in the project). There's no need to remove the `ASSERT`s as with `printf` since they are silent guardians.
 
@@ -602,7 +604,7 @@ if(ret == -1 || ret >= sizeof(path))
 
 // OK to use path
 …
-```    
+```
 
 The problem is pandemic, and not just boring user land programs. Projects which offer high integrity code, such as SELinux, suffer silent truncations. The following is from an approved SELinux patch even though a comment was made that it suffered silent truncations in its `security_compute_create_name` function from `compute_create.c`.
 
@@ -624,15 +626,15 @@ The problem is pandemic, and not just boring user land programs. Projects which 
 26
 27    snprintf(path, sizeof path, "%s/create", selinux_mnt);
 28    fd = open(path, O_RDWR);
-```    
+```
 
 Unlike other examples, the above code will not debug itself, and you will have to set breakpoints and trace calls to determine the point of first failure. (And the code above gambles that the truncated file does not exist or is not under an adversary's control by blindly performing the `open`).
 
-# Runtime
+## Runtime
 
 The previous sections concentrated on setting up your project for success. This section will examine additional hints for running with increased diagnostics and defenses. Not all platforms are created equal - GNU Linux is difficult to impossible to [add hardening to a program after compiling and static linking](https://sourceware.org/ml/binutils/2012-03/msg00309.html); while Windows allows post-build hardening through a download. Remember, the goal is to find the point of first failure quickly so you can improve the reliability and security of the code.
 
-## Xcode
+### Xcode
 
 Xcode offers additional [Code Diagnostics](https://developer.apple.com/documentation/code_diagnostics) that can help find memory errors and object use problems. Schemes can be managed through *Products* menu item, *Scheme* submenu item, and then *Edit*. From the editor, navigate to the *Diagnostics* tab. In the figure below, four additional instruments are enabled for the debugging cycle: Scribble guards, Edge guards, Malloc guards, and Zombies.
 
@@ -640,7 +642,7 @@ Xcode offers additional [Code Diagnostics](https://developer.apple.com/documenta
 
 There is one caveat with using some of the guards: Apple only provides them for the simulator, and not a device. In the past, the guards were available for both devices and simulators.
 
-### Windows
+#### Windows
 
 Visual Studio offers a number of debugging aides for use during development. The aides are called [Managed Debugging Assistants (MDAs)](https://docs.microsoft.com/en-us/dotnet/framework/debug-trace-profile/diagnosing-errors-with-managed-debugging-assistants). You can find the MDAs on the *Debug* menu, then *Exceptions* submenu. MDAs allow you to tune your debugging experience by, for example, filter exceptions for which the debugger should snap. For more details, see Stephen Toub's *[Let The CLR Find Bugs For You With Managed Debugging Assistants](https://docs.microsoft.com/en-us/archive/msdn-magazine/2006/may/let-the-clr-find-bugs-for-you-with-managed-debugging-assistants)*.
 

@@ -1,10 +1,12 @@
 site_name: OWASP Cheat Sheet Series
 site_description: Website with the collection of all the cheat sheets of the project.
 docs_dir: cheatsheets/
+google_analytics: ['UA-4531126-15', 'auto']
 plugins:
     - search:
         prebuild_index: true
-#theme:
+#For read the docs       
+# theme:
 #     name: readthedocs
 #     custom_dir: custom_theme/
 #     highlightjs: true

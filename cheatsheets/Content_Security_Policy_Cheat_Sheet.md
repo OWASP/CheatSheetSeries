@@ -1,12 +1,14 @@
-# Introduction
+# Content Security Policy Cheat Sheet
+
+## Introduction
 
 This article brings forth a way to integrate the `defense in depth` concept to the client-side of web applications. By injecting the Content-Security-Policy (CSP) headers from the server, the browser is aware and capable of protecting the user from dynamic calls that will load content into the page currently being visited.
 
-# Context
+## Context
 
 The increase in XSS and clickjacking vulnerabilities demands a more `defense in depth` security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.
 
-# Defense in Depth
+## Defense in Depth
 
 A strong CSP provides an effective second layer of protection against various types of vulnerabilities, including XSS. Although it may not be possible to fully mitigate these issues, a CSP can make it significantly harder for an attacker to actually exploit them.
 
@@ -14,14 +16,15 @@ Even on a fully static website, which does not accept any user input, a CSP can 
 
 However, CSP **should not** be relied upon as the only defensive mechanism on a website. It is still vital that other protective controls are implemented, such as those discussed in the [Cross-Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
-# Policy Delivery
+## Policy Delivery
 
 CSP can be delivered to the user agent in different techniques.
+
 1. `Content-Security-Policy` HTTP response header field. This is the most preferred technique.
 1. `<meta>` HTML element with `http-equiv` attribute set to `Content-Security-Policy`. These elements need to be placed as early as possible in the documents.
 1. `Content-Security-Policy-Report-Only` HTTP response header field. This header is used when the developer is unsure of the CSP behavior and wants to monitor it, instead of enforcing it.
 
-## HTTP Headers
+### HTTP Headers
 
 The following are headers for CSP.
 
@@ -29,15 +32,15 @@ The following are headers for CSP.
 - `Content-Security-Policy-Report-Only` : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking ("fail open") and a report is sent to the URL designated by the `report-uri` directive. This is often used as a precursor to utilizing CSP in blocking mode ("fail closed")
 - `DO NOT` use X-Content-Security-Policy or X-WebKit-CSP. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.
 
-# CSP Directives
+## CSP Directives
 
 Multiple types of directives exist that allow the developer to granularly control the flow of the policies.
 
-## Fetch Directives
+### Fetch Directives
 
 Fetch directives tell the browser the locations to trust and load resources from.
 
-Most fetch directives have a certain [fallback list specified in w3](https://www.w3.org/TR/CSP3/#directive-fallback-list). This list allows for granular control of the source of scripts, images, files, etc. 
+Most fetch directives have a certain [fallback list specified in w3](https://www.w3.org/TR/CSP3/#directive-fallback-list). This list allows for granular control of the source of scripts, images, files, etc.
 
 - `child-src` allows the developer to control nested browsing contexts and worker execution contexts.
   - According to [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Fetch_directives), the below 2 directives should be used to regulate nested browsing context and workers as `child-src` will be deprecated in the coming versions.
@@ -58,9 +61,9 @@ Most fetch directives have a certain [fallback list specified in w3](https://www
   - `style-src-attr` controls styles attributes.
 - `default-src` is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of `default-src`.
 
-## Document Directives
+### Document Directives
 
-Document directives instruct the browser about the properties of the document to which the policies will apply to. 
+Document directives instruct the browser about the properties of the document to which the policies will apply to.
 
 - `base-uri` specifies the possible URLs that the `<base>` element can use.
 - `plugin-types` limits the types of resources that can be loaded into the document (*e.g.* application/pdf). 3 rules apply to the affected elements, `<embed>` and `<object>`:
@@ -72,7 +75,7 @@ Document directives instruct the browser about the properties of the document to
   - Not specifying a value for the directive activates all of the sandbox restrictions. `Content-Security-Policy: sandbox;`
   - [Sandbox syntax](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/sandbox#Syntax)
 
-## Navigation Directives
+### Navigation Directives
 
 Navigation directives instruct the browser about the locations that the document can navigate to.
 
@@ -83,7 +86,7 @@ Navigation directives instruct the browser about the locations that the document
   - This directive doesn't fallback to `default-src` directive.
   - `X-Frame-Options` is rendered obsolete by this directive and is ignored by the user agents.
 
-## Reporting Directives
+### Reporting Directives
 
 Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
 
@@ -94,7 +97,7 @@ Reporting directives deliver violations of prevented behaviors to specified loca
 
 In order to ensure backward compatibility, use the 2 directives in conjunction. Whenever a browser supports `report-to`, it will ignore `report-uri`. Otherwise, `report-uri` will be used.
 
-## Special Directive Sources
+### Special Directive Sources
 
 | Value            | Description                                                                 |
 |------------------|-----------------------------------------------------------------------------|
@@ -112,7 +115,7 @@ To create hashes, check out this [hash generator](https://report-uri.com/home/ha
 
 To better understand how the directive sources work, check out the [source lists from w3c](https://w3c.github.io/webappsec-csp/#framework-directive-source-list).
 
-## Nonces
+### Nonces
 
 [Nonces](https://en.wikipedia.org/wiki/Cryptographic_nonce) attributes are added to script tags. Nonce attributes are composed of base64 values. This nonce is verified against the nonce sent in the CSP header, and only matching nonces are allowed to execute.
 
@@ -120,9 +123,9 @@ They can be used in dynamic script blocks in combination with `strict-dynamic`. 
 
 For more details on strict-dynamic, check out [strict-dynamic usage](https://w3c.github.io/webappsec-csp/#strict-dynamic-usage).
 
-# CSP Sample Policies
+## CSP Sample Policies
 
-## Basic CSP Policy
+### Basic CSP Policy
 
 This policy will only allow resources from the originating domain for all the default level directives and will not allow inline scripts/styles to execute. If your application functions with these restrictions, it drastically reduces your attack surface, and works with most modern browsers.
 
@@ -139,7 +142,7 @@ To tighten further, one can apply the following:
 
 This policy allows images, scripts, AJAX, and CSS from the same origin, and does not allow any other resources to load (eg. object, frame, media, etc).
 
-## Mixed Content Policy
+### Mixed Content Policy
 
 - In order to prevent mixed content (resources being loaded over http, from a document loaded over https), one can use the [block-all-mixed-content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/block-all-mixed-content) directive to block mixed content.
 
@@ -151,7 +154,7 @@ This policy allows images, scripts, AJAX, and CSS from the same origin, and does
 
 If the [upgrade-insecure-requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests) is set, the `block-all-mixed-content` is rendered meaningless and should be removed.
 
-## Preventing ClickJacking
+### Preventing ClickJacking
 
 - To prevent all framing of your content use:
   - `Content-Security-Policy: frame-ancestors 'none';`
@@ -160,7 +163,7 @@ If the [upgrade-insecure-requests](https://developer.mozilla.org/en-US/docs/Web/
 - To allow for trusted domain, do the following:
   - `Content-Security-Policy: frame-ancestors trusted.com;`
 
-## Strict Policy
+### Strict Policy
 
 A strict policy's role is to protect against classical stored, reflected, and some of the DOM XSS attacks and should be the optimal goal of any team trying to implement CSP.
 
@@ -170,19 +173,19 @@ Based on a [presentation](https://speakerdeck.com/lweichselbaum/csp-a-successful
 
 - Moderate Strict Policy:
 
-```
+```text
 script-src 'nonce-r4nd0m' 'strict-dynamic';
 object-src 'none'; base-uri 'none';
 ```
 
 - Locked down Strict Policy:
 
-```
+```text
 script-src 'nonce-r4nd0m';
 object-src 'none'; base-uri 'none';
 ```
 
-## Refactoring inline code
+### Refactoring inline code
 
 By default CSP disables any unsigned JavaScript code placed inline in the HTML source, such as this:
 
@@ -219,7 +222,7 @@ This should be replaced by `addEventListener` calls:
 
 > `document.getElementById("button1").addEventListener('click', doSomething);`
 
-# References
+## References
 
 - [CSP with Google](https://csp.withgoogle.com/docs/index.html)
 - [CSP Level 3 W3C](https://www.w3.org/TR/CSP3/)

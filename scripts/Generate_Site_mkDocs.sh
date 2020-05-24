@@ -42,22 +42,19 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     sed -i '' 's/Index.md/glossary.md/g' $WORK/cheatsheets/glossary.md
     sed -i '' "1i\\
         Title: Index Alphabetical\\
-        Date: $date\\
         " $WORK/cheatsheets/glossary.md
     sed -i '' "1i\\
         Title: Index ASVS\\
-        Date: $date\\
         " $WORK/cheatsheets/IndexASVS.md
     sed -i '' "1i\\
         Title: Index Proactive Controls\\
-        Date: $date\\
         " $WORK/cheatsheets/IndexProactiveControls.md
 
 else
     sed -i 's/Index.md/glossary.md/g' $WORK/cheatsheets/glossary.md
-    sed -i "1iTitle: Index Alphabetical\nDate: $date\n" $WORK/cheatsheets/glossary.md
-    sed -i "1iTitle: Index ASVS\nDate: $date\n" $WORK/cheatsheets/IndexASVS.md
-    sed -i "1iTitle: Index Proactive Controls\nDate: $date\n" $WORK/cheatsheets/IndexProactiveControls.md
+    sed -i "1iTitle: Index Alphabetical\n" $WORK/cheatsheets/glossary.md
+    sed -i "1iTitle: Index ASVS\n" $WORK/cheatsheets/IndexASVS.md
+    sed -i "1iTitle: Index Proactive Controls\n" $WORK/cheatsheets/IndexProactiveControls.md
 fi
 
 
@@ -65,17 +62,16 @@ echo "Step 4/6: Inserting markdown metadata."
 for fullfile in $WORK/cheatsheets/cheatsheets/*.md
 do
     filename=$(basename -- "$fullfile")
-    filename="${filename%.*}"
+    filename="${filename%_Cheat_Sheet.*}"
 
-    echo "Processing file: $fullfile"
+    echo "Processing file: $fullfile - $filename"
     if [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OSX
         sed -i '' "1i\\
             Title: ${filename//[_]/ }\\
-            Date: $date\\
             " $fullfile
     else
-        sed -i "1iTitle: ${filename//[_]/ }\nDate: $date\n" $fullfile
+        sed -i "1iTitle: ${filename//[_]/ }\n" $fullfile
     fi
 done
 
@@ -91,8 +87,8 @@ then
 fi
 
 echo "Step 6/6 Cleanup."
-rm -rf cheatsheets
-rm -rf custom_theme
-rm mkdocs.yml
+#rm -rf cheatsheets
+#rm -rf custom_theme
+#rm mkdocs.yml
 
 echo "Generation finished to the folder: $WORK/$GENERATED_SITE"
