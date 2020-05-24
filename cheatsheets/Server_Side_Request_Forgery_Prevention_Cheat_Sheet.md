@@ -52,6 +52,7 @@ SSRF is an attack vector that abuses an application to interact with the interna
 ## Cases
 
 Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:
+
 - Application can send request only to **identified and trusted applications**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
 - Application can send requests to **ANY external IP address or domain name**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is not available.
 
@@ -82,6 +83,7 @@ Based on that point, the following question comes to mind: *How to perform this 
 As [Orange Tsai](https://twitter.com/orange_8361) shows in his [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf), depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the [whitelisting approach](Input_Validation_Cheat_Sheet.md#whitelisting-vs-blacklisting) when input validation is used because, most of the time, the format of the information expected from the user is globally know.
 
 The request sent to the internal application will be based on the following information:
+
 - String containing business data.
 - IP address (V4 or V6).
 - Domain name.
@@ -138,6 +140,7 @@ After ensuring the validity of the incoming IP address, the second layer of vali
 ###### Domain name
 
 In the attempt of validating domain names, it is apparent to do a DNS resolution in order to verify the existence of the domain. In general, it is not a bad idea, yet it opens up the application to attacks depending on the configuration used regarding the DNS servers used for the domain name resolution:
+
 - It can disclose information to external DNS resolvers.
 - It can be used by an attacker to bind a legit domain name to an internal IP address. See the section `Exploitation tricks > Bypassing restrictions > Input validation > DNS pinning` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf).
 - It can be used, by an attacker, to deliver a malicious payload to the internal DNS resolvers as well as to the API (SDK or third-party) used by the application to handle the DNS communication and then, potentially, trigger a vulnerability in one of these components.

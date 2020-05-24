@@ -17,6 +17,7 @@ Most of the projects use third-party dependencies to delegate handling of differ
 It's a good approach because it allows the development team to focus on the real application code supporting the expected business feature. The dependency brings forth an expected downside where the security posture of the real application is now resting on it.
 
 This aspect is referenced in the following projects:
+
 - [OWASP TOP 10 2017](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/) under the point *[A9 - Using Components with Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities.html)*.
 - [OWASP Application Security Verification Standard Project](https://owasp.org/www-project-application-security-verification-standard/) under the section *V14.2 Dependency*.
 
@@ -166,6 +167,7 @@ Nothing specific because here we are in a *patch yourself* condition.
 **Step 1:**
 
 If we are in this case due to one of the following conditions, it's a good idea to start a parallel study to find another component better maintained or if it's a commercial component with support **then put pressure** on the provider with the help of your [Chief Risk Officer](https://en.wikipedia.org/wiki/Chief_risk_officer) (fallback possible to [Chief Information Security Officer](https://en.wikipedia.org/wiki/Chief_information_security_officer)):
+
 - Provider does not want to fix the issue.
 - Provider does not answer at all.
 
@@ -228,6 +230,7 @@ Using the information from the full disclosure post or the pentester's exploitat
 This section lists several tools that can used to analyse the dependencies used by a project in order to detect the vulnerabilities.
 
 It's important to ensure, during the selection process of a vulnerable dependency detection tool, that this one:
+
 - Uses several reliable input sources in order to handle both vulnerability disclosure ways.
 - Support for flagging an issue raised on a component as a [false-positive](https://www.whitehatsec.com/glossary/content/false-positive).
 
