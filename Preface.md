@@ -11,16 +11,19 @@ You can download this site [here](bundle.zip).
 An ATOM feed is available [here](News.xml) with the latest updates.
 
 Project leaders:
+
 - [Jim Manico](https://github.com/jmanico)
 - [Elie Saad](https://github.com/ThunderSon)
 
 Core team:
+
 - [Elie Saad](https://github.com/ThunderSon)
 - [Jakub Maćkowski](https://github.com/mackowski)
 - [Robin Bailey](https://github.com/rbsec)
 - [Jim Manico](https://github.com/jmanico)
 
 Project links:
+
 - [Homepage](https://owasp.org/www-project-cheat-sheets/)
 - [GitHub repository](https://github.com/OWASP/CheatSheetSeries)
 - [How to contribute?](https://github.com/OWASP/CheatSheetSeries/blob/master/CONTRIBUTING.md)
