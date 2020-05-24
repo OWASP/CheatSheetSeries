@@ -10,18 +10,18 @@ date=$(date '+%Y-%m-%d')
 
 echo "Generate a offline portable website with all the cheat sheets..."
 
-echo "Step 1/6: Init work folder."
+echo "Step 1/7: Init work folder."
 rm -rf $WORK 1>/dev/null 2>&1
 mkdir $WORK
 mkdir $WORK/cheatsheets
 mkdir $WORK/custom_theme
 mkdir $WORK/custom_theme/img
 
-echo "Step 2/6: Generate the summary markdown page "
+echo "Step 2/7: Generate the summary markdown page "
 python Update_CheatSheets_Index.py
 python Generate_RSS_Feed.py
 
-echo "Step 3/6: Create the expected MkDocs folder structure."
+echo "Step 3/7: Create the expected MkDocs folder structure."
 
 cp ../mkdocs.yml $WORK/.
 cp ../Preface.md $WORK/cheatsheets/index.md
@@ -58,7 +58,7 @@ else
 fi
 
 
-echo "Step 4/6: Inserting markdown metadata."
+echo "Step 4/7: Inserting markdown metadata."
 for fullfile in $WORK/cheatsheets/cheatsheets/*.md
 do
     filename=$(basename -- "$fullfile")
@@ -75,7 +75,7 @@ do
     fi
 done
 
-echo "Step 5/6: Generate the site."
+echo "Step 5/7: Generate the site."
 
 cd $WORK
 python -m mkdocs build
@@ -86,7 +86,51 @@ then
     exit 1
 fi
 
-echo "Step 6/6 Cleanup."
+echo "Step 6/7: Handling redirect for files that have changed"
+#Authorization_Testing_Automation.md -> Authorization_Testing_Automation_Cheat_Sheet.md
+#Injection_Prevention_Cheat_Sheet_in_Java.md -> Injection_Prevention_in_Java_Cheat_Sheet.md
+#JSON_WEB_Token_Cheat_Sheet_for_Java.md -> JSON_WEB_Token_for_Java_Cheat_Sheet.md
+#Ruby_on_Rails_Cheatsheet.md -> Ruby_on_Rails_Cheat_Sheet.md
+#Nodejs_security_cheat_sheet.html -> Nodejs_security_Cheat_Sheet.html
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Mac OSX
+    sed -i '' "1i\\
+        ---\\
+        redirect_from: \"/cheatsheets/Authorization_Testing_Automation.html\"\\
+        ---\\
+        " $WORK/$GENERATED_SITE/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html
+    sed -i '' "1i\\
+        ---\\
+        redirect_from: \"/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html\"\\
+        ---\\
+        " $WORK/$GENERATED_SITE/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html
+    sed -i '' "1i\\
+        ---\\
+        redirect_from: \"/cheatsheets/JSON_WEB_Token_Cheat_Sheet_for_Java.html\"\\
+        ---\\
+        " $WORK/$GENERATED_SITE/cheatsheets/JSON_WEB_Token_for_Java_Cheat_Sheet.html
+    sed -i '' "1i\\
+        ---\\
+        redirect_from: \"/cheatsheets/Ruby_on_Rails_Cheatsheet.html\"\\
+        ---\\
+        " $WORK/$GENERATED_SITE/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html
+    sed -i '' "1i\\
+        ---\\
+        redirect_from: \"/cheatsheets/Nodejs_security_cheat_sheet.html\"\\
+        ---\\
+        " $WORK/$GENERATED_SITE/cheatsheets/Nodejs_Security_Cheat_Sheet.html
+else
+    sed -i "1i---\nredirect_from: \"/cheatsheets/Authorization_Testing_Automation.html\"---\n" $WORK/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html\"---\n" $WORK/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/JSON_WEB_Token_Cheat_Sheet_for_Java.html\"---\n" $WORK/cheatsheets/JSON_WEB_Token_for_Java_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/Ruby_on_Rails_Cheatsheet.html\"---\n" $WORK/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/Nodejs_security_cheat_sheet.html\"---\n" $WORK/cheatsheets/Nodejs_Security_Cheat_Sheet.html
+fi
+
+
+
+echo "Step 7/7 Cleanup."
 rm -rf cheatsheets
 rm -rf custom_theme
 rm mkdocs.yml
