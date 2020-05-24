@@ -492,7 +492,7 @@ public class UserController
 
 You can also check roles in code using identity features in .net: `System.Web.Security.Roles.IsUserInRole(userName, roleName)`
 
-You can find more information [here](Access_Control_Cheat_Sheet.md#introduction) on Access Control and [here](Authorization_Testing_Automation.md) for Authorization.
+You can find more information [here](Access_Control_Cheat_Sheet.md#introduction) on Access Control and [here](Authorization_Testing_Automation_Cheat_Sheet.md) for Authorization.
 
 #### Insecure Direct object references
 

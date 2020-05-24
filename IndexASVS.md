@@ -244,7 +244,7 @@ None.
 
 ## V3.5 Token-based Session Management
 
-[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md).
+[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md).
 
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md).
 
@@ -264,7 +264,7 @@ None.
 
 [Access Control Cheat Sheet](cheatsheets/Access_Control_Cheat_Sheet.md).
 
-[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md).
+[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md).
 
 ## V4.2 Operation Level Access Control
 
@@ -272,7 +272,7 @@ None.
 
 [Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md).
 
-[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md).
+[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md).
 
 ## V4.3 Other Access Control Considerations
 
@@ -306,7 +306,7 @@ None.
 
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md).
 
-[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md).
+[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md).
 
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md).
 

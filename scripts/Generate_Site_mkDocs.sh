@@ -87,8 +87,8 @@ then
 fi
 
 echo "Step 6/6 Cleanup."
-#rm -rf cheatsheets
-#rm -rf custom_theme
-#rm mkdocs.yml
+rm -rf cheatsheets
+rm -rf custom_theme
+rm mkdocs.yml
 
 echo "Generation finished to the folder: $WORK/$GENERATED_SITE"

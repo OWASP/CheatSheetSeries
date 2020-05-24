@@ -1,4 +1,4 @@
-**66** cheat sheets available.
+**64** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -12,11 +12,11 @@
 
 [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md).
 
-[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md). ![Java](assets/Index_Java.png) ![Xml](assets/Index_Xml.png) 
-
 [AJAX Security Cheat Sheet](cheatsheets/AJAX_Security_Cheat_Sheet.md). ![Json](assets/Index_Json.png) 
 
 [Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md).
+
+[Authorization Testing Automation Cheat Sheet](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Xml](assets/Index_Xml.png) 
 
 # B
 
@@ -26,13 +26,9 @@
 
 [Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md). ![Html](assets/Index_Html.png) 
 
-[C-Based Toolchain Hardening](cheatsheets/C-Based_Toolchain_Hardening.md). ![C](assets/Index_C.png) ![Bash](assets/Index_Bash.png) 
-
 [Clickjacking Defense Cheat Sheet](cheatsheets/Clickjacking_Defense_Cheat_Sheet.md). ![Javascript](assets/Index_Javascript.png) ![Html](assets/Index_Html.png) 
 
 [Cross Site Scripting Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md). ![Javascript](assets/Index_Javascript.png) ![Java](assets/Index_Java.png) ![Csharp](assets/Index_Csharp.png) ![Html](assets/Index_Html.png) ![Ruby](assets/Index_Ruby.png) 
-
-[C-Based Toolchain Hardening Cheat Sheet](cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md).
 
 [Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md).
 
@@ -76,17 +72,17 @@
 
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
 
-[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
+[Injection Prevention in Java Cheat Sheet](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Xml](assets/Index_Xml.png) 
 
-[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md). ![Java](assets/Index_Java.png) ![Xml](assets/Index_Xml.png) 
+[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
 
 [Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
 
 # J
 
-[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md). ![Javascript](assets/Index_Javascript.png) ![Java](assets/Index_Java.png) ![Json](assets/Index_Json.png) ![Sql](assets/Index_Sql.png) 
-
 [JAAS Cheat Sheet](cheatsheets/JAAS_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
+
+[JSON Web Token for Java Cheat Sheet](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md). ![Javascript](assets/Index_Javascript.png) ![Java](assets/Index_Java.png) ![Json](assets/Index_Json.png) ![Sql](assets/Index_Sql.png) 
 
 # K
 
@@ -108,7 +104,7 @@
 
 # N
 
-[Nodejs security cheat sheet](cheatsheets/Nodejs_security_cheat_sheet.md). ![Javascript](assets/Index_Javascript.png) ![Html](assets/Index_Html.png) ![Bash](assets/Index_Bash.png) 
+[Nodejs security Cheat Sheet](cheatsheets/Nodejs_security_Cheat_Sheet.md). ![Javascript](assets/Index_Javascript.png) ![Html](assets/Index_Html.png) ![Bash](assets/Index_Bash.png) 
 
 # O
 
@@ -132,7 +128,7 @@
 
 [REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md).
 
-[Ruby on Rails Cheatsheet](cheatsheets/Ruby_on_Rails_Cheatsheet.md). ![Html](assets/Index_Html.png) ![Ruby](assets/Index_Ruby.png) ![Bash](assets/Index_Bash.png) 
+[Ruby on Rails Cheat Sheet](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md). ![Html](assets/Index_Html.png) ![Ruby](assets/Index_Ruby.png) ![Bash](assets/Index_Bash.png) 
 
 # S
 
