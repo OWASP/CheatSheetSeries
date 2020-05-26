@@ -74,10 +74,10 @@ jobs:
         mv site/* .
         upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md
         rm -rf site
-    - name: Install Jekyll and other deps
-      run: |
-        sudo gem install bundler
-        bundle install
+    # - name: Install Jekyll and other deps
+    #   run: |
+    #     sudo gem install bundler
+    #     bundle install
     - name: Commit changes to gh-pages
       run: |
         git config --global user.email "action@github.com"
