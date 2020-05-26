@@ -121,11 +121,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         ---\\
         " $WORK/$GENERATED_SITE/cheatsheets/Nodejs_Security_Cheat_Sheet.html
 else
-    sed -i "1i---\nredirect_from: \"/cheatsheets/Authorization_Testing_Automation.html\"---\n" $WORK/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html
-    sed -i "1i---\nredirect_from: \"/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html\"---\n" $WORK/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html
-    sed -i "1i---\nredirect_from: \"/cheatsheets/JSON_WEB_Token_Cheat_Sheet_for_Java.html\"---\n" $WORK/cheatsheets/JSON_WEB_Token_for_Java_Cheat_Sheet.html
-    sed -i "1i---\nredirect_from: \"/cheatsheets/Ruby_on_Rails_Cheatsheet.html\"---\n" $WORK/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html
-    sed -i "1i---\nredirect_from: \"/cheatsheets/Nodejs_security_cheat_sheet.html\"---\n" $WORK/cheatsheets/Nodejs_Security_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/Authorization_Testing_Automation.html\"---\n" $WORK/$GENERATED_SITE/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html\"---\n" $WORK/$GENERATED_SITE/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/JSON_WEB_Token_Cheat_Sheet_for_Java.html\"---\n" $WORK/$GENERATED_SITE/cheatsheets/JSON_WEB_Token_for_Java_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/Ruby_on_Rails_Cheatsheet.html\"---\n" $WORK/$GENERATED_SITE/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/Nodejs_security_cheat_sheet.html\"---\n" $WORK/$GENERATED_SITE/cheatsheets/Nodejs_Security_Cheat_Sheet.html
 fi
 
 
