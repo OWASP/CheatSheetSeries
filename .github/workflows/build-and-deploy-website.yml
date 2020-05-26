@@ -57,7 +57,7 @@ jobs:
     - name: Remove previous version website files
       run: |
         shopt -s extglob
-        rm -rdfv !("CNAME"|"robots.txt"|"_config.yml"|"Gemfile")
+        rm -rdfv !("CNAME"|"robots.txt"|"_config.yml")
     - name: Download new build from artifact
       uses: actions/download-artifact@v1
       with:
