@@ -44,16 +44,16 @@ Vulnerabilities in SAML implementations due to XML Signature Wrapping attacks we
 The following recommendations were proposed in response ([Secure SAML validation to prevent XML signature wrapping attacks](https://arxiv.org/pdf/1401.7483v1.pdf)):
 
 - Always perform schema validation on the XML document prior to using it for any security-­related purposes:
-  - Always use local, trusted copies of schemas for validation.
-  - Never allow automatic download of schemas from third party locations.
-  - If possible, inspect schemas and perform schema hardening, to disable possible wildcard ­type or relaxed processing statements.
+    - Always use local, trusted copies of schemas for validation.
+    - Never allow automatic download of schemas from third party locations.
+    - If possible, inspect schemas and perform schema hardening, to disable possible wildcard ­type or relaxed processing statements.
 - Securely validate the digital signature:
-  - If you expect only one signing key, use `StaticKeySelector`. Obtain the key directly from the identity provider, store it in local file and ignore any `KeyInfo` elements in the document.
-  - If you expect more than one signing key, use `X509KeySelector` (the JKS variant). Obtain these keys directly form the identity providers, store them in local JKS and ignore any `KeyInfo` elements in the document.
-  - If you expect a heterogeneous signed documents (many certificates from many identity providers, multi­level validation paths), implement full trust establishment model based on PKIX and trusted root certificates.
+    - If you expect only one signing key, use `StaticKeySelector`. Obtain the key directly from the identity provider, store it in local file and ignore any `KeyInfo` elements in the document.
+    - If you expect more than one signing key, use `X509KeySelector` (the JKS variant). Obtain these keys directly form the identity providers, store them in local JKS and ignore any `KeyInfo` elements in the document.
+    - If you expect a heterogeneous signed documents (many certificates from many identity providers, multi­level validation paths), implement full trust establishment model based on PKIX and trusted root certificates.
 - Avoid signature-wrapping attacks.
-  - Never use `getElementsByTagName` to select security related elements in an XML document without prior validation.
-  - Always use absolute XPath expressions to select elements, unless a hardened schema is used for validation.
+    - Never use `getElementsByTagName` to select security related elements in an XML document without prior validation.
+    - Always use absolute XPath expressions to select elements, unless a hardened schema is used for validation.
 
 ## Validate Protocol Processing Rules
 
@@ -62,12 +62,12 @@ This is another common area for security gaps simply because of the vast number 
 Processing a SAML response is an expensive operation but all steps must be validated:
 
 - Validate AuthnRequest processing rules. Refer to [SAML Core](https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) (3.4.1.4) for all AuthnRequest processing rules. This step will help counter the following attacks:
-  - Man-in-the-middle (6.4.2)
+    - Man-in-the-middle (6.4.2)
 - Validate Response processing rules. Refer to [SAML Profiles](https://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf) (4.1.4.3) for all Response processing rules. This step will help counter the following attacks:
-  - Stolen Assertion (6.4.1)
-  - Man-in-the-middle (6.4.2)
-  - Forged Assertion (6.4.3)
-  - Browser State Exposure (6.4.4)
+    - Stolen Assertion (6.4.1)
+    - Man-in-the-middle (6.4.2)
+    - Forged Assertion (6.4.3)
+    - Browser State Exposure (6.4.4)
 
 ## Validate Binding Implementation
 
@@ -81,14 +81,14 @@ Revisit each security threat that exists within the [SAML Security](https://docs
 Additional countermeasures considered should include:
 
 - Prefer IP Filtering when appropriate. For example, this countermeasure could have prevented Google's initial security flaw if Google provided each trusted partner with a separate endpoint and setup an IP filter for each endpoint. This step will help counter the following attacks:
-  - Stolen Assertion (6.4.1)
-  - Man-in-the-middle (6.4.2)
+    - Stolen Assertion (6.4.1)
+    - Man-in-the-middle (6.4.2)
 - Prefer short lifetimes on the SAML Response. This step will help counter the following attacks:
-  - Stolen Assertion (6.4.1)
-  - Browser State Exposure (6.4.4)
+    - Stolen Assertion (6.4.1)
+    - Browser State Exposure (6.4.4)
 - Prefer OneTimeUse on the SAML Response. This step will help counter the following attacks:
-  - Browser State Exposure (6.4.4)
-  - Replay (6.4.5)
+    - Browser State Exposure (6.4.4)
+    - Replay (6.4.5)
 
 Need an architectural diagram? The [SAML technical overview](https://www.oasis-open.org/committees/download.php/11511/sstc-saml-tech-overview-2.0-draft-03.pdf) contains the most complete diagrams. For the Web Browser SSO Profile with Redirect/POST bindings refer to the section 4.1.3. In fact, of all the SAML documentation, the technical overview is the most valuable from a high-level perspective.
 
@@ -97,12 +97,12 @@ Need an architectural diagram? The [SAML technical overview](https://www.oasis-o
 Unsolicited Response is inherently [less secure](https://www.identityserver.com/articles/the-dangers-of-saml-idp-initiated-sso) by design due to the lack of [CSRF](https://owasp.org/www-community/attacks/csrf) protection. However, it is supported by many due to the backwards compatibility feature of SAML 1.1. The general security recommendation is to not support this type of authentication, but if it must be enabled, the following steps (in additional to everything mentioned above) should help you secure this flow:
 
 - Follow the validation process mentioned in [SAML Profiles (section 4.1.5)](https://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf). This step will help counter the following attacks:
-  - Replay (6.1.2)
-  - Message Insertion (6.1.3)
+    - Replay (6.1.2)
+    - Message Insertion (6.1.3)
 - If the contract of the `RelayState` parameter is a URL, make sure the URL is validated and whitelisted. This step will help counter the following attack:
-  - [Open Redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html)
+    - [Open Redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html)
 - Implement proper replay detection either at the response or assertion level. This will help counter the following attack:
-  - Replay (6.1.2)
+    - Replay (6.1.2)
 
 ## Identity Provider and Service Provider Considerations
 
