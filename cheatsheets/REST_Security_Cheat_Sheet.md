@@ -40,7 +40,7 @@ Non-public REST services must perform access control at each API endpoint. Web s
 There seems to be a convergence towards using [JSON Web Tokens](https://tools.ietf.org/html/rfc7519) (JWT) as the format for security tokens. JWTs are JSON data structures containing a set of claims that can be used for access control decisions. A cryptographic signature or message authentication code (MAC) can be used to protect the integrity of the JWT.
 
 - Ensure JWTs are integrity protected by either a signature or a MAC. Do not allow the unsecured JWTs: `{"alg":"none"}`.
-  - See [here](https://tools.ietf.org/html/rfc7519#section-6.1)
+    - See [here](https://tools.ietf.org/html/rfc7519#section-6.1)
 - In general, signatures should be preferred over MACs for integrity protection of JWTs.
 
 If MACs are used for integrity protection, every service that is able to validate JWTs can also create new JWTs using the same key. This means that all services using the same key have to mutually trust each other. Another consequence of this is that a compromise of any service also compromises all other services sharing the same key. See [here](https://tools.ietf.org/html/rfc7515#section-10.5) for additional information.
