@@ -88,8 +88,8 @@ Prior to running the tests, 2 output paths are possible:
 
 - All tests succeed, and thus the update can be pushed to production.
 - One or several tests failed, several output paths are possible:
-  - Failure is due to change in some function calls (_e.g._ signature, argument, package, etc.). The development team must update their code to fit the new library. Once that is done, re-run the tests.
-  - Technical incompatibility of the released dependency (_e.g._ require a more recent runtime version) which leads to the following actions:
+    - Failure is due to change in some function calls (_e.g._ signature, argument, package, etc.). The development team must update their code to fit the new library. Once that is done, re-run the tests.
+    - Technical incompatibility of the released dependency (_e.g._ require a more recent runtime version) which leads to the following actions:
     1. Raise the issue to the provider.
     2. Apply [Case 2](#case-2) while waiting for the provider's feedback.
 
@@ -235,19 +235,19 @@ It's important to ensure, during the selection process of a vulnerable dependenc
 - Support for flagging an issue raised on a component as a [false-positive](https://www.whitehatsec.com/glossary/content/false-positive).
 
 - Free
-  - [OWASP Dependency Check](https://owasp.org/www-project-dependency-check/):
-    - Full support: Java, .Net.
-    - Experimental support: Python, Ruby, PHP (composer), NodeJS, C, C++.
-  - [NPM Audit](https://docs.npmjs.com/cli/audit)
-    - Full support: NodeJS, JavaScript.
-    - HTML report available via this [module](https://www.npmjs.com/package/npm-audit-html).
-  - [OWASP Dependency Track](https://dependencytrack.org/) can be used to manage vulnerable dependencies across an organization.
+    - [OWASP Dependency Check](https://owasp.org/www-project-dependency-check/):
+        - Full support: Java, .Net.
+        - Experimental support: Python, Ruby, PHP (composer), NodeJS, C, C++.
+    - [NPM Audit](https://docs.npmjs.com/cli/audit)
+        - Full support: NodeJS, JavaScript.
+        - HTML report available via this [module](https://www.npmjs.com/package/npm-audit-html).
+    - [OWASP Dependency Track](https://dependencytrack.org/) can be used to manage vulnerable dependencies across an organization.
 - Commercial
-  - [Snyk](https://snyk.io/) (open source and free option available):
-    - [Full support](https://snyk.io/docs/) for many languages and package manager.
-  - [JFrog XRay](https://jfrog.com/xray/):
-    - [Full support](https://jfrog.com/integration/) for many languages and package manager.
-  - [Renovate](https://renovatebot.com) (allow to detect old dependencies):
-    - [Full support](https://renovatebot.com/docs/) for many languages and package manager.
-  - [Requires.io](https://requires.io/) (allow to detect old dependencies - open source and free option available):
-    - [Full support](https://requires.io/features/): Python only.
+    - [Snyk](https://snyk.io/) (open source and free option available):
+        - [Full support](https://snyk.io/docs/) for many languages and package manager.
+    - [JFrog XRay](https://jfrog.com/xray/):
+        - [Full support](https://jfrog.com/integration/) for many languages and package manager.
+    - [Renovate](https://renovatebot.com) (allow to detect old dependencies):
+        - [Full support](https://renovatebot.com/docs/) for many languages and package manager.
+    - [Requires.io](https://requires.io/) (allow to detect old dependencies - open source and free option available):
+        - [Full support](https://requires.io/features/): Python only.

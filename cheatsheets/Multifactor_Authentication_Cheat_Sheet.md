@@ -21,26 +21,26 @@ Additionally, while the following sections discuss the disadvantage and weakness
 - [Disadvantages](#disadvantages)
 - [Quick Recommendations](#quick-recommendations)
 - [Implementing MFA](#implementing-mfa)
-  - [When to Require MFA](#when-to-require-mfa)
-  - [Improving Usability](#improving-usability)
-  - [Failed Login Attempts](#failed-login-attempts)
-  - [Resetting MFA](#resetting-mfa)
+    - [When to Require MFA](#when-to-require-mfa)
+    - [Improving Usability](#improving-usability)
+    - [Failed Login Attempts](#failed-login-attempts)
+    - [Resetting MFA](#resetting-mfa)
 - [Something You Know](#something-you-know)
-  - [Passwords and PINs](#passwords-and-pins)
-  - [Security Questions](#security-questions)
+    - [Passwords and PINs](#passwords-and-pins)
+    - [Security Questions](#security-questions)
 - [Something You Have](#something-you-have)
-  - [Hardware OTP Tokens](#hardware-otp-tokens)
-  - [Software TOTP Tokens](#software-totp-tokens)
-  - [Hardware U2F Tokens](#hardware-u2f-tokens)
-  - [Certificates](#certificates)
-  - [Smartcards](#smartcards)
-  - [SMS Messages and Phone Calls](#sms-messages-and-phone-calls)
-  - [Email](#email)
+    - [Hardware OTP Tokens](#hardware-otp-tokens)
+    - [Software TOTP Tokens](#software-totp-tokens)
+    - [Hardware U2F Tokens](#hardware-u2f-tokens)
+    - [Certificates](#certificates)
+    - [Smartcards](#smartcards)
+    - [SMS Messages and Phone Calls](#sms-messages-and-phone-calls)
+    - [Email](#email)
 - [Something You Are](#something-you-are)
-  - [Biometrics](#biometrics)
+    - [Biometrics](#biometrics)
 - [Location](#location)
-  - [Source IP Ranges](#source-ip-ranges)
-  - [Geolocation](#geolocation)
+    - [Source IP Ranges](#source-ip-ranges)
+    - [Geolocation](#geolocation)
 
 ## Advantages
 
@@ -89,13 +89,13 @@ If the application provides multiple ways for a user to authenticate these shoul
 Having to frequently login with MFA creates an additional burden for users, and may cause them to disable MFA on the application. A number of mechanisms can be used to try and reduce the level of annoyance that MFA causes. However, these types of measures do decrease the security provided by MFA, so need to be risk assessed to find a reasonable balance of security and usability for the application.
 
 - Remembering the user's browser so they don't need to use MFA every time.
-  - This can either be permanent, or for a period of a few days.
-  - This needs to be done with more than just a cookie, which could be stolen by an attacker.
-    - For example, a cookie matched to the previous IP address the cookie was issued for.
+    - This can either be permanent, or for a period of a few days.
+    - This needs to be done with more than just a cookie, which could be stolen by an attacker.
+        - For example, a cookie matched to the previous IP address the cookie was issued for.
 - Whitelisting corporate IP ranges (or, more strictly, using location as a second factor).
-  - This doesn't protect against malicious insiders, or a user's workstation being compromised.
+    - This doesn't protect against malicious insiders, or a user's workstation being compromised.
 - Only requiring MFA for sensitive actions, not for the initial login.
-  - This will depend heavily on the functionality in the application.
+    - This will depend heavily on the functionality in the application.
 
 ### Failed Login Attempts
 
@@ -107,11 +107,11 @@ When a user enters their password, but fails to authenticate using a second fact
 There are a number of steps that should be taken when this occurs:
 
 - Prompt the user to try another form of MFA
-  - For example, an SMS code rather than using their hardware OTP token.
+    - For example, an SMS code rather than using their hardware OTP token.
 - Allow the user to attempt to [reset their MFA](#resetting-mfa).
 - Notify the user of the failed login attempt, and encourage them to change their password if they don't recognise it.
-  - The notification should include the time, browser and geographic location of the login attempt.
-  - This should be displayed next time they login, and optionally emailed to them as well.
+    - The notification should include the time, browser and geographic location of the login attempt.
+    - This should be displayed next time they login, and optionally emailed to them as well.
 
 ### Resetting MFA
 

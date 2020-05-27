@@ -11,20 +11,20 @@ This cheat sheet will focus on the defensive point of view and will not explain 
 - [Context](#context)
 - [Overview of a SSRF common flow](#overview-of-a-ssrf-common-flow)
 - [Cases](#cases)
-  - [Case 1 - Application can send request only to identified and trusted applications](#case-1---application-can-send-request-only-to-identified-and-trusted-applications)
-    - [Example](#example)
-    - [Available protections](#available-protections)
-      - [Application layer](#application-layer)
-        - [String](#string)
-        - [IP address](#ip-address)
-        - [Domain name](#domain-name)
-        - [URL](#url)
-      - [Network layer](#network-layer)
-  - [Case 2 - Application can send requests to ANY external IP address or domain name](#case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name)
-    - [Challenges in blocking URLs at application layer](#challenges-in-blocking-urls-at-application-layer)
-    - [Available protections](#available-protections-1)
-      - [Application layer](#application-layer-1)
-      - [Network layer](#network-layer-1)
+    - [Case 1 - Application can send request only to identified and trusted applications](#case-1---application-can-send-request-only-to-identified-and-trusted-applications)
+        - [Example](#example)
+        - [Available protections](#available-protections)
+            - [Application layer](#application-layer)
+                - [String](#string)
+                - [IP address](#ip-address)
+                - [Domain name](#domain-name)
+                - [URL](#url)
+            - [Network layer](#network-layer)
+    - [Case 2 - Application can send requests to ANY external IP address or domain name](#case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name)
+        - [Challenges in blocking URLs at application layer](#challenges-in-blocking-urls-at-application-layer)
+        - [Available protections](#available-protections-1)
+            - [Application layer](#application-layer-1)
+            - [Network layer](#network-layer-1)
 - [IMDSv2 in AWS](#imdsv2-in-aws)
 - [References](#references)
 - [Tools and code used for schemas](#tools-and-code-used-for-schemas)
@@ -119,16 +119,16 @@ The first layer of validation can be applied using libraries that ensure the sec
 > Verification of the proposed libraries has been performed regarding the exposure to bypasses (Hex, Octal, Dword, URL and Mixed encoding) described in this [article](https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b).
 
 - **JAVA:** Method [InetAddressValidator.isValid](http://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/InetAddressValidator.html#isValid(java.lang.String)) from the [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/) library.
-  - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
+    - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 - **.NET**: Method [IPAddress.TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8) from the SDK.
-  - **It is exposed** to bypass using Hex, Octal, Dword and Mixed encoding but **NOT** the URL encoding.
-  - As whitelisting is used here, any bypass tentative will be blocked during the comparison against the allowed list of IP addresses.
+    - **It is exposed** to bypass using Hex, Octal, Dword and Mixed encoding but **NOT** the URL encoding.
+    - As whitelisting is used here, any bypass tentative will be blocked during the comparison against the allowed list of IP addresses.
 - **JavaScript**: Library [ip-address](https://www.npmjs.com/package/ip-address).
-  - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
+    - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 - **Python**: Module [ipaddress](https://docs.python.org/3/library/ipaddress.html) from the SDK.
-  - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
+    - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 - **Ruby**: Class [IPAddr](https://ruby-doc.org/stdlib-2.0.0/libdoc/ipaddr/rdoc/IPAddr.html) from the SDK.
-  - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
+    - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 
 > **Use the output value of the method/library as the IP address to compare against the whitelist.**
 
@@ -156,8 +156,8 @@ Similar to the IP address validation, the first layer of validation can be appli
 - **JavaScript**: Library [is-valid-domain](https://www.npmjs.com/package/is-valid-domain).
 - **Python**: Module [validators.domain](https://validators.readthedocs.io/en/latest/#module-validators.domain).
 - **Ruby**: No valid dedicated gem has been found.
-  - [domainator](https://github.com/mhuggins/domainator), [public_suffix](https://github.com/weppos/publicsuffix-ruby) and [addressable](https://github.com/sporkmonger/addressable) has been tested but unfortunately they all consider `<script>alert(1)</script>.owasp.org` as a valid domain name.
-  - This regex, taken from [here](https://stackoverflow.com/a/26987741), can be used: `^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$`
+    - [domainator](https://github.com/mhuggins/domainator), [public_suffix](https://github.com/weppos/publicsuffix-ruby) and [addressable](https://github.com/sporkmonger/addressable) has been tested but unfortunately they all consider `<script>alert(1)</script>.owasp.org` as a valid domain name.
+    - This regex, taken from [here](https://stackoverflow.com/a/26987741), can be used: `^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$`
 
 Example of execution of the proposed regex for Ruby:
 

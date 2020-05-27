@@ -52,9 +52,9 @@ Where:
 
 - When executed, the 1st command line argument is the stanza from the config file. The Stanza names the `LoginModule` to be used. The 2nd argument is the `CallbackHandler`.
 - Create a new `LoginContext` with the arguments passed to `Main.java`.
-  - `loginContext = new LoginContext (args[0], new AppCallbackHandler());`
+    - `loginContext = new LoginContext (args[0], new AppCallbackHandler());`
 - Call the LoginContext.Login Module:
-  - `loginContext.login();`
+    - `loginContext.login();`
 - The value in succeeded Option is returned from `loginContext.login()`.
 - If the login was successful, a subject was created.
 
@@ -73,17 +73,17 @@ A `LoginModule` must have the following authentication methods:
 In `Main()`, after the `LoginContext` reads the correct stanza from the config file, the `LoginContext` instantiates the `LoginModule` specified in the stanza.
 
 - `initialize()` methods signature:
-  - `Public void initialize (Subject subject, CallbackHandler callbackHandler, Map sharedState, Map options)`
+    - `Public void initialize (Subject subject, CallbackHandler callbackHandler, Map sharedState, Map options)`
 - The arguments above should be saved as follows:
-  - `this.subject = subject;`
-  - `this.callbackHandler = callbackHandler;`
-  - `this.sharedState = sharedState;`
-  - `this.options = options;`
+    - `this.subject = subject;`
+    - `this.callbackHandler = callbackHandler;`
+    - `this.sharedState = sharedState;`
+    - `this.options = options;`
 - What the `initialize()` method does:
-  - Builds a subject object of the `Subject` class contingent on a successful `login()`.
-  - Sets the `CallbackHandler` which interacts with the user to gather login information.
-  - If a `LoginContext` specifies 2 or more LoginModules, which is legal, they can share information via a `sharedState` map.
-  - Saves state information such as debug and succeeded in an options Map.
+    - Builds a subject object of the `Subject` class contingent on a successful `login()`.
+    - Sets the `CallbackHandler` which interacts with the user to gather login information.
+    - If a `LoginContext` specifies 2 or more LoginModules, which is legal, they can share information via a `sharedState` map.
+    - Saves state information such as debug and succeeded in an options Map.
 
 ### login()
 
@@ -98,8 +98,8 @@ callbackHandler.handle (callbacks);
 
 - Authenticates the user
 - Retrieves the user supplied information from the callback objects:
-  - `String ID = nameCallback.getName ();`
-  - `char[] tempPW = passwordCallback.getPassword ();`
+    - `String ID = nameCallback.getName ();`
+    - `char[] tempPW = passwordCallback.getPassword ();`
 - Compare `name` and `tempPW` to values stored in a repository such as LDAP.
 - Set the value of the variable succeeded and return to `Main()`.
 

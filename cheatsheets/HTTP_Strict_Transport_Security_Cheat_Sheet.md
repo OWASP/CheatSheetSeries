@@ -11,11 +11,11 @@ The specification has been released and published end of 2012 as [RFC 6797](http
 HSTS addresses the following threats:
 
 - User bookmarks or manually types `http://example.com` and is subject to a man-in-the-middle attacker
-  - HSTS automatically redirects HTTP requests to HTTPS for the target domain
+    - HSTS automatically redirects HTTP requests to HTTPS for the target domain
 - Web application that is intended to be purely HTTPS inadvertently contains HTTP links or serves content over HTTP
-  - HSTS automatically redirects HTTP requests to HTTPS for the target domain
+    - HSTS automatically redirects HTTP requests to HTTPS for the target domain
 - A man-in-the-middle attacker attempts to intercept traffic from a victim user using an invalid certificate and hopes the user will accept the bad certificate
-  - HSTS does not allow a user to override the invalid certificate message
+    - HSTS does not allow a user to override the invalid certificate message
 
 ## Examples
 
