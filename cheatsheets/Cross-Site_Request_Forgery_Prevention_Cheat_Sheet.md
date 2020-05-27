@@ -1,4 +1,4 @@
-# Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet
+# Cross-Site Request Forgery Prevention Cheat Sheet
 
 ## Introduction
 
@@ -9,7 +9,7 @@ The impact of a successful CSRF attack is limited to the capabilities exposed by
 In short, the following principles should be followed to defend against CSRF:
 
 - **Check if your framework has [built-in CSRF protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
-  - **If framework does not have built-in CSRF protection add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on backend** 
+  - **If framework does not have built-in CSRF protection add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on backend**
 - **Always use [SameSite Cookie Attribute](#samesite-cookie-attribute) for session cookies**
 - **Implement at least one mitigation from [Defense in Depth Mitigations](#defense-in-depth-techniques) section**
   - **[Use custom request headers](#use-of-custom-request-headers)**
@@ -24,31 +24,31 @@ In short, the following principles should be followed to defend against CSRF:
 ## Contents
 
 - [Token Based Mitigation](#token-based-mitigation)
-  * [Use Build-In Or Existing CSRF Implementations for CSRF Protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection)
-  * [Synchronizer Token Pattern](#synchronizer-token-pattern)
-  * [Encryption based Token Pattern](#encryption-based-token-pattern)
-  * [HMAC Based Token Pattern](#hmac-based-token-pattern)
+  - [Use Build-In Or Existing CSRF Implementations for CSRF Protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection)
+  - [Synchronizer Token Pattern](#synchronizer-token-pattern)
+  - [Encryption based Token Pattern](#encryption-based-token-pattern)
+  - [HMAC Based Token Pattern](#hmac-based-token-pattern)
 - [Defense In Depth Techniques](#defense-in-depth-techniques)
-  * [SameSite Cookie Attribute](#samesite-cookie-attribute)
-  * [Verifying Origin With Standard Headers](#verifying-origin-with-standard-headers)
-    + [Identifying Source Origin (via Origin/Referer header)](#identifying-source-origin--via-origin-referer-header-)
-    + [Identifying the Target Origin](#identifying-the-target-origin)
-  * [Double Submit Cookie](#double-submit-cookie)
-    + [Cookie with __Host- prefix](#cookie-with---host--prefix)
-  * [Use of Custom Request Headers](#use-of-custom-request-headers)
-  * [User Interaction Based CSRF Defense](#user-interaction-based-csrf-defense)
+  - [SameSite Cookie Attribute](#samesite-cookie-attribute)
+  - [Verifying Origin With Standard Headers](#verifying-origin-with-standard-headers)
+    - [Identifying Source Origin (via Origin/Referer header)](#identifying-source-origin--via-origin-referer-header-)
+    - [Identifying the Target Origin](#identifying-the-target-origin)
+  - [Double Submit Cookie](#double-submit-cookie)
+    - [Cookie with __Host- prefix](#cookie-with---host--prefix)
+  - [Use of Custom Request Headers](#use-of-custom-request-headers)
+  - [User Interaction Based CSRF Defense](#user-interaction-based-csrf-defense)
 - [Login CSRF](#login-csrf)
 - [Java Reference Example](#java-reference-example)
 - [JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header](#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header)
-  * [Storing the CSRF Token Value in the DOM](#storing-the-csrf-token-value-in-the-dom)
-  * [Overriding Defaults to Set Custom Header](#overriding-defaults-to-set-custom-header)
-    + [XMLHttpRequest (Native JavaScript)](#xmlhttprequest--native-javascript-)
-    + [AngularJS](#angularjs)
-    + [Axios](#axios)
-    + [JQuery](#jquery)
+  - [Storing the CSRF Token Value in the DOM](#storing-the-csrf-token-value-in-the-dom)
+  - [Overriding Defaults to Set Custom Header](#overriding-defaults-to-set-custom-header)
+    - [XMLHttpRequest (Native JavaScript)](#xmlhttprequest--native-javascript-)
+    - [AngularJS](#angularjs)
+    - [Axios](#axios)
+    - [JQuery](#jquery)
 - [References](#references)
-  * [CSRF](#csrf)
-  * [Cookie Prefixes](#cookie-prefixes)
+  - [CSRF](#csrf)
+  - [Cookie Prefixes](#cookie-prefixes)
 
 ## Token Based Mitigation
 
@@ -70,9 +70,10 @@ CSRF tokens should be generated on the server-side. They can be generated once p
 When a request is issued by the client, the server-side component must verify the existence and validity of the token in the request compared to the token found in the user session. If the token was not found within the request, or the value provided does not match the value within the user session, then the request should be aborted, session of the user terminated and the event logged as a potential CSRF attack in progress.
 
 CSRF tokens should be:
- - Unique per user session.
- - Secret
- - Unpredictable (large random value generated by a [secure method](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng)).
+
+- Unique per user session.
+- Secret
+- Unpredictable (large random value generated by a [secure method](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng)).
 
 CSRF tokens prevent CSRF because without token, attacker cannot create a valid requests to the backend server.
 
@@ -116,7 +117,7 @@ Using key K, generate `HMAC(session ID + timestamp`) and append the same timesta
 Include token in a hidden field for forms and in the request-header field/request body parameter for AJAX requests.
 3. Validating the token\
 When the request is received at the server, re-generate the token with same key K (parameters are the session ID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.
-   
+
 The [Key Management Cheat Sheet](Key_Management_Cheat_Sheet.md#key-management-lifecycle-best-practices) contains best practices about managing the HMAC key.
 
 ## Defense In Depth Techniques
@@ -133,7 +134,7 @@ For more details on the `SameSite` values, check the following [section](https:/
 
 Example of cookies using this attribute:
 
-```
+```text
 Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
 Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 ```
@@ -153,11 +154,11 @@ At server side we verify if both of them match. If they do, we accept the reques
 
 #### Identifying Source Origin (via Origin/Referer header)
 
-**Checking the Origin Header**
+##### Checking the Origin Header
 
 If the Origin header is present, verify that its value matches the target origin. Unlike the Referer, the Origin header will be present in HTTP requests that originate from an HTTPS URL.
 
-**Checking the Referer Header**
+##### Checking the Referer Header
 
 If the Origin header is not present, verify the hostname in the Referer header matches the target origin. This method of CSRF mitigation is also commonly used with unauthenticated requests, such as requests made prior to establishing a session state, which is required to keep track of a synchronization token.
 
@@ -201,9 +202,9 @@ A simpler alternative to an encrypted cookie is to hash the token with a secret 
 
 Another solution for this problem is use of `Cookie Prefixes` for cookie with CSRF token. If cookie has `__Host-` prefix e.g. `Set-Cookie: __Host-token=RANDOM; path=/; Secure` then the cookie:
 
- - Cannot be (over)written from another subdomain.
- - Must have the path of `/`.
- - Must be marked as Secure (i.e, cannot be send over unencrypted HTTP).
+- Cannot be (over)written from another subdomain.
+- Must have the path of `/`.
+- Must be marked as Secure (i.e, cannot be send over unencrypted HTTP).
 
 However, as of January 2020 cookie prefixes [are not supported by IE and Edge](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility).
 

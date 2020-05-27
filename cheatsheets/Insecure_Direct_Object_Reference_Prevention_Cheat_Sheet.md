@@ -1,10 +1,12 @@
-# Introduction
+# Insecure Direct Object Reference Prevention Cheat Sheet
+
+## Introduction
 
 **I**nsecure **D**irect **O**bject **R**eference (called **IDOR** from here) occurs when a application exposes a reference to an internal implementation object. Using this way, it reveals the real identifier and format/pattern used of the element in the storage backend side. The most common example of it (although is not limited to this one) is a record identifier in a storage system (database, filesystem and so on).
 
 IDOR is referenced in element [A4](https://wiki.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References) of the OWASP Top 10 in the 2013 edition.
 
-# Context
+## Context
 
 IDOR do not bring a direct security issue because, by itself, it reveals only the format/pattern used for the object identifier. IDOR bring, depending on the format/pattern in place, a capacity for the attacker to mount a enumeration attack in order to try to probe access to the associated objects.
 
@@ -25,7 +27,7 @@ Based on this, an attacker can build a collection of valid ID from *EMP-00000* t
 
 To be exploited, an IDOR issue must be combined with an [Access Control](Access_Control_Cheat_Sheet.md) issue because it's the Access Control issue that "allow" the attacker to access to the object for which he have guessed the identifier through is enumeration attack.
 
-# Additional remarks
+## Additional remarks
 
 **From Jeff Williams**:
 
@@ -41,11 +43,11 @@ I'm "down" with DOR's for files, directories, etc. But not so much for ALL datab
 
 But, suppose a user has a list of accounts, like a bank where database id 23456 is their checking account. I'd DOR that in a heartbeat. You need to be prudent about this.
 
-# Objective
+## Objective
 
 This article propose an idea to prevent the exposure of real identifier in a simple, portable and stateless way because the proposal need to handle Session and Session-less application topologies.
 
-# Proposition
+## Proposition
 
 The proposal use a hash to replace the direct identifier. This hash is salted with a value defined at application level in order support topology in which the application is deployed in multi-instances mode (case for production).
 
@@ -63,29 +65,29 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Handle the creation of ID that will be send to front end side 
+ * Handle the creation of ID that will be send to front end side
  * in order to prevent IDOR
  */
 
 public class IDORUtil {
     /**
-     * SALT used for the generation of the HASH of the real item identifier 
+     * SALT used for the generation of the HASH of the real item identifier
      * in order to prevent to forge it on front end side.
      */
     private static final String SALT = "[READ_IT_FROM_APP_CONFIGURATION]";
 
     /**
-     * Compute a identifier that will be send to the front end and be used as item 
+     * Compute a identifier that will be send to the front end and be used as item
      * unique identifier on client side.
      *
-     * @param realItemBackendIdentifier Identifier of the item on the backend storage 
+     * @param realItemBackendIdentifier Identifier of the item on the backend storage
      *                                  (real identifier)
      * @return A string representing the identifier to use
      * @throws UnsupportedEncodingException If string's byte cannot be obtained
-     * @throws NoSuchAlgorithmException If the hashing algorithm used is not 
+     * @throws NoSuchAlgorithmException If the hashing algorithm used is not
      *                                  supported is not available
      */
-    public static String computeFrontEndIdentifier(String realItemBackendIdentifier) 
+    public static String computeFrontEndIdentifier(String realItemBackendIdentifier)
      throws NoSuchAlgorithmException, UnsupportedEncodingException {
         String frontEndId = null;
         if (realItemBackendIdentifier != null && !realItemBackendIdentifier.trim().isEmpty()) {
@@ -128,7 +130,7 @@ public Map<String, String> listAllMovies() {
                 //Add the computed ID and the associated item name to the result map
                 result.put(frontEndId, m.getName());
             } catch (Exception e) {
-                LOGGER.error("Error during ID generation for real ID {}: {}", m.getBackendIdentifier(), 
+                LOGGER.error("Error during ID generation for real ID {}: {}", m.getBackendIdentifier(),
                              e.getMessage());
             }
         });
@@ -166,7 +168,7 @@ public Movie obtainMovieName(@PathVariable("id") String id) {
         return match;
     }).findFirst();
 
-    //We have marked the Backend Identifier class field as excluded 
+    //We have marked the Backend Identifier class field as excluded
     //from the serialization
     //So we can send the object to front end through the serializer
     return movie.get();
@@ -189,6 +191,6 @@ public class Movie {
 }
 ```
 
-# Sources of the prototype
+## Sources of the prototype
 
 [Github repository](https://github.com/righettod/poc-idor).

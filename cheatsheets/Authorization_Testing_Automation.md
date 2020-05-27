@@ -1,10 +1,12 @@
-# Introduction
+# Authorization Testing Automation
+
+## Introduction
 
 Authorizations definition and implementation is one of the important protection measure of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to go live, the most significant number of issues related to authorization came in the maintenance lifetime of the application.
 
 This situation is often explained by the fact that features are added/modified and no review of the authorizations was performed on the application before the publishing of the new release, for cost or time issue reason.
 
-# Context
+## Context
 
 In order to try to address this situation, it's can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations definition.
 
@@ -14,7 +16,7 @@ The representation of the different combinations of these 2 dimensions is often 
 
 During a test of an authorization, a **Logical Role** is also called a **Point Of View**.
 
-# Objective
+## Objective
 
 This article describe a proposition of implementation in order to automate the tests of an *authorization matrix*.
 
@@ -22,21 +24,21 @@ This article use the assumption that 2 dimensions are used to represents an auth
 
 The objective is to provide starting ideas/hints in order to create a tailored way of testing of the authorization matrix for the target application.
 
-# Proposition
+## Proposition
 
 In order to achieve the full automation of the evaluation of the *authorization matrix*, the following actions has been performed:
 
-1.  Formalize the authorization matrix in a pivot format file allowing:
-    1.  The processing by a program in a easy way.
-    2.  To be read and updated by a human for the follow-up of the authorization combinations.
-    3.  Hierarchy in the information in order to easily materialize the different combinations.
-    4.  The maximum possible of independence from the technology and design used to implements the application exposing the features.
+1. Formalize the authorization matrix in a pivot format file allowing:
+    1. The processing by a program in a easy way.
+    2. To be read and updated by a human for the follow-up of the authorization combinations.
+    3. Hierarchy in the information in order to easily materialize the different combinations.
+    4. The maximum possible of independence from the technology and design used to implements the application exposing the features.
 
-2.  Create a set of integration tests that fully use the authorization matrix pivot file as input source in order to evaluate the different combinations with:
-    1.  The minimum possible of maintenance when the authorization matrix pivot file is updated.
-    2.  A clear indication, in case of failed test, of the source authorization combination that do not respect the authorization matrix.
+2. Create a set of integration tests that fully use the authorization matrix pivot file as input source in order to evaluate the different combinations with:
+    1. The minimum possible of maintenance when the authorization matrix pivot file is updated.
+    2. A clear indication, in case of failed test, of the source authorization combination that do not respect the authorization matrix.
 
-## Authorization matrix pivot file
+### Authorization matrix pivot file
 
 The XML format has been used to formalize the authorization matrix.
 
@@ -48,7 +50,7 @@ The XML structure contains 3 main sections:
 
 This is an example of the XML used to represents the authorization:
 
-*Placeholders (values between {}) are used to mark location where test value must be placed by the integration tests if needed*
+> Placeholders (values between {}) are used to mark location where test value must be placed by the integration tests if needed
 
 ``` xml
   <?xml version="1.0" encoding="UTF-8"?>
@@ -69,35 +71,35 @@ This is an example of the XML used to represents the authorization:
       provide a list+explanation
       of the different roles (authorization level) -->
       <roles>
-          <role name="ANONYMOUS" 
+          <role name="ANONYMOUS"
           description="Indicate that no authorization is needed"/>
-          <role name="BASIC" 
+          <role name="BASIC"
           description="Role affected to a standard user (lowest access right just above anonymous)"/>
-          <role name="ADMIN" 
+          <role name="ADMIN"
           description="Role affected to a administrator user (highest access right)"/>
       </roles>
 
       <!-- List and describe the available services exposed by the system and the associated 
       logical role(s) that can call them -->
       <services>
-          <service name="ReadSingleMessage" uri="/{messageId}" http-method="GET" 
+          <service name="ReadSingleMessage" uri="/{messageId}" http-method="GET"
           http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
               <role name="ANONYMOUS"/>
               <role name="BASIC"/>
               <role name="ADMIN"/>
           </service>
-          <service name="ReadAllMessages" uri="/" http-method="GET" 
+          <service name="ReadAllMessages" uri="/" http-method="GET"
           http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
               <role name="ANONYMOUS"/>
               <role name="BASIC"/>
               <role name="ADMIN"/>
           </service>
-          <service name="CreateMessage" uri="/" http-method="PUT" 
+          <service name="CreateMessage" uri="/" http-method="PUT"
           http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
               <role name="BASIC"/>
               <role name="ADMIN"/>
           </service>
-          <service name="DeleteMessage" uri="/{messageId}" http-method="DELETE" 
+          <service name="DeleteMessage" uri="/{messageId}" http-method="DELETE"
           http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
               <role name="ADMIN"/>
           </service>
@@ -124,7 +126,7 @@ This is an example of the XML used to represents the authorization:
   </authorization-matrix>
 ```
 
-## Integration tests
+### Integration tests
 
 Integration tests are implemented using a maximum of factorized code and one test case by **Point Of View (POV)** has been created in order to group the verifications by profile of access level (logical role) and facilitate the rendering/identification of the errors.
 
@@ -180,7 +182,7 @@ This the implementation of the integration tests case class:
        */
       @BeforeClass
       public static void globalInit() throws Exception {
-          try (FileInputStream fis = new FileInputStream(new File("authorization-matrix.xml"))) { 
+          try (FileInputStream fis = new FileInputStream(new File("authorization-matrix.xml"))) {
               SAXParserFactory spf = SAXParserFactory.newInstance();
               spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
               spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
@@ -375,26 +377,26 @@ This the implementation of the integration tests case class:
 
 In case of detection of a authorization issue(s) the output is the following:
 
-```
+```java
 testAccessUsingAnonymousUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  
 Time elapsed: 1.009 s  ### FAILURE
 java.lang.AssertionError:
 Access issues detected using the ANONYMOUS USER point of view:
-    The service 'DeleteMessage' when called with POV 'ANONYMOUS' return 
+    The service 'DeleteMessage' when called with POV 'ANONYMOUS' return
     a response code 200 that is not the expected one (403 expected).
-    
-    The service 'CreateMessage' when called with POV 'ANONYMOUS' return 
+
+    The service 'CreateMessage' when called with POV 'ANONYMOUS' return
     a response code 200 that is not the expected one (403 expected).
 
 testAccessUsingBasicUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  
 Time elapsed: 0.05 s  ### FAILURE!
 java.lang.AssertionError:
 Access issues detected using the BASIC USER point of view:
-    The service 'DeleteMessage' when called with POV 'BASIC' return 
+    The service 'DeleteMessage' when called with POV 'BASIC' return
     a response code 200 that is not the expected one (403 expected).
 ```
 
-# Rendering of the authorization matrix for audit / review
+## Rendering of the authorization matrix for audit / review
 
 Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.
 
@@ -407,9 +409,9 @@ The Following XSL stylesheet can be used:
     <html>
       <head>
         <title>Authorization Matrix</title>
-        <link rel="stylesheet" 
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" 
-        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" 
+        <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
         crossorigin="anonymous" />
       </head>
       <body>
@@ -508,6 +510,6 @@ Example of the rendering:
 
 ![RenderingExample](../assets/Authorization_Testing_Automation_AutomationRendering.png)
 
-# Sources of the prototype
+## Sources of the prototype
 
 [Github repository](https://github.com/righettod/poc-authz-testing)
