@@ -74,8 +74,8 @@ Your selected framework may limit the available choices. All types of applicatio
 This could be a centralized log collection and management system (e.g. SIEM or SEM) or another application elsewhere. Consider whether the application can simply send its event stream, unbuffered, to stdout, for management by the execution environment.
 
 - When using the file system, it is preferable to use a separate partition than those used by the operating system, other application files and user generated content
-  - For file-based logs, apply strict permissions concerning which users can access the directories, and the permissions of files within the directories
-  - In web applications, the logs should not be exposed in web-accessible locations, and if done so, should have restricted access and be configured with a plain text MIME type (not HTML)
+    - For file-based logs, apply strict permissions concerning which users can access the directories, and the permissions of files within the directories
+    - In web applications, the logs should not be exposed in web-accessible locations, and if done so, should have restricted access and be configured with a plain text MIME type (not HTML)
 - When using a database, it is preferable to utilize a separate database account that is only used for writing log data and which has very restrictive database , table, function and command permissions
 - Use standard formats over secure protocols to record and send event data, or log files, to other systems e.g. Common Log File System (CLFS) or Common Event Format (CEF) over syslog; standard formats facilitate integration with centralised logging services
 
@@ -118,24 +118,24 @@ The application logs must record "when, where, who and what" for each event.
 The properties for these will be different depending on the architecture, class of application and host system/device, but often include the following:
 
 - When
-  - Log date and time (international format)
-  - Event date and time - the event time stamp may be different to the time of logging e.g. server logging where the client application is hosted on remote device that is only periodically or intermittently online
-  - Interaction identifier `Note A`
+    - Log date and time (international format)
+    - Event date and time - the event time stamp may be different to the time of logging e.g. server logging where the client application is hosted on remote device that is only periodically or intermittently online
+    - Interaction identifier `Note A`
 - Where
-  - Application identifier e.g. name and version
-  - Application address e.g. cluster/host name or server IPv4 or IPv6 address and port number, workstation identity, local device identifier
-  - Service e.g. name and protocol
-  - Geolocation
-  - Window/form/page e.g. entry point URL and HTTP method for a web application, dialogue box name
-  - Code location e.g. script name, module name
+    - Application identifier e.g. name and version
+    - Application address e.g. cluster/host name or server IPv4 or IPv6 address and port number, workstation identity, local device identifier
+    - Service e.g. name and protocol
+    - Geolocation
+    - Window/form/page e.g. entry point URL and HTTP method for a web application, dialogue box name
+    - Code location e.g. script name, module name
 - Who (human or machine user)
-  - Source address e.g. user's device/machine identifier, user's IP address, cell/RF tower ID, mobile telephone number
-  - User identity (if authenticated or otherwise known) e.g. user database table primary key value, user name, license number
+    - Source address e.g. user's device/machine identifier, user's IP address, cell/RF tower ID, mobile telephone number
+    - User identity (if authenticated or otherwise known) e.g. user database table primary key value, user name, license number
 - What
-  - Type of event `Note B`
-  - Severity of event `Note B` e.g. `{0=emergency, 1=alert, ..., 7=debug}, {fatal, error, warning, info, debug, trace}`
-  - Security relevant event flag (if the logs contain non-security event data too)
-  - Description
+    - Type of event `Note B`
+    - Severity of event `Note B` e.g. `{0=emergency, 1=alert, ..., 7=debug}, {fatal, error, warning, info, debug, trace}`
+    - Security relevant event flag (if the logs contain non-security event data too)
+    - Description
 
 Additionally consider recording:
 

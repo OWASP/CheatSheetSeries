@@ -12,8 +12,8 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 - When posting a message, explicitly state the expected origin as the second argument to `postMessage` rather than `*` in order to prevent sending the message to an unknown origin after a redirect or some other means of the target window's origin changing.
 - The receiving page should **always**:
-  - Check the `origin` attribute of the sender to verify the data is originating from the expected location.
-  - Perform input validation on the `data` attribute of the event to ensure that it's in the desired format.
+    - Check the `origin` attribute of the sender to verify the data is originating from the expected location.
+    - Perform input validation on the `data` attribute of the event to ensure that it's in the desired format.
 - Don't assume you have control over the `data` attribute. A single [Cross Site Scripting](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) flaw in the sending page allows an attacker to send messages of any given format.
 - Both pages should only interpret the exchanged messages as **data**. Never evaluate passed messages as code (e.g. via `eval()`) or insert it to a page DOM (e.g. via `innerHTML`), as that would create a DOM-based XSS vulnerability. For more information see [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md).
 - To assign the data value to an element, instead of using a insecure method like `element.innerHTML=data;`, use the safer option: `element.textContent=data;`
@@ -90,8 +90,8 @@ To prevent this issue, the following actions are available:
 Cut the back link between the parent and the child pages:
 
 - For html link:
-  - To cut this back link, add the attribute `rel="noopener"` on the tag used to create the link from the parent page to the child page. This attribute value cuts the link, but depending on the browser, lets referrer information be present in the request to the child page.
-  - To also remove the referrer information use this attribute value: `rel="noopener noreferrer"`.
+    - To cut this back link, add the attribute `rel="noopener"` on the tag used to create the link from the parent page to the child page. This attribute value cuts the link, but depending on the browser, lets referrer information be present in the request to the child page.
+    - To also remove the referrer information use this attribute value: `rel="noopener noreferrer"`.
 - For javascript `window.open` function, add the values `noopener,noreferrer` in the [windowFeatures](https://developer.mozilla.org/en-US/docs/Web/API/Window/open) parameter of the `window.open` function.
 
 As the behavior using the elements above is different between the browsers, either use html link or javascript to open a window (or tab), then use this configuration to maximize the cross supports:

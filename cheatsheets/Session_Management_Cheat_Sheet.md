@@ -103,7 +103,7 @@ Additionally, the `Secure` [cookie attribute](https://developer.mozilla.org/en-U
 The following set of best practices are focused on protecting the session ID (specifically when cookies are used) and helping with the integration of HTTPS within the web application:
 
 - Do not switch a given session from HTTP to HTTPS, or vice-versa, as this will disclose the session ID in the clear through the network.
-  - When redirecting to HTTPS, ensure that the cookie is set or regenerated **after** the redirect has occurred.
+    - When redirecting to HTTPS, ensure that the cookie is set or regenerated **after** the redirect has occurred.
 - Do not mix encrypted and unencrypted contents (HTML pages, images, CSS, JavaScript files, etc) in the same page, or from the same domain.
 - Where possible, avoid offering public unencrypted contents and private encrypted contents from the same host. Where insecure content is required, consider hosting this on a separate insecure domain.
 - Implement [HTTP Strict Transport Security (HSTS)](HTTP_Strict_Transport_Security_Cheat_Sheet.md) to enforce HTTPS connections.

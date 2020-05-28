@@ -219,14 +219,14 @@ docker run --mount source=volume-name,destination=/path/in/container,readonly al
 To detect containers with known vulnerabilities - scan images using static analysis tools.
 
 - Free
-  - [Clair](https://github.com/coreos/clair)
-  - [Trivy](https://github.com/knqyf263/trivy)
+    - [Clair](https://github.com/coreos/clair)
+    - [Trivy](https://github.com/knqyf263/trivy)
 - Commercial
-  - [Snyk](https://snyk.io/) **(open source and free option available)**
-  - [anchore](https://anchore.com/opensource/) **(open source and free option available)**
-  - [Aqua Security's MicroScanner](https://github.com/aquasecurity/microscanner) **(free option available for rate-limited number of scans)**
-  - [JFrog XRay](https://jfrog.com/xray/)
-  - [Qualys](https://www.qualys.com/apps/container-security/)
+    - [Snyk](https://snyk.io/) **(open source and free option available)**
+    - [anchore](https://anchore.com/opensource/) **(open source and free option available)**
+    - [Aqua Security's MicroScanner](https://github.com/aquasecurity/microscanner) **(free option available for rate-limited number of scans)**
+    - [JFrog XRay](https://jfrog.com/xray/)
+    - [Qualys](https://www.qualys.com/apps/container-security/)
 
 To detect misconfigurations in Kubernetes:
 
