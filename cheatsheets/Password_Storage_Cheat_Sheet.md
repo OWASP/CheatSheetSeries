@@ -14,24 +14,24 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 ## Contents
 
 - [Background](#background)
-  - [Hashing vs Encryption](#hashing-vs-encryption)
-  - [How Attackers Crack Password Hashes](#how-attackers-crack-password-hashes)
+    - [Hashing vs Encryption](#hashing-vs-encryption)
+    - [How Attackers Crack Password Hashes](#how-attackers-crack-password-hashes)
 - [Hashing Concepts](#hashing-concepts)
-  - [Salting](#salting)
-  - [Peppering](#peppering)
-    - [Disadvantages](#disadvantages)
-  - [Work Factors](#work-factors)
-    - [Upgrading the Work Factor](#upgrading-the-work-factor)
-  - [Maximum Password Lengths](#maximum-password-lengths)
-    - [Pre-Hashing Passwords](#pre-hashing-passwords)
+    - [Salting](#salting)
+    - [Peppering](#peppering)
+        - [Disadvantages](#disadvantages)
+    - [Work Factors](#work-factors)
+        - [Upgrading the Work Factor](#upgrading-the-work-factor)
+    - [Maximum Password Lengths](#maximum-password-lengths)
+        - [Pre-Hashing Passwords](#pre-hashing-passwords)
 - [Password Hashing Algorithms](#password-hashing-algorithms)
-  - [Modern Algorithms](#modern-algorithms)
-    - [Argon2id](#argon2id)
-    - [PBKDF2](#pbkdf2)
-    - [Bcrypt](#bcrypt)
-  - [Legacy Algorithms](#legacy-algorithms)
-  - [Upgrading Legacy Hashes](#upgrading-legacy-hashes)
-  - [Custom Algorithms](#custom-algorithms)
+    - [Modern Algorithms](#modern-algorithms)
+        - [Argon2id](#argon2id)
+        - [PBKDF2](#pbkdf2)
+        - [Bcrypt](#bcrypt)
+    - [Legacy Algorithms](#legacy-algorithms)
+    - [Upgrading Legacy Hashes](#upgrading-legacy-hashes)
+    - [Custom Algorithms](#custom-algorithms)
 
 ## Background
 
@@ -85,10 +85,10 @@ Salting also provides protection against an attacker pre-computing hashes using 
 [Modern hashing algorithms](#modern-algorithms) such as Argon2 or Bcrypt automatically salt the passwords, so no additional steps are required when using them. However, if you are using a [legacy password hashing algorithm](#legacy-algorithms) then salting needs to be implemented manually. The basic steps to perform this are:
 
 - Generate a salt using a [cryptographically secure function](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
-  - The salt should be at least 16 characters long.
-  - Encode the salt into a safe character set such as hexadecimal or Base64.
+    - The salt should be at least 16 characters long.
+    - Encode the salt into a safe character set such as hexadecimal or Base64.
 - Combine the salt with the password.
-  - This can be done using simple concatenation, or a construct such as a HMAC.
+    - This can be done using simple concatenation, or a construct such as a HMAC.
 - Hash the combined password and salt.
 - Store the salt and the password hash.
 

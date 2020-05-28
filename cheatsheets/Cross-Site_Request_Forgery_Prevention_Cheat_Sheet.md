@@ -9,46 +9,46 @@ The impact of a successful CSRF attack is limited to the capabilities exposed by
 In short, the following principles should be followed to defend against CSRF:
 
 - **Check if your framework has [built-in CSRF protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
-  - **If framework does not have built-in CSRF protection add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on backend**
+    - **If framework does not have built-in CSRF protection add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on backend**
 - **Always use [SameSite Cookie Attribute](#samesite-cookie-attribute) for session cookies**
 - **Implement at least one mitigation from [Defense in Depth Mitigations](#defense-in-depth-techniques) section**
-  - **[Use custom request headers](#use-of-custom-request-headers)**
-  - **[Verify the origin with standard headers](#verifying-origin-with-standard-headers)**
-  - **[Use double submit cookies](#double-submit-cookie)**
+    - **[Use custom request headers](#use-of-custom-request-headers)**
+    - **[Verify the origin with standard headers](#verifying-origin-with-standard-headers)**
+    - **[Use double submit cookies](#double-submit-cookie)**
 - **Consider implementing [user interaction based protection](#user-interaction-based-csrf-defense) for highly sensitive operations**
 - **Remember that any Cross-Site Scripting (XSS) can be used to defeat all CSRF mitigation techniques!**
-  - **See the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.**
+    - **See the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.**
 - **Do not use GET requests for state changing operations.**
-  - **If for any reason you do it, you have to also protect those resources against CSRF**
+    - **If for any reason you do it, you have to also protect those resources against CSRF**
 
 ## Contents
 
 - [Token Based Mitigation](#token-based-mitigation)
-  - [Use Build-In Or Existing CSRF Implementations for CSRF Protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection)
-  - [Synchronizer Token Pattern](#synchronizer-token-pattern)
-  - [Encryption based Token Pattern](#encryption-based-token-pattern)
-  - [HMAC Based Token Pattern](#hmac-based-token-pattern)
+    - [Use Build-In Or Existing CSRF Implementations for CSRF Protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection)
+    - [Synchronizer Token Pattern](#synchronizer-token-pattern)
+    - [Encryption based Token Pattern](#encryption-based-token-pattern)
+    - [HMAC Based Token Pattern](#hmac-based-token-pattern)
 - [Defense In Depth Techniques](#defense-in-depth-techniques)
-  - [SameSite Cookie Attribute](#samesite-cookie-attribute)
-  - [Verifying Origin With Standard Headers](#verifying-origin-with-standard-headers)
-    - [Identifying Source Origin (via Origin/Referer header)](#identifying-source-origin--via-origin-referer-header-)
-    - [Identifying the Target Origin](#identifying-the-target-origin)
-  - [Double Submit Cookie](#double-submit-cookie)
-    - [Cookie with __Host- prefix](#cookie-with---host--prefix)
-  - [Use of Custom Request Headers](#use-of-custom-request-headers)
-  - [User Interaction Based CSRF Defense](#user-interaction-based-csrf-defense)
+    - [SameSite Cookie Attribute](#samesite-cookie-attribute)
+    - [Verifying Origin With Standard Headers](#verifying-origin-with-standard-headers)
+        - [Identifying Source Origin (via Origin/Referer header)](#identifying-source-origin--via-origin-referer-header-)
+        - [Identifying the Target Origin](#identifying-the-target-origin)
+    - [Double Submit Cookie](#double-submit-cookie)
+        - [Cookie with __Host- prefix](#cookie-with---host--prefix)
+    - [Use of Custom Request Headers](#use-of-custom-request-headers)
+    - [User Interaction Based CSRF Defense](#user-interaction-based-csrf-defense)
 - [Login CSRF](#login-csrf)
 - [Java Reference Example](#java-reference-example)
 - [JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header](#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header)
-  - [Storing the CSRF Token Value in the DOM](#storing-the-csrf-token-value-in-the-dom)
-  - [Overriding Defaults to Set Custom Header](#overriding-defaults-to-set-custom-header)
-    - [XMLHttpRequest (Native JavaScript)](#xmlhttprequest--native-javascript-)
-    - [AngularJS](#angularjs)
-    - [Axios](#axios)
-    - [JQuery](#jquery)
+    - [Storing the CSRF Token Value in the DOM](#storing-the-csrf-token-value-in-the-dom)
+    - [Overriding Defaults to Set Custom Header](#overriding-defaults-to-set-custom-header)
+        - [XMLHttpRequest (Native JavaScript)](#xmlhttprequest--native-javascript-)
+        - [AngularJS](#angularjs)
+        - [Axios](#axios)
+        - [JQuery](#jquery)
 - [References](#references)
-  - [CSRF](#csrf)
-  - [Cookie Prefixes](#cookie-prefixes)
+    - [CSRF](#csrf)
+    - [Cookie Prefixes](#cookie-prefixes)
 
 ## Token Based Mitigation
 

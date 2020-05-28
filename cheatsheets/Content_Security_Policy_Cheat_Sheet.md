@@ -43,9 +43,9 @@ Fetch directives tell the browser the locations to trust and load resources from
 Most fetch directives have a certain [fallback list specified in w3](https://www.w3.org/TR/CSP3/#directive-fallback-list). This list allows for granular control of the source of scripts, images, files, etc.
 
 - `child-src` allows the developer to control nested browsing contexts and worker execution contexts.
-  - According to [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Fetch_directives), the below 2 directives should be used to regulate nested browsing context and workers as `child-src` will be deprecated in the coming versions.
-  - `frame-src` specifies the URLs which can be loaded into nested browsing contexts (*e.g.* `<iframe>`).
-  - `worker-src` specifies the URLs which can be loaded as worker, sharedworker, or serviceworker. Fallback's on `script-src` too.
+    - According to [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Fetch_directives), the below 2 directives should be used to regulate nested browsing context and workers as `child-src` will be deprecated in the coming versions.
+    - `frame-src` specifies the URLs which can be loaded into nested browsing contexts (*e.g.* `<iframe>`).
+    - `worker-src` specifies the URLs which can be loaded as worker, sharedworker, or serviceworker. Fallback's on `script-src` too.
 - `connect-src` provides control over fetch requests, XHR, eventsource, beacon and websockets connections.
 - `font-src` specifies which URLs to load fonts from.
 - `img-src` specifies the URLs that images can be loaded from.
@@ -54,11 +54,11 @@ Most fetch directives have a certain [fallback list specified in w3](https://www
 - `prefetch-src` specifies the URLs from which resources can be prefetched from.
 - `object-src` specifies the URLs from which plugins can be loaded from.
 - `script-src` specifies the locations from which a script can be executed from. It is a fallback directive for other script-like directives.
-  - `script-src-elem` controls the location from which execution of script requests and blocks can occur.
-  - `script-src-attr` controls the execution of event handlers.
+    - `script-src-elem` controls the location from which execution of script requests and blocks can occur.
+    - `script-src-attr` controls the execution of event handlers.
 - `style-src` controls from where styles get applied to a document. This includes `<link>` elements, `@import` rules, and requests originating from a `Link` HTTP response header field.
-  - `style-src-elem` controls styles except for inline attributes.
-  - `style-src-attr` controls styles attributes.
+    - `style-src-elem` controls styles except for inline attributes.
+    - `style-src-attr` controls styles attributes.
 - `default-src` is a fallback directive for the other fetch directives. Directives that are specified have no inheritance, yet directives that are not specified will fall back to the value of `default-src`.
 
 ### Document Directives
@@ -67,13 +67,13 @@ Document directives instruct the browser about the properties of the document to
 
 - `base-uri` specifies the possible URLs that the `<base>` element can use.
 - `plugin-types` limits the types of resources that can be loaded into the document (*e.g.* application/pdf). 3 rules apply to the affected elements, `<embed>` and `<object>`:
-  - The element needs to explicitly declare its type.
-  - The element's type needs to match the declared type.
-  - The element's resource need to match the declared type.
+    - The element needs to explicitly declare its type.
+    - The element's type needs to match the declared type.
+    - The element's resource need to match the declared type.
 - `sandbox` restricts a page's actions such as submitting forms.
-  - Only applies when used with the request header `Content-Security-Policy`.
-  - Not specifying a value for the directive activates all of the sandbox restrictions. `Content-Security-Policy: sandbox;`
-  - [Sandbox syntax](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/sandbox#Syntax)
+    - Only applies when used with the request header `Content-Security-Policy`.
+    - Not specifying a value for the directive activates all of the sandbox restrictions. `Content-Security-Policy: sandbox;`
+    - [Sandbox syntax](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/sandbox#Syntax)
 
 ### Navigation Directives
 
@@ -82,18 +82,18 @@ Navigation directives instruct the browser about the locations that the document
 - `navigate-to` restricts the URLs which a document can navigate to by any mean.
 - `form-action` restricts the URLs which the forms can submit to.
 - `frame-ancestors` restricts the URLs that can embed the requested resource inside of  `<frame>`, `<iframe>`, `<object>`, `<embed>`, or `<applet>` elements.
-  - If this directive is specified in a `<meta>` tag, the directive is ignored.
-  - This directive doesn't fallback to `default-src` directive.
-  - `X-Frame-Options` is rendered obsolete by this directive and is ignored by the user agents.
+    - If this directive is specified in a `<meta>` tag, the directive is ignored.
+    - This directive doesn't fallback to `default-src` directive.
+    - `X-Frame-Options` is rendered obsolete by this directive and is ignored by the user agents.
 
 ### Reporting Directives
 
 Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
 
 - `report-to` which is a groupname defined in the header in a json formatted header value.
-  - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)
+    - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)
 - `report-uri` directive is deprecated by `report-to`, which is a URI that the reports are sent to.
-  - Goes by the format of: `Content-Security-Policy: report-uri https://example.com/csp-reports`
+    - Goes by the format of: `Content-Security-Policy: report-uri https://example.com/csp-reports`
 
 In order to ensure backward compatibility, use the 2 directives in conjunction. Whenever a browser supports `report-to`, it will ignore `report-uri`. Otherwise, `report-uri` will be used.
 
@@ -146,22 +146,22 @@ This policy allows images, scripts, AJAX, and CSS from the same origin, and does
 
 - In order to prevent mixed content (resources being loaded over http, from a document loaded over https), one can use the [block-all-mixed-content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/block-all-mixed-content) directive to block mixed content.
 
-  - `Content-Security-Policy: block-all-mixed-content;`
+    - `Content-Security-Policy: block-all-mixed-content;`
 
 - On the other hand, if the developer is migrating from HTTP to HTTPS, the following directive will ensure that all requests will be sent over HTTPS with no fallback to HTTP:
 
-  - `Content-Security-Policy: upgrade-insecure-requests;`
+    - `Content-Security-Policy: upgrade-insecure-requests;`
 
 If the [upgrade-insecure-requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests) is set, the `block-all-mixed-content` is rendered meaningless and should be removed.
 
 ### Preventing ClickJacking
 
 - To prevent all framing of your content use:
-  - `Content-Security-Policy: frame-ancestors 'none';`
+    - `Content-Security-Policy: frame-ancestors 'none';`
 - To allow for the site itself, use:
-  - `Content-Security-Policy: frame-ancestors 'self';`
+    - `Content-Security-Policy: frame-ancestors 'self';`
 - To allow for trusted domain, do the following:
-  - `Content-Security-Policy: frame-ancestors trusted.com;`
+    - `Content-Security-Policy: frame-ancestors trusted.com;`
 
 ### Strict Policy
 

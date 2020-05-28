@@ -288,11 +288,11 @@ If the application knows before deserialization which messages will need to be p
 - [Payload generator](https://github.com/mbechler/marshalsec)
 - [Android Java Deserialization Vulnerability Tester](https://github.com/modzero/modjoda)
 - Burp Suite Extension
-  - [JavaSerialKiller](https://github.com/NetSPI/JavaSerialKiller)
-  - [Java Deserialization Scanner](https://github.com/federicodotta/Java-Deserialization-Scanner)
-  - [Burp-ysoserial](https://github.com/summitt/burp-ysoserial)
-  - [SuperSerial](https://github.com/DirectDefense/SuperSerial)
-  - [SuperSerial-Active](https://github.com/DirectDefense/SuperSerial-Active)
+    - [JavaSerialKiller](https://github.com/NetSPI/JavaSerialKiller)
+    - [Java Deserialization Scanner](https://github.com/federicodotta/Java-Deserialization-Scanner)
+    - [Burp-ysoserial](https://github.com/summitt/burp-ysoserial)
+    - [SuperSerial](https://github.com/DirectDefense/SuperSerial)
+    - [SuperSerial-Active](https://github.com/DirectDefense/SuperSerial-Active)
 
 ## References
 
@@ -311,13 +311,13 @@ If the application knows before deserialization which messages will need to be p
 - [Payload generator](https://github.com/mbechler/marshalsec)
 - [Android Java Deserialization Vulnerability Tester](https://github.com/modzero/modjoda)
 - Burp Suite Extension
-  - [JavaSerialKiller](https://github.com/NetSPI/JavaSerialKiller)
-  - [Java Deserialization Scanner](https://github.com/federicodotta/Java-Deserialization-Scanner)
-  - [Burp-ysoserial](https://github.com/summitt/burp-ysoserial)
-  - [SuperSerial](https://github.com/DirectDefense/SuperSerial)
-  - [SuperSerial-Active](https://github.com/DirectDefense/SuperSerial-Active)
+    - [JavaSerialKiller](https://github.com/NetSPI/JavaSerialKiller)
+    - [Java Deserialization Scanner](https://github.com/federicodotta/Java-Deserialization-Scanner)
+    - [Burp-ysoserial](https://github.com/summitt/burp-ysoserial)
+    - [SuperSerial](https://github.com/DirectDefense/SuperSerial)
+    - [SuperSerial-Active](https://github.com/DirectDefense/SuperSerial-Active)
 - .Net
-  - [Alvaro Muñoz: .NET Serialization: Detecting and defending vulnerable endpoints](https://www.youtube.com/watch?v=qDoBlLwREYk)
-  - [James Forshaw - Black Hat USA 2012 - Are You My Type? Breaking .net Sandboxes Through Serialization](https://www.youtube.com/watch?v=Xfbu-pQ1tIc)
-  - [Jonathan Birch BlueHat v17 - Dangerous Contents - Securing .Net Deserialization](https://www.youtube.com/watch?v=oxlD8VWWHE8)
-  - [Alvaro Muñoz & Oleksandr Mirosh - Friday the 13th: Attacking JSON - AppSecUSA 2017](https://www.youtube.com/watch?v=NqHsaVhlxAQ)
+    - [Alvaro Muñoz: .NET Serialization: Detecting and defending vulnerable endpoints](https://www.youtube.com/watch?v=qDoBlLwREYk)
+    - [James Forshaw - Black Hat USA 2012 - Are You My Type? Breaking .net Sandboxes Through Serialization](https://www.youtube.com/watch?v=Xfbu-pQ1tIc)
+    - [Jonathan Birch BlueHat v17 - Dangerous Contents - Securing .Net Deserialization](https://www.youtube.com/watch?v=oxlD8VWWHE8)
+    - [Alvaro Muñoz & Oleksandr Mirosh - Friday the 13th: Attacking JSON - AppSecUSA 2017](https://www.youtube.com/watch?v=NqHsaVhlxAQ)

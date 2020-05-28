@@ -99,7 +99,7 @@ Additionally, when creating the certificate, the following should be taken into 
 - Do not include non-qualified hostnames.
 - Do not include IP addresses.
 - Do not include internal domain names on externally facing certificates.
-  - If a server is accessible using both internal and external FQDNs, configure it with multiple certificates.
+    - If a server is accessible using both internal and external FQDNs, configure it with multiple certificates.
 
 ### Carefully Consider the use of Wildcard Certificates
 
@@ -110,12 +110,12 @@ The issues around the use of wildcard certificates are complicated, and there ar
 When risk assessing the use of wildcard certificates, the following areas should be considered:
 
 - Only use wildcard certificates where there is a genuine need, rather than for convenience.
-  - Consider the use of the [ACME](https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment) to allow systems to automatically request and update their own certificates instead.
+    - Consider the use of the [ACME](https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment) to allow systems to automatically request and update their own certificates instead.
 - Never use a wildcard certificates for systems at different trust levels.
-  - Two VPN gateways could use a shared wildcard certificate.
-  - Multiple instances of a web application could share a certificate.
-  - A VPN gateway and a public webserver **should not** share a wildcard certificate.
-  - A public webserver and an internal server **should not** share a wildcard certificate.
+    - Two VPN gateways could use a shared wildcard certificate.
+    - Multiple instances of a web application could share a certificate.
+    - A VPN gateway and a public webserver **should not** share a wildcard certificate.
+    - A public webserver and an internal server **should not** share a wildcard certificate.
 - Consider the use of a reverse proxy server which performs TLS termination, so that the wildcard private key is only present on one system.
 - A list of all systems sharing a certificate should be maintained to allow them all to be updated if the certificate expires or is compromised.
 - Limit the scope of a wildcard certificate by issuing it for a subdomain (such as `*.foo.example.org`), or a for a separate domain.
@@ -190,7 +190,7 @@ In a typical configuration, TLS is used with a certificate on the server so that
 
 - The server does not have any mechanism to verify the identity of the client
 - The connection can be intercepted by an attacker who is able to obtain a valid certificate for the domain.
-  - This is most commonly used by businesses to carry out inspection of TLS traffic by installing a trusted CA certificate on there client systems.
+    - This is most commonly used by businesses to carry out inspection of TLS traffic by installing a trusted CA certificate on there client systems.
 
 Client certificates address both of these issues by requiring that the client proves their identity to the server with their own certificate. This not only provides strong authentication of the identity of the client, but also prevents an intermediate party from performing TLS decryption, even if they have trusted CA certificate on the client system.
 
