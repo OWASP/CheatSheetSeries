@@ -5,7 +5,9 @@ google_analytics: ['UA-4531126-15', 'auto']
 use_directory_urls: false
 plugins:
     - search:
-        prebuild_index: true
+#        prebuild_index: true
+        lang:
+            - en
 #For read the docs       
 # theme:
 #     name: readthedocs
