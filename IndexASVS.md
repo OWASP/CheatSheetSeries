@@ -1,19 +1,16 @@
 # ASVS Index
-<!-- Generated with "https://ecotrust-canada.github.io/markdown-toc/" -->
 
 ## Table of Contents
 
-- [ASVS Index](#asvs-index)
-  - [Table of Contents](#table-of-contents)
-  - [Objective](#objective)
-  - [V1: Architecture, Design and Threat Modeling Requirements](#v1-architecture-design-and-threat-modeling-requirements)
+- [Objective](#objective)
+- [V1: Architecture, Design and Threat Modeling Requirements](#v1--architecture--design-and-threat-modeling-requirements)
     - [V1.1 Secure Software Development Lifecycle Requirements](#v11-secure-software-development-lifecycle-requirements)
     - [V1.2 Authentication Architectural Requirements](#v12-authentication-architectural-requirements)
     - [V1.3 Session Management Architectural Requirements](#v13-session-management-architectural-requirements)
     - [V1.4 Access Control Architectural Requirements](#v14-access-control-architectural-requirements)
     - [V1.5 Input and Output Architectural Requirements](#v15-input-and-output-architectural-requirements)
     - [V1.6 Cryptographic Architectural Requirements](#v16-cryptographic-architectural-requirements)
-    - [V1.7 Errors, Logging and Auditing Architectural Requirements](#v17-errors-logging-and-auditing-architectural-requirements)
+    - [V1.7 Errors, Logging and Auditing Architectural Requirements](#v17-errors--logging-and-auditing-architectural-requirements)
     - [V1.8 Data Protection and Privacy Architectural Requirements](#v18-data-protection-and-privacy-architectural-requirements)
     - [V1.9 Communications Architectural Requirements](#v19-communications-architectural-requirements)
     - [V1.10 Malicious Software Architectural Requirements](#v110-malicious-software-architectural-requirements)
@@ -21,7 +18,7 @@
     - [V1.12 Secure File Upload Architectural Requirements](#v112-secure-file-upload-architectural-requirements)
     - [V1.13 API Architectural Requirements](#v113-api-architectural-requirements)
     - [V1.14 Configuration Architectural Requirements](#v114-configuration-architectural-requirements)
-  - [V2: Authentication Verification Requirements](#v2-authentication-verification-requirements)
+- [V2: Authentication Verification Requirements](#v2--authentication-verification-requirements)
     - [V2.1 Password Security Requirements](#v21-password-security-requirements)
     - [V2.2 General Authenticator Requirements](#v22-general-authenticator-requirements)
     - [V2.3 Authenticator Lifecycle Requirements](#v23-authenticator-lifecycle-requirements)
@@ -32,7 +29,7 @@
     - [V2.8 Single or Multi Factor One Time Verifier Requirements](#v28-single-or-multi-factor-one-time-verifier-requirements)
     - [V2.9 Cryptographic Software and Devices Verifier Requirements](#v29-cryptographic-software-and-devices-verifier-requirements)
     - [V2.10 Service Authentication Requirements](#v210-service-authentication-requirements)
-  - [V3: Session Management Verification Requirements](#v3-session-management-verification-requirements)
+- [V3: Session Management Verification Requirements](#v3--session-management-verification-requirements)
     - [V3.1 Fundamental Session Management Requirements](#v31-fundamental-session-management-requirements)
     - [V3.2 Session Binding Requirements](#v32-session-binding-requirements)
     - [V3.3 Session Logout and Timeout Requirements](#v33-session-logout-and-timeout-requirements)
@@ -40,52 +37,52 @@
     - [V3.5 Token-based Session Management](#v35-token-based-session-management)
     - [V3.6 Re-authentication from a Federation or Assertion](#v36-re-authentication-from-a-federation-or-assertion)
     - [V3.7 Defenses Against Session Management Exploits](#v37-defenses-against-session-management-exploits)
-  - [V4: Access Control Verification Requirements](#v4-access-control-verification-requirements)
+- [V4: Access Control Verification Requirements](#v4--access-control-verification-requirements)
     - [V4.1 General Access Control Design](#v41-general-access-control-design)
     - [V4.2 Operation Level Access Control](#v42-operation-level-access-control)
     - [V4.3 Other Access Control Considerations](#v43-other-access-control-considerations)
-  - [V5: Validation, Sanitization and Encoding Verification Requirements](#v5-validation-sanitization-and-encoding-verification-requirements)
+- [V5: Validation, Sanitization and Encoding Verification Requirements](#v5--validation--sanitization-and-encoding-verification-requirements)
     - [V5.1 Input Validation Requirements](#v51-input-validation-requirements)
     - [V5.2 Sanitization and Sandboxing Requirements](#v52-sanitization-and-sandboxing-requirements)
     - [V5.3 Output encoding and Injection Prevention Requirements](#v53-output-encoding-and-injection-prevention-requirements)
-    - [V5.4 Memory, String, and Unmanaged Code Requirements](#v54-memory-string-and-unmanaged-code-requirements)
+    - [V5.4 Memory, String, and Unmanaged Code Requirements](#v54-memory--string--and-unmanaged-code-requirements)
     - [V5.5 Deserialization Prevention Requirements](#v55-deserialization-prevention-requirements)
-  - [V6: Stored Cryptography Verification Requirements](#v6-stored-cryptography-verification-requirements)
+- [V6: Stored Cryptography Verification Requirements](#v6--stored-cryptography-verification-requirements)
     - [V6.1 Data Classification](#v61-data-classification)
     - [V6.2 Algorithms](#v62-algorithms)
     - [V6.3 Random Values](#v63-random-values)
     - [V6.4 Secret Management](#v64-secret-management)
-  - [V7: Error Handling and Logging Verification Requirements](#v7-error-handling-and-logging-verification-requirements)
+- [V7: Error Handling and Logging Verification Requirements](#v7--error-handling-and-logging-verification-requirements)
     - [V7.1 Log Content Requirements](#v71-log-content-requirements)
     - [V7.2 Log Processing Requirements](#v72-log-processing-requirements)
     - [V7.3 Log Protection Requirements](#v73-log-protection-requirements)
     - [V7.4 Error Handling](#v74-error-handling)
-  - [V8: Data Protection Verification Requirements](#v8-data-protection-verification-requirements)
+- [V8: Data Protection Verification Requirements](#v8--data-protection-verification-requirements)
     - [V8.1 General Data Protection](#v81-general-data-protection)
     - [V8.2 Client-side Data Protection](#v82-client-side-data-protection)
     - [V8.3 Sensitive Private Data](#v83-sensitive-private-data)
-  - [V9: Communications Verification Requirements](#v9-communications-verification-requirements)
+- [V9: Communications Verification Requirements](#v9--communications-verification-requirements)
     - [V9.1 Communications Security Requirements](#v91-communications-security-requirements)
     - [V9.2 Server Communications Security Requirements](#v92-server-communications-security-requirements)
-  - [V10: Malicious Code Verification Requirements](#v10-malicious-code-verification-requirements)
+- [V10: Malicious Code Verification Requirements](#v10--malicious-code-verification-requirements)
     - [V10.1 Code Integrity Controls](#v101-code-integrity-controls)
     - [V10.2 Malicious Code Search](#v102-malicious-code-search)
     - [V10.3 Deployed Application Integrity Controls](#v103-deployed-application-integrity-controls)
-  - [V11: Business Logic Verification Requirements](#v11-business-logic-verification-requirements)
+- [V11: Business Logic Verification Requirements](#v11--business-logic-verification-requirements)
     - [V11.1 Business Logic Security Requirements](#v111-business-logic-security-requirements)
-  - [V12: File and Resources Verification Requirements](#v12-file-and-resources-verification-requirements)
+- [V12: File and Resources Verification Requirements](#v12--file-and-resources-verification-requirements)
     - [V12.1 File Upload Requirements](#v121-file-upload-requirements)
     - [V12.2 File Integrity Requirements](#v122-file-integrity-requirements)
     - [V12.3 File execution Requirements](#v123-file-execution-requirements)
     - [V12.4 File Storage Requirements](#v124-file-storage-requirements)
     - [V12.5 File Download Requirements](#v125-file-download-requirements)
     - [V12.6 SSRF Protection Requirements](#v126-ssrf-protection-requirements)
-  - [V13: API and Web Service Verification Requirements](#v13-api-and-web-service-verification-requirements)
+- [V13: API and Web Service Verification Requirements](#v13--api-and-web-service-verification-requirements)
     - [V13.1 Generic Web Service Security Verification Requirements](#v131-generic-web-service-security-verification-requirements)
     - [V13.2 RESTful Web Service Verification Requirements](#v132-restful-web-service-verification-requirements)
     - [V13.3 SOAP Web Service Verification Requirements](#v133-soap-web-service-verification-requirements)
     - [V13.4 GraphQL and other Web Service Data Layer Security Requirements](#v134-graphql-and-other-web-service-data-layer-security-requirements)
-  - [V14: Configuration Verification Requirements](#v14-configuration-verification-requirements)
+- [V14: Configuration Verification Requirements](#v14--configuration-verification-requirements)
     - [V14.1 Build](#v141-build)
     - [V14.2 Dependency](#v142-dependency)
     - [V14.3 Unintended Security Disclosure Requirements](#v143-unintended-security-disclosure-requirements)
@@ -246,7 +243,7 @@ None.
 
 ### V3.5 Token-based Session Management
 
-[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md).
+[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md).
 
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md).
 
@@ -266,7 +263,7 @@ None.
 
 [Access Control Cheat Sheet](cheatsheets/Access_Control_Cheat_Sheet.md).
 
-[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md).
+[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md).
 
 ### V4.2 Operation Level Access Control
 
@@ -274,7 +271,7 @@ None.
 
 [Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md).
 
-[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md).
+[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md).
 
 ### V4.3 Other Access Control Considerations
 
@@ -308,7 +305,7 @@ None.
 
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md).
 
-[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md).
+[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md).
 
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md).
 
@@ -316,7 +313,7 @@ None.
 
 [OS Command Injection Defense Cheat Sheet](cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md).
 
-[Protect File Upload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md).
+[Protect File Upload Against Malicious File](cheatsheets/File_Upload_Cheat_Sheet.md).
 
 [Query Parameterization Cheat Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md).
 
@@ -434,11 +431,11 @@ None.
 
 ### V12.1 File Upload Requirements
 
-[Protect File Upload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md).
+[Protect File Upload Against Malicious File](cheatsheets/File_Upload_Cheat_Sheet.md).
 
 ### V12.2 File Integrity Requirements
 
-[Protect File Upload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md).
+[Protect File Upload Against Malicious File](cheatsheets/File_Upload_Cheat_Sheet.md).
 
 [Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md).
 
