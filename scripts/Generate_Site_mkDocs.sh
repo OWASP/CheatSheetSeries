@@ -24,7 +24,7 @@ python Generate_RSS_Feed.py
 echo "Step 3/7: Create the expected MkDocs folder structure."
 
 cp ../mkdocs.yml $WORK/.
-cp ../Preface.md $WORK/cheatsheets/Index.md
+cp ../Preface.md $WORK/cheatsheets/index.md
 mv News.xml $WORK/cheatsheets/.
 cp -r ../cheatsheets $WORK/cheatsheets/cheatsheets
 cp -r ../assets $WORK/cheatsheets/assets
@@ -41,7 +41,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OSX
     sed -i '' "1i\\
         Title: Introduction\\
-        " $WORK/cheatsheets/Index.md
+        " $WORK/cheatsheets/index.md
     sed -i '' 's/Index.md/Glossary.md/g' $WORK/cheatsheets/Glossary.md
     sed -i '' "1i\\
         Title: Index Alphabetical\\
@@ -54,7 +54,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         " $WORK/cheatsheets/IndexProactiveControls.md
 
 else
-    sed -i "1iTitle: Introduction\n" $WORK/cheatsheets/Index.md
+    sed -i "1iTitle: Introduction\n" $WORK/cheatsheets/index.md
     sed -i 's/Index.md/Glossary.md/g' $WORK/cheatsheets/Glossary.md
     sed -i "1iTitle: Index Alphabetical\n" $WORK/cheatsheets/Glossary.md
     sed -i "1iTitle: Index ASVS\n" $WORK/cheatsheets/IndexASVS.md
