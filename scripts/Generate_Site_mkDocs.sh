@@ -24,11 +24,11 @@ python Generate_RSS_Feed.py
 echo "Step 3/7: Create the expected MkDocs folder structure."
 
 cp ../mkdocs.yml $WORK/.
-cp ../Preface.md $WORK/cheatsheets/index.md
+cp ../Preface.md $WORK/cheatsheets/Index.md
 mv News.xml $WORK/cheatsheets/.
 cp -r ../cheatsheets $WORK/cheatsheets/cheatsheets
 cp -r ../assets $WORK/cheatsheets/assets
-cp ../Index.md $WORK/cheatsheets/glossary.md
+cp ../Index.md $WORK/cheatsheets/Glossary.md
 cp ../IndexASVS.md $WORK/cheatsheets/IndexASVS.md
 cp ../IndexProactiveControls.md $WORK/cheatsheets/IndexProactiveControls.md
 
@@ -42,10 +42,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     sed -i '' "1i\\
         Title: Introduction\\
         " $WORK/cheatsheets/Index.md
-    sed -i '' 's/Index.md/glossary.md/g' $WORK/cheatsheets/glossary.md
+    sed -i '' 's/Index.md/Glossary.md/g' $WORK/cheatsheets/Glossary.md
     sed -i '' "1i\\
         Title: Index Alphabetical\\
-        " $WORK/cheatsheets/glossary.md
+        " $WORK/cheatsheets/Glossary.md
     sed -i '' "1i\\
         Title: Index ASVS\\
         " $WORK/cheatsheets/IndexASVS.md
@@ -55,8 +55,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
 else
     sed -i "1iTitle: Introduction\n" $WORK/cheatsheets/Index.md
-    sed -i 's/Index.md/glossary.md/g' $WORK/cheatsheets/glossary.md
-    sed -i "1iTitle: Index Alphabetical\n" $WORK/cheatsheets/glossary.md
+    sed -i 's/Index.md/Glossary.md/g' $WORK/cheatsheets/Glossary.md
+    sed -i "1iTitle: Index Alphabetical\n" $WORK/cheatsheets/Glossary.md
     sed -i "1iTitle: Index ASVS\n" $WORK/cheatsheets/IndexASVS.md
     sed -i "1iTitle: Index Proactive Controls\n" $WORK/cheatsheets/IndexProactiveControls.md
 fi
