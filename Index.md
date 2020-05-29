@@ -1,4 +1,4 @@
-# Index
+# Introduction
 
 **64** cheat sheets available.
 

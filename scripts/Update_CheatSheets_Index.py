@@ -29,7 +29,7 @@ language_md_link_template = "![%s](assets/Index_%s.png)"
 header_template = "## %s\n\n"
 top_menu_template = "[%s](Index.md#%s)"
 cs_count_template = "**%s** cheat sheets available."
-cs_index_title_template = "# Index\n\n"
+cs_index_title_template = "# Introduction\n\n"
 
 # Scan all CS files
 index = {}

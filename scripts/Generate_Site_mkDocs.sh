@@ -39,6 +39,9 @@ cp ./404.html $WORK/custom_theme/
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OSX
+    sed -i '' "1i\\
+        Title: Introduction\\
+        " $WORK/cheatsheets/Index.md
     sed -i '' 's/Index.md/glossary.md/g' $WORK/cheatsheets/glossary.md
     sed -i '' "1i\\
         Title: Index Alphabetical\\
@@ -51,6 +54,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         " $WORK/cheatsheets/IndexProactiveControls.md
 
 else
+    sed -i "1iTitle: Introduction\n" $WORK/cheatsheets/Index.md
     sed -i 's/Index.md/glossary.md/g' $WORK/cheatsheets/glossary.md
     sed -i "1iTitle: Index Alphabetical\n" $WORK/cheatsheets/glossary.md
     sed -i "1iTitle: Index ASVS\n" $WORK/cheatsheets/IndexASVS.md
