@@ -1537,7 +1537,7 @@
 <p><em>Notes:</em></p>
 <ul>
 <li>SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (<em>e.g.</em> FTP, SMB, SMTP, etc.) and schemes (<em>e.g.</em> <code>file://</code>, <code>phar://</code>, <code>gopher://</code>, <code>data://</code>, <code>dict://</code>, etc.). The protocol/scheme usage is highly dependent on the application's requirements.</li>
-<li>If the application is vulnerable to <a href="https://portswigger.net/web-security/xxe">XML eXternal Entity (XXE) injection</a> then it can by exploited to perform a <a href="https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks">SSRF attack</a>, take a look at the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a> to learn how to prevent the exposure to XXE.</li>
+<li>If the application is vulnerable to <a href="https://portswigger.net/web-security/xxe">XML eXternal Entity (XXE) injection</a> then it can be exploited to perform a <a href="https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks">SSRF attack</a>, take a look at the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a> to learn how to prevent the exposure to XXE.</li>
 </ul>
 <h2 id="cases">Cases<a class="headerlink" href="#cases" title="Permanent link">&para;</a></h2>
 <p>Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:</p>
@@ -1860,7 +1860,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <h5 id="network-layer_1">Network layer<a class="headerlink" href="#network-layer_1" title="Permanent link">&para;</a></h5>
 <p>Similar to the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#network-layer">section</a>.</p>
 <h2 id="imdsv2-in-aws">IMDSv2 in AWS<a class="headerlink" href="#imdsv2-in-aws" title="Permanent link">&para;</a></h2>
-<p>In cloud environments SSRF is often used to access and steal credentaials and access tokens from metadata services (e.g. AWS Instance Metadata Service, Azure Instance Metadata Service, GCP metadata server).</p>
+<p>In cloud environments SSRF is often used to access and steal credentials and access tokens from metadata services (e.g. AWS Instance Metadata Service, Azure Instance Metadata Service, GCP metadata server).</p>
 <p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/">IMDSv2</a> is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF.</p>
 <p>To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html">AWS documentation</a> for more details.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
