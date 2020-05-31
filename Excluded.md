@@ -1,13 +1,3 @@
----
-redirect_from :
-    -/cheatsheets/C-Based_Toolchain_Hardening.html
-    -/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html
-    -/cheatsheets/PL_SQL_Security_Cheat_Sheet.html
-    -/cheatsheets/Secure_SDLC_Cheat_Sheet.html
-    -/cheatsheets/Security_Testing_Cheat_Sheet.html
-    -/cheatsheets/Web_Application_Security_Testing_Cheat_Sheet.html
-    -/cheatsheets/Web_Service_Security_Testing_Cheat_Sheet.html
----
 # Index of Excluded Cheat Sheets
 
 The following Cheat sheets have been removed and are no longer maintained. You can however still find them on the github repositroy.

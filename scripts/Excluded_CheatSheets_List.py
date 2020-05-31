@@ -16,9 +16,6 @@ top_menu_template = "[%s](Excluded.md#%s)"
 cs_count_template = "**%s** cheat sheets excluded."
 cs_index_title_template = "# Index of Excluded Cheat Sheets\n\n"
 cs_index_text_template = "The following Cheat sheets have been removed and are no longer maintained. You can however still find them on the github repositroy.\n\n"
-redirect_from_comment_template = "---\n"
-redirect_from_command_template = "redirect_from :\n"
-redirect_from_item_template = "    -/cheatsheets/%s\n"  
 
 # Scan all CS files
 index = {}
@@ -36,13 +33,7 @@ index = OrderedDict(sorted(index.items()))
 # Generate the index file
 with open("../Excluded.md", "w") as index_file:
 
-    index_file.write(redirect_from_comment_template)
-    index_file.write(redirect_from_command_template)
-    for letter in index:
-        for cs_file in index[letter]:
-            cs_name = cs_file.replace(".md", ".html").strip()
-            index_file.write(redirect_from_item_template % (cs_name))
-    index_file.write(redirect_from_comment_template)
+
 
     index_file.write(cs_index_title_template)
     index_file.write(cs_index_text_template)

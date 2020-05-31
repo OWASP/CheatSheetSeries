@@ -58,6 +58,8 @@ fi
 
 echo "Step 6-2/7: Handling redirect for excluded and redirect page"
 
+python ../scripts/Excluded_CheatSheets_Redirect.py
+
 echo "Step 7/7 Cleanup."
 rm -rf cheatsheets
 rm -rf custom_theme

@@ -15,8 +15,6 @@ docs_dir: cheatsheets/
 use_directory_urls: false
 plugins:
   - search
-  - minify:
-      minify_html: true
 
 theme:
   name: material
