@@ -15,7 +15,7 @@ header_template = "## %s\n\n"
 top_menu_template = "[%s](Excluded.md#%s)"
 cs_count_template = "**%s** cheat sheets excluded."
 cs_index_title_template = "# Index of Excluded Cheat Sheets\n\n"
-cs_index_text_template = "The following Cheat sheets have been removed and are no longer maintained. You can however still find them on the github repositroy.\n\n"
+cs_index_text_template = "The following Cheat sheets have been removed and are no longer maintained. You can however still find them on the github repository.\n\n"
 
 # Scan all CS files
 index = {}
