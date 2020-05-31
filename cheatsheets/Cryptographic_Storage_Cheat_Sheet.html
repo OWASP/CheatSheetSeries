@@ -1,1060 +1,1423 @@
 
-<!DOCTYPE HTML>
-<html lang="en" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Cryptographic Storage  · OWASP Cheat Sheet Series</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>Cryptographic Storage</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
         
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
         
-        
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="DOM_based_XSS_Prevention_Cheat_Sheet.html" />
-    
-    
-    <link rel="prev" href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        <li class="header">Cheatsheets</li>
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="Index.html">
-            
-                <a href="Index.html">
-            
-                    
-                    Index Alphabetical
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
-            
-                <a href="IndexASVS.html">
-            
-                    
-                    Index ASVS
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
-            
-                <a href="IndexProactiveControls.html">
-            
-                    
-                    Index Proactive Controls
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
-            
-                <a href="AJAX_Security_Cheat_Sheet.html">
-            
-                    
-                    AJAX Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
-            
-                <a href="Abuse_Case_Cheat_Sheet.html">
-            
-                    
-                    Abuse Case 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
-            
-                <a href="Access_Control_Cheat_Sheet.html">
-            
-                    
-                    Access Control 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                    
-                    Attack Surface Analysis 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
-            
-                <a href="Authentication_Cheat_Sheet.html">
-            
-                    
-                    Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
-            
-                <a href="Authorization_Testing_Automation.html">
-            
-                    
-                    Authorization Testing Automation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
-            
-                <a href="Bean_Validation_Cheat_Sheet.html">
-            
-                    
-                    Bean Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
-            
-                <a href="C-Based_Toolchain_Hardening.html">
-            
-                    
-                    C-Based Toolchain Hardening
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                    
-                    C-Based Toolchain Hardening 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                    
-                    Choosing and Using Security Questions 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                <a href="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                    
-                    Clickjacking Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
-            
-                <a href="Content_Security_Policy_Cheat_Sheet.html">
-            
-                    
-                    Content Security Policy 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Credential Stuffing Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross-Site Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross Site Scripting Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                <a href="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                    
-                    Cryptographic Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                    
-                    DOM based XSS Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.22" data-path="Database_Security_Cheat_Sheet.html">
-            
-                <a href="Database_Security_Cheat_Sheet.html">
-            
-                    
-                    Database Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.23" data-path="Denial_of_Service_Cheat_Sheet.html">
-            
-                <a href="Denial_of_Service_Cheat_Sheet.html">
-            
-                    
-                    Denial of Service 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.24" data-path="Deserialization_Cheat_Sheet.html">
-            
-                <a href="Deserialization_Cheat_Sheet.html">
-            
-                    
-                    Deserialization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.25" data-path="Docker_Security_Cheat_Sheet.html">
-            
-                <a href="Docker_Security_Cheat_Sheet.html">
-            
-                    
-                    Docker Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.26" data-path="DotNet_Security_Cheat_Sheet.html">
-            
-                <a href="DotNet_Security_Cheat_Sheet.html">
-            
-                    
-                    DotNet Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.27" data-path="Error_Handling_Cheat_Sheet.html">
-            
-                <a href="Error_Handling_Cheat_Sheet.html">
-            
-                    
-                    Error Handling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
-            
-                <a href="File_Upload_Cheat_Sheet.html">
-            
-                    
-                    File Upload 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.29" data-path="Forgot_Password_Cheat_Sheet.html">
-            
-                <a href="Forgot_Password_Cheat_Sheet.html">
-            
-                    
-                    Forgot Password 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.30" data-path="HTML5_Security_Cheat_Sheet.html">
-            
-                <a href="HTML5_Security_Cheat_Sheet.html">
-            
-                    
-                    HTML5 Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.31" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                    
-                    HTTP Strict Transport Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.32" data-path="Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.33" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                    
-                    Injection Prevention  in Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.34" data-path="Input_Validation_Cheat_Sheet.html">
-            
-                <a href="Input_Validation_Cheat_Sheet.html">
-            
-                    
-                    Input Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.35" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Insecure Direct Object Reference Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.36" data-path="JAAS_Cheat_Sheet.html">
-            
-                <a href="JAAS_Cheat_Sheet.html">
-            
-                    
-                    JAAS 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.37" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                    
-                    JSON Web Token  for Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.38" data-path="Key_Management_Cheat_Sheet.html">
-            
-                <a href="Key_Management_Cheat_Sheet.html">
-            
-                    
-                    Key Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.39" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    LDAP Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.40" data-path="Logging_Cheat_Sheet.html">
-            
-                <a href="Logging_Cheat_Sheet.html">
-            
-                    
-                    Logging 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.41" data-path="Mass_Assignment_Cheat_Sheet.html">
-            
-                <a href="Mass_Assignment_Cheat_Sheet.html">
-            
-                    
-                    Mass Assignment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.42" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                    
-                    Microservices based Security Arch Doc 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.43" data-path="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                <a href="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                    
-                    Multifactor Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.44" data-path="Nodejs_security_cheat_sheet.html">
-            
-                <a href="Nodejs_security_cheat_sheet.html">
-            
-                    
-                    Nodejs security cheat sheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.45" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                    
-                    OS Command Injection Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.46" data-path="PHP_Configuration_Cheat_Sheet.html">
-            
-                <a href="PHP_Configuration_Cheat_Sheet.html">
-            
-                    
-                    PHP Configuration 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.47" data-path="Password_Storage_Cheat_Sheet.html">
-            
-                <a href="Password_Storage_Cheat_Sheet.html">
-            
-                    
-                    Password Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
-            
-                <a href="Pinning_Cheat_Sheet.html">
-            
-                    
-                    Pinning 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.49" data-path="Query_Parameterization_Cheat_Sheet.html">
-            
-                <a href="Query_Parameterization_Cheat_Sheet.html">
-            
-                    
-                    Query Parameterization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.50" data-path="REST_Assessment_Cheat_Sheet.html">
-            
-                <a href="REST_Assessment_Cheat_Sheet.html">
-            
-                    
-                    REST Assessment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.51" data-path="REST_Security_Cheat_Sheet.html">
-            
-                <a href="REST_Security_Cheat_Sheet.html">
-            
-                    
-                    REST Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.52" data-path="Ruby_on_Rails_Cheatsheet.html">
-            
-                <a href="Ruby_on_Rails_Cheatsheet.html">
-            
-                    
-                    Ruby on Rails Cheatsheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.53" data-path="SAML_Security_Cheat_Sheet.html">
-            
-                <a href="SAML_Security_Cheat_Sheet.html">
-            
-                    
-                    SAML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.54" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    SQL Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.55" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                    
-                    Securing Cascading Style Sheets 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.56" data-path="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Server Side Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.57" data-path="Session_Management_Cheat_Sheet.html">
-            
-                <a href="Session_Management_Cheat_Sheet.html">
-            
-                    
-                    Session Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.58" data-path="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                <a href="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                    
-                    TLS Cipher String 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.59" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                    
-                    Third Party Javascript Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.60" data-path="Threat_Modeling_Cheat_Sheet.html">
-            
-                <a href="Threat_Modeling_Cheat_Sheet.html">
-            
-                    
-                    Threat Modeling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.61" data-path="Transaction_Authorization_Cheat_Sheet.html">
-            
-                <a href="Transaction_Authorization_Cheat_Sheet.html">
-            
-                    
-                    Transaction Authorization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.62" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                    
-                    Transport Layer Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.63" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                    
-                    Unvalidated Redirects and Forwards 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.64" data-path="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                <a href="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                    
-                    User Privacy Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.65" data-path="Virtual_Patching_Cheat_Sheet.html">
-            
-                <a href="Virtual_Patching_Cheat_Sheet.html">
-            
-                    
-                    Virtual Patching 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.66" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                    
-                    Vulnerability Disclosure 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.67" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                    
-                    Vulnerable Dependency Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.68" data-path="Web_Service_Security_Cheat_Sheet.html">
-            
-                <a href="Web_Service_Security_Cheat_Sheet.html">
-            
-                    
-                    Web Service Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.69" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                    
-                    XML External Entity Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.70" data-path="XML_Security_Cheat_Sheet.html">
-            
-                <a href="XML_Security_Cheat_Sheet.html">
-            
-                    
-                    XML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="#cryptographic-storage-cheat-sheet" class="md-skip">
+          Skip to content
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
+      
     </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
+    <div data-md-component="announce">
+      
+    </div>
     
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Cryptographic Storage </a>
-    </h1>
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Cryptographic Storage
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
     
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="cryptographic-storage-cheat-sheet"><a name="cryptographic-storage-cheat-sheet" class="plugin-anchor" href="#cryptographic-storage-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Cryptographic Storage Cheat Sheet</h1>
-<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" title="Index Alphabetical" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" title="Index ASVS" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" title="Index Proactive Controls" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" title="AJAX Security" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" title="Abuse Case" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" title="Access Control" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" title="Clickjacking Defense" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" title="Content Security Policy" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" title="Cross-Site Request Forgery Prevention" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Cryptographic Storage
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" title="Cryptographic Storage" class="md-nav__link md-nav__link--active">
+      Cryptographic Storage
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architectural-design" class="md-nav__link">
+    Architectural Design
+  </a>
+  
+    <nav class="md-nav" aria-label="Architectural Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-to-perform-encryption" class="md-nav__link">
+    Where to Perform Encryption
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimise-the-storage-of-sensitive-information" class="md-nav__link">
+    Minimise the Storage of Sensitive Information
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#algorithms" class="md-nav__link">
+    Algorithms
+  </a>
+  
+    <nav class="md-nav" aria-label="Algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-algorithms" class="md-nav__link">
+    Custom Algorithms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cipher-modes" class="md-nav__link">
+    Cipher Modes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-random-number-generation" class="md-nav__link">
+    Secure Random Number Generation
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Random Number Generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uuids-and-guids" class="md-nav__link">
+    UUIDs and GUIDs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defence-in-depth" class="md-nav__link">
+    Defence in Depth
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-management" class="md-nav__link">
+    Key Management
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#processes" class="md-nav__link">
+    Processes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-generation" class="md-nav__link">
+    Key Generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-lifetimes-and-rotation" class="md-nav__link">
+    Key Lifetimes and Rotation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-storage" class="md-nav__link">
+    Key Storage
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#separation-of-keys-and-data" class="md-nav__link">
+    Separation of Keys and Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encrypting-stored-keys" class="md-nav__link">
+    Encrypting Stored Keys
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" title="Database Security" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" title="Denial of Service" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" title="Deserialization" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" title="Docker Security" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" title="DotNet Security" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" title="Error Handling" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" title="File Upload" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" title="Forgot Password" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" title="HTML5 Security" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" title="HTTP Strict Transport Security" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" title="Injection Prevention in Java" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" title="Insecure Direct Object Reference Prevention" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" title="JAAS" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" title="JSON Web Token for Java" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" title="Key Management" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" title="LDAP Injection Prevention" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" title="Mass Assignment" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" title="Multifactor Authentication" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" title="Nodejs Security" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" title="OS Command Injection Defense" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" title="PHP Configuration" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" title="Password Storage" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" title="Pinning" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" title="Query Parameterization" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" title="REST Assessment" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" title="REST Security" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" title="Ruby on Rails" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" title="SQL Injection Prevention" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" title="Server Side Request Forgery Prevention" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" title="TLS Cipher String" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" title="Third Party Javascript Management" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" title="Threat Modeling" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" title="Transport Layer Protection" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" title="User Privacy Protection" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" title="Virtual Patching" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" title="Vulnerability Disclosure" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" title="Vulnerable Dependency Management" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" title="XML External Entity Prevention" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architectural-design" class="md-nav__link">
+    Architectural Design
+  </a>
+  
+    <nav class="md-nav" aria-label="Architectural Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#where-to-perform-encryption" class="md-nav__link">
+    Where to Perform Encryption
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimise-the-storage-of-sensitive-information" class="md-nav__link">
+    Minimise the Storage of Sensitive Information
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#algorithms" class="md-nav__link">
+    Algorithms
+  </a>
+  
+    <nav class="md-nav" aria-label="Algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-algorithms" class="md-nav__link">
+    Custom Algorithms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cipher-modes" class="md-nav__link">
+    Cipher Modes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-random-number-generation" class="md-nav__link">
+    Secure Random Number Generation
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Random Number Generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uuids-and-guids" class="md-nav__link">
+    UUIDs and GUIDs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defence-in-depth" class="md-nav__link">
+    Defence in Depth
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-management" class="md-nav__link">
+    Key Management
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#processes" class="md-nav__link">
+    Processes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-generation" class="md-nav__link">
+    Key Generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-lifetimes-and-rotation" class="md-nav__link">
+    Key Lifetimes and Rotation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-storage" class="md-nav__link">
+    Key Storage
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#separation-of-keys-and-data" class="md-nav__link">
+    Separation of Keys and Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encrypting-stored-keys" class="md-nav__link">
+    Encrypting Stored Keys
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="cryptographic-storage-cheat-sheet">Cryptographic Storage Cheat Sheet<a class="headerlink" href="#cryptographic-storage-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This article provides a simple model to follow when implementing solutions to protect data at rest.</p>
 <p>Passwords should not be stored using reversible encryption - secure password hashing algorithms should be used instead. The <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> contains further guidance on storing passwords.</p>
-<h2 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h2>
+<h2 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="#cryptographic-storage-cheat-sheet">Cryptographic Storage Cheat Sheet</a><ul>
 <li><a href="#introduction">Introduction</a></li>
@@ -1088,44 +1451,44 @@
 </ul>
 </li>
 </ul>
-<h2 id="architectural-design"><a name="architectural-design" class="plugin-anchor" href="#architectural-design"><i class="fa fa-link" aria-hidden="true"></i></a>Architectural Design</h2>
+<h2 id="architectural-design">Architectural Design<a class="headerlink" href="#architectural-design" title="Permanent link">&para;</a></h2>
 <p>The first step in designing any application is to consider the overall architecture of the system, as this will have a huge impact on the technical implementation.</p>
 <p>This process should begin with considering the <a href="Threat_Modeling_Cheat_Sheet.html">threat model</a> of the application (i.e, who you trying to protect that data against).</p>
 <p>The use of dedicated secret or key management systems can provide an additional layer of security protection, as well as making the management of secrets significantly easier - however it comes at the cost of additional complexity and administrative overhead - so may not be feasible for all applications. Note that many cloud environments provide these services, so these should be taken advantage of where possible.</p>
-<h3 id="where-to-perform-encryption"><a name="where-to-perform-encryption" class="plugin-anchor" href="#where-to-perform-encryption"><i class="fa fa-link" aria-hidden="true"></i></a>Where to Perform Encryption</h3>
+<h3 id="where-to-perform-encryption">Where to Perform Encryption<a class="headerlink" href="#where-to-perform-encryption" title="Permanent link">&para;</a></h3>
 <p>Encryption can be performed on a number of levels in the application stack, such as:</p>
 <ul>
 <li>At the application level.</li>
-<li>At the database level (e.g, <a href="https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/transparent-data-encryption?view=sql-server-ver15" target="_blank">SQL Server TDE</a></li>
+<li>At the database level (e.g, <a href="https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/transparent-data-encryption?view=sql-server-ver15">SQL Server TDE</a></li>
 <li>At the filesystem level (e.g, BitLocker or LUKS)</li>
 <li>At the hardware level (e.g, encrypted RAID cards or SSDs)</li>
 </ul>
 <p>Which layer(s) are most appropriate will depend on the threat model. For example, hardware level encryption is effective at protecting against the physical theft of the server, but will provide no protection if an attacker is able to compromise the server remotely.</p>
-<h3 id="minimise-the-storage-of-sensitive-information"><a name="minimise-the-storage-of-sensitive-information" class="plugin-anchor" href="#minimise-the-storage-of-sensitive-information"><i class="fa fa-link" aria-hidden="true"></i></a>Minimise the Storage of Sensitive Information</h3>
+<h3 id="minimise-the-storage-of-sensitive-information">Minimise the Storage of Sensitive Information<a class="headerlink" href="#minimise-the-storage-of-sensitive-information" title="Permanent link">&para;</a></h3>
 <p>The best way to protect sensitive information is to not store it in the first place. Although this applies to all kinds of information, it is most often applicable to credit card details, as they are highly desirable for attackers, and PCI DSS has such stringent requirements for how they must be stored. Wherever possible, the storage of sensitive information should be avoided.</p>
-<h2 id="algorithms"><a name="algorithms" class="plugin-anchor" href="#algorithms"><i class="fa fa-link" aria-hidden="true"></i></a>Algorithms</h2>
-<p>For symmetric encryption <strong>AES</strong> with a key that&apos;s at least <strong>128 bits</strong> (ideally <strong>256 bits</strong>) and a secure <a href="#cipher-modes">mode</a> should be used as the preferred algorithm.</p>
+<h2 id="algorithms">Algorithms<a class="headerlink" href="#algorithms" title="Permanent link">&para;</a></h2>
+<p>For symmetric encryption <strong>AES</strong> with a key that's at least <strong>128 bits</strong> (ideally <strong>256 bits</strong>) and a secure <a href="#cipher-modes">mode</a> should be used as the preferred algorithm.</p>
 <p>For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as <strong>Curve25519</strong> as a preferred algorithm. If ECC is not available and  <strong>RSA</strong> must be used, then ensure that the key is at least <strong>2048 bits</strong>.</p>
 <p>Many other symmetric and asymmetric algorithms are available which have their own pros and cons, and they may be better or worse than AES or Curve25519 in specific use cases. When considering these, a number of factors should be taken into account, including:</p>
 <ul>
 <li>Key size.</li>
 <li>Known attacks and weaknesses of the algorithm.</li>
 <li>Maturity of the algorithm.</li>
-<li>Approval by third parties such as <a href="https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program" target="_blank">NIST&apos;s algorithmic validation program</a>.</li>
+<li>Approval by third parties such as <a href="https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program">NIST's algorithmic validation program</a>.</li>
 <li>Performance (both for encryption and decryption).</li>
 <li>Quality of the libraries available.</li>
 <li>Portability of the algorithm (i.e, how widely supported is it).</li>
 </ul>
-<p>In some cases there may be regulatory requirements that limit the algorithms that can be used, such as <a href="https://csrc.nist.gov/csrc/media/publications/fips/140/2/final/documents/fips1402annexa.pdf" target="_blank">FIPS 140-2</a> or <a href="https://www.pcisecuritystandards.org/pci_security/glossary#Strong%20Cryptography" target="_blank">PCI DSS</a>.</p>
-<h3 id="custom-algorithms"><a name="custom-algorithms" class="plugin-anchor" href="#custom-algorithms"><i class="fa fa-link" aria-hidden="true"></i></a>Custom Algorithms</h3>
-<p>Don&apos;t do this.</p>
-<h3 id="cipher-modes"><a name="cipher-modes" class="plugin-anchor" href="#cipher-modes"><i class="fa fa-link" aria-hidden="true"></i></a>Cipher Modes</h3>
-<p>There are various <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation" target="_blank">modes</a> that can be used to allow block ciphers (such as AES) to encrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.</p>
-<p>Where available, authenticated modes should always be used. These provide guarantees of the integrity and authenticity of the data, as well as confidentiality. The most commonly used authenticated modes are <strong><a href="https://en.wikipedia.org/wiki/Galois/Counter_Mode" target="_blank">GCM</a></strong> and <strong><a href="https://en.wikipedia.org/wiki/CCM_mode" target="_blank">CCM</a></strong>, which should be used as a first preference.</p>
-<p>If GCM or CCM are not available, then <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_%28CTR%29" target="_blank">CTR</a> mode or <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_%28CBC%29" target="_blank">CBC</a> mode should be used. As these do not provide any guarantees about the authenticity of the data, separate authentication should be implemented, such as using the <a href="https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_%28EtM%29" target="_blank">Encrypt-then-MAC</a> technique. Care needs to be taken when using this method with <a href="https://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages" target="_blank">variable length messages</a></p>
-<p>If random access to the encrypted data is required then <a href="https://en.wikipedia.org/wiki/Disk_encryption_theory#XTS" target="_blank">XTS</a> mode should be used. This is typically used for disk encryption, so it unlikely to be used by a web application.</p>
-<p><a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB" target="_blank">ECB</a> should not be used outside of very specific circumstances.</p>
-<h3 id="secure-random-number-generation"><a name="secure-random-number-generation" class="plugin-anchor" href="#secure-random-number-generation"><i class="fa fa-link" aria-hidden="true"></i></a>Secure Random Number Generation</h3>
+<p>In some cases there may be regulatory requirements that limit the algorithms that can be used, such as <a href="https://csrc.nist.gov/csrc/media/publications/fips/140/2/final/documents/fips1402annexa.pdf">FIPS 140-2</a> or <a href="https://www.pcisecuritystandards.org/pci_security/glossary#Strong%20Cryptography">PCI DSS</a>.</p>
+<h3 id="custom-algorithms">Custom Algorithms<a class="headerlink" href="#custom-algorithms" title="Permanent link">&para;</a></h3>
+<p>Don't do this.</p>
+<h3 id="cipher-modes">Cipher Modes<a class="headerlink" href="#cipher-modes" title="Permanent link">&para;</a></h3>
+<p>There are various <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">modes</a> that can be used to allow block ciphers (such as AES) to encrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.</p>
+<p>Where available, authenticated modes should always be used. These provide guarantees of the integrity and authenticity of the data, as well as confidentiality. The most commonly used authenticated modes are <strong><a href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM</a></strong> and <strong><a href="https://en.wikipedia.org/wiki/CCM_mode">CCM</a></strong>, which should be used as a first preference.</p>
+<p>If GCM or CCM are not available, then <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_%28CTR%29">CTR</a> mode or <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_%28CBC%29">CBC</a> mode should be used. As these do not provide any guarantees about the authenticity of the data, separate authentication should be implemented, such as using the <a href="https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_%28EtM%29">Encrypt-then-MAC</a> technique. Care needs to be taken when using this method with <a href="https://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages">variable length messages</a></p>
+<p>If random access to the encrypted data is required then <a href="https://en.wikipedia.org/wiki/Disk_encryption_theory#XTS">XTS</a> mode should be used. This is typically used for disk encryption, so it unlikely to be used by a web application.</p>
+<p><a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB">ECB</a> should not be used outside of very specific circumstances.</p>
+<h3 id="secure-random-number-generation">Secure Random Number Generation<a class="headerlink" href="#secure-random-number-generation" title="Permanent link">&para;</a></h3>
 <p>Random numbers (or strings) are needed for various security critical functionality, such as generating encryption keys, IVs, session IDs, CSRF tokens or password reset tokens. As such, it is important that these are generated securely, and that it is not possible for an attacker to guess and predict them.</p>
 <p>It is generally not possible for computers to generate truly random numbers (without special hardware), so most systems and languages provide two different types of randomness.</p>
 <p>Pseudo-Random Number Generators (PRNG) provide low-quality randomness that are much faster, and can be used for non-security related functionality (such as ordering results on a page, or randomising UI elements). However, they <strong>must not</strong> be used for anything security critical, as it is often possible for attackers to guess or predict the output.</p>
@@ -1143,57 +1506,57 @@
 <tr>
 <td>C</td>
 <td><code>random()</code>, <code>rand()</code></td>
-<td><a href="http://man7.org/linux/man-pages/man2/getrandom.2.html" target="_blank">getrandom(2)</a></td>
+<td><a href="http://man7.org/linux/man-pages/man2/getrandom.2.html">getrandom(2)</a></td>
 </tr>
 <tr>
 <td>Java</td>
 <td><code>java.util.Random()</code></td>
-<td><a href="https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html" target="_blank">java.security.SecureRandom</a></td>
+<td><a href="https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html">java.security.SecureRandom</a></td>
 </tr>
 <tr>
 <td>PHP</td>
 <td><code>rand()</code>, <code>mt_rand()</code>, <code>array_rand()</code>, <code>uniqid()</code></td>
-<td><a href="https://www.php.net/manual/en/function.random-bytes.php" target="_blank">random_bytes()</a>, <a href="https://www.php.net/manual/en/function.random-int.php" target="_blank">random_int()</a> in PHP 7 or <a href="https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php" target="_blank">openssl_random_pseudo_bytes()</a> in PHP 5</td>
+<td><a href="https://www.php.net/manual/en/function.random-bytes.php">random_bytes()</a>, <a href="https://www.php.net/manual/en/function.random-int.php">random_int()</a> in PHP 7 or <a href="https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php">openssl_random_pseudo_bytes()</a> in PHP 5</td>
 </tr>
 <tr>
 <td>.NET/C#</td>
 <td><code>Random()</code>,</td>
-<td><a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rngcryptoserviceprovider?view=netframework-4.8" target="_blank">RNGCryptoServiceProvider</a></td>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rngcryptoserviceprovider?view=netframework-4.8">RNGCryptoServiceProvider</a></td>
 </tr>
 <tr>
 <td>Objective-C</td>
 <td><code>arc4random()</code> (Uses RC4 Cipher),</td>
-<td><a href="https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc" target="_blank">SecRandomCopyBytes</a></td>
+<td><a href="https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc">SecRandomCopyBytes</a></td>
 </tr>
 <tr>
 <td>Python</td>
 <td><code>random()</code>,</td>
-<td><a href="https://docs.python.org/3/library/secrets.html#module-secrets" target="_blank">secrets()</a></td>
+<td><a href="https://docs.python.org/3/library/secrets.html#module-secrets">secrets()</a></td>
 </tr>
 <tr>
 <td>Ruby</td>
 <td><code>Random</code>,</td>
-<td><a href="https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html" target="_blank">SecureRandom</a></td>
+<td><a href="https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html">SecureRandom</a></td>
 </tr>
 <tr>
 <td>Go</td>
 <td><code>rand</code> using <code>math/rand</code> package,</td>
-<td><a href="https://golang.org/pkg/crypto/rand/" target="_blank">crypto.rand</a> package</td>
+<td><a href="https://golang.org/pkg/crypto/rand/">crypto.rand</a> package</td>
 </tr>
 <tr>
 <td>Rust</td>
 <td><code>rand::prng::XorShiftRng</code>,</td>
-<td><a href="https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html" target="_blank">rand::prng::chacha::ChaChaRng</a> and the rest of the Rust library <a href="https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs" target="_blank">CSPRNGs.</a></td>
+<td><a href="https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html">rand::prng::chacha::ChaChaRng</a> and the rest of the Rust library <a href="https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs">CSPRNGs.</a></td>
 </tr>
 </tbody>
 </table>
-<h4 id="uuids-and-guids"><a name="uuids-and-guids" class="plugin-anchor" href="#uuids-and-guids"><i class="fa fa-link" aria-hidden="true"></i></a>UUIDs and GUIDs</h4>
-<p>Universally unique identifiers (UUIDs or GUIDs) are sometimes used as a quick way to generate random strings. Although they can provide a reasonable source of randomness, this will depend on the <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Versions" target="_blank">type or version</a> of the UUID that is created.</p>
+<h4 id="uuids-and-guids">UUIDs and GUIDs<a class="headerlink" href="#uuids-and-guids" title="Permanent link">&para;</a></h4>
+<p>Universally unique identifiers (UUIDs or GUIDs) are sometimes used as a quick way to generate random strings. Although they can provide a reasonable source of randomness, this will depend on the <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Versions">type or version</a> of the UUID that is created.</p>
 <p>Specifically, version 1 UUIDs are comprised of a high precision timestamp and the MAC address of the system that generated them, so are <strong>not random</strong> (although they may be hard to guess, given the timestamp is to the nearest 100ns). Type 4 UUIDs are randomly generated, although whether this is done using a CSPRNG will depend on the implementation. Unless this is known to be secure in the specific language or framework, the randomness of UUIDs should not be relied upon.</p>
-<h3 id="defence-in-depth"><a name="defence-in-depth" class="plugin-anchor" href="#defence-in-depth"><i class="fa fa-link" aria-hidden="true"></i></a>Defence in Depth</h3>
+<h3 id="defence-in-depth">Defence in Depth<a class="headerlink" href="#defence-in-depth" title="Permanent link">&para;</a></h3>
 <p>Applications should be designed to still be secure even if cryptographic controls fail. Any information that is stored in an encrypted form should also be protected by additional layers of security. Application should also not rely on the security of encrypted URL parameters, and should enforce strong access control to prevent unauthorised access to information.</p>
-<h2 id="key-management"><a name="key-management" class="plugin-anchor" href="#key-management"><i class="fa fa-link" aria-hidden="true"></i></a>Key Management</h2>
-<h3 id="processes"><a name="processes" class="plugin-anchor" href="#processes"><i class="fa fa-link" aria-hidden="true"></i></a>Processes</h3>
+<h2 id="key-management">Key Management<a class="headerlink" href="#key-management" title="Permanent link">&para;</a></h2>
+<h3 id="processes">Processes<a class="headerlink" href="#processes" title="Permanent link">&para;</a></h3>
 <p>Formal processes should be implemented (and tested) to cover all aspects of key management, including:</p>
 <ul>
 <li>Generating and storing new keys.</li>
@@ -1201,10 +1564,10 @@
 <li>Deploying keys to application servers.</li>
 <li>Rotating and decommissioning old keys</li>
 </ul>
-<h3 id="key-generation"><a name="key-generation" class="plugin-anchor" href="#key-generation"><i class="fa fa-link" aria-hidden="true"></i></a>Key Generation</h3>
-<p>Keys should be randomly generated using a cryptographically secure function, such as those discussed in the <a href="#secure-random-number-generation">Secure Random Number Generation</a> section. Keys <strong>should not</strong> be based on common words or phrases, or on &quot;random&quot; characters generated by mashing the keyboard.</p>
+<h3 id="key-generation">Key Generation<a class="headerlink" href="#key-generation" title="Permanent link">&para;</a></h3>
+<p>Keys should be randomly generated using a cryptographically secure function, such as those discussed in the <a href="#secure-random-number-generation">Secure Random Number Generation</a> section. Keys <strong>should not</strong> be based on common words or phrases, or on "random" characters generated by mashing the keyboard.</p>
 <p>Where multiple keys are used (such as data separate data-encrypting and key-encrypting keys), they should be fully independent from each other.</p>
-<h3 id="key-lifetimes-and-rotation"><a name="key-lifetimes-and-rotation" class="plugin-anchor" href="#key-lifetimes-and-rotation"><i class="fa fa-link" aria-hidden="true"></i></a>Key Lifetimes and Rotation</h3>
+<h3 id="key-lifetimes-and-rotation">Key Lifetimes and Rotation<a class="headerlink" href="#key-lifetimes-and-rotation" title="Permanent link">&para;</a></h3>
 <p>Encryption keys should be changed (or rotated) based on a number of different criteria:</p>
 <ul>
 <li>If the previous key is known (or suspected) to have been compromised.<ul>
@@ -1212,7 +1575,7 @@
 </ul>
 </li>
 <li>After a specified period of time has elapsed (known as the cryptoperiod).<ul>
-<li>There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf" target="_blank">NIST SP 800-57</a> for further guidance.</li>
+<li>There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf">NIST SP 800-57</a> for further guidance.</li>
 </ul>
 </li>
 <li>After the key has been used to encrypt a specific amount of data.<ul>
@@ -1228,14 +1591,14 @@
 </ol>
 <p>The first option should generally be preferred, as it greatly simplifies both the application code and key management processes; however, it may not always be feasible. Note that old keys should generally be stored for a certain period after they have been retired, in case old backups of copies of the data need to be decrypted.</p>
 <p>It is important that the code and processes required to rotate a key are in place <strong>before</strong> they are required, so that keys can be quickly rotated in the event of a compromise. Additionally, processes should also be implemented to allow the encryption algorithm or library to be changed, in case a new vulnerability is found in the algorithm or implementation.</p>
-<h2 id="key-storage"><a name="key-storage" class="plugin-anchor" href="#key-storage"><i class="fa fa-link" aria-hidden="true"></i></a>Key Storage</h2>
+<h2 id="key-storage">Key Storage<a class="headerlink" href="#key-storage" title="Permanent link">&para;</a></h2>
 <p>Securely storing cryptographic keys is one of the hardest problems to solve, as the application always needs to have some level of access to the keys in order to decrypt the data. While it may not be possible to fully protect the keys from an attacker who has fully compromised the application, a number of steps can be taken to make it harder for them to obtain the keys.</p>
 <p>Where available, the secure storage mechanisms provided by the operating system, framework or cloud service provider should be used. These include:</p>
 <ul>
 <li>A physical Hardware Security Module (HSM).</li>
 <li>A virtual HSM.</li>
-<li>Key vaults such as <a href="https://aws.amazon.com/kms/" target="_blank">Amazon KMS</a> or <a href="https://azure.microsoft.com/en-gb/services/key-vault/" target="_blank">Azure Key Vault</a>.</li>
-<li>Secure storage APIs provided by the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?redirectedfrom=MSDN&amp;view=netframework-4.8" target="_blank">ProtectedData</a> class in the .NET framework.</li>
+<li>Key vaults such as <a href="https://aws.amazon.com/kms/">Amazon KMS</a> or <a href="https://azure.microsoft.com/en-gb/services/key-vault/">Azure Key Vault</a>.</li>
+<li>Secure storage APIs provided by the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?redirectedfrom=MSDN&amp;view=netframework-4.8">ProtectedData</a> class in the .NET framework.</li>
 </ul>
 <p>There are many advantages to using these types of secure storage over simply putting keys in configuration files. The specifics of these will vary depending on the solution used, but they include:</p>
 <ul>
@@ -1250,98 +1613,106 @@
 <li>Do not hard-code keys into the application source code.</li>
 <li>Do not check keys into version control systems.</li>
 <li>Protect the configuration files containing the keys with restrictive permissions.</li>
-<li>Avoid storing keys in environment variables, as these can be accidentally exposed through functions such as <a href="https://www.php.net/manual/en/function.phpinfo.php" target="_blank">phpinfo()</a> or through the <code>/proc/self/environ</code> file.</li>
+<li>Avoid storing keys in environment variables, as these can be accidentally exposed through functions such as <a href="https://www.php.net/manual/en/function.phpinfo.php">phpinfo()</a> or through the <code>/proc/self/environ</code> file.</li>
 </ul>
-<h3 id="separation-of-keys-and-data"><a name="separation-of-keys-and-data" class="plugin-anchor" href="#separation-of-keys-and-data"><i class="fa fa-link" aria-hidden="true"></i></a>Separation of Keys and Data</h3>
+<h3 id="separation-of-keys-and-data">Separation of Keys and Data<a class="headerlink" href="#separation-of-keys-and-data" title="Permanent link">&para;</a></h3>
 <p>Where possible, encryption keys should be stored in a separate location from encrypted data. For example, if the data is stored in a database, the keys should be stored in the filesystem. This means that if an attacker only has access to one of these (for example through directory traversal or SQL injection), they cannot access both the keys and the data.</p>
 <p>Depending on the architecture of the environment, it may be possible to store the keys and data on separate systems, which would provide a greater degree of isolation.</p>
-<h3 id="encrypting-stored-keys"><a name="encrypting-stored-keys" class="plugin-anchor" href="#encrypting-stored-keys"><i class="fa fa-link" aria-hidden="true"></i></a>Encrypting Stored Keys</h3>
+<h3 id="encrypting-stored-keys">Encrypting Stored Keys<a class="headerlink" href="#encrypting-stored-keys" title="Permanent link">&para;</a></h3>
 <p>Where possible, encryption keys should themselves be stored in an encrypted form. At least two separate keys are required for this:</p>
 <ul>
 <li>The Data Encryption Key (DEK) is used to encrypt the data.</li>
 <li>The Key Encryption Key (KEK) is used to encrypt the DEK.</li>
 </ul>
 <p>For this to be effective, the KEK must be stored separately from the DEK. The encrypted DEK can be stored with the data, but will only be usable if an attacker is able to also obtain the KEK, which is stored on another system.</p>
-<p>The KEK should also be at least as strong as the DEK. The <a href="https://cloud.google.com/kms/docs/envelope-encryption" target="_blank">envelope encryption</a> guidance from Google contains further details on how to manage DEKs and KEKs.</p>
+<p>The KEK should also be at least as strong as the DEK. The <a href="https://cloud.google.com/kms/docs/envelope-encryption">envelope encryption</a> guidance from Google contains further details on how to manage DEKs and KEKs.</p>
 <p>In simpler application architectures (such as shared hosting environments) where the KEK and DEK cannot be stored separately, there is limited value to this approach, as an attacker is likely to be able to obtain both of the keys at the same time. However, it can provide an additional barrier to unskilled attackers.</p>
 <p>A key derivation function (KDF) could be used to generate a KEK from user-supplied input (such a passphrase), which would then be used to encrypt a randomly generated DEK. This allows the KEK to be easily changed (when the user changes their passphrase), without needing to re-encrypt the data (as the DEK remains the same).</p>
-
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
-
-                        </div>
-                    </div>
                 
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
-
-            
-                
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Cross Site Scripting Prevention ">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: DOM based XSS Prevention ">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Cross Site Scripting Prevention
+              </div>
+            </div>
+          </a>
         
+        
+          <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                DOM based XSS Prevention
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Cryptographic Storage ","level":"1.20","depth":1,"next":{"title":"DOM based XSS Prevention ","level":"1.21","depth":1,"path":"cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md","ref":"cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Cross Site Scripting Prevention ","level":"1.19","depth":1,"path":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Cryptographic_Storage_Cheat_Sheet.md","mtime":"2020-05-27T19:41:37.100Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-27T19:42:04.146Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
-
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-

@@ -1,1082 +1,1371 @@
 
-<!DOCTYPE HTML>
-<html lang="en" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Bean Validation  · OWASP Cheat Sheet Series</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Bean_Validation_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>Bean Validation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
         
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
         
-        
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="C-Based_Toolchain_Hardening.html" />
-    
-    
-    <link rel="prev" href="Authorization_Testing_Automation.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        <li class="header">Cheatsheets</li>
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="Index.html">
-            
-                <a href="Index.html">
-            
-                    
-                    Index Alphabetical
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
-            
-                <a href="IndexASVS.html">
-            
-                    
-                    Index ASVS
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
-            
-                <a href="IndexProactiveControls.html">
-            
-                    
-                    Index Proactive Controls
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
-            
-                <a href="AJAX_Security_Cheat_Sheet.html">
-            
-                    
-                    AJAX Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
-            
-                <a href="Abuse_Case_Cheat_Sheet.html">
-            
-                    
-                    Abuse Case 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
-            
-                <a href="Access_Control_Cheat_Sheet.html">
-            
-                    
-                    Access Control 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                    
-                    Attack Surface Analysis 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
-            
-                <a href="Authentication_Cheat_Sheet.html">
-            
-                    
-                    Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
-            
-                <a href="Authorization_Testing_Automation.html">
-            
-                    
-                    Authorization Testing Automation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
-            
-                <a href="Bean_Validation_Cheat_Sheet.html">
-            
-                    
-                    Bean Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
-            
-                <a href="C-Based_Toolchain_Hardening.html">
-            
-                    
-                    C-Based Toolchain Hardening
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                    
-                    C-Based Toolchain Hardening 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                    
-                    Choosing and Using Security Questions 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                <a href="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                    
-                    Clickjacking Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
-            
-                <a href="Content_Security_Policy_Cheat_Sheet.html">
-            
-                    
-                    Content Security Policy 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Credential Stuffing Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross-Site Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross Site Scripting Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                <a href="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                    
-                    Cryptographic Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                    
-                    DOM based XSS Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.22" data-path="Database_Security_Cheat_Sheet.html">
-            
-                <a href="Database_Security_Cheat_Sheet.html">
-            
-                    
-                    Database Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.23" data-path="Denial_of_Service_Cheat_Sheet.html">
-            
-                <a href="Denial_of_Service_Cheat_Sheet.html">
-            
-                    
-                    Denial of Service 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.24" data-path="Deserialization_Cheat_Sheet.html">
-            
-                <a href="Deserialization_Cheat_Sheet.html">
-            
-                    
-                    Deserialization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.25" data-path="Docker_Security_Cheat_Sheet.html">
-            
-                <a href="Docker_Security_Cheat_Sheet.html">
-            
-                    
-                    Docker Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.26" data-path="DotNet_Security_Cheat_Sheet.html">
-            
-                <a href="DotNet_Security_Cheat_Sheet.html">
-            
-                    
-                    DotNet Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.27" data-path="Error_Handling_Cheat_Sheet.html">
-            
-                <a href="Error_Handling_Cheat_Sheet.html">
-            
-                    
-                    Error Handling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
-            
-                <a href="File_Upload_Cheat_Sheet.html">
-            
-                    
-                    File Upload 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.29" data-path="Forgot_Password_Cheat_Sheet.html">
-            
-                <a href="Forgot_Password_Cheat_Sheet.html">
-            
-                    
-                    Forgot Password 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.30" data-path="HTML5_Security_Cheat_Sheet.html">
-            
-                <a href="HTML5_Security_Cheat_Sheet.html">
-            
-                    
-                    HTML5 Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.31" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                    
-                    HTTP Strict Transport Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.32" data-path="Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.33" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                    
-                    Injection Prevention  in Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.34" data-path="Input_Validation_Cheat_Sheet.html">
-            
-                <a href="Input_Validation_Cheat_Sheet.html">
-            
-                    
-                    Input Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.35" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Insecure Direct Object Reference Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.36" data-path="JAAS_Cheat_Sheet.html">
-            
-                <a href="JAAS_Cheat_Sheet.html">
-            
-                    
-                    JAAS 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.37" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                    
-                    JSON Web Token  for Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.38" data-path="Key_Management_Cheat_Sheet.html">
-            
-                <a href="Key_Management_Cheat_Sheet.html">
-            
-                    
-                    Key Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.39" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    LDAP Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.40" data-path="Logging_Cheat_Sheet.html">
-            
-                <a href="Logging_Cheat_Sheet.html">
-            
-                    
-                    Logging 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.41" data-path="Mass_Assignment_Cheat_Sheet.html">
-            
-                <a href="Mass_Assignment_Cheat_Sheet.html">
-            
-                    
-                    Mass Assignment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.42" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                    
-                    Microservices based Security Arch Doc 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.43" data-path="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                <a href="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                    
-                    Multifactor Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.44" data-path="Nodejs_security_cheat_sheet.html">
-            
-                <a href="Nodejs_security_cheat_sheet.html">
-            
-                    
-                    Nodejs security cheat sheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.45" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                    
-                    OS Command Injection Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.46" data-path="PHP_Configuration_Cheat_Sheet.html">
-            
-                <a href="PHP_Configuration_Cheat_Sheet.html">
-            
-                    
-                    PHP Configuration 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.47" data-path="Password_Storage_Cheat_Sheet.html">
-            
-                <a href="Password_Storage_Cheat_Sheet.html">
-            
-                    
-                    Password Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
-            
-                <a href="Pinning_Cheat_Sheet.html">
-            
-                    
-                    Pinning 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.49" data-path="Query_Parameterization_Cheat_Sheet.html">
-            
-                <a href="Query_Parameterization_Cheat_Sheet.html">
-            
-                    
-                    Query Parameterization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.50" data-path="REST_Assessment_Cheat_Sheet.html">
-            
-                <a href="REST_Assessment_Cheat_Sheet.html">
-            
-                    
-                    REST Assessment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.51" data-path="REST_Security_Cheat_Sheet.html">
-            
-                <a href="REST_Security_Cheat_Sheet.html">
-            
-                    
-                    REST Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.52" data-path="Ruby_on_Rails_Cheatsheet.html">
-            
-                <a href="Ruby_on_Rails_Cheatsheet.html">
-            
-                    
-                    Ruby on Rails Cheatsheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.53" data-path="SAML_Security_Cheat_Sheet.html">
-            
-                <a href="SAML_Security_Cheat_Sheet.html">
-            
-                    
-                    SAML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.54" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    SQL Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.55" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                    
-                    Securing Cascading Style Sheets 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.56" data-path="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Server Side Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.57" data-path="Session_Management_Cheat_Sheet.html">
-            
-                <a href="Session_Management_Cheat_Sheet.html">
-            
-                    
-                    Session Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.58" data-path="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                <a href="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                    
-                    TLS Cipher String 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.59" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                    
-                    Third Party Javascript Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.60" data-path="Threat_Modeling_Cheat_Sheet.html">
-            
-                <a href="Threat_Modeling_Cheat_Sheet.html">
-            
-                    
-                    Threat Modeling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.61" data-path="Transaction_Authorization_Cheat_Sheet.html">
-            
-                <a href="Transaction_Authorization_Cheat_Sheet.html">
-            
-                    
-                    Transaction Authorization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.62" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                    
-                    Transport Layer Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.63" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                    
-                    Unvalidated Redirects and Forwards 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.64" data-path="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                <a href="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                    
-                    User Privacy Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.65" data-path="Virtual_Patching_Cheat_Sheet.html">
-            
-                <a href="Virtual_Patching_Cheat_Sheet.html">
-            
-                    
-                    Virtual Patching 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.66" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                    
-                    Vulnerability Disclosure 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.67" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                    
-                    Vulnerable Dependency Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.68" data-path="Web_Service_Security_Cheat_Sheet.html">
-            
-                <a href="Web_Service_Security_Cheat_Sheet.html">
-            
-                    
-                    Web Service Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.69" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                    
-                    XML External Entity Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.70" data-path="XML_Security_Cheat_Sheet.html">
-            
-                <a href="XML_Security_Cheat_Sheet.html">
-            
-                    
-                    XML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="#bean-validation-cheat-sheet" class="md-skip">
+          Skip to content
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
+      
     </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
+    <div data-md-component="announce">
+      
+    </div>
     
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Bean Validation </a>
-    </h1>
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Bean Validation
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
     
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="bean-validation-cheat-sheet"><a name="bean-validation-cheat-sheet" class="plugin-anchor" href="#bean-validation-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Bean Validation Cheat Sheet</h1>
-<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" title="Index Alphabetical" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" title="Index ASVS" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" title="Index Proactive Controls" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" title="AJAX Security" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" title="Abuse Case" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" title="Access Control" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Bean Validation
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link md-nav__link--active">
+      Bean Validation
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#typical-validation" class="md-nav__link">
+    Typical Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bean-validation" class="md-nav__link">
+    Bean Validation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basics" class="md-nav__link">
+    Basics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-defined-constraints" class="md-nav__link">
+    Pre-defined Constraints
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-defined Constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern" class="md-nav__link">
+    @Pattern
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digits" class="md-nav__link">
+    @Digits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#size" class="md-nav__link">
+    @Size
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#past-future" class="md-nav__link">
+    @Past / @Future
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-constraints" class="md-nav__link">
+    Combining Constraints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cascading-constraints" class="md-nav__link">
+    Cascading Constraints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-constraints" class="md-nav__link">
+    Additional Constraints
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-constraints" class="md-nav__link">
+    Custom Constraints
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-messages" class="md-nav__link">
+    Error Messages
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" title="Clickjacking Defense" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" title="Content Security Policy" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" title="Cross-Site Request Forgery Prevention" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" title="Cryptographic Storage" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" title="Database Security" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" title="Denial of Service" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" title="Deserialization" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" title="Docker Security" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" title="DotNet Security" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" title="Error Handling" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" title="File Upload" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" title="Forgot Password" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" title="HTML5 Security" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" title="HTTP Strict Transport Security" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" title="Injection Prevention in Java" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" title="Insecure Direct Object Reference Prevention" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" title="JAAS" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" title="JSON Web Token for Java" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" title="Key Management" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" title="LDAP Injection Prevention" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" title="Mass Assignment" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" title="Multifactor Authentication" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" title="Nodejs Security" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" title="OS Command Injection Defense" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" title="PHP Configuration" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" title="Password Storage" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" title="Pinning" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" title="Query Parameterization" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" title="REST Assessment" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" title="REST Security" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" title="Ruby on Rails" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" title="SQL Injection Prevention" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" title="Server Side Request Forgery Prevention" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" title="TLS Cipher String" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" title="Third Party Javascript Management" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" title="Threat Modeling" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" title="Transport Layer Protection" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" title="User Privacy Protection" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" title="Virtual Patching" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" title="Vulnerability Disclosure" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" title="Vulnerable Dependency Management" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" title="XML External Entity Prevention" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#typical-validation" class="md-nav__link">
+    Typical Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bean-validation" class="md-nav__link">
+    Bean Validation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basics" class="md-nav__link">
+    Basics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pre-defined-constraints" class="md-nav__link">
+    Pre-defined Constraints
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-defined Constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern" class="md-nav__link">
+    @Pattern
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digits" class="md-nav__link">
+    @Digits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#size" class="md-nav__link">
+    @Size
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#past-future" class="md-nav__link">
+    @Past / @Future
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combining-constraints" class="md-nav__link">
+    Combining Constraints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cascading-constraints" class="md-nav__link">
+    Cascading Constraints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-constraints" class="md-nav__link">
+    Additional Constraints
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-constraints" class="md-nav__link">
+    Custom Constraints
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-messages" class="md-nav__link">
+    Error Messages
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="bean-validation-cheat-sheet">Bean Validation Cheat Sheet<a class="headerlink" href="#bean-validation-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This article is focused on providing clear, simple, actionable guidance for providing Java Bean Validation security functionality in your applications.</p>
-<p>Bean validation (JSR303 aka <a href="https://beanvalidation.org/1.0/spec/" target="_blank">Bean Validation 1.0</a> /JSR349 aka <a href="https://beanvalidation.org/1.1/spec/" target="_blank">Bean Validation 1.1</a>) is one of the most common ways to perform <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html" target="_blank">input validation</a> in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.</p>
+<p>Bean validation (JSR303 aka <a href="https://beanvalidation.org/1.0/spec/">Bean Validation 1.0</a> /JSR349 aka <a href="https://beanvalidation.org/1.1/spec/">Bean Validation 1.1</a>) is one of the most common ways to perform <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">input validation</a> in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.</p>
 <p>One advantage of this approach is that the validation constraints and the corresponding validators are only written once, thus reducing duplication of effort and ensuring uniformity:</p>
-<h3 id="typical-validation"><a name="typical-validation" class="plugin-anchor" href="#typical-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Typical Validation</h3>
-<p><img src="../assets/Bean_Validation_Cheat_Sheet_Typical.png" alt="Typical"></p>
-<h3 id="bean-validation"><a name="bean-validation" class="plugin-anchor" href="#bean-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Bean Validation</h3>
-<p><img src="../assets/Bean_Validation_Cheat_Sheet_JSR.png" alt="JSR"></p>
-<h2 id="setup"><a name="setup" class="plugin-anchor" href="#setup"><i class="fa fa-link" aria-hidden="true"></i></a>Setup</h2>
+<h3 id="typical-validation">Typical Validation<a class="headerlink" href="#typical-validation" title="Permanent link">&para;</a></h3>
+<p><img alt="Typical" src="../assets/Bean_Validation_Cheat_Sheet_Typical.png" /></p>
+<h3 id="bean-validation">Bean Validation<a class="headerlink" href="#bean-validation" title="Permanent link">&para;</a></h3>
+<p><img alt="JSR" src="../assets/Bean_Validation_Cheat_Sheet_JSR.png" /></p>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <p>The examples in this guide use Hibernate Validator (the reference implementation for Bean Validation 1.1).</p>
 <p>Add Hibernate Validator to your <strong>pom.xml</strong>:</p>
-<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
-   <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.hibernate<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
-   <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>hibernate-validator<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
-   <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.2.4.Final<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
-</code></pre>
-<p>Enable bean validation support in Spring&apos;s <strong>context.xml</strong>:</p>
-<pre><code class="lang-xml">&lt;beans:beans ...
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;dependency&gt;</span>
+   <span class="nt">&lt;groupId&gt;</span>org.hibernate<span class="nt">&lt;/groupId&gt;</span>
+   <span class="nt">&lt;artifactId&gt;</span>hibernate-validator<span class="nt">&lt;/artifactId&gt;</span>
+   <span class="nt">&lt;version&gt;</span>5.2.4.Final<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div>
+
+
+<p>Enable bean validation support in Spring's <strong>context.xml</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;beans:beans</span> <span class="err">...</span>
+   <span class="err">...</span>
+   <span class="err">&lt;mvc:annotation-driven</span> <span class="nt">/&gt;</span>
    ...
-   &lt;mvc:annotation-driven /&gt;
-   ...
-&lt;/beans:beans&gt;
-</code></pre>
-<p>For more info, please see the <a href="https://hibernate.org/validator/documentation/getting-started/" target="_blank">setup guide</a></p>
-<h2 id="basics"><a name="basics" class="plugin-anchor" href="#basics"><i class="fa fa-link" aria-hidden="true"></i></a>Basics</h2>
+<span class="nt">&lt;/beans:beans&gt;</span>
+</code></pre></div>
+
+
+<p>For more info, please see the <a href="https://hibernate.org/validator/documentation/getting-started/">setup guide</a></p>
+<h2 id="basics">Basics<a class="headerlink" href="#basics" title="Permanent link">&para;</a></h2>
 <p>In order to get started using Bean Validation, you must add validation constraints (<code>@Pattern</code>, <code>@Digits</code>, <code>@Min</code>, <code>@Max</code>, <code>@Size</code>, <code>@Past</code>, <code>@Future</code>, <code>@CreditCardNumber</code>, <code>@Email</code>, <code>@URL</code>, etc.) to your model and then utilize the <code>@Valid</code> annotation when passing your model around in various application layers.</p>
 <p>Constraints can be applied in several places:</p>
 <ul>
@@ -1092,61 +1381,65 @@
 </ul>
 <p>For the sake of simplicity all the examples below feature field constraints and all validation is triggered by the controller. Refer to the Bean Validation documentation for a full list of examples.</p>
 <p>When it comes to error handling, the Hibernate Validator returns a <code>BindingResult</code> object which contains a <code>List&lt;ObjectError&gt;</code>. The examples below feature simplistic error handling, while a production ready application would have a more elaborate design that takes care of logging and error page redirection.</p>
-<h2 id="pre-defined-constraints"><a name="pre-defined-constraints" class="plugin-anchor" href="#pre-defined-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Pre-defined Constraints</h2>
-<h3 id="pattern"><a name="pattern" class="plugin-anchor" href="#pattern"><i class="fa fa-link" aria-hidden="true"></i></a>@Pattern</h3>
+<h2 id="pre-defined-constraints">Pre-defined Constraints<a class="headerlink" href="#pre-defined-constraints" title="Permanent link">&para;</a></h2>
+<h3 id="pattern">@Pattern<a class="headerlink" href="#pattern" title="Permanent link">&para;</a></h3>
 <p><strong>Annotation</strong>:</p>
 <p><code>@Pattern(regex=,flag=)</code></p>
 <p><strong>Data Type</strong>:</p>
 <p><code>CharSequence</code></p>
 <p><strong>Use</strong>:</p>
-<p>Checks if the annotated string matches the regular expression regex considering the given flag match. Please visit <a href="https://owasp.org/www-community/OWASP_Validation_Regex_Repository" target="_blank">OWASP Validation Regex Repository</a> for other useful regex&apos;s.</p>
+<p>Checks if the annotated string matches the regular expression regex considering the given flag match. Please visit <a href="https://owasp.org/www-community/OWASP_Validation_Regex_Repository">OWASP Validation Regex Repository</a> for other useful regex's.</p>
 <p><strong>Reference</strong>:</p>
-<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Pattern;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Pattern</span><span class="p">;</span>
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Article</span>  </span>{  
- <span class="hljs-comment">//Constraint: Alpha Numeric article titles only using a regular expression</span>
- <span class="hljs-meta">@Pattern</span>(regexp = <span class="hljs-string">&quot;[a-zA-Z0-9 ]&quot;</span>)
- <span class="hljs-keyword">private</span> String articleTitle;
- <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getArticleTitle</span><span class="hljs-params">()</span>  </span>{
-  <span class="hljs-keyword">return</span>  articleTitle;
- }  
- <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setArticleTitle</span><span class="hljs-params">(String  articleTitle)</span>  </span>{
-   <span class="hljs-keyword">this</span>.articleTitle  =  articleTitle;
-  }
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Article</span>  <span class="p">{</span>  
+ <span class="c1">//Constraint: Alpha Numeric article titles only using a regular expression</span>
+ <span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span> <span class="o">=</span> <span class="s">&quot;[a-zA-Z0-9 ]&quot;</span><span class="p">)</span>
+ <span class="kd">private</span> <span class="n">String</span> <span class="n">articleTitle</span><span class="p">;</span>
+ <span class="kd">public</span> <span class="n">String</span> <span class="nf">getArticleTitle</span><span class="p">()</span>  <span class="p">{</span>
+  <span class="k">return</span>  <span class="n">articleTitle</span><span class="p">;</span>
+ <span class="p">}</span>  
+ <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setArticleTitle</span><span class="p">(</span><span class="n">String</span>  <span class="n">articleTitle</span><span class="p">)</span>  <span class="p">{</span>
+   <span class="k">this</span><span class="p">.</span><span class="na">articleTitle</span>  <span class="o">=</span>  <span class="n">articleTitle</span><span class="p">;</span>
+  <span class="p">}</span>
 
-  ...
+  <span class="p">...</span>
 
-}
-</code></pre>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <p><strong>Controller</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> javax.validation.Valid;
-<span class="hljs-keyword">import</span> com.company.app.model.Article;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.company.app.model.Article</span><span class="p">;</span>
 
-<span class="hljs-meta">@Controller</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArticleController</span>  </span>{
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ArticleController</span>  <span class="p">{</span>
 
- ...
+ <span class="p">...</span>
 
- <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">&quot;/postArticle&quot;</span>,  method = RequestMethod.POST)
- <span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">postArticle</span><span class="hljs-params">(@Valid  Article  article,  BindingResult  result,  
- HttpServletResponse  response)</span> </span>{
-  <span class="hljs-keyword">if</span> (result.hasErrors()) {
-   String errorMessage  =  <span class="hljs-string">&quot;&quot;</span>;
-   response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-   List&lt;ObjectError&gt; errors = result.getAllErrors();
-   <span class="hljs-keyword">for</span>(ObjectError  e :  errors) {
-    errorMessage += <span class="hljs-string">&quot;ERROR: &quot;</span> +  e.getDefaultMessage();
-   }
-   <span class="hljs-keyword">return</span>  errorMessage;
-  } <span class="hljs-keyword">else</span> {
-   <span class="hljs-keyword">return</span>  <span class="hljs-string">&quot;Validation Successful&quot;</span>;  
-  }
- }
-}
-</code></pre>
-<h3 id="digits"><a name="digits" class="plugin-anchor" href="#digits"><i class="fa fa-link" aria-hidden="true"></i></a>@Digits</h3>
+ <span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/postArticle&quot;</span><span class="p">,</span>  <span class="n">method</span> <span class="o">=</span> <span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+ <span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span> <span class="nf">postArticle</span><span class="p">(</span><span class="nd">@Valid</span>  <span class="n">Article</span>  <span class="n">article</span><span class="p">,</span>  <span class="n">BindingResult</span>  <span class="n">result</span><span class="p">,</span>  
+ <span class="n">HttpServletResponse</span>  <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">())</span> <span class="p">{</span>
+   <span class="n">String</span> <span class="n">errorMessage</span>  <span class="o">=</span>  <span class="s">&quot;&quot;</span><span class="p">;</span>
+   <span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">);</span>
+   <span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectError</span><span class="o">&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">();</span>
+   <span class="k">for</span><span class="p">(</span><span class="n">ObjectError</span>  <span class="n">e</span> <span class="p">:</span>  <span class="n">errors</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">errorMessage</span> <span class="o">+=</span> <span class="s">&quot;ERROR: &quot;</span> <span class="o">+</span>  <span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
+   <span class="p">}</span>
+   <span class="k">return</span>  <span class="n">errorMessage</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+   <span class="k">return</span>  <span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>  
+  <span class="p">}</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="digits">@Digits<a class="headerlink" href="#digits" title="Permanent link">&para;</a></h3>
 <p><strong>Annotation</strong>:</p>
 <p><code>@Digits(integer=,fraction=)</code></p>
 <p><strong>Data Type</strong>:</p>
@@ -1154,112 +1447,120 @@
 <p><strong>Use</strong>:</p>
 <p>Checks whether the annotated value is a number having up to integer digits and fraction fractional digits</p>
 <p><strong>Reference</strong>:</p>
-<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Digits;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Digits</span><span class="p">;</span>
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Customer</span> </span>{
-  <span class="hljs-comment">//Constraint: Age can only be 3 digits long or less</span>
-  <span class="hljs-meta">@Digits</span>(integer = <span class="hljs-number">3</span>, fraction = <span class="hljs-number">0</span>)
-  <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customer</span> <span class="p">{</span>
+  <span class="c1">//Constraint: Age can only be 3 digits long or less</span>
+  <span class="nd">@Digits</span><span class="p">(</span><span class="n">integer</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">fraction</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="p">;</span>
 
-  <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getAge</span><span class="hljs-params">()</span>  </span>{
-    <span class="hljs-keyword">return</span> age;
-  }
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getAge</span><span class="p">()</span>  <span class="p">{</span>
+    <span class="k">return</span> <span class="n">age</span><span class="p">;</span>
+  <span class="p">}</span>
 
-  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAge</span><span class="hljs-params">(String age)</span>  </span>{
-      <span class="hljs-keyword">this</span>.age = age;
-    }
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="p">(</span><span class="n">String</span> <span class="n">age</span><span class="p">)</span>  <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    ...
-}
-</code></pre>
+    <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <p><strong>Controller</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> javax.validation.Valid;
-<span class="hljs-keyword">import</span> com.company.app.model.Customer;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.company.app.model.Customer</span><span class="p">;</span>
 
-<span class="hljs-meta">@Controller</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomerController</span>  </span>{
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerController</span>  <span class="p">{</span>
 
- ...
+ <span class="p">...</span>
 
- <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">&quot;/registerCustomer&quot;</span>,  method = RequestMethod.POST)
- <span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">registerCustomer</span><span class="hljs-params">(@Valid Customer customer, BindingResult result,  
- HttpServletResponse  response)</span> </span>{
+ <span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/registerCustomer&quot;</span><span class="p">,</span>  <span class="n">method</span> <span class="o">=</span> <span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+ <span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span> <span class="nf">registerCustomer</span><span class="p">(</span><span class="nd">@Valid</span> <span class="n">Customer</span> <span class="n">customer</span><span class="p">,</span> <span class="n">BindingResult</span> <span class="n">result</span><span class="p">,</span>  
+ <span class="n">HttpServletResponse</span>  <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
 
-  <span class="hljs-keyword">if</span> (result.hasErrors()) {
-   String errorMessage = <span class="hljs-string">&quot;&quot;</span>;
-   response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-   List&lt;ObjectError&gt; errors = result.getAllErrors();
+  <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">())</span> <span class="p">{</span>
+   <span class="n">String</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+   <span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">);</span>
+   <span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectError</span><span class="o">&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">();</span>
 
-   <span class="hljs-keyword">for</span>( ObjectError  e :  errors) {
-    errorMessage += <span class="hljs-string">&quot;ERROR: &quot;</span>  +  e.getDefaultMessage();
-   }
-   <span class="hljs-keyword">return</span>  errorMessage;
-  } <span class="hljs-keyword">else</span> {
-   <span class="hljs-keyword">return</span>  <span class="hljs-string">&quot;Validation Successful&quot;</span>;
-  }
- }
-}
-</code></pre>
-<h3 id="size"><a name="size" class="plugin-anchor" href="#size"><i class="fa fa-link" aria-hidden="true"></i></a>@Size</h3>
+   <span class="k">for</span><span class="p">(</span> <span class="n">ObjectError</span>  <span class="n">e</span> <span class="p">:</span>  <span class="n">errors</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">errorMessage</span> <span class="o">+=</span> <span class="s">&quot;ERROR: &quot;</span>  <span class="o">+</span>  <span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
+   <span class="p">}</span>
+   <span class="k">return</span>  <span class="n">errorMessage</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+   <span class="k">return</span>  <span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="size">@Size<a class="headerlink" href="#size" title="Permanent link">&para;</a></h3>
 <p><strong>Annotation</strong>:</p>
 <p><code>@Size(min=,</code> <code>max=)</code></p>
 <p><strong>Data Type</strong>:</p>
 <p><code>CharSequence</code>, <code>Collection</code>, <code>Map</code> and <code>Arrays</code></p>
 <p><strong>Use</strong>:</p>
-<p>Checks if the annotated element&apos;s size is between min and max (inclusive)</p>
+<p>Checks if the annotated element's size is between min and max (inclusive)</p>
 <p><strong>Reference</strong>:</p>
-<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Size;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Size</span><span class="p">;</span>
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Message</span> </span>{
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Message</span> <span class="p">{</span>
 
-   <span class="hljs-comment">//Constraint: Message must be at least 10 characters long, but less than 500</span>
-   <span class="hljs-meta">@Size</span>(min = <span class="hljs-number">10</span>, max = <span class="hljs-number">500</span>)
-   <span class="hljs-keyword">private</span> String message;
+   <span class="c1">//Constraint: Message must be at least 10 characters long, but less than 500</span>
+   <span class="nd">@Size</span><span class="p">(</span><span class="n">min</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">500</span><span class="p">)</span>
+   <span class="kd">private</span> <span class="n">String</span> <span class="n">message</span><span class="p">;</span>
 
-   <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getMessage</span><span class="hljs-params">()</span> </span>{
-      <span class="hljs-keyword">return</span> message;
-   }
+   <span class="kd">public</span> <span class="n">String</span> <span class="nf">getMessage</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">message</span><span class="p">;</span>
+   <span class="p">}</span>
 
-   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMessage</span><span class="hljs-params">(String message)</span> </span>{
-      <span class="hljs-keyword">this</span>.message = message;
-   }
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMessage</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="na">message</span> <span class="o">=</span> <span class="n">message</span><span class="p">;</span>
+   <span class="p">}</span>
 
-...
-}
-</code></pre>
+<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <p><strong>Controller</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> javax.validation.Valid;
-<span class="hljs-keyword">import</span> com.company.app.model.Message;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.company.app.model.Message</span><span class="p">;</span>
 
-<span class="hljs-meta">@Controller</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MessageController</span> </span>{
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MessageController</span> <span class="p">{</span>
 
-...
+<span class="p">...</span>
 
-<span class="hljs-meta">@RequestMapping</span>(value=<span class="hljs-string">&quot;/sendMessage&quot;</span>, method=RequestMethod.POST)
-<span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">sendMessage</span><span class="hljs-params">(@Valid Message message, BindingResult result,
-HttpServletResponse response)</span></span>{
+<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;/sendMessage&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+<span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span> <span class="nf">sendMessage</span><span class="p">(</span><span class="nd">@Valid</span> <span class="n">Message</span> <span class="n">message</span><span class="p">,</span> <span class="n">BindingResult</span> <span class="n">result</span><span class="p">,</span>
+<span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">){</span>
 
-   <span class="hljs-keyword">if</span>(result.hasErrors()){
-      String errorMessage = <span class="hljs-string">&quot;&quot;</span>;
-      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      List&lt;ObjectError&gt; errors = result.getAllErrors();
-      <span class="hljs-keyword">for</span>( ObjectError e : errors){
-         errorMessage+= <span class="hljs-string">&quot;ERROR: &quot;</span> + e.getDefaultMessage();
-      }
-      <span class="hljs-keyword">return</span> errorMessage;
-   }
-   <span class="hljs-keyword">else</span>{
-      <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Validation Successful&quot;</span>;
-   }
-}
-}
-</code></pre>
-<h3 id="past--future"><a name="past--future" class="plugin-anchor" href="#past--future"><i class="fa fa-link" aria-hidden="true"></i></a>@Past / @Future</h3>
+   <span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">()){</span>
+      <span class="n">String</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+      <span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">);</span>
+      <span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectError</span><span class="o">&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">();</span>
+      <span class="k">for</span><span class="p">(</span> <span class="n">ObjectError</span> <span class="n">e</span> <span class="p">:</span> <span class="n">errors</span><span class="p">){</span>
+         <span class="n">errorMessage</span><span class="o">+=</span> <span class="s">&quot;ERROR: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="n">errorMessage</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="k">else</span><span class="p">{</span>
+      <span class="k">return</span> <span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="past-future">@Past / @Future<a class="headerlink" href="#past-future" title="Permanent link">&para;</a></h3>
 <p><strong>Annotation</strong>:</p>
 <p><code>@Past,</code> <code>@Future</code></p>
 <p><strong>Data Type</strong>:</p>
@@ -1267,69 +1568,73 @@ HttpServletResponse response)</span></span>{
 <p><strong>Use</strong>:</p>
 <p>Checks whether the annotated date is in the past / future</p>
 <p><strong>Reference</strong>:</p>
-<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Past;
-<span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Future;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Past</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Future</span><span class="p">;</span>
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DoctorVisit</span> </span>{
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DoctorVisit</span> <span class="p">{</span>
 
-   <span class="hljs-comment">//Constraint: Birthdate must be in the past</span>
-   <span class="hljs-meta">@Past</span>
-   <span class="hljs-keyword">private</span> Date birthDate;
+   <span class="c1">//Constraint: Birthdate must be in the past</span>
+   <span class="nd">@Past</span>
+   <span class="kd">private</span> <span class="n">Date</span> <span class="n">birthDate</span><span class="p">;</span>
 
-   <span class="hljs-function"><span class="hljs-keyword">public</span> Date <span class="hljs-title">getBirthDate</span><span class="hljs-params">()</span> </span>{
-      <span class="hljs-keyword">return</span> birthDate;
-   }
+   <span class="kd">public</span> <span class="n">Date</span> <span class="nf">getBirthDate</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">birthDate</span><span class="p">;</span>
+   <span class="p">}</span>
 
-   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setBirthDate</span><span class="hljs-params">(Date birthDate)</span> </span>{
-      <span class="hljs-keyword">this</span>.birthDate = birthDate;
-   }
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setBirthDate</span><span class="p">(</span><span class="n">Date</span> <span class="n">birthDate</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="na">birthDate</span> <span class="o">=</span> <span class="n">birthDate</span><span class="p">;</span>
+   <span class="p">}</span>
 
-   <span class="hljs-comment">//Constraint: Schedule visit date must be in the future</span>
-   <span class="hljs-meta">@Future</span>
-   <span class="hljs-keyword">private</span> String scheduledVisitDate;
+   <span class="c1">//Constraint: Schedule visit date must be in the future</span>
+   <span class="nd">@Future</span>
+   <span class="kd">private</span> <span class="n">String</span> <span class="n">scheduledVisitDate</span><span class="p">;</span>
 
-   <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getScheduledVisitDate</span><span class="hljs-params">()</span> </span>{
-      <span class="hljs-keyword">return</span> scheduledVisitDate;
-   }
+   <span class="kd">public</span> <span class="n">String</span> <span class="nf">getScheduledVisitDate</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">scheduledVisitDate</span><span class="p">;</span>
+   <span class="p">}</span>
 
-   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setScheduledVisitDate</span><span class="hljs-params">(String scheduledVisitDate)</span> </span>{
-      <span class="hljs-keyword">this</span>.scheduledVisitDate = scheduledVisitDate;
-   }
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setScheduledVisitDate</span><span class="p">(</span><span class="n">String</span> <span class="n">scheduledVisitDate</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="na">scheduledVisitDate</span> <span class="o">=</span> <span class="n">scheduledVisitDate</span><span class="p">;</span>
+   <span class="p">}</span>
 
-...
-}
-</code></pre>
+<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <p><strong>Controller</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> javax.validation.Valid;
-<span class="hljs-keyword">import</span> com.company.app.model.DoctorVisit;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.company.app.model.DoctorVisit</span><span class="p">;</span>
 
-<span class="hljs-meta">@Controller</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DoctorVisitController</span> </span>{
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DoctorVisitController</span> <span class="p">{</span>
 
-   ...
+   <span class="p">...</span>
 
-   <span class="hljs-meta">@RequestMapping</span>(value=<span class="hljs-string">&quot;/scheduleVisit&quot;</span>, method=RequestMethod.POST)
-   <span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">scheduleVisit</span><span class="hljs-params">(@Valid DoctorVisit doctorvisit, BindingResult result,
-   HttpServletResponse response)</span></span>{
+   <span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;/scheduleVisit&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+   <span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span> <span class="nf">scheduleVisit</span><span class="p">(</span><span class="nd">@Valid</span> <span class="n">DoctorVisit</span> <span class="n">doctorvisit</span><span class="p">,</span> <span class="n">BindingResult</span> <span class="n">result</span><span class="p">,</span>
+   <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">){</span>
 
-      <span class="hljs-keyword">if</span>(result.hasErrors()){
-         String errorMessage = <span class="hljs-string">&quot;&quot;</span>;
-         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-         List&lt;ObjectError&gt; errors = result.getAllErrors();
-         <span class="hljs-keyword">for</span>( ObjectError e : errors){
-            errorMessage+= <span class="hljs-string">&quot;ERROR: &quot;</span> + e.getDefaultMessage();
-         }
-         <span class="hljs-keyword">return</span> errorMessage;
-      }
-      <span class="hljs-keyword">else</span>{
-         <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Validation Successful&quot;</span>;
-      }
-   }
-}
-</code></pre>
-<h3 id="combining-constraints"><a name="combining-constraints" class="plugin-anchor" href="#combining-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Combining Constraints</h3>
+      <span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">()){</span>
+         <span class="n">String</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+         <span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">);</span>
+         <span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectError</span><span class="o">&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">();</span>
+         <span class="k">for</span><span class="p">(</span> <span class="n">ObjectError</span> <span class="n">e</span> <span class="p">:</span> <span class="n">errors</span><span class="p">){</span>
+            <span class="n">errorMessage</span><span class="o">+=</span> <span class="s">&quot;ERROR: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
+         <span class="p">}</span>
+         <span class="k">return</span> <span class="n">errorMessage</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">else</span><span class="p">{</span>
+         <span class="k">return</span> <span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="combining-constraints">Combining Constraints<a class="headerlink" href="#combining-constraints" title="Permanent link">&para;</a></h3>
 <p>Validation annotations can be combined in any suitable way. For instance, to specify a valid reviewRating value between 1 and 5, specify the validation like this :</p>
 <p><strong>Annotation</strong>:</p>
 <p><code>@Min(value=),</code> <code>@Max(value=)</code></p>
@@ -1338,59 +1643,63 @@ HttpServletResponse response)</span></span>{
 <p><strong>Use</strong>:</p>
 <p>Checks whether the annotated value is higher/lower than or equal to the specified minimum</p>
 <p><strong>Reference:</strong></p>
-<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints" target="_blank">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Min;
-<span class="hljs-keyword">import</span> org.hibernate.validator.constraints.Max;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Min</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Max</span><span class="p">;</span>
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Review</span> </span>{
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Review</span> <span class="p">{</span>
 
- <span class="hljs-comment">//Constraint: Review rating must be between 1 and 5</span>
- <span class="hljs-meta">@Min</span>(<span class="hljs-number">1</span>)
- <span class="hljs-meta">@Max</span>(<span class="hljs-number">5</span>)
- <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> reviewRating;
+ <span class="c1">//Constraint: Review rating must be between 1 and 5</span>
+ <span class="nd">@Min</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+ <span class="nd">@Max</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+ <span class="kd">private</span> <span class="kt">int</span> <span class="n">reviewRating</span><span class="p">;</span>
 
- <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getReviewRating</span><span class="hljs-params">()</span> </span>{
-   <span class="hljs-keyword">return</span> reviewRating;
- }
+ <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getReviewRating</span><span class="p">()</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="n">reviewRating</span><span class="p">;</span>
+ <span class="p">}</span>
 
- <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setReviewRating</span><span class="hljs-params">(<span class="hljs-keyword">int</span> reviewRating)</span> </span>{
-   <span class="hljs-keyword">this</span>.reviewRating = reviewRating;
-}
- ...
-}
-</code></pre>
+ <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setReviewRating</span><span class="p">(</span><span class="kt">int</span> <span class="n">reviewRating</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">this</span><span class="p">.</span><span class="na">reviewRating</span> <span class="o">=</span> <span class="n">reviewRating</span><span class="p">;</span>
+<span class="p">}</span>
+ <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <p><strong>Controller</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> javax.validation.Valid;
-<span class="hljs-keyword">import</span> com.company.app.model.ReviewRating;
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.company.app.model.ReviewRating</span><span class="p">;</span>
 
-<span class="hljs-meta">@Controller</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ReviewController</span> </span>{
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReviewController</span> <span class="p">{</span>
 
-   ...
+   <span class="p">...</span>
 
-   <span class="hljs-meta">@RequestMapping</span>(value=<span class="hljs-string">&quot;/postReview&quot;</span>, method=RequestMethod.POST)
-   <span class="hljs-keyword">public</span> <span class="hljs-meta">@ResponseBody</span> <span class="hljs-function">String <span class="hljs-title">postReview</span><span class="hljs-params">(@Valid Review review, BindingResult result,
-   HttpServletResponse response)</span></span>{
+   <span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s">&quot;/postReview&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+   <span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span> <span class="nf">postReview</span><span class="p">(</span><span class="nd">@Valid</span> <span class="n">Review</span> <span class="n">review</span><span class="p">,</span> <span class="n">BindingResult</span> <span class="n">result</span><span class="p">,</span>
+   <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">){</span>
 
-      <span class="hljs-keyword">if</span>(result.hasErrors()){
-         String errorMessage = <span class="hljs-string">&quot;&quot;</span>;
-         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-         List&lt;ObjectError&gt; errors = result.getAllErrors();
-         <span class="hljs-keyword">for</span>( ObjectError e : errors){
-            errorMessage+= <span class="hljs-string">&quot;ERROR: &quot;</span> + e.getDefaultMessage();
-         }
-         <span class="hljs-keyword">return</span> errorMessage;
-      }
-       <span class="hljs-keyword">else</span>{
-         <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Validation Successful&quot;</span>;
-      }
-   }
-}
-</code></pre>
-<h3 id="cascading-constraints"><a name="cascading-constraints" class="plugin-anchor" href="#cascading-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Cascading Constraints</h3>
-<p>Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch03.html#_cascaded_validation" target="_blank">@Valid</a></p>
-<h3 id="additional-constraints"><a name="additional-constraints" class="plugin-anchor" href="#additional-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Additional Constraints</h3>
+      <span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">()){</span>
+         <span class="n">String</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+         <span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">);</span>
+         <span class="n">List</span><span class="o">&lt;</span><span class="n">ObjectError</span><span class="o">&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="na">getAllErrors</span><span class="p">();</span>
+         <span class="k">for</span><span class="p">(</span> <span class="n">ObjectError</span> <span class="n">e</span> <span class="p">:</span> <span class="n">errors</span><span class="p">){</span>
+            <span class="n">errorMessage</span><span class="o">+=</span> <span class="s">&quot;ERROR: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">.</span><span class="na">getDefaultMessage</span><span class="p">();</span>
+         <span class="p">}</span>
+         <span class="k">return</span> <span class="n">errorMessage</span><span class="p">;</span>
+      <span class="p">}</span>
+       <span class="k">else</span><span class="p">{</span>
+         <span class="k">return</span> <span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>
+      <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h3 id="cascading-constraints">Cascading Constraints<a class="headerlink" href="#cascading-constraints" title="Permanent link">&para;</a></h3>
+<p>Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch03.html#_cascaded_validation">@Valid</a></p>
+<h3 id="additional-constraints">Additional Constraints<a class="headerlink" href="#additional-constraints" title="Permanent link">&para;</a></h3>
 <p>In addition to providing the complete set of JSR303 constraints, Hibernate Validator also defines some additional constraints for convenience:</p>
 <ul>
 <li><code>@CreditCardNumber</code></li>
@@ -1402,93 +1711,103 @@ HttpServletResponse response)</span></span>{
 <li><code>@ScriptAssert</code></li>
 <li><code>@URL</code></li>
 </ul>
-<p>Take a look at this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints" target="_blank">table</a> for the complete list.</p>
-<h2 id="custom-constraints"><a name="custom-constraints" class="plugin-anchor" href="#custom-constraints"><i class="fa fa-link" aria-hidden="true"></i></a>Custom Constraints</h2>
+<p>Take a look at this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints">table</a> for the complete list.</p>
+<h2 id="custom-constraints">Custom Constraints<a class="headerlink" href="#custom-constraints" title="Permanent link">&para;</a></h2>
 <p>One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built in constraints.</p>
-<p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html" target="_blank">documentation</a>.</p>
-<h2 id="error-messages"><a name="error-messages" class="plugin-anchor" href="#error-messages"><i class="fa fa-link" aria-hidden="true"></i></a>Error Messages</h2>
+<p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html">documentation</a>.</p>
+<h2 id="error-messages">Error Messages<a class="headerlink" href="#error-messages" title="Permanent link">&para;</a></h2>
 <p>It is possible to specify a message ID with the validation annotation, so that error messages are customized :</p>
-<pre><code class="lang-java"><span class="hljs-meta">@Pattern</span>(regexp = <span class="hljs-string">&quot;[a-zA-Z0-9 ]&quot;</span>, message=<span class="hljs-string">&quot;article.title.error&quot;</span>)
-<span class="hljs-keyword">private</span> String articleTitle;
-</code></pre>
-<p>Spring MVC will then look up a message with id <em>article.title.error</em> in a defined MessageSource. More on this <a href="https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/" target="_blank">documentation</a>.</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span> <span class="o">=</span> <span class="s">&quot;[a-zA-Z0-9 ]&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">&quot;article.title.error&quot;</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="n">articleTitle</span><span class="p">;</span>
+</code></pre></div>
 
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
 
-                        </div>
-                    </div>
+<p>Spring MVC will then look up a message with id <em>article.title.error</em> in a defined MessageSource. More on this <a href="https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/">documentation</a>.</p>
                 
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
-
-            
-                
-                <a href="Authorization_Testing_Automation.html" class="navigation navigation-prev " aria-label="Previous page: Authorization Testing Automation">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="C-Based_Toolchain_Hardening.html" class="navigation navigation-next " aria-label="Next page: C-Based Toolchain Hardening">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Authorization Testing Automation
+              </div>
+            </div>
+          </a>
         
+        
+          <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Choosing and Using Security Questions
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Bean Validation ","level":"1.11","depth":1,"next":{"title":"C-Based Toolchain Hardening","level":"1.12","depth":1,"path":"cheatsheets/C-Based_Toolchain_Hardening.md","ref":"cheatsheets/C-Based_Toolchain_Hardening.md","articles":[]},"previous":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Bean_Validation_Cheat_Sheet.md","mtime":"2020-05-27T19:41:37.100Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-27T19:42:04.146Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
-
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-

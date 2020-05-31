@@ -1,0 +1,2297 @@
+---
+redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
+---
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>Injection Prevention in Java</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#injection-prevention-cheat-sheet-in-java" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Injection Prevention in Java
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" title="Index Alphabetical" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" title="Index ASVS" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" title="Index Proactive Controls" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" title="AJAX Security" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" title="Abuse Case" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" title="Access Control" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" title="Clickjacking Defense" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" title="Content Security Policy" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" title="Cross-Site Request Forgery Prevention" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" title="Cryptographic Storage" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" title="Database Security" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" title="Denial of Service" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" title="Deserialization" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" title="Docker Security" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" title="DotNet Security" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" title="Error Handling" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" title="File Upload" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" title="Forgot Password" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" title="HTML5 Security" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" title="HTTP Strict Transport Security" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Injection Prevention in Java
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" title="Injection Prevention in Java" class="md-nav__link md-nav__link--active">
+      Injection Prevention in Java
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-injection" class="md-nav__link">
+    What is Injection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-advices-to-prevent-injection" class="md-nav__link">
+    General advices to prevent Injection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specific-injection-types" class="md-nav__link">
+    Specific Injection types
+  </a>
+  
+    <nav class="md-nav" aria-label="Specific Injection types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    SQL
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jpa" class="md-nav__link">
+    JPA
+  </a>
+  
+    <nav class="md-nav" aria-label="JPA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_1" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_1" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_1" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-system" class="md-nav__link">
+    Operating System
+  </a>
+  
+    <nav class="md-nav" aria-label="Operating System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_2" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_2" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_2" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xml-xpath-injection" class="md-nav__link">
+    XML: XPath Injection
+  </a>
+  
+    <nav class="md-nav" aria-label="XML: XPath Injection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_3" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_3" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_3" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_3" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#htmljavascriptcss" class="md-nav__link">
+    HTML/JavaScript/CSS
+  </a>
+  
+    <nav class="md-nav" aria-label="HTML/JavaScript/CSS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_4" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_4" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_4" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_4" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap" class="md-nav__link">
+    LDAP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nosql" class="md-nav__link">
+    NoSQL
+  </a>
+  
+    <nav class="md-nav" aria-label="NoSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_5" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_5" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-mongodb" class="md-nav__link">
+    Example - MongoDB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_5" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-injection" class="md-nav__link">
+    Log Injection
+  </a>
+  
+    <nav class="md-nav" aria-label="Log Injection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_6" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_6" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-using-log4j2" class="md-nav__link">
+    Example using Log4j2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-using-logback-with-the-owasp-security-logging-library" class="md-nav__link">
+    Example using Logback with the OWASP Security Logging library
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_6" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" title="Insecure Direct Object Reference Prevention" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" title="JAAS" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" title="JSON Web Token for Java" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" title="Key Management" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" title="LDAP Injection Prevention" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" title="Mass Assignment" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" title="Multifactor Authentication" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" title="Nodejs Security" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" title="OS Command Injection Defense" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" title="PHP Configuration" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" title="Password Storage" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" title="Pinning" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" title="Query Parameterization" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" title="REST Assessment" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" title="REST Security" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" title="Ruby on Rails" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" title="SQL Injection Prevention" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" title="Server Side Request Forgery Prevention" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" title="TLS Cipher String" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" title="Third Party Javascript Management" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" title="Threat Modeling" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" title="Transport Layer Protection" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" title="User Privacy Protection" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" title="Virtual Patching" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" title="Vulnerability Disclosure" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" title="Vulnerable Dependency Management" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" title="XML External Entity Prevention" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-injection" class="md-nav__link">
+    What is Injection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-advices-to-prevent-injection" class="md-nav__link">
+    General advices to prevent Injection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specific-injection-types" class="md-nav__link">
+    Specific Injection types
+  </a>
+  
+    <nav class="md-nav" aria-label="Specific Injection types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    SQL
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jpa" class="md-nav__link">
+    JPA
+  </a>
+  
+    <nav class="md-nav" aria-label="JPA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_1" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_1" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_1" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_1" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-system" class="md-nav__link">
+    Operating System
+  </a>
+  
+    <nav class="md-nav" aria-label="Operating System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_2" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_2" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_2" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_2" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xml-xpath-injection" class="md-nav__link">
+    XML: XPath Injection
+  </a>
+  
+    <nav class="md-nav" aria-label="XML: XPath Injection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_3" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_3" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_3" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_3" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#htmljavascriptcss" class="md-nav__link">
+    HTML/JavaScript/CSS
+  </a>
+  
+    <nav class="md-nav" aria-label="HTML/JavaScript/CSS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_4" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_4" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example_4" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_4" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ldap" class="md-nav__link">
+    LDAP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nosql" class="md-nav__link">
+    NoSQL
+  </a>
+  
+    <nav class="md-nav" aria-label="NoSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_5" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_5" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-mongodb" class="md-nav__link">
+    Example - MongoDB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_5" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-injection" class="md-nav__link">
+    Log Injection
+  </a>
+  
+    <nav class="md-nav" aria-label="Log Injection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptom_6" class="md-nav__link">
+    Symptom
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-prevent_6" class="md-nav__link">
+    How to prevent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-using-log4j2" class="md-nav__link">
+    Example using Log4j2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-using-logback-with-the-owasp-security-logging-library" class="md-nav__link">
+    Example using Logback with the OWASP Security Logging library
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_6" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="injection-prevention-cheat-sheet-in-java">Injection Prevention Cheat Sheet in Java<a class="headerlink" href="#injection-prevention-cheat-sheet-in-java" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This document has for objective to provide some tips to handle <em>Injection</em> into Java application code.</p>
+<p>Sample codes used in tips are located <a href="https://github.com/righettod/injection-cheat-sheets">here</a>.</p>
+<h2 id="what-is-injection">What is Injection<a class="headerlink" href="#what-is-injection" title="Permanent link">&para;</a></h2>
+<p><a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection">Injection</a> in OWASP Top 10 is defined as following:</p>
+<p><em>Consider anyone who can send untrusted data to the system, including external users, internal users, and administrators.</em></p>
+<h2 id="general-advices-to-prevent-injection">General advices to prevent Injection<a class="headerlink" href="#general-advices-to-prevent-injection" title="Permanent link">&para;</a></h2>
+<p>The following point can be applied, in a general way, to prevent <em>Injection</em> issue:</p>
+<ol>
+<li>Apply <strong>Input Validation</strong> (using whitelist approach) combined with <strong>Output Sanitizing+Escaping</strong> on user input/output.</li>
+<li>If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.</li>
+</ol>
+<p>Additional advices are provided on this <a href="Input_Validation_Cheat_Sheet.html">cheatsheet</a>.</p>
+<h2 id="specific-injection-types">Specific Injection types<a class="headerlink" href="#specific-injection-types" title="Permanent link">&para;</a></h2>
+<p><em>Examples in this section will be provided in Java technology (see Maven project associated) but advices are applicable to others technologies like .Net / PHP / Ruby / Python...</em></p>
+<h3 id="sql">SQL<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h3>
+<h4 id="symptom">Symptom<a class="headerlink" href="#symptom" title="Permanent link">&para;</a></h4>
+<p>Injection of this type occur when the application use untrusted user input to build a SQL query using a String and execute it.</p>
+<h4 id="how-to-prevent">How to prevent<a class="headerlink" href="#how-to-prevent" title="Permanent link">&para;</a></h4>
+<p>Use <em>Query Parameterization</em> in order to prevent injection.</p>
+<h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="cm">/*No DB framework used here in order to show the real use of</span>
+<span class="cm">  Prepared Statement from Java API*/</span>
+<span class="cm">/*Open connection with H2 database and use it*/</span>
+<span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;org.h2.Driver&quot;</span><span class="p">);</span>
+<span class="n">String</span> <span class="n">jdbcUrl</span> <span class="o">=</span> <span class="s">&quot;jdbc:h2:file:&quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">).</span><span class="na">getAbsolutePath</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;/target/db&quot;</span><span class="p">;</span>
+<span class="k">try</span> <span class="p">(</span><span class="n">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">jdbcUrl</span><span class="p">))</span> <span class="p">{</span>
+
+    <span class="cm">/* Sample A: Select data using Prepared Statement*/</span>
+    <span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;select * from color where friendly_name = ?&quot;</span><span class="p">;</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">colors</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+    <span class="k">try</span> <span class="p">(</span><span class="n">PreparedStatement</span> <span class="n">pStatement</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;yellow&quot;</span><span class="p">);</span>
+        <span class="k">try</span> <span class="p">(</span><span class="n">ResultSet</span> <span class="n">rSet</span> <span class="o">=</span> <span class="n">pStatement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">rSet</span><span class="p">.</span><span class="na">next</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">colors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">rSet</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">colors</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">colors</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;yellow&quot;</span><span class="p">));</span>
+
+    <span class="cm">/* Sample B: Insert data using Prepared Statement*/</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;insert into color(friendly_name, red, green, blue) values(?, ?, ?, ?)&quot;</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">insertedRecordCount</span><span class="p">;</span>
+    <span class="k">try</span> <span class="p">(</span><span class="n">PreparedStatement</span> <span class="n">pStatement</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">);</span>
+        <span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">239</span><span class="p">);</span>
+        <span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">125</span><span class="p">);</span>
+        <span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">11</span><span class="p">);</span>
+        <span class="n">insertedRecordCount</span> <span class="o">=</span> <span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">insertedRecordCount</span><span class="p">);</span>
+
+   <span class="cm">/* Sample C: Update data using Prepared Statement*/</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;update color set blue = ? where friendly_name = ?&quot;</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">updatedRecordCount</span><span class="p">;</span>
+    <span class="k">try</span> <span class="p">(</span><span class="n">PreparedStatement</span> <span class="n">pStatement</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+        <span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">);</span>
+        <span class="n">updatedRecordCount</span> <span class="o">=</span> <span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">updatedRecordCount</span><span class="p">);</span>
+
+   <span class="cm">/* Sample D: Delete data using Prepared Statement*/</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;delete from color where friendly_name = ?&quot;</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">deletedRecordCount</span><span class="p">;</span>
+    <span class="k">try</span> <span class="p">(</span><span class="n">PreparedStatement</span> <span class="n">pStatement</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;orange&quot;</span><span class="p">);</span>
+        <span class="n">deletedRecordCount</span> <span class="o">=</span> <span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">deletedRecordCount</span><span class="p">);</span>
+
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a></li>
+</ul>
+<h3 id="jpa">JPA<a class="headerlink" href="#jpa" title="Permanent link">&para;</a></h3>
+<h4 id="symptom_1">Symptom<a class="headerlink" href="#symptom_1" title="Permanent link">&para;</a></h4>
+<p>Injection of this type occur when the application use untrusted user input to build a JPA query using a String and execute it. It's quite similar to SQL injection but here the altered language is not SQL but JPA QL.</p>
+<h4 id="how-to-prevent_1">How to prevent<a class="headerlink" href="#how-to-prevent_1" title="Permanent link">&para;</a></h4>
+<p>Use Java Persistence Query Language <strong>Query Parameterization</strong> in order to prevent injection.</p>
+<h4 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="n">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="cm">/* Get a ref on EntityManager to access DB */</span>
+    <span class="n">entityManager</span> <span class="o">=</span> <span class="n">Persistence</span><span class="p">.</span><span class="na">createEntityManagerFactory</span><span class="p">(</span><span class="s">&quot;testJPA&quot;</span><span class="p">).</span><span class="na">createEntityManager</span><span class="p">();</span>
+
+    <span class="cm">/* Define parameterized query prototype using named parameter to enhance readability */</span>
+    <span class="n">String</span> <span class="n">queryPrototype</span> <span class="o">=</span> <span class="s">&quot;select c from Color c where c.friendlyName = :colorName&quot;</span><span class="p">;</span>
+
+    <span class="cm">/* Create the query, set the named parameter and execute the query */</span>
+    <span class="n">Query</span> <span class="n">queryObject</span> <span class="o">=</span> <span class="n">entityManager</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="n">queryPrototype</span><span class="p">);</span>
+    <span class="n">Color</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">Color</span><span class="p">)</span> <span class="n">queryObject</span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;colorName&quot;</span><span class="p">,</span> <span class="s">&quot;yellow&quot;</span><span class="p">).</span><span class="na">getSingleResult</span><span class="p">();</span>
+
+    <span class="cm">/* Ensure that the object obtained is the right one */</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="na">assertNotNull</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getFriendlyName</span><span class="p">(),</span> <span class="s">&quot;yellow&quot;</span><span class="p">);</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getRed</span><span class="p">(),</span> <span class="mi">213</span><span class="p">);</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getGreen</span><span class="p">(),</span> <span class="mi">242</span><span class="p">);</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getBlue</span><span class="p">(),</span> <span class="mi">26</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">entityManager</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">entityManager</span><span class="p">.</span><span class="na">isOpen</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">entityManager</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h4 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="https://software-security.sans.org/developer-how-to/fix-sql-injection-in-java-persistence-api-jpa">SQLi and JPA</a></li>
+</ul>
+<h3 id="operating-system">Operating System<a class="headerlink" href="#operating-system" title="Permanent link">&para;</a></h3>
+<h4 id="symptom_2">Symptom<a class="headerlink" href="#symptom_2" title="Permanent link">&para;</a></h4>
+<p>Injection of this type occur when the application use untrusted user input to build a Operating System command using a String and execute it.</p>
+<h4 id="how-to-prevent_2">How to prevent<a class="headerlink" href="#how-to-prevent_2" title="Permanent link">&para;</a></h4>
+<p>Use technology stack <strong>API</strong> in order to prevent injection.</p>
+<h4 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="cm">/* The context taken is, for example, to perform a PING against a computer.</span>
+<span class="cm">* The prevention is to use the feature provided by the Java API instead of building</span>
+<span class="cm">* a system command as String and execute it */</span>
+<span class="n">InetAddress</span> <span class="n">host</span> <span class="o">=</span> <span class="n">InetAddress</span><span class="p">.</span><span class="na">getByName</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">);</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">host</span><span class="p">.</span><span class="na">isReachable</span><span class="p">(</span><span class="mi">5000</span><span class="p">));</span>
+</code></pre></div>
+
+
+<h4 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="https://owasp.org/www-community/attacks/Command_Injection">Command Injection</a></li>
+</ul>
+<h3 id="xml-xpath-injection">XML: XPath Injection<a class="headerlink" href="#xml-xpath-injection" title="Permanent link">&para;</a></h3>
+<h4 id="symptom_3">Symptom<a class="headerlink" href="#symptom_3" title="Permanent link">&para;</a></h4>
+<p>Injection of this type occur when the application use untrusted user input to build a XPath query using a String and execute it.</p>
+<h4 id="how-to-prevent_3">How to prevent<a class="headerlink" href="#how-to-prevent_3" title="Permanent link">&para;</a></h4>
+<p>Use <strong>XPath Variable Resolver</strong> in order to prevent injection.</p>
+<h4 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">&para;</a></h4>
+<p><strong>Variable Resolver</strong> implementation.</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm"> * Resolver in order to define parameter for XPATH expression.</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimpleVariableResolver</span> <span class="kd">implements</span> <span class="n">XPathVariableResolver</span> <span class="p">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">QName</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">vars</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">QName</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span><span class="p">();</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * External methods to add parameter</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param name Parameter name</span>
+<span class="cm">     * @param value Parameter value</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addVariable</span><span class="p">(</span><span class="n">QName</span> <span class="n">name</span><span class="p">,</span> <span class="n">Object</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vars</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * {@inheritDoc}</span>
+<span class="cm">     *</span>
+<span class="cm">     * @see javax.xml.xpath.XPathVariableResolver#resolveVariable(javax.xml.namespace.QName)</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">resolveVariable</span><span class="p">(</span><span class="n">QName</span> <span class="n">variableName</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">vars</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">variableName</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Code using it to perform XPath query.</p>
+<div class="codehilite"><pre><span></span><code><span class="cm">/*Create a XML document builder factory*/</span>
+<span class="n">DocumentBuilderFactory</span> <span class="n">dbf</span> <span class="o">=</span> <span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+
+<span class="cm">/*Disable External Entity resolution for differents cases*/</span>
+<span class="c1">//Do not performed here in order to focus on variable resolver code</span>
+<span class="c1">//but do it for production code !</span>
+
+<span class="cm">/*Load XML file*/</span>
+<span class="n">DocumentBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">dbf</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span>
+<span class="n">Document</span> <span class="n">doc</span> <span class="o">=</span> <span class="n">builder</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;src/test/resources/SampleXPath.xml&quot;</span><span class="p">));</span>
+
+<span class="cm">/* Create and configure parameter resolver */</span>
+<span class="n">String</span> <span class="n">bid</span> <span class="o">=</span> <span class="s">&quot;bk102&quot;</span><span class="p">;</span>
+<span class="n">SimpleVariableResolver</span> <span class="n">variableResolver</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleVariableResolver</span><span class="p">();</span>
+<span class="n">variableResolver</span><span class="p">.</span><span class="na">addVariable</span><span class="p">(</span><span class="k">new</span> <span class="n">QName</span><span class="p">(</span><span class="s">&quot;bookId&quot;</span><span class="p">),</span> <span class="n">bid</span><span class="p">);</span>
+
+<span class="cm">/*Create and configure XPATH expression*/</span>
+<span class="n">XPath</span> <span class="n">xpath</span> <span class="o">=</span> <span class="n">XPathFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">().</span><span class="na">newXPath</span><span class="p">();</span>
+<span class="n">xpath</span><span class="p">.</span><span class="na">setXPathVariableResolver</span><span class="p">(</span><span class="n">variableResolver</span><span class="p">);</span>
+<span class="n">XPathExpression</span> <span class="n">xPathExpression</span> <span class="o">=</span> <span class="n">xpath</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;//book[@id=$bookId]&quot;</span><span class="p">);</span>
+
+<span class="cm">/* Apply expression on XML document */</span>
+<span class="n">Object</span> <span class="n">nodes</span> <span class="o">=</span> <span class="n">xPathExpression</span><span class="p">.</span><span class="na">evaluate</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">XPathConstants</span><span class="p">.</span><span class="na">NODESET</span><span class="p">);</span>
+<span class="n">NodeList</span> <span class="n">nodesList</span> <span class="o">=</span> <span class="p">(</span><span class="n">NodeList</span><span class="p">)</span> <span class="n">nodes</span><span class="p">;</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertNotNull</span><span class="p">(</span><span class="n">nodesList</span><span class="p">);</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nodesList</span><span class="p">.</span><span class="na">getLength</span><span class="p">());</span>
+<span class="n">Element</span> <span class="n">book</span> <span class="o">=</span> <span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="n">nodesList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="na">getTextContent</span><span class="p">().</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;Ralls, Kim&quot;</span><span class="p">));</span>
+</code></pre></div>
+
+
+<h4 id="references_3">References<a class="headerlink" href="#references_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="https://owasp.org/www-community/attacks/XPATH_Injection">XPATH Injection</a></li>
+</ul>
+<h3 id="htmljavascriptcss">HTML/JavaScript/CSS<a class="headerlink" href="#htmljavascriptcss" title="Permanent link">&para;</a></h3>
+<h4 id="symptom_4">Symptom<a class="headerlink" href="#symptom_4" title="Permanent link">&para;</a></h4>
+<p>Injection of this type occur when the application use untrusted user input to build a HTTP response and sent it to browser.</p>
+<h4 id="how-to-prevent_4">How to prevent<a class="headerlink" href="#how-to-prevent_4" title="Permanent link">&para;</a></h4>
+<p>Either apply strict input validation (whitelist approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).</p>
+<h4 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="cm">/*</span>
+<span class="cm">INPUT WAY: Receive data from user</span>
+<span class="cm">Here it&#39;s recommended to use strict input validation using whitelist approach.</span>
+<span class="cm">In fact, you ensure that only allowed characters are part of the input received.</span>
+<span class="cm">*/</span>
+
+<span class="n">String</span> <span class="n">userInput</span> <span class="o">=</span> <span class="s">&quot;You user login is owasp-user01&quot;</span><span class="p">;</span>
+
+<span class="cm">/* First we check that the value contains only expected character*/</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span><span class="p">,</span> <span class="n">userInput</span><span class="p">));</span>
+
+<span class="cm">/* If the first check pass then ensure that potential dangerous character</span>
+<span class="cm">that we have allowed for business requirement are not used in a dangerous way.</span>
+<span class="cm">For example here we have allowed the character &#39;-&#39;, and, this can</span>
+<span class="cm">be used in SQL injection so, we</span>
+<span class="cm">ensure that this character is not used is a continuous form.</span>
+<span class="cm">Use the API COMMONS LANG v3 to help in String analysis...</span>
+<span class="cm">*/</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">StringUtils</span><span class="p">.</span><span class="na">countMatches</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">),</span> <span class="s">&quot;--&quot;</span><span class="p">));</span>
+
+<span class="cm">/*</span>
+<span class="cm">OUTPUT WAY: Send data to user</span>
+<span class="cm">Here we escape + sanitize any data sent to user</span>
+<span class="cm">Use the OWASP Java HTML Sanitizer API to handle sanitizing</span>
+<span class="cm">Use the OWASP Java Encoder API to handle HTML tag encoding (escaping)</span>
+<span class="cm">*/</span>
+
+<span class="n">String</span> <span class="n">outputToUser</span> <span class="o">=</span> <span class="s">&quot;You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;&quot;</span><span class="p">;</span>
+<span class="n">outputToUser</span> <span class="o">+=</span> <span class="s">&quot;&lt;script&gt;alert(22);&lt;/script&gt;&lt;img src=&#39;#&#39; onload=&#39;javascript:alert(23);&#39;&gt;&quot;</span><span class="p">;</span>
+
+<span class="cm">/* Create a sanitizing policy that only allow tag &#39;&lt;p&gt;&#39; and &#39;&lt;strong&gt;&#39;*/</span>
+<span class="n">PolicyFactory</span> <span class="n">policy</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HtmlPolicyBuilder</span><span class="p">().</span><span class="na">allowElements</span><span class="p">(</span><span class="s">&quot;p&quot;</span><span class="p">,</span> <span class="s">&quot;strong&quot;</span><span class="p">).</span><span class="na">toFactory</span><span class="p">();</span>
+
+<span class="cm">/* Sanitize the output that will be sent to user*/</span>
+<span class="n">String</span> <span class="n">safeOutput</span> <span class="o">=</span> <span class="n">policy</span><span class="p">.</span><span class="na">sanitize</span><span class="p">(</span><span class="n">outputToUser</span><span class="p">);</span>
+
+<span class="cm">/* Encode HTML Tag*/</span>
+<span class="n">safeOutput</span> <span class="o">=</span> <span class="n">Encode</span><span class="p">.</span><span class="na">forHtml</span><span class="p">(</span><span class="n">safeOutput</span><span class="p">);</span>
+<span class="n">String</span> <span class="n">finalSafeOutputExpected</span> <span class="o">=</span> <span class="s">&quot;You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;&quot;</span><span class="p">;</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">finalSafeOutputExpected</span><span class="p">,</span> <span class="n">safeOutput</span><span class="p">);</span>
+</code></pre></div>
+
+
+<h4 id="references_4">References<a class="headerlink" href="#references_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="https://owasp.org/www-community/attacks/xss/">XSS</a></li>
+<li><a href="https://github.com/owasp/java-html-sanitizer">OWASP Java HTML Sanitizer</a></li>
+<li><a href="https://github.com/owasp/owasp-java-encoder">OWASP Java Encoder</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html">Java RegEx</a></li>
+</ul>
+<h3 id="ldap">LDAP<a class="headerlink" href="#ldap" title="Permanent link">&para;</a></h3>
+<p>A dedicated <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">cheatsheet</a> has been created.</p>
+<h3 id="nosql">NoSQL<a class="headerlink" href="#nosql" title="Permanent link">&para;</a></h3>
+<h4 id="symptom_5">Symptom<a class="headerlink" href="#symptom_5" title="Permanent link">&para;</a></h4>
+<p>Injection of this type occur when the application use untrusted user input to build a NoSQL API call expression.</p>
+<h4 id="how-to-prevent_5">How to prevent<a class="headerlink" href="#how-to-prevent_5" title="Permanent link">&para;</a></h4>
+<p>As there many NoSQL database system and each one use a API for call, it's important to ensure that user input received and used to build the API call expression do not contains any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It's also important to not use string concatenation to build API call expression but use the API to create the expression.</p>
+<h4 id="example-mongodb">Example - MongoDB<a class="headerlink" href="#example-mongodb" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code> <span class="cm">/* Here use MongoDB as target NoSQL DB */</span>
+<span class="n">String</span> <span class="n">userInput</span> <span class="o">=</span> <span class="s">&quot;Brooklyn&quot;</span><span class="p">;</span>
+
+<span class="cm">/* First ensure that the input do no contains any special characters</span>
+<span class="cm">for the current NoSQL DB call API,</span>
+<span class="cm">here they are: &#39; &quot; \ ; { } $</span>
+<span class="cm">*/</span>
+<span class="c1">//Avoid regexp this time in order to made validation code</span>
+<span class="c1">//more easy to read and understand...</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">specialCharsList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">{</span> <span class="p">{</span>
+    <span class="n">add</span><span class="p">(</span><span class="s">&quot;&#39;&quot;</span><span class="p">);</span>
+    <span class="n">add</span><span class="p">(</span><span class="s">&quot;\&quot;&quot;</span><span class="p">);</span>
+    <span class="n">add</span><span class="p">(</span><span class="s">&quot;\\&quot;</span><span class="p">);</span>
+    <span class="n">add</span><span class="p">(</span><span class="s">&quot;;&quot;</span><span class="p">);</span>
+    <span class="n">add</span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="p">);</span>
+    <span class="n">add</span><span class="p">(</span><span class="s">&quot;}&quot;</span><span class="p">);</span>
+    <span class="n">add</span><span class="p">(</span><span class="s">&quot;$&quot;</span><span class="p">);</span>
+<span class="p">}</span> <span class="p">};</span>
+<span class="n">specialCharsList</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">specChar</span> <span class="o">-&gt;</span> <span class="n">Assert</span><span class="p">.</span><span class="na">assertFalse</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="n">specChar</span><span class="p">)));</span>
+<span class="c1">//Add also a check on input max size</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">length</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">50</span><span class="p">);</span>
+
+<span class="cm">/* Then perform query on database using API to build expression */</span>
+<span class="c1">//Connect to the local MongoDB instance</span>
+<span class="k">try</span><span class="p">(</span><span class="n">MongoClient</span> <span class="n">mongoClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MongoClient</span><span class="p">()){</span>
+    <span class="n">MongoDatabase</span> <span class="n">db</span> <span class="o">=</span> <span class="n">mongoClient</span><span class="p">.</span><span class="na">getDatabase</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">);</span>
+    <span class="c1">//Use API query builder to create call expression</span>
+    <span class="c1">//Create expression</span>
+    <span class="n">Bson</span> <span class="n">expression</span> <span class="o">=</span> <span class="n">eq</span><span class="p">(</span><span class="s">&quot;borough&quot;</span><span class="p">,</span> <span class="n">userInput</span><span class="p">);</span>
+    <span class="c1">//Perform call</span>
+    <span class="n">FindIterable</span><span class="o">&lt;</span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="o">&gt;</span> <span class="n">restaurants</span> <span class="o">=</span> <span class="n">db</span><span class="p">.</span><span class="na">getCollection</span><span class="p">(</span><span class="s">&quot;restaurants&quot;</span><span class="p">).</span><span class="na">find</span><span class="p">(</span><span class="n">expression</span><span class="p">);</span>
+    <span class="c1">//Verify result consistency</span>
+    <span class="n">restaurants</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="k">new</span> <span class="n">Block</span><span class="o">&lt;</span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">apply</span><span class="p">(</span><span class="kd">final</span> <span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span> <span class="n">doc</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">String</span> <span class="n">restBorough</span> <span class="o">=</span> <span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="n">doc</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;borough&quot;</span><span class="p">);</span>
+            <span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="s">&quot;Brooklyn&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">restBorough</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h4 id="references_5">References<a class="headerlink" href="#references_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection.html">Testing for NoSQL injection</a></li>
+<li><a href="https://ckarande.gitbooks.io/owasp-nodegoat-tutorial/content/tutorial/a1_-_sql_and_nosql_injection.html">SQL and NoSQL Injection</a></li>
+<li><a href="https://arxiv.org/ftp/arxiv/papers/1506/1506.04082.pdf">No SQL, No Injection?</a></li>
+</ul>
+<h3 id="log-injection">Log Injection<a class="headerlink" href="#log-injection" title="Permanent link">&para;</a></h3>
+<h4 id="symptom_6">Symptom<a class="headerlink" href="#symptom_6" title="Permanent link">&para;</a></h4>
+<p><a href="https://owasp.org/www-community/attacks/Log_Injection">Log Injection</a> occurs when an application includes untrusted data in an application log message (e.g., an attacker can cause an additional log entry that looks like it came from a completely different user, if they can inject CRLF characters in the untrusted data). More information about this attack is available on the OWASP <a href="https://owasp.org/www-community/attacks/Log_Injection">Log Injection</a> page.</p>
+<h4 id="how-to-prevent_6">How to prevent<a class="headerlink" href="#how-to-prevent_6" title="Permanent link">&para;</a></h4>
+<p>To prevent an attacker from writing malicious content into the application log, apply defenses such as:</p>
+<ul>
+<li>Filter the user input used to prevent injection of <strong>C</strong>arriage <strong>R</strong>eturn (CR) or <strong>L</strong>ine <strong>F</strong>eed (LF) characters.</li>
+<li>Limit the size of the user input value used to create the log message.</li>
+<li>Make sure <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">all XSS defenses</a> are applied when viewing log files in a web browser.</li>
+</ul>
+<h4 id="example-using-log4j2">Example using Log4j2<a class="headerlink" href="#example-using-log4j2" title="Permanent link">&para;</a></h4>
+<p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout\%7CLog4j2">Pattern <em>encode{}{CRLF}</em></a>, introduced in <a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api">Log4j2 v2.10.0</a>, and the <em>-500m</em> message size limit.:</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;Configuration</span> <span class="na">status=</span><span class="s">&quot;error&quot;</span> <span class="na">name=</span><span class="s">&quot;SecureLoggingPolicy&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Appenders&gt;</span>
+        <span class="nt">&lt;RollingFile</span> <span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span> <span class="na">fileName=</span><span class="s">&quot;App.log&quot;</span> <span class="na">filePattern=</span><span class="s">&quot;App-%i.log&quot;</span> <span class="na">ignoreExceptions=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;PatternLayout&gt;</span>
+                <span class="c">&lt;!-- Encode any CRLF chars in the message and limit its </span>
+<span class="c">                     maximum size to 500 characters --&gt;</span>
+                <span class="nt">&lt;Pattern&gt;</span>%d{ISO8601} %-5p - %encode{ %.-500m }{CRLF}%n<span class="nt">&lt;/Pattern&gt;</span>
+            <span class="nt">&lt;/PatternLayout&gt;</span>
+            <span class="nt">&lt;Policies&gt;</span>
+                <span class="nt">&lt;SizeBasedTriggeringPolicy</span> <span class="na">size=</span><span class="s">&quot;5MB&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/Policies&gt;</span>
+            <span class="nt">&lt;DefaultRolloverStrategy</span> <span class="na">max=</span><span class="s">&quot;10&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/RollingFile&gt;</span>
+    <span class="nt">&lt;/Appenders&gt;</span>
+    <span class="nt">&lt;Loggers&gt;</span>
+        <span class="nt">&lt;Root</span> <span class="na">level=</span><span class="s">&quot;debug&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;AppenderRef</span> <span class="na">ref=</span><span class="s">&quot;RollingFile&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Root&gt;</span>
+    <span class="nt">&lt;/Loggers&gt;</span>
+<span class="nt">&lt;/Configuration&gt;</span>
+</code></pre></div>
+
+
+<p>Usage of the logger at code level:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.logging.log4j.LogManager</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.logging.log4j.Logger</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="c1">// No special action needed because security actions are</span>
+<span class="c1">// performed at the logging policy level</span>
+<span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">logMessage</span><span class="p">);</span>
+<span class="p">...</span>
+</code></pre></div>
+
+
+<h4 id="example-using-logback-with-the-owasp-security-logging-library">Example using Logback with the OWASP Security Logging library<a class="headerlink" href="#example-using-logback-with-the-owasp-security-logging-library" title="Permanent link">&para;</a></h4>
+<p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging">CRLFConverter</a>, provided by the <a href="https://owasp.org/www-project-security-logging/">OWASP Security Logging Project</a>, and the <em>-500msg</em> message size limit:</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;configuration&gt;</span>
+    <span class="c">&lt;!-- Define the CRLFConverter --&gt;</span>
+    <span class="nt">&lt;conversionRule</span> <span class="na">conversionWord=</span><span class="s">&quot;crlf&quot;</span> <span class="na">converterClass=</span><span class="s">&quot;org.owasp.security.logging.mask.CRLFConverter&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;file&gt;</span>App.log<span class="nt">&lt;/file&gt;</span>
+        <span class="nt">&lt;rollingPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.FixedWindowRollingPolicy&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;fileNamePattern&gt;</span>App-%i.log<span class="nt">&lt;/fileNamePattern&gt;</span>
+            <span class="nt">&lt;minIndex&gt;</span>1<span class="nt">&lt;/minIndex&gt;</span>
+            <span class="nt">&lt;maxIndex&gt;</span>10<span class="nt">&lt;/maxIndex&gt;</span>
+        <span class="nt">&lt;/rollingPolicy&gt;</span>
+        <span class="nt">&lt;triggeringPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;maxFileSize&gt;</span>5MB<span class="nt">&lt;/maxFileSize&gt;</span>
+        <span class="nt">&lt;/triggeringPolicy&gt;</span>
+        <span class="nt">&lt;encoder&gt;</span>
+            <span class="c">&lt;!-- Encode any CRLF chars in the message and limit </span>
+<span class="c">                 its maximum size to 500 characters --&gt;</span>
+            <span class="nt">&lt;pattern&gt;</span>%relative [%thread] %-5level %logger{35} - %crlf(%.-500msg) %n<span class="nt">&lt;/pattern&gt;</span>
+        <span class="nt">&lt;/encoder&gt;</span>
+    <span class="nt">&lt;/appender&gt;</span>
+    <span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">&quot;debug&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;RollingFile&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/root&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></div>
+
+
+<p>You also have to add the <a href="https://github.com/javabeanz/owasp-security-logging/wiki/Usage-with-Logback">OWASP Security Logging</a> dependency to your project.</p>
+<p>Usage of the logger at code level:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.slf4j.Logger</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="c1">// No special action needed because security actions</span>
+<span class="c1">// are performed at the logging policy level</span>
+<span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">logMessage</span><span class="p">);</span>
+<span class="p">...</span>
+</code></pre></div>
+
+
+<h4 id="references_6">References<a class="headerlink" href="#references_6" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout">PatternLayout</a> (See the <code>encode{}{CRLF}</code> function)</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent log injection.
+
+It prevents XSS attacks against viewing logs using a browser.
+
+OWASP recommends defending against XSS attacks in such situations in the log viewer application itself,
+not by preencoding all the log messages with HTML encoding as such log entries may be used/viewed in many
+other log viewing/analysis tools that don&#39;t expect the log data to be pre-HTML encoded.
+</code></pre></div>
+
+
+<ul>
+<li><a href="https://logging.apache.org/log4j/2.x/manual/configuration.html">LOG4J Configuration</a></li>
+<li><a href="https://logging.apache.org/log4j/2.x/manual/appenders.html">LOG4J Appender</a></li>
+<li><a href="https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging">Log Forging</a> - See the Logback section about the <code>CRLFConverter</code> this library provides.</li>
+<li><a href="https://github.com/javabeanz/owasp-security-logging/wiki/Usage-with-Logback">Usage of OWASP Security Logging with Logback</a></li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Injection Prevention
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Input Validation
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

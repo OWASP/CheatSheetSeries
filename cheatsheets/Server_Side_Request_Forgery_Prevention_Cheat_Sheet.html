@@ -1,1061 +1,1495 @@
 
-<!DOCTYPE HTML>
-<html lang="en" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Server Side Request Forgery Prevention  · OWASP Cheat Sheet Series</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>Server Side Request Forgery Prevention</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
         
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
         
-        
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="Session_Management_Cheat_Sheet.html" />
-    
-    
-    <link rel="prev" href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        <li class="header">Cheatsheets</li>
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="Index.html">
-            
-                <a href="Index.html">
-            
-                    
-                    Index Alphabetical
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
-            
-                <a href="IndexASVS.html">
-            
-                    
-                    Index ASVS
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
-            
-                <a href="IndexProactiveControls.html">
-            
-                    
-                    Index Proactive Controls
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
-            
-                <a href="AJAX_Security_Cheat_Sheet.html">
-            
-                    
-                    AJAX Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
-            
-                <a href="Abuse_Case_Cheat_Sheet.html">
-            
-                    
-                    Abuse Case 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
-            
-                <a href="Access_Control_Cheat_Sheet.html">
-            
-                    
-                    Access Control 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                    
-                    Attack Surface Analysis 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
-            
-                <a href="Authentication_Cheat_Sheet.html">
-            
-                    
-                    Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
-            
-                <a href="Authorization_Testing_Automation.html">
-            
-                    
-                    Authorization Testing Automation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
-            
-                <a href="Bean_Validation_Cheat_Sheet.html">
-            
-                    
-                    Bean Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
-            
-                <a href="C-Based_Toolchain_Hardening.html">
-            
-                    
-                    C-Based Toolchain Hardening
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                    
-                    C-Based Toolchain Hardening 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                    
-                    Choosing and Using Security Questions 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                <a href="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                    
-                    Clickjacking Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
-            
-                <a href="Content_Security_Policy_Cheat_Sheet.html">
-            
-                    
-                    Content Security Policy 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Credential Stuffing Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross-Site Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross Site Scripting Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                <a href="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                    
-                    Cryptographic Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                    
-                    DOM based XSS Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.22" data-path="Database_Security_Cheat_Sheet.html">
-            
-                <a href="Database_Security_Cheat_Sheet.html">
-            
-                    
-                    Database Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.23" data-path="Denial_of_Service_Cheat_Sheet.html">
-            
-                <a href="Denial_of_Service_Cheat_Sheet.html">
-            
-                    
-                    Denial of Service 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.24" data-path="Deserialization_Cheat_Sheet.html">
-            
-                <a href="Deserialization_Cheat_Sheet.html">
-            
-                    
-                    Deserialization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.25" data-path="Docker_Security_Cheat_Sheet.html">
-            
-                <a href="Docker_Security_Cheat_Sheet.html">
-            
-                    
-                    Docker Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.26" data-path="DotNet_Security_Cheat_Sheet.html">
-            
-                <a href="DotNet_Security_Cheat_Sheet.html">
-            
-                    
-                    DotNet Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.27" data-path="Error_Handling_Cheat_Sheet.html">
-            
-                <a href="Error_Handling_Cheat_Sheet.html">
-            
-                    
-                    Error Handling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
-            
-                <a href="File_Upload_Cheat_Sheet.html">
-            
-                    
-                    File Upload 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.29" data-path="Forgot_Password_Cheat_Sheet.html">
-            
-                <a href="Forgot_Password_Cheat_Sheet.html">
-            
-                    
-                    Forgot Password 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.30" data-path="HTML5_Security_Cheat_Sheet.html">
-            
-                <a href="HTML5_Security_Cheat_Sheet.html">
-            
-                    
-                    HTML5 Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.31" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                    
-                    HTTP Strict Transport Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.32" data-path="Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.33" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                    
-                    Injection Prevention  in Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.34" data-path="Input_Validation_Cheat_Sheet.html">
-            
-                <a href="Input_Validation_Cheat_Sheet.html">
-            
-                    
-                    Input Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.35" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Insecure Direct Object Reference Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.36" data-path="JAAS_Cheat_Sheet.html">
-            
-                <a href="JAAS_Cheat_Sheet.html">
-            
-                    
-                    JAAS 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.37" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                    
-                    JSON Web Token  for Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.38" data-path="Key_Management_Cheat_Sheet.html">
-            
-                <a href="Key_Management_Cheat_Sheet.html">
-            
-                    
-                    Key Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.39" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    LDAP Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.40" data-path="Logging_Cheat_Sheet.html">
-            
-                <a href="Logging_Cheat_Sheet.html">
-            
-                    
-                    Logging 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.41" data-path="Mass_Assignment_Cheat_Sheet.html">
-            
-                <a href="Mass_Assignment_Cheat_Sheet.html">
-            
-                    
-                    Mass Assignment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.42" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                    
-                    Microservices based Security Arch Doc 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.43" data-path="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                <a href="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                    
-                    Multifactor Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.44" data-path="Nodejs_security_cheat_sheet.html">
-            
-                <a href="Nodejs_security_cheat_sheet.html">
-            
-                    
-                    Nodejs security cheat sheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.45" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                    
-                    OS Command Injection Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.46" data-path="PHP_Configuration_Cheat_Sheet.html">
-            
-                <a href="PHP_Configuration_Cheat_Sheet.html">
-            
-                    
-                    PHP Configuration 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.47" data-path="Password_Storage_Cheat_Sheet.html">
-            
-                <a href="Password_Storage_Cheat_Sheet.html">
-            
-                    
-                    Password Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
-            
-                <a href="Pinning_Cheat_Sheet.html">
-            
-                    
-                    Pinning 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.49" data-path="Query_Parameterization_Cheat_Sheet.html">
-            
-                <a href="Query_Parameterization_Cheat_Sheet.html">
-            
-                    
-                    Query Parameterization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.50" data-path="REST_Assessment_Cheat_Sheet.html">
-            
-                <a href="REST_Assessment_Cheat_Sheet.html">
-            
-                    
-                    REST Assessment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.51" data-path="REST_Security_Cheat_Sheet.html">
-            
-                <a href="REST_Security_Cheat_Sheet.html">
-            
-                    
-                    REST Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.52" data-path="Ruby_on_Rails_Cheatsheet.html">
-            
-                <a href="Ruby_on_Rails_Cheatsheet.html">
-            
-                    
-                    Ruby on Rails Cheatsheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.53" data-path="SAML_Security_Cheat_Sheet.html">
-            
-                <a href="SAML_Security_Cheat_Sheet.html">
-            
-                    
-                    SAML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.54" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    SQL Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.55" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                    
-                    Securing Cascading Style Sheets 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.56" data-path="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Server Side Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.57" data-path="Session_Management_Cheat_Sheet.html">
-            
-                <a href="Session_Management_Cheat_Sheet.html">
-            
-                    
-                    Session Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.58" data-path="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                <a href="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                    
-                    TLS Cipher String 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.59" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                    
-                    Third Party Javascript Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.60" data-path="Threat_Modeling_Cheat_Sheet.html">
-            
-                <a href="Threat_Modeling_Cheat_Sheet.html">
-            
-                    
-                    Threat Modeling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.61" data-path="Transaction_Authorization_Cheat_Sheet.html">
-            
-                <a href="Transaction_Authorization_Cheat_Sheet.html">
-            
-                    
-                    Transaction Authorization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.62" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                    
-                    Transport Layer Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.63" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                    
-                    Unvalidated Redirects and Forwards 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.64" data-path="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                <a href="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                    
-                    User Privacy Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.65" data-path="Virtual_Patching_Cheat_Sheet.html">
-            
-                <a href="Virtual_Patching_Cheat_Sheet.html">
-            
-                    
-                    Virtual Patching 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.66" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                    
-                    Vulnerability Disclosure 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.67" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                    
-                    Vulnerable Dependency Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.68" data-path="Web_Service_Security_Cheat_Sheet.html">
-            
-                <a href="Web_Service_Security_Cheat_Sheet.html">
-            
-                    
-                    Web Service Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.69" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                    
-                    XML External Entity Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.70" data-path="XML_Security_Cheat_Sheet.html">
-            
-                <a href="XML_Security_Cheat_Sheet.html">
-            
-                    
-                    XML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="#server-side-request-forgery-prevention-cheat-sheet" class="md-skip">
+          Skip to content
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
+      
     </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
+    <div data-md-component="announce">
+      
+    </div>
     
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Server Side Request Forgery Prevention </a>
-    </h1>
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Server Side Request Forgery Prevention
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
     
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="server-side-request-forgery-prevention-cheat-sheet"><a name="server-side-request-forgery-prevention-cheat-sheet" class="plugin-anchor" href="#server-side-request-forgery-prevention-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Server-Side Request Forgery Prevention Cheat Sheet</h1>
-<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
-<p>The objective of the cheat sheet is to provide advices regarding the protection against <a href="https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/" target="_blank">Server Side Request Forgery</a> (SSRF) attack.</p>
-<p>This cheat sheet will focus on the defensive point of view and will not explain how to perform this attack. This <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a> from the security researcher <a href="https://twitter.com/orange_8361" target="_blank">Orange Tsai</a> as well as this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a> provide techniques on how to perform this kind of attack.</p>
-<h2 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h2>
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" title="Index Alphabetical" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" title="Index ASVS" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" title="Index Proactive Controls" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" title="AJAX Security" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" title="Abuse Case" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" title="Access Control" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" title="Clickjacking Defense" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" title="Content Security Policy" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" title="Cross-Site Request Forgery Prevention" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" title="Cryptographic Storage" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" title="Database Security" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" title="Denial of Service" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" title="Deserialization" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" title="Docker Security" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" title="DotNet Security" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" title="Error Handling" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" title="File Upload" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" title="Forgot Password" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" title="HTML5 Security" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" title="HTTP Strict Transport Security" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" title="Injection Prevention in Java" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" title="Insecure Direct Object Reference Prevention" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" title="JAAS" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" title="JSON Web Token for Java" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" title="Key Management" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" title="LDAP Injection Prevention" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" title="Mass Assignment" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" title="Multifactor Authentication" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" title="Nodejs Security" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" title="OS Command Injection Defense" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" title="PHP Configuration" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" title="Password Storage" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" title="Pinning" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" title="Query Parameterization" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" title="REST Assessment" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" title="REST Security" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" title="Ruby on Rails" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" title="SQL Injection Prevention" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Server Side Request Forgery Prevention
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" title="Server Side Request Forgery Prevention" class="md-nav__link md-nav__link--active">
+      Server Side Request Forgery Prevention
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    Context
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-a-ssrf-common-flow" class="md-nav__link">
+    Overview of a SSRF common flow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cases" class="md-nav__link">
+    Cases
+  </a>
+  
+    <nav class="md-nav" aria-label="Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" class="md-nav__link">
+    Case 1 - Application can send request only to identified and trusted applications
+  </a>
+  
+    <nav class="md-nav" aria-label="Case 1 - Application can send request only to identified and trusted applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-protections" class="md-nav__link">
+    Available protections
+  </a>
+  
+    <nav class="md-nav" aria-label="Available protections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-layer" class="md-nav__link">
+    Application layer
+  </a>
+  
+    <nav class="md-nav" aria-label="Application layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    String
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ip-address" class="md-nav__link">
+    IP address
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#domain-name" class="md-nav__link">
+    Domain name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#url" class="md-nav__link">
+    URL
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-layer" class="md-nav__link">
+    Network layer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name" class="md-nav__link">
+    Case 2 - Application can send requests to ANY external IP address or domain name
+  </a>
+  
+    <nav class="md-nav" aria-label="Case 2 - Application can send requests to ANY external IP address or domain name">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#challenges-in-blocking-urls-at-application-layer" class="md-nav__link">
+    Challenges in blocking URLs at application layer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-protections_1" class="md-nav__link">
+    Available protections
+  </a>
+  
+    <nav class="md-nav" aria-label="Available protections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-layer_1" class="md-nav__link">
+    Application layer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-layer_1" class="md-nav__link">
+    Network layer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#imdsv2-in-aws" class="md-nav__link">
+    IMDSv2 in AWS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools-and-code-used-for-schemas" class="md-nav__link">
+    Tools and code used for schemas
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" title="TLS Cipher String" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" title="Third Party Javascript Management" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" title="Threat Modeling" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" title="Transport Layer Protection" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" title="User Privacy Protection" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" title="Virtual Patching" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" title="Vulnerability Disclosure" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" title="Vulnerable Dependency Management" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" title="XML External Entity Prevention" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    Context
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-a-ssrf-common-flow" class="md-nav__link">
+    Overview of a SSRF common flow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cases" class="md-nav__link">
+    Cases
+  </a>
+  
+    <nav class="md-nav" aria-label="Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" class="md-nav__link">
+    Case 1 - Application can send request only to identified and trusted applications
+  </a>
+  
+    <nav class="md-nav" aria-label="Case 1 - Application can send request only to identified and trusted applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-protections" class="md-nav__link">
+    Available protections
+  </a>
+  
+    <nav class="md-nav" aria-label="Available protections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-layer" class="md-nav__link">
+    Application layer
+  </a>
+  
+    <nav class="md-nav" aria-label="Application layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    String
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ip-address" class="md-nav__link">
+    IP address
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#domain-name" class="md-nav__link">
+    Domain name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#url" class="md-nav__link">
+    URL
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-layer" class="md-nav__link">
+    Network layer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name" class="md-nav__link">
+    Case 2 - Application can send requests to ANY external IP address or domain name
+  </a>
+  
+    <nav class="md-nav" aria-label="Case 2 - Application can send requests to ANY external IP address or domain name">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#challenges-in-blocking-urls-at-application-layer" class="md-nav__link">
+    Challenges in blocking URLs at application layer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-protections_1" class="md-nav__link">
+    Available protections
+  </a>
+  
+    <nav class="md-nav" aria-label="Available protections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-layer_1" class="md-nav__link">
+    Application layer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-layer_1" class="md-nav__link">
+    Network layer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#imdsv2-in-aws" class="md-nav__link">
+    IMDSv2 in AWS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools-and-code-used-for-schemas" class="md-nav__link">
+    Tools and code used for schemas
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="server-side-request-forgery-prevention-cheat-sheet">Server-Side Request Forgery Prevention Cheat Sheet<a class="headerlink" href="#server-side-request-forgery-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The objective of the cheat sheet is to provide advices regarding the protection against <a href="https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/">Server Side Request Forgery</a> (SSRF) attack.</p>
+<p>This cheat sheet will focus on the defensive point of view and will not explain how to perform this attack. This <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a> from the security researcher <a href="https://twitter.com/orange_8361">Orange Tsai</a> as well as this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a> provide techniques on how to perform this kind of attack.</p>
+<h2 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">&para;</a></h2>
 <ul>
+<li><a href="#server-side-request-forgery-prevention-cheat-sheet">Server-Side Request Forgery Prevention Cheat Sheet</a><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#contents">Contents</a></li>
 <li><a href="#context">Context</a></li>
 <li><a href="#overview-of-a-ssrf-common-flow">Overview of a SSRF common flow</a></li>
 <li><a href="#cases">Cases</a><ul>
@@ -1089,42 +1523,44 @@
 <li><a href="#references">References</a></li>
 <li><a href="#tools-and-code-used-for-schemas">Tools and code used for schemas</a></li>
 </ul>
-<h2 id="context"><a name="context" class="plugin-anchor" href="#context"><i class="fa fa-link" aria-hidden="true"></i></a>Context</h2>
+</li>
+</ul>
+<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
 <p>SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples:</p>
 <ul>
 <li>Image on external server (<em>e.g.</em> user enters image URL of their avatar for the application to download and use).</li>
-<li>Custom <a href="https://en.wikipedia.org/wiki/Webhook" target="_blank">WebHook</a> (user have to specify WebHook handlers or Callback URLs).</li>
+<li>Custom <a href="https://en.wikipedia.org/wiki/Webhook">WebHook</a> (user have to specify WebHook handlers or Callback URLs).</li>
 <li>Internal requests to interact with another service to serve a certain functionality. Most of the times, user data is sent along to be processed, and if badly handled, can perform certain injection attacks.</li>
 </ul>
-<h2 id="overview-of-a-ssrf-common-flow"><a name="overview-of-a-ssrf-common-flow" class="plugin-anchor" href="#overview-of-a-ssrf-common-flow"><i class="fa fa-link" aria-hidden="true"></i></a>Overview of a SSRF common flow</h2>
-<p><img src="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Common_Flow.png" alt="SSRF Common Flow"></p>
+<h2 id="overview-of-a-ssrf-common-flow">Overview of a SSRF common flow<a class="headerlink" href="#overview-of-a-ssrf-common-flow" title="Permanent link">&para;</a></h2>
+<p><img alt="SSRF Common Flow" src="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Common_Flow.png" /></p>
 <p><em>Notes:</em></p>
 <ul>
-<li>SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (<em>e.g.</em> FTP, SMB, SMTP, etc.) and schemes (<em>e.g.</em> <code>file://</code>, <code>phar://</code>, <code>gopher://</code>, <code>data://</code>, <code>dict://</code>, etc.). The protocol/scheme usage is highly dependent on the application&apos;s requirements.</li>
-<li>If the application is vulnerable to <a href="https://portswigger.net/web-security/xxe" target="_blank">XML eXternal Entity (XXE) injection</a> then it can by exploited to perform a <a href="https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks" target="_blank">SSRF attack</a>, take a look at the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a> to learn how to prevent the exposure to XXE.</li>
+<li>SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (<em>e.g.</em> FTP, SMB, SMTP, etc.) and schemes (<em>e.g.</em> <code>file://</code>, <code>phar://</code>, <code>gopher://</code>, <code>data://</code>, <code>dict://</code>, etc.). The protocol/scheme usage is highly dependent on the application's requirements.</li>
+<li>If the application is vulnerable to <a href="https://portswigger.net/web-security/xxe">XML eXternal Entity (XXE) injection</a> then it can by exploited to perform a <a href="https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks">SSRF attack</a>, take a look at the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a> to learn how to prevent the exposure to XXE.</li>
 </ul>
-<h2 id="cases"><a name="cases" class="plugin-anchor" href="#cases"><i class="fa fa-link" aria-hidden="true"></i></a>Cases</h2>
-<p>Depending on the application&apos;s functionality and requirements, there are two basic cases in which SSRF can happen:</p>
+<h2 id="cases">Cases<a class="headerlink" href="#cases" title="Permanent link">&para;</a></h2>
+<p>Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:</p>
 <ul>
-<li>Application can send request only to <strong>identified and trusted applications</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting" target="_blank">whitelist</a> approach is available.</li>
-<li>Application can send requests to <strong>ANY external IP address or domain name</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting" target="_blank">whitelist</a> approach is not available.</li>
+<li>Application can send request only to <strong>identified and trusted applications</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting">whitelist</a> approach is available.</li>
+<li>Application can send requests to <strong>ANY external IP address or domain name</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting">whitelist</a> approach is not available.</li>
 </ul>
 <p>Because these two cases are very different, this cheat sheet will describe defences against them separately.</p>
-<h3 id="case-1---application-can-send-request-only-to-identified-and-trusted-applications"><a name="case-1---application-can-send-request-only-to-identified-and-trusted-applications" class="plugin-anchor" href="#case-1---application-can-send-request-only-to-identified-and-trusted-applications"><i class="fa fa-link" aria-hidden="true"></i></a>Case 1 - Application can send request only to identified and trusted applications</h3>
+<h3 id="case-1-application-can-send-request-only-to-identified-and-trusted-applications">Case 1 - Application can send request only to identified and trusted applications<a class="headerlink" href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" title="Permanent link">&para;</a></h3>
 <p>Sometimes, an application need to perform request to another application, often located on another network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.</p>
-<h4 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h4>
+<h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p>Take the example of a web application that receives and uses personal information from a user, such as their firstname/lastname/birthdate to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands in order to process that data.
 Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system.
 The user leverages the web application as a proxy to the HR system.</p>
 </blockquote>
 <p>The whitelist approach is a viable option in this case since the internal application called by the <em>VulnerableApplication</em> is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.</p>
-<h4 id="available-protections"><a name="available-protections" class="plugin-anchor" href="#available-protections"><i class="fa fa-link" aria-hidden="true"></i></a>Available protections</h4>
+<h4 id="available-protections">Available protections<a class="headerlink" href="#available-protections" title="Permanent link">&para;</a></h4>
 <p>Several protective measures are possible at the <strong>Application</strong> and <strong>Network</strong> layers. In order to apply the <strong>defense in depth</strong> principle, both layers will be hardened against such attacks.</p>
-<h5 id="application-layer"><a name="application-layer" class="plugin-anchor" href="#application-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Application layer</h5>
+<h5 id="application-layer">Application layer<a class="headerlink" href="#application-layer" title="Permanent link">&para;</a></h5>
 <p>The first level of protection that comes to mind is <a href="Input_Validation_Cheat_Sheet.html">Input validation</a>.</p>
 <p>Based on that point, the following question comes to mind: <em>How to perform this input validation?</em></p>
-<p>As <a href="https://twitter.com/orange_8361" target="_blank">Orange Tsai</a> shows in his <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a>, depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the <a href="Input_Validation_Cheat_Sheet.html#whitelisting-vs-blacklisting">whitelisting approach</a> when input validation is used because, most of the time, the format of the information expected from the user is globally know.</p>
+<p>As <a href="https://twitter.com/orange_8361">Orange Tsai</a> shows in his <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a>, depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the <a href="Input_Validation_Cheat_Sheet.html#whitelisting-vs-blacklisting">whitelisting approach</a> when input validation is used because, most of the time, the format of the information expected from the user is globally know.</p>
 <p>The request sent to the internal application will be based on the following information:</p>
 <ul>
 <li>String containing business data.</li>
@@ -1132,20 +1568,22 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li>Domain name.</li>
 <li>URL.</li>
 </ul>
-<p><strong>Note:</strong> Disable the support for the following of the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections" target="_blank">redirection</a> in your web client in order to prevent the bypass of the input validation described in the section <code>Exploitation tricks &gt; Bypassing restrictions &gt; Input validation &gt; Unsafe redirect</code> of this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>.</p>
-<h6 id="string"><a name="string" class="plugin-anchor" href="#string"><i class="fa fa-link" aria-hidden="true"></i></a>String</h6>
+<p><strong>Note:</strong> Disable the support for the following of the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">redirection</a> in your web client in order to prevent the bypass of the input validation described in the section <code>Exploitation tricks &gt; Bypassing restrictions &gt; Input validation &gt; Unsafe redirect</code> of this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>.</p>
+<h6 id="string">String<a class="headerlink" href="#string" title="Permanent link">&para;</a></h6>
 <p>In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected.</p>
-<p>A <a href="https://www.regular-expressions.info/" target="_blank">regex</a> can be used to ensure that data received is valid from a security point of view if the input data have a simple format (<em>e.g.</em> token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the <code>string</code> object because regex for complex formats are difficult to maintain and are highly error prone.</p>
-<p>User input is assumed to be non-network related and consists of the user&apos;s personal information.</p>
+<p>A <a href="https://www.regular-expressions.info/">regex</a> can be used to ensure that data received is valid from a security point of view if the input data have a simple format (<em>e.g.</em> token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the <code>string</code> object because regex for complex formats are difficult to maintain and are highly error prone.</p>
+<p>User input is assumed to be non-network related and consists of the user's personal information.</p>
 <p>Example:</p>
-<pre><code class="lang-java"><span class="hljs-comment">//Regex validation for a data having a simple format</span>
-<span class="hljs-keyword">if</span>(Pattern.matches(<span class="hljs-string">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span>, userInput)){
-    <span class="hljs-comment">//Continue the processing because the input data is valid</span>
-}<span class="hljs-keyword">else</span>{
-    <span class="hljs-comment">//Stop the processing and reject the request</span>
-}
-</code></pre>
-<h6 id="ip-address"><a name="ip-address" class="plugin-anchor" href="#ip-address"><i class="fa fa-link" aria-hidden="true"></i></a>IP address</h6>
+<div class="codehilite"><pre><span></span><code><span class="c1">//Regex validation for a data having a simple format</span>
+<span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span><span class="p">,</span> <span class="n">userInput</span><span class="p">)){</span>
+    <span class="c1">//Continue the processing because the input data is valid</span>
+<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+    <span class="c1">//Stop the processing and reject the request</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<h6 id="ip-address">IP address<a class="headerlink" href="#ip-address" title="Permanent link">&para;</a></h6>
 <p>In the context of SSRF, there are 2 possible validations to perform:</p>
 <ol>
 <li>Ensure that the data provided is a valid IP V4 or V6 address.</li>
@@ -1153,27 +1591,27 @@ The user leverages the web application as a proxy to the HR system.</p>
 </ol>
 <p>The first layer of validation can be applied using libraries that ensure the security of the IP address format, based on the technology used (library option is proposed here in order to delegate the managing of the IP address format and leverage battle tested validation function):</p>
 <blockquote>
-<p>Verification of the proposed libraries has been performed regarding the exposure to bypasses (Hex, Octal, Dword, URL and Mixed encoding) described in this <a href="https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b" target="_blank">article</a>.</p>
+<p>Verification of the proposed libraries has been performed regarding the exposure to bypasses (Hex, Octal, Dword, URL and Mixed encoding) described in this <a href="https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b">article</a>.</p>
 </blockquote>
 <ul>
-<li><strong>JAVA:</strong> Method <a href="http://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/InetAddressValidator.html#isValid(java.lang.String" target="_blank">InetAddressValidator.isValid</a>) from the <a href="http://commons.apache.org/proper/commons-validator/" target="_blank">Apache Commons Validator</a> library.<ul>
+<li><strong>JAVA:</strong> Method <a href="http://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/InetAddressValidator.html#isValid(java.lang.String)">InetAddressValidator.isValid</a> from the <a href="http://commons.apache.org/proper/commons-validator/">Apache Commons Validator</a> library.<ul>
 <li><strong>It is NOT exposed</strong> to bypass using Hex, Octal, Dword, URL and Mixed encoding.</li>
 </ul>
 </li>
-<li><strong>.NET</strong>: Method <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8" target="_blank">IPAddress.TryParse</a> from the SDK.<ul>
+<li><strong>.NET</strong>: Method <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8">IPAddress.TryParse</a> from the SDK.<ul>
 <li><strong>It is exposed</strong> to bypass using Hex, Octal, Dword and Mixed encoding but <strong>NOT</strong> the URL encoding.</li>
 <li>As whitelisting is used here, any bypass tentative will be blocked during the comparison against the allowed list of IP addresses.</li>
 </ul>
 </li>
-<li><strong>JavaScript</strong>: Library <a href="https://www.npmjs.com/package/ip-address" target="_blank">ip-address</a>.<ul>
+<li><strong>JavaScript</strong>: Library <a href="https://www.npmjs.com/package/ip-address">ip-address</a>.<ul>
 <li><strong>It is NOT exposed</strong> to bypass using Hex, Octal, Dword, URL and Mixed encoding.</li>
 </ul>
 </li>
-<li><strong>Python</strong>: Module <a href="https://docs.python.org/3/library/ipaddress.html" target="_blank">ipaddress</a> from the SDK.<ul>
+<li><strong>Python</strong>: Module <a href="https://docs.python.org/3/library/ipaddress.html">ipaddress</a> from the SDK.<ul>
 <li><strong>It is NOT exposed</strong> to bypass using Hex, Octal, Dword, URL and Mixed encoding.</li>
 </ul>
 </li>
-<li><strong>Ruby</strong>: Class <a href="https://ruby-doc.org/stdlib-2.0.0/libdoc/ipaddr/rdoc/IPAddr.html" target="_blank">IPAddr</a> from the SDK.<ul>
+<li><strong>Ruby</strong>: Class <a href="https://ruby-doc.org/stdlib-2.0.0/libdoc/ipaddr/rdoc/IPAddr.html">IPAddr</a> from the SDK.<ul>
 <li><strong>It is NOT exposed</strong> to bypass using Hex, Octal, Dword, URL and Mixed encoding.</li>
 </ul>
 </li>
@@ -1182,7 +1620,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p><strong>Use the output value of the method/library as the IP address to compare against the whitelist.</strong></p>
 </blockquote>
 <p>After ensuring the validity of the incoming IP address, the second layer of validation is applied. A whitelist is created after determining all the IP addresses (v4 and v6 in order to avoid bypasses) of the identified and trusted applications. The valid IP is cross checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).</p>
-<h6 id="domain-name"><a name="domain-name" class="plugin-anchor" href="#domain-name"><i class="fa fa-link" aria-hidden="true"></i></a>Domain name</h6>
+<h6 id="domain-name">Domain name<a class="headerlink" href="#domain-name" title="Permanent link">&para;</a></h6>
 <p>In the attempt of validating domain names, it is apparent to do a DNS resolution in order to verify the existence of the domain. In general, it is not a bad idea, yet it opens up the application to attacks depending on the configuration used regarding the DNS servers used for the domain name resolution:</p>
 <ul>
 <li>It can disclose information to external DNS resolvers.</li>
@@ -1199,35 +1637,39 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>Verification of the proposed libraries has been performed to ensure that the proposed functions do not perform any DNS resolution query.</p>
 </blockquote>
 <ul>
-<li><strong>JAVA:</strong> Method <a href="https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html#isValid(java.lang.String" target="_blank">DomainValidator.isValid</a>) from the <a href="http://commons.apache.org/proper/commons-validator/" target="_blank">Apache Commons Validator</a> library.</li>
-<li><strong>.NET</strong>: Method <a href="https://docs.microsoft.com/en-us/dotnet/api/system.uri.checkhostname?view=netframework-4.8" target="_blank">Uri.CheckHostName</a> from the SDK.</li>
-<li><strong>JavaScript</strong>: Library <a href="https://www.npmjs.com/package/is-valid-domain" target="_blank">is-valid-domain</a>.</li>
-<li><strong>Python</strong>: Module <a href="https://validators.readthedocs.io/en/latest/#module-validators.domain" target="_blank">validators.domain</a>.</li>
+<li><strong>JAVA:</strong> Method <a href="https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/routines/DomainValidator.html#isValid(java.lang.String)">DomainValidator.isValid</a> from the <a href="http://commons.apache.org/proper/commons-validator/">Apache Commons Validator</a> library.</li>
+<li><strong>.NET</strong>: Method <a href="https://docs.microsoft.com/en-us/dotnet/api/system.uri.checkhostname?view=netframework-4.8">Uri.CheckHostName</a> from the SDK.</li>
+<li><strong>JavaScript</strong>: Library <a href="https://www.npmjs.com/package/is-valid-domain">is-valid-domain</a>.</li>
+<li><strong>Python</strong>: Module <a href="https://validators.readthedocs.io/en/latest/#module-validators.domain">validators.domain</a>.</li>
 <li><strong>Ruby</strong>: No valid dedicated gem has been found.<ul>
-<li><a href="https://github.com/mhuggins/domainator" target="_blank">domainator</a>, <a href="https://github.com/weppos/publicsuffix-ruby" target="_blank">public_suffix</a> and <a href="https://github.com/sporkmonger/addressable" target="_blank">addressable</a> has been tested but unfortunately they all consider <code>&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org</code> as a valid domain name.</li>
-<li>This regex, taken from <a href="https://stackoverflow.com/a/26987741" target="_blank">here</a>, can be used: <code>^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$</code></li>
+<li><a href="https://github.com/mhuggins/domainator">domainator</a>, <a href="https://github.com/weppos/publicsuffix-ruby">public_suffix</a> and <a href="https://github.com/sporkmonger/addressable">addressable</a> has been tested but unfortunately they all consider <code>&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org</code> as a valid domain name.</li>
+<li>This regex, taken from <a href="https://stackoverflow.com/a/26987741">here</a>, can be used: <code>^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$</code></li>
 </ul>
 </li>
 </ul>
 <p>Example of execution of the proposed regex for Ruby:</p>
-<pre><code class="lang-ruby">domain_names = [<span class="hljs-string">&quot;owasp.org&quot;</span>,<span class="hljs-string">&quot;owasp-test.org&quot;</span>,<span class="hljs-string">&quot;doc-test.owasp.org&quot;</span>,<span class="hljs-string">&quot;doc.owasp.org&quot;</span>,
-                <span class="hljs-string">&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;</span>,<span class="hljs-string">&quot;&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org&quot;</span>]
-domain_names.each { |domain_name|
-    <span class="hljs-keyword">if</span> ( domain_name =~ <span class="hljs-regexp">/^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$/</span> )
-        puts <span class="hljs-string">&quot;[i] <span class="hljs-subst">#{domain_name}</span> is VALID&quot;</span>
-    <span class="hljs-keyword">else</span>
-        puts <span class="hljs-string">&quot;[!] <span class="hljs-subst">#{domain_name}</span> is INVALID&quot;</span>
-    <span class="hljs-keyword">end</span>
-}
-</code></pre>
-<pre><code class="lang-bash">$ ruby test.rb
-[i] owasp.org is VALID
-[i] owasp-test.org is VALID
-[i] doc-test.owasp.org is VALID
-[i] doc.owasp.org is VALID
-[!] &lt;script&gt;alert(1)&lt;/script&gt; is INVALID
-[!] &lt;script&gt;alert(1)&lt;/script&gt;.owasp.org is INVALID
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">domain_names</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;owasp.org&quot;</span><span class="p">,</span><span class="s2">&quot;owasp-test.org&quot;</span><span class="p">,</span><span class="s2">&quot;doc-test.owasp.org&quot;</span><span class="p">,</span><span class="s2">&quot;doc.owasp.org&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;</span><span class="p">,</span><span class="s2">&quot;&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org&quot;</span><span class="o">]</span>
+<span class="n">domain_names</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">domain_name</span><span class="o">|</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">domain_name</span> <span class="o">=~</span> <span class="sr">/^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$/</span> <span class="p">)</span>
+        <span class="nb">puts</span> <span class="s2">&quot;[i] </span><span class="si">#{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> is VALID&quot;</span>
+    <span class="k">else</span>
+        <span class="nb">puts</span> <span class="s2">&quot;[!] </span><span class="si">#{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> is INVALID&quot;</span>
+    <span class="k">end</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<div class="codehilite"><pre><span></span><code>$ ruby test.rb
+<span class="o">[</span>i<span class="o">]</span> owasp.org is VALID
+<span class="o">[</span>i<span class="o">]</span> owasp-test.org is VALID
+<span class="o">[</span>i<span class="o">]</span> doc-test.owasp.org is VALID
+<span class="o">[</span>i<span class="o">]</span> doc.owasp.org is VALID
+<span class="o">[</span>!<span class="o">]</span> &lt;script&gt;alert<span class="o">(</span><span class="m">1</span><span class="o">)</span>&lt;/script&gt; is INVALID
+<span class="o">[</span>!<span class="o">]</span> &lt;script&gt;alert<span class="o">(</span><span class="m">1</span><span class="o">)</span>&lt;/script&gt;.owasp.org is INVALID
+</code></pre></div>
+
+
 <p>After ensuring the validity of the incoming domain name, the second layer of validation is applied:</p>
 <ol>
 <li>Build a whitelist with all the domain names of every identified and trusted applications.</li>
@@ -1236,205 +1678,203 @@ domain_names.each { |domain_name|
 <p>Unfortunately here, the application is still vulnerable to the <code>DNS pinning</code> bypass mentioned in this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>. Indeed, a DNS resolution will be made when the business code will be executed. To address that issue, the following action must be taken in addition of the validation on the domain name:</p>
 <ol>
 <li>Ensure that the domains that are part of your organization are resolved by your internal DNS server first in the chains of DNS resolvers.</li>
-<li>Monitor the domains whitelist in order to detect when any of them resolves to a/an:<ul>
+<li>Monitor the domains whitelist in order to detect when any of them resolves to a/an:</li>
 <li>Local IP address (V4 + V6).</li>
 <li>Internal IP of your organization (expected to be in private IP ranges) for the domain that are not part of your organization.</li>
-</ul>
-</li>
 </ol>
 <p>The following Python3 script can be used, as a starting point, for the monitoring mentioned above:</p>
-<pre><code class="lang-python"># Dependencies: pip install ipaddress dnspython
-import ipaddress
-import dns.resolver
+<div class="codehilite"><pre><span></span><code><span class="c1"># Dependencies: pip install ipaddress dnspython</span>
+<span class="kn">import</span> <span class="nn">ipaddress</span>
+<span class="kn">import</span> <span class="nn">dns.resolver</span>
 
-# Configure the whitelist to check
-DOMAINS_WHITELIST = [&quot;owasp.org&quot;, &quot;labslinux&quot;]
+<span class="c1"># Configure the whitelist to check</span>
+<span class="n">DOMAINS_WHITELIST</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;owasp.org&quot;</span><span class="p">,</span> <span class="s2">&quot;labslinux&quot;</span><span class="p">]</span>
 
-# Configure the DNS resolver to use for all DNS queries
-DNS_RESOLVER = dns.resolver.Resolver()
-DNS_RESOLVER.nameservers = [&quot;1.1.1.1&quot;]
+<span class="c1"># Configure the DNS resolver to use for all DNS queries</span>
+<span class="n">DNS_RESOLVER</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">resolver</span><span class="o">.</span><span class="n">Resolver</span><span class="p">()</span>
+<span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">nameservers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1.1.1.1&quot;</span><span class="p">]</span>
 
-def verify_dns_records(domain, records, type):
-    &quot;&quot;&quot;
-    Verify if one of the DNS records resolve to a non public IP address.
-    Return a boolean indicating if any error has been detected.
-    &quot;&quot;&quot;
-    error_detected = False
-    if records is not None:
-        for record in records:
-            value = record.to_text().strip()
-            try:
-                ip = ipaddress.ip_address(value)
-                # See https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address.is_global
-                if not ip.is_global:
-                    print(&quot;[!] DNS record type &apos;%s&apos; for domain name &apos;%s&apos; resolve to
-                    a non public IP address &apos;%s&apos;!&quot; % (type, domain, value))
-                    error_detected = True
-            except ValueError:
-                error_detected = True
-                print(&quot;[!] &apos;%s&apos; is not valid IP address!&quot; % value)
-    return error_detected
+<span class="k">def</span> <span class="nf">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Verify if one of the DNS records resolve to a non public IP address.</span>
+<span class="sd">    Return a boolean indicating if any error has been detected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">records</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">to_text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">ip</span> <span class="o">=</span> <span class="n">ipaddress</span><span class="o">.</span><span class="n">ip_address</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="c1"># See https://docs.python.org/3/library/ipaddress.html#ipaddress.IPv4Address.is_global</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">ip</span><span class="o">.</span><span class="n">is_global</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[!] DNS record type &#39;</span><span class="si">%s</span><span class="s2">&#39; for domain name &#39;</span><span class="si">%s</span><span class="s2">&#39; resolve to</span>
+                    <span class="n">a</span> <span class="n">non</span> <span class="n">public</span> <span class="n">IP</span> <span class="n">address</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="err">!</span><span class="s2">&quot; % (type, domain, value))</span>
+                    <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[!] &#39;</span><span class="si">%s</span><span class="s2">&#39; is not valid IP address!&quot;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">error_detected</span>
 
-def check():
-    &quot;&quot;&quot;
-    Perform the check of the whitelist of domains.
-    Return a boolean indicating if any error has been detected.
-    &quot;&quot;&quot;
-    error_detected = False
-    for domain in DOMAINS_WHITELIST:
-        # Get the IPs of the current domain
-        # See https://en.wikipedia.org/wiki/List_of_DNS_record_types
-        try:
-            # A = IPv4 address record
-            ip_v4_records = DNS_RESOLVER.query(domain, &quot;A&quot;)
-        except Exception as e:
-            ip_v4_records = None
-            print(&quot;[i] Cannot get A record for domain &apos;%s&apos;: %s\n&quot; % (domain,e))
-        try:
-            # AAAA = IPv6 address record
-            ip_v6_records = DNS_RESOLVER.query(domain, &quot;AAAA&quot;)
-        except Exception as e:
-            ip_v6_records = None
-            print(&quot;[i] Cannot get AAAA record for domain &apos;%s&apos;: %s\n&quot; % (domain,e))
-        # Verify the IPs obtained
-        if verify_dns_records(domain, ip_v4_records, &quot;A&quot;)
-        or verify_dns_records(domain, ip_v6_records, &quot;AAAA&quot;):
-            error_detected = True
-    return error_detected
+<span class="k">def</span> <span class="nf">check</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform the check of the whitelist of domains.</span>
+<span class="sd">    Return a boolean indicating if any error has been detected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">DOMAINS_WHITELIST</span><span class="p">:</span>
+        <span class="c1"># Get the IPs of the current domain</span>
+        <span class="c1"># See https://en.wikipedia.org/wiki/List_of_DNS_record_types</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># A = IPv4 address record</span>
+            <span class="n">ip_v4_records</span> <span class="o">=</span> <span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">ip_v4_records</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[i] Cannot get A record for domain &#39;</span><span class="si">%s</span><span class="s2">&#39;: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">domain</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># AAAA = IPv6 address record</span>
+            <span class="n">ip_v6_records</span> <span class="o">=</span> <span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="s2">&quot;AAAA&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">ip_v6_records</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[i] Cannot get AAAA record for domain &#39;</span><span class="si">%s</span><span class="s2">&#39;: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">domain</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
+        <span class="c1"># Verify the IPs obtained</span>
+        <span class="k">if</span> <span class="n">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">ip_v4_records</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">ip_v6_records</span><span class="p">,</span> <span class="s2">&quot;AAAA&quot;</span><span class="p">):</span>
+            <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">error_detected</span>
 
-if __name__== &quot;__main__&quot;:
-    if check():
-        exit(1)
-    else:
-        exit(0)
-</code></pre>
-<h6 id="url"><a name="url" class="plugin-anchor" href="#url"><i class="fa fa-link" aria-hidden="true"></i></a>URL</h6>
-<p>Do not accept complete URLs from the user because URL are difficult to validate and the parser can be abused depending on the technology used as showcased by the following <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a> of <a href="https://twitter.com/orange_8361" target="_blank">Orange Tsai</a>.</p>
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">check</span><span class="p">():</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h6 id="url">URL<a class="headerlink" href="#url" title="Permanent link">&para;</a></h6>
+<p>Do not accept complete URLs from the user because URL are difficult to validate and the parser can be abused depending on the technology used as showcased by the following <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a> of <a href="https://twitter.com/orange_8361">Orange Tsai</a>.</p>
 <p>If network related information is really needed then only accept a valid IP address or domain name.</p>
-<h5 id="network-layer"><a name="network-layer" class="plugin-anchor" href="#network-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Network layer</h5>
+<h5 id="network-layer">Network layer<a class="headerlink" href="#network-layer" title="Permanent link">&para;</a></h5>
 <p>The objective of the Network layer security is to prevent the <em>VulnerableApplication</em> from performing calls to arbitrary applications. Only allowed <em>routes</em> will be available for this application in order to limit its network access to only those that it should communicate with.</p>
 <p>The Firewall component, as a specific device or using the one provided within the operating system, will be used here to define the legitimate flows.</p>
-<p>In the schema below, a Firewall component is leveraged to limit the application&apos;s access, and in turn, limit the impact of an application vulnerable to SSRF:</p>
-<p><img src="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.png" alt="Case 1 for Network layer protection about flows that we want to prevent"></p>
-<p><a href="https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation" target="_blank">Network segregation</a> (see this set of <a href="https://www.cyber.gov.au/publications/network-segmentation-and-segregation" target="_blank">implementation advices</a>) can also be leveraged and <strong>is highly recommended in order to block illegitimate calls directly at network level itself</strong>.</p>
-<h3 id="case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name"><a name="case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name" class="plugin-anchor" href="#case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name"><i class="fa fa-link" aria-hidden="true"></i></a>Case 2 - Application can send requests to ANY external IP address or domain name</h3>
-<p>This case happens when a user can control an URL to an <strong>External</strong> resource and the application makes a request to this URL (e.g. in case of <a href="https://en.wikipedia.org/wiki/Webhook" target="_blank">WebHooks</a>). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.</p>
-<p>In this scenario, <em>External</em> refers to any IP that doesn&apos;t belong to the internal network, and should be reached by going over the public internet.</p>
+<p>In the schema below, a Firewall component is leveraged to limit the application's access, and in turn, limit the impact of an application vulnerable to SSRF:</p>
+<p><img alt="Case 1 for Network layer protection about flows that we want to prevent" src="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.png" /></p>
+<p><a href="https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation">Network segregation</a> (see this set of <a href="https://www.cyber.gov.au/publications/network-segmentation-and-segregation">implementation advices</a>) can also be leveraged and <strong>is highly recommended in order to block illegitimate calls directly at network level itself</strong>.</p>
+<h3 id="case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name">Case 2 - Application can send requests to ANY external IP address or domain name<a class="headerlink" href="#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name" title="Permanent link">&para;</a></h3>
+<p>This case happens when a user can control an URL to an <strong>External</strong> resource and the application makes a request to this URL (e.g. in case of <a href="https://en.wikipedia.org/wiki/Webhook">WebHooks</a>). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.</p>
+<p>In this scenario, <em>External</em> refers to any IP that doesn't belong to the internal network, and should be reached by going over the public internet.</p>
 <p>Thus, the call from the <em>Vulnerable Application</em>:</p>
 <ul>
-<li><strong>Is NOT</strong> targeting one of the IP/domain <em>located inside</em> the company&apos;s global network.</li>
+<li><strong>Is NOT</strong> targeting one of the IP/domain <em>located inside</em> the company's global network.</li>
 <li>Uses a convention defined between the <em>VulnerableApplication</em> and the expected IP/domain in order to <em>prove</em> that the call has been legitimately initiated.</li>
 </ul>
-<h4 id="challenges-in-blocking-urls-at-application-layer"><a name="challenges-in-blocking-urls-at-application-layer" class="plugin-anchor" href="#challenges-in-blocking-urls-at-application-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Challenges in blocking URLs at application layer</h4>
+<h4 id="challenges-in-blocking-urls-at-application-layer">Challenges in blocking URLs at application layer<a class="headerlink" href="#challenges-in-blocking-urls-at-application-layer" title="Permanent link">&para;</a></h4>
 <p>Based on the business requirements of the above mentioned applications, the whitelist approach is not a valid solution. Despite knowing that the blacklist approach is not an impenetrable wall, it is the best solution in this scenario. It is informing the application what it should <strong>not</strong> do.</p>
 <p>Here is why filtering URLs is hard at the Application layer:</p>
 <ul>
-<li>It implies that the application must be able to detect, at the code level, that the provided IP (V4 + V6) is not part of the official <a href="https://en.wikipedia.org/wiki/Private_network" target="_blank">private networks ranges</a> including also <em>localhost</em> and <em>IPv4/v6 Link-Local</em> addresses. Not every SDK provides a built-in feature for this kind of verification, and leaves the handling up to the developer to understand all of its pitfalls and possible values, which makes it a demanding task.</li>
+<li>It implies that the application must be able to detect, at the code level, that the provided IP (V4 + V6) is not part of the official <a href="https://en.wikipedia.org/wiki/Private_network">private networks ranges</a> including also <em>localhost</em> and <em>IPv4/v6 Link-Local</em> addresses. Not every SDK provides a built-in feature for this kind of verification, and leaves the handling up to the developer to understand all of its pitfalls and possible values, which makes it a demanding task.</li>
 <li>Same remark for domain name: The company must maintain a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain names.</li>
 </ul>
-<h4 id="available-protections"><a name="available-protections" class="plugin-anchor" href="#available-protections"><i class="fa fa-link" aria-hidden="true"></i></a>Available protections</h4>
+<h4 id="available-protections_1">Available protections<a class="headerlink" href="#available-protections_1" title="Permanent link">&para;</a></h4>
 <p>Taking into consideration the same assumption in the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#example">example</a> for the following sections.</p>
-<h5 id="application-layer"><a name="application-layer" class="plugin-anchor" href="#application-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Application layer</h5>
-<p>Like for the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#case-1---application-can-send-request-only-to-identified-and-trusted-applications">n&#xB0;1</a>, it is assumed that the <code>IP Address</code> or <code>domain name</code> is required to create the request that will be sent to the <em>TargetApplication</em>.</p>
-<p>The first validation on the input data presented in the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">n&#xB0;1</a> on the 3 types of data will be the same for this case <strong>BUT the second validation will differ</strong>. Indeed, here we must use the blacklist approach.</p>
+<h5 id="application-layer_1">Application layer<a class="headerlink" href="#application-layer_1" title="Permanent link">&para;</a></h5>
+<p>Like for the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#case-1---application-can-send-request-only-to-identified-and-trusted-applications">n°1</a>, it is assumed that the <code>IP Address</code> or <code>domain name</code> is required to create the request that will be sent to the <em>TargetApplication</em>.</p>
+<p>The first validation on the input data presented in the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">n°1</a> on the 3 types of data will be the same for this case <strong>BUT the second validation will differ</strong>. Indeed, here we must use the blacklist approach.</p>
 <blockquote>
 <p><strong>Regarding the proof of legitimacy of the request</strong>: The <em>TargetedApplication</em> that will receive the request must generate a random token (ex: alphanumeric of 20 characters) that is expected to be passed by the caller (in body via a parameter for which the name is also defined by the application itself and only allow characters set <code>[a-z]{1,10}</code>) to perform a valid request. The receiving endpoint must only accept HTTP POST requests.</p>
 </blockquote>
 <p><strong>Validation flow (if one the validation steps fail then the request is rejected):</strong></p>
 <ol>
 <li>The application will receive the IP address or domain name of the <em>TargetedApplication</em> and it will apply the first validation on the input data using the libraries/regex mentioned in this <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">section</a>.</li>
-<li>The second validation will be applied against the IP address or domain name of the <em>TargetedApplication</em> using the following blacklist approach:<ul>
+<li>The second validation will be applied against the IP address or domain name of the <em>TargetedApplication</em> using the following blacklist approach:</li>
 <li>For IP address:<ul>
 <li>The application will verify that it is a public one (see the hint provided in the next paragraph with the python code sample).</li>
 </ul>
 </li>
-<li>For domain name:<ol>
-<li>The application will verify that it is a public one by trying to resolve the domain name against the DNS resolver that will only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.</li>
-<li>To prevent the <code>DNS pinning</code> attack described in this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>, the application will retrieve all the IP addresses behind the domain name provided (taking records <em>A</em> + <em>AAAA</em> for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.</li>
-</ol>
-</li>
-</ul>
-</li>
+<li>For domain name:
+        1. The application will verify that it is a public one by trying to resolve the domain name against the DNS resolver that will only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.
+        2. To prevent the <code>DNS pinning</code> attack described in this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>, the application will retrieve all the IP addresses behind the domain name provided (taking records <em>A</em> + <em>AAAA</em> for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.</li>
 <li>The application will receive the protocol to use for the request via a dedicated input parameter for which it will verify the value against an allowed list of protocols (<code>HTTP</code> or <code>HTTPS</code>).</li>
 <li>The application will receive the parameter name for the token to pass to the <em>TargetedApplication</em> via a dedicated input parameter for which it will only allow the characters set <code>[a-z]{1,10}</code>.</li>
 <li>The application will receive the token itself via a dedicated input parameter for which it will only allow the characters set <code>[a-zA-Z0-9]{20}</code>.</li>
 <li>The application will receive and validate (from a security point of view) any business data needed to perform a valid call.</li>
-<li>The application will build the HTTP POST request <strong>using only validated informations</strong> and will send it (<em>don&apos;t forget to disable the support for <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections" target="_blank">redirection</a> in the web client used</em>).</li>
+<li>The application will build the HTTP POST request <strong>using only validated informations</strong> and will send it (<em>don't forget to disable the support for <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">redirection</a> in the web client used</em>).</li>
 </ol>
 <p><strong>Hints for the step 2 regarding the verification on an IP address:</strong></p>
 <p>As mentioned above, not every SDK provide a built-in feature to verify if an IP (V4 + V6) is private/public. So, the following approach can be used based on a blacklist composed of the private IP ranges (<em>example is given in python in order to be easy to understand and portable to others technologies</em>) :</p>
-<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_private_ip</span><span class="hljs-params">(ip_address)</span>:</span>
-    is_private = <span class="hljs-keyword">False</span>
-    <span class="hljs-string">&quot;&quot;&quot;
-    Determine if a IP address provided is a private one.
-    Return TRUE if it&apos;s the case, FALSE otherwise.
-    &quot;&quot;&quot;</span>
-    <span class="hljs-comment"># Build the list of IP prefix for V4 and V6 addresses</span>
-    ip_prefix = []
-    <span class="hljs-comment"># Add prefix for loopback addresses</span>
-    ip_prefix.append(<span class="hljs-string">&quot;127.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;0.&quot;</span>)
-    <span class="hljs-comment"># Add IP V4 prefix for private addresses</span>
-    <span class="hljs-comment"># See https://en.wikipedia.org/wiki/Private_network</span>
-    ip_prefix.append(<span class="hljs-string">&quot;10.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.16.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.17.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.18.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.19.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.20.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.21.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.22.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.23.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.24.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.25.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.26.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.27.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.28.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.29.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.30.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;172.31.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;192.168.&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;169.254.&quot;</span>)
-    <span class="hljs-comment"># Add IP V6 prefix for private addresses</span>
-    <span class="hljs-comment"># See https://en.wikipedia.org/wiki/Unique_local_address</span>
-    <span class="hljs-comment"># See https://en.wikipedia.org/wiki/Private_network</span>
-    <span class="hljs-comment"># See https://simpledns.com/private-ipv6</span>
-    ip_prefix.append(<span class="hljs-string">&quot;fc&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;fd&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;fe&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;ff&quot;</span>)
-    ip_prefix.append(<span class="hljs-string">&quot;::1&quot;</span>)
-    <span class="hljs-comment"># Verify the provided IP address</span>
-    <span class="hljs-comment"># Remove whitespace characters from the beginning/end of the string</span>
-    <span class="hljs-comment"># and convert it to lower case</span>
-    <span class="hljs-comment"># Lower case is for preventing any IPV6 case bypass using mixed case</span>
-    <span class="hljs-comment"># depending on the source used to get the IP address</span>
-    ip_to_verify = ip_address.strip().lower()
-    <span class="hljs-comment"># Perform the check against the list of prefix</span>
-    <span class="hljs-keyword">for</span> prefix <span class="hljs-keyword">in</span> ip_prefix:
-        <span class="hljs-keyword">if</span> ip_to_verify.startswith(prefix):
-            is_private = <span class="hljs-keyword">True</span>
-            <span class="hljs-keyword">break</span>
-    <span class="hljs-keyword">return</span> is_private
-</code></pre>
-<h5 id="network-layer"><a name="network-layer" class="plugin-anchor" href="#network-layer"><i class="fa fa-link" aria-hidden="true"></i></a>Network layer</h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">is_private_ip</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+    <span class="n">is_private</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine if a IP address provided is a private one.</span>
+<span class="sd">    Return TRUE if it&#39;s the case, FALSE otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Build the list of IP prefix for V4 and V6 addresses</span>
+    <span class="n">ip_prefix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Add prefix for loopback addresses</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;127.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;0.&quot;</span><span class="p">)</span>
+    <span class="c1"># Add IP V4 prefix for private addresses</span>
+    <span class="c1"># See https://en.wikipedia.org/wiki/Private_network</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;10.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.16.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.17.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.18.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.19.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.20.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.21.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.22.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.23.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.24.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.25.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.26.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.27.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.28.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.29.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.30.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.31.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;192.168.&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;169.254.&quot;</span><span class="p">)</span>
+    <span class="c1"># Add IP V6 prefix for private addresses</span>
+    <span class="c1"># See https://en.wikipedia.org/wiki/Unique_local_address</span>
+    <span class="c1"># See https://en.wikipedia.org/wiki/Private_network</span>
+    <span class="c1"># See https://simpledns.com/private-ipv6</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;fc&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;fd&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;fe&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;ff&quot;</span><span class="p">)</span>
+    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;::1&quot;</span><span class="p">)</span>
+    <span class="c1"># Verify the provided IP address</span>
+    <span class="c1"># Remove whitespace characters from the beginning/end of the string</span>
+    <span class="c1"># and convert it to lower case</span>
+    <span class="c1"># Lower case is for preventing any IPV6 case bypass using mixed case</span>
+    <span class="c1"># depending on the source used to get the IP address</span>
+    <span class="n">ip_to_verify</span> <span class="o">=</span> <span class="n">ip_address</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="c1"># Perform the check against the list of prefix</span>
+    <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">ip_prefix</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ip_to_verify</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+            <span class="n">is_private</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">is_private</span>
+</code></pre></div>
+
+
+<h5 id="network-layer_1">Network layer<a class="headerlink" href="#network-layer_1" title="Permanent link">&para;</a></h5>
 <p>Similar to the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#network-layer">section</a>.</p>
-<h2 id="imdsv2-in-aws"><a name="imdsv2-in-aws" class="plugin-anchor" href="#imdsv2-in-aws"><i class="fa fa-link" aria-hidden="true"></i></a>IMDSv2 in AWS</h2>
+<h2 id="imdsv2-in-aws">IMDSv2 in AWS<a class="headerlink" href="#imdsv2-in-aws" title="Permanent link">&para;</a></h2>
 <p>In cloud environments SSRF is often used to access and steal credentaials and access tokens from metadata services (e.g. AWS Instance Metadata Service, Azure Instance Metadata Service, GCP metadata server).</p>
-<p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/" target="_blank">IMDSv2</a> is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF.</p>
-<p>To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html" target="_blank">AWS documentation</a> for more details.</p>
-<h2 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h2>
-<p>Online version of the <a href="https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM" target="_blank">SSRF bible</a> (PDF version is used in this cheat sheet).</p>
-<p>Article about <a href="https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b" target="_blank">Bypassing SSRF Protection</a>.</p>
-<p>Articles about SSRF attacks: <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-1-the-basics-a42ba5cc244a" target="_blank">Part 1</a>, <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-2-fun-with-ipv4-addresses-eb51971e476d" target="_blank">part 2</a> and  <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-part-3-other-advanced-techniques-3f48cbcad27e" target="_blank">part 3</a>.</p>
-<p>Article about <a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/" target="_blank">IMDSv2</a></p>
-<h2 id="tools-and-code-used-for-schemas"><a name="tools-and-code-used-for-schemas" class="plugin-anchor" href="#tools-and-code-used-for-schemas"><i class="fa fa-link" aria-hidden="true"></i></a>Tools and code used for schemas</h2>
+<p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/">IMDSv2</a> is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF.</p>
+<p>To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html">AWS documentation</a> for more details.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<p>Online version of the <a href="https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM">SSRF bible</a> (PDF version is used in this cheat sheet).</p>
+<p>Article about <a href="https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b">Bypassing SSRF Protection</a>.</p>
+<p>Articles about SSRF attacks: <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-1-the-basics-a42ba5cc244a">Part 1</a>, <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-attacks-part-2-fun-with-ipv4-addresses-eb51971e476d">part 2</a> and  <a href="https://medium.com/poka-techblog/server-side-request-forgery-ssrf-part-3-other-advanced-techniques-3f48cbcad27e">part 3</a>.</p>
+<p>Article about <a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/">IMDSv2</a></p>
+<h2 id="tools-and-code-used-for-schemas">Tools and code used for schemas<a class="headerlink" href="#tools-and-code-used-for-schemas" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://mermaidjs.github.io/mermaid-live-editor" target="_blank">Mermaid Online Editor</a> and <a href="https://mermaidjs.github.io/" target="_blank">Mermaid documentation</a>.</li>
-<li><a href="https://www.draw.io/" target="_blank">Draw.io Online Editor</a>.</li>
+<li><a href="https://mermaidjs.github.io/mermaid-live-editor">Mermaid Online Editor</a> and <a href="https://mermaidjs.github.io/">Mermaid documentation</a>.</li>
+<li><a href="https://www.draw.io/">Draw.io Online Editor</a>.</li>
 </ul>
 <p>Mermaid code for SSRF common flow (printscreen are used to capture PNG image inserted into this cheat sheet):</p>
-<pre><code class="lang-text">sequenceDiagram
+<div class="codehilite"><pre><span></span><code>sequenceDiagram
     participant Attacker
     participant VulnerableApplication
     participant TargetedApplication
@@ -1444,85 +1884,95 @@ if __name__== &quot;__main__&quot;:
     TargetedApplication-&gt;&gt;VulnerableApplication: Response
     VulnerableApplication-&gt;&gt;Attacker: Response
     Note left of VulnerableApplication: Include response&lt;br&gt;from the&lt;br&gt;TargetedApplication
-</code></pre>
-<p>Draw.io schema XML code for the &quot;<a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.xml">case 1 for network layer protection about flows that we want to prevent</a>&quot; schema (printscreen are used to capture PNG image inserted into this cheat sheet).</p>
+</code></pre></div>
 
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
 
-                        </div>
-                    </div>
+<p>Draw.io schema XML code for the "<a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.xml">case 1 for network layer protection about flows that we want to prevent</a>" schema (printscreen are used to capture PNG image inserted into this cheat sheet).</p>
                 
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
-
-            
-                
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Securing Cascading Style Sheets ">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="Session_Management_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Session Management ">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Securing Cascading Style Sheets
+              </div>
+            </div>
+          </a>
         
+        
+          <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Session Management
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Server Side Request Forgery Prevention ","level":"1.56","depth":1,"next":{"title":"Session Management ","level":"1.57","depth":1,"path":"cheatsheets/Session_Management_Cheat_Sheet.md","ref":"cheatsheets/Session_Management_Cheat_Sheet.md","articles":[]},"previous":{"title":"Securing Cascading Style Sheets ","level":"1.55","depth":1,"path":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","ref":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md","mtime":"2020-05-27T19:41:37.100Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-27T19:42:04.146Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
-
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-

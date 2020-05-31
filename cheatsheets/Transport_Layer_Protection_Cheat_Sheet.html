@@ -1,1057 +1,1534 @@
 
-<!DOCTYPE HTML>
-<html lang="en" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Transport Layer Protection  · OWASP Cheat Sheet Series</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>Transport Layer Protection</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
         
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
         
-        
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" />
-    
-    
-    <link rel="prev" href="Transaction_Authorization_Cheat_Sheet.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        <li class="header">Cheatsheets</li>
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="Index.html">
-            
-                <a href="Index.html">
-            
-                    
-                    Index Alphabetical
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
-            
-                <a href="IndexASVS.html">
-            
-                    
-                    Index ASVS
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
-            
-                <a href="IndexProactiveControls.html">
-            
-                    
-                    Index Proactive Controls
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
-            
-                <a href="AJAX_Security_Cheat_Sheet.html">
-            
-                    
-                    AJAX Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
-            
-                <a href="Abuse_Case_Cheat_Sheet.html">
-            
-                    
-                    Abuse Case 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
-            
-                <a href="Access_Control_Cheat_Sheet.html">
-            
-                    
-                    Access Control 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                    
-                    Attack Surface Analysis 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
-            
-                <a href="Authentication_Cheat_Sheet.html">
-            
-                    
-                    Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
-            
-                <a href="Authorization_Testing_Automation.html">
-            
-                    
-                    Authorization Testing Automation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
-            
-                <a href="Bean_Validation_Cheat_Sheet.html">
-            
-                    
-                    Bean Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
-            
-                <a href="C-Based_Toolchain_Hardening.html">
-            
-                    
-                    C-Based Toolchain Hardening
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                    
-                    C-Based Toolchain Hardening 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                    
-                    Choosing and Using Security Questions 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                <a href="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                    
-                    Clickjacking Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
-            
-                <a href="Content_Security_Policy_Cheat_Sheet.html">
-            
-                    
-                    Content Security Policy 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Credential Stuffing Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross-Site Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross Site Scripting Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                <a href="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                    
-                    Cryptographic Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                    
-                    DOM based XSS Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.22" data-path="Database_Security_Cheat_Sheet.html">
-            
-                <a href="Database_Security_Cheat_Sheet.html">
-            
-                    
-                    Database Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.23" data-path="Denial_of_Service_Cheat_Sheet.html">
-            
-                <a href="Denial_of_Service_Cheat_Sheet.html">
-            
-                    
-                    Denial of Service 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.24" data-path="Deserialization_Cheat_Sheet.html">
-            
-                <a href="Deserialization_Cheat_Sheet.html">
-            
-                    
-                    Deserialization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.25" data-path="Docker_Security_Cheat_Sheet.html">
-            
-                <a href="Docker_Security_Cheat_Sheet.html">
-            
-                    
-                    Docker Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.26" data-path="DotNet_Security_Cheat_Sheet.html">
-            
-                <a href="DotNet_Security_Cheat_Sheet.html">
-            
-                    
-                    DotNet Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.27" data-path="Error_Handling_Cheat_Sheet.html">
-            
-                <a href="Error_Handling_Cheat_Sheet.html">
-            
-                    
-                    Error Handling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
-            
-                <a href="File_Upload_Cheat_Sheet.html">
-            
-                    
-                    File Upload 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.29" data-path="Forgot_Password_Cheat_Sheet.html">
-            
-                <a href="Forgot_Password_Cheat_Sheet.html">
-            
-                    
-                    Forgot Password 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.30" data-path="HTML5_Security_Cheat_Sheet.html">
-            
-                <a href="HTML5_Security_Cheat_Sheet.html">
-            
-                    
-                    HTML5 Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.31" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                    
-                    HTTP Strict Transport Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.32" data-path="Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.33" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                    
-                    Injection Prevention  in Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.34" data-path="Input_Validation_Cheat_Sheet.html">
-            
-                <a href="Input_Validation_Cheat_Sheet.html">
-            
-                    
-                    Input Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.35" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Insecure Direct Object Reference Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.36" data-path="JAAS_Cheat_Sheet.html">
-            
-                <a href="JAAS_Cheat_Sheet.html">
-            
-                    
-                    JAAS 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.37" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                    
-                    JSON Web Token  for Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.38" data-path="Key_Management_Cheat_Sheet.html">
-            
-                <a href="Key_Management_Cheat_Sheet.html">
-            
-                    
-                    Key Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.39" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    LDAP Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.40" data-path="Logging_Cheat_Sheet.html">
-            
-                <a href="Logging_Cheat_Sheet.html">
-            
-                    
-                    Logging 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.41" data-path="Mass_Assignment_Cheat_Sheet.html">
-            
-                <a href="Mass_Assignment_Cheat_Sheet.html">
-            
-                    
-                    Mass Assignment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.42" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                    
-                    Microservices based Security Arch Doc 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.43" data-path="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                <a href="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                    
-                    Multifactor Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.44" data-path="Nodejs_security_cheat_sheet.html">
-            
-                <a href="Nodejs_security_cheat_sheet.html">
-            
-                    
-                    Nodejs security cheat sheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.45" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                    
-                    OS Command Injection Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.46" data-path="PHP_Configuration_Cheat_Sheet.html">
-            
-                <a href="PHP_Configuration_Cheat_Sheet.html">
-            
-                    
-                    PHP Configuration 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.47" data-path="Password_Storage_Cheat_Sheet.html">
-            
-                <a href="Password_Storage_Cheat_Sheet.html">
-            
-                    
-                    Password Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
-            
-                <a href="Pinning_Cheat_Sheet.html">
-            
-                    
-                    Pinning 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.49" data-path="Query_Parameterization_Cheat_Sheet.html">
-            
-                <a href="Query_Parameterization_Cheat_Sheet.html">
-            
-                    
-                    Query Parameterization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.50" data-path="REST_Assessment_Cheat_Sheet.html">
-            
-                <a href="REST_Assessment_Cheat_Sheet.html">
-            
-                    
-                    REST Assessment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.51" data-path="REST_Security_Cheat_Sheet.html">
-            
-                <a href="REST_Security_Cheat_Sheet.html">
-            
-                    
-                    REST Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.52" data-path="Ruby_on_Rails_Cheatsheet.html">
-            
-                <a href="Ruby_on_Rails_Cheatsheet.html">
-            
-                    
-                    Ruby on Rails Cheatsheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.53" data-path="SAML_Security_Cheat_Sheet.html">
-            
-                <a href="SAML_Security_Cheat_Sheet.html">
-            
-                    
-                    SAML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.54" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    SQL Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.55" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                    
-                    Securing Cascading Style Sheets 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.56" data-path="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Server Side Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.57" data-path="Session_Management_Cheat_Sheet.html">
-            
-                <a href="Session_Management_Cheat_Sheet.html">
-            
-                    
-                    Session Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.58" data-path="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                <a href="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                    
-                    TLS Cipher String 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.59" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                    
-                    Third Party Javascript Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.60" data-path="Threat_Modeling_Cheat_Sheet.html">
-            
-                <a href="Threat_Modeling_Cheat_Sheet.html">
-            
-                    
-                    Threat Modeling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.61" data-path="Transaction_Authorization_Cheat_Sheet.html">
-            
-                <a href="Transaction_Authorization_Cheat_Sheet.html">
-            
-                    
-                    Transaction Authorization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.62" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                    
-                    Transport Layer Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.63" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                    
-                    Unvalidated Redirects and Forwards 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.64" data-path="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                <a href="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                    
-                    User Privacy Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.65" data-path="Virtual_Patching_Cheat_Sheet.html">
-            
-                <a href="Virtual_Patching_Cheat_Sheet.html">
-            
-                    
-                    Virtual Patching 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.66" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                    
-                    Vulnerability Disclosure 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.67" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                    
-                    Vulnerable Dependency Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.68" data-path="Web_Service_Security_Cheat_Sheet.html">
-            
-                <a href="Web_Service_Security_Cheat_Sheet.html">
-            
-                    
-                    Web Service Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.69" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                    
-                    XML External Entity Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.70" data-path="XML_Security_Cheat_Sheet.html">
-            
-                <a href="XML_Security_Cheat_Sheet.html">
-            
-                    
-                    XML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="#transport-layer-protection-cheat-sheet" class="md-skip">
+          Skip to content
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
+      
     </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
+    <div data-md-component="announce">
+      
+    </div>
     
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Transport Layer Protection </a>
-    </h1>
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Transport Layer Protection
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
     
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="transport-layer-protection-cheat-sheet"><a name="transport-layer-protection-cheat-sheet" class="plugin-anchor" href="#transport-layer-protection-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Transport Layer Protection Cheat Sheet</h1>
-<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" title="Index Alphabetical" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" title="Index ASVS" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" title="Index Proactive Controls" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" title="AJAX Security" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" title="Abuse Case" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" title="Access Control" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" title="Clickjacking Defense" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" title="Content Security Policy" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" title="Cross-Site Request Forgery Prevention" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" title="Cryptographic Storage" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" title="Database Security" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" title="Denial of Service" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" title="Deserialization" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" title="Docker Security" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" title="DotNet Security" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" title="Error Handling" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" title="File Upload" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" title="Forgot Password" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" title="HTML5 Security" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" title="HTTP Strict Transport Security" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" title="Injection Prevention in Java" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" title="Insecure Direct Object Reference Prevention" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" title="JAAS" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" title="JSON Web Token for Java" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" title="Key Management" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" title="LDAP Injection Prevention" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" title="Mass Assignment" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" title="Multifactor Authentication" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" title="Nodejs Security" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" title="OS Command Injection Defense" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" title="PHP Configuration" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" title="Password Storage" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" title="Pinning" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" title="Query Parameterization" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" title="REST Assessment" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" title="REST Security" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" title="Ruby on Rails" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" title="SQL Injection Prevention" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" title="Server Side Request Forgery Prevention" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" title="TLS Cipher String" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" title="Third Party Javascript Management" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" title="Threat Modeling" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Transport Layer Protection
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" title="Transport Layer Protection" class="md-nav__link md-nav__link--active">
+      Transport Layer Protection
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssl-vs-tls" class="md-nav__link">
+    SSL vs TLS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server-configuration" class="md-nav__link">
+    Server Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#only-support-strong-protocols" class="md-nav__link">
+    Only Support Strong Protocols
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#only-support-strong-ciphers" class="md-nav__link">
+    Only Support Strong Ciphers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-diffie-hellman-parameters" class="md-nav__link">
+    Use Strong Diffie-Hellman Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-compression" class="md-nav__link">
+    Disable Compression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patch-cryptographic-libraries" class="md-nav__link">
+    Patch Cryptographic Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-the-server-configuration" class="md-nav__link">
+    Test the Server Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#certificates" class="md-nav__link">
+    Certificates
+  </a>
+  
+    <nav class="md-nav" aria-label="Certificates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-keys-and-protect-them" class="md-nav__link">
+    Use Strong Keys and Protect Them
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-cryptographic-hashing-algorithms" class="md-nav__link">
+    Use Strong Cryptographic Hashing Algorithms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-correct-domain-names" class="md-nav__link">
+    Use Correct Domain Names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#carefully-consider-the-use-of-wildcard-certificates" class="md-nav__link">
+    Carefully Consider the use of Wildcard Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-an-appropriate-certification-authority-for-the-applications-user-base" class="md-nav__link">
+    Use an Appropriate Certification Authority for the Application's User Base
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-caa-records-to-restrict-which-cas-can-issue-certificates" class="md-nav__link">
+    Use CAA Records to Restrict Which CAs can Issue Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#always-provide-all-needed-certificates" class="md-nav__link">
+    Always Provide All Needed Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consider-the-use-of-extended-validation-certificates" class="md-nav__link">
+    Consider the use of Extended Validation Certificates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    Application
+  </a>
+  
+    <nav class="md-nav" aria-label="Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-tls-for-all-pages" class="md-nav__link">
+    Use TLS For All Pages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-not-mix-tls-and-non-tls-content" class="md-nav__link">
+    Do Not Mix TLS and Non-TLS Content
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-secure-cookie-flag" class="md-nav__link">
+    Use the "Secure" Cookie Flag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prevent-caching-of-sensitive-data" class="md-nav__link">
+    Prevent Caching of Sensitive Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-http-strict-transport-security" class="md-nav__link">
+    Use HTTP Strict Transport Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consider-using-public-key-pinning" class="md-nav__link">
+    Consider Using Public Key Pinning
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consider-the-use-of-client-side-certificates" class="md-nav__link">
+    Consider the use of Client-Side Certificates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-articles" class="md-nav__link">
+    Related Articles
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" title="User Privacy Protection" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" title="Virtual Patching" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" title="Vulnerability Disclosure" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" title="Vulnerable Dependency Management" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" title="XML External Entity Prevention" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssl-vs-tls" class="md-nav__link">
+    SSL vs TLS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server-configuration" class="md-nav__link">
+    Server Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#only-support-strong-protocols" class="md-nav__link">
+    Only Support Strong Protocols
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#only-support-strong-ciphers" class="md-nav__link">
+    Only Support Strong Ciphers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-diffie-hellman-parameters" class="md-nav__link">
+    Use Strong Diffie-Hellman Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-compression" class="md-nav__link">
+    Disable Compression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patch-cryptographic-libraries" class="md-nav__link">
+    Patch Cryptographic Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-the-server-configuration" class="md-nav__link">
+    Test the Server Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#certificates" class="md-nav__link">
+    Certificates
+  </a>
+  
+    <nav class="md-nav" aria-label="Certificates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-keys-and-protect-them" class="md-nav__link">
+    Use Strong Keys and Protect Them
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-cryptographic-hashing-algorithms" class="md-nav__link">
+    Use Strong Cryptographic Hashing Algorithms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-correct-domain-names" class="md-nav__link">
+    Use Correct Domain Names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#carefully-consider-the-use-of-wildcard-certificates" class="md-nav__link">
+    Carefully Consider the use of Wildcard Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-an-appropriate-certification-authority-for-the-applications-user-base" class="md-nav__link">
+    Use an Appropriate Certification Authority for the Application's User Base
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-caa-records-to-restrict-which-cas-can-issue-certificates" class="md-nav__link">
+    Use CAA Records to Restrict Which CAs can Issue Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#always-provide-all-needed-certificates" class="md-nav__link">
+    Always Provide All Needed Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consider-the-use-of-extended-validation-certificates" class="md-nav__link">
+    Consider the use of Extended Validation Certificates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    Application
+  </a>
+  
+    <nav class="md-nav" aria-label="Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-tls-for-all-pages" class="md-nav__link">
+    Use TLS For All Pages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-not-mix-tls-and-non-tls-content" class="md-nav__link">
+    Do Not Mix TLS and Non-TLS Content
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-secure-cookie-flag" class="md-nav__link">
+    Use the "Secure" Cookie Flag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prevent-caching-of-sensitive-data" class="md-nav__link">
+    Prevent Caching of Sensitive Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-http-strict-transport-security" class="md-nav__link">
+    Use HTTP Strict Transport Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consider-using-public-key-pinning" class="md-nav__link">
+    Consider Using Public Key Pinning
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consider-the-use-of-client-side-certificates" class="md-nav__link">
+    Consider the use of Client-Side Certificates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-articles" class="md-nav__link">
+    Related Articles
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="transport-layer-protection-cheat-sheet">Transport Layer Protection Cheat Sheet<a class="headerlink" href="#transport-layer-protection-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This cheat sheet provides guidance on how to implement transport layer protection for an application using Transport Layer Security (TLS). When correctly implemented, TLS can provides a number of security benefits:</p>
 <ul>
 <li>Confidentiality - protection against an attacker from reading the contents of traffic.</li>
@@ -1060,16 +1537,16 @@
 <li>Authentication - allowing the client to verify that they are connected to the real server (note that the identity of the <em>client</em> is not verified unless client certificates are used).</li>
 </ul>
 <p>TLS is used by many other protocols to provide encryption and integrity, and can be used in a number of different ways. This cheatsheet is primarily focused on how to use TLS to protect clients connecting to a web application over HTTPS; although much of the guidance is also applicable to other uses of TLS.</p>
-<h3 id="ssl-vs-tls"><a name="ssl-vs-tls" class="plugin-anchor" href="#ssl-vs-tls"><i class="fa fa-link" aria-hidden="true"></i></a>SSL vs TLS</h3>
+<h3 id="ssl-vs-tls">SSL vs TLS<a class="headerlink" href="#ssl-vs-tls" title="Permanent link">&para;</a></h3>
 <p>Secure Socket Layer (SSL) was the original protocol that was used to provide encryption for HTTP traffic, in the form of HTTPS. There were two publicly released versions of SSL - versions 2 and 3. Both of these have serious cryptographic weaknesses and should no longer be used.</p>
-<p>For <a href="http://tim.dierks.org/2014/05/security-standards-and-name-changes-in.html" target="_blank">various reasons</a> the next version of the protocol (effectively SSL 3.1) was named Transport Layer Security (TLS) version 1.0. Subsequently TLS versions 1.1, 1.2 and 1.3 have been released.</p>
-<p>The terms &quot;SSL&quot;, &quot;SSL/TLS&quot; and &quot;TLS&quot; are frequently used interchangeably, and in many cases &quot;SSL&quot; is used when referring to the more modern TLS protocol. This cheatsheet will use the term &quot;TLS&quot; except where referring to the legacy protocols.</p>
-<h2 id="server-configuration"><a name="server-configuration" class="plugin-anchor" href="#server-configuration"><i class="fa fa-link" aria-hidden="true"></i></a>Server Configuration</h2>
-<h3 id="only-support-strong-protocols"><a name="only-support-strong-protocols" class="plugin-anchor" href="#only-support-strong-protocols"><i class="fa fa-link" aria-hidden="true"></i></a>Only Support Strong Protocols</h3>
+<p>For <a href="http://tim.dierks.org/2014/05/security-standards-and-name-changes-in.html">various reasons</a> the next version of the protocol (effectively SSL 3.1) was named Transport Layer Security (TLS) version 1.0. Subsequently TLS versions 1.1, 1.2 and 1.3 have been released.</p>
+<p>The terms "SSL", "SSL/TLS" and "TLS" are frequently used interchangeably, and in many cases "SSL" is used when referring to the more modern TLS protocol. This cheatsheet will use the term "TLS" except where referring to the legacy protocols.</p>
+<h2 id="server-configuration">Server Configuration<a class="headerlink" href="#server-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="only-support-strong-protocols">Only Support Strong Protocols<a class="headerlink" href="#only-support-strong-protocols" title="Permanent link">&para;</a></h3>
 <p>The SSL protocols have a large number of weaknesses, and should not be used in any circumstances. General purpose web applications should only support TLS 1.2 and TLS 1.3, with all other protocols disabled. Where it is known that a web server must support legacy clients with unsupported an insecure browsers (such as Internet Explorer 10), it may be necessary to enable TLS 1.0 to provide support.</p>
-<p>Where legacy protocols are required, the <a href="https://tools.ietf.org/html/rfc7507" target="_blank">&quot;TLS_FALLBACK_SCSV&quot; extension</a> should be enabled in order to prevent downgrade attacks against clients.</p>
-<p>Note that PCI DSS <a href="https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf" target="_blank">forbids the use of legacy protocols such as TLS 1.0</a>.</p>
-<h3 id="only-support-strong-ciphers"><a name="only-support-strong-ciphers" class="plugin-anchor" href="#only-support-strong-ciphers"><i class="fa fa-link" aria-hidden="true"></i></a>Only Support Strong Ciphers</h3>
+<p>Where legacy protocols are required, the <a href="https://tools.ietf.org/html/rfc7507">"TLS_FALLBACK_SCSV" extension</a> should be enabled in order to prevent downgrade attacks against clients.</p>
+<p>Note that PCI DSS <a href="https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf">forbids the use of legacy protocols such as TLS 1.0</a>.</p>
+<h3 id="only-support-strong-ciphers">Only Support Strong Ciphers<a class="headerlink" href="#only-support-strong-ciphers" title="Permanent link">&para;</a></h3>
 <p>There are a large number of different ciphers (or cipher suites) that are supported by TLS, that provide varying levels of security. Where possible, only GCM ciphers should be enabled. However, if it is necessary to support legacy clients, then other ciphers may be required.</p>
 <p>At a minimum, the following types of ciphers should always be disabled:</p>
 <ul>
@@ -1078,41 +1555,43 @@
 <li>EXPORT ciphers</li>
 </ul>
 <p>See the <a href="TLS_Cipher_String_Cheat_Sheet.html">TLS Cipher String Cheat Sheet</a> for full details on securely configuring ciphers.</p>
-<h3 id="use-strong-diffie-hellman-parameters"><a name="use-strong-diffie-hellman-parameters" class="plugin-anchor" href="#use-strong-diffie-hellman-parameters"><i class="fa fa-link" aria-hidden="true"></i></a>Use Strong Diffie-Hellman Parameters</h3>
-<p>Where ciphers that use the ephemeral Diffie-Hellman key exchange are in use (signified by the &quot;DHE&quot; or &quot;EDH&quot; strings in the cipher name) sufficiently secure Diffie-Hellman parameters (at least 2048 bits) should be used</p>
+<h3 id="use-strong-diffie-hellman-parameters">Use Strong Diffie-Hellman Parameters<a class="headerlink" href="#use-strong-diffie-hellman-parameters" title="Permanent link">&para;</a></h3>
+<p>Where ciphers that use the ephemeral Diffie-Hellman key exchange are in use (signified by the "DHE" or "EDH" strings in the cipher name) sufficiently secure Diffie-Hellman parameters (at least 2048 bits) should be used</p>
 <p>The following command can be used to generate 2048 bit parameters:</p>
-<pre><code class="lang-bash">openssl dhparam 2048 -out dhparam2048.pem
-</code></pre>
-<p>The <a href="https://weakdh.org/sysadmin.html" target="_blank">Weak DH</a> website provides guidance on how various web servers can be configured to use these generated parameters.</p>
-<h3 id="disable-compression"><a name="disable-compression" class="plugin-anchor" href="#disable-compression"><i class="fa fa-link" aria-hidden="true"></i></a>Disable Compression</h3>
-<p>TLS compression should be disabled in order to protect against a vulnerability (nicknamed <a href="https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/" target="_blank">CRIME</a>) which could potentially allow sensitive information such as session cookies to be recovered by an attacker.</p>
-<h3 id="patch-cryptographic-libraries"><a name="patch-cryptographic-libraries" class="plugin-anchor" href="#patch-cryptographic-libraries"><i class="fa fa-link" aria-hidden="true"></i></a>Patch Cryptographic Libraries</h3>
-<p>As well as the vulnerabilities in the SSL and TLS protocols, there have also been a large number of historic vulnerability in SSL and TLS libraries, with <a href="http://heartbleed.com" target="_blank">Heartbleed</a> being the most well known. As such, it is important to ensure that these libraries are kept up to date with the latest security patches.</p>
-<h3 id="test-the-server-configuration"><a name="test-the-server-configuration" class="plugin-anchor" href="#test-the-server-configuration"><i class="fa fa-link" aria-hidden="true"></i></a>Test the Server Configuration</h3>
-<p>Once the server has been hardened, the configuration should be tested. The <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_SSL_TLS_Ciphers_Insufficient_Transport_Layer_Protection.html" target="_blank">OWASP Testing Guide chapter on SSL/TLS Testing</a> contains further information on testing.</p>
+<div class="codehilite"><pre><span></span><code>openssl dhparam <span class="m">2048</span> -out dhparam2048.pem
+</code></pre></div>
+
+
+<p>The <a href="https://weakdh.org/sysadmin.html">Weak DH</a> website provides guidance on how various web servers can be configured to use these generated parameters.</p>
+<h3 id="disable-compression">Disable Compression<a class="headerlink" href="#disable-compression" title="Permanent link">&para;</a></h3>
+<p>TLS compression should be disabled in order to protect against a vulnerability (nicknamed <a href="https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/">CRIME</a>) which could potentially allow sensitive information such as session cookies to be recovered by an attacker.</p>
+<h3 id="patch-cryptographic-libraries">Patch Cryptographic Libraries<a class="headerlink" href="#patch-cryptographic-libraries" title="Permanent link">&para;</a></h3>
+<p>As well as the vulnerabilities in the SSL and TLS protocols, there have also been a large number of historic vulnerability in SSL and TLS libraries, with <a href="http://heartbleed.com">Heartbleed</a> being the most well known. As such, it is important to ensure that these libraries are kept up to date with the latest security patches.</p>
+<h3 id="test-the-server-configuration">Test the Server Configuration<a class="headerlink" href="#test-the-server-configuration" title="Permanent link">&para;</a></h3>
+<p>Once the server has been hardened, the configuration should be tested. The <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_SSL_TLS_Ciphers_Insufficient_Transport_Layer_Protection.html">OWASP Testing Guide chapter on SSL/TLS Testing</a> contains further information on testing.</p>
 <p>There are a number of online tools that can be used to quickly validate the configuration of a server, including:</p>
 <ul>
-<li><a href="https://www.ssllabs.com/ssltest" target="_blank">SSL Labs Server Test</a></li>
-<li><a href="https://observatory.mozilla.org" target="_blank">Observatory by Mozilla</a></li>
+<li><a href="https://www.ssllabs.com/ssltest">SSL Labs Server Test</a></li>
+<li><a href="https://observatory.mozilla.org">Observatory by Mozilla</a></li>
 </ul>
 <p>Additionally, there are a number of offline tools that can be used:</p>
 <ul>
-<li><a href="https://wiki.owasp.org/index.php/O-Saft" target="_blank">O-Saft - OWASP SSL advanced forensic tool</a></li>
-<li><a href="https://testssl.sh" target="_blank">testssl.sh - Testing any TLS/SSL encryption</a></li>
-<li><a href="https://github.com/rbsec/sslscan" target="_blank">SSLScan - Fast SSL Scanner</a></li>
-<li><a href="https://github.com/iSECPartners/sslyze" target="_blank">SSLyze</a></li>
+<li><a href="https://wiki.owasp.org/index.php/O-Saft">O-Saft - OWASP SSL advanced forensic tool</a></li>
+<li><a href="https://testssl.sh">testssl.sh - Testing any TLS/SSL encryption</a></li>
+<li><a href="https://github.com/rbsec/sslscan">SSLScan - Fast SSL Scanner</a></li>
+<li><a href="https://github.com/iSECPartners/sslyze">SSLyze</a></li>
 </ul>
-<h2 id="certificates"><a name="certificates" class="plugin-anchor" href="#certificates"><i class="fa fa-link" aria-hidden="true"></i></a>Certificates</h2>
-<h3 id="use-strong-keys-and-protect-them"><a name="use-strong-keys-and-protect-them" class="plugin-anchor" href="#use-strong-keys-and-protect-them"><i class="fa fa-link" aria-hidden="true"></i></a>Use Strong Keys and Protect Them</h3>
-<p>The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits. Additional information on key lifetimes and comparable key strengths can be found <a href="http://www.keylength.com/en/compare/" target="_blank">here</a> and in <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf" target="_blank">NIST SP 800-57</a>.</p>
+<h2 id="certificates">Certificates<a class="headerlink" href="#certificates" title="Permanent link">&para;</a></h2>
+<h3 id="use-strong-keys-and-protect-them">Use Strong Keys and Protect Them<a class="headerlink" href="#use-strong-keys-and-protect-them" title="Permanent link">&para;</a></h3>
+<p>The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits. Additional information on key lifetimes and comparable key strengths can be found <a href="http://www.keylength.com/en/compare/">here</a> and in <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf">NIST SP 800-57</a>.</p>
 <p>The private key should also be protected from unauthorised access using filesystem permissions and other technical and administrative controls.</p>
-<h3 id="use-strong-cryptographic-hashing-algorithms"><a name="use-strong-cryptographic-hashing-algorithms" class="plugin-anchor" href="#use-strong-cryptographic-hashing-algorithms"><i class="fa fa-link" aria-hidden="true"></i></a>Use Strong Cryptographic Hashing Algorithms</h3>
+<h3 id="use-strong-cryptographic-hashing-algorithms">Use Strong Cryptographic Hashing Algorithms<a class="headerlink" href="#use-strong-cryptographic-hashing-algorithms" title="Permanent link">&para;</a></h3>
 <p>Certificates should use SHA-256 for the hashing algorithm, rather than the older MD5 and SHA-1 algorithms. These have a number of cryptographic weaknesses, and are not trusted by modern browsers.</p>
-<h3 id="use-correct-domain-names"><a name="use-correct-domain-names" class="plugin-anchor" href="#use-correct-domain-names"><i class="fa fa-link" aria-hidden="true"></i></a>Use Correct Domain Names</h3>
+<h3 id="use-correct-domain-names">Use Correct Domain Names<a class="headerlink" href="#use-correct-domain-names" title="Permanent link">&para;</a></h3>
 <p>The domain name (or subject) of the certificate must match the fully qualified name of the server that presents the certificate. Historically this was stored in the <code>commonName</code> (CN) attribute of the certificate. However, modern versions of Chrome ignore the CN attribute, and require that the FQDN is in the <code>subjectAlternativeName</code> (SAN) attribute. For compatibility reasons, certificates should have the primary FQDN in the CN, and the full list of FQDNs in the SAN.</p>
 <p>Additionally, when creating the certificate, the following should be taken into account:</p>
 <ul>
-<li>Consider whether the &quot;www&quot; subdomain should also be included.</li>
+<li>Consider whether the "www" subdomain should also be included.</li>
 <li>Do not include non-qualified hostnames.</li>
 <li>Do not include IP addresses.</li>
 <li>Do not include internal domain names on externally facing certificates.<ul>
@@ -1120,13 +1599,13 @@
 </ul>
 </li>
 </ul>
-<h3 id="carefully-consider-the-use-of-wildcard-certificates"><a name="carefully-consider-the-use-of-wildcard-certificates" class="plugin-anchor" href="#carefully-consider-the-use-of-wildcard-certificates"><i class="fa fa-link" aria-hidden="true"></i></a>Carefully Consider the use of Wildcard Certificates</h3>
-<p>Wildcard certificates can be convenient, however they violate <a href="https://wiki.owasp.org/index.php/Least_privilege" target="_blank">the principal of least privilege</a>, as a single certificate is valid for all subdomains of a domain (such as *.example.org). Where multiple systems are sharing a wildcard certificate, the likelihood that the private key for the certificate is compromised increases, as the key may be present on multiple systems. Additionally, the value of this key is significantly increased, making it a more attractive target for attackers.</p>
-<p>The issues around the use of wildcard certificates are complicated, and there are <a href="https://blog.sean-wright.com/wildcard-certs-not-quite-the-star/" target="_blank">various</a> other <a href="https://gist.github.com/joepie91/7e5cad8c0726fd6a5e90360a754fc568" target="_blank">discussions</a> of them online.</p>
+<h3 id="carefully-consider-the-use-of-wildcard-certificates">Carefully Consider the use of Wildcard Certificates<a class="headerlink" href="#carefully-consider-the-use-of-wildcard-certificates" title="Permanent link">&para;</a></h3>
+<p>Wildcard certificates can be convenient, however they violate <a href="https://wiki.owasp.org/index.php/Least_privilege">the principal of least privilege</a>, as a single certificate is valid for all subdomains of a domain (such as *.example.org). Where multiple systems are sharing a wildcard certificate, the likelihood that the private key for the certificate is compromised increases, as the key may be present on multiple systems. Additionally, the value of this key is significantly increased, making it a more attractive target for attackers.</p>
+<p>The issues around the use of wildcard certificates are complicated, and there are <a href="https://blog.sean-wright.com/wildcard-certs-not-quite-the-star/">various</a> other <a href="https://gist.github.com/joepie91/7e5cad8c0726fd6a5e90360a754fc568">discussions</a> of them online.</p>
 <p>When risk assessing the use of wildcard certificates, the following areas should be considered:</p>
 <ul>
 <li>Only use wildcard certificates where there is a genuine need, rather than for convenience.<ul>
-<li>Consider the use of the <a href="https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment" target="_blank">ACME</a> to allow systems to automatically request and update their own certificates instead.</li>
+<li>Consider the use of the <a href="https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment">ACME</a> to allow systems to automatically request and update their own certificates instead.</li>
 </ul>
 </li>
 <li>Never use a wildcard certificates for systems at different trust levels.<ul>
@@ -1140,40 +1619,42 @@
 <li>A list of all systems sharing a certificate should be maintained to allow them all to be updated if the certificate expires or is compromised.</li>
 <li>Limit the scope of a wildcard certificate by issuing it for a subdomain (such as <code>*.foo.example.org</code>), or a for a separate domain.</li>
 </ul>
-<h3 id="use-an-appropriate-certification-authority-for-the-applications-user-base"><a name="use-an-appropriate-certification-authority-for-the-applications-user-base" class="plugin-anchor" href="#use-an-appropriate-certification-authority-for-the-applications-user-base"><i class="fa fa-link" aria-hidden="true"></i></a>Use an Appropriate Certification Authority for the Application&apos;s User Base</h3>
+<h3 id="use-an-appropriate-certification-authority-for-the-applications-user-base">Use an Appropriate Certification Authority for the Application's User Base<a class="headerlink" href="#use-an-appropriate-certification-authority-for-the-applications-user-base" title="Permanent link">&para;</a></h3>
 <p>In order to be trusted by users, certificates must be signed by a trusted certificate authority (CA). For Internet facing applications, this should be one of the CAs which are well-known and automatically trusted by operating systems and browsers.</p>
-<p>The <a href="https://letsencrypt.org" target="_blank">LetsEncrypt</a> CA provides free domain validated SSL certificates, which are trusted by all major browsers. As such, consider whether there are any benefits to purchasing a certificate from a CA.</p>
+<p>The <a href="https://letsencrypt.org">LetsEncrypt</a> CA provides free domain validated SSL certificates, which are trusted by all major browsers. As such, consider whether there are any benefits to purchasing a certificate from a CA.</p>
 <p>For internal applications, an internal CA can be used. This means that the FQDN of the certificate will not be exposed (either to an external CA, or publicly in certificate transparency lists). However, the certificate will only be trusted by users who have imported and trusted the internal CA certificate that was used to sign them.</p>
-<h3 id="use-caa-records-to-restrict-which-cas-can-issue-certificates"><a name="use-caa-records-to-restrict-which-cas-can-issue-certificates" class="plugin-anchor" href="#use-caa-records-to-restrict-which-cas-can-issue-certificates"><i class="fa fa-link" aria-hidden="true"></i></a>Use CAA Records to Restrict Which CAs can Issue Certificates</h3>
+<h3 id="use-caa-records-to-restrict-which-cas-can-issue-certificates">Use CAA Records to Restrict Which CAs can Issue Certificates<a class="headerlink" href="#use-caa-records-to-restrict-which-cas-can-issue-certificates" title="Permanent link">&para;</a></h3>
 <p>Certification Authority Authorization (CAA) DNS records can be used to define which CAs are permitted to issue certificates for a domain. The records contains a list of CAs, and any CA who is not included in that list should refuse to issue a certificate for the domain. This can help to prevent an attacker from obtaining unauthorised certificates for a domain through a less-reputable CA. Where it is applied to all subdomains, it can also be useful from an administrative perspective by limiting which CAs administrators or developers are able to use, and by preventing them from obtaining unauthorised wildcard certificates.</p>
-<h3 id="always-provide-all-needed-certificates"><a name="always-provide-all-needed-certificates" class="plugin-anchor" href="#always-provide-all-needed-certificates"><i class="fa fa-link" aria-hidden="true"></i></a>Always Provide All Needed Certificates</h3>
-<p>In order to validate the authenticity of a certificate, the user&apos;s browser must examine the certificate that was used to sign it and compare it to the list of CAs trusted by their system. In many cases the certificate is not directly signed by a root CA, but is instead signed by an intermediate CA, which is in turn signed by the root CA.</p>
+<h3 id="always-provide-all-needed-certificates">Always Provide All Needed Certificates<a class="headerlink" href="#always-provide-all-needed-certificates" title="Permanent link">&para;</a></h3>
+<p>In order to validate the authenticity of a certificate, the user's browser must examine the certificate that was used to sign it and compare it to the list of CAs trusted by their system. In many cases the certificate is not directly signed by a root CA, but is instead signed by an intermediate CA, which is in turn signed by the root CA.</p>
 <p>If the user does not know or trust this intermediate CA then the certificate validation will fail, even if the user trusts the ultimate root CA, as they cannot establish a chain of trust between the certificate and the root. In order to avoid this, any intermediate certificates should be provided alongside the main certificate.</p>
-<h3 id="consider-the-use-of-extended-validation-certificates"><a name="consider-the-use-of-extended-validation-certificates" class="plugin-anchor" href="#consider-the-use-of-extended-validation-certificates"><i class="fa fa-link" aria-hidden="true"></i></a>Consider the use of Extended Validation Certificates</h3>
-<p>Extended validation (EV) certificates claim to provide a higher level of verification of the entity, as they perform checks that the requestor is a legitimate legal entity, rather than just verifying the ownership of the domain name like normal (or &quot;Domain Validated&quot;) certificates. This can effectively be viewed as the difference between &quot;This site is really run by Example Company Inc.&quot; vs &quot;This domain is really example.org&quot;.</p>
-<p>Historically these displayed differently in the browser, often showing the company name or a green icon or background in the address bar. However, as of 2019 both <a href="https://groups.google.com/a/chromium.org/forum/m/#!msg/security-dev/h1bTcoTpfeI/jUTk1z7VAAAJ" target="_blank">Chrome</a> and <a href="https://groups.google.com/forum/m/?fromgroups&amp;hl=en#!topic/firefox-dev/6wAg_PpnlY4" target="_blank">Firefox</a> have announced that they will be removing these indicators, as they do not believe that EV certificates provide any additional protection.</p>
+<h3 id="consider-the-use-of-extended-validation-certificates">Consider the use of Extended Validation Certificates<a class="headerlink" href="#consider-the-use-of-extended-validation-certificates" title="Permanent link">&para;</a></h3>
+<p>Extended validation (EV) certificates claim to provide a higher level of verification of the entity, as they perform checks that the requestor is a legitimate legal entity, rather than just verifying the ownership of the domain name like normal (or "Domain Validated") certificates. This can effectively be viewed as the difference between "This site is really run by Example Company Inc." vs "This domain is really example.org".</p>
+<p>Historically these displayed differently in the browser, often showing the company name or a green icon or background in the address bar. However, as of 2019 both <a href="https://groups.google.com/a/chromium.org/forum/m/#!msg/security-dev/h1bTcoTpfeI/jUTk1z7VAAAJ">Chrome</a> and <a href="https://groups.google.com/forum/m/?fromgroups&amp;hl=en#!topic/firefox-dev/6wAg_PpnlY4">Firefox</a> have announced that they will be removing these indicators, as they do not believe that EV certificates provide any additional protection.</p>
 <p>There is no security downside to the use of EV certificates. However, as they are significantly more expensive than domain validated certificates, an assessment should be made to determine whether they provide any additional value</p>
-<h2 id="application"><a name="application" class="plugin-anchor" href="#application"><i class="fa fa-link" aria-hidden="true"></i></a>Application</h2>
-<h3 id="use-tls-for-all-pages"><a name="use-tls-for-all-pages" class="plugin-anchor" href="#use-tls-for-all-pages"><i class="fa fa-link" aria-hidden="true"></i></a>Use TLS For All Pages</h3>
+<h2 id="application">Application<a class="headerlink" href="#application" title="Permanent link">&para;</a></h2>
+<h3 id="use-tls-for-all-pages">Use TLS For All Pages<a class="headerlink" href="#use-tls-for-all-pages" title="Permanent link">&para;</a></h3>
 <p>TLS should be used for all pages, not just those that are considered sensitive such as the login page. If there are any pages that do not enforce the use of TLS, these could give an attacker an opportunity to sniff sensitive information such as session tokens, or to inject malicious JavaScript into the responses to carry out other attacks against the user.</p>
 <p>For public facing applications, it may be appropriate to have the web server listening for unencrypted HTTP connections on port 80, and then immediately redirecting them with a permanent redirect (HTTP 301) in order to provide a better experience to users who manually type in the domain name. This should then be supported with the <a href="#use-http-strict-transport-security">HTTP Strict Transport Security (HSTS)</a> header to prevent them accessing the site over HTTP in the future.</p>
-<h3 id="do-not-mix-tls-and-non-tls-content"><a name="do-not-mix-tls-and-non-tls-content" class="plugin-anchor" href="#do-not-mix-tls-and-non-tls-content"><i class="fa fa-link" aria-hidden="true"></i></a>Do Not Mix TLS and Non-TLS Content</h3>
+<h3 id="do-not-mix-tls-and-non-tls-content">Do Not Mix TLS and Non-TLS Content<a class="headerlink" href="#do-not-mix-tls-and-non-tls-content" title="Permanent link">&para;</a></h3>
 <p>A page that is available over TLS should not include any resources (such as JavaScript or CSS) files which are loaded over unencrypted HTTP. These unencrypted resources could allow an attacker to sniff session cookies or inject malicious code into the page. Modern browsers will also block attempts to load active content over unencrypted HTTP into secure pages.</p>
-<h3 id="use-the-secure-cookie-flag"><a name="use-the-secure-cookie-flag" class="plugin-anchor" href="#use-the-secure-cookie-flag"><i class="fa fa-link" aria-hidden="true"></i></a>Use the &quot;Secure&quot; Cookie Flag</h3>
-<p>All cookies should be marked with the &quot;<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies" target="_blank">Secure</a>&quot; attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed webserver on port 80 to the user in order to steal their cookie.</p>
-<h3 id="prevent-caching-of-sensitive-data"><a name="prevent-caching-of-sensitive-data" class="plugin-anchor" href="#prevent-caching-of-sensitive-data"><i class="fa fa-link" aria-hidden="true"></i></a>Prevent Caching of Sensitive Data</h3>
-<p>Although TLS provides protection of data while it is in transit, it does not provide any protection for data once it has reached the requesting system. As such, this information may be stored in the cache of the user&apos;s browser, or by any intercepting proxies which are configured to perform TLS decryption.</p>
+<h3 id="use-the-secure-cookie-flag">Use the "Secure" Cookie Flag<a class="headerlink" href="#use-the-secure-cookie-flag" title="Permanent link">&para;</a></h3>
+<p>All cookies should be marked with the "<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies">Secure</a>" attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed webserver on port 80 to the user in order to steal their cookie.</p>
+<h3 id="prevent-caching-of-sensitive-data">Prevent Caching of Sensitive Data<a class="headerlink" href="#prevent-caching-of-sensitive-data" title="Permanent link">&para;</a></h3>
+<p>Although TLS provides protection of data while it is in transit, it does not provide any protection for data once it has reached the requesting system. As such, this information may be stored in the cache of the user's browser, or by any intercepting proxies which are configured to perform TLS decryption.</p>
 <p>Where sensitive data is returned in responses, HTTP headers should be used to instruct the browser and any proxy servers not to cache the information, in order to prevent it being stored or returned to other users. This can be achieved by setting the following HTTP headers in the response:</p>
-<pre><code class="lang-text">Cache-Control: no-cache, no-store, must-revalidate
+<div class="codehilite"><pre><span></span><code>Cache-Control: no-cache, no-store, must-revalidate
 Pragma: no-cache
 Expires: 0
-</code></pre>
-<h3 id="use-http-strict-transport-security"><a name="use-http-strict-transport-security" class="plugin-anchor" href="#use-http-strict-transport-security"><i class="fa fa-link" aria-hidden="true"></i></a>Use HTTP Strict Transport Security</h3>
-<p>HTTP Strict Transport Security (HSTS) instructs the user&apos;s browser to always request the site over HTTPS, and also prevents the user from bypassing certificate warnings. See the <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security cheatsheet</a> for further information on implementing HSTS.</p>
-<h3 id="consider-using-public-key-pinning"><a name="consider-using-public-key-pinning" class="plugin-anchor" href="#consider-using-public-key-pinning"><i class="fa fa-link" aria-hidden="true"></i></a>Consider Using Public Key Pinning</h3>
-<p>HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the <a href="https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning#http-pinning" target="_blank">Certificate and Public Key Pinning article</a> for further information in implementing HPKP.</p>
-<p>HPKP is controversial, and that while it is currently supported in Firefox and some other browsers, it has been removed from <a href="https://www.chromestatus.com/feature/5903385005916160" target="_blank">Chrome</a>, and is considered deprecated by <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins" target="_blank">Mozilla</a>. As such, careful consideration of the risks should be made before implementing it.</p>
-<h3 id="consider-the-use-of-client-side-certificates"><a name="consider-the-use-of-client-side-certificates" class="plugin-anchor" href="#consider-the-use-of-client-side-certificates"><i class="fa fa-link" aria-hidden="true"></i></a>Consider the use of Client-Side Certificates</h3>
+</code></pre></div>
+
+
+<h3 id="use-http-strict-transport-security">Use HTTP Strict Transport Security<a class="headerlink" href="#use-http-strict-transport-security" title="Permanent link">&para;</a></h3>
+<p>HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS, and also prevents the user from bypassing certificate warnings. See the <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security cheatsheet</a> for further information on implementing HSTS.</p>
+<h3 id="consider-using-public-key-pinning">Consider Using Public Key Pinning<a class="headerlink" href="#consider-using-public-key-pinning" title="Permanent link">&para;</a></h3>
+<p>HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the <a href="https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning#http-pinning">Certificate and Public Key Pinning article</a> for further information in implementing HPKP.</p>
+<p>HPKP is controversial, and that while it is currently supported in Firefox and some other browsers, it has been removed from <a href="https://www.chromestatus.com/feature/5903385005916160">Chrome</a>, and is considered deprecated by <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins">Mozilla</a>. As such, careful consideration of the risks should be made before implementing it.</p>
+<h3 id="consider-the-use-of-client-side-certificates">Consider the use of Client-Side Certificates<a class="headerlink" href="#consider-the-use-of-client-side-certificates" title="Permanent link">&para;</a></h3>
 <p>In a typical configuration, TLS is used with a certificate on the server so that the client is able to verify the identity of the server, and to provide an encrypted connection between them. However, there are two main weaknesses with this approach:</p>
 <ul>
 <li>The server does not have any mechanism to verify the identity of the client</li>
@@ -1190,98 +1671,106 @@ Expires: 0
 <li>TLS decryption used by many organisations will cause client certificate authentication to fail.</li>
 </ul>
 <p>However, they should be considered for high-value applications or APIs, especially where there are a small number of technically sophisticated users, or where all users are part of the same organisation.</p>
-<h2 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h2>
+<h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
 <ul>
 <li>OWASP - <a href="TLS_Cipher_String_Cheat_Sheet.html">TLS Cipher String Cheat Sheet</a></li>
-<li>OWASP - <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_SSL_TLS_Ciphers_Insufficient_Transport_Layer_Protection.html" target="_blank">Testing for SSL-TLS</a>, and OWASP <a href="https://wiki.owasp.org/index.php/Guide_to_Cryptography" target="_blank">Guide to Cryptography</a></li>
-<li>OWASP - <a href="https://github.com/OWASP/ASVS/blob/v4.0.1/4.0/en/0x17-V9-Communications.md" target="_blank">Application Security Verification Standard (ASVS) - Communication Security Verification Requirements (V9)</a></li>
-<li>Mozilla - <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations" target="_blank">Mozilla Recommended Configurations</a></li>
-<li>NIST - <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-52r2.pdf" target="_blank">SP 800-52 Rev. 1 Guidelines for the Selection, Configuration, and Use of Transport Layer Security (TLS) Implementations</a></li>
-<li>NIST - <a href="http://csrc.nist.gov/publications/nistpubs/800-57/sp800-57_part1_rev3_general.pdf" target="_blank">NIST SP 800-57 Recommendation for Key Management, Revision 3</a>, <a href="http://csrc.nist.gov/publications/PubsDrafts.html#SP-800-57-Part%203-Rev.1" target="_blank">Public DRAFT</a></li>
-<li>NIST - <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-95.pdf" target="_blank">SP 800-95 Guide to Secure Web Services</a></li>
-<li>IETF - <a href="https://tools.ietf.org/html/rfc5280" target="_blank">RFC 5280 Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</a></li>
-<li>IETF - <a href="https://tools.ietf.org/html/rfc2246" target="_blank">RFC 2246 The Transport Layer Security (TLS) Protocol Version 1.0 (JAN 1999)</a></li>
-<li>IETF - <a href="https://tools.ietf.org/html/rfc4346" target="_blank">RFC 4346 The Transport Layer Security (TLS) Protocol Version 1.1 (APR 2006)</a></li>
-<li>IETF - <a href="https://tools.ietf.org/html/rfc5246" target="_blank">RFC 5246 The Transport Layer Security (TLS) Protocol Version 1.2 (AUG 2008)</a></li>
-<li>Bettercrypto - <a href="https://bettercrypto.org" target="_blank">Applied Crypto Hardening: HOWTO for secure crypto settings of the most common services)</a></li>
+<li>OWASP - <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_SSL_TLS_Ciphers_Insufficient_Transport_Layer_Protection.html">Testing for SSL-TLS</a>, and OWASP <a href="https://wiki.owasp.org/index.php/Guide_to_Cryptography">Guide to Cryptography</a></li>
+<li>OWASP - <a href="https://github.com/OWASP/ASVS/blob/v4.0.1/4.0/en/0x17-V9-Communications.md">Application Security Verification Standard (ASVS) - Communication Security Verification Requirements (V9)</a></li>
+<li>Mozilla - <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations">Mozilla Recommended Configurations</a></li>
+<li>NIST - <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-52r2.pdf">SP 800-52 Rev. 1 Guidelines for the Selection, Configuration, and Use of Transport Layer Security (TLS) Implementations</a></li>
+<li>NIST - <a href="http://csrc.nist.gov/publications/nistpubs/800-57/sp800-57_part1_rev3_general.pdf">NIST SP 800-57 Recommendation for Key Management, Revision 3</a>, <a href="http://csrc.nist.gov/publications/PubsDrafts.html#SP-800-57-Part%203-Rev.1">Public DRAFT</a></li>
+<li>NIST - <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-95.pdf">SP 800-95 Guide to Secure Web Services</a></li>
+<li>IETF - <a href="https://tools.ietf.org/html/rfc5280">RFC 5280 Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</a></li>
+<li>IETF - <a href="https://tools.ietf.org/html/rfc2246">RFC 2246 The Transport Layer Security (TLS) Protocol Version 1.0 (JAN 1999)</a></li>
+<li>IETF - <a href="https://tools.ietf.org/html/rfc4346">RFC 4346 The Transport Layer Security (TLS) Protocol Version 1.1 (APR 2006)</a></li>
+<li>IETF - <a href="https://tools.ietf.org/html/rfc5246">RFC 5246 The Transport Layer Security (TLS) Protocol Version 1.2 (AUG 2008)</a></li>
+<li>Bettercrypto - <a href="https://bettercrypto.org">Applied Crypto Hardening: HOWTO for secure crypto settings of the most common services)</a></li>
 </ul>
-
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
-
-                        </div>
-                    </div>
                 
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
-
-            
-                
-                <a href="Transaction_Authorization_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Transaction Authorization ">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Unvalidated Redirects and Forwards ">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Transaction Authorization
+              </div>
+            </div>
+          </a>
         
+        
+          <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Unvalidated Redirects and Forwards
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Transport Layer Protection ","level":"1.62","depth":1,"next":{"title":"Unvalidated Redirects and Forwards ","level":"1.63","depth":1,"path":"cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md","ref":"cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md","articles":[]},"previous":{"title":"Transaction Authorization ","level":"1.61","depth":1,"path":"cheatsheets/Transaction_Authorization_Cheat_Sheet.md","ref":"cheatsheets/Transaction_Authorization_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md","mtime":"2020-05-27T19:41:37.100Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-27T19:42:04.146Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
-
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-

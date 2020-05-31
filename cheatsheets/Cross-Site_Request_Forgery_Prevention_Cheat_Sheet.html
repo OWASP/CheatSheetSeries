@@ -1,1059 +1,1598 @@
 
-<!DOCTYPE HTML>
-<html lang="en" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Cross-Site Request Forgery Prevention  · OWASP Cheat Sheet Series</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>Cross-Site Request Forgery Prevention</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
         
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
         
-        
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" />
-    
-    
-    <link rel="prev" href="Credential_Stuffing_Prevention_Cheat_Sheet.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        <li class="header">Cheatsheets</li>
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="Index.html">
-            
-                <a href="Index.html">
-            
-                    
-                    Index Alphabetical
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
-            
-                <a href="IndexASVS.html">
-            
-                    
-                    Index ASVS
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
-            
-                <a href="IndexProactiveControls.html">
-            
-                    
-                    Index Proactive Controls
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
-            
-                <a href="AJAX_Security_Cheat_Sheet.html">
-            
-                    
-                    AJAX Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
-            
-                <a href="Abuse_Case_Cheat_Sheet.html">
-            
-                    
-                    Abuse Case 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
-            
-                <a href="Access_Control_Cheat_Sheet.html">
-            
-                    
-                    Access Control 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                    
-                    Attack Surface Analysis 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
-            
-                <a href="Authentication_Cheat_Sheet.html">
-            
-                    
-                    Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
-            
-                <a href="Authorization_Testing_Automation.html">
-            
-                    
-                    Authorization Testing Automation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
-            
-                <a href="Bean_Validation_Cheat_Sheet.html">
-            
-                    
-                    Bean Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
-            
-                <a href="C-Based_Toolchain_Hardening.html">
-            
-                    
-                    C-Based Toolchain Hardening
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                    
-                    C-Based Toolchain Hardening 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                    
-                    Choosing and Using Security Questions 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                <a href="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                    
-                    Clickjacking Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
-            
-                <a href="Content_Security_Policy_Cheat_Sheet.html">
-            
-                    
-                    Content Security Policy 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Credential Stuffing Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross-Site Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross Site Scripting Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                <a href="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                    
-                    Cryptographic Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                    
-                    DOM based XSS Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.22" data-path="Database_Security_Cheat_Sheet.html">
-            
-                <a href="Database_Security_Cheat_Sheet.html">
-            
-                    
-                    Database Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.23" data-path="Denial_of_Service_Cheat_Sheet.html">
-            
-                <a href="Denial_of_Service_Cheat_Sheet.html">
-            
-                    
-                    Denial of Service 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.24" data-path="Deserialization_Cheat_Sheet.html">
-            
-                <a href="Deserialization_Cheat_Sheet.html">
-            
-                    
-                    Deserialization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.25" data-path="Docker_Security_Cheat_Sheet.html">
-            
-                <a href="Docker_Security_Cheat_Sheet.html">
-            
-                    
-                    Docker Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.26" data-path="DotNet_Security_Cheat_Sheet.html">
-            
-                <a href="DotNet_Security_Cheat_Sheet.html">
-            
-                    
-                    DotNet Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.27" data-path="Error_Handling_Cheat_Sheet.html">
-            
-                <a href="Error_Handling_Cheat_Sheet.html">
-            
-                    
-                    Error Handling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
-            
-                <a href="File_Upload_Cheat_Sheet.html">
-            
-                    
-                    File Upload 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.29" data-path="Forgot_Password_Cheat_Sheet.html">
-            
-                <a href="Forgot_Password_Cheat_Sheet.html">
-            
-                    
-                    Forgot Password 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.30" data-path="HTML5_Security_Cheat_Sheet.html">
-            
-                <a href="HTML5_Security_Cheat_Sheet.html">
-            
-                    
-                    HTML5 Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.31" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                    
-                    HTTP Strict Transport Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.32" data-path="Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.33" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                    
-                    Injection Prevention  in Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.34" data-path="Input_Validation_Cheat_Sheet.html">
-            
-                <a href="Input_Validation_Cheat_Sheet.html">
-            
-                    
-                    Input Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.35" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Insecure Direct Object Reference Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.36" data-path="JAAS_Cheat_Sheet.html">
-            
-                <a href="JAAS_Cheat_Sheet.html">
-            
-                    
-                    JAAS 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.37" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                    
-                    JSON Web Token  for Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.38" data-path="Key_Management_Cheat_Sheet.html">
-            
-                <a href="Key_Management_Cheat_Sheet.html">
-            
-                    
-                    Key Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.39" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    LDAP Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.40" data-path="Logging_Cheat_Sheet.html">
-            
-                <a href="Logging_Cheat_Sheet.html">
-            
-                    
-                    Logging 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.41" data-path="Mass_Assignment_Cheat_Sheet.html">
-            
-                <a href="Mass_Assignment_Cheat_Sheet.html">
-            
-                    
-                    Mass Assignment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.42" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                    
-                    Microservices based Security Arch Doc 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.43" data-path="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                <a href="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                    
-                    Multifactor Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.44" data-path="Nodejs_security_cheat_sheet.html">
-            
-                <a href="Nodejs_security_cheat_sheet.html">
-            
-                    
-                    Nodejs security cheat sheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.45" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                    
-                    OS Command Injection Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.46" data-path="PHP_Configuration_Cheat_Sheet.html">
-            
-                <a href="PHP_Configuration_Cheat_Sheet.html">
-            
-                    
-                    PHP Configuration 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.47" data-path="Password_Storage_Cheat_Sheet.html">
-            
-                <a href="Password_Storage_Cheat_Sheet.html">
-            
-                    
-                    Password Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
-            
-                <a href="Pinning_Cheat_Sheet.html">
-            
-                    
-                    Pinning 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.49" data-path="Query_Parameterization_Cheat_Sheet.html">
-            
-                <a href="Query_Parameterization_Cheat_Sheet.html">
-            
-                    
-                    Query Parameterization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.50" data-path="REST_Assessment_Cheat_Sheet.html">
-            
-                <a href="REST_Assessment_Cheat_Sheet.html">
-            
-                    
-                    REST Assessment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.51" data-path="REST_Security_Cheat_Sheet.html">
-            
-                <a href="REST_Security_Cheat_Sheet.html">
-            
-                    
-                    REST Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.52" data-path="Ruby_on_Rails_Cheatsheet.html">
-            
-                <a href="Ruby_on_Rails_Cheatsheet.html">
-            
-                    
-                    Ruby on Rails Cheatsheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.53" data-path="SAML_Security_Cheat_Sheet.html">
-            
-                <a href="SAML_Security_Cheat_Sheet.html">
-            
-                    
-                    SAML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.54" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    SQL Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.55" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                    
-                    Securing Cascading Style Sheets 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.56" data-path="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Server Side Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.57" data-path="Session_Management_Cheat_Sheet.html">
-            
-                <a href="Session_Management_Cheat_Sheet.html">
-            
-                    
-                    Session Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.58" data-path="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                <a href="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                    
-                    TLS Cipher String 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.59" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                    
-                    Third Party Javascript Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.60" data-path="Threat_Modeling_Cheat_Sheet.html">
-            
-                <a href="Threat_Modeling_Cheat_Sheet.html">
-            
-                    
-                    Threat Modeling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.61" data-path="Transaction_Authorization_Cheat_Sheet.html">
-            
-                <a href="Transaction_Authorization_Cheat_Sheet.html">
-            
-                    
-                    Transaction Authorization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.62" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                    
-                    Transport Layer Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.63" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                    
-                    Unvalidated Redirects and Forwards 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.64" data-path="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                <a href="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                    
-                    User Privacy Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.65" data-path="Virtual_Patching_Cheat_Sheet.html">
-            
-                <a href="Virtual_Patching_Cheat_Sheet.html">
-            
-                    
-                    Virtual Patching 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.66" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                    
-                    Vulnerability Disclosure 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.67" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                    
-                    Vulnerable Dependency Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.68" data-path="Web_Service_Security_Cheat_Sheet.html">
-            
-                <a href="Web_Service_Security_Cheat_Sheet.html">
-            
-                    
-                    Web Service Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.69" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                    
-                    XML External Entity Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.70" data-path="XML_Security_Cheat_Sheet.html">
-            
-                <a href="XML_Security_Cheat_Sheet.html">
-            
-                    
-                    XML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="#cross-site-request-forgery-prevention-cheat-sheet" class="md-skip">
+          Skip to content
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
+      
     </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
+    <div data-md-component="announce">
+      
+    </div>
     
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Cross-Site Request Forgery Prevention </a>
-    </h1>
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Cross-Site Request Forgery Prevention
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
     
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="cross-site-request-forgery-prevention-cheat-sheet"><a name="cross-site-request-forgery-prevention-cheat-sheet" class="plugin-anchor" href="#cross-site-request-forgery-prevention-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Cross-Site Request Forgery Prevention Cheat Sheet</h1>
-<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
-<p><a href="https://owasp.org/www-community/attacks/csrf" target="_blank">Cross-Site Request Forgery (CSRF)</a> is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user&apos;s web browser to perform an unwanted action on a trusted site when the user is authenticated. A CSRF attack works because browser requests automatically include all cookies including session cookies. Therefore, if the user is authenticated to the site, the site cannot distinguish between legitimate requests and forged requests.</p>
-<p>The impact of a successful CSRF attack is limited to the capabilities exposed by the vulnerable application and privileges of the user. For example, this attack could result in a transfer of funds, changing a password, or making a purchase with the user&apos;s credentials. In effect, CSRF attacks are used by an attacker to make a target system perform a function via the victim&apos;s browser, without the victim&apos;s knowledge, at least until the unauthorized transaction has been committed.</p>
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" title="Index Alphabetical" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" title="Index ASVS" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" title="Index Proactive Controls" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" title="AJAX Security" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" title="Abuse Case" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" title="Access Control" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" title="Clickjacking Defense" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" title="Content Security Policy" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Cross-Site Request Forgery Prevention
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" title="Cross-Site Request Forgery Prevention" class="md-nav__link md-nav__link--active">
+      Cross-Site Request Forgery Prevention
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#token-based-mitigation" class="md-nav__link">
+    Token Based Mitigation
+  </a>
+  
+    <nav class="md-nav" aria-label="Token Based Mitigation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection" class="md-nav__link">
+    Use Built-In Or Existing CSRF Implementations for CSRF Protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronizer-token-pattern" class="md-nav__link">
+    Synchronizer Token Pattern
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encryption-based-token-pattern" class="md-nav__link">
+    Encryption based Token Pattern
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmac-based-token-pattern" class="md-nav__link">
+    HMAC Based Token Pattern
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defense-in-depth-techniques" class="md-nav__link">
+    Defense In Depth Techniques
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense In Depth Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#samesite-cookie-attribute" class="md-nav__link">
+    SameSite Cookie Attribute
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-origin-with-standard-headers" class="md-nav__link">
+    Verifying Origin With Standard Headers
+  </a>
+  
+    <nav class="md-nav" aria-label="Verifying Origin With Standard Headers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identifying-source-origin-via-originreferer-header" class="md-nav__link">
+    Identifying Source Origin (via Origin/Referer header)
+  </a>
+  
+    <nav class="md-nav" aria-label="Identifying Source Origin (via Origin/Referer header)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checking-the-origin-header" class="md-nav__link">
+    Checking the Origin Header
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-the-referer-header" class="md-nav__link">
+    Checking the Referer Header
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identifying-the-target-origin" class="md-nav__link">
+    Identifying the Target Origin
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double-submit-cookie" class="md-nav__link">
+    Double Submit Cookie
+  </a>
+  
+    <nav class="md-nav" aria-label="Double Submit Cookie">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cookie-with-__host-prefix" class="md-nav__link">
+    Cookie with __Host- prefix
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-of-custom-request-headers" class="md-nav__link">
+    Use of Custom Request Headers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-interaction-based-csrf-defense" class="md-nav__link">
+    User Interaction Based CSRF Defense
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#login-csrf" class="md-nav__link">
+    Login CSRF
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-reference-example" class="md-nav__link">
+    Java Reference Example
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header" class="md-nav__link">
+    JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header
+  </a>
+  
+    <nav class="md-nav" aria-label="JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#storing-the-csrf-token-value-in-the-dom" class="md-nav__link">
+    Storing the CSRF Token Value in the DOM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overriding-defaults-to-set-custom-header" class="md-nav__link">
+    Overriding Defaults to Set Custom Header
+  </a>
+  
+    <nav class="md-nav" aria-label="Overriding Defaults to Set Custom Header">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xmlhttprequest-native-javascript" class="md-nav__link">
+    XMLHttpRequest (Native JavaScript)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axios" class="md-nav__link">
+    Axios
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jquery" class="md-nav__link">
+    JQuery
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+    <nav class="md-nav" aria-label="References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csrf" class="md-nav__link">
+    CSRF
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" title="Cryptographic Storage" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" title="Database Security" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" title="Denial of Service" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" title="Deserialization" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" title="Docker Security" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" title="DotNet Security" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" title="Error Handling" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" title="File Upload" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" title="Forgot Password" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" title="HTML5 Security" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" title="HTTP Strict Transport Security" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" title="Injection Prevention in Java" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" title="Insecure Direct Object Reference Prevention" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" title="JAAS" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" title="JSON Web Token for Java" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" title="Key Management" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" title="LDAP Injection Prevention" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" title="Mass Assignment" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" title="Multifactor Authentication" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" title="Nodejs Security" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" title="OS Command Injection Defense" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" title="PHP Configuration" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" title="Password Storage" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" title="Pinning" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" title="Query Parameterization" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" title="REST Assessment" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" title="REST Security" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" title="Ruby on Rails" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" title="SQL Injection Prevention" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" title="Server Side Request Forgery Prevention" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" title="TLS Cipher String" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" title="Third Party Javascript Management" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" title="Threat Modeling" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" title="Transport Layer Protection" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" title="User Privacy Protection" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" title="Virtual Patching" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" title="Vulnerability Disclosure" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" title="Vulnerable Dependency Management" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" title="XML External Entity Prevention" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#token-based-mitigation" class="md-nav__link">
+    Token Based Mitigation
+  </a>
+  
+    <nav class="md-nav" aria-label="Token Based Mitigation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection" class="md-nav__link">
+    Use Built-In Or Existing CSRF Implementations for CSRF Protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronizer-token-pattern" class="md-nav__link">
+    Synchronizer Token Pattern
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encryption-based-token-pattern" class="md-nav__link">
+    Encryption based Token Pattern
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmac-based-token-pattern" class="md-nav__link">
+    HMAC Based Token Pattern
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defense-in-depth-techniques" class="md-nav__link">
+    Defense In Depth Techniques
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense In Depth Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#samesite-cookie-attribute" class="md-nav__link">
+    SameSite Cookie Attribute
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-origin-with-standard-headers" class="md-nav__link">
+    Verifying Origin With Standard Headers
+  </a>
+  
+    <nav class="md-nav" aria-label="Verifying Origin With Standard Headers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identifying-source-origin-via-originreferer-header" class="md-nav__link">
+    Identifying Source Origin (via Origin/Referer header)
+  </a>
+  
+    <nav class="md-nav" aria-label="Identifying Source Origin (via Origin/Referer header)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checking-the-origin-header" class="md-nav__link">
+    Checking the Origin Header
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-the-referer-header" class="md-nav__link">
+    Checking the Referer Header
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identifying-the-target-origin" class="md-nav__link">
+    Identifying the Target Origin
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double-submit-cookie" class="md-nav__link">
+    Double Submit Cookie
+  </a>
+  
+    <nav class="md-nav" aria-label="Double Submit Cookie">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cookie-with-__host-prefix" class="md-nav__link">
+    Cookie with __Host- prefix
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-of-custom-request-headers" class="md-nav__link">
+    Use of Custom Request Headers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-interaction-based-csrf-defense" class="md-nav__link">
+    User Interaction Based CSRF Defense
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#login-csrf" class="md-nav__link">
+    Login CSRF
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-reference-example" class="md-nav__link">
+    Java Reference Example
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header" class="md-nav__link">
+    JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header
+  </a>
+  
+    <nav class="md-nav" aria-label="JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#storing-the-csrf-token-value-in-the-dom" class="md-nav__link">
+    Storing the CSRF Token Value in the DOM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overriding-defaults-to-set-custom-header" class="md-nav__link">
+    Overriding Defaults to Set Custom Header
+  </a>
+  
+    <nav class="md-nav" aria-label="Overriding Defaults to Set Custom Header">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xmlhttprequest-native-javascript" class="md-nav__link">
+    XMLHttpRequest (Native JavaScript)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#axios" class="md-nav__link">
+    Axios
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jquery" class="md-nav__link">
+    JQuery
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+    <nav class="md-nav" aria-label="References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csrf" class="md-nav__link">
+    CSRF
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="cross-site-request-forgery-prevention-cheat-sheet">Cross-Site Request Forgery Prevention Cheat Sheet<a class="headerlink" href="#cross-site-request-forgery-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p><a href="https://owasp.org/www-community/attacks/csrf">Cross-Site Request Forgery (CSRF)</a> is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user's web browser to perform an unwanted action on a trusted site when the user is authenticated. A CSRF attack works because browser requests automatically include all cookies including session cookies. Therefore, if the user is authenticated to the site, the site cannot distinguish between legitimate requests and forged requests.</p>
+<p>The impact of a successful CSRF attack is limited to the capabilities exposed by the vulnerable application and privileges of the user. For example, this attack could result in a transfer of funds, changing a password, or making a purchase with the user's credentials. In effect, CSRF attacks are used by an attacker to make a target system perform a function via the victim's browser, without the victim's knowledge, at least until the unauthorized transaction has been committed.</p>
 <p>In short, the following principles should be followed to defend against CSRF:</p>
 <ul>
 <li><strong>Check if your framework has <a href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection">built-in CSRF protection</a> and use it</strong><ul>
@@ -1069,7 +1608,7 @@
 </li>
 <li><strong>Consider implementing <a href="#user-interaction-based-csrf-defense">user interaction based protection</a> for highly sensitive operations</strong></li>
 <li><strong>Remember that any Cross-Site Scripting (XSS) can be used to defeat all CSRF mitigation techniques!</strong><ul>
-<li><strong>See the OWASP <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheat Sheet</a> for detailed guidance on how to prevent XSS flaws.</strong></li>
+<li><strong>See the OWASP <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheat Sheet</a> for detailed guidance on how to prevent XSS flaws.</strong></li>
 </ul>
 </li>
 <li><strong>Do not use GET requests for state changing operations.</strong><ul>
@@ -1077,7 +1616,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="contents"><a name="contents" class="plugin-anchor" href="#contents"><i class="fa fa-link" aria-hidden="true"></i></a>Contents</h2>
+<h2 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="#token-based-mitigation">Token Based Mitigation</a><ul>
 <li><a href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection">Use Build-In Or Existing CSRF Implementations for CSRF Protection</a></li>
@@ -1120,41 +1659,43 @@
 </ul>
 </li>
 </ul>
-<h2 id="token-based-mitigation"><a name="token-based-mitigation" class="plugin-anchor" href="#token-based-mitigation"><i class="fa fa-link" aria-hidden="true"></i></a>Token Based Mitigation</h2>
+<h2 id="token-based-mitigation">Token Based Mitigation<a class="headerlink" href="#token-based-mitigation" title="Permanent link">&para;</a></h2>
 <p>This defense is one of the most popular and recommended methods to mitigate CSRF. It can be achieved either with state (<a href="#synchronizer-token-pattern">synchronizer token pattern</a>) or stateless (<a href="#encryption-based-token-pattern">encrypted</a> or <a href="#hmac-based-token-pattern">hashed</a> based token pattern).</p>
-<h3 id="use-built-in-or-existing-csrf-implementations-for-csrf-protection"><a name="use-built-in-or-existing-csrf-implementations-for-csrf-protection" class="plugin-anchor" href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection"><i class="fa fa-link" aria-hidden="true"></i></a>Use Built-In Or Existing CSRF Implementations for CSRF Protection</h3>
-<p>Synchronizer token defenses have been built into many frameworks. It is strongly recommended to research if the framework you are using has an option to achieve CSRF protection by default before trying to build your custom token generating system. For example, .NET has <a href="https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1" target="_blank">built-in protection</a> that adds a token to CSRF vulnerable resources. You are responsible for proper configuration (such as key management and token management) before using these built-in CSRF protections that generate tokens to guard CSRF vulnerable resources.</p>
+<h3 id="use-built-in-or-existing-csrf-implementations-for-csrf-protection">Use Built-In Or Existing CSRF Implementations for CSRF Protection<a class="headerlink" href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection" title="Permanent link">&para;</a></h3>
+<p>Synchronizer token defenses have been built into many frameworks. It is strongly recommended to research if the framework you are using has an option to achieve CSRF protection by default before trying to build your custom token generating system. For example, .NET has <a href="https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1">built-in protection</a> that adds a token to CSRF vulnerable resources. You are responsible for proper configuration (such as key management and token management) before using these built-in CSRF protections that generate tokens to guard CSRF vulnerable resources.</p>
 <p>External components that add CSRF defenses to existing applications are also recommended. Examples:</p>
 <ul>
-<li>For Java: OWASP <a href="https://owasp.org/www-project-csrfguard/" target="_blank">CSRF Guard</a> or <a href="https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html" target="_blank">Spring Security</a></li>
-<li>For PHP and Apache: <a href="https://owasp.org/www-project-csrfprotector/" target="_blank">CSRFProtector Project</a></li>
+<li>For Java: OWASP <a href="https://owasp.org/www-project-csrfguard/">CSRF Guard</a> or <a href="https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html">Spring Security</a></li>
+<li>For PHP and Apache: <a href="https://owasp.org/www-project-csrfprotector/">CSRFProtector Project</a></li>
 </ul>
-<h3 id="synchronizer-token-pattern"><a name="synchronizer-token-pattern" class="plugin-anchor" href="#synchronizer-token-pattern"><i class="fa fa-link" aria-hidden="true"></i></a>Synchronizer Token Pattern</h3>
-<p>CSRF tokens should be generated on the server-side. They can be generated once per user session or for each request. Per-request tokens are more secure than per-session tokens as the time range for an attacker to exploit the stolen tokens is minimal. However, this may result in usability concerns. For example, the &quot;Back&quot; button browser capability is often hindered as the previous page may contain a token that is no longer valid. Interaction with this previous page will result in a CSRF false positive security event at the server. In per-session token implementation after initial generation of token, the value is stored in the session and is used for each subsequent request until the session expires.</p>
+<h3 id="synchronizer-token-pattern">Synchronizer Token Pattern<a class="headerlink" href="#synchronizer-token-pattern" title="Permanent link">&para;</a></h3>
+<p>CSRF tokens should be generated on the server-side. They can be generated once per user session or for each request. Per-request tokens are more secure than per-session tokens as the time range for an attacker to exploit the stolen tokens is minimal. However, this may result in usability concerns. For example, the "Back" button browser capability is often hindered as the previous page may contain a token that is no longer valid. Interaction with this previous page will result in a CSRF false positive security event at the server. In per-session token implementation after initial generation of token, the value is stored in the session and is used for each subsequent request until the session expires.</p>
 <p>When a request is issued by the client, the server-side component must verify the existence and validity of the token in the request compared to the token found in the user session. If the token was not found within the request, or the value provided does not match the value within the user session, then the request should be aborted, session of the user terminated and the event logged as a potential CSRF attack in progress.</p>
 <p>CSRF tokens should be:</p>
 <ul>
 <li>Unique per user session.</li>
 <li>Secret</li>
-<li>Unpredictable (large random value generated by a <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng" target="_blank">secure method</a>).</li>
+<li>Unpredictable (large random value generated by a <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng">secure method</a>).</li>
 </ul>
 <p>CSRF tokens prevent CSRF because without token, attacker cannot create a valid requests to the backend server.</p>
 <p><strong>CSRF tokens should not be transmitted using cookies.</strong></p>
 <p>The CSRF token can be added through hidden fields, headers, and can be used with forms, and AJAX calls. Make sure that the token is not leaked in the server logs, or in the URL. CSRF tokens in GET requests are potentially leaked at several locations, such as the browser history, log files, network appliances that log the first line of an HTTP request, and Referer headers if the protected site links to an external site.</p>
 <p>For example:</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;/transfer.do&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;hidden&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;CSRFToken&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;OWY4NmQwODE4ODRjN2Q2NTlhMmZlYWEwYzU1YWQwMTVhM2JmNGYxYjJiMGI4MjJjZDE1ZDZMGYwMGEwOA==&quot;</span>&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/transfer.do&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;CSRFToken&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;OWY4NmQwODE4ODRjN2Q2NTlhMmZlYWEwYzU1YWQwMTVhM2JmNGYxYjJiMGI4MjJjZDE1ZDZMGYwMGEwOA==&quot;</span><span class="p">&gt;</span>
 [...]
-<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
-</code></pre>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
 <p>Inserting the CSRF token in the custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because it <a href="#use-of-custom-request-headers">uses custom request headers</a>.</p>
-<h3 id="encryption-based-token-pattern"><a name="encryption-based-token-pattern" class="plugin-anchor" href="#encryption-based-token-pattern"><i class="fa fa-link" aria-hidden="true"></i></a>Encryption based Token Pattern</h3>
+<h3 id="encryption-based-token-pattern">Encryption based Token Pattern<a class="headerlink" href="#encryption-based-token-pattern" title="Permanent link">&para;</a></h3>
 <p>The Encrypted Token Pattern leverages an encryption, rather than comparison method of Token-validation. It is most suitable for applications that do not want to maintain any state at server side.</p>
-<p>The server generates a token comprised of the user&apos;s session ID and a timestamp (to prevent replay attacks) using a unique key available only on the server (AES256-with GCM mode/GCM-SIV is recommended. Usage of ECB mode is strictly not recommended. If you would like to use any other block cipher mode of operation, refer <a href="Cryptographic_Storage_Cheat_Sheet.html">here</a> and <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation" target="_blank">here</a> for more information). This token is returned to the client and embedded in a hidden field for forms, in the request-header/parameter for AJAX requests. On receipt of this request, the server reads and decrypts the token value with the same key used to create the token.</p>
+<p>The server generates a token comprised of the user's session ID and a timestamp (to prevent replay attacks) using a unique key available only on the server (AES256-with GCM mode/GCM-SIV is recommended. Usage of ECB mode is strictly not recommended. If you would like to use any other block cipher mode of operation, refer <a href="Cryptographic_Storage_Cheat_Sheet.html">here</a> and <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">here</a> for more information). This token is returned to the client and embedded in a hidden field for forms, in the request-header/parameter for AJAX requests. On receipt of this request, the server reads and decrypts the token value with the same key used to create the token.</p>
 <p>If the value cannot be decrypted then this suggests an intrusion attempt (which should be blocked and logged for debugging or incident response purposes). Once decrypted, the users session ID and timestamp contained within the token are validated. The session ID is compared against the currently logged in user, and the timestamp is compared against the current time to verify that its not beyond the defined token expiry time. If session id matches and the timestamp is under the defined token expiry time, request is allowed.</p>
 <p>The <a href="Key_Management_Cheat_Sheet.html#key-management-lifecycle-best-practices">Key Management Cheat Sheet</a> contains best practices about managing encryption keys.</p>
-<h3 id="hmac-based-token-pattern"><a name="hmac-based-token-pattern" class="plugin-anchor" href="#hmac-based-token-pattern"><i class="fa fa-link" aria-hidden="true"></i></a>HMAC Based Token Pattern</h3>
-<p>HMAC Based Token Pattern mitigation is also achieved without maintaining any state at the server. <a href="https://en.wikipedia.org/wiki/HMAC" target="_blank">HMAC</a> based CSRF protection works similar to encryption based CSRF protection with a couple of minor differences</p>
+<h3 id="hmac-based-token-pattern">HMAC Based Token Pattern<a class="headerlink" href="#hmac-based-token-pattern" title="Permanent link">&para;</a></h3>
+<p>HMAC Based Token Pattern mitigation is also achieved without maintaining any state at the server. <a href="https://en.wikipedia.org/wiki/HMAC">HMAC</a> based CSRF protection works similar to encryption based CSRF protection with a couple of minor differences</p>
 <ol>
 <li>It uses a strong HMAC function (SHA-256 or better is recommended) instead of an encryption function to generate the token.</li>
 <li>The token consists of a HMAC and timestamp.</li>
@@ -1169,270 +1710,295 @@ Include token in a hidden field for forms and in the request-header field/reques
 When the request is received at the server, re-generate the token with same key K (parameters are the session ID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.</li>
 </ol>
 <p>The <a href="Key_Management_Cheat_Sheet.html#key-management-lifecycle-best-practices">Key Management Cheat Sheet</a> contains best practices about managing the HMAC key.</p>
-<h2 id="defense-in-depth-techniques"><a name="defense-in-depth-techniques" class="plugin-anchor" href="#defense-in-depth-techniques"><i class="fa fa-link" aria-hidden="true"></i></a>Defense In Depth Techniques</h2>
-<h3 id="samesite-cookie-attribute"><a name="samesite-cookie-attribute" class="plugin-anchor" href="#samesite-cookie-attribute"><i class="fa fa-link" aria-hidden="true"></i></a>SameSite Cookie Attribute</h3>
-<p>SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) which aims to mitigate CSRF attacks. It is defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7" target="_blank">RFC6265bis</a>. This attribute helps the browser decide whether to send cookies along with cross-site requests. Possible values for this attribute are <code>Lax</code>, <code>Strict</code>, or <code>None</code>.</p>
-<p>The Strict value will prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link. For example, for a GitHub-like website this would mean that if a logged-in user follows a link to a private GitHub project posted on a corporate discussion forum or email, GitHub will not receive the session cookie and the user will not be able to access the project. A bank website however doesn&apos;t want to allow any transactional pages to be linked from external sites, so the Strict flag would be most appropriate.</p>
-<p>The default Lax value provides a reasonable balance between security and usability for websites that want to maintain user&apos;s logged-in session after the user arrives from an external link. In the above GitHub scenario, the session cookie would be allowed when following a regular link from an external website while blocking it in CSRF-prone request methods such as POST. Only cross-site-requests that are allowed in Lax mode are the ones that have top-level navigations and are also <a href="https://tools.ietf.org/html/rfc7231#section-4.2.1" target="_blank">safe</a> HTTP methods.</p>
-<p>For more details on the <code>SameSite</code> values, check the following <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1" target="_blank">section</a> from the <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02" target="_blank">rfc</a>.</p>
+<h2 id="defense-in-depth-techniques">Defense In Depth Techniques<a class="headerlink" href="#defense-in-depth-techniques" title="Permanent link">&para;</a></h2>
+<h3 id="samesite-cookie-attribute">SameSite Cookie Attribute<a class="headerlink" href="#samesite-cookie-attribute" title="Permanent link">&para;</a></h3>
+<p>SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) which aims to mitigate CSRF attacks. It is defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7">RFC6265bis</a>. This attribute helps the browser decide whether to send cookies along with cross-site requests. Possible values for this attribute are <code>Lax</code>, <code>Strict</code>, or <code>None</code>.</p>
+<p>The Strict value will prevent the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link. For example, for a GitHub-like website this would mean that if a logged-in user follows a link to a private GitHub project posted on a corporate discussion forum or email, GitHub will not receive the session cookie and the user will not be able to access the project. A bank website however doesn't want to allow any transactional pages to be linked from external sites, so the Strict flag would be most appropriate.</p>
+<p>The default Lax value provides a reasonable balance between security and usability for websites that want to maintain user's logged-in session after the user arrives from an external link. In the above GitHub scenario, the session cookie would be allowed when following a regular link from an external website while blocking it in CSRF-prone request methods such as POST. Only cross-site-requests that are allowed in Lax mode are the ones that have top-level navigations and are also <a href="https://tools.ietf.org/html/rfc7231#section-4.2.1">safe</a> HTTP methods.</p>
+<p>For more details on the <code>SameSite</code> values, check the following <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1">section</a> from the <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02">rfc</a>.</p>
 <p>Example of cookies using this attribute:</p>
-<pre><code class="lang-text">Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
+<div class="codehilite"><pre><span></span><code>Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
 Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
-</code></pre>
-<p>All desktop browsers and almost all mobile browsers now support the <code>SameSite</code> attribute. To keep track of the browsers implementing it and the usage of the attribute, refer to the following <a href="https://caniuse.com/#feat=same-site-cookie-attribute" target="_blank">service</a>. Note that Chrome has <a href="https://blog.chromium.org/2019/10/developers-get-ready-for-new.html" target="_blank">announced</a> that they will mark cookies as <code>SameSite=Lax</code> by default from Chrome 80 (due in February 2020), and Firefox and Edge are both planning to follow suit. Additionally, the <code>Secure</code> flag will be required for cookies that are marked as <code>SameSite=None</code>.</p>
-<p>It is important to note that this attribute should be implemented as an additional layer <em>defense in depth</em> concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1" target="_blank">section</a>. This attribute should not replace having a CSRF Token. Instead, it should co-exist with that token in order to protect the user in a more robust way.</p>
-<h3 id="verifying-origin-with-standard-headers"><a name="verifying-origin-with-standard-headers" class="plugin-anchor" href="#verifying-origin-with-standard-headers"><i class="fa fa-link" aria-hidden="true"></i></a>Verifying Origin With Standard Headers</h3>
+</code></pre></div>
+
+
+<p>All desktop browsers and almost all mobile browsers now support the <code>SameSite</code> attribute. To keep track of the browsers implementing it and the usage of the attribute, refer to the following <a href="https://caniuse.com/#feat=same-site-cookie-attribute">service</a>. Note that Chrome has <a href="https://blog.chromium.org/2019/10/developers-get-ready-for-new.html">announced</a> that they will mark cookies as <code>SameSite=Lax</code> by default from Chrome 80 (due in February 2020), and Firefox and Edge are both planning to follow suit. Additionally, the <code>Secure</code> flag will be required for cookies that are marked as <code>SameSite=None</code>.</p>
+<p>It is important to note that this attribute should be implemented as an additional layer <em>defense in depth</em> concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1">section</a>. This attribute should not replace having a CSRF Token. Instead, it should co-exist with that token in order to protect the user in a more robust way.</p>
+<h3 id="verifying-origin-with-standard-headers">Verifying Origin With Standard Headers<a class="headerlink" href="#verifying-origin-with-standard-headers" title="Permanent link">&para;</a></h3>
 <p>There are two steps to this mitigation, both of which rely on examining an HTTP request header value.</p>
 <ol>
 <li>Determining the origin the request is coming from (source origin). Can be done via Origin or Referer headers.</li>
 <li>Determining the origin the request is going to (target origin).</li>
 </ol>
-<p>At server side we verify if both of them match. If they do, we accept the request as legitimate (meaning it&apos;s the same origin request) and if they don&apos;t, we discard the request (meaning that the request originated from cross-domain). Reliability on these headers comes from the fact that they cannot be altered programmatically (using JavaScript with an XSS vulnerability) as they fall under <a href="https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name" target="_blank">forbidden headers</a> list, meaning that only the browser can set them</p>
-<h4 id="identifying-source-origin-via-originreferer-header"><a name="identifying-source-origin-via-originreferer-header" class="plugin-anchor" href="#identifying-source-origin-via-originreferer-header"><i class="fa fa-link" aria-hidden="true"></i></a>Identifying Source Origin (via Origin/Referer header)</h4>
-<h5 id="checking-the-origin-header"><a name="checking-the-origin-header" class="plugin-anchor" href="#checking-the-origin-header"><i class="fa fa-link" aria-hidden="true"></i></a>Checking the Origin Header</h5>
+<p>At server side we verify if both of them match. If they do, we accept the request as legitimate (meaning it's the same origin request) and if they don't, we discard the request (meaning that the request originated from cross-domain). Reliability on these headers comes from the fact that they cannot be altered programmatically (using JavaScript with an XSS vulnerability) as they fall under <a href="https://developer.mozilla.org/en-US/docs/Glossary/Forbidden_header_name">forbidden headers</a> list, meaning that only the browser can set them</p>
+<h4 id="identifying-source-origin-via-originreferer-header">Identifying Source Origin (via Origin/Referer header)<a class="headerlink" href="#identifying-source-origin-via-originreferer-header" title="Permanent link">&para;</a></h4>
+<h5 id="checking-the-origin-header">Checking the Origin Header<a class="headerlink" href="#checking-the-origin-header" title="Permanent link">&para;</a></h5>
 <p>If the Origin header is present, verify that its value matches the target origin. Unlike the Referer, the Origin header will be present in HTTP requests that originate from an HTTPS URL.</p>
-<h5 id="checking-the-referer-header"><a name="checking-the-referer-header" class="plugin-anchor" href="#checking-the-referer-header"><i class="fa fa-link" aria-hidden="true"></i></a>Checking the Referer Header</h5>
+<h5 id="checking-the-referer-header">Checking the Referer Header<a class="headerlink" href="#checking-the-referer-header" title="Permanent link">&para;</a></h5>
 <p>If the Origin header is not present, verify the hostname in the Referer header matches the target origin. This method of CSRF mitigation is also commonly used with unauthenticated requests, such as requests made prior to establishing a session state, which is required to keep track of a synchronization token.</p>
 <p>In both cases, make sure the target origin check is strong. For example, if your site is <code>example.org</code> make sure <code>example.org.attacker.com</code> does not pass your origin check (i.e, match through the trailing / after the origin to make sure you are matching against the entire origin).</p>
 <p>If neither of these headers are present, you can either accept or block the request. We recommend <strong>blocking</strong>. Alternatively, you might want to log all such instances, monitor their use cases/behavior, and then start blocking requests only after you get enough confidence.</p>
-<h4 id="identifying-the-target-origin"><a name="identifying-the-target-origin" class="plugin-anchor" href="#identifying-the-target-origin"><i class="fa fa-link" aria-hidden="true"></i></a>Identifying the Target Origin</h4>
-<p>You might think it&apos;s easy to determine the target origin, but it&apos;s frequently not. The first thought is to simply grab the target origin (i.e., its hostname and port <code>#</code>) from the URL in the request. However, the application server is frequently sitting behind one or more proxies and the original URL is different from the URL the app server actually receives. If your application server is directly accessed by its users, then using the origin in the URL is fine and you&apos;re all set.</p>
+<h4 id="identifying-the-target-origin">Identifying the Target Origin<a class="headerlink" href="#identifying-the-target-origin" title="Permanent link">&para;</a></h4>
+<p>You might think it's easy to determine the target origin, but it's frequently not. The first thought is to simply grab the target origin (i.e., its hostname and port <code>#</code>) from the URL in the request. However, the application server is frequently sitting behind one or more proxies and the original URL is different from the URL the app server actually receives. If your application server is directly accessed by its users, then using the origin in the URL is fine and you're all set.</p>
 <p>If you are behind a proxy, there are a number of options to consider.</p>
 <ul>
-<li><p><strong>Configure your application to simply know its target origin:</strong> It&apos;s your application, so you can find its target origin and set that value in some server configuration entry. This would be the most secure approach as its defined server side, so it is a trusted value. However, this might be problematic to maintain if your application is deployed in many places, e.g., dev, test, QA, production, and possibly multiple production instances. Setting the correct value for each of these situations might be difficult, but if you can do it via some central configuration and providing your instances to grab value from it, that&apos;s great! (<strong>Note:</strong> Make sure the centralized configuration store is maintained securely because major part of your CSRF defense depends on it.)</p>
+<li>
+<p><strong>Configure your application to simply know its target origin:</strong> It's your application, so you can find its target origin and set that value in some server configuration entry. This would be the most secure approach as its defined server side, so it is a trusted value. However, this might be problematic to maintain if your application is deployed in many places, e.g., dev, test, QA, production, and possibly multiple production instances. Setting the correct value for each of these situations might be difficult, but if you can do it via some central configuration and providing your instances to grab value from it, that's great! (<strong>Note:</strong> Make sure the centralized configuration store is maintained securely because major part of your CSRF defense depends on it.)</p>
 </li>
-<li><p><strong>Use the Host header value:</strong> If you prefer that the application find its own target so it doesn&apos;t have to be configured for each deployed instance, we recommend using the Host family of headers. The Host header&apos;s purpose is to contain the target origin of the request. But, if your app server is sitting behind a proxy, the Host header value is most likely changed by the proxy to the target origin of the URL behind the proxy, which is different than the original URL. This modified Host header origin won&apos;t match the source origin in the original Origin or Referer headers.</p>
+<li>
+<p><strong>Use the Host header value:</strong> If you prefer that the application find its own target so it doesn't have to be configured for each deployed instance, we recommend using the Host family of headers. The Host header's purpose is to contain the target origin of the request. But, if your app server is sitting behind a proxy, the Host header value is most likely changed by the proxy to the target origin of the URL behind the proxy, which is different than the original URL. This modified Host header origin won't match the source origin in the original Origin or Referer headers.</p>
 </li>
-<li><p><strong>Use the X-Forwarded-Host header value:</strong> To avoid the issue of proxy altering the host header, there is another header called X-Forwarded-Host, whose purpose is to contain the original Host header value the proxy received. Most proxies will pass along the original Host header value in the X-Forwarded-Host header. So that header value is likely to be the target origin value you need to compare to the source origin in the Origin or Referer header.</p>
+<li>
+<p><strong>Use the X-Forwarded-Host header value:</strong> To avoid the issue of proxy altering the host header, there is another header called X-Forwarded-Host, whose purpose is to contain the original Host header value the proxy received. Most proxies will pass along the original Host header value in the X-Forwarded-Host header. So that header value is likely to be the target origin value you need to compare to the source origin in the Origin or Referer header.</p>
 </li>
 </ul>
 <p>This mitigation is working properly when origin or referrer headers are present in the requests. Though these headers are included <strong>majority</strong> of the time, there are few use cases where they are not included (most of them are for legitimate reasons to safeguard users privacy/to tune to browsers ecosystem). The following lists some use cases:</p>
 <ul>
-<li>Internet Explorer 11 does not add the Origin header on a CORS request across sites of a trusted zone. The Referer header will remain the only indication of the UI origin. See the following references in stackoverflow <a href="https://stackoverflow.com/questions/20784209/internet-explorer-11-does-not-add-the-origin-header-on-a-cors-request" target="_blank">here</a> and <a href="https://github.com/silverstripe/silverstripe-graphql/issues/118" target="_blank">here</a>.</li>
-<li>In an instance following a <a href="https://stackoverflow.com/questions/22397072/are-there-any-browsers-that-set-the-origin-header-to-null-for-privacy-sensitiv" target="_blank">302 redirect cross-origin</a>, Origin is not included in the redirected request because that may be considered sensitive information that should not be sent to the other origin.</li>
-<li>There are some <a href="https://wiki.mozilla.org/Security/Origin#Privacy-Sensitive_Contexts" target="_blank">privacy contexts</a> where Origin is set to &quot;null&quot; For example, see the following <a href="https://www.google.com/search?q=origin+header+sent+null+value+site%3Astackoverflow.com&amp;oq=origin+header+sent+null+value+site%3Astackoverflow.com" target="_blank">here</a>.</li>
+<li>Internet Explorer 11 does not add the Origin header on a CORS request across sites of a trusted zone. The Referer header will remain the only indication of the UI origin. See the following references in stackoverflow <a href="https://stackoverflow.com/questions/20784209/internet-explorer-11-does-not-add-the-origin-header-on-a-cors-request">here</a> and <a href="https://github.com/silverstripe/silverstripe-graphql/issues/118">here</a>.</li>
+<li>In an instance following a <a href="https://stackoverflow.com/questions/22397072/are-there-any-browsers-that-set-the-origin-header-to-null-for-privacy-sensitiv">302 redirect cross-origin</a>, Origin is not included in the redirected request because that may be considered sensitive information that should not be sent to the other origin.</li>
+<li>There are some <a href="https://wiki.mozilla.org/Security/Origin#Privacy-Sensitive_Contexts">privacy contexts</a> where Origin is set to "null" For example, see the following <a href="https://www.google.com/search?q=origin+header+sent+null+value+site%3Astackoverflow.com&amp;oq=origin+header+sent+null+value+site%3Astackoverflow.com">here</a>.</li>
 <li>Origin header is included for all cross origin requests but for same origin requests, in most browsers it is only included in POST/DELETE/PUT <strong>Note:</strong> Although it is not ideal, many developers use GET requests to do state changing operations.</li>
-<li>Referer header is no exception. There are multiple use cases where referrer header is omitted as well (<a href="https://stackoverflow.com/questions/6880659/in-what-cases-will-http-referer-be-empty" target="_blank">1</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer" target="_blank">2</a>, <a href="https://en.wikipedia.org/wiki/HTTP_referer#Referer_hiding" target="_blank">3</a>, <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">4</a> and <a href="https://www.google.com/search?q=referrer+header+sent+null+value+site:stackoverflow.com" target="_blank">5</a>). Load balancers, proxies and embedded network devices are also well known to strip the referrer header due to privacy reasons in logging them.</li>
+<li>Referer header is no exception. There are multiple use cases where referrer header is omitted as well (<a href="https://stackoverflow.com/questions/6880659/in-what-cases-will-http-referer-be-empty">1</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer">2</a>, <a href="https://en.wikipedia.org/wiki/HTTP_referer#Referer_hiding">3</a>, <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf">4</a> and <a href="https://www.google.com/search?q=referrer+header+sent+null+value+site:stackoverflow.com">5</a>). Load balancers, proxies and embedded network devices are also well known to strip the referrer header due to privacy reasons in logging them.</li>
 </ul>
-<p>Usually, a minor percentage of traffic does fall under above categories (<a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html" target="_blank">1-2%</a>) and no enterprise would want to lose this traffic. One of the popular technique used across Internet to make this technique more usable is to accept the request if the Origin/referrer matches your configured list of domains &quot;OR&quot; a null value (Examples <a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html" target="_blank">here</a>. null value is to cover the edge cases mentioned above where these headers are not sent). Please note that, attackers can exploit this but people prefer to use this technique as a defense in depth measure because of minor effort involved in deploying it</p>
-<h3 id="double-submit-cookie"><a name="double-submit-cookie" class="plugin-anchor" href="#double-submit-cookie"><i class="fa fa-link" aria-hidden="true"></i></a>Double Submit Cookie</h3>
-<p>If maintaining the state for CSRF token at server side is problematic, an alternative defense is to use the double submit cookie technique. This technique is easy to implement and is stateless. In this technique, we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (cryptographically strong) pseudorandom value and set it as a cookie on the user&apos;s machine separate from the session identifier. The site then requires that every transaction request include this pseudorandom value as a hidden form value (or other request parameter/header). If both of them match at server side, the server accepts it as legitimate request and if they don&apos;t, it would reject the request.</p>
+<p>Usually, a minor percentage of traffic does fall under above categories (<a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html">1-2%</a>) and no enterprise would want to lose this traffic. One of the popular technique used across Internet to make this technique more usable is to accept the request if the Origin/referrer matches your configured list of domains "OR" a null value (Examples <a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html">here</a>. null value is to cover the edge cases mentioned above where these headers are not sent). Please note that, attackers can exploit this but people prefer to use this technique as a defense in depth measure because of minor effort involved in deploying it</p>
+<h3 id="double-submit-cookie">Double Submit Cookie<a class="headerlink" href="#double-submit-cookie" title="Permanent link">&para;</a></h3>
+<p>If maintaining the state for CSRF token at server side is problematic, an alternative defense is to use the double submit cookie technique. This technique is easy to implement and is stateless. In this technique, we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (cryptographically strong) pseudorandom value and set it as a cookie on the user's machine separate from the session identifier. The site then requires that every transaction request include this pseudorandom value as a hidden form value (or other request parameter/header). If both of them match at server side, the server accepts it as legitimate request and if they don't, it would reject the request.</p>
 <p>Because subdomains can write cookies to the parent domains and because cookies can be set for the domain over plain HTTP connections this technique works as long as you are sure that your subdomains are fully secured and only accept HTTPS connections.</p>
 <p>To enhance the security of this solution include the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for ajax calls. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.</p>
-<p>A simpler alternative to an encrypted cookie is to hash the token with a secret salt known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a salted-hash is used, an attacker won&apos;t be able to recreate the cookie value from the plain token without knowledge of the server secrets.</p>
-<h4 id="cookie-with-host--prefix"><a name="cookie-with-host--prefix" class="plugin-anchor" href="#cookie-with-host--prefix"><i class="fa fa-link" aria-hidden="true"></i></a>Cookie with __Host- prefix</h4>
+<p>A simpler alternative to an encrypted cookie is to hash the token with a secret salt known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a salted-hash is used, an attacker won't be able to recreate the cookie value from the plain token without knowledge of the server secrets.</p>
+<h4 id="cookie-with-__host-prefix">Cookie with __Host- prefix<a class="headerlink" href="#cookie-with-__host-prefix" title="Permanent link">&para;</a></h4>
 <p>Another solution for this problem is use of <code>Cookie Prefixes</code> for cookie with CSRF token. If cookie has <code>__Host-</code> prefix e.g. <code>Set-Cookie: __Host-token=RANDOM; path=/; Secure</code> then the cookie:</p>
 <ul>
 <li>Cannot be (over)written from another subdomain.</li>
 <li>Must have the path of <code>/</code>.</li>
 <li>Must be marked as Secure (i.e, cannot be send over unencrypted HTTP).</li>
 </ul>
-<p>However, as of January 2020 cookie prefixes <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility" target="_blank">are not supported by IE and Edge</a>.</p>
-<p>See the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives" target="_blank">Mozilla Developer Network</a> and <a href="https://tools.ietf.org/html/draft-west-cookie-prefixes-05" target="_blank">IETF Draft</a> for further information about cookie prefixes.</p>
-<h3 id="use-of-custom-request-headers"><a name="use-of-custom-request-headers" class="plugin-anchor" href="#use-of-custom-request-headers"><i class="fa fa-link" aria-hidden="true"></i></a>Use of Custom Request Headers</h3>
-<p>Adding CSRF tokens, a double submit cookie and value, an encrypted token, or other defense that involves changing the UI can frequently be complex or otherwise problematic. An alternate defense that is particularly well suited for AJAX or API endpoints is the use of a <strong>custom request header</strong>. This defense relies on the <a href="https://en.wikipedia.org/wiki/Same-origin_policy" target="_blank">same-origin policy (SOP)</a> restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests with custom headers.</p>
+<p>However, as of January 2020 cookie prefixes <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility">are not supported by IE and Edge</a>.</p>
+<p>See the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives">Mozilla Developer Network</a> and <a href="https://tools.ietf.org/html/draft-west-cookie-prefixes-05">IETF Draft</a> for further information about cookie prefixes.</p>
+<h3 id="use-of-custom-request-headers">Use of Custom Request Headers<a class="headerlink" href="#use-of-custom-request-headers" title="Permanent link">&para;</a></h3>
+<p>Adding CSRF tokens, a double submit cookie and value, an encrypted token, or other defense that involves changing the UI can frequently be complex or otherwise problematic. An alternate defense that is particularly well suited for AJAX or API endpoints is the use of a <strong>custom request header</strong>. This defense relies on the <a href="https://en.wikipedia.org/wiki/Same-origin_policy">same-origin policy (SOP)</a> restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests with custom headers.</p>
 <p>If this is the case for your system, you can simply verify the presence of this header and value on all your server side AJAX endpoints in order to protect against CSRF attacks. This approach has the double advantage of usually requiring no UI changes and not introducing any server side state, which is particularly attractive to REST services. You can always add your own <strong>custom header</strong> and value if that is preferred.</p>
 <p>This technique obviously works for AJAX calls and you have to still need protect <code>&lt;form&gt;</code> tags with approaches described in this document such as tokens. Also, CORS configuration should also be robust to make this solution work effectively (as custom headers for requests coming from other domains trigger a pre-flight CORS check).</p>
-<h3 id="user-interaction-based-csrf-defense"><a name="user-interaction-based-csrf-defense" class="plugin-anchor" href="#user-interaction-based-csrf-defense"><i class="fa fa-link" aria-hidden="true"></i></a>User Interaction Based CSRF Defense</h3>
-<p>While all the techniques referenced here do not require any user interaction, sometimes it&apos;s easier or more appropriate to involve the user in the transaction to prevent unauthorized operations (forged via CSRF or otherwise). The following are some examples of techniques that can act as strong CSRF defense when implemented correctly.</p>
+<h3 id="user-interaction-based-csrf-defense">User Interaction Based CSRF Defense<a class="headerlink" href="#user-interaction-based-csrf-defense" title="Permanent link">&para;</a></h3>
+<p>While all the techniques referenced here do not require any user interaction, sometimes it's easier or more appropriate to involve the user in the transaction to prevent unauthorized operations (forged via CSRF or otherwise). The following are some examples of techniques that can act as strong CSRF defense when implemented correctly.</p>
 <ul>
 <li>Re-Authentication (password or stronger)</li>
 <li>One-time Token</li>
 <li>CAPTCHA</li>
 </ul>
 <p>While these are a very strong CSRF defense, it can create a significant impact on the user experience. As such, they would generally only be used for security critical operations (such as password change, money transfers, etc.), alongside the other defences discussed in this cheat sheet.</p>
-<h2 id="login-csrf"><a name="login-csrf" class="plugin-anchor" href="#login-csrf"><i class="fa fa-link" aria-hidden="true"></i></a>Login CSRF</h2>
+<h2 id="login-csrf">Login CSRF<a class="headerlink" href="#login-csrf" title="Permanent link">&para;</a></h2>
 <p>Most developers tend to ignore CSRF vulnerability on login forms as they assume that CSRF would not be applicable on login forms because user is not authenticated at that stage, however this assumption is not always true. CSRF vulnerabilities can still occur on login forms where the user is not authenticated, but the impact and risk is different.</p>
-<p>For example, if an attacker uses CSRF to authenticate a victim on a shopping website using the attacker&apos;s account, and the victim then enters their credit card information, an attacker may be able to purchase items using the victim&apos;s stored card details. For more information about login CSRF and other risks, see section 3 of <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">this</a> paper.</p>
-<p>Login CSRF can be mitigated by creating pre-sessions (sessions before a user is authenticated) and including tokens in login form. You can use any of the techniques mentioned above to generate tokens. Remember that pre-sessions cannot be transitioned to real sessions once the user is authenticated - the session should be destroyed and a new one should be made to avoid <a href="http://www.acrossecurity.com/papers/session_fixation.pdf" target="_blank">session fixation attacks</a>. This technique is described in <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">Robust Defenses for Cross-Site Request Forgery section 4.1</a>.</p>
+<p>For example, if an attacker uses CSRF to authenticate a victim on a shopping website using the attacker's account, and the victim then enters their credit card information, an attacker may be able to purchase items using the victim's stored card details. For more information about login CSRF and other risks, see section 3 of <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf">this</a> paper.</p>
+<p>Login CSRF can be mitigated by creating pre-sessions (sessions before a user is authenticated) and including tokens in login form. You can use any of the techniques mentioned above to generate tokens. Remember that pre-sessions cannot be transitioned to real sessions once the user is authenticated - the session should be destroyed and a new one should be made to avoid <a href="http://www.acrossecurity.com/papers/session_fixation.pdf">session fixation attacks</a>. This technique is described in <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf">Robust Defenses for Cross-Site Request Forgery section 4.1</a>.</p>
 <p>If sub-domains under your master domain are not trusted in your threat model, it is difficult to mitigate login CSRF. A strict subdomain and path level referrer header validation can be used in these cases for mitigating CSRF on login forms to an extent.</p>
-<h2 id="java-reference-example"><a name="java-reference-example" class="plugin-anchor" href="#java-reference-example"><i class="fa fa-link" aria-hidden="true"></i></a>Java Reference Example</h2>
-<p>The following <a href="https://github.com/righettod/poc-csrf/blob/master/src/main/java/eu/righettod/poccsrf/filter/CSRFValidationFilter.java" target="_blank">JEE web filter</a> provides an example reference for some of the concepts described in this cheatsheet. It implements the following stateless mitigations (<a href="https://github.com/aramrami/OWASP-CSRFGuard" target="_blank">OWASP CSRFGuard</a>, cover a stateful approach).</p>
+<h2 id="java-reference-example">Java Reference Example<a class="headerlink" href="#java-reference-example" title="Permanent link">&para;</a></h2>
+<p>The following <a href="https://github.com/righettod/poc-csrf/blob/master/src/main/java/eu/righettod/poccsrf/filter/CSRFValidationFilter.java">JEE web filter</a> provides an example reference for some of the concepts described in this cheatsheet. It implements the following stateless mitigations (<a href="https://github.com/aramrami/OWASP-CSRFGuard">OWASP CSRFGuard</a>, cover a stateful approach).</p>
 <ul>
 <li>Verifying same origin with standard headers</li>
 <li>Double submit cookie</li>
 <li>SameSite cookie attribute</li>
 </ul>
-<p><strong>Please note</strong> that it only acts a reference sample and is not complete (for example: it doesn&apos;t have a block to direct the control flow when origin and referrer header check succeeds nor it has a port/host/protocol level validation for referrer header). Developers are recommended to build their complete mitigation on top of this reference sample. Developers should also implement standard authentication or authorization checks before checking for CSRF.</p>
-<p>Full source is located <a href="https://github.com/righettod/poc-csrf" target="_blank">here</a> and provides a runnable POC.</p>
-<h2 id="javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header"><a name="javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header" class="plugin-anchor" href="#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header"><i class="fa fa-link" aria-hidden="true"></i></a>JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header</h2>
+<p><strong>Please note</strong> that it only acts a reference sample and is not complete (for example: it doesn't have a block to direct the control flow when origin and referrer header check succeeds nor it has a port/host/protocol level validation for referrer header). Developers are recommended to build their complete mitigation on top of this reference sample. Developers should also implement standard authentication or authorization checks before checking for CSRF.</p>
+<p>Full source is located <a href="https://github.com/righettod/poc-csrf">here</a> and provides a runnable POC.</p>
+<h2 id="javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header">JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header<a class="headerlink" href="#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header" title="Permanent link">&para;</a></h2>
 <p>The following guidance considers <strong>GET</strong>, <strong>HEAD</strong> and <strong>OPTIONS</strong> methods are safe operations. Therefore <strong>GET</strong>, <strong>HEAD</strong>, and <strong>OPTIONS</strong> method AJAX calls need not be appended with a CSRF token header. However, if the verbs are used to perform state changing operations, they will also require a CSRF token header (although this is bad practice, and should be avoided).</p>
 <p>The <strong>POST</strong>, <strong>PUT</strong>, <strong>PATCH</strong>, and <strong>DELETE</strong> methods, being state changing verbs, should have a CSRF token attached to the request. The following guidance will demonstrate how to create overrides in JavaScript libraries to have CSRF tokens included automatically with every AJAX request for the state changing methods mentioned above.</p>
-<h3 id="storing-the-csrf-token-value-in-the-dom"><a name="storing-the-csrf-token-value-in-the-dom" class="plugin-anchor" href="#storing-the-csrf-token-value-in-the-dom"><i class="fa fa-link" aria-hidden="true"></i></a>Storing the CSRF Token Value in the DOM</h3>
+<h3 id="storing-the-csrf-token-value-in-the-dom">Storing the CSRF Token Value in the DOM<a class="headerlink" href="#storing-the-csrf-token-value-in-the-dom" title="Permanent link">&para;</a></h3>
 <p>A CSRF token can be included in the <code>&lt;meta&gt;</code> tag as shown below. All subsequent calls in the page can extract the CSRF token from this <code>&lt;meta&gt;</code> tag. It can also be stored in a JavaScript variable or anywhere on the DOM. However, it is not recommended to store it in cookies or browser local storage.</p>
 <p>The following code snippet can be used to include a CSRF token as a <code>&lt;meta&gt;</code> tag:</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;csrf-token&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;{{ csrf_token() }}&quot;</span>&gt;</span>
-</code></pre>
-<p>The exact syntax of populating the content attribute would depend on your web application&apos;s backend programming language.</p>
-<h3 id="overriding-defaults-to-set-custom-header"><a name="overriding-defaults-to-set-custom-header" class="plugin-anchor" href="#overriding-defaults-to-set-custom-header"><i class="fa fa-link" aria-hidden="true"></i></a>Overriding Defaults to Set Custom Header</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;csrf-token&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;{{ csrf_token() }}&quot;</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
+<p>The exact syntax of populating the content attribute would depend on your web application's backend programming language.</p>
+<h3 id="overriding-defaults-to-set-custom-header">Overriding Defaults to Set Custom Header<a class="headerlink" href="#overriding-defaults-to-set-custom-header" title="Permanent link">&para;</a></h3>
 <p>Several JavaScript libraries allow for overriding default settings to have a header added automatically to all AJAX requests.</p>
-<h4 id="xmlhttprequest-native-javascript"><a name="xmlhttprequest-native-javascript" class="plugin-anchor" href="#xmlhttprequest-native-javascript"><i class="fa fa-link" aria-hidden="true"></i></a>XMLHttpRequest (Native JavaScript)</h4>
-<p>XMLHttpRequest&apos;s open() method can be overridden to set the <code>anti-csrf-token</code> header whenever the <code>open()</code> method is invoked next. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
+<h4 id="xmlhttprequest-native-javascript">XMLHttpRequest (Native JavaScript)<a class="headerlink" href="#xmlhttprequest-native-javascript" title="Permanent link">&para;</a></h4>
+<p>XMLHttpRequest's open() method can be overridden to set the <code>anti-csrf-token</code> header whenever the <code>open()</code> method is invoked next. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>This can be done as demonstrated in the following code snippet:</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript">
-    <span class="hljs-keyword">var</span> csrf_token = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;meta[name=&apos;csrf-token&apos;]&quot;</span>).getAttribute(<span class="hljs-string">&quot;content&quot;</span>);
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">csrfSafeMethod</span>(<span class="hljs-params">method</span>) </span>{
-        <span class="hljs-comment">// these HTTP methods do not require CSRF protection</span>
-        <span class="hljs-keyword">return</span> (<span class="hljs-regexp">/^(GET|HEAD|OPTIONS)$/</span>.test(method));
-    }
-    <span class="hljs-keyword">var</span> o = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
-        <span class="hljs-keyword">var</span> res = o.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
-        <span class="hljs-keyword">var</span> err = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>();
-        <span class="hljs-keyword">if</span> (!csrfSafeMethod(<span class="hljs-built_in">arguments</span>[<span class="hljs-number">0</span>])) {
-            <span class="hljs-keyword">this</span>.setRequestHeader(<span class="hljs-string">&apos;anti-csrf-token&apos;</span>, csrf_token);
-        }
-        <span class="hljs-keyword">return</span> res;
-    };
- </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-</code></pre>
-<h4 id="angularjs"><a name="angularjs" class="plugin-anchor" href="#angularjs"><i class="fa fa-link" aria-hidden="true"></i></a>AngularJS</h4>
-<p>AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS&apos;s documentation for <a href="https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults" target="_blank">$httpProvider</a>.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-    <span class="hljs-keyword">var</span> csrf_token = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;meta[name=&apos;csrf-token&apos;]&quot;</span>).getAttribute(<span class="hljs-string">&quot;content&quot;</span>);
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+    <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+    <span class="kd">function</span> <span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// these HTTP methods do not require CSRF protection</span>
+        <span class="k">return</span> <span class="p">(</span><span class="sr">/^(GET|HEAD|OPTIONS)$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span><span class="p">;</span>
+    <span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">o</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">err</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">,</span> <span class="nx">csrf_token</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+    <span class="p">};</span>
+ <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+ ```
 
-    <span class="hljs-keyword">var</span> app = angular.module(<span class="hljs-string">&quot;app&quot;</span>, []);
+#### AngularJS
 
-    app.config([<span class="hljs-string">&apos;$httpProvider&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">$httpProvider</span>) </span>{
-        $httpProvider.defaults.headers.post[<span class="hljs-string">&quot;anti-csrf-token&quot;</span>] = csrf_token;
-        $httpProvider.defaults.headers.put[<span class="hljs-string">&quot;anti-csrf-token&quot;</span>] = csrf_token;
-        $httpProvider.defaults.headers.patch[<span class="hljs-string">&quot;anti-csrf-token&quot;</span>] = csrf_token;
-        <span class="hljs-comment">// AngularJS does not create an object for DELETE and TRACE methods by default, and has to be manually created.</span>
-        $httpProvider.defaults.headers.delete = {
-            <span class="hljs-string">&quot;Content-Type&quot;</span> : <span class="hljs-string">&quot;application/json;charset=utf-8&quot;</span>,
-            <span class="hljs-string">&quot;anti-csrf-token&quot;</span> : csrf_token
-        };
-        $httpProvider.defaults.headers.trace = {
-            <span class="hljs-string">&quot;Content-Type&quot;</span> : <span class="hljs-string">&quot;application/json;charset=utf-8&quot;</span>,
-            <span class="hljs-string">&quot;anti-csrf-token&quot;</span> : csrf_token
-        };
-      }]);
- </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-</code></pre>
+AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS&#39;s documentation for [$httpProvider](https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults).
+
+```html
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,</span> <span class="p">[]);</span>
+
+    <span class="nx">app</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$httpProvider&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$httpProvider</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
+        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">put</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
+        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">patch</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
+        <span class="c1">// AngularJS does not create an object for DELETE and TRACE methods by default, and has to be manually created.</span>
+        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="k">delete</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Content-Type&quot;</span> <span class="o">:</span> <span class="s2">&quot;application/json;charset=utf-8&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;anti-csrf-token&quot;</span> <span class="o">:</span> <span class="nx">csrf_token</span>
+        <span class="p">};</span>
+        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Content-Type&quot;</span> <span class="o">:</span> <span class="s2">&quot;application/json;charset=utf-8&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;anti-csrf-token&quot;</span> <span class="o">:</span> <span class="nx">csrf_token</span>
+        <span class="p">};</span>
+      <span class="p">}]);</span>
+ <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
 <p>This code snippet has been tested with AngularJS version 1.7.7.</p>
-<h4 id="axios"><a name="axios" class="plugin-anchor" href="#axios"><i class="fa fa-link" aria-hidden="true"></i></a>Axios</h4>
-<p><a href="https://github.com/axios/axios" target="_blank">Axios</a> allows us to set default headers for the POST, PUT, DELETE and PATCH actions.</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript">
-    <span class="hljs-keyword">var</span> csrf_token = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&quot;meta[name=&apos;csrf-token&apos;]&quot;</span>).getAttribute(<span class="hljs-string">&quot;content&quot;</span>);
+<h4 id="axios">Axios<a class="headerlink" href="#axios" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/axios/axios">Axios</a> allows us to set default headers for the POST, PUT, DELETE and PATCH actions.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+    <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
 
-    axios.defaults.headers.post[<span class="hljs-string">&apos;anti-csrf-token&apos;</span>] = csrf_token;
-    axios.defaults.headers.put[<span class="hljs-string">&apos;anti-csrf-token&apos;</span>] = csrf_token;
-    axios.defaults.headers.delete[<span class="hljs-string">&apos;anti-csrf-token&apos;</span>] = csrf_token;
-    axios.defaults.headers.patch[<span class="hljs-string">&apos;anti-csrf-token&apos;</span>] = csrf_token;
+    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
+    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">put</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
+    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="k">delete</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
+    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">patch</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
 
-    <span class="hljs-comment">// Axios does not create an object for TRACE method by default, and has to be created manually.</span>
-    axios.defaults.headers.trace = {}
-    axios.defaults.headers.trace[<span class="hljs-string">&apos;anti-csrf-token&apos;</span>] = csrf_token
-</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-</code></pre>
+    <span class="c1">// Axios does not create an object for TRACE method by default, and has to be created manually.</span>
+    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
 <p>This code snippet has been tested with Axios version 0.18.0.</p>
-<h4 id="jquery"><a name="jquery" class="plugin-anchor" href="#jquery"><i class="fa fa-link" aria-hidden="true"></i></a>JQuery</h4>
+<h4 id="jquery">JQuery<a class="headerlink" href="#jquery" title="Permanent link">&para;</a></h4>
 <p>JQuery exposes an API called $.ajaxSetup() which can be used to add the <code>anti-csrf-token</code> header to the AJAX request. API documentation for <code>$.ajaxSetup()</code> can be found here. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>You can configure JQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript">
-    <span class="hljs-keyword">var</span> csrf_token = $(<span class="hljs-string">&apos;meta[name=&quot;csrf-token&quot;]&apos;</span>).attr(<span class="hljs-string">&apos;content&apos;</span>);
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+    <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;csrf-token&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">csrfSafeMethod</span>(<span class="hljs-params">method</span>) </span>{
-        <span class="hljs-comment">// these HTTP methods do not require CSRF protection</span>
-        <span class="hljs-keyword">return</span> (<span class="hljs-regexp">/^(GET|HEAD|OPTIONS)$/</span>.test(method));
-    }
+    <span class="kd">function</span> <span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// these HTTP methods do not require CSRF protection</span>
+        <span class="k">return</span> <span class="p">(</span><span class="sr">/^(GET|HEAD|OPTIONS)$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">));</span>
+    <span class="p">}</span>
 
-    $.ajaxSetup({
-        beforeSend: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">xhr, settings</span>) </span>{
-            <span class="hljs-keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="hljs-keyword">this</span>.crossDomain) {
-                xhr.setRequestHeader(<span class="hljs-string">&quot;anti-csrf-token&quot;</span>, csrf_token);
-            }
-        }
-    });
-</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
-</code></pre>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajaxSetup</span><span class="p">({</span>
+        <span class="nx">beforeSend</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">crossDomain</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">,</span> <span class="nx">csrf_token</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
 <p>This code snippet has been tested with jQuery version 3.3.1.</p>
-<h2 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h2>
-<h3 id="csrf"><a name="csrf" class="plugin-anchor" href="#csrf"><i class="fa fa-link" aria-hidden="true"></i></a>CSRF</h3>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<h3 id="csrf">CSRF<a class="headerlink" href="#csrf" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://owasp.org/www-community/attacks/csrf" target="_blank">OWASP Cross-Site Request Forgery (CSRF)</a></li>
-<li><a href="https://portswigger.net/web-security/csrf" target="_blank">PortSwigger Web Security Academy</a></li>
-<li><a href="https://infosec.mozilla.org/guidelines/web_security#csrf-prevention" target="_blank">Mozilla Web Security Cheat Sheet</a></li>
-<li><a href="https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/" target="_blank">Common CSRF Prevention Misconceptions</a></li>
-<li><a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank">Robust Defenses for Cross-Site Request Forgery</a></li>
+<li><a href="https://owasp.org/www-community/attacks/csrf">OWASP Cross-Site Request Forgery (CSRF)</a></li>
+<li><a href="https://portswigger.net/web-security/csrf">PortSwigger Web Security Academy</a></li>
+<li><a href="https://infosec.mozilla.org/guidelines/web_security#csrf-prevention">Mozilla Web Security Cheat Sheet</a></li>
+<li><a href="https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/">Common CSRF Prevention Misconceptions</a></li>
+<li><a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf">Robust Defenses for Cross-Site Request Forgery</a></li>
 </ul>
-
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
-
-                        </div>
-                    </div>
                 
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
-
-            
-                
-                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Credential Stuffing Prevention ">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Cross Site Scripting Prevention ">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Credential Stuffing Prevention
+              </div>
+            </div>
+          </a>
         
+        
+          <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Cross Site Scripting Prevention
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Cross-Site Request Forgery Prevention ","level":"1.18","depth":1,"next":{"title":"Cross Site Scripting Prevention ","level":"1.19","depth":1,"path":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md","articles":[]},"previous":{"title":"Credential Stuffing Prevention ","level":"1.17","depth":1,"path":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","ref":"cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md","mtime":"2020-05-27T19:41:37.100Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-27T19:42:04.146Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
-
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-

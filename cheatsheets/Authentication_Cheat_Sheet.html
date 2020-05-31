@@ -1,1110 +1,1731 @@
 
-<!DOCTYPE HTML>
-<html lang="en" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Authentication  · OWASP Cheat Sheet Series</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>Authentication</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
         
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
         
-        
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="Authorization_Testing_Automation.html" />
-    
-    
-    <link rel="prev" href="Attack_Surface_Analysis_Cheat_Sheet.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        <li class="header">Cheatsheets</li>
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="Index.html">
-            
-                <a href="Index.html">
-            
-                    
-                    Index Alphabetical
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
-            
-                <a href="IndexASVS.html">
-            
-                    
-                    Index ASVS
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
-            
-                <a href="IndexProactiveControls.html">
-            
-                    
-                    Index Proactive Controls
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
-            
-                <a href="AJAX_Security_Cheat_Sheet.html">
-            
-                    
-                    AJAX Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
-            
-                <a href="Abuse_Case_Cheat_Sheet.html">
-            
-                    
-                    Abuse Case 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
-            
-                <a href="Access_Control_Cheat_Sheet.html">
-            
-                    
-                    Access Control 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                    
-                    Attack Surface Analysis 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
-            
-                <a href="Authentication_Cheat_Sheet.html">
-            
-                    
-                    Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
-            
-                <a href="Authorization_Testing_Automation.html">
-            
-                    
-                    Authorization Testing Automation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
-            
-                <a href="Bean_Validation_Cheat_Sheet.html">
-            
-                    
-                    Bean Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
-            
-                <a href="C-Based_Toolchain_Hardening.html">
-            
-                    
-                    C-Based Toolchain Hardening
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                    
-                    C-Based Toolchain Hardening 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                    
-                    Choosing and Using Security Questions 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                <a href="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                    
-                    Clickjacking Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
-            
-                <a href="Content_Security_Policy_Cheat_Sheet.html">
-            
-                    
-                    Content Security Policy 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Credential Stuffing Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross-Site Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross Site Scripting Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                <a href="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                    
-                    Cryptographic Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                    
-                    DOM based XSS Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.22" data-path="Database_Security_Cheat_Sheet.html">
-            
-                <a href="Database_Security_Cheat_Sheet.html">
-            
-                    
-                    Database Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.23" data-path="Denial_of_Service_Cheat_Sheet.html">
-            
-                <a href="Denial_of_Service_Cheat_Sheet.html">
-            
-                    
-                    Denial of Service 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.24" data-path="Deserialization_Cheat_Sheet.html">
-            
-                <a href="Deserialization_Cheat_Sheet.html">
-            
-                    
-                    Deserialization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.25" data-path="Docker_Security_Cheat_Sheet.html">
-            
-                <a href="Docker_Security_Cheat_Sheet.html">
-            
-                    
-                    Docker Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.26" data-path="DotNet_Security_Cheat_Sheet.html">
-            
-                <a href="DotNet_Security_Cheat_Sheet.html">
-            
-                    
-                    DotNet Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.27" data-path="Error_Handling_Cheat_Sheet.html">
-            
-                <a href="Error_Handling_Cheat_Sheet.html">
-            
-                    
-                    Error Handling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
-            
-                <a href="File_Upload_Cheat_Sheet.html">
-            
-                    
-                    File Upload 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.29" data-path="Forgot_Password_Cheat_Sheet.html">
-            
-                <a href="Forgot_Password_Cheat_Sheet.html">
-            
-                    
-                    Forgot Password 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.30" data-path="HTML5_Security_Cheat_Sheet.html">
-            
-                <a href="HTML5_Security_Cheat_Sheet.html">
-            
-                    
-                    HTML5 Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.31" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                    
-                    HTTP Strict Transport Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.32" data-path="Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.33" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                    
-                    Injection Prevention  in Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.34" data-path="Input_Validation_Cheat_Sheet.html">
-            
-                <a href="Input_Validation_Cheat_Sheet.html">
-            
-                    
-                    Input Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.35" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Insecure Direct Object Reference Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.36" data-path="JAAS_Cheat_Sheet.html">
-            
-                <a href="JAAS_Cheat_Sheet.html">
-            
-                    
-                    JAAS 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.37" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                    
-                    JSON Web Token  for Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.38" data-path="Key_Management_Cheat_Sheet.html">
-            
-                <a href="Key_Management_Cheat_Sheet.html">
-            
-                    
-                    Key Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.39" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    LDAP Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.40" data-path="Logging_Cheat_Sheet.html">
-            
-                <a href="Logging_Cheat_Sheet.html">
-            
-                    
-                    Logging 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.41" data-path="Mass_Assignment_Cheat_Sheet.html">
-            
-                <a href="Mass_Assignment_Cheat_Sheet.html">
-            
-                    
-                    Mass Assignment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.42" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                    
-                    Microservices based Security Arch Doc 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.43" data-path="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                <a href="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                    
-                    Multifactor Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.44" data-path="Nodejs_security_cheat_sheet.html">
-            
-                <a href="Nodejs_security_cheat_sheet.html">
-            
-                    
-                    Nodejs security cheat sheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.45" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                    
-                    OS Command Injection Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.46" data-path="PHP_Configuration_Cheat_Sheet.html">
-            
-                <a href="PHP_Configuration_Cheat_Sheet.html">
-            
-                    
-                    PHP Configuration 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.47" data-path="Password_Storage_Cheat_Sheet.html">
-            
-                <a href="Password_Storage_Cheat_Sheet.html">
-            
-                    
-                    Password Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
-            
-                <a href="Pinning_Cheat_Sheet.html">
-            
-                    
-                    Pinning 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.49" data-path="Query_Parameterization_Cheat_Sheet.html">
-            
-                <a href="Query_Parameterization_Cheat_Sheet.html">
-            
-                    
-                    Query Parameterization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.50" data-path="REST_Assessment_Cheat_Sheet.html">
-            
-                <a href="REST_Assessment_Cheat_Sheet.html">
-            
-                    
-                    REST Assessment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.51" data-path="REST_Security_Cheat_Sheet.html">
-            
-                <a href="REST_Security_Cheat_Sheet.html">
-            
-                    
-                    REST Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.52" data-path="Ruby_on_Rails_Cheatsheet.html">
-            
-                <a href="Ruby_on_Rails_Cheatsheet.html">
-            
-                    
-                    Ruby on Rails Cheatsheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.53" data-path="SAML_Security_Cheat_Sheet.html">
-            
-                <a href="SAML_Security_Cheat_Sheet.html">
-            
-                    
-                    SAML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.54" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    SQL Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.55" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                    
-                    Securing Cascading Style Sheets 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.56" data-path="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Server Side Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.57" data-path="Session_Management_Cheat_Sheet.html">
-            
-                <a href="Session_Management_Cheat_Sheet.html">
-            
-                    
-                    Session Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.58" data-path="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                <a href="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                    
-                    TLS Cipher String 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.59" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                    
-                    Third Party Javascript Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.60" data-path="Threat_Modeling_Cheat_Sheet.html">
-            
-                <a href="Threat_Modeling_Cheat_Sheet.html">
-            
-                    
-                    Threat Modeling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.61" data-path="Transaction_Authorization_Cheat_Sheet.html">
-            
-                <a href="Transaction_Authorization_Cheat_Sheet.html">
-            
-                    
-                    Transaction Authorization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.62" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                    
-                    Transport Layer Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.63" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                    
-                    Unvalidated Redirects and Forwards 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.64" data-path="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                <a href="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                    
-                    User Privacy Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.65" data-path="Virtual_Patching_Cheat_Sheet.html">
-            
-                <a href="Virtual_Patching_Cheat_Sheet.html">
-            
-                    
-                    Virtual Patching 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.66" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                    
-                    Vulnerability Disclosure 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.67" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                    
-                    Vulnerable Dependency Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.68" data-path="Web_Service_Security_Cheat_Sheet.html">
-            
-                <a href="Web_Service_Security_Cheat_Sheet.html">
-            
-                    
-                    Web Service Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.69" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                    
-                    XML External Entity Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.70" data-path="XML_Security_Cheat_Sheet.html">
-            
-                <a href="XML_Security_Cheat_Sheet.html">
-            
-                    
-                    XML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="#authentication-cheat-sheet" class="md-skip">
+          Skip to content
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
+      
     </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
+    <div data-md-component="announce">
+      
+    </div>
     
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Authentication </a>
-    </h1>
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Authentication
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
     
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="authentication-cheat-sheet"><a name="authentication-cheat-sheet" class="plugin-anchor" href="#authentication-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication Cheat Sheet</h1>
-<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" title="Index Alphabetical" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" title="Index ASVS" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" title="Index Proactive Controls" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" title="AJAX Security" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" title="Abuse Case" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" title="Access Control" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Authentication
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Authentication_Cheat_Sheet.html" title="Authentication" class="md-nav__link md-nav__link--active">
+      Authentication
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-general-guidelines" class="md-nav__link">
+    Authentication General Guidelines
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication General Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-ids" class="md-nav__link">
+    User IDs
+  </a>
+  
+    <nav class="md-nav" aria-label="User IDs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#email-address-as-a-user-id" class="md-nav__link">
+    Email address as a User ID
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-solution-and-sensitive-accounts" class="md-nav__link">
+    Authentication Solution and Sensitive Accounts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implement-proper-password-strength-controls" class="md-nav__link">
+    Implement Proper Password Strength Controls
+  </a>
+  
+    <nav class="md-nav" aria-label="Implement Proper Password Strength Controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#for-more-detailed-information-check" class="md-nav__link">
+    For more detailed information check
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implement-secure-password-recovery-mechanism" class="md-nav__link">
+    Implement Secure Password Recovery Mechanism
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#store-passwords-in-a-secure-fashion" class="md-nav__link">
+    Store Passwords in a Secure Fashion
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-password-hashes-using-safe-functions" class="md-nav__link">
+    Compare Password Hashes Using Safe Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transmit-passwords-only-over-tls-or-other-strong-transport" class="md-nav__link">
+    Transmit Passwords Only Over TLS or Other Strong Transport
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#require-re-authentication-for-sensitive-features" class="md-nav__link">
+    Require Re-authentication for Sensitive Features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consider-strong-transaction-authentication" class="md-nav__link">
+    Consider Strong Transaction Authentication
+  </a>
+  
+    <nav class="md-nav" aria-label="Consider Strong Transaction Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tls-client-authentication" class="md-nav__link">
+    TLS Client Authentication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-and-error-messages" class="md-nav__link">
+    Authentication and Error Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication and Error Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication-responses" class="md-nav__link">
+    Authentication Responses
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication Responses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#incorrect-and-correct-response-examples" class="md-nav__link">
+    Incorrect and correct response examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Incorrect and correct response examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#login" class="md-nav__link">
+    Login
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#password-recovery" class="md-nav__link">
+    Password recovery
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-creation" class="md-nav__link">
+    Account creation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-codes-and-urls" class="md-nav__link">
+    Error Codes and URLs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protect-against-automated-attacks" class="md-nav__link">
+    Protect Against Automated Attacks
+  </a>
+  
+    <nav class="md-nav" aria-label="Protect Against Automated Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-factor-authentication" class="md-nav__link">
+    Multi-Factor Authentication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-lockout" class="md-nav__link">
+    Account Lockout
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captcha" class="md-nav__link">
+    CAPTCHA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-questions-and-memorable-words" class="md-nav__link">
+    Security Questions and Memorable Words
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-and-monitoring" class="md-nav__link">
+    Logging and Monitoring
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-of-authentication-protocols-that-require-no-password" class="md-nav__link">
+    Use of authentication protocols that require no password
+  </a>
+  
+    <nav class="md-nav" aria-label="Use of authentication protocols that require no password">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oauth" class="md-nav__link">
+    OAuth
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openid" class="md-nav__link">
+    OpenId
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saml" class="md-nav__link">
+    SAML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fido" class="md-nav__link">
+    FIDO
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#password-managers" class="md-nav__link">
+    Password Managers
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" title="Clickjacking Defense" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" title="Content Security Policy" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" title="Cross-Site Request Forgery Prevention" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" title="Cryptographic Storage" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" title="Database Security" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" title="Denial of Service" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" title="Deserialization" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" title="Docker Security" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" title="DotNet Security" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" title="Error Handling" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" title="File Upload" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" title="Forgot Password" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" title="HTML5 Security" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" title="HTTP Strict Transport Security" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" title="Injection Prevention in Java" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" title="Insecure Direct Object Reference Prevention" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" title="JAAS" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" title="JSON Web Token for Java" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" title="Key Management" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" title="LDAP Injection Prevention" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" title="Mass Assignment" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" title="Multifactor Authentication" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" title="Nodejs Security" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" title="OS Command Injection Defense" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" title="PHP Configuration" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" title="Password Storage" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" title="Pinning" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" title="Query Parameterization" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" title="REST Assessment" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" title="REST Security" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" title="Ruby on Rails" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" title="SQL Injection Prevention" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" title="Server Side Request Forgery Prevention" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" title="TLS Cipher String" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" title="Third Party Javascript Management" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" title="Threat Modeling" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" title="Transport Layer Protection" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" title="User Privacy Protection" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" title="Virtual Patching" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" title="Vulnerability Disclosure" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" title="Vulnerable Dependency Management" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" title="XML External Entity Prevention" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-general-guidelines" class="md-nav__link">
+    Authentication General Guidelines
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication General Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-ids" class="md-nav__link">
+    User IDs
+  </a>
+  
+    <nav class="md-nav" aria-label="User IDs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#email-address-as-a-user-id" class="md-nav__link">
+    Email address as a User ID
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-solution-and-sensitive-accounts" class="md-nav__link">
+    Authentication Solution and Sensitive Accounts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implement-proper-password-strength-controls" class="md-nav__link">
+    Implement Proper Password Strength Controls
+  </a>
+  
+    <nav class="md-nav" aria-label="Implement Proper Password Strength Controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#for-more-detailed-information-check" class="md-nav__link">
+    For more detailed information check
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implement-secure-password-recovery-mechanism" class="md-nav__link">
+    Implement Secure Password Recovery Mechanism
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#store-passwords-in-a-secure-fashion" class="md-nav__link">
+    Store Passwords in a Secure Fashion
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-password-hashes-using-safe-functions" class="md-nav__link">
+    Compare Password Hashes Using Safe Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transmit-passwords-only-over-tls-or-other-strong-transport" class="md-nav__link">
+    Transmit Passwords Only Over TLS or Other Strong Transport
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#require-re-authentication-for-sensitive-features" class="md-nav__link">
+    Require Re-authentication for Sensitive Features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consider-strong-transaction-authentication" class="md-nav__link">
+    Consider Strong Transaction Authentication
+  </a>
+  
+    <nav class="md-nav" aria-label="Consider Strong Transaction Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tls-client-authentication" class="md-nav__link">
+    TLS Client Authentication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-and-error-messages" class="md-nav__link">
+    Authentication and Error Messages
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication and Error Messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentication-responses" class="md-nav__link">
+    Authentication Responses
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication Responses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#incorrect-and-correct-response-examples" class="md-nav__link">
+    Incorrect and correct response examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Incorrect and correct response examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#login" class="md-nav__link">
+    Login
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#password-recovery" class="md-nav__link">
+    Password recovery
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-creation" class="md-nav__link">
+    Account creation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-codes-and-urls" class="md-nav__link">
+    Error Codes and URLs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protect-against-automated-attacks" class="md-nav__link">
+    Protect Against Automated Attacks
+  </a>
+  
+    <nav class="md-nav" aria-label="Protect Against Automated Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-factor-authentication" class="md-nav__link">
+    Multi-Factor Authentication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-lockout" class="md-nav__link">
+    Account Lockout
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#captcha" class="md-nav__link">
+    CAPTCHA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-questions-and-memorable-words" class="md-nav__link">
+    Security Questions and Memorable Words
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-and-monitoring" class="md-nav__link">
+    Logging and Monitoring
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-of-authentication-protocols-that-require-no-password" class="md-nav__link">
+    Use of authentication protocols that require no password
+  </a>
+  
+    <nav class="md-nav" aria-label="Use of authentication protocols that require no password">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oauth" class="md-nav__link">
+    OAuth
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openid" class="md-nav__link">
+    OpenId
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saml" class="md-nav__link">
+    SAML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fido" class="md-nav__link">
+    FIDO
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#password-managers" class="md-nav__link">
+    Password Managers
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="authentication-cheat-sheet">Authentication Cheat Sheet<a class="headerlink" href="#authentication-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p><strong>Authentication</strong> is the process of verifying that an individual, entity or website is whom it claims to be. Authentication in the context of web applications is commonly performed by submitting a username or ID and one or more items of private information that only a given user should know.</p>
 <p><strong>Session Management</strong> is a process by which a server maintains the state of an entity interacting with it. This is required for a server to remember how to react to subsequent requests throughout a transaction. Sessions are maintained on the server by a session identifier which can be passed back and forward between the client and server when transmitting and receiving requests. Sessions should be unique per user and computationally very difficult to predict. The <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a> contains further guidance on the best practices in this area.</p>
-<h2 id="authentication-general-guidelines"><a name="authentication-general-guidelines" class="plugin-anchor" href="#authentication-general-guidelines"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication General Guidelines</h2>
-<h3 id="user-ids"><a name="user-ids" class="plugin-anchor" href="#user-ids"><i class="fa fa-link" aria-hidden="true"></i></a>User IDs</h3>
-<p>Make sure your usernames/user IDs are case-insensitive. User &apos;smith&apos; and user &apos;Smith&apos; should be the same user. Usernames should also be unique. For high-security applications, usernames could be assigned and secret instead of user-defined public data.</p>
-<h4 id="email-address-as-a-user-id"><a name="email-address-as-a-user-id" class="plugin-anchor" href="#email-address-as-a-user-id"><i class="fa fa-link" aria-hidden="true"></i></a>Email address as a User ID</h4>
+<h2 id="authentication-general-guidelines">Authentication General Guidelines<a class="headerlink" href="#authentication-general-guidelines" title="Permanent link">&para;</a></h2>
+<h3 id="user-ids">User IDs<a class="headerlink" href="#user-ids" title="Permanent link">&para;</a></h3>
+<p>Make sure your usernames/user IDs are case-insensitive. User 'smith' and user 'Smith' should be the same user. Usernames should also be unique. For high-security applications, usernames could be assigned and secret instead of user-defined public data.</p>
+<h4 id="email-address-as-a-user-id">Email address as a User ID<a class="headerlink" href="#email-address-as-a-user-id" title="Permanent link">&para;</a></h4>
 <p>For information on validating email addresses, please visit the <a href="Input_Validation_Cheat_Sheet.html#Email_Address_Validation">input validation cheatsheet email discussion</a>.</p>
-<h3 id="authentication-solution-and-sensitive-accounts"><a name="authentication-solution-and-sensitive-accounts" class="plugin-anchor" href="#authentication-solution-and-sensitive-accounts"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication Solution and Sensitive Accounts</h3>
+<h3 id="authentication-solution-and-sensitive-accounts">Authentication Solution and Sensitive Accounts<a class="headerlink" href="#authentication-solution-and-sensitive-accounts" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Do <strong>NOT</strong> allow login with sensitive accounts (i.e. accounts that can be used internally within the solution such as to a back-end / middle-ware / DB) to any front-end user-interface</li>
 <li>Do <strong>NOT</strong> use the same authentication solution (e.g. IDP / AD) used internally for unsecured access (e.g. public access / DMZ)</li>
 </ul>
-<h3 id="implement-proper-password-strength-controls"><a name="implement-proper-password-strength-controls" class="plugin-anchor" href="#implement-proper-password-strength-controls"><i class="fa fa-link" aria-hidden="true"></i></a>Implement Proper Password Strength Controls</h3>
-<p>A key concern when using passwords for authentication is password strength. A &quot;strong&quot; password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:</p>
+<h3 id="implement-proper-password-strength-controls">Implement Proper Password Strength Controls<a class="headerlink" href="#implement-proper-password-strength-controls" title="Permanent link">&para;</a></h3>
+<p>A key concern when using passwords for authentication is password strength. A "strong" password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:</p>
 <ul>
 <li>Password Length<ul>
-<li><strong>Minimum</strong> length of the passwords should be <strong>enforced</strong> by the application. Passwords <strong>shorter than 8 characters</strong> are considered to be weak (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html" target="_blank">NIST SP800-63B</a>).</li>
-<li><strong>Maximum</strong> password length should not be set <strong>too low</strong>, as it will prevent users from creating passphrases. A common maximum length is 64 characters due to limitations in certain hashing algorithms, as discussed in the <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a>. It is important to set a maximum password length to prevent <a href="https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/" target="_blank">long password Denial of Service attacks</a>.</li>
+<li><strong>Minimum</strong> length of the passwords should be <strong>enforced</strong> by the application. Passwords <strong>shorter than 8 characters</strong> are considered to be weak (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP800-63B</a>).</li>
+<li><strong>Maximum</strong> password length should not be set <strong>too low</strong>, as it will prevent users from creating passphrases. A common maximum length is 64 characters due to limitations in certain hashing algorithms, as discussed in the <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a>. It is important to set a maximum password length to prevent <a href="https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/">long password Denial of Service attacks</a>.</li>
 </ul>
 </li>
 <li>Do not silently truncate passwords. The <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a> provides further guidance on how to handle passwords that are longer than the maximum length.</li>
 <li>Allow usage of <strong>all</strong> characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted.</li>
 <li>Ensure credential rotation when a password leak, or at the time of compromise identification.</li>
 <li>Include password strength meter to help users create a more complex password and block common and previously breached passwords<ul>
-<li><a href="https://github.com/dropbox/zxcvbn" target="_blank">zxcvbn library</a> can be used for this purpose. (Note that this library is no longer maintained)</li>
-<li><a href="https://haveibeenpwned.com/Passwords" target="_blank">Pwned Passwords</a> is a service where passwords can be checked against previously breached passwords. You can host it yourself or use <a href="https://haveibeenpwned.com/API/v2#PwnedPasswords" target="_blank">API</a>.</li>
+<li><a href="https://github.com/dropbox/zxcvbn">zxcvbn library</a> can be used for this purpose. (Note that this library is no longer maintained)</li>
+<li><a href="https://haveibeenpwned.com/Passwords">Pwned Passwords</a> is a service where passwords can be checked against previously breached passwords. You can host it yourself or use <a href="https://haveibeenpwned.com/API/v2#PwnedPasswords">API</a>.</li>
 </ul>
 </li>
 </ul>
-<h4 id="for-more-detailed-information-check"><a name="for-more-detailed-information-check" class="plugin-anchor" href="#for-more-detailed-information-check"><i class="fa fa-link" aria-hidden="true"></i></a>For more detailed information check</h4>
+<h4 id="for-more-detailed-information-check">For more detailed information check<a class="headerlink" href="#for-more-detailed-information-check" title="Permanent link">&para;</a></h4>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements" target="_blank">ASVS v4.0 Password Security Requirements</a></li>
-<li><a href="https://www.troyhunt.com/passwords-evolved-authentication-guidance-for-the-modern-era/" target="_blank">Passwords Evolved: Authentication Guidance for the Modern Era</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements">ASVS v4.0 Password Security Requirements</a></li>
+<li><a href="https://www.troyhunt.com/passwords-evolved-authentication-guidance-for-the-modern-era/">Passwords Evolved: Authentication Guidance for the Modern Era</a></li>
 </ul>
-<h3 id="implement-secure-password-recovery-mechanism"><a name="implement-secure-password-recovery-mechanism" class="plugin-anchor" href="#implement-secure-password-recovery-mechanism"><i class="fa fa-link" aria-hidden="true"></i></a>Implement Secure Password Recovery Mechanism</h3>
+<h3 id="implement-secure-password-recovery-mechanism">Implement Secure Password Recovery Mechanism<a class="headerlink" href="#implement-secure-password-recovery-mechanism" title="Permanent link">&para;</a></h3>
 <p>It is common for an application to have a mechanism that provides a means for a user to gain access to their account in the event they forget their password. Please see <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a> for details on this feature.</p>
-<h3 id="store-passwords-in-a-secure-fashion"><a name="store-passwords-in-a-secure-fashion" class="plugin-anchor" href="#store-passwords-in-a-secure-fashion"><i class="fa fa-link" aria-hidden="true"></i></a>Store Passwords in a Secure Fashion</h3>
+<h3 id="store-passwords-in-a-secure-fashion">Store Passwords in a Secure Fashion<a class="headerlink" href="#store-passwords-in-a-secure-fashion" title="Permanent link">&para;</a></h3>
 <p>It is critical for an application to store a password using the right cryptographic technique. Please see <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> for details on this feature.</p>
-<h3 id="compare-password-hashes-using-safe-functions"><a name="compare-password-hashes-using-safe-functions" class="plugin-anchor" href="#compare-password-hashes-using-safe-functions"><i class="fa fa-link" aria-hidden="true"></i></a>Compare Password Hashes Using Safe Functions</h3>
-<p>Where possible, the user-supplied password should be compared to the stored password hash using a secure password comparison function provided by the language or framework, such as the <a href="https://www.php.net/manual/en/function.password-verify.php" target="_blank">password_verify()</a> function in PHP. Where this is not possible, ensure that the comparison function:</p>
+<h3 id="compare-password-hashes-using-safe-functions">Compare Password Hashes Using Safe Functions<a class="headerlink" href="#compare-password-hashes-using-safe-functions" title="Permanent link">&para;</a></h3>
+<p>Where possible, the user-supplied password should be compared to the stored password hash using a secure password comparison function provided by the language or framework, such as the <a href="https://www.php.net/manual/en/function.password-verify.php">password_verify()</a> function in PHP. Where this is not possible, ensure that the comparison function:</p>
 <ul>
 <li>Has a maximum input length, to protect against denial of service attacks with very long inputs.</li>
-<li>Explicitly sets the type of both variable, to protect against type confusion attacks such as <a href="https://www.whitehatsec.com/blog/magic-hashes/" target="_blank">Magic Hashes</a> in PHP.</li>
+<li>Explicitly sets the type of both variable, to protect against type confusion attacks such as <a href="https://www.whitehatsec.com/blog/magic-hashes/">Magic Hashes</a> in PHP.</li>
 <li>Returns in constant time, to protect against timing attacks.</li>
 </ul>
-<h3 id="transmit-passwords-only-over-tls-or-other-strong-transport"><a name="transmit-passwords-only-over-tls-or-other-strong-transport" class="plugin-anchor" href="#transmit-passwords-only-over-tls-or-other-strong-transport"><i class="fa fa-link" aria-hidden="true"></i></a>Transmit Passwords Only Over TLS or Other Strong Transport</h3>
+<h3 id="transmit-passwords-only-over-tls-or-other-strong-transport">Transmit Passwords Only Over TLS or Other Strong Transport<a class="headerlink" href="#transmit-passwords-only-over-tls-or-other-strong-transport" title="Permanent link">&para;</a></h3>
 <p>See: <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a></p>
-<p>The login page and all subsequent authenticated pages must be exclusively accessed over TLS or other strong transport. The initial login page referred to as the &quot;login landing page&quot;, must be served over TLS or other strong transport. Failure to utilize TLS or other strong transport for the login landing page allows an attacker to modify the login form action, causing the user&apos;s credentials to be posted to an arbitrary location. Failure to utilize TLS or other strong transport for authenticated pages after login enables an attacker to view the unencrypted session ID and compromise the user&apos;s authenticated session.</p>
-<h3 id="require-re-authentication-for-sensitive-features"><a name="require-re-authentication-for-sensitive-features" class="plugin-anchor" href="#require-re-authentication-for-sensitive-features"><i class="fa fa-link" aria-hidden="true"></i></a>Require Re-authentication for Sensitive Features</h3>
-<p>In order to mitigate CSRF and session hijacking, it&apos;s important to require the current credentials for an account before updating sensitive account information such as the user&apos;s password, user&apos;s email, or before sensitive transactions, such as shipping a purchase to a new address. Without this countermeasure, an attacker may be able to execute sensitive transactions through a CSRF or XSS attack without needing to know the user&apos;s current credentials. Additionally, an attacker may get temporary physical access to a user&apos;s browser or steal their session ID to take over the user&apos;s session.</p>
-<h3 id="consider-strong-transaction-authentication"><a name="consider-strong-transaction-authentication" class="plugin-anchor" href="#consider-strong-transaction-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>Consider Strong Transaction Authentication</h3>
+<p>The login page and all subsequent authenticated pages must be exclusively accessed over TLS or other strong transport. The initial login page referred to as the "login landing page", must be served over TLS or other strong transport. Failure to utilize TLS or other strong transport for the login landing page allows an attacker to modify the login form action, causing the user's credentials to be posted to an arbitrary location. Failure to utilize TLS or other strong transport for authenticated pages after login enables an attacker to view the unencrypted session ID and compromise the user's authenticated session.</p>
+<h3 id="require-re-authentication-for-sensitive-features">Require Re-authentication for Sensitive Features<a class="headerlink" href="#require-re-authentication-for-sensitive-features" title="Permanent link">&para;</a></h3>
+<p>In order to mitigate CSRF and session hijacking, it's important to require the current credentials for an account before updating sensitive account information such as the user's password, user's email, or before sensitive transactions, such as shipping a purchase to a new address. Without this countermeasure, an attacker may be able to execute sensitive transactions through a CSRF or XSS attack without needing to know the user's current credentials. Additionally, an attacker may get temporary physical access to a user's browser or steal their session ID to take over the user's session.</p>
+<h3 id="consider-strong-transaction-authentication">Consider Strong Transaction Authentication<a class="headerlink" href="#consider-strong-transaction-authentication" title="Permanent link">&para;</a></h3>
 <p>Some applications should use a second factor to check whether a user may perform sensitive operations. For more information, see the <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a>.</p>
-<h4 id="tls-client-authentication"><a name="tls-client-authentication" class="plugin-anchor" href="#tls-client-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>TLS Client Authentication</h4>
+<h4 id="tls-client-authentication">TLS Client Authentication<a class="headerlink" href="#tls-client-authentication" title="Permanent link">&para;</a></h4>
 <p>TLS Client Authentication, also known as two-way TLS authentication, consists of both, browser and server, sending their respective TLS certificates during the TLS handshake process. Just as you can validate the authenticity of a server by using the certificate and asking a well known Certificate Authority (CA) if the certificate is valid, the server can authenticate the user by receiving a certificate from the client and validating against a third party CA or its own CA. To do this, the server must provide the user with a certificate generated specifically for him, assigning values to the subject so that these can be used to determine what user the certificate should validate. The user installs the certificate on a browser and now uses it for the website.</p>
 <p>It is a good idea to do this when:</p>
 <ul>
@@ -1113,12 +1734,12 @@
 <li>The website requires an extra step of security.</li>
 <li>It is also a good thing to use when the website is for an intranet of a company or organization.</li>
 </ul>
-<p>It is generally not a good idea to use this method for widely and publicly available websites that will have an average user. For example, it wouldn&apos;t be a good idea to implement this for a website like Facebook. While this technique can prevent the user from having to type a password (thus protecting against an average keylogger from stealing it), it is still considered a good idea to consider using both a password and TLS client authentication combined.</p>
+<p>It is generally not a good idea to use this method for widely and publicly available websites that will have an average user. For example, it wouldn't be a good idea to implement this for a website like Facebook. While this technique can prevent the user from having to type a password (thus protecting against an average keylogger from stealing it), it is still considered a good idea to consider using both a password and TLS client authentication combined.</p>
 <p>Additionally, if the client is behind an enterprise proxy which performs SSL/TLS decryption, this will break certificate authentication unless the site is whitelisted on the proxy.</p>
-<p>For more information, see: <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security#Client-authenticated_TLS_handshake" target="_blank">Client-authenticated TLS handshake</a></p>
-<h3 id="authentication-and-error-messages"><a name="authentication-and-error-messages" class="plugin-anchor" href="#authentication-and-error-messages"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication and Error Messages</h3>
+<p>For more information, see: <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security#Client-authenticated_TLS_handshake">Client-authenticated TLS handshake</a></p>
+<h3 id="authentication-and-error-messages">Authentication and Error Messages<a class="headerlink" href="#authentication-and-error-messages" title="Permanent link">&para;</a></h3>
 <p>Incorrectly implemented error messages in the case of authentication functionality can be used for the purposes of user ID and password enumeration. An application should respond (both HTTP and HTML) in a generic manner.</p>
-<h4 id="authentication-responses"><a name="authentication-responses" class="plugin-anchor" href="#authentication-responses"><i class="fa fa-link" aria-hidden="true"></i></a>Authentication Responses</h4>
+<h4 id="authentication-responses">Authentication Responses<a class="headerlink" href="#authentication-responses" title="Permanent link">&para;</a></h4>
 <p>Using any of the authentication mechanisms (login, password reset or password recovery), an application must respond with a generic error message regardless of whether:</p>
 <ul>
 <li>The user ID or password was incorrect.</li>
@@ -1126,13 +1747,13 @@
 <li>The account is locked or disabled.</li>
 </ul>
 <p>The account registration feature should also be taken into consideration, and the same approach of generic error message can be applied regarding the case in which the user exists.</p>
-<p>The objective is to prevent the creation of a <a href="https://cwe.mitre.org/data/definitions/204.html" target="_blank">discrepancy factor</a>, allowing an attacker to mount a user enumeration action against the application.</p>
-<p>It is interesting to note that the business logic itself can bring a discrepancy factor related to the processing time taken. Indeed, depending on the implementation, the processing time can be significantly different according to the case (success vs failure) allowing an attacker to mount a <a href="https://en.wikipedia.org/wiki/Timing_attack" target="_blank">time-based attack</a> (delta of some seconds for example).</p>
+<p>The objective is to prevent the creation of a <a href="https://cwe.mitre.org/data/definitions/204.html">discrepancy factor</a>, allowing an attacker to mount a user enumeration action against the application.</p>
+<p>It is interesting to note that the business logic itself can bring a discrepancy factor related to the processing time taken. Indeed, depending on the implementation, the processing time can be significantly different according to the case (success vs failure) allowing an attacker to mount a <a href="https://en.wikipedia.org/wiki/Timing_attack">time-based attack</a> (delta of some seconds for example).</p>
 <p>Example using pseudo-code for a login feature:</p>
 <ul>
-<li>First implementation using the &quot;quick exit&quot; approach</li>
+<li>First implementation using the "quick exit" approach</li>
 </ul>
-<pre><code class="lang-text">IF USER_EXISTS(username) THEN
+<div class="codehilite"><pre><span></span><code>IF USER_EXISTS(username) THEN
     password_hash=HASH(password)
     IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
     IF NOT IS_VALID THEN
@@ -1141,57 +1762,61 @@
 ELSE
    RETURN Error(&quot;Invalid Username or Password!&quot;)
 ENDIF
-</code></pre>
-<p>It can be clearly seen that if the user doesn&apos;t exist, the application will directly throw an error. Otherwise, when the user exists and the password doesn&apos;t, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.</p>
+</code></pre></div>
+
+
+<p>It can be clearly seen that if the user doesn't exist, the application will directly throw an error. Otherwise, when the user exists and the password doesn't, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.</p>
 <ul>
-<li>Second implementation without relying on the &quot;quick exit&quot; approach:</li>
+<li>Second implementation without relying on the "quick exit" approach:</li>
 </ul>
-<pre><code class="lang-text">password_hash=HASH(password)
+<div class="codehilite"><pre><span></span><code>password_hash=HASH(password)
 IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
 IF NOT IS_VALID THEN
    RETURN Error(&quot;Invalid Username or Password!&quot;)
 ENDIF
-</code></pre>
+</code></pre></div>
+
+
 <p>This code will go through the same process no matter what the user or the password is, allowing the application to return in approximately the same response time.</p>
 <p>The problem with returning a generic error message for the user is a User Experience (UX) matter. A legitimate user might feel confused with the generic messages, thus making it hard for them to use the application, and might after several retries, leave the application because of its complexity. The decision to return a <em>generic error message</em> can be determined based on the criticality of the application and its data. For example, for critical applications, the team can decide that under the failure scenario, a user will always be redirected to the support page and a <em>generic error message</em> will be returned.</p>
-<p>Regarding the user enumeration itself, protection against <a href="#protect-against-automated-attacks">brute-force attack</a> are also effective because they prevent an attacker from applying the enumeration at scale. Usage of <a href="https://en.wikipedia.org/wiki/CAPTCHA" target="_blank">CAPTCHA</a> can be applied on a feature for which a <em>generic error message</em> cannot be returned because the <em>user experience</em> must be preserved.</p>
-<h5 id="incorrect-and-correct-response-examples"><a name="incorrect-and-correct-response-examples" class="plugin-anchor" href="#incorrect-and-correct-response-examples"><i class="fa fa-link" aria-hidden="true"></i></a>Incorrect and correct response examples</h5>
-<h6 id="login"><a name="login" class="plugin-anchor" href="#login"><i class="fa fa-link" aria-hidden="true"></i></a>Login</h6>
+<p>Regarding the user enumeration itself, protection against <a href="#protect-against-automated-attacks">brute-force attack</a> are also effective because they prevent an attacker from applying the enumeration at scale. Usage of <a href="https://en.wikipedia.org/wiki/CAPTCHA">CAPTCHA</a> can be applied on a feature for which a <em>generic error message</em> cannot be returned because the <em>user experience</em> must be preserved.</p>
+<h5 id="incorrect-and-correct-response-examples">Incorrect and correct response examples<a class="headerlink" href="#incorrect-and-correct-response-examples" title="Permanent link">&para;</a></h5>
+<h6 id="login">Login<a class="headerlink" href="#login" title="Permanent link">&para;</a></h6>
 <p>Incorrect response examples:</p>
 <ul>
-<li>&quot;Login for User foo: invalid password.&quot;</li>
-<li>&quot;Login failed, invalid user ID.&quot;</li>
-<li>&quot;Login failed; account disabled.&quot;</li>
-<li>&quot;Login failed; this user is not active.&quot;</li>
+<li>"Login for User foo: invalid password."</li>
+<li>"Login failed, invalid user ID."</li>
+<li>"Login failed; account disabled."</li>
+<li>"Login failed; this user is not active."</li>
 </ul>
 <p>Correct response example:</p>
 <ul>
-<li>&quot;Login failed; Invalid user ID or password.&quot;</li>
+<li>"Login failed; Invalid user ID or password."</li>
 </ul>
-<h6 id="password-recovery"><a name="password-recovery" class="plugin-anchor" href="#password-recovery"><i class="fa fa-link" aria-hidden="true"></i></a>Password recovery</h6>
+<h6 id="password-recovery">Password recovery<a class="headerlink" href="#password-recovery" title="Permanent link">&para;</a></h6>
 <p>Incorrect response examples:</p>
 <ul>
-<li>&quot;We just sent you a password reset link.&quot;</li>
-<li>&quot;This email address doesn&apos;t exist in our database.&quot;</li>
+<li>"We just sent you a password reset link."</li>
+<li>"This email address doesn't exist in our database."</li>
 </ul>
 <p>Correct response example:</p>
 <ul>
-<li>&quot;If that email address is in our database, we will send you an email to reset your password.&quot;</li>
+<li>"If that email address is in our database, we will send you an email to reset your password."</li>
 </ul>
-<h6 id="account-creation"><a name="account-creation" class="plugin-anchor" href="#account-creation"><i class="fa fa-link" aria-hidden="true"></i></a>Account creation</h6>
+<h6 id="account-creation">Account creation<a class="headerlink" href="#account-creation" title="Permanent link">&para;</a></h6>
 <p>Incorrect response examples:</p>
 <ul>
-<li>&quot;This user ID is already in use.&quot;</li>
-<li>&quot;Welcome! You have signed up successfully.&quot;</li>
+<li>"This user ID is already in use."</li>
+<li>"Welcome! You have signed up successfully."</li>
 </ul>
 <p>Correct response example:</p>
 <ul>
-<li>&quot;A link to activate your account has been emailed to the address provided.&quot;</li>
+<li>"A link to activate your account has been emailed to the address provided."</li>
 </ul>
-<h5 id="error-codes-and-urls"><a name="error-codes-and-urls" class="plugin-anchor" href="#error-codes-and-urls"><i class="fa fa-link" aria-hidden="true"></i></a>Error Codes and URLs</h5>
-<p>The application may return a different <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" target="_blank">HTTP Error code</a> depending on the authentication attempt response. It may respond with a 200 for a positive result and a 403 for a negative result. Even though a generic error page is shown to a user, the HTTP response code may differ which can leak information about whether the account is valid or not.</p>
+<h5 id="error-codes-and-urls">Error Codes and URLs<a class="headerlink" href="#error-codes-and-urls" title="Permanent link">&para;</a></h5>
+<p>The application may return a different <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP Error code</a> depending on the authentication attempt response. It may respond with a 200 for a positive result and a 403 for a negative result. Even though a generic error page is shown to a user, the HTTP response code may differ which can leak information about whether the account is valid or not.</p>
 <p>Error disclosure can also be used as a discrepancy factor, consult the <a href="Error_Handling_Cheat_Sheet.html">error handling cheat sheet</a> regarding the global handling of different errors in an application.</p>
-<h3 id="protect-against-automated-attacks"><a name="protect-against-automated-attacks" class="plugin-anchor" href="#protect-against-automated-attacks"><i class="fa fa-link" aria-hidden="true"></i></a>Protect Against Automated Attacks</h3>
+<h3 id="protect-against-automated-attacks">Protect Against Automated Attacks<a class="headerlink" href="#protect-against-automated-attacks" title="Permanent link">&para;</a></h3>
 <p>There are a number of different types of automated attacks that attackers can use to try and compromise user accounts. The most common types are listed below:</p>
 <table>
 <thead>
@@ -1217,10 +1842,10 @@ ENDIF
 </table>
 <p>Different protection mechanisms can be implemented to protect against these attacks. In many cases, these defences do not provide complete protection, but when a number of them are implemented in a defence-in-depth approach, a reasonable level of protection can be achieved.</p>
 <p>The following sections will focus primarily on preventing brute-force attacks, although these controls can also be effective against other types of attacks. For further guidance on defending against credential stuffing and password spraying, see the <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">Credential Stuffing Cheat Sheet</a>.</p>
-<h4 id="multi-factor-authentication"><a name="multi-factor-authentication" class="plugin-anchor" href="#multi-factor-authentication"><i class="fa fa-link" aria-hidden="true"></i></a>Multi-Factor Authentication</h4>
-<p>Multi-factor authentication (MFA) is by far the best defence against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984" target="_blank">99.9% of account compromises</a>. As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.</p>
+<h4 id="multi-factor-authentication">Multi-Factor Authentication<a class="headerlink" href="#multi-factor-authentication" title="Permanent link">&para;</a></h4>
+<p>Multi-factor authentication (MFA) is by far the best defence against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984">99.9% of account compromises</a>. As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.</p>
 <p>The <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet</a> contains further guidance on implementing MFA.</p>
-<h4 id="account-lockout"><a name="account-lockout" class="plugin-anchor" href="#account-lockout"><i class="fa fa-link" aria-hidden="true"></i></a>Account Lockout</h4>
+<h4 id="account-lockout">Account Lockout<a class="headerlink" href="#account-lockout" title="Permanent link">&para;</a></h4>
 <p>The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.</p>
 <p>The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker from making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:</p>
 <ul>
@@ -1229,39 +1854,39 @@ ENDIF
 <li>How long the account is locked out for (lockout duration).</li>
 </ul>
 <p>Rather than implementing a fixed lockout duration (e.g., ten minutes), some applications use an exponential lockout, where the lockout duration starts as a very short period (e.g., one second), but doubles after each failed login attempt.</p>
-<p>When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users&apos; accounts. One way this could be performed is to allow the user of the forgotten password functionality to log in, even if the account is locked out.</p>
-<h4 id="captcha"><a name="captcha" class="plugin-anchor" href="#captcha"><i class="fa fa-link" aria-hidden="true"></i></a>CAPTCHA</h4>
+<p>When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the user of the forgotten password functionality to log in, even if the account is locked out.</p>
+<h4 id="captcha">CAPTCHA<a class="headerlink" href="#captcha" title="Permanent link">&para;</a></h4>
 <p>The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques or can be outsourced to services which can solve them. As such, the use of CAPTCHA should be viewed as a defence-in-depth control to make brute-force attacks more time consuming and expensive, rather than as a preventative.</p>
 <p>It may be more user-friendly to only require a CAPTCHA be solved after a small number of failed login attempts, rather than requiring it from the very first login.</p>
-<h4 id="security-questions-and-memorable-words"><a name="security-questions-and-memorable-words" class="plugin-anchor" href="#security-questions-and-memorable-words"><i class="fa fa-link" aria-hidden="true"></i></a>Security Questions and Memorable Words</h4>
+<h4 id="security-questions-and-memorable-words">Security Questions and Memorable Words<a class="headerlink" href="#security-questions-and-memorable-words" title="Permanent link">&para;</a></h4>
 <p>The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does <strong>not</strong> constitute multi-factor authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so they must be carefully chosen. The <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">Choosing and Using Security Questions cheat sheet</a> contains further guidance on this.</p>
-<h2 id="logging-and-monitoring"><a name="logging-and-monitoring" class="plugin-anchor" href="#logging-and-monitoring"><i class="fa fa-link" aria-hidden="true"></i></a>Logging and Monitoring</h2>
+<h2 id="logging-and-monitoring">Logging and Monitoring<a class="headerlink" href="#logging-and-monitoring" title="Permanent link">&para;</a></h2>
 <p>Enable logging and monitoring of authentication functions to detect attacks/failures on a real-time basis</p>
 <ul>
 <li>Ensure that all failures are logged and reviewed</li>
 <li>Ensure that all password failures are logged and reviewed</li>
 <li>Ensure that all account lockouts are logged and reviewed</li>
 </ul>
-<h2 id="use-of-authentication-protocols-that-require-no-password"><a name="use-of-authentication-protocols-that-require-no-password" class="plugin-anchor" href="#use-of-authentication-protocols-that-require-no-password"><i class="fa fa-link" aria-hidden="true"></i></a>Use of authentication protocols that require no password</h2>
-<p>While authentication through a user/password combination and using multi-factor authentication is considered generally secure, there are use cases where it isn&apos;t considered the best option or even safe. Examples of this are third party applications that desire connecting to the web application, either from a mobile device, another website, desktop or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn&apos;t in your control. For this, and other use cases, there are several authentication protocols that can protect you from exposing your users&apos; data to attackers.</p>
-<h3 id="oauth"><a name="oauth" class="plugin-anchor" href="#oauth"><i class="fa fa-link" aria-hidden="true"></i></a>OAuth</h3>
+<h2 id="use-of-authentication-protocols-that-require-no-password">Use of authentication protocols that require no password<a class="headerlink" href="#use-of-authentication-protocols-that-require-no-password" title="Permanent link">&para;</a></h2>
+<p>While authentication through a user/password combination and using multi-factor authentication is considered generally secure, there are use cases where it isn't considered the best option or even safe. Examples of this are third party applications that desire connecting to the web application, either from a mobile device, another website, desktop or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn't in your control. For this, and other use cases, there are several authentication protocols that can protect you from exposing your users' data to attackers.</p>
+<h3 id="oauth">OAuth<a class="headerlink" href="#oauth" title="Permanent link">&para;</a></h3>
 <p>Open Authorization (OAuth) is a protocol that allows an application to authenticate against a server as a user, without requiring passwords or any third party server that acts as an identity provider. It uses a token generated by the server and provides how the authorization flows most occur, so that a client, such as a mobile application, can tell the server what user is using the service.</p>
 <p>The recommendation is to use and implement OAuth 1.0a or OAuth 2.0 since the very first version (OAuth1.0) has been found to be vulnerable to session fixation.</p>
 <p>OAuth 2.0 relies on HTTPS for security and is currently used and implemented by APIs from companies such as Facebook, Google, Twitter and Microsoft. OAuth1.0a is more difficult to use because it requires the use of cryptographic libraries for digital signatures. However, since OAuth1.0a does not rely on HTTPS for security, it can be more suited for higher-risk transactions.</p>
-<h3 id="openid"><a name="openid" class="plugin-anchor" href="#openid"><i class="fa fa-link" aria-hidden="true"></i></a>OpenId</h3>
+<h3 id="openid">OpenId<a class="headerlink" href="#openid" title="Permanent link">&para;</a></h3>
 <p>OpenId is an HTTP-based protocol that uses identity providers to validate that a user is whom he says he is. It is a very simple protocol which allows a service provider initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user in multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.</p>
 <p>Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well-known identity providers for OpenId are Stack Exchange, Google, Facebook and Yahoo!</p>
 <p>For non-enterprise environments, OpenId is considered a secure and often better choice, as long as the identity provider is of trust.</p>
-<h3 id="saml"><a name="saml" class="plugin-anchor" href="#saml"><i class="fa fa-link" aria-hidden="true"></i></a>SAML</h3>
-<p>Security Assertion Markup Language (SAML) is often considered to compete with OpenId. The most recommended version is 2.0 since it is very features complete and provides strong security. Like OpenId, SAML uses identity providers, but unlike OpenId, it is XML-based and provides more flexibility. SAML is based on browser redirects which send XML data. Furthermore, SAML isn&apos;t only initiated by a service provider; it can also be initiated from the identity provider. This allows the user to navigate through different portals while still being authenticated without having to do anything, making the process transparent.</p>
-<p>While OpenId has taken most of the consumer market, SAML is often the choice for enterprise applications. The reason for this is often that there are few OpenId identity providers which are considered of enterprise-class (meaning that the way they validate the user identity doesn&apos;t have high standards required for enterprise identity). It is more common to see SAML being used inside of intranet websites, sometimes even using a server from the intranet as the identity provider.</p>
+<h3 id="saml">SAML<a class="headerlink" href="#saml" title="Permanent link">&para;</a></h3>
+<p>Security Assertion Markup Language (SAML) is often considered to compete with OpenId. The most recommended version is 2.0 since it is very features complete and provides strong security. Like OpenId, SAML uses identity providers, but unlike OpenId, it is XML-based and provides more flexibility. SAML is based on browser redirects which send XML data. Furthermore, SAML isn't only initiated by a service provider; it can also be initiated from the identity provider. This allows the user to navigate through different portals while still being authenticated without having to do anything, making the process transparent.</p>
+<p>While OpenId has taken most of the consumer market, SAML is often the choice for enterprise applications. The reason for this is often that there are few OpenId identity providers which are considered of enterprise-class (meaning that the way they validate the user identity doesn't have high standards required for enterprise identity). It is more common to see SAML being used inside of intranet websites, sometimes even using a server from the intranet as the identity provider.</p>
 <p>In the past few years, applications like SAP ERP and SharePoint (SharePoint by using Active Directory Federation Services 2.0) have decided to use SAML 2.0 authentication as an often preferred method for single sign-on implementations whenever enterprise federation is required for web services and web applications.</p>
 <p><strong>See also: <a href="SAML_Security_Cheat_Sheet.html">SAML Security Cheat Sheet</a></strong></p>
-<h3 id="fido"><a name="fido" class="plugin-anchor" href="#fido"><i class="fa fa-link" aria-hidden="true"></i></a>FIDO</h3>
+<h3 id="fido">FIDO<a class="headerlink" href="#fido" title="Permanent link">&para;</a></h3>
 <p>The Fast Identity Online (FIDO) Alliance has created two protocols to facilitate online authentication: the Universal Authentication Framework (UAF) protocol and the Universal Second Factor (U2F) protocol. While UAF focuses on passwordless authentication, U2F allows the addition of a second factor to existing password-based authentication. Both protocols are based on a public key cryptography challenge-response model.</p>
 <p>UAF takes advantage of existing security technologies present on devices for authentication including fingerprint sensors, cameras(face biometrics), microphones(voice biometrics), Trusted Execution Environments(TEEs), Secure Elements(SEs) and others. The protocol is designed to plug-in these device capabilities into a common authentication framework. UAF works with both native applications and web applications.</p>
 <p>U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides <strong>protection against phishing</strong> by using the URL of the website to look up the stored authentication key.</p>
-<h2 id="password-managers"><a name="password-managers" class="plugin-anchor" href="#password-managers"><i class="fa fa-link" aria-hidden="true"></i></a>Password Managers</h2>
+<h2 id="password-managers">Password Managers<a class="headerlink" href="#password-managers" title="Permanent link">&para;</a></h2>
 <p>Password managers are programs, browser plugins or web services that automate management of large number of different credentials. Most password managers have functionality to allow users to easily use them on websites, either by pasting the passwords into the login form, or by simulating the user typing them in.</p>
 <p>Web applications should at least not make password managers job more difficult than necessary by observing the following recommendations:</p>
 <ul>
@@ -1274,83 +1899,91 @@ ENDIF
 <li>Allow users to paste into the username and password fields.</li>
 <li>Allow users to navigate between the username and password field with a single press of the <code>Tab</code> key.</li>
 </ul>
-
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
-
-                        </div>
-                    </div>
                 
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
-
-            
-                
-                <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Attack Surface Analysis ">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="Authorization_Testing_Automation.html" class="navigation navigation-next " aria-label="Next page: Authorization Testing Automation">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Attack Surface Analysis
+              </div>
+            </div>
+          </a>
         
+        
+          <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Authorization Testing Automation
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Authentication ","level":"1.9","depth":1,"next":{"title":"Authorization Testing Automation","level":"1.10","depth":1,"path":"cheatsheets/Authorization_Testing_Automation.md","ref":"cheatsheets/Authorization_Testing_Automation.md","articles":[]},"previous":{"title":"Attack Surface Analysis ","level":"1.8","depth":1,"path":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","ref":"cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Authentication_Cheat_Sheet.md","mtime":"2020-05-27T19:41:37.100Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-27T19:42:04.146Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
-
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-

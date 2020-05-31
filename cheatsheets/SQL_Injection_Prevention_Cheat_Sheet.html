@@ -1,1063 +1,1508 @@
 
-<!DOCTYPE HTML>
-<html lang="en" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>SQL Injection Prevention  · OWASP Cheat Sheet Series</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>SQL Injection Prevention</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
         
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
         
-        
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" />
-    
-    
-    <link rel="prev" href="SAML_Security_Cheat_Sheet.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        <li class="header">Cheatsheets</li>
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="Index.html">
-            
-                <a href="Index.html">
-            
-                    
-                    Index Alphabetical
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
-            
-                <a href="IndexASVS.html">
-            
-                    
-                    Index ASVS
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
-            
-                <a href="IndexProactiveControls.html">
-            
-                    
-                    Index Proactive Controls
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
-            
-                <a href="AJAX_Security_Cheat_Sheet.html">
-            
-                    
-                    AJAX Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
-            
-                <a href="Abuse_Case_Cheat_Sheet.html">
-            
-                    
-                    Abuse Case 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
-            
-                <a href="Access_Control_Cheat_Sheet.html">
-            
-                    
-                    Access Control 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                    
-                    Attack Surface Analysis 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
-            
-                <a href="Authentication_Cheat_Sheet.html">
-            
-                    
-                    Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
-            
-                <a href="Authorization_Testing_Automation.html">
-            
-                    
-                    Authorization Testing Automation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
-            
-                <a href="Bean_Validation_Cheat_Sheet.html">
-            
-                    
-                    Bean Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
-            
-                <a href="C-Based_Toolchain_Hardening.html">
-            
-                    
-                    C-Based Toolchain Hardening
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                    
-                    C-Based Toolchain Hardening 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                    
-                    Choosing and Using Security Questions 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                <a href="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                    
-                    Clickjacking Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
-            
-                <a href="Content_Security_Policy_Cheat_Sheet.html">
-            
-                    
-                    Content Security Policy 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Credential Stuffing Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross-Site Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross Site Scripting Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                <a href="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                    
-                    Cryptographic Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                    
-                    DOM based XSS Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.22" data-path="Database_Security_Cheat_Sheet.html">
-            
-                <a href="Database_Security_Cheat_Sheet.html">
-            
-                    
-                    Database Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.23" data-path="Denial_of_Service_Cheat_Sheet.html">
-            
-                <a href="Denial_of_Service_Cheat_Sheet.html">
-            
-                    
-                    Denial of Service 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.24" data-path="Deserialization_Cheat_Sheet.html">
-            
-                <a href="Deserialization_Cheat_Sheet.html">
-            
-                    
-                    Deserialization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.25" data-path="Docker_Security_Cheat_Sheet.html">
-            
-                <a href="Docker_Security_Cheat_Sheet.html">
-            
-                    
-                    Docker Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.26" data-path="DotNet_Security_Cheat_Sheet.html">
-            
-                <a href="DotNet_Security_Cheat_Sheet.html">
-            
-                    
-                    DotNet Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.27" data-path="Error_Handling_Cheat_Sheet.html">
-            
-                <a href="Error_Handling_Cheat_Sheet.html">
-            
-                    
-                    Error Handling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
-            
-                <a href="File_Upload_Cheat_Sheet.html">
-            
-                    
-                    File Upload 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.29" data-path="Forgot_Password_Cheat_Sheet.html">
-            
-                <a href="Forgot_Password_Cheat_Sheet.html">
-            
-                    
-                    Forgot Password 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.30" data-path="HTML5_Security_Cheat_Sheet.html">
-            
-                <a href="HTML5_Security_Cheat_Sheet.html">
-            
-                    
-                    HTML5 Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.31" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                    
-                    HTTP Strict Transport Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.32" data-path="Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.33" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                    
-                    Injection Prevention  in Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.34" data-path="Input_Validation_Cheat_Sheet.html">
-            
-                <a href="Input_Validation_Cheat_Sheet.html">
-            
-                    
-                    Input Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.35" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Insecure Direct Object Reference Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.36" data-path="JAAS_Cheat_Sheet.html">
-            
-                <a href="JAAS_Cheat_Sheet.html">
-            
-                    
-                    JAAS 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.37" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                    
-                    JSON Web Token  for Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.38" data-path="Key_Management_Cheat_Sheet.html">
-            
-                <a href="Key_Management_Cheat_Sheet.html">
-            
-                    
-                    Key Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.39" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    LDAP Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.40" data-path="Logging_Cheat_Sheet.html">
-            
-                <a href="Logging_Cheat_Sheet.html">
-            
-                    
-                    Logging 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.41" data-path="Mass_Assignment_Cheat_Sheet.html">
-            
-                <a href="Mass_Assignment_Cheat_Sheet.html">
-            
-                    
-                    Mass Assignment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.42" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                    
-                    Microservices based Security Arch Doc 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.43" data-path="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                <a href="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                    
-                    Multifactor Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.44" data-path="Nodejs_security_cheat_sheet.html">
-            
-                <a href="Nodejs_security_cheat_sheet.html">
-            
-                    
-                    Nodejs security cheat sheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.45" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                    
-                    OS Command Injection Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.46" data-path="PHP_Configuration_Cheat_Sheet.html">
-            
-                <a href="PHP_Configuration_Cheat_Sheet.html">
-            
-                    
-                    PHP Configuration 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.47" data-path="Password_Storage_Cheat_Sheet.html">
-            
-                <a href="Password_Storage_Cheat_Sheet.html">
-            
-                    
-                    Password Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
-            
-                <a href="Pinning_Cheat_Sheet.html">
-            
-                    
-                    Pinning 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.49" data-path="Query_Parameterization_Cheat_Sheet.html">
-            
-                <a href="Query_Parameterization_Cheat_Sheet.html">
-            
-                    
-                    Query Parameterization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.50" data-path="REST_Assessment_Cheat_Sheet.html">
-            
-                <a href="REST_Assessment_Cheat_Sheet.html">
-            
-                    
-                    REST Assessment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.51" data-path="REST_Security_Cheat_Sheet.html">
-            
-                <a href="REST_Security_Cheat_Sheet.html">
-            
-                    
-                    REST Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.52" data-path="Ruby_on_Rails_Cheatsheet.html">
-            
-                <a href="Ruby_on_Rails_Cheatsheet.html">
-            
-                    
-                    Ruby on Rails Cheatsheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.53" data-path="SAML_Security_Cheat_Sheet.html">
-            
-                <a href="SAML_Security_Cheat_Sheet.html">
-            
-                    
-                    SAML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.54" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    SQL Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.55" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                    
-                    Securing Cascading Style Sheets 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.56" data-path="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Server Side Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.57" data-path="Session_Management_Cheat_Sheet.html">
-            
-                <a href="Session_Management_Cheat_Sheet.html">
-            
-                    
-                    Session Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.58" data-path="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                <a href="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                    
-                    TLS Cipher String 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.59" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                    
-                    Third Party Javascript Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.60" data-path="Threat_Modeling_Cheat_Sheet.html">
-            
-                <a href="Threat_Modeling_Cheat_Sheet.html">
-            
-                    
-                    Threat Modeling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.61" data-path="Transaction_Authorization_Cheat_Sheet.html">
-            
-                <a href="Transaction_Authorization_Cheat_Sheet.html">
-            
-                    
-                    Transaction Authorization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.62" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                    
-                    Transport Layer Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.63" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                    
-                    Unvalidated Redirects and Forwards 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.64" data-path="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                <a href="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                    
-                    User Privacy Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.65" data-path="Virtual_Patching_Cheat_Sheet.html">
-            
-                <a href="Virtual_Patching_Cheat_Sheet.html">
-            
-                    
-                    Virtual Patching 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.66" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                    
-                    Vulnerability Disclosure 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.67" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                    
-                    Vulnerable Dependency Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.68" data-path="Web_Service_Security_Cheat_Sheet.html">
-            
-                <a href="Web_Service_Security_Cheat_Sheet.html">
-            
-                    
-                    Web Service Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.69" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                    
-                    XML External Entity Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.70" data-path="XML_Security_Cheat_Sheet.html">
-            
-                <a href="XML_Security_Cheat_Sheet.html">
-            
-                    
-                    XML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="#sql-injection-prevention-cheat-sheet" class="md-skip">
+          Skip to content
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
+      
     </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
+    <div data-md-component="announce">
+      
+    </div>
     
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >SQL Injection Prevention </a>
-    </h1>
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              SQL Injection Prevention
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
     
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="sql-injection-prevention-cheat-sheet"><a name="sql-injection-prevention-cheat-sheet" class="plugin-anchor" href="#sql-injection-prevention-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>SQL Injection Prevention Cheat Sheet</h1>
-<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
-<p>This article is focused on providing clear, simple, actionable guidance for preventing SQL Injection flaws in your applications. <a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank">SQL Injection</a> attacks are unfortunately very common, and this is due to two factors:</p>
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" title="Index Alphabetical" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" title="Index ASVS" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" title="Index Proactive Controls" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" title="AJAX Security" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" title="Abuse Case" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" title="Access Control" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" title="Clickjacking Defense" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" title="Content Security Policy" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" title="Cross-Site Request Forgery Prevention" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" title="Cryptographic Storage" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" title="Database Security" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" title="Denial of Service" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" title="Deserialization" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" title="Docker Security" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" title="DotNet Security" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" title="Error Handling" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" title="File Upload" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" title="Forgot Password" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" title="HTML5 Security" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" title="HTTP Strict Transport Security" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" title="Injection Prevention in Java" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" title="Insecure Direct Object Reference Prevention" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" title="JAAS" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" title="JSON Web Token for Java" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" title="Key Management" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" title="LDAP Injection Prevention" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" title="Mass Assignment" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" title="Multifactor Authentication" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" title="Nodejs Security" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" title="OS Command Injection Defense" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" title="PHP Configuration" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" title="Password Storage" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" title="Pinning" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" title="Query Parameterization" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" title="REST Assessment" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" title="REST Security" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" title="Ruby on Rails" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        SQL Injection Prevention
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" title="SQL Injection Prevention" class="md-nav__link md-nav__link--active">
+      SQL Injection Prevention
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#primary-defenses" class="md-nav__link">
+    Primary Defenses
+  </a>
+  
+    <nav class="md-nav" aria-label="Primary Defenses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense-option-1-prepared-statements-with-parameterized-queries" class="md-nav__link">
+    Defense Option 1: Prepared Statements (with Parameterized Queries)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defense-option-2-stored-procedures" class="md-nav__link">
+    Defense Option 2: Stored Procedures
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defense-option-3-whitelist-input-validation" class="md-nav__link">
+    Defense Option 3: Whitelist Input Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defense-option-4-escaping-all-user-supplied-input" class="md-nav__link">
+    Defense Option 4: Escaping All User-Supplied Input
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense Option 4: Escaping All User-Supplied Input">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database-specific-escaping-details" class="md-nav__link">
+    Database Specific Escaping Details
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Specific Escaping Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oracle-escaping" class="md-nav__link">
+    Oracle Escaping
+  </a>
+  
+    <nav class="md-nav" aria-label="Oracle Escaping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#escaping-dynamic-queries" class="md-nav__link">
+    Escaping Dynamic Queries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turn-off-character-replacement" class="md-nav__link">
+    Turn off character replacement
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escaping-wildcard-characters-in-like-clauses" class="md-nav__link">
+    Escaping Wildcard characters in Like Clauses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oracle-10g-escaping" class="md-nav__link">
+    Oracle 10g escaping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mysql-escaping" class="md-nav__link">
+    MySQL Escaping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-server-escaping" class="md-nav__link">
+    SQL Server Escaping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#db2-escaping" class="md-nav__link">
+    DB2 Escaping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hex-encoding-all-input" class="md-nav__link">
+    Hex-encoding all input
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escaping-sqli-in-php" class="md-nav__link">
+    Escaping SQLi in PHP
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-defenses" class="md-nav__link">
+    Additional Defenses
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Defenses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#least-privilege" class="md-nav__link">
+    Least Privilege
+  </a>
+  
+    <nav class="md-nav" aria-label="Least Privilege">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multiple-db-users" class="md-nav__link">
+    Multiple DB Users
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#views" class="md-nav__link">
+    Views
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whitelist-input-validation" class="md-nav__link">
+    Whitelist Input Validation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-articles" class="md-nav__link">
+    Related Articles
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" title="Server Side Request Forgery Prevention" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" title="TLS Cipher String" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" title="Third Party Javascript Management" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" title="Threat Modeling" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" title="Transport Layer Protection" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" title="User Privacy Protection" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" title="Virtual Patching" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" title="Vulnerability Disclosure" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" title="Vulnerable Dependency Management" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" title="XML External Entity Prevention" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#primary-defenses" class="md-nav__link">
+    Primary Defenses
+  </a>
+  
+    <nav class="md-nav" aria-label="Primary Defenses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense-option-1-prepared-statements-with-parameterized-queries" class="md-nav__link">
+    Defense Option 1: Prepared Statements (with Parameterized Queries)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defense-option-2-stored-procedures" class="md-nav__link">
+    Defense Option 2: Stored Procedures
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defense-option-3-whitelist-input-validation" class="md-nav__link">
+    Defense Option 3: Whitelist Input Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defense-option-4-escaping-all-user-supplied-input" class="md-nav__link">
+    Defense Option 4: Escaping All User-Supplied Input
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense Option 4: Escaping All User-Supplied Input">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database-specific-escaping-details" class="md-nav__link">
+    Database Specific Escaping Details
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Specific Escaping Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oracle-escaping" class="md-nav__link">
+    Oracle Escaping
+  </a>
+  
+    <nav class="md-nav" aria-label="Oracle Escaping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#escaping-dynamic-queries" class="md-nav__link">
+    Escaping Dynamic Queries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turn-off-character-replacement" class="md-nav__link">
+    Turn off character replacement
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escaping-wildcard-characters-in-like-clauses" class="md-nav__link">
+    Escaping Wildcard characters in Like Clauses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oracle-10g-escaping" class="md-nav__link">
+    Oracle 10g escaping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mysql-escaping" class="md-nav__link">
+    MySQL Escaping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-server-escaping" class="md-nav__link">
+    SQL Server Escaping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#db2-escaping" class="md-nav__link">
+    DB2 Escaping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hex-encoding-all-input" class="md-nav__link">
+    Hex-encoding all input
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escaping-sqli-in-php" class="md-nav__link">
+    Escaping SQLi in PHP
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-defenses" class="md-nav__link">
+    Additional Defenses
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Defenses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#least-privilege" class="md-nav__link">
+    Least Privilege
+  </a>
+  
+    <nav class="md-nav" aria-label="Least Privilege">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multiple-db-users" class="md-nav__link">
+    Multiple DB Users
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#views" class="md-nav__link">
+    Views
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whitelist-input-validation" class="md-nav__link">
+    Whitelist Input Validation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-articles" class="md-nav__link">
+    Related Articles
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="sql-injection-prevention-cheat-sheet">SQL Injection Prevention Cheat Sheet<a class="headerlink" href="#sql-injection-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This article is focused on providing clear, simple, actionable guidance for preventing SQL Injection flaws in your applications. <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> attacks are unfortunately very common, and this is due to two factors:</p>
 <ol>
 <li>the significant prevalence of SQL Injection vulnerabilities, and</li>
 <li>the attractiveness of the target (i.e., the database typically contains all the interesting/critical data for your application).</li>
 </ol>
-<p>It&apos;s somewhat shameful that there are so many successful SQL Injection attacks occurring, because it is EXTREMELY simple to avoid SQL Injection vulnerabilities in your code.</p>
+<p>It's somewhat shameful that there are so many successful SQL Injection attacks occurring, because it is EXTREMELY simple to avoid SQL Injection vulnerabilities in your code.</p>
 <p>SQL Injection flaws are introduced when software developers create dynamic database queries that include user supplied input. To avoid SQL injection flaws is simple. Developers need to either: a) stop writing dynamic queries; and/or b) prevent user supplied input which contains malicious SQL from affecting the logic of the executed query.</p>
 <p>This article provides a set of simple techniques for preventing SQL Injection vulnerabilities by avoiding these two problems. These techniques can be used with practically any kind of programming language with any type of database. There are other types of databases, like XML databases, which can have similar problems (e.g., XPath and XQuery injection) and these techniques can be used to protect them as well.</p>
 <p><strong>Primary Defenses:</strong></p>
@@ -1074,123 +1519,139 @@
 </ul>
 <p><strong>Unsafe Example:</strong></p>
 <p>SQL injection flaws typically look like this:</p>
-<p>The following (Java) example is UNSAFE, and would allow an attacker to inject code into the query that would be executed by the database. The unvalidated &quot;customerName&quot; parameter that is simply appended to the query allows an attacker to inject any SQL code they want. Unfortunately, this method for accessing databases is all too common.</p>
-<pre><code class="lang-java">String query = <span class="hljs-string">&quot;SELECT account_balance FROM user_data WHERE user_name = &quot;</span>
-             + request.getParameter(<span class="hljs-string">&quot;customerName&quot;</span>);
-<span class="hljs-keyword">try</span> {
-    Statement statement = connection.createStatement( ... );
-    ResultSet results = statement.executeQuery( query );
-}
-...
-</code></pre>
-<h2 id="primary-defenses"><a name="primary-defenses" class="plugin-anchor" href="#primary-defenses"><i class="fa fa-link" aria-hidden="true"></i></a>Primary Defenses</h2>
-<h3 id="defense-option-1-prepared-statements-with-parameterized-queries"><a name="defense-option-1-prepared-statements-with-parameterized-queries" class="plugin-anchor" href="#defense-option-1-prepared-statements-with-parameterized-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 1: Prepared Statements (with Parameterized Queries)</h3>
+<p>The following (Java) example is UNSAFE, and would allow an attacker to inject code into the query that would be executed by the database. The unvalidated "customerName" parameter that is simply appended to the query allows an attacker to inject any SQL code they want. Unfortunately, this method for accessing databases is all too common.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = &quot;</span>
+             <span class="o">+</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="n">Statement</span> <span class="n">statement</span> <span class="o">=</span> <span class="n">connection</span><span class="p">.</span><span class="na">createStatement</span><span class="p">(</span> <span class="p">...</span> <span class="p">);</span>
+    <span class="n">ResultSet</span> <span class="n">results</span> <span class="o">=</span> <span class="n">statement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span> <span class="n">query</span> <span class="p">);</span>
+<span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div>
+
+
+<h2 id="primary-defenses">Primary Defenses<a class="headerlink" href="#primary-defenses" title="Permanent link">&para;</a></h2>
+<h3 id="defense-option-1-prepared-statements-with-parameterized-queries">Defense Option 1: Prepared Statements (with Parameterized Queries)<a class="headerlink" href="#defense-option-1-prepared-statements-with-parameterized-queries" title="Permanent link">&para;</a></h3>
 <p>The use of prepared statements with variable binding (aka parameterized queries) is how all developers should first be taught how to write database queries. They are simple to write, and easier to understand than dynamic queries. Parameterized queries force the developer to first define all the SQL code, and then pass in each parameter to the query later. This coding style allows the database to distinguish between code and data, regardless of what user input is supplied.</p>
-<p>Prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker. In the safe example below, if an attacker were to enter the userID of <code>tom&apos; or &apos;1&apos;=&apos;1</code>, the parameterized query would not be vulnerable and would instead look for a username which literally matched the entire string <code>tom&apos; or &apos;1&apos;=&apos;1</code>.</p>
+<p>Prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker. In the safe example below, if an attacker were to enter the userID of <code>tom' or '1'='1</code>, the parameterized query would not be vulnerable and would instead look for a username which literally matched the entire string <code>tom' or '1'='1</code>.</p>
 <p>Language specific recommendations:</p>
 <ul>
-<li>Java EE &#x2013; use <code>PreparedStatement()</code> with bind variables</li>
-<li>.NET &#x2013; use parameterized queries like <code>SqlCommand()</code> or <code>OleDbCommand()</code> with bind variables</li>
-<li>PHP &#x2013; use PDO with strongly typed parameterized queries (using bindParam())</li>
+<li>Java EE – use <code>PreparedStatement()</code> with bind variables</li>
+<li>.NET – use parameterized queries like <code>SqlCommand()</code> or <code>OleDbCommand()</code> with bind variables</li>
+<li>PHP – use PDO with strongly typed parameterized queries (using bindParam())</li>
 <li>Hibernate - use <code>createQuery()</code> with bind variables (called named parameters in Hibernate)</li>
-<li>SQLite - use <code>sqlite3_prepare()</code> to create a <a href="http://www.sqlite.org/c3ref/stmt.html" target="_blank">statement object</a></li>
+<li>SQLite - use <code>sqlite3_prepare()</code> to create a <a href="http://www.sqlite.org/c3ref/stmt.html">statement object</a></li>
 </ul>
 <p>In rare circumstances, prepared statements can harm performance. When confronted with this situation, it is best to either a) strongly validate all data or b) escape all user supplied input using an escaping routine specific to your database vendor as described below, rather than using a prepared statement.</p>
 <p><strong>Safe Java Prepared Statement Example</strong>:</p>
-<p>The following code example uses a <code>PreparedStatement</code>, Java&apos;s implementation of a parameterized query, to execute the same database query.</p>
-<pre><code class="lang-java"><span class="hljs-comment">// This should REALLY be validated too</span>
-String custname = request.getParameter(<span class="hljs-string">&quot;customerName&quot;</span>);
-<span class="hljs-comment">// Perform input validation to detect attacks</span>
-String query = <span class="hljs-string">&quot;SELECT account_balance FROM user_data WHERE user_name = ? &quot;</span>;
-PreparedStatement pstmt = connection.prepareStatement( query );
-pstmt.setString( <span class="hljs-number">1</span>, custname);
-ResultSet results = pstmt.executeQuery( );
-</code></pre>
+<p>The following code example uses a <code>PreparedStatement</code>, Java's implementation of a parameterized query, to execute the same database query.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// This should REALLY be validated too</span>
+<span class="n">String</span> <span class="n">custname</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
+<span class="c1">// Perform input validation to detect attacks</span>
+<span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ? &quot;</span><span class="p">;</span>
+<span class="n">PreparedStatement</span> <span class="n">pstmt</span> <span class="o">=</span> <span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span> <span class="n">query</span> <span class="p">);</span>
+<span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="n">custname</span><span class="p">);</span>
+<span class="n">ResultSet</span> <span class="n">results</span> <span class="o">=</span> <span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span> <span class="p">);</span>
+</code></pre></div>
+
+
 <p><strong>Safe C# .NET Prepared Statement Example</strong>:</p>
-<p>With .NET, it&apos;s even more straightforward. The creation and execution of the query doesn&apos;t change. All you have to do is simply pass the parameters to the query using the <code>Parameters.Add()</code> call as shown here.</p>
-<pre><code class="lang-csharp">String query = <span class="hljs-string">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span>;
-<span class="hljs-keyword">try</span> {
-  OleDbCommand command = <span class="hljs-keyword">new</span> OleDbCommand(query, connection);
-  command.Parameters.Add(<span class="hljs-keyword">new</span> OleDbParameter(<span class="hljs-string">&quot;customerName&quot;</span>, CustomerName Name.Text));
-  OleDbDataReader reader = command.ExecuteReader();
-  <span class="hljs-comment">// &#x2026;</span>
-} <span class="hljs-keyword">catch</span> (OleDbException se) {
-  <span class="hljs-comment">// error handling</span>
-}
-</code></pre>
-<p>We have shown examples in Java and .NET but practically all other languages, including Cold Fusion, and Classic ASP, support parameterized query interfaces. Even SQL abstraction layers, like the <a href="http://hibernate.org/" target="_blank">Hibernate Query Language</a> (HQL) have the same type of injection problems (which we call <a href="http://cwe.mitre.org/data/definitions/564.html" target="_blank">HQL Injection</a>). HQL supports parameterized queries as well, so we can avoid this problem:</p>
+<p>With .NET, it's even more straightforward. The creation and execution of the query doesn't change. All you have to do is simply pass the parameters to the query using the <code>Parameters.Add()</code> call as shown here.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">String</span> <span class="n">query</span> <span class="p">=</span> <span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>
+<span class="k">try</span> <span class="p">{</span>
+  <span class="n">OleDbCommand</span> <span class="n">command</span> <span class="p">=</span> <span class="k">new</span> <span class="n">OleDbCommand</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">connection</span><span class="p">);</span>
+  <span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">OleDbParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">,</span> <span class="n">CustomerName</span> <span class="n">Name</span><span class="p">.</span><span class="n">Text</span><span class="p">));</span>
+  <span class="n">OleDbDataReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="n">command</span><span class="p">.</span><span class="n">ExecuteReader</span><span class="p">();</span>
+  <span class="c1">// …</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">OleDbException</span> <span class="n">se</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// error handling</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>We have shown examples in Java and .NET but practically all other languages, including Cold Fusion, and Classic ASP, support parameterized query interfaces. Even SQL abstraction layers, like the <a href="http://hibernate.org/">Hibernate Query Language</a> (HQL) have the same type of injection problems (which we call <a href="http://cwe.mitre.org/data/definitions/564.html">HQL Injection</a>). HQL supports parameterized queries as well, so we can avoid this problem:</p>
 <p><strong>Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples</strong>:</p>
-<pre><code class="lang-java"><span class="hljs-comment">//First is an unsafe HQL Statement</span>
-Query unsafeHQLQuery = session.createQuery(<span class="hljs-string">&quot;from Inventory where productID=&apos;&quot;</span>+userSuppliedParameter+<span class="hljs-string">&quot;&apos;&quot;</span>);
-<span class="hljs-comment">//Here is a safe version of the same query using named parameters</span>
-Query safeHQLQuery = session.createQuery(<span class="hljs-string">&quot;from Inventory where productID=:productid&quot;</span>);
-safeHQLQuery.setParameter(<span class="hljs-string">&quot;productid&quot;</span>, userSuppliedParameter);
-</code></pre>
-<p>For examples of parameterized queries in other languages, including Ruby, PHP, Cold Fusion, and Perl, see the <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization Cheat Sheet</a> or this <a href="http://bobby-tables.com/" target="_blank">site</a>.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">//First is an unsafe HQL Statement</span>
+<span class="n">Query</span> <span class="n">unsafeHQLQuery</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="s">&quot;from Inventory where productID=&#39;&quot;</span><span class="o">+</span><span class="n">userSuppliedParameter</span><span class="o">+</span><span class="s">&quot;&#39;&quot;</span><span class="p">);</span>
+<span class="c1">//Here is a safe version of the same query using named parameters</span>
+<span class="n">Query</span> <span class="n">safeHQLQuery</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="s">&quot;from Inventory where productID=:productid&quot;</span><span class="p">);</span>
+<span class="n">safeHQLQuery</span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;productid&quot;</span><span class="p">,</span> <span class="n">userSuppliedParameter</span><span class="p">);</span>
+</code></pre></div>
+
+
+<p>For examples of parameterized queries in other languages, including Ruby, PHP, Cold Fusion, and Perl, see the <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization Cheat Sheet</a> or this <a href="http://bobby-tables.com/">site</a>.</p>
 <p>Developers tend to like the Prepared Statement approach because all the SQL code stays within the application. This makes your application relatively database independent.</p>
-<h3 id="defense-option-2-stored-procedures"><a name="defense-option-2-stored-procedures" class="plugin-anchor" href="#defense-option-2-stored-procedures"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 2: Stored Procedures</h3>
+<h3 id="defense-option-2-stored-procedures">Defense Option 2: Stored Procedures<a class="headerlink" href="#defense-option-2-stored-procedures" title="Permanent link">&para;</a></h3>
 <p>Stored procedures are not always safe from SQL injection. However, certain standard stored procedure programming constructs have the same effect as the use of parameterized queries when implemented safely which is the norm for most stored procedure languages.</p>
 <p>They require the developer to just build SQL statements with parameters which are automatically parameterized unless the developer does something largely out of the norm. The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. Both of these techniques have the same effectiveness in preventing SQL injection so your organization should choose which approach makes the most sense for you.</p>
-<p>Note: &apos;Implemented safely&apos; means the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided. If it can&apos;t be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can&apos;t be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of sp_execute, execute or exec within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.</p>
-<p>There are also several cases where stored procedures can increase risk. For example, on MS SQL server, you have 3 main default roles: <code>db_datareader</code>, <code>db_datawriter</code> and <code>db_owner</code>. Before stored procedures came into use, DBA&apos;s would give db_datareader or db_datawriter rights to the webservice&apos;s user, depending on the requirements. However, stored procedures require execute rights, a role that is not available by default. Some setups where the user management has been centralized, but is limited to those 3 roles, cause all web apps to run under db_owner rights so stored procedures can work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.</p>
+<p>Note: 'Implemented safely' means the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided. If it can't be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can't be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of sp_execute, execute or exec within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.</p>
+<p>There are also several cases where stored procedures can increase risk. For example, on MS SQL server, you have 3 main default roles: <code>db_datareader</code>, <code>db_datawriter</code> and <code>db_owner</code>. Before stored procedures came into use, DBA's would give db_datareader or db_datawriter rights to the webservice's user, depending on the requirements. However, stored procedures require execute rights, a role that is not available by default. Some setups where the user management has been centralized, but is limited to those 3 roles, cause all web apps to run under db_owner rights so stored procedures can work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.</p>
 <p><strong>Safe Java Stored Procedure Example</strong>:</p>
-<p>The following code example uses a <code>CallableStatement</code>, Java&apos;s implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.</p>
-<pre><code class="lang-java"><span class="hljs-comment">// This should REALLY be validated</span>
-String custname = request.getParameter(<span class="hljs-string">&quot;customerName&quot;</span>);
-<span class="hljs-keyword">try</span> {
-  CallableStatement cs = connection.prepareCall(<span class="hljs-string">&quot;{call sp_getAccountBalance(?)}&quot;</span>);
-  cs.setString(<span class="hljs-number">1</span>, custname);
-  ResultSet results = cs.executeQuery();
-  <span class="hljs-comment">// &#x2026; result set handling</span>
-} <span class="hljs-keyword">catch</span> (SQLException se) {
-  <span class="hljs-comment">// &#x2026; logging and error handling</span>
-}
-</code></pre>
+<p>The following code example uses a <code>CallableStatement</code>, Java's implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// This should REALLY be validated</span>
+<span class="n">String</span> <span class="n">custname</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
+<span class="k">try</span> <span class="p">{</span>
+  <span class="n">CallableStatement</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">connection</span><span class="p">.</span><span class="na">prepareCall</span><span class="p">(</span><span class="s">&quot;{call sp_getAccountBalance(?)}&quot;</span><span class="p">);</span>
+  <span class="n">cs</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">custname</span><span class="p">);</span>
+  <span class="n">ResultSet</span> <span class="n">results</span> <span class="o">=</span> <span class="n">cs</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">();</span>
+  <span class="c1">// … result set handling</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">SQLException</span> <span class="n">se</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// … logging and error handling</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <p><strong>Safe VB .NET Stored Procedure Example</strong>:</p>
-<p>The following code example uses a <code>SqlCommand</code>, .NET&apos;s implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.</p>
-<pre><code class="lang-vbnet"> <span class="hljs-keyword">Try</span>
-   <span class="hljs-keyword">Dim</span> command <span class="hljs-keyword">As</span> SqlCommand = <span class="hljs-keyword">new</span> SqlCommand(<span class="hljs-string">&quot;sp_getAccountBalance&quot;</span>, connection)
-   command.CommandType = CommandType.StoredProcedure
-   command.Parameters.Add(<span class="hljs-keyword">new</span> SqlParameter(<span class="hljs-string">&quot;@CustomerName&quot;</span>, CustomerName.<span class="hljs-keyword">Text</span>))
-   <span class="hljs-keyword">Dim</span> reader <span class="hljs-keyword">As</span> SqlDataReader = command.ExecuteReader()
-   <span class="hljs-comment">&apos;...</span>
- <span class="hljs-keyword">Catch</span> se <span class="hljs-keyword">As</span> SqlException
-   <span class="hljs-comment">&apos;error handling</span>
- <span class="hljs-keyword">End</span> <span class="hljs-keyword">Try</span>
-</code></pre>
-<h3 id="defense-option-3-whitelist-input-validation"><a name="defense-option-3-whitelist-input-validation" class="plugin-anchor" href="#defense-option-3-whitelist-input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 3: Whitelist Input Validation</h3>
-<p>Various parts of SQL queries aren&apos;t legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.</p>
-<p>But if user parameter values are used for targeting different table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn&apos;t end up in the query. Please note, this is a symptom of poor design and a full re-write should be considered if time allows.</p>
+<p>The following code example uses a <code>SqlCommand</code>, .NET's implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.</p>
+<div class="codehilite"><pre><span></span><code> <span class="k">Try</span>
+   <span class="k">Dim</span> <span class="n">command</span> <span class="ow">As</span> <span class="n">SqlCommand</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SqlCommand</span><span class="p">(</span><span class="s">&quot;sp_getAccountBalance&quot;</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+   <span class="n">command</span><span class="p">.</span><span class="n">CommandType</span> <span class="o">=</span> <span class="n">CommandType</span><span class="p">.</span><span class="n">StoredProcedure</span>
+   <span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">SqlParameter</span><span class="p">(</span><span class="s">&quot;@CustomerName&quot;</span><span class="p">,</span> <span class="n">CustomerName</span><span class="p">.</span><span class="n">Text</span><span class="p">))</span>
+   <span class="k">Dim</span> <span class="n">reader</span> <span class="ow">As</span> <span class="n">SqlDataReader</span> <span class="o">=</span> <span class="n">command</span><span class="p">.</span><span class="n">ExecuteReader</span><span class="p">()</span>
+   <span class="c">&#39;...</span>
+ <span class="k">Catch</span> <span class="n">se</span> <span class="ow">As</span> <span class="n">SqlException</span>
+   <span class="c">&#39;error handling</span>
+ <span class="k">End</span> <span class="k">Try</span>
+</code></pre></div>
+
+
+<h3 id="defense-option-3-whitelist-input-validation">Defense Option 3: Whitelist Input Validation<a class="headerlink" href="#defense-option-3-whitelist-input-validation" title="Permanent link">&para;</a></h3>
+<p>Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.</p>
+<p>But if user parameter values are used for targeting different table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full re-write should be considered if time allows.</p>
 <p>Here is an example of table name validation.</p>
-<pre><code class="lang-text">String tableName;
+<div class="codehilite"><pre><span></span><code>String tableName;
 switch(PARAM):
-  case &quot;Value1&quot;: tableName = &quot;fooTable&quot;;
-                 break;
-  case &quot;Value2&quot;: tableName = &quot;barTable&quot;;
-                 break;
-  ...
-  default      : throw new InputValidationException(&quot;unexpected value provided&quot;
-                                                  + &quot; for table name&quot;);
-</code></pre>
+  case &quot;Value1&quot;: tableName = &quot;fooTable&quot;;
+                 break;
+  case &quot;Value2&quot;: tableName = &quot;barTable&quot;;
+                 break;
+  ...
+  default      : throw new InputValidationException(&quot;unexpected value provided&quot;
+                                                  + &quot; for table name&quot;);
+</code></pre></div>
+
+
 <p>The <code>tableName</code> can then be directly appended to the SQL query since it is now known to be one of the legal and expected values for a table name in this query. Keep in mind that generic table validation functions can lead to data loss as table names are used in queries where they are not expected.</p>
 <p>For something simple like a sort order, it would be best if the user supplied input is converted to a boolean, and then that boolean is used to select the safe value to append to the query. This is a very standard need in dynamic query creation.</p>
 <p>For example:</p>
-<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">someMethod</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> sortOrder)</span> </span>{
- String SQLquery = <span class="hljs-string">&quot;some SQL ... order by Salary &quot;</span> + (sortOrder ? <span class="hljs-string">&quot;ASC&quot;</span> : <span class="hljs-string">&quot;DESC&quot;</span>);`
- ...
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="n">String</span> <span class="nf">someMethod</span><span class="p">(</span><span class="kt">boolean</span> <span class="n">sortOrder</span><span class="p">)</span> <span class="p">{</span>
+ <span class="n">String</span> <span class="n">SQLquery</span> <span class="o">=</span> <span class="s">&quot;some SQL ... order by Salary &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">sortOrder</span> <span class="o">?</span> <span class="s">&quot;ASC&quot;</span> <span class="p">:</span> <span class="s">&quot;DESC&quot;</span><span class="p">);</span><span class="err">`</span>
+ <span class="p">...</span>
+</code></pre></div>
+
+
 <p>Any time user input can be converted to a non-String, like a date, numeric, boolean, enumerated type, etc. before it is appended to a query, or used to select a value to append to the query, this ensures it is safe to do so.</p>
 <p>Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong whitelist input validation is described in the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
-<h3 id="defense-option-4-escaping-all-user-supplied-input"><a name="defense-option-4-escaping-all-user-supplied-input" class="plugin-anchor" href="#defense-option-4-escaping-all-user-supplied-input"><i class="fa fa-link" aria-hidden="true"></i></a>Defense Option 4: Escaping All User-Supplied Input</h3>
+<h3 id="defense-option-4-escaping-all-user-supplied-input">Defense Option 4: Escaping All User-Supplied Input<a class="headerlink" href="#defense-option-4-escaping-all-user-supplied-input" title="Permanent link">&para;</a></h3>
 <p>This technique should only be used as a last resort, when none of the above are feasible. Input validation is probably a better choice as this methodology is frail compared to other defenses and we cannot guarantee it will prevent all SQL Injection in all situations.</p>
-<p>This technique is to escape user input before putting it in a query. It is very database specific in its implementation. It&apos;s usually only recommended to retrofit legacy code when implementing input validation isn&apos;t cost effective. Applications built from scratch, or applications requiring low risk tolerance should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.</p>
+<p>This technique is to escape user input before putting it in a query. It is very database specific in its implementation. It's usually only recommended to retrofit legacy code when implementing input validation isn't cost effective. Applications built from scratch, or applications requiring low risk tolerance should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.</p>
 <p>This technique works like this. Each DBMS supports one or more character escaping schemes specific to certain kinds of queries. If you then escape all user supplied input using the proper escaping scheme for the database you are using, the DBMS will not confuse that input with SQL code written by the developer, thus avoiding any possible SQL injection vulnerabilities.</p>
 <p>The OWASP Enterprise Security API (ESAPI) is a free, open source, web application security control library that makes it easier for programmers to write lower-risk applications. The ESAPI libraries are designed to make it easier for programmers to retrofit security into existing applications. The ESAPI libraries also serve as a solid foundation for new development:</p>
 <ul>
-<li>Full details on <a href="https://owasp.org/www-project-enterprise-security-api/" target="_blank">ESAPI are available here on OWASP</a>.</li>
-<li>The javadoc for <a href="http://www.javadoc.io/doc/org.owasp.esapi/esapi/2.1.0" target="_blank">ESAPI 2.x (Legacy) is available</a>. This code was migrated to GitHub in November 2014.</li>
-<li><a href="https://github.com/ESAPI/esapi-java-legacy" target="_blank">The legacy ESAPI for Java at GitHub</a> helps understand existing use of it when Javadoc seems insufficient.</li>
-<li><a href="https://github.com/ESAPI/esapi-java" target="_blank">An attempt at another ESAPI for Java GitHub</a> has other approaches and no tests or concrete codecs.</li>
+<li>Full details on <a href="https://owasp.org/www-project-enterprise-security-api/">ESAPI are available here on OWASP</a>.</li>
+<li>The javadoc for <a href="http://www.javadoc.io/doc/org.owasp.esapi/esapi/2.1.0">ESAPI 2.x (Legacy) is available</a>. This code was migrated to GitHub in November 2014.</li>
+<li><a href="https://github.com/ESAPI/esapi-java-legacy">The legacy ESAPI for Java at GitHub</a> helps understand existing use of it when Javadoc seems insufficient.</li>
+<li><a href="https://github.com/ESAPI/esapi-java">An attempt at another ESAPI for Java GitHub</a> has other approaches and no tests or concrete codecs.</li>
 </ul>
 <p>To find the javadoc specifically for the database encoders, click on the <code>Codec</code> class on the left hand side. There are lots of Codecs implemented. The two Database specific codecs are <code>OracleCodec</code>, and <code>MySQLCodec</code>.</p>
 <p>Just click on their names in the <code>All Known Implementing Classes:</code> at the top of the Interface Codec page.</p>
@@ -1205,64 +1666,74 @@ switch(PARAM):
 <li>PostgreSQL</li>
 </ul>
 <p>If your database encoder is missing, please let us know.</p>
-<h4 id="database-specific-escaping-details"><a name="database-specific-escaping-details" class="plugin-anchor" href="#database-specific-escaping-details"><i class="fa fa-link" aria-hidden="true"></i></a>Database Specific Escaping Details</h4>
+<h4 id="database-specific-escaping-details">Database Specific Escaping Details<a class="headerlink" href="#database-specific-escaping-details" title="Permanent link">&para;</a></h4>
 <p>If you want to build your own escaping routines, here are the escaping details for each of the databases that we have developed ESAPI Encoders for:</p>
 <ul>
 <li>Oracle</li>
 <li>SQL Server</li>
 <li>DB2</li>
 </ul>
-<h5 id="oracle-escaping"><a name="oracle-escaping" class="plugin-anchor" href="#oracle-escaping"><i class="fa fa-link" aria-hidden="true"></i></a>Oracle Escaping</h5>
-<p>This information is based on the <a href="http://www.orafaq.com/wiki/SQL_FAQ#How_does_one_escape_special_characters_when_writing_SQL_queries.3F" target="_blank">Oracle Escape character information</a>.</p>
-<h6 id="escaping-dynamic-queries"><a name="escaping-dynamic-queries" class="plugin-anchor" href="#escaping-dynamic-queries"><i class="fa fa-link" aria-hidden="true"></i></a>Escaping Dynamic Queries</h6>
+<h5 id="oracle-escaping">Oracle Escaping<a class="headerlink" href="#oracle-escaping" title="Permanent link">&para;</a></h5>
+<p>This information is based on the <a href="http://www.orafaq.com/wiki/SQL_FAQ#How_does_one_escape_special_characters_when_writing_SQL_queries.3F">Oracle Escape character information</a>.</p>
+<h6 id="escaping-dynamic-queries">Escaping Dynamic Queries<a class="headerlink" href="#escaping-dynamic-queries" title="Permanent link">&para;</a></h6>
 <p>To use an ESAPI database codec is pretty simple. An Oracle example looks something like:</p>
-<pre><code class="lang-java">ESAPI.encoder().encodeForSQL( <span class="hljs-keyword">new</span> OracleCodec(), queryparam );
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">ESAPI</span><span class="p">.</span><span class="na">encoder</span><span class="p">().</span><span class="na">encodeForSQL</span><span class="p">(</span> <span class="k">new</span> <span class="n">OracleCodec</span><span class="p">(),</span> <span class="n">queryparam</span> <span class="p">);</span>
+</code></pre></div>
+
+
 <p>So, if you had an existing Dynamic query being generated in your code that was going to Oracle that looked like this:</p>
-<pre><code class="lang-java">String query = <span class="hljs-string">&quot;SELECT user_id FROM user_data WHERE user_name = &apos;&quot;</span>
-              + req.getParameter(<span class="hljs-string">&quot;userID&quot;</span>)
-              + <span class="hljs-string">&quot;&apos; and user_password = &apos;&quot;</span> + req.getParameter(<span class="hljs-string">&quot;pwd&quot;</span>) +<span class="hljs-string">&quot;&apos;&quot;</span>;
-<span class="hljs-keyword">try</span> {
-    Statement statement = connection.createStatement( &#x2026; );
-    ResultSet results = statement.executeQuery( query );
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT user_id FROM user_data WHERE user_name = &#39;&quot;</span>
+              <span class="o">+</span> <span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;userID&quot;</span><span class="p">)</span>
+              <span class="o">+</span> <span class="s">&quot;&#39; and user_password = &#39;&quot;</span> <span class="o">+</span> <span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;pwd&quot;</span><span class="p">)</span> <span class="o">+</span><span class="s">&quot;&#39;&quot;</span><span class="p">;</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="n">Statement</span> <span class="n">statement</span> <span class="o">=</span> <span class="n">connection</span><span class="p">.</span><span class="na">createStatement</span><span class="p">(</span> <span class="err">…</span> <span class="p">);</span>
+    <span class="n">ResultSet</span> <span class="n">results</span> <span class="o">=</span> <span class="n">statement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span> <span class="n">query</span> <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <p>You would rewrite the first line to look like this:</p>
-<pre><code class="lang-java">Codec ORACLE_CODEC = <span class="hljs-keyword">new</span> OracleCodec();
-String query = <span class="hljs-string">&quot;SELECT user_id FROM user_data WHERE user_name = &apos;&quot;</span>
-+ ESAPI.encoder().encodeForSQL( ORACLE_CODEC, req.getParameter(<span class="hljs-string">&quot;userID&quot;</span>))
-+ <span class="hljs-string">&quot;&apos; and user_password = &apos;&quot;</span>
-+ ESAPI.encoder().encodeForSQL( ORACLE_CODEC, req.getParameter(<span class="hljs-string">&quot;pwd&quot;</span>)) +<span class="hljs-string">&quot;&apos;&quot;</span>;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">Codec</span> <span class="n">ORACLE_CODEC</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OracleCodec</span><span class="p">();</span>
+<span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT user_id FROM user_data WHERE user_name = &#39;&quot;</span>
+<span class="o">+</span> <span class="n">ESAPI</span><span class="p">.</span><span class="na">encoder</span><span class="p">().</span><span class="na">encodeForSQL</span><span class="p">(</span> <span class="n">ORACLE_CODEC</span><span class="p">,</span> <span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;userID&quot;</span><span class="p">))</span>
+<span class="o">+</span> <span class="s">&quot;&#39; and user_password = &#39;&quot;</span>
+<span class="o">+</span> <span class="n">ESAPI</span><span class="p">.</span><span class="na">encoder</span><span class="p">().</span><span class="na">encodeForSQL</span><span class="p">(</span> <span class="n">ORACLE_CODEC</span><span class="p">,</span> <span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;pwd&quot;</span><span class="p">))</span> <span class="o">+</span><span class="s">&quot;&#39;&quot;</span><span class="p">;</span>
+</code></pre></div>
+
+
 <p>And it would now be safe from SQL injection, regardless of the input supplied.</p>
 <p>For maximum code readability, you could also construct your own <code>OracleEncoder</code>:</p>
-<pre><code class="lang-java">Encoder oe = <span class="hljs-keyword">new</span> OracleEncoder();
-String query = <span class="hljs-string">&quot;SELECT user_id FROM user_data WHERE user_name = &apos;&quot;</span>
-+ oe.encode( req.getParameter(<span class="hljs-string">&quot;userID&quot;</span>)) + <span class="hljs-string">&quot;&apos; and user_password = &apos;&quot;</span>
-+ oe.encode( req.getParameter(<span class="hljs-string">&quot;pwd&quot;</span>)) +<span class="hljs-string">&quot;&apos;&quot;</span>;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">Encoder</span> <span class="n">oe</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OracleEncoder</span><span class="p">();</span>
+<span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT user_id FROM user_data WHERE user_name = &#39;&quot;</span>
+<span class="o">+</span> <span class="n">oe</span><span class="p">.</span><span class="na">encode</span><span class="p">(</span> <span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;userID&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;&#39; and user_password = &#39;&quot;</span>
+<span class="o">+</span> <span class="n">oe</span><span class="p">.</span><span class="na">encode</span><span class="p">(</span> <span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;pwd&quot;</span><span class="p">))</span> <span class="o">+</span><span class="s">&quot;&#39;&quot;</span><span class="p">;</span>
+</code></pre></div>
+
+
 <p>With this type of solution, you would need only to wrap each user-supplied parameter being passed into an <code>ESAPI.encoder().encodeForOracle( )</code> call or whatever you named the call and you would be done.</p>
-<h6 id="turn-off-character-replacement"><a name="turn-off-character-replacement" class="plugin-anchor" href="#turn-off-character-replacement"><i class="fa fa-link" aria-hidden="true"></i></a>Turn off character replacement</h6>
+<h6 id="turn-off-character-replacement">Turn off character replacement<a class="headerlink" href="#turn-off-character-replacement" title="Permanent link">&para;</a></h6>
 <p>Use <code>SET DEFINE OFF</code> or <code>SET SCAN OFF</code> to ensure that automatic character replacement is turned off. If this character replacement is turned on, the &amp; character will be treated like a SQLPlus variable prefix that could allow an attacker to retrieve private data.</p>
-<p>See <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14357/ch12040.htm#i2698854" target="_blank">here</a> and <a href="https://stackoverflow.com/a/410490" target="_blank">here</a> for more information</p>
-<h6 id="escaping-wildcard-characters-in-like-clauses"><a name="escaping-wildcard-characters-in-like-clauses" class="plugin-anchor" href="#escaping-wildcard-characters-in-like-clauses"><i class="fa fa-link" aria-hidden="true"></i></a>Escaping Wildcard characters in Like Clauses</h6>
+<p>See <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14357/ch12040.htm#i2698854">here</a> and <a href="https://stackoverflow.com/a/410490">here</a> for more information</p>
+<h6 id="escaping-wildcard-characters-in-like-clauses">Escaping Wildcard characters in Like Clauses<a class="headerlink" href="#escaping-wildcard-characters-in-like-clauses" title="Permanent link">&para;</a></h6>
 <p>The <code>LIKE</code> keyword allows for text scanning searches. In Oracle, the underscore <code>_</code> character matches only one character, while the ampersand <code>%</code> is used to match zero or more occurrences of any characters. These characters must be escaped in LIKE clause criteria.</p>
 <p>For example:</p>
-<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span> <span class="hljs-keyword">FROM</span> emp <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&apos;%/_%&apos;</span> ESCAPE <span class="hljs-string">&apos;/&apos;</span>;
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">LIKE</span> <span class="s1">&#39;%/_%&#39;</span> <span class="k">ESCAPE</span> <span class="s1">&#39;/&#39;</span><span class="p">;</span>
 
-<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span> <span class="hljs-keyword">FROM</span> emp <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">id</span> <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&apos;%\%%&apos;</span> ESCAPE <span class="hljs-string">&apos;\&apos;;
-</span></code></pre>
-<h6 id="oracle-10g-escaping"><a name="oracle-10g-escaping" class="plugin-anchor" href="#oracle-10g-escaping"><i class="fa fa-link" aria-hidden="true"></i></a>Oracle 10g escaping</h6>
-<p>An alternative for Oracle 10g and later is to place <code>{</code> and <code>}</code> around the string to escape the entire string. However, you have to be careful that there isn&apos;t a <code>}</code> character already in the string. You must search for these and if there is one, then you must replace it with <code>}}</code>. Otherwise that character will end the escaping early, and may introduce a vulnerability.</p>
-<h5 id="mysql-escaping"><a name="mysql-escaping" class="plugin-anchor" href="#mysql-escaping"><i class="fa fa-link" aria-hidden="true"></i></a>MySQL Escaping</h5>
+<span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">LIKE</span> <span class="s1">&#39;%\%%&#39;</span> <span class="k">ESCAPE</span> <span class="s1">&#39;\&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+
+<h6 id="oracle-10g-escaping">Oracle 10g escaping<a class="headerlink" href="#oracle-10g-escaping" title="Permanent link">&para;</a></h6>
+<p>An alternative for Oracle 10g and later is to place <code>{</code> and <code>}</code> around the string to escape the entire string. However, you have to be careful that there isn't a <code>}</code> character already in the string. You must search for these and if there is one, then you must replace it with <code>}}</code>. Otherwise that character will end the escaping early, and may introduce a vulnerability.</p>
+<h5 id="mysql-escaping">MySQL Escaping<a class="headerlink" href="#mysql-escaping" title="Permanent link">&para;</a></h5>
 <p>MySQL supports two escaping modes:</p>
 <ol>
 <li><code>ANSI_QUOTES</code> SQL mode, and a mode with this off, which we call</li>
 <li><code>MySQL</code> mode.</li>
 </ol>
-<p><code>ANSI SQL</code> mode: Simply encode all <code>&apos;</code> (single tick) characters with <code>&apos;&apos;</code> (two single ticks)</p>
+<p><code>ANSI SQL</code> mode: Simply encode all <code>'</code> (single tick) characters with <code>''</code> (two single ticks)</p>
 <p><code>MySQL</code> mode, do the following:</p>
-<pre><code class="lang-text">NUL (0x00) --&gt; \0  [This is a zero, not the letter O]
+<div class="codehilite"><pre><span></span><code>NUL (0x00) --&gt; \0  [This is a zero, not the letter O]
 BS  (0x08) --&gt; \b
 TAB (0x09) --&gt; \t
 LF  (0x0a) --&gt; \n
@@ -1270,177 +1741,195 @@ CR  (0x0d) --&gt; \r
 SUB (0x1a) --&gt; \Z
 &quot;   (0x22) --&gt; \&quot;
 %   (0x25) --&gt; \%
-&apos;   (0x27) --&gt; \&apos;
+&#39;   (0x27) --&gt; \&#39;
 \   (0x5c) --&gt; \\
 _   (0x5f) --&gt; \_
 all other non-alphanumeric characters with ASCII values
-less than 256  --&gt; \c where &apos;c&apos; is the original non-alphanumeric character.
-</code></pre>
-<p>This information is based on the <a href="https://dev.mysql.com/doc/refman/5.7/en/string-literals.html" target="_blank">MySQL Escape character information</a>.</p>
-<h5 id="sql-server-escaping"><a name="sql-server-escaping" class="plugin-anchor" href="#sql-server-escaping"><i class="fa fa-link" aria-hidden="true"></i></a>SQL Server Escaping</h5>
-<p>We have not implemented the SQL Server escaping routine yet, but the following has good pointers and links to articles describing how to prevent SQL injection attacks on SQL server, see <a href="https://aka.ms/sql-injection" target="_blank">here</a>.</p>
-<h5 id="db2-escaping"><a name="db2-escaping" class="plugin-anchor" href="#db2-escaping"><i class="fa fa-link" aria-hidden="true"></i></a>DB2 Escaping</h5>
-<p>This information is based on <a href="https://www.ibm.com/support/pages/web-query-special-characters" target="_blank">DB2 WebQuery special characters</a> as well as some information from <a href="http://docs.oracle.com/cd/E12840_01/wls/docs103/jdbc_drivers/sqlescape.html" target="_blank">Oracle&apos;s JDBC DB2 driver</a>.</p>
-<p>Information in regards to differences between several <a href="https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads" target="_blank">DB2 Universal drivers</a>.</p>
-<h4 id="hex-encoding-all-input"><a name="hex-encoding-all-input" class="plugin-anchor" href="#hex-encoding-all-input"><i class="fa fa-link" aria-hidden="true"></i></a>Hex-encoding all input</h4>
+less than 256  --&gt; \c where &#39;c&#39; is the original non-alphanumeric character.
+</code></pre></div>
+
+
+<p>This information is based on the <a href="https://dev.mysql.com/doc/refman/5.7/en/string-literals.html">MySQL Escape character information</a>.</p>
+<h5 id="sql-server-escaping">SQL Server Escaping<a class="headerlink" href="#sql-server-escaping" title="Permanent link">&para;</a></h5>
+<p>We have not implemented the SQL Server escaping routine yet, but the following has good pointers and links to articles describing how to prevent SQL injection attacks on SQL server, see <a href="https://aka.ms/sql-injection">here</a>.</p>
+<h5 id="db2-escaping">DB2 Escaping<a class="headerlink" href="#db2-escaping" title="Permanent link">&para;</a></h5>
+<p>This information is based on <a href="https://www.ibm.com/support/pages/web-query-special-characters">DB2 WebQuery special characters</a> as well as some information from <a href="http://docs.oracle.com/cd/E12840_01/wls/docs103/jdbc_drivers/sqlescape.html">Oracle's JDBC DB2 driver</a>.</p>
+<p>Information in regards to differences between several <a href="https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads">DB2 Universal drivers</a>.</p>
+<h4 id="hex-encoding-all-input">Hex-encoding all input<a class="headerlink" href="#hex-encoding-all-input" title="Permanent link">&para;</a></h4>
 <p>A somewhat special case of escaping is the process of hex-encode the entire string received from the user (this can be seen as escaping every character). The web application should hex-encode the user input before including it in the SQL statement. The SQL statement should take into account this fact, and accordingly compare the data.</p>
 <p>For example, if we have to look up a record matching a sessionID, and the user transmitted the string abc123 as the session ID, the select statement would be:</p>
-<pre><code class="lang-sql"><span class="hljs-keyword">SELECT</span> ... <span class="hljs-keyword">FROM</span> <span class="hljs-keyword">session</span> <span class="hljs-keyword">WHERE</span> hex_encode(sessionID) = <span class="hljs-string">&apos;616263313233&apos;</span>
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="k">session</span> <span class="k">WHERE</span> <span class="n">hex_encode</span><span class="p">(</span><span class="n">sessionID</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;616263313233&#39;</span>
+</code></pre></div>
+
+
 <p><code>hex_encode</code> should be replaced by the particular facility for the database being used. The string 606162313233 is the hex encoded version of the string received from the user (it is the sequence of hex values of the ASCII/UTF-8 codes of the user data).</p>
 <p>If an attacker were to transmit a string containing a single-quote character followed by their attempt to inject SQL code, the constructed SQL statement will only look like:</p>
-<pre><code class="lang-sql">... WHERE hex_encode ( ... ) = &apos;2720 ... &apos;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="p">...</span> <span class="k">WHERE</span> <span class="n">hex_encode</span> <span class="p">(</span> <span class="p">...</span> <span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;2720 ... &#39;</span>
+</code></pre></div>
+
+
 <p><code>27</code> being the ASCII code (in hex) of the single-quote, which is simply hex-encoded like any other character in the string. The resulting SQL can only contain numeric digits and letters <code>a</code> to <code>f</code>, and never any special character that could enable an SQL injection.</p>
-<h4 id="escaping-sqli-in-php"><a name="escaping-sqli-in-php" class="plugin-anchor" href="#escaping-sqli-in-php"><i class="fa fa-link" aria-hidden="true"></i></a>Escaping SQLi in PHP</h4>
+<h4 id="escaping-sqli-in-php">Escaping SQLi in PHP<a class="headerlink" href="#escaping-sqli-in-php" title="Permanent link">&para;</a></h4>
 <p>Use prepared statements and parameterized queries. These are SQL statements that are sent to and parsed by the database server separately from any parameters. This way it is impossible for an attacker to inject malicious SQL.</p>
 <p>You basically have two options to achieve this:</p>
 <ol>
-<li>Using <a href="https://www.php.net/manual/en/book.pdo.php" target="_blank">PDO</a> (for any supported database driver):</li>
+<li>Using <a href="https://www.php.net/manual/en/book.pdo.php">PDO</a> (for any supported database driver):</li>
 </ol>
-<pre><code class="lang-php">$stmt = $pdo-&gt;prepare(<span class="hljs-string">&apos;SELECT * FROM employees WHERE name = :name&apos;</span>);
-$stmt-&gt;execute(<span class="hljs-keyword">array</span>(<span class="hljs-string">&apos;name&apos;</span> =&gt; $name));
-<span class="hljs-keyword">foreach</span> ($stmt <span class="hljs-keyword">as</span> $row) {
-    <span class="hljs-comment">// do something with $row</span>
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="x">$stmt = $pdo-&gt;prepare(&#39;SELECT * FROM employees WHERE name = :name&#39;);</span>
+<span class="x">$stmt-&gt;execute(array(&#39;name&#39; =&gt; $name));</span>
+<span class="x">foreach ($stmt as $row) {</span>
+<span class="x">    // do something with $row</span>
+<span class="x">}</span>
+</code></pre></div>
+
+
 <ol>
-<li>Using <a href="https://www.php.net/manual/en/book.mysqli.php" target="_blank">MySQLi</a> (for MySQL):</li>
+<li>Using <a href="https://www.php.net/manual/en/book.mysqli.php">MySQLi</a> (for MySQL):</li>
 </ol>
-<pre><code class="lang-php">$stmt = $dbConnection-&gt;prepare(<span class="hljs-string">&apos;SELECT * FROM employees WHERE name = ?&apos;</span>);
-$stmt-&gt;bind_param(<span class="hljs-string">&apos;s&apos;</span>, $name);
-$stmt-&gt;execute();
-$result = $stmt-&gt;get_result();
-<span class="hljs-keyword">while</span> ($row = $result-&gt;fetch_assoc()) {
-    <span class="hljs-comment">// do something with $row</span>
-}
-</code></pre>
-<p>PDO is the universal option. If you&apos;re connecting to a database other than MySQL, you can refer to a driver-specific second option (e.g. pg_prepare() and pg_execute() for PostgreSQL).</p>
-<h2 id="additional-defenses"><a name="additional-defenses" class="plugin-anchor" href="#additional-defenses"><i class="fa fa-link" aria-hidden="true"></i></a>Additional Defenses</h2>
+<div class="codehilite"><pre><span></span><code><span class="x">$stmt = $dbConnection-&gt;prepare(&#39;SELECT * FROM employees WHERE name = ?&#39;);</span>
+<span class="x">$stmt-&gt;bind_param(&#39;s&#39;, $name);</span>
+<span class="x">$stmt-&gt;execute();</span>
+<span class="x">$result = $stmt-&gt;get_result();</span>
+<span class="x">while ($row = $result-&gt;fetch_assoc()) {</span>
+<span class="x">    // do something with $row</span>
+<span class="x">}</span>
+</code></pre></div>
+
+
+<p>PDO is the universal option. If you're connecting to a database other than MySQL, you can refer to a driver-specific second option (e.g. pg_prepare() and pg_execute() for PostgreSQL).</p>
+<h2 id="additional-defenses">Additional Defenses<a class="headerlink" href="#additional-defenses" title="Permanent link">&para;</a></h2>
 <p>Beyond adopting one of the four primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:</p>
 <ul>
 <li><strong>Least Privilege</strong></li>
 <li><strong>Whitelist Input Validation</strong></li>
 </ul>
-<h3 id="least-privilege"><a name="least-privilege" class="plugin-anchor" href="#least-privilege"><i class="fa fa-link" aria-hidden="true"></i></a>Least Privilege</h3>
-<p>To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Do not assign DBA or admin type access rights to your application accounts. We understand that this is easy, and everything just &apos;works&apos; when you do it this way, but it is very dangerous.</p>
+<h3 id="least-privilege">Least Privilege<a class="headerlink" href="#least-privilege" title="Permanent link">&para;</a></h3>
+<p>To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Do not assign DBA or admin type access rights to your application accounts. We understand that this is easy, and everything just 'works' when you do it this way, but it is very dangerous.</p>
 <p>Start from the ground up to determine what access rights your application accounts require, rather than trying to figure out what access rights you need to take away. Make sure that accounts that only need read access are only granted read access to the tables they need access to.</p>
 <p>If an account only needs access to portions of a table, consider creating a view that limits access to that portion of the data and assigning the account access to the view instead, rather than the underlying table. Rarely, if ever, grant create or delete access to database accounts.</p>
-<p>If you adopt a policy where you use stored procedures everywhere, and don&apos;t allow application accounts to directly execute their own queries, then restrict those accounts to only be able to execute the stored procedures they need. Don&apos;t grant them any rights directly to the tables in the database.</p>
+<p>If you adopt a policy where you use stored procedures everywhere, and don't allow application accounts to directly execute their own queries, then restrict those accounts to only be able to execute the stored procedures they need. Don't grant them any rights directly to the tables in the database.</p>
 <p>SQL injection is not the only threat to your database data. Attackers can simply change the parameter values from one of the legal values they are presented with, to a value that is unauthorized for them, but the application itself might be authorized to access. As such, minimizing the privileges granted to your application will reduce the likelihood of such unauthorized access attempts, even when an attacker is not trying to use SQL injection as part of their exploit.</p>
-<p>While you are at it, you should minimize the privileges of the operating system account that the DBMS runs under. Don&apos;t run your DBMS as root or system! Most DBMSs run out of the box with a very powerful system account. For example, MySQL runs as system on Windows by default! Change the DBMS&apos;s OS account to something more appropriate, with restricted privileges.</p>
-<h4 id="multiple-db-users"><a name="multiple-db-users" class="plugin-anchor" href="#multiple-db-users"><i class="fa fa-link" aria-hidden="true"></i></a>Multiple DB Users</h4>
+<p>While you are at it, you should minimize the privileges of the operating system account that the DBMS runs under. Don't run your DBMS as root or system! Most DBMSs run out of the box with a very powerful system account. For example, MySQL runs as system on Windows by default! Change the DBMS's OS account to something more appropriate, with restricted privileges.</p>
+<h4 id="multiple-db-users">Multiple DB Users<a class="headerlink" href="#multiple-db-users" title="Permanent link">&para;</a></h4>
 <p>The designer of web applications should not only avoid using the same owner/admin account in the web applications to connect to the database. Different DB users could be used for different web applications.</p>
 <p>In general, each separate web application that requires access to the database could have a designated database user account that the web-app will use to connect to the DB. That way, the designer of the application can have good granularity in the access control, thus reducing the privileges as much as possible. Each DB user will then have select access to what it needs only, and write-access as needed.</p>
 <p>As an example, a login page requires read access to the username and password fields of a table, but no write access of any form (no insert, update, or delete). However, the sign-up page certainly requires insert privilege to that table; this restriction can only be enforced if these web apps use different DB users to connect to the database.</p>
-<h4 id="views"><a name="views" class="plugin-anchor" href="#views"><i class="fa fa-link" aria-hidden="true"></i></a>Views</h4>
+<h4 id="views">Views<a class="headerlink" href="#views" title="Permanent link">&para;</a></h4>
 <p>You can use SQL views to further increase the granularity of access by limiting the read access to specific fields of a table or joins of tables. It could potentially have additional benefits: for example, suppose that the system is required (perhaps due to some specific legal requirements) to store the passwords of the users, instead of salted-hashed passwords.</p>
 <p>The designer could use views to compensate for this limitation; revoke all access to the table (from all DB users except the owner/admin) and create a view that outputs the hash of the password field and not the field itself. Any SQL injection attack that succeeds in stealing DB information will be restricted to stealing the hash of the passwords (could even be a keyed hash), since no DB user for any of the web applications has access to the table itself.</p>
-<h3 id="whitelist-input-validation"><a name="whitelist-input-validation" class="plugin-anchor" href="#whitelist-input-validation"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelist Input Validation</h3>
-<p>In addition to being a primary defense when nothing else is possible (e.g., when a bind variable isn&apos;t legal), input validation can also be a secondary defense used to detect unauthorized input before it is passed to the SQL query. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>. Proceed with caution here. Validated data is not necessarily safe to insert into SQL queries via string building.</p>
-<h2 id="related-articles"><a name="related-articles" class="plugin-anchor" href="#related-articles"><i class="fa fa-link" aria-hidden="true"></i></a>Related Articles</h2>
+<h3 id="whitelist-input-validation">Whitelist Input Validation<a class="headerlink" href="#whitelist-input-validation" title="Permanent link">&para;</a></h3>
+<p>In addition to being a primary defense when nothing else is possible (e.g., when a bind variable isn't legal), input validation can also be a secondary defense used to detect unauthorized input before it is passed to the SQL query. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>. Proceed with caution here. Validated data is not necessarily safe to insert into SQL queries via string building.</p>
+<h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
 <p><strong>SQL Injection Attack Cheat Sheets</strong>:</p>
 <p>The following articles describe how to exploit different kinds of SQL Injection Vulnerabilities on various platforms that this article was created to help you avoid:</p>
 <ul>
-<li><a href="https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/" target="_blank">SQL Injection Cheat Sheet</a></li>
-<li>Bypassing WAF&apos;s with SQLi - <a href="https://owasp.org/www-community/attacks/SQL_Injection_Bypassing_WAF" target="_blank">SQL Injection Bypassing WAF</a></li>
+<li><a href="https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/">SQL Injection Cheat Sheet</a></li>
+<li>Bypassing WAF's with SQLi - <a href="https://owasp.org/www-community/attacks/SQL_Injection_Bypassing_WAF">SQL Injection Bypassing WAF</a></li>
 </ul>
 <p><strong>Description of SQL Injection Vulnerabilities</strong>:</p>
 <ul>
-<li>OWASP article on <a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank">SQL Injection</a> Vulnerabilities</li>
-<li>OWASP article on <a href="https://owasp.org/www-community/attacks/Blind_SQL_Injection" target="_blank">Blind_SQL_Injection</a> Vulnerabilities</li>
+<li>OWASP article on <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> Vulnerabilities</li>
+<li>OWASP article on <a href="https://owasp.org/www-community/attacks/Blind_SQL_Injection">Blind_SQL_Injection</a> Vulnerabilities</li>
 </ul>
 <p><strong>How to Avoid SQL Injection Vulnerabilities</strong>:</p>
 <ul>
-<li><a href="https://github.com/OWASP/DevGuide" target="_blank">OWASP Developers Guide</a> article on how to avoid SQL injection vulnerabilities</li>
+<li><a href="https://github.com/OWASP/DevGuide">OWASP Developers Guide</a> article on how to avoid SQL injection vulnerabilities</li>
 <li>OWASP Cheat Sheet that provides <a href="Query_Parameterization_Cheat_Sheet.html">numerous language specific examples of parameterized queries using both Prepared Statements and Stored Procedures</a></li>
-<li><a href="http://bobby-tables.com/" target="_blank">The Bobby Tables site (inspired by the XKCD webcomic) has numerous examples in different languages of parameterized Prepared Statements and Stored Procedures</a></li>
+<li><a href="http://bobby-tables.com/">The Bobby Tables site (inspired by the XKCD webcomic) has numerous examples in different languages of parameterized Prepared Statements and Stored Procedures</a></li>
 </ul>
 <p><strong>How to Review Code for SQL Injection Vulnerabilities</strong>:</p>
 <ul>
-<li><a href="https://wiki.owasp.org/index.php/Category:OWASP_Code_Review_Project" target="_blank">OWASP Code Review Guide</a> article on how to <a href="https://wiki.owasp.org/index.php/Reviewing_Code_for_SQL_Injection" target="_blank">Review Code for SQL Injection</a> Vulnerabilities</li>
+<li><a href="https://wiki.owasp.org/index.php/Category:OWASP_Code_Review_Project">OWASP Code Review Guide</a> article on how to <a href="https://wiki.owasp.org/index.php/Reviewing_Code_for_SQL_Injection">Review Code for SQL Injection</a> Vulnerabilities</li>
 </ul>
 <p><strong>How to Test for SQL Injection Vulnerabilities</strong>:</p>
 <ul>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide" target="_blank">OWASP Testing Guide</a> article on how to <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection.html" target="_blank">Test for SQL Injection</a> Vulnerabilities</li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide">OWASP Testing Guide</a> article on how to <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection.html">Test for SQL Injection</a> Vulnerabilities</li>
 </ul>
-
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
-
-                        </div>
-                    </div>
                 
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
-
-            
-                
-                <a href="SAML_Security_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: SAML Security ">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Securing Cascading Style Sheets ">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                SAML Security
+              </div>
+            </div>
+          </a>
         
+        
+          <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Securing Cascading Style Sheets
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"SQL Injection Prevention ","level":"1.54","depth":1,"next":{"title":"Securing Cascading Style Sheets ","level":"1.55","depth":1,"path":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","ref":"cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md","articles":[]},"previous":{"title":"SAML Security ","level":"1.53","depth":1,"path":"cheatsheets/SAML_Security_Cheat_Sheet.md","ref":"cheatsheets/SAML_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md","mtime":"2020-05-27T19:41:37.100Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-27T19:42:04.146Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
-
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-

@@ -1,1340 +1,1875 @@
 
-<!DOCTYPE HTML>
-<html lang="en" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Mass Assignment  · OWASP Cheat Sheet Series</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>Mass Assignment</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
         
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
         
-        
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" />
-    
-    
-    <link rel="prev" href="Logging_Cheat_Sheet.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        <li class="header">Cheatsheets</li>
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="Index.html">
-            
-                <a href="Index.html">
-            
-                    
-                    Index Alphabetical
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
-            
-                <a href="IndexASVS.html">
-            
-                    
-                    Index ASVS
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
-            
-                <a href="IndexProactiveControls.html">
-            
-                    
-                    Index Proactive Controls
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
-            
-                <a href="AJAX_Security_Cheat_Sheet.html">
-            
-                    
-                    AJAX Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
-            
-                <a href="Abuse_Case_Cheat_Sheet.html">
-            
-                    
-                    Abuse Case 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
-            
-                <a href="Access_Control_Cheat_Sheet.html">
-            
-                    
-                    Access Control 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                    
-                    Attack Surface Analysis 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
-            
-                <a href="Authentication_Cheat_Sheet.html">
-            
-                    
-                    Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
-            
-                <a href="Authorization_Testing_Automation.html">
-            
-                    
-                    Authorization Testing Automation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
-            
-                <a href="Bean_Validation_Cheat_Sheet.html">
-            
-                    
-                    Bean Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
-            
-                <a href="C-Based_Toolchain_Hardening.html">
-            
-                    
-                    C-Based Toolchain Hardening
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                    
-                    C-Based Toolchain Hardening 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                    
-                    Choosing and Using Security Questions 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                <a href="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                    
-                    Clickjacking Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
-            
-                <a href="Content_Security_Policy_Cheat_Sheet.html">
-            
-                    
-                    Content Security Policy 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Credential Stuffing Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross-Site Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross Site Scripting Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                <a href="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                    
-                    Cryptographic Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                    
-                    DOM based XSS Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.22" data-path="Database_Security_Cheat_Sheet.html">
-            
-                <a href="Database_Security_Cheat_Sheet.html">
-            
-                    
-                    Database Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.23" data-path="Denial_of_Service_Cheat_Sheet.html">
-            
-                <a href="Denial_of_Service_Cheat_Sheet.html">
-            
-                    
-                    Denial of Service 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.24" data-path="Deserialization_Cheat_Sheet.html">
-            
-                <a href="Deserialization_Cheat_Sheet.html">
-            
-                    
-                    Deserialization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.25" data-path="Docker_Security_Cheat_Sheet.html">
-            
-                <a href="Docker_Security_Cheat_Sheet.html">
-            
-                    
-                    Docker Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.26" data-path="DotNet_Security_Cheat_Sheet.html">
-            
-                <a href="DotNet_Security_Cheat_Sheet.html">
-            
-                    
-                    DotNet Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.27" data-path="Error_Handling_Cheat_Sheet.html">
-            
-                <a href="Error_Handling_Cheat_Sheet.html">
-            
-                    
-                    Error Handling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
-            
-                <a href="File_Upload_Cheat_Sheet.html">
-            
-                    
-                    File Upload 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.29" data-path="Forgot_Password_Cheat_Sheet.html">
-            
-                <a href="Forgot_Password_Cheat_Sheet.html">
-            
-                    
-                    Forgot Password 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.30" data-path="HTML5_Security_Cheat_Sheet.html">
-            
-                <a href="HTML5_Security_Cheat_Sheet.html">
-            
-                    
-                    HTML5 Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.31" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                    
-                    HTTP Strict Transport Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.32" data-path="Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.33" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                    
-                    Injection Prevention  in Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.34" data-path="Input_Validation_Cheat_Sheet.html">
-            
-                <a href="Input_Validation_Cheat_Sheet.html">
-            
-                    
-                    Input Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.35" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Insecure Direct Object Reference Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.36" data-path="JAAS_Cheat_Sheet.html">
-            
-                <a href="JAAS_Cheat_Sheet.html">
-            
-                    
-                    JAAS 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.37" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                    
-                    JSON Web Token  for Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.38" data-path="Key_Management_Cheat_Sheet.html">
-            
-                <a href="Key_Management_Cheat_Sheet.html">
-            
-                    
-                    Key Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.39" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    LDAP Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.40" data-path="Logging_Cheat_Sheet.html">
-            
-                <a href="Logging_Cheat_Sheet.html">
-            
-                    
-                    Logging 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.41" data-path="Mass_Assignment_Cheat_Sheet.html">
-            
-                <a href="Mass_Assignment_Cheat_Sheet.html">
-            
-                    
-                    Mass Assignment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.42" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                    
-                    Microservices based Security Arch Doc 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.43" data-path="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                <a href="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                    
-                    Multifactor Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.44" data-path="Nodejs_security_cheat_sheet.html">
-            
-                <a href="Nodejs_security_cheat_sheet.html">
-            
-                    
-                    Nodejs security cheat sheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.45" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                    
-                    OS Command Injection Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.46" data-path="PHP_Configuration_Cheat_Sheet.html">
-            
-                <a href="PHP_Configuration_Cheat_Sheet.html">
-            
-                    
-                    PHP Configuration 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.47" data-path="Password_Storage_Cheat_Sheet.html">
-            
-                <a href="Password_Storage_Cheat_Sheet.html">
-            
-                    
-                    Password Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
-            
-                <a href="Pinning_Cheat_Sheet.html">
-            
-                    
-                    Pinning 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.49" data-path="Query_Parameterization_Cheat_Sheet.html">
-            
-                <a href="Query_Parameterization_Cheat_Sheet.html">
-            
-                    
-                    Query Parameterization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.50" data-path="REST_Assessment_Cheat_Sheet.html">
-            
-                <a href="REST_Assessment_Cheat_Sheet.html">
-            
-                    
-                    REST Assessment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.51" data-path="REST_Security_Cheat_Sheet.html">
-            
-                <a href="REST_Security_Cheat_Sheet.html">
-            
-                    
-                    REST Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.52" data-path="Ruby_on_Rails_Cheatsheet.html">
-            
-                <a href="Ruby_on_Rails_Cheatsheet.html">
-            
-                    
-                    Ruby on Rails Cheatsheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.53" data-path="SAML_Security_Cheat_Sheet.html">
-            
-                <a href="SAML_Security_Cheat_Sheet.html">
-            
-                    
-                    SAML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.54" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    SQL Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.55" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                    
-                    Securing Cascading Style Sheets 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.56" data-path="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Server Side Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.57" data-path="Session_Management_Cheat_Sheet.html">
-            
-                <a href="Session_Management_Cheat_Sheet.html">
-            
-                    
-                    Session Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.58" data-path="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                <a href="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                    
-                    TLS Cipher String 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.59" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                    
-                    Third Party Javascript Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.60" data-path="Threat_Modeling_Cheat_Sheet.html">
-            
-                <a href="Threat_Modeling_Cheat_Sheet.html">
-            
-                    
-                    Threat Modeling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.61" data-path="Transaction_Authorization_Cheat_Sheet.html">
-            
-                <a href="Transaction_Authorization_Cheat_Sheet.html">
-            
-                    
-                    Transaction Authorization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.62" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                    
-                    Transport Layer Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.63" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                    
-                    Unvalidated Redirects and Forwards 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.64" data-path="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                <a href="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                    
-                    User Privacy Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.65" data-path="Virtual_Patching_Cheat_Sheet.html">
-            
-                <a href="Virtual_Patching_Cheat_Sheet.html">
-            
-                    
-                    Virtual Patching 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.66" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                    
-                    Vulnerability Disclosure 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.67" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                    
-                    Vulnerable Dependency Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.68" data-path="Web_Service_Security_Cheat_Sheet.html">
-            
-                <a href="Web_Service_Security_Cheat_Sheet.html">
-            
-                    
-                    Web Service Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.69" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                    
-                    XML External Entity Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.70" data-path="XML_Security_Cheat_Sheet.html">
-            
-                <a href="XML_Security_Cheat_Sheet.html">
-            
-                    
-                    XML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="#mass-assignment-cheat-sheet" class="md-skip">
+          Skip to content
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
+      
     </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
+    <div data-md-component="announce">
+      
+    </div>
     
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Mass Assignment </a>
-    </h1>
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Mass Assignment
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
     
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="mass-assignment-cheat-sheet"><a name="mass-assignment-cheat-sheet" class="plugin-anchor" href="#mass-assignment-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>Mass Assignment Cheat Sheet</h1>
-<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
-<h3 id="definition"><a name="definition" class="plugin-anchor" href="#definition"><i class="fa fa-link" aria-hidden="true"></i></a>Definition</h3>
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" title="Index Alphabetical" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" title="Index ASVS" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" title="Index Proactive Controls" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" title="AJAX Security" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" title="Abuse Case" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" title="Access Control" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" title="Clickjacking Defense" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" title="Content Security Policy" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" title="Cross-Site Request Forgery Prevention" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" title="Cryptographic Storage" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" title="Database Security" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" title="Denial of Service" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" title="Deserialization" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" title="Docker Security" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" title="DotNet Security" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" title="Error Handling" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" title="File Upload" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" title="Forgot Password" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" title="HTML5 Security" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" title="HTTP Strict Transport Security" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" title="Injection Prevention in Java" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" title="Insecure Direct Object Reference Prevention" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" title="JAAS" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" title="JSON Web Token for Java" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" title="Key Management" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" title="LDAP Injection Prevention" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Mass Assignment
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="Mass_Assignment_Cheat_Sheet.html" title="Mass Assignment" class="md-nav__link md-nav__link--active">
+      Mass Assignment
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition" class="md-nav__link">
+    Definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-names" class="md-nav__link">
+    Alternative Names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploitability" class="md-nav__link">
+    Exploitability
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-case-study" class="md-nav__link">
+    GitHub case study
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solutions" class="md-nav__link">
+    Solutions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-solutions" class="md-nav__link">
+    General Solutions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-framework-specific-solutions" class="md-nav__link">
+    Language &amp; Framework specific solutions
+  </a>
+  
+    <nav class="md-nav" aria-label="Language &amp; Framework specific solutions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spring-mvc" class="md-nav__link">
+    Spring MVC
+  </a>
+  
+    <nav class="md-nav" aria-label="Spring MVC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whitelisting" class="md-nav__link">
+    Whitelisting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blacklisting" class="md-nav__link">
+    Blacklisting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodejs-mongoose" class="md-nav__link">
+    NodeJS + Mongoose
+  </a>
+  
+    <nav class="md-nav" aria-label="NodeJS + Mongoose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whitelisting_1" class="md-nav__link">
+    Whitelisting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blacklisting_1" class="md-nav__link">
+    Blacklisting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ruby-on-rails" class="md-nav__link">
+    Ruby On Rails
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django" class="md-nav__link">
+    Django
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asp-net" class="md-nav__link">
+    ASP NET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#php-laravel-eloquent" class="md-nav__link">
+    PHP Laravel + Eloquent
+  </a>
+  
+    <nav class="md-nav" aria-label="PHP Laravel + Eloquent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whitelisting_2" class="md-nav__link">
+    Whitelisting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blacklisting_2" class="md-nav__link">
+    Blacklisting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grails" class="md-nav__link">
+    Grails
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#play" class="md-nav__link">
+    Play
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jackson-json-object-mapper" class="md-nav__link">
+    Jackson (JSON Object Mapper)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gson-json-object-mapper" class="md-nav__link">
+    GSON (JSON Object Mapper)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json-lib-json-object-mapper" class="md-nav__link">
+    JSON-Lib (JSON Object Mapper)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flexjson-json-object-mapper" class="md-nav__link">
+    Flexjson (JSON Object Mapper)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-and-future-reading" class="md-nav__link">
+    References and future reading
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" title="Multifactor Authentication" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" title="Nodejs Security" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" title="OS Command Injection Defense" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" title="PHP Configuration" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" title="Password Storage" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" title="Pinning" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" title="Query Parameterization" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" title="REST Assessment" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" title="REST Security" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" title="Ruby on Rails" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" title="SQL Injection Prevention" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" title="Server Side Request Forgery Prevention" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" title="TLS Cipher String" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" title="Third Party Javascript Management" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" title="Threat Modeling" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" title="Transport Layer Protection" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" title="User Privacy Protection" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" title="Virtual Patching" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" title="Vulnerability Disclosure" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" title="Vulnerable Dependency Management" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" title="XML External Entity Prevention" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definition" class="md-nav__link">
+    Definition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-names" class="md-nav__link">
+    Alternative Names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploitability" class="md-nav__link">
+    Exploitability
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-case-study" class="md-nav__link">
+    GitHub case study
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solutions" class="md-nav__link">
+    Solutions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-solutions" class="md-nav__link">
+    General Solutions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-framework-specific-solutions" class="md-nav__link">
+    Language &amp; Framework specific solutions
+  </a>
+  
+    <nav class="md-nav" aria-label="Language &amp; Framework specific solutions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spring-mvc" class="md-nav__link">
+    Spring MVC
+  </a>
+  
+    <nav class="md-nav" aria-label="Spring MVC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whitelisting" class="md-nav__link">
+    Whitelisting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blacklisting" class="md-nav__link">
+    Blacklisting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodejs-mongoose" class="md-nav__link">
+    NodeJS + Mongoose
+  </a>
+  
+    <nav class="md-nav" aria-label="NodeJS + Mongoose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whitelisting_1" class="md-nav__link">
+    Whitelisting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blacklisting_1" class="md-nav__link">
+    Blacklisting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ruby-on-rails" class="md-nav__link">
+    Ruby On Rails
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django" class="md-nav__link">
+    Django
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asp-net" class="md-nav__link">
+    ASP NET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#php-laravel-eloquent" class="md-nav__link">
+    PHP Laravel + Eloquent
+  </a>
+  
+    <nav class="md-nav" aria-label="PHP Laravel + Eloquent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whitelisting_2" class="md-nav__link">
+    Whitelisting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blacklisting_2" class="md-nav__link">
+    Blacklisting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grails" class="md-nav__link">
+    Grails
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#play" class="md-nav__link">
+    Play
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jackson-json-object-mapper" class="md-nav__link">
+    Jackson (JSON Object Mapper)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gson-json-object-mapper" class="md-nav__link">
+    GSON (JSON Object Mapper)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json-lib-json-object-mapper" class="md-nav__link">
+    JSON-Lib (JSON Object Mapper)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flexjson-json-object-mapper" class="md-nav__link">
+    Flexjson (JSON Object Mapper)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-and-future-reading" class="md-nav__link">
+    References and future reading
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="mass-assignment-cheat-sheet">Mass Assignment Cheat Sheet<a class="headerlink" href="#mass-assignment-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<h3 id="definition">Definition<a class="headerlink" href="#definition" title="Permanent link">&para;</a></h3>
 <p>Software frameworks sometime allow developers to automatically bind HTTP request parameters into program code variables or objects to make using that framework easier on developers. This can sometimes cause harm.</p>
 <p>Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended.</p>
 <p>This is called a <strong>Mass Assignment</strong> vulnerability.</p>
-<h3 id="alternative-names"><a name="alternative-names" class="plugin-anchor" href="#alternative-names"><i class="fa fa-link" aria-hidden="true"></i></a>Alternative Names</h3>
-<p>Depending on the language/framework in question, this vulnerability can have several <a href="https://cwe.mitre.org/data/definitions/915.html" target="_blank">alternative names</a>:</p>
+<h3 id="alternative-names">Alternative Names<a class="headerlink" href="#alternative-names" title="Permanent link">&para;</a></h3>
+<p>Depending on the language/framework in question, this vulnerability can have several <a href="https://cwe.mitre.org/data/definitions/915.html">alternative names</a>:</p>
 <ul>
 <li><strong>Mass Assignment:</strong> Ruby on Rails, NodeJS.</li>
 <li><strong>Autobinding:</strong> Spring MVC, ASP NET MVC.</li>
 <li><strong>Object injection:</strong> PHP.</li>
 </ul>
-<h3 id="example"><a name="example" class="plugin-anchor" href="#example"><i class="fa fa-link" aria-hidden="true"></i></a>Example</h3>
-<p>Suppose there is a form for editing a user&apos;s account information:</p>
-<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span>
-     <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;userid&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span>
-     <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span>
-     <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;email&quot;</span> <span class="hljs-attr">text</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span>
-     <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
-</code></pre>
-<p>Here is the object that the form is binding to:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
-   <span class="hljs-keyword">private</span> String userid;
-   <span class="hljs-keyword">private</span> String password;
-   <span class="hljs-keyword">private</span> String email;
-   <span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> isAdmin;
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<p>Suppose there is a form for editing a user's account information:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;userid&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">text</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>  
+</code></pre></div>
 
-   <span class="hljs-comment">//Getters &amp; Setters</span>
-}
-</code></pre>
+
+<p>Here is the object that the form is binding to:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+   <span class="kd">private</span> <span class="n">String</span> <span class="n">userid</span><span class="p">;</span>
+   <span class="kd">private</span> <span class="n">String</span> <span class="n">password</span><span class="p">;</span>
+   <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="p">;</span>
+   <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">isAdmin</span><span class="p">;</span>
+
+   <span class="c1">//Getters &amp; Setters</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <p>Here is the controller handling the request:</p>
-<pre><code class="lang-java"><span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">&quot;/addUser&quot;</span>, method = RequestMethod.POST)
-<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">submit</span><span class="hljs-params">(User user)</span> </span>{
-   userService.add(user);
-   <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;successPage&quot;</span>;
-}
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/addUser&quot;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">submit</span><span class="p">(</span><span class="n">User</span> <span class="n">user</span><span class="p">)</span> <span class="p">{</span>
+   <span class="n">userService</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+   <span class="k">return</span> <span class="s">&quot;successPage&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
 <p>Here is the typical request:</p>
-<pre><code class="lang-text">POST /addUser
+<div class="codehilite"><pre><span></span><code>POST /addUser
 ...
 userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com
-</code></pre>
+</code></pre></div>
+
+
 <p>And here is the exploit in which we set the value of the attribute <code>isAdmin</code> of the instance of the class <code>User</code>:</p>
-<pre><code class="lang-text">POST /addUser
+<div class="codehilite"><pre><span></span><code>POST /addUser
 ...
 userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmin=true
-</code></pre>
-<h3 id="exploitability"><a name="exploitability" class="plugin-anchor" href="#exploitability"><i class="fa fa-link" aria-hidden="true"></i></a>Exploitability</h3>
+</code></pre></div>
+
+
+<h3 id="exploitability">Exploitability<a class="headerlink" href="#exploitability" title="Permanent link">&para;</a></h3>
 <p>This functionality becomes exploitable when:</p>
 <ul>
 <li>Attacker can guess common sensitive fields.</li>
 <li>Attacker has access to source code and can review the models for sensitive fields.</li>
 <li>AND the object with sensitive fields has an empty constructor.</li>
 </ul>
-<h3 id="github-case-study"><a name="github-case-study" class="plugin-anchor" href="#github-case-study"><i class="fa fa-link" aria-hidden="true"></i></a>GitHub case study</h3>
-<p>In 2012, GitHub was hacked using mass assignment. A user was able to upload his public key to any organization and thus make any subsequent changes in their repositories. <a href="https://blog.github.com/2012-03-04-public-key-security-vulnerability-and-mitigation/" target="_blank">GitHub&apos;s Blog Post</a>.</p>
-<h3 id="solutions"><a name="solutions" class="plugin-anchor" href="#solutions"><i class="fa fa-link" aria-hidden="true"></i></a>Solutions</h3>
+<h3 id="github-case-study">GitHub case study<a class="headerlink" href="#github-case-study" title="Permanent link">&para;</a></h3>
+<p>In 2012, GitHub was hacked using mass assignment. A user was able to upload his public key to any organization and thus make any subsequent changes in their repositories. <a href="https://blog.github.com/2012-03-04-public-key-security-vulnerability-and-mitigation/">GitHub's Blog Post</a>.</p>
+<h3 id="solutions">Solutions<a class="headerlink" href="#solutions" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Whitelist the bindable, non-sensitive fields.</li>
 <li>Blacklist the non-bindable, sensitive fields.</li>
-<li>Use <a href="https://martinfowler.com/eaaCatalog/dataTransferObject.html" target="_blank">Data Transfer Objects</a> (DTOs).</li>
+<li>Use <a href="https://martinfowler.com/eaaCatalog/dataTransferObject.html">Data Transfer Objects</a> (DTOs).</li>
 </ul>
-<h2 id="general-solutions"><a name="general-solutions" class="plugin-anchor" href="#general-solutions"><i class="fa fa-link" aria-hidden="true"></i></a>General Solutions</h2>
+<h2 id="general-solutions">General Solutions<a class="headerlink" href="#general-solutions" title="Permanent link">&para;</a></h2>
 <p>An architectural approach is to create Data Transfer Objects and avoid binding input directly to domain objects. Only the fields that are meant to be editable by the user are included in the DTO.</p>
-<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserRegistrationFormDTO</span> </span>{
- <span class="hljs-keyword">private</span> String userid;
- <span class="hljs-keyword">private</span> String password;
- <span class="hljs-keyword">private</span> String email;
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserRegistrationFormDTO</span> <span class="p">{</span>
+ <span class="kd">private</span> <span class="n">String</span> <span class="n">userid</span><span class="p">;</span>
+ <span class="kd">private</span> <span class="n">String</span> <span class="n">password</span><span class="p">;</span>
+ <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="p">;</span>
 
- <span class="hljs-comment">//<span class="hljs-doctag">NOTE:</span> isAdmin field is not present</span>
+ <span class="c1">//NOTE: isAdmin field is not present</span>
 
- <span class="hljs-comment">//Getters &amp; Setters</span>
-}
-</code></pre>
-<h2 id="language--framework-specific-solutions"><a name="language--framework-specific-solutions" class="plugin-anchor" href="#language--framework-specific-solutions"><i class="fa fa-link" aria-hidden="true"></i></a>Language &amp; Framework specific solutions</h2>
-<h3 id="spring-mvc"><a name="spring-mvc" class="plugin-anchor" href="#spring-mvc"><i class="fa fa-link" aria-hidden="true"></i></a>Spring MVC</h3>
-<h4 id="whitelisting"><a name="whitelisting" class="plugin-anchor" href="#whitelisting"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelisting</h4>
-<pre><code class="lang-java"><span class="hljs-meta">@Controller</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span>
-</span>{
-    <span class="hljs-meta">@InitBinder</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initBinder</span><span class="hljs-params">(WebDataBinder binder, WebRequest request)</span>
-    </span>{
-        binder.setAllowedFields([<span class="hljs-string">&quot;userid&quot;</span>,<span class="hljs-string">&quot;password&quot;</span>,<span class="hljs-string">&quot;email&quot;</span>]);
-    }
-...
-}
-</code></pre>
-<p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setAllowedFields-java.lang.String...-" target="_blank">here</a> for the documentation.</p>
-<h4 id="blacklisting"><a name="blacklisting" class="plugin-anchor" href="#blacklisting"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklisting</h4>
-<pre><code class="lang-java"><span class="hljs-meta">@Controller</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span>
-</span>{
-   <span class="hljs-meta">@InitBinder</span>
-   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initBinder</span><span class="hljs-params">(WebDataBinder binder, WebRequest request)</span>
-   </span>{
-      binder.setDisallowedFields([<span class="hljs-string">&quot;isAdmin&quot;</span>]);
-   }
-...
-}
-</code></pre>
-<p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setDisallowedFields-java.lang.String...-" target="_blank">here</a> for the documentation.</p>
-<h3 id="nodejs--mongoose"><a name="nodejs--mongoose" class="plugin-anchor" href="#nodejs--mongoose"><i class="fa fa-link" aria-hidden="true"></i></a>NodeJS + Mongoose</h3>
-<h4 id="whitelisting"><a name="whitelisting" class="plugin-anchor" href="#whitelisting"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelisting</h4>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> UserSchema = <span class="hljs-keyword">new</span> mongoose.Schema({
-    userid: <span class="hljs-built_in">String</span>,
-    password: <span class="hljs-built_in">String</span>,
-    email : <span class="hljs-built_in">String</span>,
-    isAdmin : <span class="hljs-built_in">Boolean</span>,
-});
+ <span class="c1">//Getters &amp; Setters</span>
+<span class="p">}</span>
+</code></pre></div>
 
-UserSchema.statics = {
-    User.userCreateSafeFields: [<span class="hljs-string">&apos;userid&apos;</span>, <span class="hljs-string">&apos;password&apos;</span>, <span class="hljs-string">&apos;email&apos;</span>]
-};
 
-<span class="hljs-keyword">var</span> User = mongoose.model(<span class="hljs-string">&apos;User&apos;</span>, UserSchema);
+<h2 id="language-framework-specific-solutions">Language &amp; Framework specific solutions<a class="headerlink" href="#language-framework-specific-solutions" title="Permanent link">&para;</a></h2>
+<h3 id="spring-mvc">Spring MVC<a class="headerlink" href="#spring-mvc" title="Permanent link">&para;</a></h3>
+<h4 id="whitelisting">Whitelisting<a class="headerlink" href="#whitelisting" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserController</span>
+<span class="p">{</span>
+    <span class="nd">@InitBinder</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span> <span class="n">binder</span><span class="p">,</span> <span class="n">WebRequest</span> <span class="n">request</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">binder</span><span class="p">.</span><span class="na">setAllowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;userid&quot;</span><span class="p">,</span><span class="s">&quot;password&quot;</span><span class="p">,</span><span class="s">&quot;email&quot;</span><span class="o">]</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
 
-_ = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;underscore&apos;</span>);
-<span class="hljs-keyword">var</span> user = <span class="hljs-keyword">new</span> User(_.pick(req.body, User.userCreateSafeFields));
-</code></pre>
-<p>Take a look <a href="http://underscorejs.org/#pick" target="_blank">here</a> for the documentation.</p>
-<h4 id="blacklisting"><a name="blacklisting" class="plugin-anchor" href="#blacklisting"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklisting</h4>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> massAssign = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;mongoose-mass-assign&apos;</span>);
 
-<span class="hljs-keyword">var</span> UserSchema = <span class="hljs-keyword">new</span> mongoose.Schema({
-    userid: <span class="hljs-built_in">String</span>,
-    password: <span class="hljs-built_in">String</span>,
-    email : <span class="hljs-built_in">String</span>,
-    isAdmin : { type: <span class="hljs-built_in">Boolean</span>, protect: <span class="hljs-literal">true</span>, <span class="hljs-keyword">default</span>: <span class="hljs-literal">false</span> }
-});
+<p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setAllowedFields-java.lang.String...-">here</a> for the documentation.</p>
+<h4 id="blacklisting">Blacklisting<a class="headerlink" href="#blacklisting" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserController</span>
+<span class="p">{</span>
+   <span class="nd">@InitBinder</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span> <span class="n">binder</span><span class="p">,</span> <span class="n">WebRequest</span> <span class="n">request</span><span class="p">)</span>
+   <span class="p">{</span>
+      <span class="n">binder</span><span class="p">.</span><span class="na">setDisallowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;isAdmin&quot;</span><span class="o">]</span><span class="p">);</span>
+   <span class="p">}</span>
+<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
 
-UserSchema.plugin(massAssign);
 
-<span class="hljs-keyword">var</span> User = mongoose.model(<span class="hljs-string">&apos;User&apos;</span>, UserSchema);
+<p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setDisallowedFields-java.lang.String...-">here</a> for the documentation.</p>
+<h3 id="nodejs-mongoose">NodeJS + Mongoose<a class="headerlink" href="#nodejs-mongoose" title="Permanent link">&para;</a></h3>
+<h4 id="whitelisting_1">Whitelisting<a class="headerlink" href="#whitelisting_1" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">UserSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
+    <span class="nx">userid</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">password</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">email</span> <span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">isAdmin</span> <span class="o">:</span> <span class="nb">Boolean</span><span class="p">,</span>
+<span class="p">});</span>
 
-<span class="hljs-comment">/** Static method, useful for creation **/</span>
-<span class="hljs-keyword">var</span> user = User.massAssign(req.body);
+<span class="nx">UserSchema</span><span class="p">.</span><span class="nx">statics</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;userid&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">]</span>
+<span class="p">};</span>
 
-<span class="hljs-comment">/** Instance method, useful for updating**/</span>
-<span class="hljs-keyword">var</span> user = <span class="hljs-keyword">new</span> User;
-user.massAssign(req.body);
+<span class="kd">var</span> <span class="nx">User</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span> <span class="nx">UserSchema</span><span class="p">);</span>
 
-<span class="hljs-comment">/** Static massUpdate method **/</span>
-<span class="hljs-keyword">var</span> input = { userid: <span class="hljs-string">&apos;bhelx&apos;</span>, isAdmin: <span class="hljs-string">&apos;true&apos;</span> };
-User.update({ <span class="hljs-string">&apos;_id&apos;</span>: someId }, { $set: User.massUpdate(input) }, <span class="hljs-built_in">console</span>.log);
-</code></pre>
-<p>Take a look <a href="https://www.npmjs.com/package/mongoose-mass-assign" target="_blank">here</a> for the documentation.</p>
-<h3 id="ruby-on-rails"><a name="ruby-on-rails" class="plugin-anchor" href="#ruby-on-rails"><i class="fa fa-link" aria-hidden="true"></i></a>Ruby On Rails</h3>
-<p>Take a look <a href="https://guides.rubyonrails.org/v3.2.9/security.html#mass-assignment" target="_blank">here</a> for the documentation.</p>
-<h3 id="django"><a name="django" class="plugin-anchor" href="#django"><i class="fa fa-link" aria-hidden="true"></i></a>Django</h3>
-<p>Take a look <a href="https://coffeeonthekeyboard.com/mass-assignment-security-part-10-855/" target="_blank">here</a> for the documentation.</p>
-<h3 id="asp-net"><a name="asp-net" class="plugin-anchor" href="#asp-net"><i class="fa fa-link" aria-hidden="true"></i></a>ASP NET</h3>
-<p>Take a look <a href="https://odetocode.com/Blogs/scott/archive/2012/03/11/complete-guide-to-mass-assignment-in-asp-net-mvc.aspx" target="_blank">here</a> for the documentation.</p>
-<h3 id="php-laravel--eloquent"><a name="php-laravel--eloquent" class="plugin-anchor" href="#php-laravel--eloquent"><i class="fa fa-link" aria-hidden="true"></i></a>PHP Laravel + Eloquent</h3>
-<h4 id="whitelisting"><a name="whitelisting" class="plugin-anchor" href="#whitelisting"><i class="fa fa-link" aria-hidden="true"></i></a>Whitelisting</h4>
-<pre><code class="lang-php"><span class="hljs-meta">&lt;?php</span>
+<span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="p">));</span>
+</code></pre></div>
 
-<span class="hljs-keyword">namespace</span> <span class="hljs-title">App</span>;
 
-<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Database</span>\<span class="hljs-title">Eloquent</span>\<span class="hljs-title">Model</span>;
+<p>Take a look <a href="http://underscorejs.org/#pick">here</a> for the documentation.</p>
+<h4 id="blacklisting_1">Blacklisting<a class="headerlink" href="#blacklisting_1" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">massAssign</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose-mass-assign&#39;</span><span class="p">);</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span>
-</span>{
-    <span class="hljs-keyword">private</span> $userid;
-    <span class="hljs-keyword">private</span> $password;
-    <span class="hljs-keyword">private</span> $email;
-    <span class="hljs-keyword">private</span> $isAdmin;
+<span class="kd">var</span> <span class="nx">UserSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
+    <span class="nx">userid</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">password</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">email</span> <span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+    <span class="nx">isAdmin</span> <span class="o">:</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="nb">Boolean</span><span class="p">,</span> <span class="nx">protect</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="k">default</span><span class="o">:</span> <span class="kc">false</span> <span class="p">}</span>
+<span class="p">});</span>
 
-    <span class="hljs-keyword">protected</span> $fillable = <span class="hljs-keyword">array</span>(<span class="hljs-string">&apos;userid&apos;</span>,<span class="hljs-string">&apos;password&apos;</span>,<span class="hljs-string">&apos;email&apos;</span>);
-}
-</code></pre>
-<p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment" target="_blank">here</a> for the documentation.</p>
-<h4 id="blacklisting"><a name="blacklisting" class="plugin-anchor" href="#blacklisting"><i class="fa fa-link" aria-hidden="true"></i></a>Blacklisting</h4>
-<pre><code class="lang-php"><span class="hljs-meta">&lt;?php</span>
+<span class="nx">UserSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">massAssign</span><span class="p">);</span>
 
-<span class="hljs-keyword">namespace</span> <span class="hljs-title">App</span>;
+<span class="kd">var</span> <span class="nx">User</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span> <span class="nx">UserSchema</span><span class="p">);</span>
 
-<span class="hljs-keyword">use</span> <span class="hljs-title">Illuminate</span>\<span class="hljs-title">Database</span>\<span class="hljs-title">Eloquent</span>\<span class="hljs-title">Model</span>;
+<span class="cm">/** Static method, useful for creation **/</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">User</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span>
-</span>{
-    <span class="hljs-keyword">private</span> $userid;
-    <span class="hljs-keyword">private</span> $password;
-    <span class="hljs-keyword">private</span> $email;
-    <span class="hljs-keyword">private</span> $isAdmin;
+<span class="cm">/** Instance method, useful for updating**/</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">;</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
 
-    <span class="hljs-keyword">protected</span> $guarded = <span class="hljs-keyword">array</span>(<span class="hljs-string">&apos;isAdmin&apos;</span>);
-}
-</code></pre>
-<p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment" target="_blank">here</a> for the documentation.</p>
-<h3 id="grails"><a name="grails" class="plugin-anchor" href="#grails"><i class="fa fa-link" aria-hidden="true"></i></a>Grails</h3>
-<p>Take a look <a href="http://spring.io/blog/2012/03/28/secure-data-binding-with-grails/" target="_blank">here</a> for the documentation.</p>
-<h3 id="play"><a name="play" class="plugin-anchor" href="#play"><i class="fa fa-link" aria-hidden="true"></i></a>Play</h3>
-<p>Take a look <a href="https://www.playframework.com/documentation/1.4.x/controllers#nobinding" target="_blank">here</a> for the documentation.</p>
-<h3 id="jackson-json-object-mapper"><a name="jackson-json-object-mapper" class="plugin-anchor" href="#jackson-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>Jackson (JSON Object Mapper)</h3>
-<p>Take a look <a href="https://www.baeldung.com/jackson-field-serializable-deserializable-or-not" target="_blank">here</a> and <a href="http://lifelongprogrammer.blogspot.com/2015/09/using-jackson-view-to-protect-mass-assignment.html" target="_blank">here</a> for the documentation.</p>
-<h3 id="gson-json-object-mapper"><a name="gson-json-object-mapper" class="plugin-anchor" href="#gson-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>GSON (JSON Object Mapper)</h3>
-<p>Take a look <a href="https://sites.google.com/site/gson/gson-user-guide#TOC-Excluding-Fields-From-Serialization-and-Deserialization" target="_blank">here</a> and <a href="https://stackoverflow.com/a/27986860" target="_blank">here</a> for the document.</p>
-<h3 id="json-lib-json-object-mapper"><a name="json-lib-json-object-mapper" class="plugin-anchor" href="#json-lib-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>JSON-Lib (JSON Object Mapper)</h3>
-<p>Take a look <a href="http://json-lib.sourceforge.net/advanced.html" target="_blank">here</a> for the documentation.</p>
-<h3 id="flexjson-json-object-mapper"><a name="flexjson-json-object-mapper" class="plugin-anchor" href="#flexjson-json-object-mapper"><i class="fa fa-link" aria-hidden="true"></i></a>Flexjson (JSON Object Mapper)</h3>
-<p>Take a look <a href="http://flexjson.sourceforge.net/#Serialization" target="_blank">here</a> for the documentation.</p>
-<h2 id="references-and-future-reading"><a name="references-and-future-reading" class="plugin-anchor" href="#references-and-future-reading"><i class="fa fa-link" aria-hidden="true"></i></a>References and future reading</h2>
+<span class="cm">/** Static massUpdate method **/</span>
+<span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">userid</span><span class="o">:</span> <span class="s1">&#39;bhelx&#39;</span><span class="p">,</span> <span class="nx">isAdmin</span><span class="o">:</span> <span class="s1">&#39;true&#39;</span> <span class="p">};</span>
+<span class="nx">User</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span> <span class="s1">&#39;_id&#39;</span><span class="o">:</span> <span class="nx">someId</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">$set</span><span class="o">:</span> <span class="nx">User</span><span class="p">.</span><span class="nx">massUpdate</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">},</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
+</code></pre></div>
+
+
+<p>Take a look <a href="https://www.npmjs.com/package/mongoose-mass-assign">here</a> for the documentation.</p>
+<h3 id="ruby-on-rails">Ruby On Rails<a class="headerlink" href="#ruby-on-rails" title="Permanent link">&para;</a></h3>
+<p>Take a look <a href="https://guides.rubyonrails.org/v3.2.9/security.html#mass-assignment">here</a> for the documentation.</p>
+<h3 id="django">Django<a class="headerlink" href="#django" title="Permanent link">&para;</a></h3>
+<p>Take a look <a href="https://coffeeonthekeyboard.com/mass-assignment-security-part-10-855/">here</a> for the documentation.</p>
+<h3 id="asp-net">ASP NET<a class="headerlink" href="#asp-net" title="Permanent link">&para;</a></h3>
+<p>Take a look <a href="https://odetocode.com/Blogs/scott/archive/2012/03/11/complete-guide-to-mass-assignment-in-asp-net-mvc.aspx">here</a> for the documentation.</p>
+<h3 id="php-laravel-eloquent">PHP Laravel + Eloquent<a class="headerlink" href="#php-laravel-eloquent" title="Permanent link">&para;</a></h3>
+<h4 id="whitelisting_2">Whitelisting<a class="headerlink" href="#whitelisting_2" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">App</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Illuminate\Database\Eloquent\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">User extends Model</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$userid</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$password</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$email</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$isAdmin</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="nv">$fillable </span><span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;userid&#39;</span><span class="p">,</span><span class="s1">&#39;password&#39;</span><span class="p">,</span><span class="s1">&#39;email&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment">here</a> for the documentation.</p>
+<h4 id="blacklisting_2">Blacklisting<a class="headerlink" href="#blacklisting_2" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">App</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Illuminate\Database\Eloquent\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">User extends Model</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$userid</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$password</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$email</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$isAdmin</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="nv">$guarded </span><span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;isAdmin&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment">here</a> for the documentation.</p>
+<h3 id="grails">Grails<a class="headerlink" href="#grails" title="Permanent link">&para;</a></h3>
+<p>Take a look <a href="http://spring.io/blog/2012/03/28/secure-data-binding-with-grails/">here</a> for the documentation.</p>
+<h3 id="play">Play<a class="headerlink" href="#play" title="Permanent link">&para;</a></h3>
+<p>Take a look <a href="https://www.playframework.com/documentation/1.4.x/controllers#nobinding">here</a> for the documentation.</p>
+<h3 id="jackson-json-object-mapper">Jackson (JSON Object Mapper)<a class="headerlink" href="#jackson-json-object-mapper" title="Permanent link">&para;</a></h3>
+<p>Take a look <a href="https://www.baeldung.com/jackson-field-serializable-deserializable-or-not">here</a> and <a href="http://lifelongprogrammer.blogspot.com/2015/09/using-jackson-view-to-protect-mass-assignment.html">here</a> for the documentation.</p>
+<h3 id="gson-json-object-mapper">GSON (JSON Object Mapper)<a class="headerlink" href="#gson-json-object-mapper" title="Permanent link">&para;</a></h3>
+<p>Take a look <a href="https://sites.google.com/site/gson/gson-user-guide#TOC-Excluding-Fields-From-Serialization-and-Deserialization">here</a> and <a href="https://stackoverflow.com/a/27986860">here</a> for the document.</p>
+<h3 id="json-lib-json-object-mapper">JSON-Lib (JSON Object Mapper)<a class="headerlink" href="#json-lib-json-object-mapper" title="Permanent link">&para;</a></h3>
+<p>Take a look <a href="http://json-lib.sourceforge.net/advanced.html">here</a> for the documentation.</p>
+<h3 id="flexjson-json-object-mapper">Flexjson (JSON Object Mapper)<a class="headerlink" href="#flexjson-json-object-mapper" title="Permanent link">&para;</a></h3>
+<p>Take a look <a href="http://flexjson.sourceforge.net/#Serialization">here</a> for the documentation.</p>
+<h2 id="references-and-future-reading">References and future reading<a class="headerlink" href="#references-and-future-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://code.tutsplus.com/tutorials/mass-assignment-rails-and-you--net-31695" target="_blank">Mass Assignment, Rails and You</a></li>
+<li><a href="https://code.tutsplus.com/tutorials/mass-assignment-rails-and-you--net-31695">Mass Assignment, Rails and You</a></li>
 </ul>
-
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
-
-                        </div>
-                    </div>
                 
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
-
-            
-                
-                <a href="Logging_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Logging ">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: Microservices based Security Arch Doc ">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Logging
+              </div>
+            </div>
+          </a>
         
+        
+          <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Microservices based Security Arch Doc
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Mass Assignment ","level":"1.41","depth":1,"next":{"title":"Microservices based Security Arch Doc ","level":"1.42","depth":1,"path":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","ref":"cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.md","articles":[]},"previous":{"title":"Logging ","level":"1.40","depth":1,"path":"cheatsheets/Logging_Cheat_Sheet.md","ref":"cheatsheets/Logging_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/Mass_Assignment_Cheat_Sheet.md","mtime":"2020-05-27T19:41:37.100Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-27T19:42:04.146Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
-
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-

@@ -1,1077 +1,1788 @@
 
-<!DOCTYPE HTML>
-<html lang="en" >
-    <head>
-        <meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>XML External Entity Prevention  · OWASP Cheat Sheet Series</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
-        <meta name="generator" content="GitBook 3.2.3">
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.2.2">
+    
+    
+      
+        <title>XML External Entity Prevention</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a2408e81.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
         
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
         
-        
-    
-    <link rel="stylesheet" href="../gitbook/style.css">
-
-    
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
-                
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
-                
-            
-        
-
-    
-
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-        
-    
-    
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
-    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
-
-    
-    <link rel="next" href="XML_Security_Cheat_Sheet.html" />
-    
-    
-    <link rel="prev" href="Web_Service_Security_Cheat_Sheet.html" />
-    
-
-    </head>
-    <body>
-        
-<div class="book">
-    <div class="book-summary">
-        
-            
-<div id="book-search-input" role="search">
-    <input type="text" placeholder="Type to search" />
-</div>
-
-            
-                <nav role="navigation">
-                
-
-
-<ul class="summary">
-    
-    
-
-    
-
-    
-        
-        <li class="header">Cheatsheets</li>
-        
-        
-    
-        <li class="chapter " data-level="1.1" data-path="../">
-            
-                <a href="../">
-            
-                    
-                    Introduction
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2" data-path="Index.html">
-            
-                <a href="Index.html">
-            
-                    
-                    Index Alphabetical
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.3" data-path="IndexASVS.html">
-            
-                <a href="IndexASVS.html">
-            
-                    
-                    Index ASVS
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.4" data-path="IndexProactiveControls.html">
-            
-                <a href="IndexProactiveControls.html">
-            
-                    
-                    Index Proactive Controls
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.5" data-path="AJAX_Security_Cheat_Sheet.html">
-            
-                <a href="AJAX_Security_Cheat_Sheet.html">
-            
-                    
-                    AJAX Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.6" data-path="Abuse_Case_Cheat_Sheet.html">
-            
-                <a href="Abuse_Case_Cheat_Sheet.html">
-            
-                    
-                    Abuse Case 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.7" data-path="Access_Control_Cheat_Sheet.html">
-            
-                <a href="Access_Control_Cheat_Sheet.html">
-            
-                    
-                    Access Control 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.8" data-path="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                <a href="Attack_Surface_Analysis_Cheat_Sheet.html">
-            
-                    
-                    Attack Surface Analysis 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.9" data-path="Authentication_Cheat_Sheet.html">
-            
-                <a href="Authentication_Cheat_Sheet.html">
-            
-                    
-                    Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.10" data-path="Authorization_Testing_Automation.html">
-            
-                <a href="Authorization_Testing_Automation.html">
-            
-                    
-                    Authorization Testing Automation
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.11" data-path="Bean_Validation_Cheat_Sheet.html">
-            
-                <a href="Bean_Validation_Cheat_Sheet.html">
-            
-                    
-                    Bean Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.12" data-path="C-Based_Toolchain_Hardening.html">
-            
-                <a href="C-Based_Toolchain_Hardening.html">
-            
-                    
-                    C-Based Toolchain Hardening
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.13" data-path="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
-            
-                    
-                    C-Based Toolchain Hardening 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.14" data-path="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
-            
-                    
-                    Choosing and Using Security Questions 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.15" data-path="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                <a href="Clickjacking_Defense_Cheat_Sheet.html">
-            
-                    
-                    Clickjacking Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.16" data-path="Content_Security_Policy_Cheat_Sheet.html">
-            
-                <a href="Content_Security_Policy_Cheat_Sheet.html">
-            
-                    
-                    Content Security Policy 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.17" data-path="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Credential Stuffing Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.18" data-path="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross-Site Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.19" data-path="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Cross Site Scripting Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.20" data-path="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                <a href="Cryptographic_Storage_Cheat_Sheet.html">
-            
-                    
-                    Cryptographic Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.21" data-path="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
-            
-                    
-                    DOM based XSS Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.22" data-path="Database_Security_Cheat_Sheet.html">
-            
-                <a href="Database_Security_Cheat_Sheet.html">
-            
-                    
-                    Database Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.23" data-path="Denial_of_Service_Cheat_Sheet.html">
-            
-                <a href="Denial_of_Service_Cheat_Sheet.html">
-            
-                    
-                    Denial of Service 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.24" data-path="Deserialization_Cheat_Sheet.html">
-            
-                <a href="Deserialization_Cheat_Sheet.html">
-            
-                    
-                    Deserialization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.25" data-path="Docker_Security_Cheat_Sheet.html">
-            
-                <a href="Docker_Security_Cheat_Sheet.html">
-            
-                    
-                    Docker Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.26" data-path="DotNet_Security_Cheat_Sheet.html">
-            
-                <a href="DotNet_Security_Cheat_Sheet.html">
-            
-                    
-                    DotNet Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.27" data-path="Error_Handling_Cheat_Sheet.html">
-            
-                <a href="Error_Handling_Cheat_Sheet.html">
-            
-                    
-                    Error Handling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.28" data-path="File_Upload_Cheat_Sheet.html">
-            
-                <a href="File_Upload_Cheat_Sheet.html">
-            
-                    
-                    File Upload 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.29" data-path="Forgot_Password_Cheat_Sheet.html">
-            
-                <a href="Forgot_Password_Cheat_Sheet.html">
-            
-                    
-                    Forgot Password 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.30" data-path="HTML5_Security_Cheat_Sheet.html">
-            
-                <a href="HTML5_Security_Cheat_Sheet.html">
-            
-                    
-                    HTML5 Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.31" data-path="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
-            
-                    
-                    HTTP Strict Transport Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.32" data-path="Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.33" data-path="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                <a href="Injection_Prevention_Cheat_Sheet_in_Java.html">
-            
-                    
-                    Injection Prevention  in Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.34" data-path="Input_Validation_Cheat_Sheet.html">
-            
-                <a href="Input_Validation_Cheat_Sheet.html">
-            
-                    
-                    Input Validation 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.35" data-path="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Insecure Direct Object Reference Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.36" data-path="JAAS_Cheat_Sheet.html">
-            
-                <a href="JAAS_Cheat_Sheet.html">
-            
-                    
-                    JAAS 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.37" data-path="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                <a href="JSON_Web_Token_Cheat_Sheet_for_Java.html">
-            
-                    
-                    JSON Web Token  for Java
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.38" data-path="Key_Management_Cheat_Sheet.html">
-            
-                <a href="Key_Management_Cheat_Sheet.html">
-            
-                    
-                    Key Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.39" data-path="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    LDAP Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.40" data-path="Logging_Cheat_Sheet.html">
-            
-                <a href="Logging_Cheat_Sheet.html">
-            
-                    
-                    Logging 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.41" data-path="Mass_Assignment_Cheat_Sheet.html">
-            
-                <a href="Mass_Assignment_Cheat_Sheet.html">
-            
-                    
-                    Mass Assignment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.42" data-path="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
-            
-                    
-                    Microservices based Security Arch Doc 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.43" data-path="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                <a href="Multifactor_Authentication_Cheat_Sheet.html">
-            
-                    
-                    Multifactor Authentication 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.44" data-path="Nodejs_security_cheat_sheet.html">
-            
-                <a href="Nodejs_security_cheat_sheet.html">
-            
-                    
-                    Nodejs security cheat sheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.45" data-path="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">
-            
-                    
-                    OS Command Injection Defense 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.46" data-path="PHP_Configuration_Cheat_Sheet.html">
-            
-                <a href="PHP_Configuration_Cheat_Sheet.html">
-            
-                    
-                    PHP Configuration 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.47" data-path="Password_Storage_Cheat_Sheet.html">
-            
-                <a href="Password_Storage_Cheat_Sheet.html">
-            
-                    
-                    Password Storage 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.48" data-path="Pinning_Cheat_Sheet.html">
-            
-                <a href="Pinning_Cheat_Sheet.html">
-            
-                    
-                    Pinning 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.49" data-path="Query_Parameterization_Cheat_Sheet.html">
-            
-                <a href="Query_Parameterization_Cheat_Sheet.html">
-            
-                    
-                    Query Parameterization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.50" data-path="REST_Assessment_Cheat_Sheet.html">
-            
-                <a href="REST_Assessment_Cheat_Sheet.html">
-            
-                    
-                    REST Assessment 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.51" data-path="REST_Security_Cheat_Sheet.html">
-            
-                <a href="REST_Security_Cheat_Sheet.html">
-            
-                    
-                    REST Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.52" data-path="Ruby_on_Rails_Cheatsheet.html">
-            
-                <a href="Ruby_on_Rails_Cheatsheet.html">
-            
-                    
-                    Ruby on Rails Cheatsheet
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.53" data-path="SAML_Security_Cheat_Sheet.html">
-            
-                <a href="SAML_Security_Cheat_Sheet.html">
-            
-                    
-                    SAML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.54" data-path="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                <a href="SQL_Injection_Prevention_Cheat_Sheet.html">
-            
-                    
-                    SQL Injection Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.55" data-path="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
-            
-                    
-                    Securing Cascading Style Sheets 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.56" data-path="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
-            
-                    
-                    Server Side Request Forgery Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.57" data-path="Session_Management_Cheat_Sheet.html">
-            
-                <a href="Session_Management_Cheat_Sheet.html">
-            
-                    
-                    Session Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.58" data-path="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                <a href="TLS_Cipher_String_Cheat_Sheet.html">
-            
-                    
-                    TLS Cipher String 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.59" data-path="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                <a href="Third_Party_Javascript_Management_Cheat_Sheet.html">
-            
-                    
-                    Third Party Javascript Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.60" data-path="Threat_Modeling_Cheat_Sheet.html">
-            
-                <a href="Threat_Modeling_Cheat_Sheet.html">
-            
-                    
-                    Threat Modeling 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.61" data-path="Transaction_Authorization_Cheat_Sheet.html">
-            
-                <a href="Transaction_Authorization_Cheat_Sheet.html">
-            
-                    
-                    Transaction Authorization 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.62" data-path="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                <a href="Transport_Layer_Protection_Cheat_Sheet.html">
-            
-                    
-                    Transport Layer Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.63" data-path="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
-            
-                    
-                    Unvalidated Redirects and Forwards 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.64" data-path="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                <a href="User_Privacy_Protection_Cheat_Sheet.html">
-            
-                    
-                    User Privacy Protection 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.65" data-path="Virtual_Patching_Cheat_Sheet.html">
-            
-                <a href="Virtual_Patching_Cheat_Sheet.html">
-            
-                    
-                    Virtual Patching 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.66" data-path="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                <a href="Vulnerability_Disclosure_Cheat_Sheet.html">
-            
-                    
-                    Vulnerability Disclosure 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.67" data-path="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">
-            
-                    
-                    Vulnerable Dependency Management 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.68" data-path="Web_Service_Security_Cheat_Sheet.html">
-            
-                <a href="Web_Service_Security_Cheat_Sheet.html">
-            
-                    
-                    Web Service Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter active" data-level="1.69" data-path="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">
-            
-                    
-                    XML External Entity Prevention 
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.70" data-path="XML_Security_Cheat_Sheet.html">
-            
-                <a href="XML_Security_Cheat_Sheet.html">
-            
-                    
-                    XML Security 
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
-
-    <li class="divider"></li>
-
-    <li>
-        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            Published with GitBook
+        <a href="#xml-external-entity-prevention-cheat-sheet" class="md-skip">
+          Skip to content
         </a>
-    </li>
-</ul>
-
-
-                </nav>
-            
-        
+      
     </div>
-
-    <div class="book-body">
-        
-            <div class="body-inner">
-                
-                    
-
-<div class="book-header" role="navigation">
+    <div data-md-component="announce">
+      
+    </div>
     
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >XML External Entity Prevention </a>
-    </h1>
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              XML External Entity Prevention
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-                    <div class="page-wrapper" tabindex="-1" role="main">
-                        <div class="page-inner">
-                            
-<div id="book-search-results">
-    <div class="search-noresults">
     
-                                <section class="normal markdown-section">
-                                
-                                <h1 id="xml-external-entity-prevention-cheat-sheet"><a name="xml-external-entity-prevention-cheat-sheet" class="plugin-anchor" href="#xml-external-entity-prevention-cheat-sheet"><i class="fa fa-link" aria-hidden="true"></i></a>XML External Entity Prevention Cheat Sheet</h1>
-<h2 id="introduction"><a name="introduction" class="plugin-anchor" href="#introduction"><i class="fa fa-link" aria-hidden="true"></i></a>Introduction</h2>
-<p><em>XML eXternal Entity injection</em> (XXE), which is now part of the <a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29" target="_blank">OWASP Top 10</a> via the point <strong>A4</strong>, is a type of attack against an application that parses XML input.</p>
-<p>XXE issue is referenced under the ID <a href="https://cwe.mitre.org/data/definitions/611.html" target="_blank">611</a> in the <a href="https://cwe.mitre.org/index.html" target="_blank">Common Weakness Enumeration</a> referential.</p>
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" title="Index Alphabetical" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" title="Index ASVS" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" title="Index Proactive Controls" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" title="AJAX Security" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" title="Abuse Case" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" title="Access Control" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" title="Attack Surface Analysis" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" title="Authorization Testing Automation" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" title="Bean Validation" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" title="Choosing and Using Security Questions" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" title="Clickjacking Defense" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" title="Content Security Policy" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" title="Credential Stuffing Prevention" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" title="Cross-Site Request Forgery Prevention" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" title="Cross Site Scripting Prevention" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" title="Cryptographic Storage" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" title="DOM based XSS Prevention" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" title="Database Security" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" title="Denial of Service" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" title="Deserialization" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" title="Docker Security" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" title="DotNet Security" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" title="Error Handling" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" title="File Upload" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" title="Forgot Password" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" title="HTML5 Security" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" title="HTTP Strict Transport Security" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" title="Injection Prevention" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" title="Injection Prevention in Java" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" title="Input Validation" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" title="Insecure Direct Object Reference Prevention" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" title="JAAS" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" title="JSON Web Token for Java" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" title="Key Management" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" title="LDAP Injection Prevention" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" title="Logging" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" title="Mass Assignment" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" title="Microservices based Security Arch Doc" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" title="Multifactor Authentication" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" title="Nodejs Security" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" title="OS Command Injection Defense" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" title="PHP Configuration" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" title="Password Storage" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" title="Pinning" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" title="Query Parameterization" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" title="REST Assessment" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" title="REST Security" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" title="Ruby on Rails" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" title="SAML Security" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" title="SQL Injection Prevention" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" title="Securing Cascading Style Sheets" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" title="Server Side Request Forgery Prevention" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" title="Session Management" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" title="TLS Cipher String" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" title="Third Party Javascript Management" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" title="Threat Modeling" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" title="Transaction Authorization" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" title="Transport Layer Protection" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" title="Unvalidated Redirects and Forwards" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" title="User Privacy Protection" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" title="Virtual Patching" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" title="Vulnerability Disclosure" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" title="Vulnerable Dependency Management" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        XML External Entity Prevention
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" title="XML External Entity Prevention" class="md-nav__link md-nav__link--active">
+      XML External Entity Prevention
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-guidance" class="md-nav__link">
+    General Guidance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cc" class="md-nav__link">
+    C/C++
+  </a>
+  
+    <nav class="md-nav" aria-label="C/C++">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#libxml2" class="md-nav__link">
+    libxml2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#libxerces-c" class="md-nav__link">
+    libxerces-c
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    Java
+  </a>
+  
+    <nav class="md-nav" aria-label="Java">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j" class="md-nav__link">
+    JAXP DocumentBuilderFactory, SAXParserFactory and DOM4J
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlinputfactory-a-stax-parser" class="md-nav__link">
+    XMLInputFactory (a StAX parser)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformerfactory" class="md-nav__link">
+    TransformerFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validator" class="md-nav__link">
+    Validator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schemafactory" class="md-nav__link">
+    SchemaFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxtransformerfactory" class="md-nav__link">
+    SAXTransformerFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlreader" class="md-nav__link">
+    XMLReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxreader" class="md-nav__link">
+    SAXReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxbuilder" class="md-nav__link">
+    SAXBuilder
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-op-entityresolver" class="md-nav__link">
+    No-op EntityResolver
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jaxb-unmarshaller" class="md-nav__link">
+    JAXB Unmarshaller
+  </a>
+  
+    <nav class="md-nav" aria-label="JAXB Unmarshaller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-8-and-up" class="md-nav__link">
+    Java 8 and up
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xpathexpression" class="md-nav__link">
+    XPathExpression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#javabeansxmldecoder" class="md-nav__link">
+    java.beans.XMLDecoder
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-xml-parsers" class="md-nav__link">
+    Other XML Parsers
+  </a>
+  
+    <nav class="md-nav" aria-label="Other XML Parsers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spring-framework-mvcoxm-xxe-vulnerabilities" class="md-nav__link">
+    Spring Framework MVC/OXM XXE Vulnerabilities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#castor" class="md-nav__link">
+    Castor
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#net" class="md-nav__link">
+    .NET
+  </a>
+  
+    <nav class="md-nav" aria-label=".NET">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linq-to-xml" class="md-nav__link">
+    LINQ to XML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmldictionaryreader" class="md-nav__link">
+    XmlDictionaryReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmldocument" class="md-nav__link">
+    XmlDocument
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlnodereader" class="md-nav__link">
+    XmlNodeReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlreader_1" class="md-nav__link">
+    XmlReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmltextreader" class="md-nav__link">
+    XmlTextReader
+  </a>
+  
+    <nav class="md-nav" aria-label="XmlTextReader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prior-to-net-40" class="md-nav__link">
+    Prior to .NET 4.0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#net-40-net-452" class="md-nav__link">
+    .NET 4.0 - .NET 4.5.2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#net-452-and-later" class="md-nav__link">
+    .NET 4.5.2 and later
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xpathnavigator" class="md-nav__link">
+    XPathNavigator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xslcompiledtransform" class="md-nav__link">
+    XslCompiledTransform
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ios" class="md-nav__link">
+    iOS
+  </a>
+  
+    <nav class="md-nav" aria-label="iOS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#libxml2_1" class="md-nav__link">
+    libxml2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nsxmldocument" class="md-nav__link">
+    NSXMLDocument
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#php" class="md-nav__link">
+    PHP
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    Python
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-guidance" class="md-nav__link">
+    General Guidance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cc" class="md-nav__link">
+    C/C++
+  </a>
+  
+    <nav class="md-nav" aria-label="C/C++">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#libxml2" class="md-nav__link">
+    libxml2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#libxerces-c" class="md-nav__link">
+    libxerces-c
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    Java
+  </a>
+  
+    <nav class="md-nav" aria-label="Java">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j" class="md-nav__link">
+    JAXP DocumentBuilderFactory, SAXParserFactory and DOM4J
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlinputfactory-a-stax-parser" class="md-nav__link">
+    XMLInputFactory (a StAX parser)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformerfactory" class="md-nav__link">
+    TransformerFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validator" class="md-nav__link">
+    Validator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schemafactory" class="md-nav__link">
+    SchemaFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxtransformerfactory" class="md-nav__link">
+    SAXTransformerFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlreader" class="md-nav__link">
+    XMLReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxreader" class="md-nav__link">
+    SAXReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxbuilder" class="md-nav__link">
+    SAXBuilder
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-op-entityresolver" class="md-nav__link">
+    No-op EntityResolver
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jaxb-unmarshaller" class="md-nav__link">
+    JAXB Unmarshaller
+  </a>
+  
+    <nav class="md-nav" aria-label="JAXB Unmarshaller">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-8-and-up" class="md-nav__link">
+    Java 8 and up
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xpathexpression" class="md-nav__link">
+    XPathExpression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#javabeansxmldecoder" class="md-nav__link">
+    java.beans.XMLDecoder
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-xml-parsers" class="md-nav__link">
+    Other XML Parsers
+  </a>
+  
+    <nav class="md-nav" aria-label="Other XML Parsers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spring-framework-mvcoxm-xxe-vulnerabilities" class="md-nav__link">
+    Spring Framework MVC/OXM XXE Vulnerabilities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#castor" class="md-nav__link">
+    Castor
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#net" class="md-nav__link">
+    .NET
+  </a>
+  
+    <nav class="md-nav" aria-label=".NET">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linq-to-xml" class="md-nav__link">
+    LINQ to XML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmldictionaryreader" class="md-nav__link">
+    XmlDictionaryReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmldocument" class="md-nav__link">
+    XmlDocument
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlnodereader" class="md-nav__link">
+    XmlNodeReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlreader_1" class="md-nav__link">
+    XmlReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmltextreader" class="md-nav__link">
+    XmlTextReader
+  </a>
+  
+    <nav class="md-nav" aria-label="XmlTextReader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prior-to-net-40" class="md-nav__link">
+    Prior to .NET 4.0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#net-40-net-452" class="md-nav__link">
+    .NET 4.0 - .NET 4.5.2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#net-452-and-later" class="md-nav__link">
+    .NET 4.5.2 and later
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xpathnavigator" class="md-nav__link">
+    XPathNavigator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xslcompiledtransform" class="md-nav__link">
+    XslCompiledTransform
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ios" class="md-nav__link">
+    iOS
+  </a>
+  
+    <nav class="md-nav" aria-label="iOS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#libxml2_1" class="md-nav__link">
+    libxml2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nsxmldocument" class="md-nav__link">
+    NSXMLDocument
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#php" class="md-nav__link">
+    PHP
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    Python
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="xml-external-entity-prevention-cheat-sheet">XML External Entity Prevention Cheat Sheet<a class="headerlink" href="#xml-external-entity-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p><em>XML eXternal Entity injection</em> (XXE), which is now part of the <a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29">OWASP Top 10</a> via the point <strong>A4</strong>, is a type of attack against an application that parses XML input.</p>
+<p>XXE issue is referenced under the ID <a href="https://cwe.mitre.org/data/definitions/611.html">611</a> in the <a href="https://cwe.mitre.org/index.html">Common Weakness Enumeration</a> referential.</p>
 <p>This attack occurs when untrusted XML input containing a <strong>reference to an external entity is processed by a weakly configured XML parser</strong>.</p>
-<p>This attack may lead to the disclosure of confidential data, denial of service, <a href="https://owasp.org/www-community/attacks/Server_Side_Request_Forgery" target="_blank">Server Side Request Forgery</a> (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.</p>
-<p>For more information on XXE, please visit <a href="https://en.wikipedia.org/wiki/XML_external_entity_attack" target="_blank">XML External Entity (XXE)</a>.</p>
-<h2 id="general-guidance"><a name="general-guidance" class="plugin-anchor" href="#general-guidance"><i class="fa fa-link" aria-hidden="true"></i></a>General Guidance</h2>
+<p>This attack may lead to the disclosure of confidential data, denial of service, <a href="https://owasp.org/www-community/attacks/Server_Side_Request_Forgery">Server Side Request Forgery</a> (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.</p>
+<p>For more information on XXE, please visit <a href="https://en.wikipedia.org/wiki/XML_external_entity_attack">XML External Entity (XXE)</a>.</p>
+<h2 id="general-guidance">General Guidance<a class="headerlink" href="#general-guidance" title="Permanent link">&para;</a></h2>
 <p>The safest way to prevent XXE is always to disable DTDs (External Entities) completely. Depending on the parser, the method should be similar to the following:</p>
-<pre><code class="lang-java">factory.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>, <span class="hljs-keyword">true</span>);
-</code></pre>
-<p>Disabling <a href="https://www.w3schools.com/xml/xml_dtd.asp" target="_blank">DTD</a>s also makes the parser secure against denial of services (DOS) attacks such as <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack" target="_blank">Billion Laughs</a>. If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that&apos;s specific to each parser.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">factory</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</code></pre></div>
+
+
+<p>Disabling <a href="https://www.w3schools.com/xml/xml_dtd.asp">DTD</a>s also makes the parser secure against denial of services (DOS) attacks such as <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">Billion Laughs</a>. If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that's specific to each parser.</p>
 <p>Detailed XXE Prevention guidance for a number of languages and commonly used XML parsers in those languages is provided below.</p>
-<h2 id="cc"><a name="cc" class="plugin-anchor" href="#cc"><i class="fa fa-link" aria-hidden="true"></i></a>C/C++</h2>
-<h3 id="libxml2"><a name="libxml2" class="plugin-anchor" href="#libxml2"><i class="fa fa-link" aria-hidden="true"></i></a>libxml2</h3>
-<p>The Enum <a href="http://xmlsoft.org/html/libxml-parser.html#xmlParserOption" target="_blank">xmlParserOption</a> should not have the following options defined:</p>
+<h2 id="cc">C/C++<a class="headerlink" href="#cc" title="Permanent link">&para;</a></h2>
+<h3 id="libxml2">libxml2<a class="headerlink" href="#libxml2" title="Permanent link">&para;</a></h3>
+<p>The Enum <a href="http://xmlsoft.org/html/libxml-parser.html#xmlParserOption">xmlParserOption</a> should not have the following options defined:</p>
 <ul>
 <li><code>XML_PARSE_NOENT</code>: Expands entities and substitutes them with replacement text</li>
 <li><code>XML_PARSE_DTDLOAD</code>: Load the external DTD</li>
 </ul>
 <p>Note:</p>
-<p>Per: According to <a href="https://mail.gnome.org/archives/xml/2012-October/msg00045.html" target="_blank">this post</a>, starting with libxml2 version 2.9, XXE has been disabled by default as committed by the following <a href="https://gitlab.gnome.org/GNOME/libxml2/commit/4629ee02ac649c27f9c0cf98ba017c6b5526070f" target="_blank">patch</a>.</p>
+<p>Per: According to <a href="https://mail.gnome.org/archives/xml/2012-October/msg00045.html">this post</a>, starting with libxml2 version 2.9, XXE has been disabled by default as committed by the following <a href="https://gitlab.gnome.org/GNOME/libxml2/commit/4629ee02ac649c27f9c0cf98ba017c6b5526070f">patch</a>.</p>
 <p>Search for the usage of the following APIs to ensure there is no <code>XML_PARSE_NOENT</code> and <code>XML_PARSE_DTDLOAD</code> defined in the parameters:</p>
 <ul>
 <li><code>xmlCtxtReadDoc</code></li>
@@ -1087,222 +1798,254 @@
 <li><code>xmlReadIO</code></li>
 <li><code>xmlReadMemory</code></li>
 </ul>
-<h3 id="libxerces-c"><a name="libxerces-c" class="plugin-anchor" href="#libxerces-c"><i class="fa fa-link" aria-hidden="true"></i></a>libxerces-c</h3>
+<h3 id="libxerces-c">libxerces-c<a class="headerlink" href="#libxerces-c" title="Permanent link">&para;</a></h3>
 <p>Use of <code>XercesDOMParser</code> do this to prevent XXE:</p>
-<pre><code class="lang-cpp">XercesDOMParser *parser = <span class="hljs-keyword">new</span> XercesDOMParser;
-parser-&gt;setCreateEntityReferenceNodes(<span class="hljs-literal">true</span>);
-parser-&gt;setDisableDefaultEntityResolution(<span class="hljs-literal">true</span>);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">XercesDOMParser</span> <span class="o">*</span><span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">XercesDOMParser</span><span class="p">;</span>
+<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setCreateEntityReferenceNodes</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setDisableDefaultEntityResolution</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</code></pre></div>
+
+
 <p>Use of SAXParser, do this to prevent XXE:</p>
-<pre><code class="lang-cpp">SAXParser* parser = <span class="hljs-keyword">new</span> SAXParser;
-parser-&gt;setDisableDefaultEntityResolution(<span class="hljs-literal">true</span>);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">SAXParser</span><span class="o">*</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SAXParser</span><span class="p">;</span>
+<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setDisableDefaultEntityResolution</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</code></pre></div>
+
+
 <p>Use of SAX2XMLReader, do this to prevent XXE:</p>
-<pre><code class="lang-cpp">SAX2XMLReader* reader = XMLReaderFactory::createXMLReader();
-parser-&gt;setFeature(XMLUni::fgXercesDisableDefaultEntityResolution, <span class="hljs-literal">true</span>);
-</code></pre>
-<h2 id="java"><a name="java" class="plugin-anchor" href="#java"><i class="fa fa-link" aria-hidden="true"></i></a>Java</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">SAX2XMLReader</span><span class="o">*</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">XMLReaderFactory</span><span class="o">::</span><span class="n">createXMLReader</span><span class="p">();</span>
+<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setFeature</span><span class="p">(</span><span class="n">XMLUni</span><span class="o">::</span><span class="n">fgXercesDisableDefaultEntityResolution</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+</code></pre></div>
+
+
+<h2 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h2>
 <p>Java applications using XML libraries are particularly vulnerable to XXE because the default settings for most Java XML parsers is to have XXE enabled. To use these parsers safely, you have to explicitly disable XXE in the parser you use. The following describes how to disable XXE in the most commonly used XML parsers for Java.</p>
-<h3 id="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j"><a name="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j" class="plugin-anchor" href="#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j"><i class="fa fa-link" aria-hidden="true"></i></a>JAXP DocumentBuilderFactory, SAXParserFactory and DOM4J</h3>
+<h3 id="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j">JAXP DocumentBuilderFactory, SAXParserFactory and DOM4J<a class="headerlink" href="#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j" title="Permanent link">&para;</a></h3>
 <p><code>DocumentBuilderFactory,</code> <code>SAXParserFactory</code> and <code>DOM4J</code> <code>XML</code> Parsers can be configured using the same techniques to protect them against XXE.</p>
-<p>Only the <code>DocumentBuilderFactory</code> example is presented here. The JAXP <code>DocumentBuilderFactory</code> <a href="https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,%20boolean" target="_blank">setFeature</a>) method allows a developer to control which implementation-specific XML processor features are enabled or disabled.</p>
-<p>The features can either be set on the factory or the underlying <code>XMLReader</code> <a href="https://docs.oracle.com/javase/7/docs/api/org/xml/sax/XMLReader.html#setFeature%28java.lang.String,%20boolean%29" target="_blank">setFeature</a> method.</p>
+<p>Only the <code>DocumentBuilderFactory</code> example is presented here. The JAXP <code>DocumentBuilderFactory</code> <a href="https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,%20boolean)">setFeature</a> method allows a developer to control which implementation-specific XML processor features are enabled or disabled.</p>
+<p>The features can either be set on the factory or the underlying <code>XMLReader</code> <a href="https://docs.oracle.com/javase/7/docs/api/org/xml/sax/XMLReader.html#setFeature%28java.lang.String,%20boolean%29">setFeature</a> method.</p>
 <p>Each XML processor implementation has its own features that govern how DTDs and external entities are processed.</p>
-<p>For a syntax highlighted example code snippet using <code>SAXParserFactory</code>, look <a href="https://gist.github.com/asudhakar02/45e2e6fd8bcdfb4bc3b2" target="_blank">here</a>.</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;
-<span class="hljs-keyword">import</span> javax.xml.parsers.ParserConfigurationException; <span class="hljs-comment">// catching unsupported features</span>
+<p>For a syntax highlighted example code snippet using <code>SAXParserFactory</code>, look <a href="https://gist.github.com/asudhakar02/45e2e6fd8bcdfb4bc3b2">here</a>.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.xml.parsers.DocumentBuilderFactory</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">javax.xml.parsers.ParserConfigurationException</span><span class="p">;</span> <span class="c1">// catching unsupported features</span>
 
-...
+<span class="p">...</span>
 
-DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-String FEATURE = <span class="hljs-keyword">null</span>;
-<span class="hljs-keyword">try</span> {
-    <span class="hljs-comment">// This is the PRIMARY defense. If DTDs (doctypes) are disallowed, almost all</span>
-    <span class="hljs-comment">// XML entity attacks are prevented</span>
-    <span class="hljs-comment">// Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl</span>
-    FEATURE = <span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>;
-    dbf.setFeature(FEATURE, <span class="hljs-keyword">true</span>);
+<span class="n">DocumentBuilderFactory</span> <span class="n">dbf</span> <span class="o">=</span> <span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="n">String</span> <span class="n">FEATURE</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// This is the PRIMARY defense. If DTDs (doctypes) are disallowed, almost all</span>
+    <span class="c1">// XML entity attacks are prevented</span>
+    <span class="c1">// Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl</span>
+    <span class="n">FEATURE</span> <span class="o">=</span> <span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">;</span>
+    <span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
 
-    <span class="hljs-comment">// If you can&apos;t completely disable DTDs, then at least do the following:</span>
-    <span class="hljs-comment">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities</span>
-    <span class="hljs-comment">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities</span>
-    <span class="hljs-comment">// JDK7+ - http://xml.org/sax/features/external-general-entities</span>
-    FEATURE = <span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>;
-    dbf.setFeature(FEATURE, <span class="hljs-keyword">false</span>);
+    <span class="c1">// If you can&#39;t completely disable DTDs, then at least do the following:</span>
+    <span class="c1">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities</span>
+    <span class="c1">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities</span>
+    <span class="c1">// JDK7+ - http://xml.org/sax/features/external-general-entities</span>
+    <span class="n">FEATURE</span> <span class="o">=</span> <span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">;</span>
+    <span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 
-    <span class="hljs-comment">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-parameter-entities</span>
-    <span class="hljs-comment">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities</span>
-    <span class="hljs-comment">// JDK7+ - http://xml.org/sax/features/external-parameter-entities</span>
-    FEATURE = <span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>;
-    dbf.setFeature(FEATURE, <span class="hljs-keyword">false</span>);
+    <span class="c1">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-parameter-entities</span>
+    <span class="c1">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities</span>
+    <span class="c1">// JDK7+ - http://xml.org/sax/features/external-parameter-entities</span>
+    <span class="n">FEATURE</span> <span class="o">=</span> <span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">;</span>
+    <span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 
-    <span class="hljs-comment">// Disable external DTDs as well</span>
-    FEATURE = <span class="hljs-string">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>;
-    dbf.setFeature(FEATURE, <span class="hljs-keyword">false</span>);
+    <span class="c1">// Disable external DTDs as well</span>
+    <span class="n">FEATURE</span> <span class="o">=</span> <span class="s">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span><span class="p">;</span>
+    <span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 
-    <span class="hljs-comment">// and these as well, per Timothy Morgan&apos;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</span>
-    dbf.setXIncludeAware(<span class="hljs-keyword">false</span>);
-    dbf.setExpandEntityReferences(<span class="hljs-keyword">false</span>);
+    <span class="c1">// and these as well, per Timothy Morgan&#39;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</span>
+    <span class="n">dbf</span><span class="p">.</span><span class="na">setXIncludeAware</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="n">dbf</span><span class="p">.</span><span class="na">setExpandEntityReferences</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 
-    <span class="hljs-comment">// And, per Timothy Morgan: &quot;If for some reason support for inline DOCTYPEs are a requirement, then</span>
-    <span class="hljs-comment">// ensure the entity settings are disabled (as shown above) and beware that SSRF attacks</span>
-    <span class="hljs-comment">// (http://cwe.mitre.org/data/definitions/918.html) and denial</span>
-    <span class="hljs-comment">// of service attacks (such as billion laughs or decompression bombs via &quot;jar:&quot;) are a risk.&quot;</span>
+    <span class="c1">// And, per Timothy Morgan: &quot;If for some reason support for inline DOCTYPEs are a requirement, then</span>
+    <span class="c1">// ensure the entity settings are disabled (as shown above) and beware that SSRF attacks</span>
+    <span class="c1">// (http://cwe.mitre.org/data/definitions/918.html) and denial</span>
+    <span class="c1">// of service attacks (such as billion laughs or decompression bombs via &quot;jar:&quot;) are a risk.&quot;</span>
 
-    <span class="hljs-comment">// remaining parser logic</span>
-    ...
-} <span class="hljs-keyword">catch</span> (ParserConfigurationException e) {
-    <span class="hljs-comment">// This should catch a failed setFeature feature</span>
-    logger.info(<span class="hljs-string">&quot;ParserConfigurationException was thrown. The feature &apos;&quot;</span> + FEATURE
-    + <span class="hljs-string">&quot;&apos; is probably not supported by your XML processor.&quot;</span>);
-    ...
-} <span class="hljs-keyword">catch</span> (SAXException e) {
-    <span class="hljs-comment">// On Apache, this should be thrown when disallowing DOCTYPE</span>
-    logger.warning(<span class="hljs-string">&quot;A DOCTYPE was passed into the XML document&quot;</span>);
-    ...
-} <span class="hljs-keyword">catch</span> (IOException e) {
-    <span class="hljs-comment">// XXE that points to a file that doesn&apos;t exist</span>
-    logger.error(<span class="hljs-string">&quot;IOException occurred, XXE may still possible: &quot;</span> + e.getMessage());
-    ...
-}
+    <span class="c1">// remaining parser logic</span>
+    <span class="p">...</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">ParserConfigurationException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// This should catch a failed setFeature feature</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ParserConfigurationException was thrown. The feature &#39;&quot;</span> <span class="o">+</span> <span class="n">FEATURE</span>
+    <span class="o">+</span> <span class="s">&quot;&#39; is probably not supported by your XML processor.&quot;</span><span class="p">);</span>
+    <span class="p">...</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">SAXException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// On Apache, this should be thrown when disallowing DOCTYPE</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">warning</span><span class="p">(</span><span class="s">&quot;A DOCTYPE was passed into the XML document&quot;</span><span class="p">);</span>
+    <span class="p">...</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">IOException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// XXE that points to a file that doesn&#39;t exist</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;IOException occurred, XXE may still possible: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+    <span class="p">...</span>
+<span class="p">}</span>
 
-<span class="hljs-comment">// Load XML file or stream using a XXE agnostic configured parser...</span>
-DocumentBuilder safebuilder = dbf.newDocumentBuilder();
-</code></pre>
-<p><a href="https://xerces.apache.org/xerces-j/" target="_blank">Xerces 1</a> <a href="https://xerces.apache.org/xerces-j/features.html" target="_blank">Features</a>:</p>
+<span class="c1">// Load XML file or stream using a XXE agnostic configured parser...</span>
+<span class="n">DocumentBuilder</span> <span class="n">safebuilder</span> <span class="o">=</span> <span class="n">dbf</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span>
+</code></pre></div>
+
+
+<p><a href="https://xerces.apache.org/xerces-j/">Xerces 1</a> <a href="https://xerces.apache.org/xerces-j/features.html">Features</a>:</p>
 <ul>
-<li>Do not include external entities by setting <a href="https://xerces.apache.org/xerces-j/features.html#external-general-entities" target="_blank">this feature</a> to <code>false</code>.</li>
-<li>Do not include parameter entities by setting <a href="https://xerces.apache.org/xerces-j/features.html#external-parameter-entities" target="_blank">this feature</a> to <code>false</code>.</li>
-<li>Do not include external DTDs by setting <a href="https://xerces.apache.org/xerces-j/features.html#load-external-dtd" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Do not include external entities by setting <a href="https://xerces.apache.org/xerces-j/features.html#external-general-entities">this feature</a> to <code>false</code>.</li>
+<li>Do not include parameter entities by setting <a href="https://xerces.apache.org/xerces-j/features.html#external-parameter-entities">this feature</a> to <code>false</code>.</li>
+<li>Do not include external DTDs by setting <a href="https://xerces.apache.org/xerces-j/features.html#load-external-dtd">this feature</a> to <code>false</code>.</li>
 </ul>
-<p><a href="https://xerces.apache.org/xerces2-j/" target="_blank">Xerces 2</a> <a href="https://xerces.apache.org/xerces2-j/features.html" target="_blank">Features</a>:</p>
+<p><a href="https://xerces.apache.org/xerces2-j/">Xerces 2</a> <a href="https://xerces.apache.org/xerces2-j/features.html">Features</a>:</p>
 <ul>
-<li>Disallow an inline DTD by setting <a href="https://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl" target="_blank">this feature</a> to <code>true</code>.</li>
-<li>Do not include external entities by setting <a href="https://xerces.apache.org/xerces2-j/features.html#external-general-entities" target="_blank">this feature</a> to <code>false</code>.</li>
-<li>Do not include parameter entities by setting <a href="https://xerces.apache.org/xerces2-j/features.html#external-parameter-entities" target="_blank">this feature</a> to <code>false</code>.</li>
-<li>Do not include external DTDs by setting <a href="https://xerces.apache.org/xerces-j/features.html#load-external-dtd" target="_blank">this feature</a> to <code>false</code>.</li>
+<li>Disallow an inline DTD by setting <a href="https://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl">this feature</a> to <code>true</code>.</li>
+<li>Do not include external entities by setting <a href="https://xerces.apache.org/xerces2-j/features.html#external-general-entities">this feature</a> to <code>false</code>.</li>
+<li>Do not include parameter entities by setting <a href="https://xerces.apache.org/xerces2-j/features.html#external-parameter-entities">this feature</a> to <code>false</code>.</li>
+<li>Do not include external DTDs by setting <a href="https://xerces.apache.org/xerces-j/features.html#load-external-dtd">this feature</a> to <code>false</code>.</li>
 </ul>
-<p><strong>Note:</strong> The above defenses require Java 7 update 67, Java 8 update 20, or above, because the above countermeasures for <code>DocumentBuilderFactory</code> and SAXParserFactory are broken in earlier Java versions, per: <a href="http://www.cvedetails.com/cve/CVE-2014-6517/" target="_blank">CVE-2014-6517</a>.</p>
-<h3 id="xmlinputfactory-a-stax-parser"><a name="xmlinputfactory-a-stax-parser" class="plugin-anchor" href="#xmlinputfactory-a-stax-parser"><i class="fa fa-link" aria-hidden="true"></i></a>XMLInputFactory (a StAX parser)</h3>
-<p><a href="http://en.wikipedia.org/wiki/StAX" target="_blank">StAX</a> parsers such as <a href="http://docs.oracle.com/javase/7/docs/api/javax/xml/stream/XMLInputFactory.html" target="_blank"><code>XMLInputFactory</code></a> allow various properties and features to be set.</p>
+<p><strong>Note:</strong> The above defenses require Java 7 update 67, Java 8 update 20, or above, because the above countermeasures for <code>DocumentBuilderFactory</code> and SAXParserFactory are broken in earlier Java versions, per: <a href="http://www.cvedetails.com/cve/CVE-2014-6517/">CVE-2014-6517</a>.</p>
+<h3 id="xmlinputfactory-a-stax-parser">XMLInputFactory (a StAX parser)<a class="headerlink" href="#xmlinputfactory-a-stax-parser" title="Permanent link">&para;</a></h3>
+<p><a href="http://en.wikipedia.org/wiki/StAX">StAX</a> parsers such as <a href="http://docs.oracle.com/javase/7/docs/api/javax/xml/stream/XMLInputFactory.html"><code>XMLInputFactory</code></a> allow various properties and features to be set.</p>
 <p>To protect a Java <code>XMLInputFactory</code> from XXE, do this:</p>
-<pre><code class="lang-java"><span class="hljs-comment">// This disables DTDs entirely for that factory</span>
-xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, <span class="hljs-keyword">false</span>);
-<span class="hljs-comment">// disable external entities</span>
-xmlInputFactory.setProperty(<span class="hljs-string">&quot;javax.xml.stream.isSupportingExternalEntities&quot;</span>, <span class="hljs-keyword">false</span>);
-</code></pre>
-<h3 id="transformerfactory"><a name="transformerfactory" class="plugin-anchor" href="#transformerfactory"><i class="fa fa-link" aria-hidden="true"></i></a>TransformerFactory</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">// This disables DTDs entirely for that factory</span>
+<span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLInputFactory</span><span class="p">.</span><span class="na">SUPPORT_DTD</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="c1">// disable external entities</span>
+<span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;javax.xml.stream.isSupportingExternalEntities&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</code></pre></div>
+
+
+<h3 id="transformerfactory">TransformerFactory<a class="headerlink" href="#transformerfactory" title="Permanent link">&para;</a></h3>
 <p>To protect a <code>javax.xml.transform.TransformerFactory</code> from XXE, do this:</p>
-<pre><code class="lang-java">TransformerFactory tf = TransformerFactory.newInstance();
-tf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
-tf.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, <span class="hljs-string">&quot;&quot;</span>);
-</code></pre>
-<h3 id="validator"><a name="validator" class="plugin-anchor" href="#validator"><i class="fa fa-link" aria-hidden="true"></i></a>Validator</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">TransformerFactory</span> <span class="n">tf</span> <span class="o">=</span> <span class="n">TransformerFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="n">tf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">tf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_STYLESHEET</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+</code></pre></div>
+
+
+<h3 id="validator">Validator<a class="headerlink" href="#validator" title="Permanent link">&para;</a></h3>
 <p>To protect a <code>javax.xml.validation.Validator</code> from XXE, do this:</p>
-<pre><code class="lang-java">SchemaFactory factory = SchemaFactory.newInstance(<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>);
-Schema schema = factory.newSchema();
-Validator validator = schema.newValidator();
-validator.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
-validator.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, <span class="hljs-string">&quot;&quot;</span>);
-</code></pre>
-<h3 id="schemafactory"><a name="schemafactory" class="plugin-anchor" href="#schemafactory"><i class="fa fa-link" aria-hidden="true"></i></a>SchemaFactory</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">SchemaFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">SchemaFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="p">);</span>
+<span class="n">Schema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="na">newSchema</span><span class="p">();</span>
+<span class="n">Validator</span> <span class="n">validator</span> <span class="o">=</span> <span class="n">schema</span><span class="p">.</span><span class="na">newValidator</span><span class="p">();</span>
+<span class="n">validator</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">validator</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+</code></pre></div>
+
+
+<h3 id="schemafactory">SchemaFactory<a class="headerlink" href="#schemafactory" title="Permanent link">&para;</a></h3>
 <p>To protect a <code>javax.xml.validation.SchemaFactory</code> from XXE, do this:</p>
-<pre><code class="lang-java">SchemaFactory factory = SchemaFactory.newInstance(<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>);
-factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
-factory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, <span class="hljs-string">&quot;&quot;</span>);
-Schema schema = factory.newSchema(Source);
-</code></pre>
-<h3 id="saxtransformerfactory"><a name="saxtransformerfactory" class="plugin-anchor" href="#saxtransformerfactory"><i class="fa fa-link" aria-hidden="true"></i></a>SAXTransformerFactory</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">SchemaFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">SchemaFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="p">);</span>
+<span class="n">factory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">factory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">Schema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="na">newSchema</span><span class="p">(</span><span class="n">Source</span><span class="p">);</span>
+</code></pre></div>
+
+
+<h3 id="saxtransformerfactory">SAXTransformerFactory<a class="headerlink" href="#saxtransformerfactory" title="Permanent link">&para;</a></h3>
 <p>To protect a <code>javax.xml.transform.sax.SAXTransformerFactory</code> from XXE, do this:</p>
-<pre><code class="lang-java">SAXTransformerFactory sf = SAXTransformerFactory.newInstance();
-sf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
-sf.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, <span class="hljs-string">&quot;&quot;</span>);
-sf.newXMLFilter(Source);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">SAXTransformerFactory</span> <span class="n">sf</span> <span class="o">=</span> <span class="n">SAXTransformerFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="n">sf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">sf</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_STYLESHEET</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">sf</span><span class="p">.</span><span class="na">newXMLFilter</span><span class="p">(</span><span class="n">Source</span><span class="p">);</span>
+</code></pre></div>
+
+
 <p><strong>Note: Use of the following <code>XMLConstants</code> requires JAXP 1.5, which was added to Java in 7u40 and Java 8:</strong></p>
 <ul>
 <li><code>javax.xml.XMLConstants.ACCESS_EXTERNAL_DTD</code></li>
 <li><code>javax.xml.XMLConstants.ACCESS_EXTERNAL_SCHEMA</code></li>
 <li><code>javax.xml.XMLConstants.ACCESS_EXTERNAL_STYLESHEET</code></li>
 </ul>
-<h3 id="xmlreader"><a name="xmlreader" class="plugin-anchor" href="#xmlreader"><i class="fa fa-link" aria-hidden="true"></i></a>XMLReader</h3>
+<h3 id="xmlreader">XMLReader<a class="headerlink" href="#xmlreader" title="Permanent link">&para;</a></h3>
 <p>To protect a Java <code>org.xml.sax.XMLReader</code> from XXE, do this:</p>
-<pre><code class="lang-java">XMLReader reader = XMLReaderFactory.createXMLReader();
-reader.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>, <span class="hljs-keyword">true</span>);
-<span class="hljs-comment">// This may not be strictly required as DTDs shouldn&apos;t be allowed at all, per previous line.</span>
-reader.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>, <span class="hljs-keyword">false</span>);
-reader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
-reader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
-</code></pre>
-<h3 id="saxreader"><a name="saxreader" class="plugin-anchor" href="#saxreader"><i class="fa fa-link" aria-hidden="true"></i></a>SAXReader</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">XMLReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">XMLReaderFactory</span><span class="p">.</span><span class="na">createXMLReader</span><span class="p">();</span>
+<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="c1">// This may not be strictly required as DTDs shouldn&#39;t be allowed at all, per previous line.</span>
+<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</code></pre></div>
+
+
+<h3 id="saxreader">SAXReader<a class="headerlink" href="#saxreader" title="Permanent link">&para;</a></h3>
 <p>To protect a Java <code>org.dom4j.io.SAXReader</code> from XXE, do this:</p>
-<pre><code class="lang-java">saxReader.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>, <span class="hljs-keyword">true</span>);
-saxReader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
-saxReader.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</code></pre></div>
+
+
 <p>Based on testing, if you are missing one of these, you can still be vulnerable to an XXE attack.</p>
-<h3 id="saxbuilder"><a name="saxbuilder" class="plugin-anchor" href="#saxbuilder"><i class="fa fa-link" aria-hidden="true"></i></a>SAXBuilder</h3>
+<h3 id="saxbuilder">SAXBuilder<a class="headerlink" href="#saxbuilder" title="Permanent link">&para;</a></h3>
 <p>To protect a Java <code>org.jdom2.input.SAXBuilder</code> from XXE, do this:</p>
-<pre><code class="lang-java">SAXBuilder builder = <span class="hljs-keyword">new</span> SAXBuilder();
-builder.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span>,<span class="hljs-keyword">true</span>);
-builder.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
-builder.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
-Document doc = builder.build(<span class="hljs-keyword">new</span> File(fileName));
-</code></pre>
-<h3 id="no-op-entityresolver"><a name="no-op-entityresolver" class="plugin-anchor" href="#no-op-entityresolver"><i class="fa fa-link" aria-hidden="true"></i></a>No-op EntityResolver</h3>
-<p>For APIs that take an <code>EntityResolver</code>, you can neutralize an XML parser&apos;s ability to resolve entities by <a href="https://wiki.sei.cmu.edu/confluence/display/java/IDS17-J.+Prevent+XML+External+Entity+Attacks" target="_blank">supplying a no-op implementation</a>:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoOpEntityResolver</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">EntityResolver</span> </span>{
-    <span class="hljs-function"><span class="hljs-keyword">public</span> InputSource <span class="hljs-title">resolveEntity</span><span class="hljs-params">(String publicId, String systemId)</span> </span>{
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> InputSource(<span class="hljs-keyword">new</span> StringReader(<span class="hljs-string">&quot;&quot;</span>));
-    }
-}
+<div class="codehilite"><pre><span></span><code><span class="n">SAXBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SAXBuilder</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="n">Document</span> <span class="n">doc</span> <span class="o">=</span> <span class="n">builder</span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="n">fileName</span><span class="p">));</span>
+</code></pre></div>
 
-<span class="hljs-comment">// ...</span>
 
-xmlReader.setEntityResolver(<span class="hljs-keyword">new</span> NoOpEntityResolver());
-documentBuilder.setEntityResolver(<span class="hljs-keyword">new</span> NoOpEntityResolver());
-</code></pre>
+<h3 id="no-op-entityresolver">No-op EntityResolver<a class="headerlink" href="#no-op-entityresolver" title="Permanent link">&para;</a></h3>
+<p>For APIs that take an <code>EntityResolver</code>, you can neutralize an XML parser's ability to resolve entities by <a href="https://wiki.sei.cmu.edu/confluence/display/java/IDS17-J.+Prevent+XML+External+Entity+Attacks">supplying a no-op implementation</a>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">NoOpEntityResolver</span> <span class="kd">implements</span> <span class="n">EntityResolver</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="n">InputSource</span> <span class="nf">resolveEntity</span><span class="p">(</span><span class="n">String</span> <span class="n">publicId</span><span class="p">,</span> <span class="n">String</span> <span class="n">systemId</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">InputSource</span><span class="p">(</span><span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// ...</span>
+
+<span class="n">xmlReader</span><span class="p">.</span><span class="na">setEntityResolver</span><span class="p">(</span><span class="k">new</span> <span class="n">NoOpEntityResolver</span><span class="p">());</span>
+<span class="n">documentBuilder</span><span class="p">.</span><span class="na">setEntityResolver</span><span class="p">(</span><span class="k">new</span> <span class="n">NoOpEntityResolver</span><span class="p">());</span>
+</code></pre></div>
+
+
 <p>or more simply:</p>
-<pre><code class="lang-java">EntityResolver noop = (publicId, systemId) -&gt; <span class="hljs-keyword">new</span> InputSource(<span class="hljs-keyword">new</span> StringReader(<span class="hljs-string">&quot;&quot;</span>));
-xmlReader.setEntityResolver(noop);
-documentBuilder.setEntityResolver(noop);
-</code></pre>
-<h3 id="jaxb-unmarshaller"><a name="jaxb-unmarshaller" class="plugin-anchor" href="#jaxb-unmarshaller"><i class="fa fa-link" aria-hidden="true"></i></a>JAXB Unmarshaller</h3>
-<p>Since a <code>javax.xml.bind.Unmarshaller</code> parses XML and does not support any flags for disabling XXE, it&apos;s imperative to parse the untrusted XML through a configurable secure parser first, generate a source object as a result, and pass the source object to the Unmarshaller. For example:</p>
-<pre><code class="lang-java"><span class="hljs-comment">//Disable XXE</span>
-SAXParserFactory spf = SAXParserFactory.newInstance();
-spf.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-general-entities&quot;</span>, <span class="hljs-keyword">false</span>);
-spf.setFeature(<span class="hljs-string">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span>, <span class="hljs-keyword">false</span>);
-spf.setFeature(<span class="hljs-string">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>, <span class="hljs-keyword">false</span>);
+<div class="codehilite"><pre><span></span><code><span class="n">EntityResolver</span> <span class="n">noop</span> <span class="o">=</span> <span class="p">(</span><span class="n">publicId</span><span class="p">,</span> <span class="n">systemId</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">InputSource</span><span class="p">(</span><span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">));</span>
+<span class="n">xmlReader</span><span class="p">.</span><span class="na">setEntityResolver</span><span class="p">(</span><span class="n">noop</span><span class="p">);</span>
+<span class="n">documentBuilder</span><span class="p">.</span><span class="na">setEntityResolver</span><span class="p">(</span><span class="n">noop</span><span class="p">);</span>
+</code></pre></div>
 
-<span class="hljs-comment">//Do unmarshall operation</span>
-Source xmlSource = <span class="hljs-keyword">new</span> SAXSource(spf.newSAXParser().getXMLReader(),
-                                <span class="hljs-keyword">new</span> InputSource(<span class="hljs-keyword">new</span> StringReader(xml)));
-JAXBContext jc = JAXBContext.newInstance(Object.class);
-Unmarshaller um = jc.createUnmarshaller();
-um.unmarshal(xmlSource);
-</code></pre>
-<h4 id="java-8-and-up"><a name="java-8-and-up" class="plugin-anchor" href="#java-8-and-up"><i class="fa fa-link" aria-hidden="true"></i></a>Java 8 and up</h4>
-<p>Since <a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8010393" target="_blank">JDK-8010393</a>, which is in OpenJDK 8 beta 86, <code>javax.xml.bind.Unmarshaller</code> instances are safe by default. The other classes mentioned here are still unsafe by default in Java 8.</p>
-<h3 id="xpathexpression"><a name="xpathexpression" class="plugin-anchor" href="#xpathexpression"><i class="fa fa-link" aria-hidden="true"></i></a>XPathExpression</h3>
+
+<h3 id="jaxb-unmarshaller">JAXB Unmarshaller<a class="headerlink" href="#jaxb-unmarshaller" title="Permanent link">&para;</a></h3>
+<p>Since a <code>javax.xml.bind.Unmarshaller</code> parses XML and does not support any flags for disabling XXE, it's imperative to parse the untrusted XML through a configurable secure parser first, generate a source object as a result, and pass the source object to the Unmarshaller. For example:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">//Disable XXE</span>
+<span class="n">SAXParserFactory</span> <span class="n">spf</span> <span class="o">=</span> <span class="n">SAXParserFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="n">spf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="n">spf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="n">spf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="c1">//Do unmarshall operation</span>
+<span class="n">Source</span> <span class="n">xmlSource</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SAXSource</span><span class="p">(</span><span class="n">spf</span><span class="p">.</span><span class="na">newSAXParser</span><span class="p">().</span><span class="na">getXMLReader</span><span class="p">(),</span>
+                                <span class="k">new</span> <span class="n">InputSource</span><span class="p">(</span><span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">xml</span><span class="p">)));</span>
+<span class="n">JAXBContext</span> <span class="n">jc</span> <span class="o">=</span> <span class="n">JAXBContext</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="n">Unmarshaller</span> <span class="n">um</span> <span class="o">=</span> <span class="n">jc</span><span class="p">.</span><span class="na">createUnmarshaller</span><span class="p">();</span>
+<span class="n">um</span><span class="p">.</span><span class="na">unmarshal</span><span class="p">(</span><span class="n">xmlSource</span><span class="p">);</span>
+</code></pre></div>
+
+
+<h4 id="java-8-and-up">Java 8 and up<a class="headerlink" href="#java-8-and-up" title="Permanent link">&para;</a></h4>
+<p>Since <a href="https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8010393">JDK-8010393</a>, which is in OpenJDK 8 beta 86, <code>javax.xml.bind.Unmarshaller</code> instances are safe by default. The other classes mentioned here are still unsafe by default in Java 8.</p>
+<h3 id="xpathexpression">XPathExpression<a class="headerlink" href="#xpathexpression" title="Permanent link">&para;</a></h3>
 <p>A <code>javax.xml.xpath.XPathExpression</code> can not be configured securely by itself, so the untrusted data must be parsed through another securable XML parser first.</p>
 <p>For example:</p>
-<pre><code class="lang-java">DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
-df.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, <span class="hljs-string">&quot;&quot;</span>);
-df.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, <span class="hljs-string">&quot;&quot;</span>);
-DocumentBuilder builder = df.newDocumentBuilder();
-String result = <span class="hljs-keyword">new</span> XPathExpression().evaluate( builder.parse(
-                            <span class="hljs-keyword">new</span> ByteArrayInputStream(xml.getBytes())) );
-</code></pre>
-<h3 id="javabeansxmldecoder"><a name="javabeansxmldecoder" class="plugin-anchor" href="#javabeansxmldecoder"><i class="fa fa-link" aria-hidden="true"></i></a>java.beans.XMLDecoder</h3>
-<p>The <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/XMLDecoder.html#readObject--" target="_blank">readObject()</a> method in this class is fundamentally unsafe.</p>
-<p>Not only is the XML it parses subject to XXE, but the method can be used to construct any Java object, and <a href="http://stackoverflow.com/questions/14307442/is-it-safe-to-use-xmldecoder-to-read-document-files" target="_blank">execute arbitrary code as described here</a>.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">DocumentBuilderFactory</span> <span class="n">df</span> <span class="o">=</span> <span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="n">df</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">df</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_SCHEMA</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="n">DocumentBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span>
+<span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">XPathExpression</span><span class="p">().</span><span class="na">evaluate</span><span class="p">(</span> <span class="n">builder</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span>
+                            <span class="k">new</span> <span class="n">ByteArrayInputStream</span><span class="p">(</span><span class="n">xml</span><span class="p">.</span><span class="na">getBytes</span><span class="p">()))</span> <span class="p">);</span>
+</code></pre></div>
+
+
+<h3 id="javabeansxmldecoder">java.beans.XMLDecoder<a class="headerlink" href="#javabeansxmldecoder" title="Permanent link">&para;</a></h3>
+<p>The <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/XMLDecoder.html#readObject--">readObject()</a> method in this class is fundamentally unsafe.</p>
+<p>Not only is the XML it parses subject to XXE, but the method can be used to construct any Java object, and <a href="http://stackoverflow.com/questions/14307442/is-it-safe-to-use-xmldecoder-to-read-document-files">execute arbitrary code as described here</a>.</p>
 <p>And there is no way to make use of this class safe except to trust or properly validate the input being passed into it.</p>
-<p>As such, we&apos;d strongly recommend completely avoiding the use of this class and replacing it with a safe or properly configured XML parser as described elsewhere in this cheat sheet.</p>
-<h3 id="other-xml-parsers"><a name="other-xml-parsers" class="plugin-anchor" href="#other-xml-parsers"><i class="fa fa-link" aria-hidden="true"></i></a>Other XML Parsers</h3>
-<p>There are many 3rd party libraries that parse XML either directly or through their use of other libraries. Please test and verify their XML parser is secure against XXE by default. If the parser is not secure by default, look for flags supported by the parser to disable all possible external resource inclusions like the examples given above. If there&apos;s no control exposed to the outside, make sure the untrusted content is passed through a secure parser first and then passed to insecure 3rd party parser similar to how the Unmarshaller is secured.</p>
-<h4 id="spring-framework-mvcoxm-xxe-vulnerabilities"><a name="spring-framework-mvcoxm-xxe-vulnerabilities" class="plugin-anchor" href="#spring-framework-mvcoxm-xxe-vulnerabilities"><i class="fa fa-link" aria-hidden="true"></i></a>Spring Framework MVC/OXM XXE Vulnerabilities</h4>
-<p>For example, some XXE vulnerabilities were found in <a href="https://pivotal.io/security/cve-2013-4152" target="_blank">Spring OXM</a> and <a href="https://pivotal.io/security/cve-2013-7315" target="_blank">Spring MVC</a>. The following versions of the Spring Framework are vulnerable to XXE:</p>
+<p>As such, we'd strongly recommend completely avoiding the use of this class and replacing it with a safe or properly configured XML parser as described elsewhere in this cheat sheet.</p>
+<h3 id="other-xml-parsers">Other XML Parsers<a class="headerlink" href="#other-xml-parsers" title="Permanent link">&para;</a></h3>
+<p>There are many 3rd party libraries that parse XML either directly or through their use of other libraries. Please test and verify their XML parser is secure against XXE by default. If the parser is not secure by default, look for flags supported by the parser to disable all possible external resource inclusions like the examples given above. If there's no control exposed to the outside, make sure the untrusted content is passed through a secure parser first and then passed to insecure 3rd party parser similar to how the Unmarshaller is secured.</p>
+<h4 id="spring-framework-mvcoxm-xxe-vulnerabilities">Spring Framework MVC/OXM XXE Vulnerabilities<a class="headerlink" href="#spring-framework-mvcoxm-xxe-vulnerabilities" title="Permanent link">&para;</a></h4>
+<p>For example, some XXE vulnerabilities were found in <a href="https://pivotal.io/security/cve-2013-4152">Spring OXM</a> and <a href="https://pivotal.io/security/cve-2013-7315">Spring MVC</a>. The following versions of the Spring Framework are vulnerable to XXE:</p>
 <ul>
 <li><strong>3.0.0</strong> to <strong>3.2.3</strong> (Spring OXM &amp; Spring MVC)</li>
 <li><strong>4.0.0.M1</strong> (Spring OXM)</li>
@@ -1310,7 +2053,7 @@ String result = <span class="hljs-keyword">new</span> XPathExpression().evaluate
 </ul>
 <p>There were other issues as well that were fixed later, so to fully address these issues, Spring recommends you upgrade to Spring Framework 3.2.8+ or 4.0.2+.</p>
 <p>For Spring OXM, this is referring to the use of org.springframework.oxm.jaxb.Jaxb2Marshaller. Note that the CVE for Spring OXM specifically indicates that 2 XML parsing situations are up to the developer to get right, and 2 are the responsibility of Spring and were fixed to address this CVE.</p>
-<p>Here&apos;s what they say:</p>
+<p>Here's what they say:</p>
 <p>Two situations developers must handle:</p>
 <ul>
 <li>For a <code>DOMSource</code>, the XML has already been parsed by user code and that code is responsible for protecting against XXE.</li>
@@ -1318,22 +2061,24 @@ String result = <span class="hljs-keyword">new</span> XPathExpression().evaluate
 </ul>
 <p>The issue Spring fixed:</p>
 <p>For SAXSource and StreamSource instances, Spring processed external entities by default thereby creating this vulnerability.</p>
-<p>Here&apos;s an example of using a StreamSource that was vulnerable, but is now safe, if you are using a fixed version of Spring OXM or Spring MVC:</p>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> org.springframework.oxm.Jaxb2Marshaller;
-<span class="hljs-keyword">import</span> org.springframework.oxm.jaxb.Jaxb2Marshaller;
+<p>Here's an example of using a StreamSource that was vulnerable, but is now safe, if you are using a fixed version of Spring OXM or Spring MVC:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.springframework.oxm.Jaxb2Marshaller</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.oxm.jaxb.Jaxb2Marshaller</span><span class="p">;</span>
 
-Jaxb2Marshaller marshaller = <span class="hljs-keyword">new</span> Jaxb2Marshaller();
-<span class="hljs-comment">// Must cast return Object to whatever type you are unmarshalling</span>
-marshaller.unmarshal(<span class="hljs-keyword">new</span> StreamSource(<span class="hljs-keyword">new</span> StringReader(some_string_containing_XML));
-</code></pre>
-<p>So, per the <a href="https://pivotal.io/security/cve-2013-4152" target="_blank">Spring OXM CVE writeup</a>, the above is now safe. But if you were to use a DOMSource or StAXSource instead, it would be up to you to configure those sources to be safe from XXE.</p>
-<h4 id="castor"><a name="castor" class="plugin-anchor" href="#castor"><i class="fa fa-link" aria-hidden="true"></i></a>Castor</h4>
-<p>Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor <strong>prior to version 1.3.3</strong> are vulnerable to XXE, and should be upgraded to the latest version. For additional information, check the official <a href="https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html" target="_blank">XML configuration file</a></p>
-<h2 id="net"><a name="net" class="plugin-anchor" href="#net"><i class="fa fa-link" aria-hidden="true"></i></a>.NET</h2>
-<p>The following information for XXE injection in .NET is directly from this <a href="https://github.com/deanf1/dotnet-security-unit-tests" target="_blank">web application of unit tests by Dean Fleming</a>.</p>
+<span class="n">Jaxb2Marshaller</span> <span class="n">marshaller</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jaxb2Marshaller</span><span class="p">();</span>
+<span class="c1">// Must cast return Object to whatever type you are unmarshalling</span>
+<span class="n">marshaller</span><span class="p">.</span><span class="na">unmarshal</span><span class="p">(</span><span class="k">new</span> <span class="n">StreamSource</span><span class="p">(</span><span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">some_string_containing_XML</span><span class="p">));</span>
+</code></pre></div>
+
+
+<p>So, per the <a href="https://pivotal.io/security/cve-2013-4152">Spring OXM CVE writeup</a>, the above is now safe. But if you were to use a DOMSource or StAXSource instead, it would be up to you to configure those sources to be safe from XXE.</p>
+<h4 id="castor">Castor<a class="headerlink" href="#castor" title="Permanent link">&para;</a></h4>
+<p>Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor <strong>prior to version 1.3.3</strong> are vulnerable to XXE, and should be upgraded to the latest version. For additional information, check the official <a href="https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html">XML configuration file</a></p>
+<h2 id="net">.NET<a class="headerlink" href="#net" title="Permanent link">&para;</a></h2>
+<p>The following information for XXE injection in .NET is directly from this <a href="https://github.com/deanf1/dotnet-security-unit-tests">web application of unit tests by Dean Fleming</a>.</p>
 <p>This web application covers all currently supported .NET XML parsers, and has test cases for each demonstrating when they are safe from XXE injection and when they are not.</p>
-<p>Previously, this information was based on <a href="https://www.jardinesoftware.net/2016/05/26/xxe-and-net/" target="_blank">James Jardine&apos;s excellent .NET XXE article</a>.</p>
-<p>It originally provided more recent and more detailed information than the older article from <a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx" target="_blank">Microsoft on how to prevent XXE and XML Denial of Service in .NET</a>, however, it has some inaccuracies that the web application covers.</p>
+<p>Previously, this information was based on <a href="https://www.jardinesoftware.net/2016/05/26/xxe-and-net/">James Jardine's excellent .NET XXE article</a>.</p>
+<p>It originally provided more recent and more detailed information than the older article from <a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx">Microsoft on how to prevent XXE and XML Denial of Service in .NET</a>, however, it has some inaccuracies that the web application covers.</p>
 <p>The following table lists all supported .NET XML parsers and their default safety levels:</p>
 <table>
 <thead>
@@ -1401,91 +2146,101 @@ marshaller.unmarshal(<span class="hljs-keyword">new</span> StreamSource(<span cl
 </tr>
 </tbody>
 </table>
-<h3 id="linq-to-xml"><a name="linq-to-xml" class="plugin-anchor" href="#linq-to-xml"><i class="fa fa-link" aria-hidden="true"></i></a>LINQ to XML</h3>
-<p>Both the <code>XElement</code> and <code>XDocument</code> objects in the <code>System.Xml.Linq</code> library are safe from XXE injection by default. <code>XElement</code> parses only the elements within the XML file, so DTDs are ignored altogether. <code>XDocument</code> has DTDs <a href="https://github.com/dotnet/docs/blob/master/docs/visual-basic/programming-guide/concepts/linq/linq-to-xml-security.md" target="_blank">disabled by default</a>, and is only unsafe if constructed with a different unsafe XML parser.</p>
-<h3 id="xmldictionaryreader"><a name="xmldictionaryreader" class="plugin-anchor" href="#xmldictionaryreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlDictionaryReader</h3>
-<p><code>System.Xml.XmlDictionaryReader</code> is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that &quot;CData elements not valid at top level of an XML document&quot;. It becomes unsafe if constructed with a different unsafe XML parser.</p>
-<h3 id="xmldocument"><a name="xmldocument" class="plugin-anchor" href="#xmldocument"><i class="fa fa-link" aria-hidden="true"></i></a>XmlDocument</h3>
+<h3 id="linq-to-xml">LINQ to XML<a class="headerlink" href="#linq-to-xml" title="Permanent link">&para;</a></h3>
+<p>Both the <code>XElement</code> and <code>XDocument</code> objects in the <code>System.Xml.Linq</code> library are safe from XXE injection by default. <code>XElement</code> parses only the elements within the XML file, so DTDs are ignored altogether. <code>XDocument</code> has DTDs <a href="https://github.com/dotnet/docs/blob/master/docs/visual-basic/programming-guide/concepts/linq/linq-to-xml-security.md">disabled by default</a>, and is only unsafe if constructed with a different unsafe XML parser.</p>
+<h3 id="xmldictionaryreader">XmlDictionaryReader<a class="headerlink" href="#xmldictionaryreader" title="Permanent link">&para;</a></h3>
+<p><code>System.Xml.XmlDictionaryReader</code> is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that "CData elements not valid at top level of an XML document". It becomes unsafe if constructed with a different unsafe XML parser.</p>
+<h3 id="xmldocument">XmlDocument<a class="headerlink" href="#xmldocument" title="Permanent link">&para;</a></h3>
 <p>Prior to .NET Framework version 4.5.2, <code>System.Xml.XmlDocument</code> is <strong>unsafe</strong> by default. The <code>XmlDocument</code> object has an <code>XmlResolver</code> object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this <code>XmlResolver</code> is set to null by default.</p>
 <p>The following example shows how it is made safe:</p>
-<pre><code class="lang-csharp"> <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">LoadXML</span>(<span class="hljs-params"></span>)
- </span>{
-   <span class="hljs-keyword">string</span> xxePayload = <span class="hljs-string">&quot;&lt;!DOCTYPE doc [&lt;!ENTITY win SYSTEM &apos;file:///C:/Users/testdata2.txt&apos;&gt;]&gt;&quot;</span>
-                     + <span class="hljs-string">&quot;&lt;doc&gt;&amp;win;&lt;/doc&gt;&quot;</span>;
-   <span class="hljs-keyword">string</span> xml = <span class="hljs-string">&quot;&lt;?xml version=&apos;1.0&apos; ?&gt;&quot;</span> + xxePayload;
+<div class="codehilite"><pre><span></span><code> <span class="k">static</span> <span class="k">void</span> <span class="nf">LoadXML</span><span class="p">()</span>
+ <span class="p">{</span>
+   <span class="kt">string</span> <span class="n">xxePayload</span> <span class="p">=</span> <span class="s">&quot;&lt;!DOCTYPE doc [&lt;!ENTITY win SYSTEM &#39;file:///C:/Users/testdata2.txt&#39;&gt;]&gt;&quot;</span>
+                     <span class="p">+</span> <span class="s">&quot;&lt;doc&gt;&amp;win;&lt;/doc&gt;&quot;</span><span class="p">;</span>
+   <span class="kt">string</span> <span class="n">xml</span> <span class="p">=</span> <span class="s">&quot;&lt;?xml version=&#39;1.0&#39; ?&gt;&quot;</span> <span class="p">+</span> <span class="n">xxePayload</span><span class="p">;</span>
 
-   XmlDocument xmlDoc = <span class="hljs-keyword">new</span> XmlDocument();
-   <span class="hljs-comment">// Setting this to NULL disables DTDs - Its NOT null by default.</span>
-   xmlDoc.XmlResolver = <span class="hljs-keyword">null</span>;
-   xmlDoc.LoadXml(xml);
-   Console.WriteLine(xmlDoc.InnerText);
-   Console.ReadLine();
- }
-</code></pre>
-<p><code>XmlDocument</code> can become unsafe if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx" target="_blank">referenced MSDN article</a>.</p>
-<h3 id="xmlnodereader"><a name="xmlnodereader" class="plugin-anchor" href="#xmlnodereader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlNodeReader</h3>
+   <span class="n">XmlDocument</span> <span class="n">xmlDoc</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XmlDocument</span><span class="p">();</span>
+   <span class="c1">// Setting this to NULL disables DTDs - Its NOT null by default.</span>
+   <span class="n">xmlDoc</span><span class="p">.</span><span class="n">XmlResolver</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+   <span class="n">xmlDoc</span><span class="p">.</span><span class="n">LoadXml</span><span class="p">(</span><span class="n">xml</span><span class="p">);</span>
+   <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">xmlDoc</span><span class="p">.</span><span class="n">InnerText</span><span class="p">);</span>
+   <span class="n">Console</span><span class="p">.</span><span class="n">ReadLine</span><span class="p">();</span>
+ <span class="p">}</span>
+</code></pre></div>
+
+
+<p><code>XmlDocument</code> can become unsafe if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx">referenced MSDN article</a>.</p>
+<h3 id="xmlnodereader">XmlNodeReader<a class="headerlink" href="#xmlnodereader" title="Permanent link">&para;</a></h3>
 <p><code>System.Xml.XmlNodeReader</code> objects are safe by default and will ignore DTDs even when constructed with an unsafe parser or wrapped in another unsafe parser.</p>
-<h3 id="xmlreader"><a name="xmlreader" class="plugin-anchor" href="#xmlreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlReader</h3>
+<h3 id="xmlreader_1">XmlReader<a class="headerlink" href="#xmlreader_1" title="Permanent link">&para;</a></h3>
 <p><code>System.Xml.XmlReader</code> objects are safe by default.</p>
 <p>They are set by default to have their ProhibitDtd property set to false in .NET Framework versions 4.0 and earlier, or their <code>DtdProcessing</code> property set to Prohibit in .NET versions 4.0 and later.</p>
 <p>Additionally, in .NET versions 4.5.2 and later, the <code>XmlReaderSettings</code> belonging to the <code>XmlReader</code> has its <code>XmlResolver</code> set to null by default, which provides an additional layer of safety.</p>
-<p>Therefore, <code>XmlReader</code> objects will only become unsafe in version 4.5.2 and up if both the <code>DtdProcessing</code> property is set to Parse and the <code>XmlReaderSetting</code>&apos;s <code>XmlResolver</code> is set to a nonnull XmlResolver with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx" target="_blank">referenced MSDN article</a>.</p>
-<h3 id="xmltextreader"><a name="xmltextreader" class="plugin-anchor" href="#xmltextreader"><i class="fa fa-link" aria-hidden="true"></i></a>XmlTextReader</h3>
+<p>Therefore, <code>XmlReader</code> objects will only become unsafe in version 4.5.2 and up if both the <code>DtdProcessing</code> property is set to Parse and the <code>XmlReaderSetting</code>'s <code>XmlResolver</code> is set to a nonnull XmlResolver with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx">referenced MSDN article</a>.</p>
+<h3 id="xmltextreader">XmlTextReader<a class="headerlink" href="#xmltextreader" title="Permanent link">&para;</a></h3>
 <p><code>System.Xml.XmlTextReader</code> is <strong>unsafe</strong> by default in .NET Framework versions prior to 4.5.2. Here is how to make it safe in various .NET versions:</p>
-<h4 id="prior-to-net-40"><a name="prior-to-net-40" class="plugin-anchor" href="#prior-to-net-40"><i class="fa fa-link" aria-hidden="true"></i></a>Prior to .NET 4.0</h4>
+<h4 id="prior-to-net-40">Prior to .NET 4.0<a class="headerlink" href="#prior-to-net-40" title="Permanent link">&para;</a></h4>
 <p>In .NET Framework versions prior to 4.0, DTD parsing behavior for <code>XmlReader</code> objects like <code>XmlTextReader</code> are controlled by the Boolean <code>ProhibitDtd</code> property found in the <code>System.Xml.XmlReaderSettings</code> and <code>System.Xml.XmlTextReader</code> classes.</p>
 <p>Set these values to true to disable inline DTDs completely.</p>
-<pre><code class="lang-csharp">XmlTextReader reader = <span class="hljs-keyword">new</span> XmlTextReader(stream);
-<span class="hljs-comment">// NEEDED because the default is FALSE!!</span>
-reader.ProhibitDtd = <span class="hljs-keyword">true</span>;
-</code></pre>
-<h4 id="net-40---net-452"><a name="net-40---net-452" class="plugin-anchor" href="#net-40---net-452"><i class="fa fa-link" aria-hidden="true"></i></a>.NET 4.0 - .NET 4.5.2</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">XmlTextReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XmlTextReader</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+<span class="c1">// NEEDED because the default is FALSE!!</span>
+<span class="n">reader</span><span class="p">.</span><span class="n">ProhibitDtd</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>  
+</code></pre></div>
+
+
+<h4 id="net-40-net-452">.NET 4.0 - .NET 4.5.2<a class="headerlink" href="#net-40-net-452" title="Permanent link">&para;</a></h4>
 <p>In .NET Framework version 4.0, DTD parsing behavior has been changed. The <code>ProhibitDtd</code> property has been deprecated in favor of the new <code>DtdProcessing</code> property.</p>
-<p>However, they didn&apos;t change the default settings so <code>XmlTextReader</code> is still vulnerable to XXE by default.</p>
+<p>However, they didn't change the default settings so <code>XmlTextReader</code> is still vulnerable to XXE by default.</p>
 <p>Setting <code>DtdProcessing</code> to <code>Prohibit</code> causes the runtime to throw an exception if a <code>&lt;!DOCTYPE&gt;</code> element is present in the XML.</p>
 <p>To set this value yourself, it looks like this:</p>
-<pre><code class="lang-csharp">XmlTextReader reader = <span class="hljs-keyword">new</span> XmlTextReader(stream);
-<span class="hljs-comment">// NEEDED because the default is Parse!!</span>
-reader.DtdProcessing = DtdProcessing.Prohibit;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">XmlTextReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XmlTextReader</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+<span class="c1">// NEEDED because the default is Parse!!</span>
+<span class="n">reader</span><span class="p">.</span><span class="n">DtdProcessing</span> <span class="p">=</span> <span class="n">DtdProcessing</span><span class="p">.</span><span class="n">Prohibit</span><span class="p">;</span>  
+</code></pre></div>
+
+
 <p>Alternatively, you can set the <code>DtdProcessing</code> property to <code>Ignore</code>, which will not throw an exception on encountering a <code>&lt;!DOCTYPE&gt;</code> element but will simply skip over it and not process it. Finally, you can set <code>DtdProcessing</code> to <code>Parse</code> if you do want to allow and process inline DTDs.</p>
-<h4 id="net-452-and-later"><a name="net-452-and-later" class="plugin-anchor" href="#net-452-and-later"><i class="fa fa-link" aria-hidden="true"></i></a>.NET 4.5.2 and later</h4>
-<p>In .NET Framework versions 4.5.2 and up, <code>XmlTextReader</code>&apos;s internal <code>XmlResolver</code> is set to null by default, making the <code>XmlTextReader</code> ignore DTDs by default. The <code>XmlTextReader</code> can become unsafe if if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings.</p>
-<h3 id="xpathnavigator"><a name="xpathnavigator" class="plugin-anchor" href="#xpathnavigator"><i class="fa fa-link" aria-hidden="true"></i></a>XPathNavigator</h3>
+<h4 id="net-452-and-later">.NET 4.5.2 and later<a class="headerlink" href="#net-452-and-later" title="Permanent link">&para;</a></h4>
+<p>In .NET Framework versions 4.5.2 and up, <code>XmlTextReader</code>'s internal <code>XmlResolver</code> is set to null by default, making the <code>XmlTextReader</code> ignore DTDs by default. The <code>XmlTextReader</code> can become unsafe if if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings.</p>
+<h3 id="xpathnavigator">XPathNavigator<a class="headerlink" href="#xpathnavigator" title="Permanent link">&para;</a></h3>
 <p><code>System.Xml.XPath.XPathNavigator</code> is <strong>unsafe</strong> by default in .NET Framework versions prior to 4.5.2.</p>
 <p>This is due to the fact that it implements <code>IXPathNavigable</code> objects like <code>XmlDocument</code>, which are also unsafe by default in versions prior to 4.5.2.</p>
-<p>You can make <code>XPathNavigator</code> safe by giving it a safe parser like <code>XmlReader</code> (which is safe by default) in the <code>XPathDocument</code>&apos;s constructor.</p>
+<p>You can make <code>XPathNavigator</code> safe by giving it a safe parser like <code>XmlReader</code> (which is safe by default) in the <code>XPathDocument</code>'s constructor.</p>
 <p>Here is an example:</p>
-<pre><code class="lang-csharp">XmlReader reader = XmlReader.Create(<span class="hljs-string">&quot;example.xml&quot;</span>);
-XPathDocument doc = <span class="hljs-keyword">new</span> XPathDocument(reader);
-XPathNavigator nav = doc.CreateNavigator();
-<span class="hljs-keyword">string</span> xml = nav.InnerXml.ToString();
-</code></pre>
-<h3 id="xslcompiledtransform"><a name="xslcompiledtransform" class="plugin-anchor" href="#xslcompiledtransform"><i class="fa fa-link" aria-hidden="true"></i></a>XslCompiledTransform</h3>
-<p><code>System.Xml.Xsl.XslCompiledTransform</code> (an XML transformer) is safe by default as long as the parser it&apos;s given is safe.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">XmlReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="n">XmlReader</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;example.xml&quot;</span><span class="p">);</span>
+<span class="n">XPathDocument</span> <span class="n">doc</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XPathDocument</span><span class="p">(</span><span class="n">reader</span><span class="p">);</span>
+<span class="n">XPathNavigator</span> <span class="n">nav</span> <span class="p">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">CreateNavigator</span><span class="p">();</span>
+<span class="kt">string</span> <span class="n">xml</span> <span class="p">=</span> <span class="n">nav</span><span class="p">.</span><span class="n">InnerXml</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+</code></pre></div>
+
+
+<h3 id="xslcompiledtransform">XslCompiledTransform<a class="headerlink" href="#xslcompiledtransform" title="Permanent link">&para;</a></h3>
+<p><code>System.Xml.Xsl.XslCompiledTransform</code> (an XML transformer) is safe by default as long as the parser it's given is safe.</p>
 <p>It is safe by default because the default parser of the <code>Transform()</code> methods is an <code>XmlReader</code>, which is safe by default (per above).</p>
-<p><a href="http://www.dotnetframework.org/default.aspx/4@0/4@0/DEVDIV_TFS/Dev10/Releases/RTMRel/ndp/fx/src/Xml/System/Xml/Xslt/XslCompiledTransform@cs/1305376/XslCompiledTransform@cs" target="_blank">The source code for this method is here.</a></p>
+<p><a href="http://www.dotnetframework.org/default.aspx/4@0/4@0/DEVDIV_TFS/Dev10/Releases/RTMRel/ndp/fx/src/Xml/System/Xml/Xslt/XslCompiledTransform@cs/1305376/XslCompiledTransform@cs">The source code for this method is here.</a></p>
 <p>Some of the <code>Transform()</code> methods accept an <code>XmlReader</code> or <code>IXPathNavigable</code> (e.g., <code>XmlDocument</code>) as an input, and if you pass in an unsafe XML Parser then the <code>Transform</code> will also be unsafe.</p>
-<h2 id="ios"><a name="ios" class="plugin-anchor" href="#ios"><i class="fa fa-link" aria-hidden="true"></i></a>iOS</h2>
-<h3 id="libxml2"><a name="libxml2" class="plugin-anchor" href="#libxml2"><i class="fa fa-link" aria-hidden="true"></i></a>libxml2</h3>
+<h2 id="ios">iOS<a class="headerlink" href="#ios" title="Permanent link">&para;</a></h2>
+<h3 id="libxml2_1">libxml2<a class="headerlink" href="#libxml2_1" title="Permanent link">&para;</a></h3>
 <p>iOS includes the C/C++ libxml2 library described above, so that guidance applies if you are using libxml2 directly.</p>
 <p>However, the version of libxml2 provided up through iOS6 is prior to version 2.9 of libxml2 (which protects against XXE by default).</p>
-<h3 id="nsxmldocument"><a name="nsxmldocument" class="plugin-anchor" href="#nsxmldocument"><i class="fa fa-link" aria-hidden="true"></i></a>NSXMLDocument</h3>
+<h3 id="nsxmldocument">NSXMLDocument<a class="headerlink" href="#nsxmldocument" title="Permanent link">&para;</a></h3>
 <p>iOS also provides an <code>NSXMLDocument</code> type, which is built on top of libxml2.</p>
-<p>However, <code>NSXMLDocument</code> provides some additional protections against XXE that aren&apos;t available in libxml2 directly.</p>
-<p>Per the &apos;NSXMLDocument External Entity Restriction API&apos; section of this <a href="https://developer.apple.com/library/ios/#releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html" target="_blank">page</a>:</p>
+<p>However, <code>NSXMLDocument</code> provides some additional protections against XXE that aren't available in libxml2 directly.</p>
+<p>Per the 'NSXMLDocument External Entity Restriction API' section of this <a href="https://developer.apple.com/library/ios/#releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html">page</a>:</p>
 <ul>
 <li>iOS4 and earlier: All external entities are loaded by default.</li>
-<li>iOS5 and later: Only entities that don&apos;t require network access are loaded. (which is safer)</li>
+<li>iOS5 and later: Only entities that don't require network access are loaded. (which is safer)</li>
 </ul>
 <p>However, to completely disable XXE in an <code>NSXMLDocument</code> in any version of iOS you simply specify <code>NSXMLNodeLoadExternalEntitiesNever</code> when creating the <code>NSXMLDocument</code>.</p>
-<h2 id="php"><a name="php" class="plugin-anchor" href="#php"><i class="fa fa-link" aria-hidden="true"></i></a>PHP</h2>
-<p>Per <a href="https://www.php.net/manual/en/function.libxml-disable-entity-loader.php" target="_blank">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</p>
-<pre><code class="lang-php">libxml_disable_entity_loader(<span class="hljs-keyword">true</span>);
-</code></pre>
-<p>A description of how to abuse this in PHP is presented in a good <a href="https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/" target="_blank">SensePost article</a> describing a cool PHP based XXE vulnerability that was fixed in Facebook.</p>
-<h2 id="python"><a name="python" class="plugin-anchor" href="#python"><i class="fa fa-link" aria-hidden="true"></i></a>Python</h2>
-<p>The Python 3 official documentation contains a section on <a href="https://docs.python.org/3/library/xml.html#xml-vulnerabilities" target="_blank">xml vulnerabilities</a>. For Python 2, you can refer to this <a href="https://docs.Python.org/2/library/xml.html#xml-vulnerabilities" target="_blank">page</a>.</p>
+<h2 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h2>
+<p>Per <a href="https://www.php.net/manual/en/function.libxml-disable-entity-loader.php">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">libxml_disable_entity_loader(true);</span>
+</code></pre></div>
+
+
+<p>A description of how to abuse this in PHP is presented in a good <a href="https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/">SensePost article</a> describing a cool PHP based XXE vulnerability that was fixed in Facebook.</p>
+<h2 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
+<p>The Python 3 official documentation contains a section on <a href="https://docs.python.org/3/library/xml.html#xml-vulnerabilities">xml vulnerabilities</a>. For Python 2, you can refer to this <a href="https://docs.Python.org/2/library/xml.html#xml-vulnerabilities">page</a>.</p>
 <blockquote>
 <p>The end of life for Python 2 is expected to be January 1st, 2020.</p>
 </blockquote>
@@ -1544,93 +2299,101 @@ XPathNavigator nav = doc.CreateNavigator();
 </tr>
 </tbody>
 </table>
-<p>To protect your application from the applicable attacks, <a href="https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages" target="_blank">two packages</a> exist to help you sanitize your input and protect your application against DDoS and remote attacks.</p>
-<h2 id="references"><a name="references" class="plugin-anchor" href="#references"><i class="fa fa-link" aria-hidden="true"></i></a>References</h2>
+<p>To protect your application from the applicable attacks, <a href="https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages">two packages</a> exist to help you sanitize your input and protect your application against DDoS and remote attacks.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/" target="_blank">XXE by InfoSecInstitute</a></li>
-<li><a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29" target="_blank">OWASP Top 10-2017 A4: XML External Entities (XXE)</a></li>
-<li><a href="https://vsecurity.com//download/papers/XMLDTDEntityAttacks.pdf" target="_blank">Timothy Morgan&apos;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</a></li>
-<li><a href="https://find-sec-bugs.github.io/bugs.htm#XXE_SAXPARSER" target="_blank">FindSecBugs XXE Detection</a></li>
-<li><a href="https://github.com/ssexxe/XXEBugFind" target="_blank">XXEbugFind Tool</a></li>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection.html" target="_blank">Testing for XML Injection</a></li>
+<li><a href="https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/">XXE by InfoSecInstitute</a></li>
+<li><a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29">OWASP Top 10-2017 A4: XML External Entities (XXE)</a></li>
+<li><a href="https://vsecurity.com//download/papers/XMLDTDEntityAttacks.pdf">Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"</a></li>
+<li><a href="https://find-sec-bugs.github.io/bugs.htm#XXE_SAXPARSER">FindSecBugs XXE Detection</a></li>
+<li><a href="https://github.com/ssexxe/XXEBugFind">XXEbugFind Tool</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection.html">Testing for XML Injection</a></li>
 </ul>
-
-                                
-                                </section>
-                            
-    </div>
-    <div class="search-results">
-        <div class="has-results">
-            
-            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
-            <ul class="search-results-list"></ul>
-            
-        </div>
-        <div class="no-results">
-            
-            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
-            
-        </div>
-    </div>
-</div>
-
-                        </div>
-                    </div>
                 
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Web_Service_Security_Cheat_Sheet.html" title="Web Service Security" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
-
-            
-                
-                <a href="Web_Service_Security_Cheat_Sheet.html" class="navigation navigation-prev " aria-label="Previous page: Web Service Security ">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                
-                
-                <a href="XML_Security_Cheat_Sheet.html" class="navigation navigation-next " aria-label="Next page: XML Security ">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                
-            
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Web Service Security
+              </div>
+            </div>
+          </a>
         
+        
+          <a href="XML_Security_Cheat_Sheet.html" title="XML Security" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                XML Security
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-
-    <script>
-        var gitbook = gitbook || [];
-        gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"XML External Entity Prevention ","level":"1.69","depth":1,"next":{"title":"XML Security ","level":"1.70","depth":1,"path":"cheatsheets/XML_Security_Cheat_Sheet.md","ref":"cheatsheets/XML_Security_Cheat_Sheet.md","articles":[]},"previous":{"title":"Web Service Security ","level":"1.68","depth":1,"path":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","ref":"cheatsheets/Web_Service_Security_Cheat_Sheet.md","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors"],"root":"./cheatsheets","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"anchors":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"Preface.md","glossary":"GLOSSARY.md","summary":"TOC.md"},"variables":{},"title":"OWASP Cheat Sheet Series","language":"en","gitbook":"*","description":"Website with the collection of all the cheat sheets of the project."},"file":{"path":"cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md","mtime":"2020-05-27T19:41:37.100Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-27T19:42:04.146Z"},"basePath":"..","book":{"language":""}});
-        });
-    </script>
-</div>
-
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
-    <script src="../gitbook/gitbook.js"></script>
-    <script src="../gitbook/theme.js"></script>
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
-        
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5f27aba8.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.27c6a5e6.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
     
-        
-        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
-        
-    
-        
-        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
-        
-    
-
-    </body>
+  </body>
 </html>
-
