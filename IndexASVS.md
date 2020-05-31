@@ -1,5 +1,4 @@
 # ASVS Index
-<!-- Generated with "https://ecotrust-canada.github.io/markdown-toc/" -->
 
 ## Table of Contents
 
@@ -244,7 +243,7 @@ None.
 
 ### V3.5 Token-based Session Management
 
-[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md).
+[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md).
 
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md).
 
@@ -264,7 +263,7 @@ None.
 
 [Access Control Cheat Sheet](cheatsheets/Access_Control_Cheat_Sheet.md).
 
-[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md).
+[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md).
 
 ### V4.2 Operation Level Access Control
 
@@ -272,7 +271,7 @@ None.
 
 [Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md).
 
-[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md).
+[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md).
 
 ### V4.3 Other Access Control Considerations
 
@@ -306,7 +305,7 @@ None.
 
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md).
 
-[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md).
+[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md).
 
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md).
 
@@ -314,7 +313,7 @@ None.
 
 [OS Command Injection Defense Cheat Sheet](cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md).
 
-[Protect File Upload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md).
+[Protect File Upload Against Malicious File](cheatsheets/File_Upload_Cheat_Sheet.md).
 
 [Query Parameterization Cheat Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md).
 
@@ -432,11 +431,11 @@ None.
 
 ### V12.1 File Upload Requirements
 
-[Protect File Upload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md).
+[Protect File Upload Against Malicious File](cheatsheets/File_Upload_Cheat_Sheet.md).
 
 ### V12.2 File Integrity Requirements
 
-[Protect File Upload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md).
+[Protect File Upload Against Malicious File](cheatsheets/File_Upload_Cheat_Sheet.md).
 
 [Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md).
 
