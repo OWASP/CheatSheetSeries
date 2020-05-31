@@ -15,9 +15,9 @@ def prepend(path, text):
 
 redirect_from_comment_template = "---\n"
 redirect_from_command_template = "redirect_from:\n"
-redirect_from_item_template = " - /cheatsheets/%s\n"  
+redirect_from_item_template = " - \"/cheatsheets/%s\"\n"  
 
-redirect_html_file_path = "../generated/site/excluded.html"
+redirect_html_file_path = "../generated/site/Excluded.html"
 
 # Scan all CS files
 index = {}
