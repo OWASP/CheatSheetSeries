@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+
+  <!-- Render hero under tabs -->
+  {% block tabs %}
+    {{ super() }}
+
+    {% if page and page.title == 'Home' %}
+    <!-- Additional styles for landing page -->
+    <style>
+
+      /* Application header should be static for the landing page */
+      .md-header {
+        position: initial;
+      }
+
+      /* Remove spacing, as we cannot hide it completely */
+      .md-main__inner {
+        margin: 0;
+      }
+
+      /* Hide main content for now */
+      .md-content {
+        display: none;
+      }
+
+      /* Gradient background + blob */
+      .tx-container {
+        padding-top: 1rem;
+        background:
+          url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 250'><path d='M 0 50 Q 100 150 200 150 Q 800 150 1000 150 Q 1200 150 1300 250 L 0 250 Z' style='fill: white' /></svg>") no-repeat bottom,
+          linear-gradient(
+            to bottom,
+            var(--md-primary-fg-color),
+            rgb(129, 129, 129) 99%,
+            var(--md-default-bg-color)
+          );
+      }
+
+      /* Set inverted text color on hero */
+      .tx-hero {
+        margin: 0 .8rem;
+        color: var(--md-primary-bg-color);
+      }
+
+      /* Make main headline thicker */
+      .tx-hero h1 {
+        margin-bottom: 1rem;
+        color: currentColor;
+        font-weight: 700;
+      }
+
+      /* Ensure that blob doesn't overlap buttons */
+      .tx-hero__content {
+        padding-bottom: 6rem;
+      }
+
+      /* Adjust spacing of buttons and invert them */
+      .tx-hero .md-button {
+        margin-top: .5rem;
+        margin-right: .5rem;
+        color: var(--md-primary-bg-color);
+      }
+
+      /* Invert primary button */
+      .tx-hero .md-button--primary {
+        background-color: var(--md-primary-bg-color);
+        color: var(--md-primary-fg-color);
+        border-color: var(--md-primary-bg-color);
+      }
+
+      /* Invert hover and focus button states */
+      .tx-hero .md-button:hover,
+      .tx-hero .md-button:focus {
+        background-color: var(--md-accent-fg-color);
+        color: var(--md-default-bg-color);
+        border-color: var(--md-accent-fg-color);
+      }
+
+      /* [mobile portrait -]: Adjust headline */
+      @media screen and (max-width: 30em) {
+
+        /* Make main headline smaller */
+        .tx-hero h1 {
+          font-size: 1.4rem;
+        }
+      }
+
+      /* [tablet landscape +]: Display content and image next to each other */
+      @media screen and (min-width: 60em) {
+
+        /* Hide table of contents */
+        .md-sidebar--secondary {
+          display: none;
+        }
+
+        /* Use flex layout to align items */
+        .tx-hero {
+          display: flex;
+          align-items: stretch;
+        }
+
+        /* Increase bottom spacing and set dimensions */
+        .tx-hero__content {
+          max-width: 19rem;
+          margin-top: 3.5rem;
+          padding-bottom: 14vw;
+        }
+
+        /* Swap with teaser and set dimensions */
+        .tx-hero__image {
+          width: 38rem;
+          order: 1;
+          transform: translateX(4rem);
+        }
+      }
+
+      /* [screen +]: Adjust spacing */
+      @media screen and (min-width: 76.25em) {
+
+        /* Hide navigation */
+        .md-sidebar--primary {
+          display: none;
+        }
+
+        /* Ensure the image aligns with the repository information */
+        .tx-hero__image {
+          transform: translateX(8rem);
+        }
+      }
+    </style>
+
+    <!-- Hero for landing page -->
+    <section class="tx-container">
+      <div class="md-grid md-typeset">
+        <div class="tx-hero">
+
+          <!-- Hero image -->
+          <div class="tx-hero__image">
+            <img
+              src="assets/Preface_Cheatsheet_Logo.png"
+              alt=""
+              width="1280"
+              height="853"
+              draggable="false"
+            >
+          </div>
+
+          <!-- Hero content -->
+          <div class="tx-hero__content">
+            <h1>A concise collection of high value information on specific applicaton security topics</h1>
+            <p>{{ config.site_description }}. All at your fingertips.</p>
+            <a
+              href="{{ page.next_page.url | url }}"
+              title="{{ page.next_page.title | striptags }}"
+              class="md-button md-button--primary"
+            >
+              Enter WebSite
+            </a>
+            <a
+              href="{{ config.repo_url }}"
+              title="{{ lang.t('source.link.title') }}"
+              class="md-button"
+            >
+              Go to GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+  {% endblock %}
+
+  <!-- Content -->
+  {% block content %}
+      {% if page and not page.title == 'Home' %}
+        {{ super() }}
+      {% endif %}
+  {% endblock %}
+
+  <!-- Application footer -->
+  {% block footer %}
+  {% if page and not page.title == 'Home' %}
+  {{ super() }}
+{% endif %}
+
+  {% endblock %}
+
+
+
+
+

@@ -14,7 +14,7 @@ Follow these steps:
 2. After a discussion on the topic/update and if the proposal is accepted by the project leaders then:
     1. Clone this GitHub repository.
     2. Either:
-      - Create the cheat sheet using the dedicated [template](templates/New_CheatSheet.md) in case of a new cheat sheet.
+      - Create the cheat sheet using the dedicated [template](https://github.com/OWASP/CheatSheetSeries/tree/master/templates/New_CheatSheet.md) in case of a new cheat sheet.
       - Modify the target cheat sheet in case of a update/refactoring.
     3. Submit your [Pull Request](https://help.github.com/articles/creating-a-pull-request/).
     4. Verify that the CI job [applied on your Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) do not fail!
@@ -70,7 +70,7 @@ Follow these steps:
 
 1. Install [Visual Studio Code](https://code.visualstudio.com/) (named `VSCode` from here), it is cross platform and free.
 2. Install this [plugin](https://github.com/DavidAnson/vscode-markdownlint#install) from VSCode.
-3. Open the file [Project.code-workspace](Project.code-workspace) from VSCode via the menu `File > Open Workspace...`.
+3. Open the file [Project.code-workspace](https://github.com/OWASP/CheatSheetSeries/Project.code-workspace) from VSCode via the menu `File > Open Workspace...`.
 4. You are ready to contribute :+1:
 
 :alarm_clock: Before to push my update to my fork, what I need to verify?
