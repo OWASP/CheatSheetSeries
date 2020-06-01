@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This article is focused on providing clear, simple, actionable guidance for providing access control security in your applications. The objective is to provide guidance to developers, reviewers, designers, architects on designing, creating and maintaining access controls in web applications.
+This article is focused on providing clear, simple, actionable guidance for providing access control security in your applications. The objective is to guide developers, reviewers, designers, architects on designing, creating and maintaining access controls in web applications.
 
 ### What is Access Control / Authorization
 
-Authorization is the process where requests to access a particular resource should be granted or denied. It should be noted that authorization is not equivalent to authentication - as these terms and their definitions are frequently confused. Authentication is providing and validating identity. Authorization includes the execution rules that determine what functionality and data the user (or Principal) may access, ensuring the proper allocation of access rights after authentication is successful.
+Authorization is the process where requests to access a particular resource should be granted or denied. It should be noted that authorization is not equivalent to authentication - as these terms and their definitions are frequently confused. Authentication is providing and validating identity. Authorization includes the operation rules that determine which functionality and data the user (or Principal) may access, ensuring the proper allocation of access rights after authentication is successful.
 
 Web applications need access controls to allow users (with varying privileges) to use the application. They also need administrators to manage the applications access control rules and the granting of permissions or entitlements to users and other entities. Various access control design methodologies are available. To choose the most appropriate one, a risk assessment needs to be performed to identify threats and vulnerabilities specific to your application, so that the proper access control methodology is appropriate for your application.
 
@@ -14,21 +14,21 @@ Web applications need access controls to allow users (with varying privileges) t
 
 Why do we need an access control policy for web development?
 
-The intention of having an access control policy is to ensure that security requirements are described clearly to architects, designers, developers and support team, such that access control functionality is designed and implemented in a consistent manner.
+The intention of having an access control policy is to ensure that security requirements are described precisely to architects, designers, developers and support team, such that access control functionality is designed and implemented in a consistently.
 
 ## Role-Based Access Control (RBAC)
 
 In Role-Based Access Control (RBAC), access decisions are based on an individual's roles and responsibilities within the organization or user base.
 
-The process of defining roles is usually based on analyzing the fundamental goals and structure of an organization and is usually linked to the security policy. For instance, in a medical organization, the different roles of users may include those such as a doctor, nurse, attendant, patients, etc. Obviously, these members require different levels of access in order to perform their functions, but also the types of web transactions and their allowed context vary greatly depending on the security policy and any relevant regulations (HIPAA, Gramm-Leach-Bliley, etc.).
+The process of defining roles is usually based on analyzing the fundamental goals and structure of an organization and is usually linked to the security policy. For instance, in a medical organization, the different roles of users may include those such as a doctor, nurse, attendant, patients, etc. These members require different levels of access in order to perform their functions, but also the types of web transactions and their allowed context vary greatly depending on the security policy and any relevant regulations (HIPAA, Gramm-Leach-Bliley, etc.).
 
 An RBAC access control framework should provide web application security administrators with the ability to determine who can perform what actions, when, from where, in what order, and in some cases under what relational circumstances.
 
 The advantages of using this methodology are:
 
 - Roles are assigned based on organizational structure with emphasis on the organizational security policy
-- Easy to use
-- Easy to administer
+- Accessible to use
+- Accessible to administer
 - Built into most frameworks
 - Aligns with security principles like segregation of duties and least privileges
 
@@ -42,19 +42,19 @@ Problems that can be encountered while using this methodology:
 The areas of caution while using RBAC are:
 
 - Roles must be only be transferred or delegated using strict sign-offs and procedures.
-- When a user changes his role to another one, the administrator must make sure that the earlier access is revoked such that at any given point of time, a user is assigned to only those roles on a need to know basis.
+- When a user changes their role to another one, the administrator must make sure that the earlier access is revoked such that at any given point of time, a user is assigned to only those roles on a need to know basis.
 - Assurance for RBAC must be carried out using strict access control reviews.
 
 ## Discretionary Access Control (DAC)
 
-Discretionary Access Control (DAC) is a means of restricting access to information based on the identity of users and/or membership in certain groups. Access decisions are typically based on the authorizations granted to a user based on the credentials he presented at the time of authentication (user name, password, hardware/software token, etc.). In most typical DAC models, the owner of the information or any resource is able to change its permissions at his discretion (thus the name).
+Discretionary Access Control (DAC) is a means of restricting access to information based on the identity of users and/or membership in certain groups. Access decisions are typically based on the authorizations granted to a user based on the credentials they presented at the time of authentication (user name, password, hardware/software token, etc.). In most typical DAC models, the owner of the information or any resource can change its permissions at their discretion (thus the name).
 
 A DAC framework can provide web application security administrators with the ability to implement fine-grained access control. This model can be a basis for data-based access control implementation
 
 The advantages of using this model are:
 
-- Easy to use
-- Easy to administer
+- Accessible to use
+- Accessible to administer
 - Aligns to the principle of least privileges.
 - Object owner has total control over access granted
 
@@ -91,7 +91,7 @@ The areas of caution while using MAC are:
 
 ## Permission Based Access Control
 
-The key concept in Permission Based Access Control is the abstraction of application actions into a set of *permissions*. A *permission* may be represented simply as a string-based name, for example, "READ". Access decisions are made by checking if the current user *has* the permission associated with the requested application action.
+The key concept in Permission Based Access Control is the abstraction of application actions into a set of *permissions*. A *permission* may be represented as a string-based name, for example, "READ". Access decisions are made by checking if the current user *has* the permission associated with the requested application action.
 
 The *has* relationship between the user and permission may be satisfied by creating a direct relationship between the user and permission (called a *grant*), or an indirect one. In the indirect model, the permission *grant* is to an intermediate entity such as *user group*. A user is considered a member of a *user group* if and only if the user *inherits* permissions from the *user group*. The indirect model makes it easier to manage the permissions for a large number of users since changing the permissions assigned to the user group affects all members of the user group.
 
