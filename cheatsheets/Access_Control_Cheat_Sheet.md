@@ -6,7 +6,7 @@ This article is focused on providing clear, simple, actionable guidance for prov
 
 ### What is Access Control / Authorization
 
-Authorization is the process where requests to access a particular resource should be granted or denied. It should be noted that authorization is not equivalent to authentication - as these terms and their definitions are frequently confused. Authentication is providing and validating identity. Authorization includes the operation rules that determine which functionality and data the user (or Principal) may access, ensuring the proper allocation of access rights after authentication is successful.
+Authorization is the process where requests to access a particular resource should be granted or denied. It should be noted that authorization is not equivalent to authentication - as these terms and their definitions are frequently confused. Authentication is providing and validating identity. Authorization includes the execution rules that determine which functionality and data the user (or Principal) may access, ensuring the proper allocation of access rights after authentication is successful.
 
 Web applications need access controls to allow users (with varying privileges) to use the application. They also need administrators to manage the applications access control rules and the granting of permissions or entitlements to users and other entities. Various access control design methodologies are available. To choose the most appropriate one, a risk assessment needs to be performed to identify threats and vulnerabilities specific to your application, so that the proper access control methodology is appropriate for your application.
 
@@ -14,7 +14,7 @@ Web applications need access controls to allow users (with varying privileges) t
 
 Why do we need an access control policy for web development?
 
-The intention of having an access control policy is to ensure that security requirements are described precisely to architects, designers, developers and support team, such that access control functionality is designed and implemented in a consistently.
+The intention of having an access control policy is to ensure that security requirements are described cleary to architects, designers, developers and support team, such that access control functionality is designed and implemented in a consistently.
 
 ## Role-Based Access Control (RBAC)
 
@@ -27,8 +27,8 @@ An RBAC access control framework should provide web application security adminis
 The advantages of using this methodology are:
 
 - Roles are assigned based on organizational structure with emphasis on the organizational security policy
-- Accessible to use
-- Accessible to administer
+- Easy to use
+- Easy to administer
 - Built into most frameworks
 - Aligns with security principles like segregation of duties and least privileges
 
@@ -53,8 +53,8 @@ A DAC framework can provide web application security administrators with the abi
 
 The advantages of using this model are:
 
-- Accessible to use
-- Accessible to administer
+- Easy to use
+- Easy to administer
 - Aligns to the principle of least privileges.
 - Object owner has total control over access granted
 
@@ -91,7 +91,7 @@ The areas of caution while using MAC are:
 
 ## Permission Based Access Control
 
-The key concept in Permission Based Access Control is the abstraction of application actions into a set of *permissions*. A *permission* may be represented as a string-based name, for example, "READ". Access decisions are made by checking if the current user *has* the permission associated with the requested application action.
+The key concept in Permission Based Access Control is the abstraction of application actions into a set of *permissions*. A *permission* may be represented simply as a string-based name, for example, "READ". Access decisions are made by checking if the current user *has* the permission associated with the requested application action.
 
 The *has* relationship between the user and permission may be satisfied by creating a direct relationship between the user and permission (called a *grant*), or an indirect one. In the indirect model, the permission *grant* is to an intermediate entity such as *user group*. A user is considered a member of a *user group* if and only if the user *inherits* permissions from the *user group*. The indirect model makes it easier to manage the permissions for a large number of users since changing the permissions assigned to the user group affects all members of the user group.
 
