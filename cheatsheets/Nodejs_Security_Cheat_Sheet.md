@@ -405,7 +405,7 @@ app.use(helmet.hsts("<max-age>", "<includeSubdomains>")); // custom configuratio
 - **[X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options):** determines if a page can be loaded via a \<frame> or an \<iframe> element. Allowing the page to be framed may result in [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking) attacks. This header can be used with [helmet](https://www.npmjs.com/package/helmet) module as follows:
 
 ```JavaScript
-app.use(hemlet.xframe()); // default behavior (DENY)
+app.use(helmet.xframe()); // default behavior (DENY)
 helmet.xframe('sameorigin'); // SAMEORIGIN
 helmet.xframe('allow-from', 'http://alloweduri.com'); //ALLOW-FROM uri
 ```
