@@ -135,5 +135,4 @@ Otherwise, you can validate certificates by yourself using [ses.setCertificateVe
 - IETF [RFC 2246 (TLS 1.0)](http://www.ietf.org/rfc/rfc2246.txt)
 - IETF [RFC 4346 (TLS 1.1)](http://www.ietf.org/rfc/rfc4346.txt)
 - IETF [RFC 5246 (TLS 1.2)](http://www.ietf.org/rfc/rfc5246.txt)
-- RSA Laboratories [PKCS\#1, RSA Encryption Standard](http://www.rsa.com/rsalabs/node.asp?id=2125)
-- RSA Laboratories [PKCS\#6, Extended-Certificate Syntax Standard](http://www.rsa.com/rsalabs/node.asp?id=2128)
+- IETF [PKCS #1: RSA Cryptography Specifications Version 2.2](https://tools.ietf.org/html/rfc8017)
