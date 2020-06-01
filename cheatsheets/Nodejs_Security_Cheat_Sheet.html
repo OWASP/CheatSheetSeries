@@ -1984,7 +1984,7 @@ For detailed information on input validation, please refer to <a href="https://c
 <ul>
 <li><strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options">X-Frame-Options</a>:</strong> determines if a page can be loaded via a \<frame> or an \<iframe> element. Allowing the page to be framed may result in <a href="https://owasp.org/www-community/attacks/Clickjacking">Clickjacking</a> attacks. This header can be used with <a href="https://www.npmjs.com/package/helmet">helmet</a> module as follows:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">hemlet</span><span class="p">.</span><span class="nx">xframe</span><span class="p">());</span> <span class="c1">// default behavior (DENY)</span>
+<div class="codehilite"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">xframe</span><span class="p">());</span> <span class="c1">// default behavior (DENY)</span>
 <span class="nx">helmet</span><span class="p">.</span><span class="nx">xframe</span><span class="p">(</span><span class="s1">&#39;sameorigin&#39;</span><span class="p">);</span> <span class="c1">// SAMEORIGIN</span>
 <span class="nx">helmet</span><span class="p">.</span><span class="nx">xframe</span><span class="p">(</span><span class="s1">&#39;allow-from&#39;</span><span class="p">,</span> <span class="s1">&#39;http://alloweduri.com&#39;</span><span class="p">);</span> <span class="c1">//ALLOW-FROM uri</span>
 </code></pre></div>
