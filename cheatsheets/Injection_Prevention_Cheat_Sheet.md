@@ -322,4 +322,4 @@ If a parameterized API is not available, you should carefully escape special cha
 
 [LDAP Injection Prevention Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md)
 
-[Injection Prevention Cheat Sheet in Java](Injection_Prevention_Cheat_Sheet_in_Java.md)
+[Injection Prevention Cheat Sheet in Java](Injection_Prevention_in_Java_Cheat_Sheet.md)
