@@ -35,7 +35,7 @@ Typical defenses include, but are not restricted to: in-house script mirroring (
 
 This risk arises from the fact that 3rd party JavaScript code is rarely reviewed by the invoking party prior to its integration into a website/application. As the client reaches the hosting website/application, this 3rd party code gets executed, thus granting the 3rd party the exact same privileges that were granted to the user (similar to [XSS attacks](https://owasp.org/www-community/attacks/xss/)).
 
-Any testing performed prior to entering production loses some of its validity, including `AST testing` ([IAST](https://www.veracode.com/security/interactive-application-security-testing-iast), [RAST](https://www.veracode.com/sites/default/files/pdf/resources/whitepapers/what-is-rasp.pdf), [SAST](https://www.gartner.com/it-glossary/static-application-security-testing-sast), [DAST](https://www.gartner.com/it-glossary/dynamic-application-security-testing-dast), etc.).
+Any testing performed prior to entering production loses some of its validity, including `AST testing` ([IAST](https://www.veracode.com/security/interactive-application-security-testing-iast), [RAST](https://www.veracode.com/sites/default/files/pdf/resources/whitepapers/what-is-rasp.pdf), [SAST](https://www.gartner.com/en/information-technology/glossary/static-application-security-testing-sast), [DAST](https://www.gartner.com/en/information-technology/glossary/dynamic-application-security-testing-dast), etc.).
 
 While it is widely accepted that the probability of having rogue code intentionally injected by the 3rd party is low, there are still cases of malicious injections in 3rd party code after the organization's servers were compromised (ex: Yahoo, January 2014).
 
