@@ -4,7 +4,7 @@
 
 Briefly introduce reader to the topic and cheatsheet.
 
-## Attack Scenarios
+## Threat Model
 
 Would include vulnerable code examples here.
 
