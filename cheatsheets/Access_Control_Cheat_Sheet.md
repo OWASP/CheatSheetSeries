@@ -14,7 +14,7 @@ Web applications need access controls to allow users (with varying privileges) t
 
 Why do we need an access control policy for web development?
 
-The intention of having an access control policy is to ensure that security requirements are described clearly to architects, designers, developers and support team, such that access control functionality is designed and implemented in a consistently.
+The intention of having an access control policy is to ensure that security requirements are described clearly to architects, designers, developers and support team, such that access control functionality is designed and implemented in a consistent manner.
 
 ## Role-Based Access Control (RBAC)
 
