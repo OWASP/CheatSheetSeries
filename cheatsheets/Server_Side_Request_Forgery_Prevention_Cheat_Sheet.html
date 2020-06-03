@@ -888,13 +888,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#contents" class="md-nav__link">
-    Contents
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#context" class="md-nav__link">
     Context
   </a>
@@ -1283,13 +1276,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#contents" class="md-nav__link">
-    Contents
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#context" class="md-nav__link">
     Context
   </a>
@@ -1485,46 +1471,6 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>The objective of the cheat sheet is to provide advices regarding the protection against <a href="https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/">Server Side Request Forgery</a> (SSRF) attack.</p>
 <p>This cheat sheet will focus on the defensive point of view and will not explain how to perform this attack. This <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a> from the security researcher <a href="https://twitter.com/orange_8361">Orange Tsai</a> as well as this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a> provide techniques on how to perform this kind of attack.</p>
-<h2 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="#server-side-request-forgery-prevention-cheat-sheet">Server-Side Request Forgery Prevention Cheat Sheet</a><ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#contents">Contents</a></li>
-<li><a href="#context">Context</a></li>
-<li><a href="#overview-of-a-ssrf-common-flow">Overview of a SSRF common flow</a></li>
-<li><a href="#cases">Cases</a><ul>
-<li><a href="#case-1---application-can-send-request-only-to-identified-and-trusted-applications">Case 1 - Application can send request only to identified and trusted applications</a><ul>
-<li><a href="#example">Example</a></li>
-<li><a href="#available-protections">Available protections</a><ul>
-<li><a href="#application-layer">Application layer</a><ul>
-<li><a href="#string">String</a></li>
-<li><a href="#ip-address">IP address</a></li>
-<li><a href="#domain-name">Domain name</a></li>
-<li><a href="#url">URL</a></li>
-</ul>
-</li>
-<li><a href="#network-layer">Network layer</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#case-2---application-can-send-requests-to-any-external-ip-address-or-domain-name">Case 2 - Application can send requests to ANY external IP address or domain name</a><ul>
-<li><a href="#challenges-in-blocking-urls-at-application-layer">Challenges in blocking URLs at application layer</a></li>
-<li><a href="#available-protections-1">Available protections</a><ul>
-<li><a href="#application-layer-1">Application layer</a></li>
-<li><a href="#network-layer-1">Network layer</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#imdsv2-in-aws">IMDSv2 in AWS</a></li>
-<li><a href="#references">References</a></li>
-<li><a href="#tools-and-code-used-for-schemas">Tools and code used for schemas</a></li>
-</ul>
-</li>
-</ul>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
 <p>SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples:</p>
 <ul>

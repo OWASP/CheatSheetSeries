@@ -456,13 +456,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#contents" class="md-nav__link">
-    Contents
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#architectural-design" class="md-nav__link">
     Architectural Design
   </a>
@@ -1249,13 +1242,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#contents" class="md-nav__link">
-    Contents
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#architectural-design" class="md-nav__link">
     Architectural Design
   </a>
@@ -1417,40 +1403,6 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This article provides a simple model to follow when implementing solutions to protect data at rest.</p>
 <p>Passwords should not be stored using reversible encryption - secure password hashing algorithms should be used instead. The <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> contains further guidance on storing passwords.</p>
-<h2 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="#cryptographic-storage-cheat-sheet">Cryptographic Storage Cheat Sheet</a><ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#contents">Contents</a></li>
-<li><a href="#architectural-design">Architectural Design</a><ul>
-<li><a href="#where-to-perform-encryption">Where to Perform Encryption</a></li>
-<li><a href="#minimise-the-storage-of-sensitive-information">Minimise the Storage of Sensitive Information</a></li>
-</ul>
-</li>
-<li><a href="#algorithms">Algorithms</a><ul>
-<li><a href="#custom-algorithms">Custom Algorithms</a></li>
-<li><a href="#cipher-modes">Cipher Modes</a></li>
-<li><a href="#secure-random-number-generation">Secure Random Number Generation</a><ul>
-<li><a href="#uuids-and-guids">UUIDs and GUIDs</a></li>
-</ul>
-</li>
-<li><a href="#defence-in-depth">Defence in Depth</a></li>
-</ul>
-</li>
-<li><a href="#key-management">Key Management</a><ul>
-<li><a href="#processes">Processes</a></li>
-<li><a href="#key-generation">Key Generation</a></li>
-<li><a href="#key-lifetimes-and-rotation">Key Lifetimes and Rotation</a></li>
-</ul>
-</li>
-<li><a href="#key-storage">Key Storage</a><ul>
-<li><a href="#separation-of-keys-and-data">Separation of Keys and Data</a></li>
-<li><a href="#encrypting-stored-keys">Encrypting Stored Keys</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
 <h2 id="architectural-design">Architectural Design<a class="headerlink" href="#architectural-design" title="Permanent link">&para;</a></h2>
 <p>The first step in designing any application is to consider the overall architecture of the system, as this will have a huge impact on the technical implementation.</p>
 <p>This process should begin with considering the <a href="Threat_Modeling_Cheat_Sheet.html">threat model</a> of the application (i.e, who you trying to protect that data against).</p>

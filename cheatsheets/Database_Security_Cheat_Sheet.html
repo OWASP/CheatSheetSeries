@@ -480,13 +480,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#contents" class="md-nav__link">
-    Contents
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#connecting-to-the-database" class="md-nav__link">
     Connecting to the Database
   </a>
@@ -1202,13 +1195,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#contents" class="md-nav__link">
-    Contents
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#connecting-to-the-database" class="md-nav__link">
     Connecting to the Database
   </a>
@@ -1322,26 +1308,6 @@
                 <h1 id="database-security-cheat-sheet">Database Security Cheat Sheet<a class="headerlink" href="#database-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This cheat sheet provides guidance on securely configuring and using the SQL and NoSQL databases. It is intended to be used by application developers when they are responsible for managing the databases, in the absence of a dedicated database administrator (DBA). For details about protecting against SQL Injection attacks, see the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
-<h2 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="#connecting-to-the-database">Connecting to the Database</a><ul>
-<li><a href="#transport-layer-protection">Transport Layer Protection</a></li>
-</ul>
-</li>
-<li><a href="#authentication">Authentication</a><ul>
-<li><a href="#storing-database-credentials">Storing Database Credentials</a></li>
-</ul>
-</li>
-<li><a href="#permissions">Permissions</a></li>
-<li><a href="#database-configuration-and-hardening">Database Configuration and Hardening</a><ul>
-<li><a href="#microsoft-sql-server">Microsoft SQL Server</a></li>
-<li><a href="#mysql-and-mariadb">MySQL and MariaDB</a></li>
-<li><a href="#postgresql">PostgreSQL</a></li>
-<li><a href="#mongodb">MongoDB</a></li>
-<li><a href="#redis">Redis</a></li>
-</ul>
-</li>
-</ul>
 <h2 id="connecting-to-the-database">Connecting to the Database<a class="headerlink" href="#connecting-to-the-database" title="Permanent link">&para;</a></h2>
 <p>The backend database used by the application should be isolated as much as possible, in order to prevent malicious or undesirable users from being able to connect to it. Exactly how this is achieved will depend on the system and network architecture. The following options could be used to protect it:</p>
 <ul>
