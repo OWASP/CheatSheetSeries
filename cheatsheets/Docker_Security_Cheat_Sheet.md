@@ -148,7 +148,7 @@ In Kubernetes [Network Policies](https://kubernetes.io/docs/concepts/services-ne
 
 Consider using security profile like [seccomp](https://docs.docker.com/engine/security/seccomp/) or [AppArmor](https://docs.docker.com/engine/security/apparmor/).
 
-Instructions how to do this inside Kubernetes can be found in [Security Context documentation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) and in [Kubernetes API documentation](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#securitycontext-v1-core)
+Instructions how to do this inside Kubernetes can be found in [Security Context documentation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) and in [Kubernetes API documentation](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#securitycontext-v1-core)
 
 ### RULE \#7 - Limit resources (memory, CPU, file descriptors, processes, restarts)
 
