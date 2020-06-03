@@ -11,28 +11,6 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 - **Use a [salt](#salting) (modern algorithms do this for you automatically).**
 - **Consider using a [pepper](#peppering) to provide an additional layer of security.**
 
-## Contents
-
-- [Background](#background)
-    - [Hashing vs Encryption](#hashing-vs-encryption)
-    - [How Attackers Crack Password Hashes](#how-attackers-crack-password-hashes)
-- [Hashing Concepts](#hashing-concepts)
-    - [Salting](#salting)
-    - [Peppering](#peppering)
-        - [Disadvantages](#disadvantages)
-    - [Work Factors](#work-factors)
-        - [Upgrading the Work Factor](#upgrading-the-work-factor)
-    - [Maximum Password Lengths](#maximum-password-lengths)
-        - [Pre-Hashing Passwords](#pre-hashing-passwords)
-- [Password Hashing Algorithms](#password-hashing-algorithms)
-    - [Modern Algorithms](#modern-algorithms)
-        - [Argon2id](#argon2id)
-        - [PBKDF2](#pbkdf2)
-        - [Bcrypt](#bcrypt)
-    - [Legacy Algorithms](#legacy-algorithms)
-    - [Upgrading Legacy Hashes](#upgrading-legacy-hashes)
-    - [Custom Algorithms](#custom-algorithms)
-
 ## Background
 
 ### Hashing vs Encryption

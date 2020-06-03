@@ -21,35 +21,6 @@ In short, the following principles should be followed to defend against CSRF:
 - **Do not use GET requests for state changing operations.**
     - **If for any reason you do it, you have to also protect those resources against CSRF**
 
-## Contents
-
-- [Token Based Mitigation](#token-based-mitigation)
-    - [Use Build-In Or Existing CSRF Implementations for CSRF Protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection)
-    - [Synchronizer Token Pattern](#synchronizer-token-pattern)
-    - [Encryption based Token Pattern](#encryption-based-token-pattern)
-    - [HMAC Based Token Pattern](#hmac-based-token-pattern)
-- [Defense In Depth Techniques](#defense-in-depth-techniques)
-    - [SameSite Cookie Attribute](#samesite-cookie-attribute)
-    - [Verifying Origin With Standard Headers](#verifying-origin-with-standard-headers)
-        - [Identifying Source Origin (via Origin/Referer header)](#identifying-source-origin--via-origin-referer-header-)
-        - [Identifying the Target Origin](#identifying-the-target-origin)
-    - [Double Submit Cookie](#double-submit-cookie)
-        - [Cookie with __Host- prefix](#cookie-with---host--prefix)
-    - [Use of Custom Request Headers](#use-of-custom-request-headers)
-    - [User Interaction Based CSRF Defense](#user-interaction-based-csrf-defense)
-- [Login CSRF](#login-csrf)
-- [Java Reference Example](#java-reference-example)
-- [JavaScript Guidance for Auto-inclusion of CSRF tokens as an AJAX Request header](#javascript-guidance-for-auto-inclusion-of-csrf-tokens-as-an-ajax-request-header)
-    - [Storing the CSRF Token Value in the DOM](#storing-the-csrf-token-value-in-the-dom)
-    - [Overriding Defaults to Set Custom Header](#overriding-defaults-to-set-custom-header)
-        - [XMLHttpRequest (Native JavaScript)](#xmlhttprequest--native-javascript-)
-        - [AngularJS](#angularjs)
-        - [Axios](#axios)
-        - [JQuery](#jquery)
-- [References](#references)
-    - [CSRF](#csrf)
-    - [Cookie Prefixes](#cookie-prefixes)
-
 ## Token Based Mitigation
 
 This defense is one of the most popular and recommended methods to mitigate CSRF. It can be achieved either with state ([synchronizer token pattern](#synchronizer-token-pattern)) or stateless ([encrypted](#encryption-based-token-pattern) or [hashed](#hmac-based-token-pattern) based token pattern).
