@@ -19,25 +19,6 @@ In short, the following principles should be followed to reach a secure file upl
 - **Ensure that any libraries used are securely configured and kept up to date**
 - **Protect the file upload from [CSRF](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) attacks**
 
-## Contents
-
-- [File Upload Threats](#file-upload-threats)
-    - [Malicious Files](#malicious-files)
-    - [Public File Retrieval](#public-file-retrieval)
-- [File Upload Protection](#file-upload-protection)
-    - [Extension Validation](#extension-validation)
-        - [Whitelist Extensions](#whitelist-extensions)
-        - [Blacklist Extensions](#blacklist-extensions)
-    - [Content-Type Validation](#content-type-validation)
-    - [Magic Number Validation](#magic-number-validation)
-    - [File Name Sanitization](#file-name-sanitization)
-    - [File Content Validation](#file-content-validation)
-    - [File Storage Location](#file-storage-location)
-    - [User Permissions](#user-permissions)
-    - [System Permissions](#system-permissions)
-    - [Upload and Download Limits](#upload-and-download-limits)
-- [Java Code Snippets](#java-code-snippets)
-
 ## File Upload Threats
 
 In order to assess and know exactly what controls to implement, knowing what you're facing is essential to protect your assets. The following sections will hopefully showcase the risks accompanying the file upload functionality.

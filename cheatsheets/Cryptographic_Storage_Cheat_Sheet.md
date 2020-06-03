@@ -6,28 +6,6 @@ This article provides a simple model to follow when implementing solutions to pr
 
 Passwords should not be stored using reversible encryption - secure password hashing algorithms should be used instead. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) contains further guidance on storing passwords.
 
-## Contents
-
-- [Cryptographic Storage Cheat Sheet](#cryptographic-storage-cheat-sheet)
-    - [Introduction](#introduction)
-    - [Contents](#contents)
-    - [Architectural Design](#architectural-design)
-        - [Where to Perform Encryption](#where-to-perform-encryption)
-        - [Minimise the Storage of Sensitive Information](#minimise-the-storage-of-sensitive-information)
-    - [Algorithms](#algorithms)
-        - [Custom Algorithms](#custom-algorithms)
-        - [Cipher Modes](#cipher-modes)
-        - [Secure Random Number Generation](#secure-random-number-generation)
-            - [UUIDs and GUIDs](#uuids-and-guids)
-        - [Defence in Depth](#defence-in-depth)
-    - [Key Management](#key-management)
-        - [Processes](#processes)
-        - [Key Generation](#key-generation)
-        - [Key Lifetimes and Rotation](#key-lifetimes-and-rotation)
-    - [Key Storage](#key-storage)
-        - [Separation of Keys and Data](#separation-of-keys-and-data)
-        - [Encrypting Stored Keys](#encrypting-stored-keys)
-
 ## Architectural Design
 
 The first step in designing any application is to consider the overall architecture of the system, as this will have a huge impact on the technical implementation.
