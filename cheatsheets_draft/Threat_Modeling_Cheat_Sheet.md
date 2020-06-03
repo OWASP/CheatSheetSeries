@@ -19,8 +19,6 @@ TODO: Add an introduction that could summarize the CS in a couple of lines.
 - DON’T Go beyond/deeper than design level.
 - DON’T Use Threat Modeling like a kitchen sink, don’t try to put everything in.
 
-![What are we building](../assets/TM_what_are_we_building.jpg "What are we building")
-
 ### What Can Go Wrong
 
 #### Things to Do
@@ -33,8 +31,6 @@ TODO: Add an introduction that could summarize the CS in a couple of lines.
 #### Things to Avoid
 
 - DON’T Get stuck in a framework, or discredit ideas because they don’t fit the framework (do admit when you are stuck and be wary of diminishing returns)
-
-![What can go wrong](../assets/TM_what_can_go_wrong.jpg "What can go wrong")
 
 ### What Are We Going to Do About It
 
@@ -50,8 +46,6 @@ TODO: Add an introduction that could summarize the CS in a couple of lines.
 #### Things to Avoid
 
 - DON’T Confuse can and should
-
-![What are we going to do about it](../assets/TM_what_are_we_going_to_do_about_it.jpg "What are we going to do about it")
 
 ### Did We Do a Good Enough Job
 
