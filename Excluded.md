@@ -1,6 +1,6 @@
 # Index of Excluded Cheat Sheets
 
-The following Cheat sheets have been removed and are no longer maintained. You can however still find them on the github repositroy.
+The following Cheat sheets have been removed and are no longer maintained. You can however still find them on the github repository.
 
 **7** cheat sheets excluded.
 
