@@ -97,7 +97,7 @@ Session settings are some of the MOST important values to concentrate on in conf
  session.sid_bits_per_character   = 6 # PHP 7.2+
  session.hash_function            = 1 # PHP 7.0-7.1
  session.hash_bits_per_character  = 6 # PHP 7.0-7.1
- ```
+```
 
 #### Some more security paranoid checks
 

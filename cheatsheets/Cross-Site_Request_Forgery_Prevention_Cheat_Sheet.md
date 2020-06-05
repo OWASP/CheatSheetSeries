@@ -266,7 +266,7 @@ This can be done as demonstrated in the following code snippet:
         return res;
     };
  </script>
- ```
+```
 
 #### AngularJS
 
