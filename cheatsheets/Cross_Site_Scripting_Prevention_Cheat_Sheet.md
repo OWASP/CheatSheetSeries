@@ -231,7 +231,7 @@ This technique has the advantage that html entity escaping is widely supported a
 <div id="init_data" style="display: none">
  <%= html_escape(data.to_json) %>
 </div>
- ```
+```
 
 ```javascript
 // external js file

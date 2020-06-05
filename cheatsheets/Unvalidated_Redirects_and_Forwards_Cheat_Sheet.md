@@ -79,7 +79,7 @@ If no validation is applied, a malicious user could create a hyperlink to redire
 
 ```text
  http://example.com/example.php?url=http://malicious.example.com
- ```
+```
 
 The user sees the link directing to the original trusted site (`example.com`) and does not realize the redirection that could take place
 
