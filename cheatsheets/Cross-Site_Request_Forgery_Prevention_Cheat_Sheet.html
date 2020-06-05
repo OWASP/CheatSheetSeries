@@ -618,6 +618,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#angularjs" class="md-nav__link">
+    AngularJS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#axios" class="md-nav__link">
     Axios
   </a>
@@ -1516,6 +1523,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#angularjs" class="md-nav__link">
+    AngularJS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#axios" class="md-nav__link">
     Axios
   </a>
@@ -1776,14 +1790,12 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
         <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
     <span class="p">};</span>
  <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
- ```
+</code></pre></div>
 
-#### AngularJS
 
-AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS&#39;s documentation for [$httpProvider](https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults).
-
-```html
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<h4 id="angularjs">AngularJS<a class="headerlink" href="#angularjs" title="Permanent link">&para;</a></h4>
+<p>AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS's documentation for <a href="https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults">$httpProvider</a>.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
     <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
 
     <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,</span> <span class="p">[]);</span>

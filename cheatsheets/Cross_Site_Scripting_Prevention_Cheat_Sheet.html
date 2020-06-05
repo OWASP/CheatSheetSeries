@@ -1670,13 +1670,13 @@ Content-Type: application/json; charset=utf-8 &lt;--good
 <div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;init_data&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;display: none&quot;</span><span class="p">&gt;</span>
  <span class="err">&lt;</span>%= html_escape(data.to_json) %&gt;
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
- ```
+</code></pre></div>
 
-```javascript
-// external js file
-var dataElement = document.getElementById(&#39;init_data&#39;);
-// decode and parse the content of the div
-var initData = JSON.parse(dataElement.textContent);
+
+<div class="codehilite"><pre><span></span><code><span class="c1">// external js file</span>
+<span class="kd">var</span> <span class="nx">dataElement</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;init_data&#39;</span><span class="p">);</span>
+<span class="c1">// decode and parse the content of the div</span>
+<span class="kd">var</span> <span class="nx">initData</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">dataElement</span><span class="p">.</span><span class="nx">textContent</span><span class="p">);</span>
 </code></pre></div>
 
 

@@ -994,6 +994,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#dangerous-url-redirect-example-2" class="md-nav__link">
+    Dangerous URL Redirect Example 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#dangerous-forward-example" class="md-nav__link">
     Dangerous Forward Example
   </a>
@@ -1183,6 +1190,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#dangerous-url-redirect-example-2" class="md-nav__link">
+    Dangerous URL Redirect Example 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#dangerous-forward-example" class="md-nav__link">
     Dangerous Forward Example
   </a>
@@ -1297,45 +1311,40 @@
 <p>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.</p>
 <p>If no validation is applied, a malicious user could create a hyperlink to redirect your users to an unvalidated malicious website, for example:</p>
 <div class="codehilite"><pre><span></span><code> http://example.com/example.php?url=http://malicious.example.com
- ```
+</code></pre></div>
 
-The user sees the link directing to the original trusted site (`example.com`) and does not realize the redirection that could take place
 
-### Dangerous URL Redirect Example 2
+<p>The user sees the link directing to the original trusted site (<code>example.com</code>) and does not realize the redirection that could take place</p>
+<h3 id="dangerous-url-redirect-example-2">Dangerous URL Redirect Example 2<a class="headerlink" href="#dangerous-url-redirect-example-2" title="Permanent link">&para;</a></h3>
+<p><a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/preventing-open-redirection-attacks">ASP .NET MVC 1 &amp; 2 websites</a> are particularly vulnerable to open redirection attacks. In order to avoid this vulnerability, you need to apply MVC 3.</p>
+<p>The code for the LogOn action in an ASP.NET MVC 2 application is shown below. After a successful login, the controller returns a redirect to the returnUrl. You can see that no validation is being performed against the returnUrl parameter.</p>
+<p>ASP.NET MVC 2 LogOn action in <code>AccountController.cs</code> (see Microsoft Docs link provided above for the context):</p>
+<div class="codehilite"><pre><span></span><code><span class="na">[HttpPost]</span>
+ <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">LogOn</span><span class="p">(</span><span class="n">LogOnModel</span> <span class="n">model</span><span class="p">,</span> <span class="kt">string</span> <span class="n">returnUrl</span><span class="p">)</span>
+ <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
+   <span class="p">{</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">MembershipService</span><span class="p">.</span><span class="n">ValidateUser</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">))</span>
+     <span class="p">{</span>
+       <span class="n">FormsService</span><span class="p">.</span><span class="n">SignIn</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">);</span>
+       <span class="k">if</span> <span class="p">(!</span><span class="n">String</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">))</span>
+       <span class="p">{</span>
+         <span class="k">return</span> <span class="nf">Redirect</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span>
+       <span class="p">}</span>
+       <span class="k">else</span>
+       <span class="p">{</span>
+         <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;Index&quot;</span><span class="p">,</span> <span class="s">&quot;Home&quot;</span><span class="p">);</span>
+       <span class="p">}</span>
+     <span class="p">}</span>
+     <span class="k">else</span>
+     <span class="p">{</span>
+       <span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;The user name or password provided is incorrect.&quot;</span><span class="p">);</span>
+     <span class="p">}</span>
+   <span class="p">}</span>
 
-[ASP .NET MVC 1 &amp; 2 websites](https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/preventing-open-redirection-attacks) are particularly vulnerable to open redirection attacks. In order to avoid this vulnerability, you need to apply MVC 3.
-
-The code for the LogOn action in an ASP.NET MVC 2 application is shown below. After a successful login, the controller returns a redirect to the returnUrl. You can see that no validation is being performed against the returnUrl parameter.
-
-ASP.NET MVC 2 LogOn action in `AccountController.cs` (see Microsoft Docs link provided above for the context):
-
-```csharp
-[HttpPost]
- public ActionResult LogOn(LogOnModel model, string returnUrl)
- {
-   if (ModelState.IsValid)
-   {
-     if (MembershipService.ValidateUser(model.UserName, model.Password))
-     {
-       FormsService.SignIn(model.UserName, model.RememberMe);
-       if (!String.IsNullOrEmpty(returnUrl))
-       {
-         return Redirect(returnUrl);
-       }
-       else
-       {
-         return RedirectToAction(&quot;Index&quot;, &quot;Home&quot;);
-       }
-     }
-     else
-     {
-       ModelState.AddModelError(&quot;&quot;, &quot;The user name or password provided is incorrect.&quot;);
-     }
-   }
-
-   // If we got this far, something failed, redisplay form
-   return View(model);
- }
+   <span class="c1">// If we got this far, something failed, redisplay form</span>
+   <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
+ <span class="p">}</span>
 </code></pre></div>
 
 
