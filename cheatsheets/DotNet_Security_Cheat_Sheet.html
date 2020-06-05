@@ -645,8 +645,22 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ldap-injection" class="md-nav__link">
+    LDAP injection
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-broken-authentication" class="md-nav__link">
+    A2 Broken Authentication
+  </a>
   
 </li>
         
@@ -1542,8 +1556,22 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ldap-injection" class="md-nav__link">
+    LDAP injection
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-broken-authentication" class="md-nav__link">
+    A2 Broken Authentication
+  </a>
   
 </li>
         
@@ -2043,27 +2071,19 @@
  <span class="p">}</span>
     <span class="p">...</span>
 <span class="p">}</span>
- <span class="err">```</span>
+</code></pre></div>
 
-<span class="err">####</span> <span class="n">LDAP</span> <span class="n">injection</span>
 
-<span class="n">Almost</span> <span class="n">any</span> <span class="n">characters</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="k">in</span> <span class="n">Distinguished</span> <span class="n">Names</span><span class="p">.</span> <span class="n">However</span><span class="p">,</span> <span class="n">some</span> <span class="n">must</span> <span class="n">be</span> <span class="n">escaped</span> <span class="n">with</span> <span class="n">the</span> <span class="n">backslash</span> <span class="err">`\`</span> <span class="n">escape</span> <span class="n">character</span><span class="p">.</span> <span class="n">A</span> <span class="n">table</span> <span class="n">showing</span> <span class="n">which</span> <span class="n">characters</span> <span class="n">that</span> <span class="n">should</span> <span class="n">be</span> <span class="n">escaped</span> <span class="k">for</span> <span class="n">Active</span> <span class="n">Directory</span> <span class="n">can</span> <span class="n">be</span> <span class="n">found</span> <span class="n">at</span> <span class="n">the</span> <span class="k">in</span> <span class="n">the</span> <span class="p">[</span><span class="n">LDAP</span> <span class="n">Injection</span> <span class="n">Prevention</span> <span class="n">Cheat</span> <span class="n">Sheet</span><span class="p">](</span><span class="n">LDAP_Injection_Prevention_Cheat_Sheet</span><span class="p">.</span><span class="n">md</span><span class="err">#</span><span class="n">introduction</span><span class="p">).</span>
-
-<span class="n">NB</span><span class="p">:</span> <span class="n">The</span> <span class="n">space</span> <span class="n">character</span> <span class="n">must</span> <span class="n">be</span> <span class="n">escaped</span> <span class="n">only</span> <span class="k">if</span> <span class="n">it</span> <span class="k">is</span> <span class="n">the</span> <span class="n">leading</span> <span class="n">or</span> <span class="n">trailing</span> <span class="n">character</span> <span class="k">in</span> <span class="n">a</span> <span class="n">component</span> <span class="n">name</span><span class="p">,</span> <span class="n">such</span> <span class="k">as</span> <span class="n">a</span> <span class="n">Common</span> <span class="n">Name</span><span class="p">.</span> <span class="n">Embedded</span> <span class="n">spaces</span> <span class="n">should</span> <span class="n">not</span> <span class="n">be</span> <span class="n">escaped</span><span class="p">.</span>
-
-<span class="n">More</span> <span class="n">information</span> <span class="n">can</span> <span class="n">be</span> <span class="n">found</span> <span class="p">[</span><span class="n">here</span><span class="p">](</span><span class="n">LDAP_Injection_Prevention_Cheat_Sheet</span><span class="p">.</span><span class="n">md</span><span class="err">#</span><span class="n">introduction</span><span class="p">).</span>
-
-<span class="err">###</span> <span class="n">A2</span> <span class="n">Broken</span> <span class="n">Authentication</span>
-
-<span class="n">DO</span><span class="p">:</span> <span class="n">Use</span> <span class="p">[</span><span class="n">ASP</span><span class="p">.</span><span class="n">net</span> <span class="n">Core</span> <span class="n">Identity</span><span class="p">](</span><span class="n">https</span><span class="p">:</span><span class="c1">//docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&amp;).</span>
-<span class="n">ASP</span><span class="p">.</span><span class="n">net</span> <span class="n">Core</span> <span class="n">Identity</span> <span class="n">framework</span> <span class="k">is</span> <span class="n">well</span> <span class="n">configured</span> <span class="k">by</span> <span class="k">default</span><span class="p">,</span> <span class="k">where</span> <span class="n">it</span> <span class="n">uses</span> <span class="n">secure</span> <span class="n">password</span> <span class="n">hashes</span> <span class="n">and</span> <span class="n">an</span> <span class="n">individual</span> <span class="n">salt</span><span class="p">.</span> <span class="n">Identity</span> <span class="n">uses</span> <span class="n">the</span> <span class="n">PBKDF2</span> <span class="n">hashing</span> <span class="n">function</span> <span class="k">for</span> <span class="n">passwords</span><span class="p">,</span> <span class="n">and</span> <span class="n">they</span> <span class="n">generate</span> <span class="n">a</span> <span class="n">random</span> <span class="n">salt</span> <span class="n">per</span> <span class="n">user</span><span class="p">.</span>
-
-<span class="n">DO</span><span class="p">:</span> <span class="n">Set</span> <span class="n">secure</span> <span class="n">password</span> <span class="n">policy</span>
-
-<span class="n">e</span><span class="p">.</span><span class="n">g</span> <span class="n">ASP</span><span class="p">.</span><span class="n">net</span> <span class="n">Core</span> <span class="n">Identity</span>
-
-<span class="err">```</span> <span class="n">csharp</span>
-<span class="c1">//startup.cs</span>
+<h4 id="ldap-injection">LDAP injection<a class="headerlink" href="#ldap-injection" title="Permanent link">&para;</a></h4>
+<p>Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash <code>\</code> escape character. A table showing which characters that should be escaped for Active Directory can be found at the in the <a href="LDAP_Injection_Prevention_Cheat_Sheet.html#introduction">LDAP Injection Prevention Cheat Sheet</a>.</p>
+<p>NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.</p>
+<p>More information can be found <a href="LDAP_Injection_Prevention_Cheat_Sheet.html#introduction">here</a>.</p>
+<h3 id="a2-broken-authentication">A2 Broken Authentication<a class="headerlink" href="#a2-broken-authentication" title="Permanent link">&para;</a></h3>
+<p>DO: Use <a href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&amp;">ASP.net Core Identity</a>.
+ASP.net Core Identity framework is well configured by default, where it uses secure password hashes and an individual salt. Identity uses the PBKDF2 hashing function for passwords, and they generate a random salt per user.</p>
+<p>DO: Set secure password policy</p>
+<p>e.g ASP.net Core Identity</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">//startup.cs</span>
 <span class="n">services</span><span class="p">.</span><span class="n">Configure</span><span class="p">&lt;</span><span class="n">IdentityOptions</span><span class="p">&gt;(</span><span class="n">options</span> <span class="p">=&gt;</span>
 <span class="p">{</span>
  <span class="c1">// Password settings</span>
