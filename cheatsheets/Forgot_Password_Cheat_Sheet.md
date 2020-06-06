@@ -8,42 +8,23 @@ Even though this functionality looks straightforward and easy to implement, the 
 
 The following short guidelines can be used as a quick reference to protect the forgot password service:
 
-- **Unified user message, whether the user exists or not.**
+- **Return a consistent message for both existent and nonexistent accounts.**
 - **Ensure that the time taken for the user response message is uniform.**
 - **Use a side-channel to communicate the method to reset their password.**
 - **For critical services and applications, MFA should be used.**
 
-## Content
-
-- [Forgot Password Cheat Sheet](#forgot-password-cheat-sheet)
-  * [Introduction](#introduction)
-  * [Content](#content)
-  * [Forgot Password Service](#forgot-password-service)
-    + [Forgot Password Request](#forgot-password-request)
-    + [Code or Token Activation](#code-or-token-activation)
-    + [User Resets Password](#user-resets-password)
-  * [Methods](#methods)
-  * [Tokens and Codes Secure Practices](#tokens-and-codes-secure-practices)
-  * [Methods Implementation](#methods-implementation)
-    + [One Time Password](#one-time-password)
-    + [URL Tokens or Codes](#url-tokens-or-codes)
-    + [Security Questions](#security-questions)
-    + [Backup Codes](#backup-codes)
-
 ## Forgot Password Service
 
-The service providing the Forgot Password functionality should follow secure practices on three stages.
-
-> Security considerations for properly handling tokens and codes on the backend are discussed in the [methods' implementation](#methods-implementation) section.
+The service providing the Forgot Password functionality should follow secure practices on three stages, detailed below.
 
 ### Forgot Password Request
 
 The user uses the forgot password service and inputs their username or email. To ensure the security on this stage, the below should implemented:
 
-- Unified user message, whether the user exists or not.
-- Unified time for the user response. A quick exit method should not be used if a user doesn't exist and an email is not sent.
-- Rate-limiting (*e.g.* Captchas, blocking IPs for a period of time, etc.) to protect the application against brute-force attacks.
-- Employ proper [Input Validation](Input_Validation_Cheat_Sheet.md) on the sent field.
+- Return a consistent message for both existent and nonexistent accounts.
+- Consistent user response time. That could be achieved by using asynchronous calls or by making sure that the same logic is followed, instead of using a quick exit method.
+- Rate-limiting (*e.g.* Captchas, blocking IPs for a period of time, etc.) to protect the application against [brute-force attacks](https://en.wikipedia.org/wiki/Brute-force_attack).
+- Employ normal security measures, such as [SQL Injection Prevention methods](SQL_Injection_Prevention_Cheat_Sheet.md), and [Input Validation](Input_Validation_Cheat_Sheet.md) where need be.
 
 ### Code or Token Activation
 
