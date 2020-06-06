@@ -39,7 +39,7 @@ Once the user is validated through the provided token or code, they should reset
 - Validate that a secure password policy is in place.
 - The user should confirm the password they set by writing it twice.
 - Update and store the password following [secure practices](Password_Storage_Cheat_Sheet.md).
-- Send the user an email informing them that their password has been reset.
+- Send the user an email informing them that their password has been reset (do not send the password in the email!).
 - Ask the user to re-login. Don't auto-login users on password reset!
 - Ask the user if they want to invalidate all of the sessions, or invalidate the sessions by default without prompting the user.
 
@@ -54,33 +54,7 @@ This can be done through any of the following methods:
 - Security Questions.
 - Offline backup codes.
 
-> These methods can be used together and many times it is recommended to do so. No matter what you must ensure that a user always has a way to recover their account.
-
-## Tokens and Codes Secure Practices
-
-It is essential to employ security practices for the reset codes and tokens that will be used in the methods.
-
-**Common secure practices**:
-
-- Randomly generated with a [CSPRNG](https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator) (*e.g.* [secrets](https://docs.python.org/3/library/secrets.html) library in Python).
-- Short lifetime (*e.g.* 30 minutes).
-- Linked to the user requesting the token in the database.
-- One time use (should be removed from the database once used).
-- Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
-
-**Tokens secure practices**:
-
-- Long enough to avoid brute-force attacks (16 characters should be the minimum used).
-
-**Codes secure practices**:
-
-- Minimum length of 8 digits, 12 for improved security.
-- If the service allows users to view the backup codes, the codes should be [securely stored](Cryptographic_Storage_Cheat_Sheet.md) and access should only happen in an authenticated session after asking for a user identifier (password, email token, etc.).
-- A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
-
-## Methods Implementation
-
-In order to implement the forgot password service, the developer needs to choose one of the proposed [methods](#methods).
+These methods can be used together and many times it is recommended to do so. No matter what you must ensure that a user always has a way to recover their account.
 
 ### One Time Password
 
@@ -116,3 +90,25 @@ Kindly refer to the [Security Questions Cheat Sheet](Choosing_and_Using_Security
 ### Backup Codes
 
 Backup codes should be provided to the user upon registering where the user should store them offline in a secure place (password managers). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
+
+### Methods Secure Practices
+
+It is essential to employ security practices for the reset codes and tokens that will be used in the methods.
+
+#### General Security Practices
+
+- Randomly generated with a [CSPRNG](https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator) (*e.g.* [secrets](https://docs.python.org/3/library/secrets.html) library in Python).
+- Short lifetime (*e.g.* 30 minutes).
+- Linked to the user requesting the token in the database.
+- One time use (should be removed from the database once used).
+- Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
+
+#### Tokens Specific Security Practices
+
+- Long enough to avoid brute-force attacks (16 characters should be the minimum used).
+
+#### Codes Specific Security Practices
+
+- Minimum length of 8 digits, 12 for improved security.
+- If the service allows users to view the backup codes, the codes should be [securely stored](Cryptographic_Storage_Cheat_Sheet.md) and access should only happen in an authenticated session after asking for a user identifier (password, email token, etc.).
+- A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
