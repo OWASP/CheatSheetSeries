@@ -112,3 +112,4 @@ It is essential to employ security practices for the reset codes and tokens that
 - Minimum length of 8 digits, 12 for improved security.
 - If the service allows users to view the backup codes, the codes should be [securely stored](Cryptographic_Storage_Cheat_Sheet.md) and access should only happen in an authenticated session after asking for a user identifier (password, email token, etc.).
 - A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
+- Code renewal or revocation service.
