@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This article brings forth a way to integrate the `defense in depth` concept to the client-side of web applications. By injecting the Content-Security-Policy (CSP) headers from the server, the browser is aware and capable of protecting the user from dynamic calls that will load content into the page currently being visited.
+This article brings forth a way to integrate the __defense in depth__ concept to the client-side of web applications. By injecting the Content-Security-Policy (CSP) headers from the server, the browser is aware and capable of protecting the user from dynamic calls that will load content into the page currently being visited.
 
 ## Context
 
-The increase in XSS and clickjacking vulnerabilities demands a more `defense in depth` security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.
+The increase in XSS and clickjacking vulnerabilities demands a more __defense in depth__ security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.
 
 ## Defense in Depth
 
@@ -134,11 +134,15 @@ The most basic policy assumes:
 - All resources are hosted by the same domain of the document.
 - There are no inlines or evals for scripts and style resources.
 
-> `Content-Security-Policy: default-src 'self';`
+```
+Content-Security-Policy: default-src 'self';
+```
 
 To tighten further, one can apply the following:
 
-> `Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';`
+```
+Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';
+```
 
 This policy allows images, scripts, AJAX, and CSS from the same origin, and does not allow any other resources to load (eg. object, frame, media, etc).
 
@@ -197,11 +201,15 @@ var foo = "314"
 
 The inline code can be enabled by **specifying its SHA256 hash** in the CSP header:
 
-> `Content-Security-Policy: script-src 'sha256-gPMJwWBMWDx0Cm7ZygJKZIU2vZpiYvzUQjl5Rh37hKs=';`
+```
+Content-Security-Policy: script-src 'sha256-gPMJwWBMWDx0Cm7ZygJKZIU2vZpiYvzUQjl5Rh37hKs=';
+```
 
 This particular script's hash can be calculated using the following command:
 
-> `echo -n 'var foo = "314"' | openssl sha256 -binary | openssl base64`
+```bash
+echo -n 'var foo = "314"' | openssl sha256 -binary | openssl base64
+```
 
 Some browsers (e.g. Chrome) will also display the hash of the script in JavaScript console warning when blocking an unsigned script.
 
@@ -212,15 +220,19 @@ The inline code can be also simply moved to a separate JavaScript file and the c
 </script>
 ```
 
-with `app.js` containing the `var foo = "314"` code.
+With `app.js` containing the `var foo = "314"` code.
 
 The inline code restriction also applies to `inline event handlers`, so that the following construct will be blocked under CSP:
 
-> `<button id="button1" onclick="doSomething()">`
+```html
+<button id="button1" onclick="doSomething()">
+```
 
 This should be replaced by `addEventListener` calls:
 
-> `document.getElementById("button1").addEventListener('click', doSomething);`
+```javascript
+document.getElementById("button1").addEventListener('click', doSomething);
+```
 
 ## References
 
