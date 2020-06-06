@@ -97,7 +97,7 @@ It is essential to employ security practices for the reset codes and tokens that
 
 #### General Security Practices
 
-- Randomly generated with a [CSPRNG](https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator) (*e.g.* [secrets](https://docs.python.org/3/library/secrets.html) library in Python).
+- [Secure random generation](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
 - Short lifetime (*e.g.* 30 minutes).
 - Linked to the user requesting the token in the database.
 - One time use (should be removed from the database once used).
