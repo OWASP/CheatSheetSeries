@@ -106,3 +106,4 @@ It is essential to employ security practices for the reset codes and tokens that
 - One time use (should be removed from the database once used).
 - Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
 - Tokens should be long enough to avoid brute-force attacks (16 characters should be the minimum used).
+- Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. When need be, implement a robust whitelist of the allowed Hosts.
