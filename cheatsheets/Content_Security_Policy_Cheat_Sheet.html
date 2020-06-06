@@ -1405,9 +1405,9 @@
                 
                 <h1 id="content-security-policy-cheat-sheet">Content Security Policy Cheat Sheet<a class="headerlink" href="#content-security-policy-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This article brings forth a way to integrate the <code>defense in depth</code> concept to the client-side of web applications. By injecting the Content-Security-Policy (CSP) headers from the server, the browser is aware and capable of protecting the user from dynamic calls that will load content into the page currently being visited.</p>
+<p>This article brings forth a way to integrate the <strong>defense in depth</strong> concept to the client-side of web applications. By injecting the Content-Security-Policy (CSP) headers from the server, the browser is aware and capable of protecting the user from dynamic calls that will load content into the page currently being visited.</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>The increase in XSS and clickjacking vulnerabilities demands a more <code>defense in depth</code> security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.</p>
+<p>The increase in XSS and clickjacking vulnerabilities demands a more <strong>defense in depth</strong> security approach. CSP comes in place to enforce the loading of resources (scripts, images, etc.) from restricted locations that are trusted by the server, as well as enforcing HTTPS usage transparently. Moreover, the developer will get more visibility on the attacks occurring on the application by using the CSP reporting directive.</p>
 <h2 id="defense-in-depth">Defense in Depth<a class="headerlink" href="#defense-in-depth" title="Permanent link">&para;</a></h2>
 <p>A strong CSP provides an effective second layer of protection against various types of vulnerabilities, including XSS. Although it may not be possible to fully mitigate these issues, a CSP can make it significantly harder for an attacker to actually exploit them.</p>
 <p>Even on a fully static website, which does not accept any user input, a CSP can be used to enforce the use of <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity">Subresource Integrity (SRI)</a>. This can help prevent malicious code being loaded on the website if one of the third party sites hosting JavaScript files (such as analytics scripts) is compromised.</p>
@@ -1546,13 +1546,15 @@
 <li>All resources are hosted by the same domain of the document.</li>
 <li>There are no inlines or evals for scripts and style resources.</li>
 </ul>
-<blockquote>
-<p><code>Content-Security-Policy: default-src 'self';</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="c">Content-Security-Policy: default-src &#39;self&#39;;</span>
+</code></pre></div>
+
+
 <p>To tighten further, one can apply the following:</p>
-<blockquote>
-<p><code>Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="c">Content-Security-Policy: default-src &#39;none&#39;; script-src &#39;self&#39;; connect-src &#39;self&#39;; img-src &#39;self&#39;; style-src &#39;self&#39;;</span>
+</code></pre></div>
+
+
 <p>This policy allows images, scripts, AJAX, and CSS from the same origin, and does not allow any other resources to load (eg. object, frame, media, etc).</p>
 <h3 id="mixed-content-policy">Mixed Content Policy<a class="headerlink" href="#mixed-content-policy" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1614,13 +1616,15 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
 
 
 <p>The inline code can be enabled by <strong>specifying its SHA256 hash</strong> in the CSP header:</p>
-<blockquote>
-<p><code>Content-Security-Policy: script-src 'sha256-gPMJwWBMWDx0Cm7ZygJKZIU2vZpiYvzUQjl5Rh37hKs=';</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="c">Content-Security-Policy: script-src &#39;sha256-gPMJwWBMWDx0Cm7ZygJKZIU2vZpiYvzUQjl5Rh37hKs=&#39;;</span>
+</code></pre></div>
+
+
 <p>This particular script's hash can be calculated using the following command:</p>
-<blockquote>
-<p><code>echo -n 'var foo = "314"' | openssl sha256 -binary | openssl base64</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="nb">echo</span> -n <span class="s1">&#39;var foo = &quot;314&quot;&#39;</span> <span class="p">|</span> openssl sha256 -binary <span class="p">|</span> openssl base64
+</code></pre></div>
+
+
 <p>Some browsers (e.g. Chrome) will also display the hash of the script in JavaScript console warning when blocking an unsigned script.</p>
 <p>The inline code can be also simply moved to a separate JavaScript file and the code in the page becomes:</p>
 <div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;app.js&quot;</span><span class="o">&gt;</span>
@@ -1628,15 +1632,17 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
 </code></pre></div>
 
 
-<p>with <code>app.js</code> containing the <code>var foo = "314"</code> code.</p>
+<p>With <code>app.js</code> containing the <code>var foo = "314"</code> code.</p>
 <p>The inline code restriction also applies to <code>inline event handlers</code>, so that the following construct will be blocked under CSP:</p>
-<blockquote>
-<p><code>&lt;button id="button1" onclick="doSomething()"&gt;</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;button1&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;doSomething()&quot;</span><span class="p">&gt;</span>
+</code></pre></div>
+
+
 <p>This should be replaced by <code>addEventListener</code> calls:</p>
-<blockquote>
-<p><code>document.getElementById("button1").addEventListener('click', doSomething);</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;button1&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">doSomething</span><span class="p">);</span>
+</code></pre></div>
+
+
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://csp.withgoogle.com/docs/index.html">CSP with Google</a></li>
