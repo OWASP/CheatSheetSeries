@@ -49,10 +49,10 @@ In order to allow a user to request a password reset, you will need to have some
 
 This can be done through any of the following methods:
 
-- One Time Password (OTP).
-- URL tokens.
-- Security Questions.
-- Offline backup codes.
+- [One Time Password (OTP)](#one-time-password).
+- [URL tokens](#url-tokens-or-codes).
+- [Security questions](#security-questions).
+- [Offline backup codes](#backup-codes).
 
 These methods can be used together and many times it is recommended to do so. No matter what you must ensure that a user always has a way to recover their account.
 
