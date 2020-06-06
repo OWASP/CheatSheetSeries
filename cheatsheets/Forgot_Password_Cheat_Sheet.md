@@ -96,18 +96,13 @@ While implementing this method, the following practices should be followed:
 - A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
 - Code renewal or revocation service.
 
-### Methods Secure Practices
+### General Security Practices
 
 It is essential to employ security practices for the reset codes and tokens that will be used in the methods.
-
-#### General Security Practices
 
 - [Secure random generation](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
 - Short lifetime (*e.g.* 30 minutes).
 - Linked to the user requesting the token in the database.
 - One time use (should be removed from the database once used).
 - Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
-
-#### Tokens Specific Security Practices
-
-- Long enough to avoid brute-force attacks (16 characters should be the minimum used).
+- Tokens should be long enough to avoid brute-force attacks (16 characters should be the minimum used).
