@@ -1,42 +1,44 @@
-# Introduction
+# Injection Prevention Cheat Sheet in Java
+
+## Introduction
 
 This document has for objective to provide some tips to handle *Injection* into Java application code.
 
 Sample codes used in tips are located [here](https://github.com/righettod/injection-cheat-sheets).
 
-# What is Injection ?
+## What is Injection
 
 [Injection](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection) in OWASP Top 10 is defined as following:
 
 *Consider anyone who can send untrusted data to the system, including external users, internal users, and administrators.*
 
-# General advices to prevent Injection
+## General advices to prevent Injection
 
 The following point can be applied, in a general way, to prevent *Injection* issue:
 
-1.  Apply **Input Validation** (using whitelist approach) combined with **Output Sanitizing+Escaping** on user input/output.
-2.  If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.
+1. Apply **Input Validation** (using whitelist approach) combined with **Output Sanitizing+Escaping** on user input/output.
+2. If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.
 
 Additional advices are provided on this [cheatsheet](Input_Validation_Cheat_Sheet.md).
 
-# Specific Injection types
+## Specific Injection types
 
 *Examples in this section will be provided in Java technology (see Maven project associated) but advices are applicable to others technologies like .Net / PHP / Ruby / Python...*
 
-## SQL
+### SQL
 
-### Symptom
+#### Symptom
 
 Injection of this type occur when the application use untrusted user input to build a SQL query using a String and execute it.
 
-### How to prevent
+#### How to prevent
 
 Use *Query Parameterization* in order to prevent injection.
 
-### Example
+#### Example
 
 ``` java
-/*No DB framework used here in order to show the real use of 
+/*No DB framework used here in order to show the real use of
   Prepared Statement from Java API*/
 /*Open connection with H2 database and use it*/
 Class.forName("org.h2.Driver");
@@ -91,21 +93,21 @@ try (Connection con = DriverManager.getConnection(jdbcUrl)) {
 }
 ```
 
-### References
+#### References
 
 - [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md)
 
-## JPA
+### JPA
 
-### Symptom
+#### Symptom
 
 Injection of this type occur when the application use untrusted user input to build a JPA query using a String and execute it. It's quite similar to SQL injection but here the altered language is not SQL but JPA QL.
 
-### How to prevent
+#### How to prevent
 
 Use Java Persistence Query Language **Query Parameterization** in order to prevent injection.
 
-### Example
+#### Example
 
 ``` java
 EntityManager entityManager = null;
@@ -133,21 +135,21 @@ try {
 }
 ```
 
-### References
+#### References
 
 - [SQLi and JPA](https://software-security.sans.org/developer-how-to/fix-sql-injection-in-java-persistence-api-jpa)
 
-## Operating System
+### Operating System
 
-### Symptom
+#### Symptom
 
 Injection of this type occur when the application use untrusted user input to build a Operating System command using a String and execute it.
 
-### How to prevent
+#### How to prevent
 
 Use technology stack **API** in order to prevent injection.
 
-### Example
+#### Example
 
 ``` java
 /* The context taken is, for example, to perform a PING against a computer.
@@ -157,21 +159,21 @@ InetAddress host = InetAddress.getByName("localhost");
 Assert.assertTrue(host.isReachable(5000));
 ```
 
-### References
+#### References
 
 - [Command Injection](https://owasp.org/www-community/attacks/Command_Injection)
 
-## XML: XPath Injection
+### XML: XPath Injection
 
-### Symptom
+#### Symptom
 
 Injection of this type occur when the application use untrusted user input to build a XPath query using a String and execute it.
 
-### How to prevent
+#### How to prevent
 
 Use **XPath Variable Resolver** in order to prevent injection.
 
-### Example
+#### Example
 
 **Variable Resolver** implementation.
 
@@ -238,21 +240,21 @@ Element book = (Element)nodesList.item(0);
 Assert.assertTrue(book.getTextContent().contains("Ralls, Kim"));
 ```
 
-### References
+#### References
 
 - [XPATH Injection](https://owasp.org/www-community/attacks/XPATH_Injection)
 
-## HTML/JavaScript/CSS
+### HTML/JavaScript/CSS
 
-### Symptom
+#### Symptom
 
 Injection of this type occur when the application use untrusted user input to build a HTTP response and sent it to browser.
 
-### How to prevent
+#### How to prevent
 
 Either apply strict input validation (whitelist approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).
 
-### Example
+#### Example
 
 ``` java
 /*
@@ -266,9 +268,9 @@ String userInput = "You user login is owasp-user01";
 /* First we check that the value contains only expected character*/
 Assert.assertTrue(Pattern.matches("[a-zA-Z0-9\\s\\-]{1,50}", userInput));
 
-/* If the first check pass then ensure that potential dangerous character 
+/* If the first check pass then ensure that potential dangerous character
 that we have allowed for business requirement are not used in a dangerous way.
-For example here we have allowed the character '-', and, this can 
+For example here we have allowed the character '-', and, this can
 be used in SQL injection so, we
 ensure that this character is not used is a continuous form.
 Use the API COMMONS LANG v3 to help in String analysis...
@@ -297,38 +299,38 @@ String finalSafeOutputExpected = "You <p>user login</p> is <strong>owasp-user01<
 Assert.assertEquals(finalSafeOutputExpected, safeOutput);
 ```
 
-### References
+#### References
 
 - [XSS](https://owasp.org/www-community/attacks/xss/)
 - [OWASP Java HTML Sanitizer](https://github.com/owasp/java-html-sanitizer)
 - [OWASP Java Encoder](https://github.com/owasp/owasp-java-encoder)
 - [Java RegEx](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html)
 
-## LDAP
+### LDAP
 
 A dedicated [cheatsheet](LDAP_Injection_Prevention_Cheat_Sheet.md) has been created.
 
-## NoSQL
+### NoSQL
 
-### Symptom
+#### Symptom
 
 Injection of this type occur when the application use untrusted user input to build a NoSQL API call expression.
 
-### How to prevent
+#### How to prevent
 
 As there many NoSQL database system and each one use a API for call, it's important to ensure that user input received and used to build the API call expression do not contains any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It's also important to not use string concatenation to build API call expression but use the API to create the expression.
 
-### Example - MongoDB
+#### Example - MongoDB
 
 ``` java
  /* Here use MongoDB as target NoSQL DB */
 String userInput = "Brooklyn";
 
-/* First ensure that the input do no contains any special characters 
+/* First ensure that the input do no contains any special characters
 for the current NoSQL DB call API,
 here they are: ' " \ ; { } $
 */
-//Avoid regexp this time in order to made validation code 
+//Avoid regexp this time in order to made validation code
 //more easy to read and understand...
 ArrayList<String> specialCharsList = new ArrayList<String>() { {
     add("'");
@@ -363,19 +365,19 @@ try(MongoClient mongoClient = new MongoClient()){
 }
 ```
 
-### References
+#### References
 
 - [Testing for NoSQL injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection.html)
 - [SQL and NoSQL Injection](https://ckarande.gitbooks.io/owasp-nodegoat-tutorial/content/tutorial/a1_-_sql_and_nosql_injection.html)
 - [No SQL, No Injection?](https://arxiv.org/ftp/arxiv/papers/1506/1506.04082.pdf)
 
-## Log Injection
+### Log Injection
 
-### Symptom
+#### Symptom
 
 [Log Injection](https://owasp.org/www-community/attacks/Log_Injection) occurs when an application includes untrusted data in an application log message (e.g., an attacker can cause an additional log entry that looks like it came from a completely different user, if they can inject CRLF characters in the untrusted data). More information about this attack is available on the OWASP [Log Injection](https://owasp.org/www-community/attacks/Log_Injection) page.
 
-### How to prevent
+#### How to prevent
 
 To prevent an attacker from writing malicious content into the application log, apply defenses such as:
 
@@ -383,7 +385,7 @@ To prevent an attacker from writing malicious content into the application log, 
 - Limit the size of the user input value used to create the log message.
 - Make sure [all XSS defenses](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) are applied when viewing log files in a web browser.
 
-### Example using Log4j2
+#### Example using Log4j2
 
 Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the [Pattern *encode{}{CRLF}*](https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout\%7CLog4j2), introduced in [Log4j2 v2.10.0](https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api), and the *-500m* message size limit.:
 
@@ -417,14 +419,14 @@ Usage of the logger at code level:
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 ...
-// No special action needed because security actions are 
+// No special action needed because security actions are
 // performed at the logging policy level
 Logger logger = LogManager.getLogger(MyClass.class);
 logger.info(logMessage);
 ...
 ```
 
-### Example using Logback with the OWASP Security Logging library
+#### Example using Logback with the OWASP Security Logging library
 
 Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the [CRLFConverter](https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging), provided by the [OWASP Security Logging Project](https://owasp.org/www-project-security-logging/), and the *-500msg* message size limit:
 
@@ -463,26 +465,26 @@ Usage of the logger at code level:
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 ...
-// No special action needed because security actions 
+// No special action needed because security actions
 // are performed at the logging policy level
 Logger logger = LoggerFactory.getLogger(MyClass.class);
 logger.info(logMessage);
 ...
 ```
 
-### References
+#### References
 
 - [PatternLayout](https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout) (See the `encode{}{CRLF}` function)
 
 ```text
-Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent log injection. 
+Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent log injection.
 
-It prevents XSS attacks against viewing logs using a browser. 
+It prevents XSS attacks against viewing logs using a browser.
 
-OWASP recommends defending against XSS attacks in such situations in the log viewer application itself, 
-not by preencoding all the log messages with HTML encoding as such log entries may be used/viewed in many 
+OWASP recommends defending against XSS attacks in such situations in the log viewer application itself,
+not by preencoding all the log messages with HTML encoding as such log entries may be used/viewed in many
 other log viewing/analysis tools that don't expect the log data to be pre-HTML encoded.
-```    
+```
 
 - [LOG4J Configuration](https://logging.apache.org/log4j/2.x/manual/configuration.html)
 - [LOG4J Appender](https://logging.apache.org/log4j/2.x/manual/appenders.html)

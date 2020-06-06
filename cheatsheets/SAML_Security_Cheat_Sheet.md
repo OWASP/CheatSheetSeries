@@ -1,10 +1,13 @@
-# Introduction
+# SAML Security Cheat Sheet
+
+## Introduction
 
 The **S**ecurity **A**ssertion **M**arkup **L**anguage ([SAML](https://en.wikipedia.org/wiki/Security_Assertion_Markup_Language)) is an open standard for exchanging authorization and authentication information. The *Web Browser SAML/SSO Profile with Redirect/POST bindings* is one of the most common SSO implementation. This cheatsheet will focus primarily on that profile.
 
-# Validate Message Confidentiality and Integrity
+## Validate Message Confidentiality and Integrity
 
 [TLS 1.2](Transport_Layer_Protection_Cheat_Sheet.md) is the most common solution to guarantee message confidentiality and integrity at the transport layer. Refer to [SAML Security (section 4.2.1)](https://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) for additional information. This step will help counter the following attacks:
+
 - Eavesdropping 7.1.1.1
 - Theft of User Authentication Information 7.1.1.2
 - Theft of the Bearer Token 7.1.1.3
@@ -13,14 +16,16 @@ The **S**ecurity **A**ssertion **M**arkup **L**anguage ([SAML](https://en.wikipe
 - Man-in-the-middle 7.1.1.8
 
 A digitally signed message with a certified key is the most common solution to guarantee message integrity and authentication. Refer to [SAML Security (section 4.3)](https://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) for additional information. This step will help counter the following attacks:
+
 - Man-in-the-middle 6.4.2
 - Forged Assertion 6.4.3
 - Message Modification 7.1.1.7
 
 Assertions may be encrypted via XMLEnc to prevent disclosure of sensitive attributes post transportation. Refer to [SAML Security (section 4.2.2)](https://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) for additional information. This step will help counter the following attacks:
+
 - Theft of User Authentication Information 7.1.1.2
 
-# Validate Protocol Usage
+## Validate Protocol Usage
 
 This is a common area for security gaps - see [Google SSO vulnerability](https://www.kb.cert.org/vuls/id/612636/) for a real life example. Their SSO profile was vulnerable to a Man-in-the-middle attack from a malicious SP (Service Provider).
 
@@ -32,7 +37,7 @@ The *AVANTSSAR* team suggested the following data elements should be required:
 - **Response(ID, SP, IdP, {AA} K -1/IdP):** A Response must contain all these elements. Where `ID` is a string uniquely identifying the response. `SP` identifies the recipient of the response. `IdP` identifies the identity provider authorizing the response. `{AA} K -1/IdP` is the assertion digitally signed with the private key of the `IdP`.
 - **AuthAssert(ID, C, IdP, SP):** An authentication assertion must exist within the Response. It must contain an `ID`, a client `(C)`, an identity provider `(IdP)`, and a service provider `(SP)` identifier.
 
-## Validate Signatures
+### Validate Signatures
 
 Vulnerabilities in SAML implementations due to XML Signature Wrapping attacks were described in 2012, [On Breaking SAML: Be Whoever You Want to Be](https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91-8-23-12.pdf).
 
@@ -50,7 +55,7 @@ The following recommendations were proposed in response ([Secure SAML validation
     - Never use `getElementsByTagName` to select security related elements in an XML document without prior validation.
     - Always use absolute XPath expressions to select elements, unless a hardened schema is used for validation.
 
-# Validate Protocol Processing Rules
+## Validate Protocol Processing Rules
 
 This is another common area for security gaps simply because of the vast number of steps to assert.
 
@@ -64,12 +69,12 @@ Processing a SAML response is an expensive operation but all steps must be valid
     - Forged Assertion (6.4.3)
     - Browser State Exposure (6.4.4)
 
-# Validate Binding Implementation
+## Validate Binding Implementation
 
 - For an HTTP Redirect Binding refer to [SAML Binding](https://docs.oasis-open.org/security/saml/v2.0/saml-bindings-2.0-os.pdf) (3.4). To view an encoding example, you may want to reference RequestUtil.java found within [Google's reference implementation](https://developers.google.com/google-apps/sso/saml_reference_implementation_web).
 - For an HTTP POST Binding refer to [SAML Binding](https://docs.oasis-open.org/security/saml/v2.0/saml-bindings-2.0-os.pdf) (3.5). The caching considerations are also very important. If a SAML protocol message gets cached, it can subsequently be used as a Stolen Assertion (6.4.1) or Replay (6.4.5) attack.
 
-# Validate Security Countermeasures
+## Validate Security Countermeasures
 
 Revisit each security threat that exists within the [SAML Security](https://docs.oasis-open.org/security/saml/v2.0/saml-sec-consider-2.0-os.pdf) document and assert you have applied the appropriate countermeasures for threats that may exist for your particular implementation.
 
@@ -87,9 +92,10 @@ Additional countermeasures considered should include:
 
 Need an architectural diagram? The [SAML technical overview](https://www.oasis-open.org/committees/download.php/11511/sstc-saml-tech-overview-2.0-draft-03.pdf) contains the most complete diagrams. For the Web Browser SSO Profile with Redirect/POST bindings refer to the section 4.1.3. In fact, of all the SAML documentation, the technical overview is the most valuable from a high-level perspective.
 
-# Unsolicited Response (ie. IdP Initiated SSO) Considerations for Service Providers
+## Unsolicited Response (ie. IdP Initiated SSO) Considerations for Service Providers
 
 Unsolicited Response is inherently [less secure](https://www.identityserver.com/articles/the-dangers-of-saml-idp-initiated-sso) by design due to the lack of [CSRF](https://owasp.org/www-community/attacks/csrf) protection. However, it is supported by many due to the backwards compatibility feature of SAML 1.1. The general security recommendation is to not support this type of authentication, but if it must be enabled, the following steps (in additional to everything mentioned above) should help you secure this flow:
+
 - Follow the validation process mentioned in [SAML Profiles (section 4.1.5)](https://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf). This step will help counter the following attacks:
     - Replay (6.1.2)
     - Message Insertion (6.1.3)
@@ -98,11 +104,11 @@ Unsolicited Response is inherently [less secure](https://www.identityserver.com/
 - Implement proper replay detection either at the response or assertion level. This will help counter the following attack:
     - Replay (6.1.2)
 
-# Identity Provider and Service Provider Considerations
+## Identity Provider and Service Provider Considerations
 
 The SAML protocol is rarely the vector of choice, though it's important to have cheatsheets to make sure that this is robust. The various endpoints are more targeted, so how the SAML token is generated and how it is consumed are both important in practice.
 
-## Identity Provider (IdP) Considerations
+### Identity Provider (IdP) Considerations
 
 - Validate X.509 Certificate for algorithm compatibility, strength of encryption, export restrictions
 - Validate Strong Authentication options for generating the SAML token
@@ -113,7 +119,7 @@ The SAML protocol is rarely the vector of choice, though it's important to have 
 - Prefer asymmetric identifiers for identity assertions over personally identifiable information (e.g. SSNs, etc)
 - Sign each individual Assertion or the entire Response element
 
-## Service Provider (SP) Considerations
+### Service Provider (SP) Considerations
 
 - Validating session state for user
 - Level of granularity in setting authZ context when consuming SAML token (do you use groups, roles, attributes)
@@ -128,13 +134,13 @@ The SAML protocol is rarely the vector of choice, though it's important to have 
 - Define criteria for session management
 - Verify user identities obtained from SAML ticket assertions whenever possible.
 
-# Input Validation
+## Input Validation
 
 Just because SAML is a security protocol does not mean that input validation goes away.
 
 - Ensure that all SAML providers/consumers do proper [input validation](Input_Validation_Cheat_Sheet.md).
 
-# Cryptography
+## Cryptography
 
 Solutions relying cryptographic algorithms need to follow the latest developments in cryptoanalysis.
 

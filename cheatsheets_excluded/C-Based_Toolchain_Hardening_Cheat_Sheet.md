@@ -1,4 +1,6 @@
-# Introduction
+# C-Based Toolchain Hardening Cheat Sheet
+
+## Introduction
 
 **C-Based Toolchain Hardening Cheat Sheet** is a brief treatment of project settings that will help you deliver reliable and secure code when using C, C++ and Objective C languages in a number of development environments. A more in-depth treatment of this topic can be found [here](C-Based_Toolchain_Hardening.md). This cheatsheet will guide you through the steps you should take to create executables with firmer defensive postures and increased integration with the available platform security. Effectively configuring the toolchain also means your project will enjoy a number of benefits during development, including enhanced warnings and static analysis, and self-debugging code.
 
@@ -6,7 +8,7 @@ There are four areas to be examined when hardening the toolchain: configuration,
 
 For those who would like a deeper treatment of the subject matter, please visit [C-Based Toolchain Hardening](C-Based_Toolchain_Hardening.md).
 
-# Actionable Items
+## Actionable Items
 
 The C-Based Toolchain Hardening Cheat Sheet calls for the following actionable items:
 
@@ -19,13 +21,13 @@ The C-Based Toolchain Hardening Cheat Sheet calls for the following actionable i
 
 The remainder of this cheat sheet briefly explains the bulleted, actionable items. For a thorough treatment, please visit the [full article](C-Based_Toolchain_Hardening.md).
 
-# Build Configurations
+## Build Configurations
 
 You should support three build configurations. First is *Debug*, second is *Release*, and third is *Test*. One size does **not** fit all, and each speaks to a different facet of the engineering process. You will use a debug build while developing, your continuous integration or build server will use test configurations, and you will ship release builds.
 
 1970's K&R code and one size fits all flags are from a bygone era. Processes have evolved and matured to meet the challenges of a modern landscape, including threats. Because tools like Autoconfig and Automake [do not support the notion of build configurations](https://lists.gnu.org/archive/html/automake/2012-12/msg00019.html), you should prefer to work in an Integrated Develop Environments (IDE) or write your makefiles so the desired targets are supported. In addition, Autoconfig and Automake often ignore user supplied flags (it depends on the folks writing the various scripts and templates), so you might find it easier to again write a makefile from scratch rather than retrofitting existing auto tool files.
 
-## Debug Builds
+### Debug Builds
 
 Debug is used during development, and the build assists you in finding problems in the code. During this phase, you develop your program and test integration with third party libraries you program depends upon. To help with debugging and diagnostics, you should define `DEBUG` and `_DEBUG` (if on a Windows platform) preprocessor macros and supply other 'debugging and diagnostic' oriented flags to the compiler and linker. Additional preprocessor macros for selected libraries are offered in the [full article](C-Based_Toolchain_Hardening.md).
 
@@ -37,7 +39,7 @@ Anywhere you have an `if` statement for validation, you should have an assert. A
 
 Unlike other debugging and diagnostic methods - such as breakpoints and `printf` - asserts stay in forever and become silent guardians. If you accidentally nudge something in an apparently unrelated code path, the assert will snap the debugger for you. The enduring coverage means debug code - with its additional diagnostics and instrumentation - is more highly valued than unadorned release code. If code is checked in that does not have the additional debugging and diagnostics, including full assertions, you should reject the check-in.
 
-## Release Builds
+### Release Builds
 
 Release builds are diametrically opposed to debug configurations. In a release configuration, the program will be built for use in production. Your program is expected to operate correctly, securely and efficiently. The time for debugging and diagnostics is over, and your program will define `NDEBUG` to remove the supplemental information and behavior.
 
@@ -49,7 +51,7 @@ Release builds should also consider the configuration pair of `-mfunction-return
 
 Release builds should also curtail logging. If you followed earlier guidance, you have properly instrumented code and can determine the point of first failure quickly and easily. Simply log the failure and and relevant parameters. Remove all `NSLog` and similar calls because sensitive information might be logged to a system logger. Worse, the data in the logs might be egressed by backup or sync. If your default configuration includes a logging level of ten or *maximum verbosity*, you probably lack stability and are trying to track problems in the field. That usually means your program or library is not ready for production.
 
-## Test Builds
+### Test Builds
 
 A Test build is closely related to a release build. In this build configuration, you want to be as close to production as possible, so you should be using `-O2`/`-O3`/`-Os` `-g1`/`-g2` and "Reptoline" configuration options. You will run your suite of *positive* and *negative* tests against the test build.
 
@@ -62,7 +64,7 @@ Many Object Oriented purist oppose testing private interfaces, but this is not a
 
 You should also concentrate on negative tests. Positive self tests are relatively useless except for functional and regression tests. Since this is your line of business or area of expertise, you should have the business logic correct when operating in a benign environment. A hostile or toxic environment is much more interesting, and that's where you want to know how your library or program will fail in the field when under attack.
 
-# Library Integration
+## Library Integration
 
 You must properly integrate and utilize libraries in your program. Proper integration includes acceptance testing, configuring for your build system, identifying libraries you *should* be using, and correctly using the libraries. A well integrated library can compliment your code, and a poorly written library can detract from your program. Because a stable library with required functionality can be elusive and its tricky to integrate libraries, you should try to minimize dependencies and avoid third party libraries whenever possible.
 
@@ -74,7 +76,7 @@ Debug builds also present an opportunity to use additional libraries to help loc
 
 Using a library properly is always difficult, especially when there is no documentation. Review any hardening documents available for the library, and be sure to visit the library's documentation to ensure proper API usage. If required, you might have to review code or step library code under the debugger to ensure there are no bugs or undocumented features.
 
-# Static Analysis
+## Static Analysis
 
 Compiler writers do a fantastic job of generating object code from source code. The process creates a lot of additional information useful in analyzing code. Compilers use the analysis to offer programmers warnings to help detect problems in their code, but the catch is you have to ask for them. After you ask for them, you should take time to understand what the underlying issue is when a statement is flagged. For example, compilers will warn you when comparing a signed integer to an unsigned integer because `-1` `>` `1` after C/C++ promotion. At other times, you will need to back off some warnings to help separate the wheat from the chaff. For example, interface programming is a popular C++ paradigm, so `-Wno-unused-parameter` will probably be helpful with C++ code.
 
@@ -86,7 +88,7 @@ For a Microsoft platform, you should use: `/W4`, `/Wall`, and `/analyze`. If you
 
 For additional details on the GCC and Windows options and flags, see *[GCC Options to Request or Suppress Warnings](http://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html)*, *["Off By Default" Compiler Warnings in Visual C++](http://blogs.msdn.com/b/vcblog/archive/2010/12/14/off-by-default-compiler-warnings-in-visual-c.aspx)*, and *[Protecting Your Code with Visual C++ Defenses](http://msdn.microsoft.com/en-us/magazine/cc337897.aspx)*.
 
-# Platform Security
+## Platform Security
 
 Integrating with platform security is essential to a defensive posture. Platform security will be your safety umbrella if someone discovers a bug with security implications - and you should always have it with you. For example, if your parser fails, then no-execute stacks and heaps can turn a 0-day into an annoying crash. Not integrating often leaves your users and customers vulnerable to malicious code. While you may not be familiar with some of the flags, you are probably familiar with the effects of omitting them. For example, Android's Gingerbreak overwrote the Global Offset Table (GOT) in the ELF headers, and could have been avoided with `-z,relro`.
 

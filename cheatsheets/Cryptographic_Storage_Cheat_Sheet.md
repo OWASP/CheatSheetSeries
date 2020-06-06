@@ -6,28 +6,6 @@ This article provides a simple model to follow when implementing solutions to pr
 
 Passwords should not be stored using reversible encryption - secure password hashing algorithms should be used instead. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) contains further guidance on storing passwords.
 
-## Contents
-
-- [Cryptographic Storage Cheat Sheet](#cryptographic-storage-cheat-sheet)
-  * [Introduction](#introduction)
-  * [Contents](#contents)
-  * [Architectural Design](#architectural-design)
-    + [Where to Perform Encryption](#where-to-perform-encryption)
-    + [Minimise the Storage of Sensitive Information](#minimise-the-storage-of-sensitive-information)
-  * [Algorithms](#algorithms)
-    + [Custom Algorithms](#custom-algorithms)
-    + [Cipher Modes](#cipher-modes)
-    + [Secure Random Number Generation](#secure-random-number-generation)
-      - [UUIDs and GUIDs](#uuids-and-guids)
-    + [Defence in Depth](#defence-in-depth)
-  * [Key Management](#key-management)
-    + [Processes](#processes)
-    + [Key Generation](#key-generation)
-    + [Key Lifetimes and Rotation](#key-lifetimes-and-rotation)
-  * [Key Storage](#key-storage)
-    + [Separation of Keys and Data](#separation-of-keys-and-data)
-    + [Encrypting Stored Keys](#encrypting-stored-keys)
-
 ## Architectural Design
 
 The first step in designing any application is to consider the overall architecture of the system, as this will have a huge impact on the technical implementation.
@@ -102,12 +80,12 @@ The table below shows the recommended algorithms for each language, as well as i
 | C        | `random()`, `rand()` | [getrandom(2)](http://man7.org/linux/man-pages/man2/getrandom.2.html) |
 | Java     | `java.util.Random()` | [java.security.SecureRandom](https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html) |
 | PHP      | `rand()`, `mt_rand()`, `array_rand()`, `uniqid()` | [random_bytes()](https://www.php.net/manual/en/function.random-bytes.php), [random_int()](https://www.php.net/manual/en/function.random-int.php) in PHP 7 or [openssl_random_pseudo_bytes()](https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php) in PHP 5 |
-| .NET/C#  | `Random()`, | [RNGCryptoServiceProvider](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rngcryptoserviceprovider?view=netframework-4.8) |
-| Objective-C | `arc4random()` (Uses RC4 Cipher), | [SecRandomCopyBytes](https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc) |
-| Python   | `random()`, | [secrets()](https://docs.python.org/3/library/secrets.html#module-secrets) |
-| Ruby     | `Random`, | [SecureRandom](https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html) |
-| Go       | `rand` using `math/rand` package, | [crypto.rand](https://golang.org/pkg/crypto/rand/) package |
-| Rust     | `rand::prng::XorShiftRng`, | [rand::prng::chacha::ChaChaRng](https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html) and the rest of the Rust library [CSPRNGs.](https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs) |
+| .NET/C#  | `Random()` | [RNGCryptoServiceProvider](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rngcryptoserviceprovider?view=netframework-4.8) |
+| Objective-C | `arc4random()` (Uses RC4 Cipher) | [SecRandomCopyBytes](https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc) |
+| Python   | `random()` | [secrets()](https://docs.python.org/3/library/secrets.html#module-secrets) |
+| Ruby     | `Random` | [SecureRandom](https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html) |
+| Go       | `rand` using `math/rand` package | [crypto.rand](https://golang.org/pkg/crypto/rand/) package |
+| Rust     | `rand::prng::XorShiftRng` | [rand::prng::chacha::ChaChaRng](https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html) and the rest of the Rust library [CSPRNGs.](https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs) |
 
 #### UUIDs and GUIDs
 
@@ -141,11 +119,11 @@ Where multiple keys are used (such as data separate data-encrypting and key-encr
 Encryption keys should be changed (or rotated) based on a number of different criteria:
 
 - If the previous key is known (or suspected) to have been compromised.
-  * This could also be caused by a someone who had access to the key leaving the organisation.
+    - This could also be caused by a someone who had access to the key leaving the organisation.
 - After a specified period of time has elapsed (known as the cryptoperiod).
-  * There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) for further guidance.
+    - There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) for further guidance.
 - After the key has been used to encrypt a specific amount of data.
-  * This would typically be `2^35` bytes (~34GB) for 64-bit keys and `2^68` bytes (~295 exabytes) for 128 bit keys.
+    - This would typically be `2^35` bytes (~34GB) for 64-bit keys and `2^68` bytes (~295 exabytes) for 128 bit keys.
 - If there is a significant change to the security provided by the algorithm (such as a new attack being announced).
 
 Once one of these criteria have been met, a new key should be generated and used for encrypting any new data. There are two main approaches for how existing data that was encrypted with the old key(s) should be handled:

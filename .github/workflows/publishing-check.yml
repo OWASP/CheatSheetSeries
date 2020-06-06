@@ -24,11 +24,11 @@ jobs:
         python-version: '3.x'
     - name: Install python dependencies
       run: pip install requests feedgen wheel
-    - name: Install Node dependencies
-      run: npm install -g markdown-link-check gitbook-cli
+    - name: Install python mkdocs dependencies
+      run: pip install mkdocs mkdocs-material pymdown-extensions
     - name: Set Permission
-      run: chmod +x scripts/Generate_Site.sh
+      run: chmod +x scripts/Generate_Site_mkDocs.sh
     - name: Run Script
-      run: cd scripts && bash Generate_Site.sh
+      run: cd scripts && bash Generate_Site_mkDocs.sh
     - name: List generated files
       run: ls -al generated/site/

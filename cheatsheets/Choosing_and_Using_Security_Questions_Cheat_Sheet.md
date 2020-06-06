@@ -8,30 +8,6 @@ Security questions **should not be relied upon as a sole mechanism to authentica
 
 This cheat sheet provides guidance on both how to choose strong security questions, and how to use them securely within an application.
 
-## Contents
-
-- [Introduction](#introduction)
-- [Contents](#contents)
-- [Choosing Security Questions](#choosing-security-questions)
-  * [Desired Characteristics](#desired-characteristics)
-  * [Types of Security Questions](#types-of-security-questions)
-  * [User Defined Security Questions](#user-defined-security-questions)
-    + [Bad Questions](#bad-questions)
-    + [Good Questions](#good-questions)
-    + [Allowing Users to Write Their Own Questions](#allowing-users-to-write-their-own-questions)
-    + [Restricting Answers](#restricting-answers)
-    + [Renewing Security Questions](#renewing-security-questions)
-  * [System Defined Security Questions](#system-defined-security-questions)
-- [Using Security Questions](#using-security-questions)
-  * [When to Use Security Questions](#when-to-use-security-questions)
-    + [Authentication Flow](#authentication-flow)
-    + [Forgotten Password or Lost MFA Token Flow](#forgotten-password-or-lost-mfa-token-flow)
-  * [How to Use Security Questions](#how-to-use-security-questions)
-    + [Storing Answers](#storing-answers)
-    + [Comparing Answers](#comparing-answers)
-    + [Updating Answers](#updating-answers)
-    + [Multiple Security Questions](#multiple-security-questions)
-
 ## Choosing Security Questions
 
 ### Desired Characteristics

@@ -4,20 +4,6 @@
 
 This cheat sheet provides guidance on securely configuring and using the SQL and NoSQL databases. It is intended to be used by application developers when they are responsible for managing the databases, in the absence of a dedicated database administrator (DBA). For details about protecting against SQL Injection attacks, see the [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md).
 
-## Contents
-
-- [Connecting to the Database](#connecting-to-the-database)
-  - [Transport Layer Protection](#transport-layer-protection)
-- [Authentication](#authentication)
-  - [Storing Database Credentials](#storing-database-credentials)
-- [Permissions](#permissions)
-- [Database Configuration and Hardening](#database-configuration-and-hardening)
-  - [Microsoft SQL Server](#microsoft-sql-server)
-  - [MySQL and MariaDB](#mysql-and-mariadb)
-  - [PostgreSQL](#postgresql)
-  - [MongoDB](#mongodb)
-  - [Redis](#redis)
-
 ## Connecting to the Database
 
 The backend database used by the application should be isolated as much as possible, in order to prevent malicious or undesirable users from being able to connect to it. Exactly how this is achieved will depend on the system and network architecture. The following options could be used to protect it:
@@ -76,14 +62,14 @@ The permissions assigned to database user accounts should be based on the princi
 - Do not use the built in `root`, `sa` or `SYS` accounts.
 - Do not grant the account administrative rights over the database instance.
 - Only allow the account to connect from whitelisted hosts.
-  - This would often be `localhost` or the address of the application server.
+    - This would often be `localhost` or the address of the application server.
 - Only grant the account access to the specific databases it needs.
-  - Development, UAT and Production environments should all use separate databases and accounts.
+    - Development, UAT and Production environments should all use separate databases and accounts.
 - Only grant the required permissions on the databases.
-  - Most applications would only need `SELECT`, `UPDATE` and `DELETE` permissions.
-  - The account should not be the owner of the database as this can lead to privilege escalation vulnerabilities.
+    - Most applications would only need `SELECT`, `UPDATE` and `DELETE` permissions.
+    - The account should not be the owner of the database as this can lead to privilege escalation vulnerabilities.
 - Avoid using database links or linked servers.
-  - Where they are required, use an account that has been granted access to only the minimum databases, tables, and system privileges required.
+    - Where they are required, use an account that has been granted access to only the minimum databases, tables, and system privileges required.
 
 For more security-critical applications, it is possible to apply permissions at more granular levels, including:
 
@@ -103,7 +89,7 @@ The database application should also be properly configured and hardened. The fo
 - Remove any default accounts and databases.
 - Store [transaction logs](https://en.wikipedia.org/wiki/Transaction_log) on a separate disk to the main database files.
 - Configure a regular backup of the database.
-  - Ensure that the backups are protected with appropriate permissions, and ideally encrypted.
+    - Ensure that the backups are protected with appropriate permissions, and ideally encrypted.
 
 The following sections gives some further recommendations for specific database software, in addition to the more general recommendations given above.
 

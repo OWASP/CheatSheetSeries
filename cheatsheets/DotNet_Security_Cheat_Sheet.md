@@ -1,12 +1,14 @@
-# Introduction
+# DotNet Security Cheat Sheet
+
+## Introduction
 
 This page intends to provide quick basic .NET security tips for developers.
 
-## The .NET Framework
+### The .NET Framework
 
 The .NET Framework is Microsoft's principal platform for enterprise development. It is the supporting API for ASP.NET, Windows Desktop applications, Windows Communication Foundation services, SharePoint, Visual Studio Tools for Office and other technologies.
 
-## Updating the Framework
+### Updating the Framework
 
 The .NET Framework is kept up-to-date by Microsoft with the Windows Update service. Developers do not normally need to run separate updates to the Framework. Windows Update can be accessed at [Windows Update](http://windowsupdate.microsoft.com/) or from the Windows Update program on a Windows computer.
 
@@ -14,18 +16,18 @@ Individual frameworks can be kept up to date using [NuGet](http://nuget.codeplex
 
 Remember that third-party libraries have to be updated separately and not all of them use NuGet. ELMAH for instance, requires a separate update effort.
 
-## Security Announcements
+### Security Announcements
 
 Receive security notifications by selecting the "Watch" button at the following repositories:
 
 - [.NET Core Security Announcements](https://github.com/dotnet/announcements/issues?q=is%3Aopen+is%3Aissue+label%3ASecurity)
 - [ASP.NET Core & Entity Framework Core Security Announcements](https://github.com/aspnet/Announcements/issues?q=is%3Aopen+is%3Aissue+label%3ASecurity)
 
-# .NET Framework Guidance
+## .NET Framework Guidance
 
 The .NET Framework is the set of APIs that support an advanced type system, data, graphics, network, file handling and most of the rest of what is needed to write enterprise apps in the Microsoft ecosystem. It is a nearly ubiquitous library that is strongly named and versioned at the assembly level.
 
-## Data Access
+### Data Access
 
 - Use [Parameterized SQL](https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlcommand.prepare?view=netframework-4.7.2) commands for all data access, without exception.
 - Do not use [SqlCommand](https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlcommand) with a string parameter made up of a [concatenated SQL String](https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca2100-review-sql-queries-for-security-vulnerabilities?view=vs-2017).
@@ -36,7 +38,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 - When using SQL Server, prefer [integrated authentication](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/using-integrated-authentication?view=sql-server-2017) over [SQL authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-2017#connecting-through-sql-server-authentication).
 - Use [Always Encrypted](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/always-encrypted-database-engine) where possible for sensitive data (SQL Server 2016 and SQL Azure),
 
-## Encryption
+### Encryption
 
 - **Never, ever write your own encryption.**
 - Use the [Windows Data Protection API (DPAPI)](https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection) for secure local storage of sensitive data.
@@ -48,14 +50,14 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 - Make sure your application or protocol can easily support a future change of cryptographic algorithms.
 - Use [Nuget](https://docs.microsoft.com/en-us/nuget/) to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
 
-## General
+### General
 
 - Lock down the config file.
     - Remove all aspects of configuration that are not in use.
     - Encrypt sensitive parts of the `web.config` using `aspnet_regiis -pe` ([command line help](https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80))).
 - For Click Once applications the .Net Framework should be upgraded to use version `4.6.2` to ensure `TLS 1.1/1.2` support.
 
-# ASP NET Web Forms Guidance
+## ASP NET Web Forms Guidance
 
 ASP.NET Web Forms is the original browser-based application development API for the .NET framework, and is still the most common enterprise platform for web application development.
 
@@ -67,9 +69,9 @@ ASP.NET Web Forms is the original browser-based application development API for 
 
 ```csharp
 protected override OnInit(EventArgs e) {
-    base.OnInit(e); 
+    base.OnInit(e);
     ViewStateUserKey = Session.SessionID;
-} 
+}
 ```
 
 If you don't use Viewstate, then look to the default master page of the ASP.NET Web Forms default template for a manual anti-CSRF token using a double-submit cookie.
@@ -154,7 +156,7 @@ if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue ||
          <add name="X-Content-Type-Options" value="NOSNIFF" />
          <add name="X-Frame-Options" value="DENY" />
          <add name="X-Permitted-Cross-Domain-Policies" value="master-only"/>
-         <add name="X-XSS-Protection" value="1; mode=block"/>
+         <add name="X-XSS-Protection" value="0"/>
          <remove name="X-Powered-By"/>
        </customHeaders>
      </httpProtocol>
@@ -195,19 +197,19 @@ if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue ||
 HttpContext.Current.Response.Headers.Remove("Server");
 ```
 
-## HTTP validation and encoding
+### HTTP validation and encoding
 
 - Do not disable [validateRequest](http://www.asp.net/whitepapers/request-validation) in the `web.config` or the page setup. This value enables limited XSS protection in ASP.NET and should be left intact as it provides partial prevention of Cross Site Scripting. Complete request validation is recommended in addition to the built in protections.
 - The 4.5 version of the .NET Frameworks includes the [AntiXssEncoder](https://docs.microsoft.com/en-us/dotnet/api/system.web.security.antixss.antixssencoder?view=netframework-4.7.2) library, which has a comprehensive input encoding library for the prevention of XSS. Use it.
 - Whitelist allowable values anytime user input is accepted.
 - Validate the URI format using [Uri.IsWellFormedUriString](https://docs.microsoft.com/en-us/dotnet/api/system.uri.iswellformeduristring).
 
-## Forms authentication
+### Forms authentication
 
 - Use cookies for persistence when possible. `Cookieless` auth will default to [UseDeviceProfile](https://docs.microsoft.com/en-us/dotnet/api/system.web.httpcookiemode?view=netframework-4.7.2).
 - Don't trust the URI of the request for persistence of the session or authorization. It can be easily faked.
 - Reduce the forms authentication timeout from the default of *20 minutes* to the shortest period appropriate for your application. If [slidingExpiration](https://docs.microsoft.com/en-us/dotnet/api/system.web.security.formsauthentication.slidingexpiration?view=netframework-4.7.2) is used this timeout resets after each request, so active users won't be affected.
--   If HTTPS is not used, [slidingExpiration](https://docs.microsoft.com/en-us/dotnet/api/system.web.security.formsauthentication.slidingexpiration?view=netframework-4.7.2) should be disabled. Consider disabling [slidingExpiration](https://docs.microsoft.com/en-us/dotnet/api/system.web.security.formsauthentication.slidingexpiration?view=netframework-4.7.2) even with HTTPS.
+- If HTTPS is not used, [slidingExpiration](https://docs.microsoft.com/en-us/dotnet/api/system.web.security.formsauthentication.slidingexpiration?view=netframework-4.7.2) should be disabled. Consider disabling [slidingExpiration](https://docs.microsoft.com/en-us/dotnet/api/system.web.security.formsauthentication.slidingexpiration?view=netframework-4.7.2) even with HTTPS.
 - Always implement proper access controls.
     - Compare user provided username with `User.Identity.Name`.
     - Check roles against `User.Identity.IsInRole`.
@@ -215,7 +217,7 @@ HttpContext.Current.Response.Headers.Remove("Server");
 - Explicitly authorize resource requests.
 - Leverage role based authorization using `User.Identity.IsInRole`.
 
-# ASP NET MVC Guidance
+## ASP NET MVC Guidance
 
 ASP.NET MVC (Model–View–Controller) is a contemporary web application framework that uses more standardized HTTP communication than the Web Forms postback model.
 
@@ -223,9 +225,9 @@ The OWASP Top 10 2017 lists the most prevalent and dangerous threats to web secu
 
 This section is based on this. Your approach to securing your web application should be to start at the top threat A1 below and work down, this will ensure that any time spent on security will be spent most effectively spent and cover the top threats first and lesser threats afterwards. After covering the top 10 it is generally advisable to assess for other threats or get a professionally completed Penetration Test.
 
-## A1 Injection
+### A1 Injection
 
-### SQL Injection
+#### SQL Injection
 
 DO: Using an object relational mapper (ORM) or stored procedures is the most effective way of countering the SQL Injection vulnerability.
 
@@ -248,14 +250,14 @@ NB: You can still accidentally do this with ORMs or Stored procedures so check e
 e.g
 
 ```sql
-string strQry = "SELECT * FROM Users WHERE UserName='" + txtUser.Text + "' AND Password='" 
+string strQry = "SELECT * FROM Users WHERE UserName='" + txtUser.Text + "' AND Password='"
                 + txtPassword.Text + "'";
 EXEC strQry // SQL Injection vulnerability!
 ```
 
 DO: Practise Least Privilege - Connect to the database using an account with a minimum set of permissions required to do it's job i.e. not the sa account
 
-### OS Injection
+#### OS Injection
 
 Information about OS Injection can be found on this [cheat sheet](OS_Command_Injection_Defense_Cheat_Sheet.md#net).
 
@@ -283,23 +285,23 @@ string ipAddress = "127.0.0.1";
 //check to make sure an ip address was provided
 if (!string.IsNullOrEmpty(ipAddress))
 {
-	// Create an instance of IPAddress for the specified address string (in
-	// dotted-quad, or colon-hexadecimal notation).
-	if (IPAddress.TryParse(ipAddress, out var address))
-	{
-		// Display the address in standard notation.
-		return address.ToString();
-	}
-	else
-	{
-		//ipAddress is not of type IPAddress
-		...
-	}
+ // Create an instance of IPAddress for the specified address string (in
+ // dotted-quad, or colon-hexadecimal notation).
+ if (IPAddress.TryParse(ipAddress, out var address))
+ {
+  // Display the address in standard notation.
+  return address.ToString();
+ }
+ else
+ {
+  //ipAddress is not of type IPAddress
+  ...
+ }
     ...
 }
- ```
+```
 
-### LDAP injection
+#### LDAP injection
 
 Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash `\` escape character. A table showing which characters that should be escaped for Active Directory can be found at the in the [LDAP Injection Prevention Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md#introduction).
 
@@ -307,7 +309,7 @@ NB: The space character must be escaped only if it is the leading or trailing ch
 
 More information can be found [here](LDAP_Injection_Prevention_Cheat_Sheet.md#introduction).
 
-## A2 Broken Authentication
+### A2 Broken Authentication
 
 DO: Use [ASP.net Core Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&).
 ASP.net Core Identity framework is well configured by default, where it uses secure password hashes and an individual salt. Identity uses the PBKDF2 hashing function for passwords, and they generate a random salt per user.
@@ -320,21 +322,21 @@ e.g ASP.net Core Identity
 //startup.cs
 services.Configure<IdentityOptions>(options =>
 {
-	// Password settings
-	options.Password.RequireDigit = true;
-	options.Password.RequiredLength = 8;
-	options.Password.RequireNonAlphanumeric = true;
-	options.Password.RequireUppercase = true;
-	options.Password.RequireLowercase = true;
-	options.Password.RequiredUniqueChars = 6;
+ // Password settings
+ options.Password.RequireDigit = true;
+ options.Password.RequiredLength = 8;
+ options.Password.RequireNonAlphanumeric = true;
+ options.Password.RequireUppercase = true;
+ options.Password.RequireLowercase = true;
+ options.Password.RequiredUniqueChars = 6;
 
 
-	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-	options.Lockout.MaxFailedAccessAttempts = 3;
+ options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+ options.Lockout.MaxFailedAccessAttempts = 3;
 
-	options.SignIn.RequireConfirmedEmail = true;
+ options.SignIn.RequireConfirmedEmail = true;
 
-	options.User.RequireUniqueEmail = true;
+ options.User.RequireUniqueEmail = true;
 });
 ```
 
@@ -346,13 +348,13 @@ e.g
 //startup.cs
 services.ConfigureApplicationCookie(options =>
 {
-	options.Cookie.HttpOnly = true;
-	options.Cookie.Expiration = TimeSpan.FromHours(1)
-	options.SlidingExpiration = true;
+ options.Cookie.HttpOnly = true;
+ options.Cookie.Expiration = TimeSpan.FromHours(1)
+ options.SlidingExpiration = true;
 });
 ```
 
-## A3 Sensitive Data Exposure
+### A3 Sensitive Data Exposure
 
 DO NOT: [Store encrypted passwords](Password_Storage_Cheat_Sheet.md#do-not-limit-the-character-set-and-set-long-max-lengths-for-credentials).
 
@@ -387,7 +389,7 @@ e.g Web.config
             <add name="X-Content-Type-Options" value="nosniff" />
             <add name="X-Frame-Options" value="DENY" />
             <add name="X-Permitted-Cross-Domain-Policies" value="master-only"/>
-            <add name="X-XSS-Protection" value="1; mode=block"/>
+            <add name="X-XSS-Protection" value="0"/>
             <remove name="X-Powered-By"/>
         </customHeaders>
     </httpProtocol>
@@ -400,7 +402,7 @@ e.g Startup.cs
 app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
 app.UseXContentTypeOptions();
 app.UseReferrerPolicy(opts => opts.NoReferrer());
-app.UseXXssProtection(options => options.EnabledWithBlockMode());
+app.UseXXssProtection(options => options.FilterDisabled());
 app.UseXfo(options => options.Deny());
 
 app.UseCsp(opts => opts
@@ -417,7 +419,7 @@ app.UseCsp(opts => opts
 
 For more information about headers can be found [here](https://owasp.org/www-project-secure-headers/).
 
-## A4 XML External Entities (XXE)
+### A4 XML External Entities (XXE)
 
 Please refer to the XXE cheat sheet so more detailed information, which can be found [here](XML_External_Entity_Prevention_Cheat_Sheet.md#net).
 
@@ -425,9 +427,9 @@ XXE attacks occur when an XML parse does not properly process user input that co
 
 Below are the three most common [XML Processing Options](https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xml-processing-options) for .NET.
 
-## A5 Broken Access Control
+### A5 Broken Access Control
 
-### Weak Account management
+#### Weak Account management
 
 Ensure cookies are sent via httpOnly:
 
@@ -471,7 +473,7 @@ DO NOT: Tell someone if the account exists on LogOn, Registration or Password re
 
 The feedback to the user should be identical whether or not the account exists, both in terms of content and behavior: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.
 
-### Missing function-level access control
+#### Missing function-level access control
 
 DO: Authorize users on all externally facing endpoints. The .NET framework has many ways to authorize a user, use them at method level:
 
@@ -490,9 +492,9 @@ public class UserController
 
 You can also check roles in code using identity features in .net: `System.Web.Security.Roles.IsUserInRole(userName, roleName)`
 
-You can find more information [here](Access_Control_Cheat_Sheet.md#introduction) on Access Control and [here](Authorization_Testing_Automation.md) for Authorization.
+You can find more information [here](Access_Control_Cheat_Sheet.md#introduction) on Access Control and [here](Authorization_Testing_Automation_Cheat_Sheet.md) for Authorization.
 
-### Insecure Direct object references
+#### Insecure Direct object references
 
 When you have a resource (object) which can be accessed by a reference (in the sample below this is the `id`) then you need to ensure that the user is intended to be there
 
@@ -521,9 +523,9 @@ public ActionResult Edit(int id)
 
 More information can be found [here](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) for Insecure Direct Object Reference.
 
-## A6 Security Misconfiguration
+### A6 Security Misconfiguration
 
-### Debug and Stack Trace
+#### Debug and Stack Trace
 
 Ensure debug and trace are off in production. This can be enforced using web.config transforms:
 
@@ -559,16 +561,16 @@ e.g Startup.cs in the Configure()
   app.UseHttpsRedirection();
 ```
 
-### Cross-site request forgery
+#### Cross-site request forgery
 
 DO NOT: Send sensitive data without validating Anti-Forgery-Tokens ([.NET](https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks) / [.NET Core](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration)).
 
 DO: Send the anti-forgery token with every POST/PUT request:
 
-#### Using .NET Framework:
+##### Using .NET Framework
 
 ```csharp
-using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", 
+using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm",
                         @class = "pull-right" }))
 {
     @Html.AntiForgeryToken()
@@ -602,7 +604,7 @@ public void RemoveAntiForgeryCookie(Controller controller)
     string[] allCookies = controller.Request.Cookies.AllKeys;
     foreach (string cookie in allCookies)
     {
-        if (controller.Response.Cookies[cookie] != null && 
+        if (controller.Response.Cookies[cookie] != null &&
             cookie == "__RequestVerificationToken")
         {
             controller.Response.Cookies[cookie].Expires = DateTime.Now.AddDays(-1);
@@ -611,7 +613,7 @@ public void RemoveAntiForgeryCookie(Controller controller)
 }
 ```
 
-#### Using .NET Core 2.0 or later:
+##### Using .NET Core 2.0 or later
 
 Starting with .NET Core 2.0 it is possible to [automatically generate and verify the antiforgery token](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration).
 
@@ -640,7 +642,7 @@ services.AddMvc(options =>
 });
 ```
 
-If you need to disable the attribute validation for a specific method on a controller you can add the [IgnoreAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.ignoreantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the controller method (for MVC controllers) or parent class (for Razor pages): 
+If you need to disable the attribute validation for a specific method on a controller you can add the [IgnoreAntiforgeryToken](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.ignoreantiforgerytokenattribute?view=aspnetcore-2.2) attribute to the controller method (for MVC controllers) or parent class (for Razor pages):
 
 ```csharp
 [IgnoreAntiforgeryToken]
@@ -679,7 +681,7 @@ public class UserController
 public class SafeModel : PageModel
 ```
 
-#### Using .Net Core 2.0 or .NET Framework with AJAX
+##### Using .Net Core 2.0 or .NET Framework with AJAX
 
 You will need to attach the anti-forgery token to AJAX requests.
 
@@ -703,7 +705,7 @@ If you are using the .NET Framework, you can find some code snippets [here](http
 
 More information can be found [here](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) for Cross-Site Request Forgery.
 
-## A7 Cross-Site Scripting (XSS)
+### A7 Cross-Site Scripting (XSS)
 
 DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists
 
@@ -736,7 +738,7 @@ DO: Enable a [Content Security Policy](Content_Security_Policy_Cheat_Sheet.md#co
 
 More information can be found [here](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for Cross-Site Scripting.
 
-## A8 Insecure Deserialization
+### A8 Insecure Deserialization
 
 Information about Insecure Deserialization can be found on this [cheat sheet](Deserialization_Cheat_Sheet.md#net-csharp).
 
@@ -752,7 +754,7 @@ If a deserialized hostile object tries to initiate a system processes or access 
 
 More information can be found here: [Deserialization Cheat Sheet](Deserialization_Cheat_Sheet.md#net-csharp)
 
-## A9 Using Components with Known Vulnerabilities
+### A9 Using Components with Known Vulnerabilities
 
 DO: Keep the .Net framework updated with the latest patches
 
@@ -760,7 +762,7 @@ DO: Keep your [NuGet](https://docs.microsoft.com/en-us/nuget/) packages up to da
 
 DO: Run the [OWASP Dependency Checker](Vulnerable_Dependency_Management_Cheat_Sheet.md) against your application as part of your build process and act on any high level vulnerabilities.
 
-## A10 Insufficient Logging & Monitoring
+### A10 Insufficient Logging & Monitoring
 
 DO: Ensure all login, access control failures and server-side input validation failures can be logged with sufficient user context to identify suspicious or malicious accounts.
 
@@ -770,7 +772,7 @@ DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was throw
 
 DO NOT: Log sensitive data such as user's passwords.
 
-### Logging
+#### Logging
 
 What Logs to Collect and more information about Logging can be found on this [cheat sheet](Logging_Cheat_Sheet.md).
 
@@ -781,23 +783,23 @@ How to log all errors from the `Startup.cs`, so that anytime an error is thrown 
 ``` csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 {
-	if (env.IsDevelopment())
-	{
-		_isDevelopment = true;
-		app.UseDeveloperExceptionPage();
-	}
+ if (env.IsDevelopment())
+ {
+  _isDevelopment = true;
+  app.UseDeveloperExceptionPage();
+ }
 
-	//Log all errors in the application
-	app.UseExceptionHandler(errorApp =>
-	{
-		errorApp.Run(async context =>
-		{
-		    var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
-		    var exception = errorFeature.Error;
+ //Log all errors in the application
+ app.UseExceptionHandler(errorApp =>
+ {
+  errorApp.Run(async context =>
+  {
+      var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
+      var exception = errorFeature.Error;
 
-		    Log.Error(String.Format("Stacktrace of error: {0}",exception.StackTrace.ToString()));
-		});
-	});
+      Log.Error(String.Format("Stacktrace of error: {0}",exception.StackTrace.ToString()));
+  });
+ });
 
         app.UseAuthentication();
             app.UseMvc();
@@ -817,7 +819,7 @@ public class AccountsController : Controller
             _Logger = logger;
         }
 
-	[HttpPost]
+ [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -827,23 +829,23 @@ public class AccountsController : Controller
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-			//Log all successful log in attempts
-			Log.Information(String.Format("User: {0}, Successfully Logged in", model.Email));
-			//Code for successful login
-		}
-		else
-		{
-			//Log all incorrect log in attempts
-			Log.Information(String.Format("User: {0}, Incorrect Password", model.Email));
-		}
-	}
+   //Log all successful log in attempts
+   Log.Information(String.Format("User: {0}, Successfully Logged in", model.Email));
+   //Code for successful login
+  }
+  else
+  {
+   //Log all incorrect log in attempts
+   Log.Information(String.Format("User: {0}, Incorrect Password", model.Email));
+  }
+ }
 
-	...
+ ...
 ```
 
 Logging levels for ILogger are listed below, in order of high to low importance:
 
-### Monitoring
+#### Monitoring
 
 Monitoring allow us to validate the performance and health of a running system through key performance indicators.
 
@@ -851,11 +853,11 @@ In .NET a great option to add monitoring capabilities is [Application Insights](
 
 More information about Logging and Monitoring can be found [here](https://github.com/microsoft/code-with-engineering-playbook/tree/master/observability).
 
-# OWASP 2013
+## OWASP 2013
 
 Below is vulnerability not discussed in OWASP 2017
 
-## A10 Unvalidated redirects and forwards
+### A10 Unvalidated redirects and forwards
 
 A protection against this was introduced in Mvc 3 template. Here is the code:
 
@@ -897,17 +899,17 @@ More information:
 
 For more information on all of the above and code samples incorporated into a sample MVC5 application with an enhanced security baseline go to [Security Essentials Baseline project](http://github.com/johnstaveley/SecurityEssentials/)
 
-# XAML Guidance
+## XAML Guidance
 
 - Work within the constraints of Internet Zone security for your application.
 - Use ClickOnce deployment. For enhanced permissions, use permission elevation at runtime or trusted application deployment at install time.
 
-# Windows Forms Guidance
+## Windows Forms Guidance
 
 - Use partial trust when possible. Partially trusted Windows applications reduce the attack surface of an application. Manage a list of what permissions your app must use, and what it may use, and then make the request for those permissions declaratively at run time.
 - Use ClickOnce deployment. For enhanced permissions, use permission elevation at runtime or trusted application deployment at install time.
 
-## WCF Guidance
+### WCF Guidance
 
 - Keep in mind that the only safe way to pass a request in RESTful services is via `HTTP POST`, with `TLS enabled`. GETs are visible in the `querystring`, and a lack of TLS means the body can be intercepted.
 - Avoid [BasicHttpBinding](https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.basichttpbinding?view=netframework-4.7.2). It has no default security configuration. Use [WSHttpBinding](https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.wshttpbinding?view=netframework-4.7.2) instead.

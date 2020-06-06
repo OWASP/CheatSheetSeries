@@ -1,4 +1,6 @@
-# Introduction
+# JSON Web Token Cheat Sheet for Java
+
+## Introduction
 
 Many applications use **JSON Web Tokens** (JWT) to allow the client to indicate its identity for further exchange after authentication.
 
@@ -10,7 +12,7 @@ JSON Web Token is used to carry information related to the identity and characte
 
 This token is created during authentication (is provided in case of successful authentication) and is verified by the server before any processing. It is used by an application to allow a client to present a token representing the user's "identity card" to the server and allow the server to verify the validity and integrity of the token in a secure way, all of this in a stateless and portable approach (portable in the way that client and server technologies can be different including also the transport channel even if HTTP is the most often used).
 
-# Token Structure
+## Token Structure
 
 Token structure example taken from [JWT.IO](https://jwt.io/#debugger):
 
@@ -20,7 +22,7 @@ Token structure example taken from [JWT.IO](https://jwt.io/#debugger):
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
 eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.
 TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
-```    
+```
 
 Chunk 1: **Header**
 
@@ -29,7 +31,7 @@ Chunk 1: **Header**
   "alg": "HS256",
   "typ": "JWT"
 }
-```    
+```
 
 Chunk 2: **Payload**
 
@@ -39,45 +41,45 @@ Chunk 2: **Payload**
   "name": "John Doe",
   "admin": true
 }
-```    
+```
 
 Chunk 3: **Signature**
 
 ```javascript
 HMACSHA256( base64UrlEncode(header) + "." + base64UrlEncode(payload), KEY )
-```    
+```
 
-# Objective
+## Objective
 
 This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT) with Java.
 
-The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens. 
+The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens.
 
 You can find the Java project [here](https://github.com/righettod/poc-jwt), it uses the official [JWT library](https://jwt.io/#libraries).
 
 In the rest of the article, the term **token** refers to the **JSON Web Tokens** (JWT).
 
-# Consideration about Using JWT
+## Consideration about Using JWT
 
 Even if a JWT token is "easy" to use and allow to expose services (mostly REST style) in a stateless way, it's not the solution that fits for all applications because it comes with some caveats, like for example the question of the storage of the token (tackled in this cheatsheet) and others...
 
 If your application does not need to be fully stateless, you can consider using traditional session system provided by all web frameworks and follow the advice from the dedicated [session management cheat sheet](Session_Management_Cheat_Sheet.md). However, for stateless applications, when well implemented, it's a good candidate.
 
-# Issues
+## Issues
 
-## None Hashing Algorithm
+### None Hashing Algorithm
 
-### Symptom
+#### Symptom
 
 This attack, described [here](https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/) occurs when an attacker alters the token and changes the hashing algorithm to indicate, through, the *none* keyword, that the integrity of the token has already been verified. As explained in the link above *some libraries treated tokens signed with the none algorithm as a valid token with a verified signature*, so an attacker can alter the token claims and token will be trusted by the application.
 
-### How to Prevent
+#### How to Prevent
 
 First, use a JWT library that is not exposed to this vulnerability.
 
 Last, during token validation, explicitly request that the expected algorithm was used.
 
-### Implementation Example
+#### Implementation Example
 
 ``` java
 // HMAC key - Block serialization and storage as String in JVM memory
@@ -85,7 +87,7 @@ private transient byte[] keyHMAC = ...;
 
 ...
 
-//Create a verification context for the token requesting 
+//Create a verification context for the token requesting
 //explicitly the use of the HMAC-256 hashing algorithm
 JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyHMAC)).build();
 
@@ -93,13 +95,13 @@ JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyHMAC)).build();
 DecodedJWT decodedToken = verifier.verify(token);
 ```
 
-## Token Sidejacking
+### Token Sidejacking
 
-### Symptom
+#### Symptom
 
 This attack occurs when a token has been intercepted/stolen by an attacker and they use it to gain access to the system using targeted user identity.
 
-### How to Prevent
+#### How to Prevent
 
 A way to prevent it is to add a "user context" in the token. A user context will be composed of the following information:
 
@@ -110,7 +112,7 @@ IP addresses should not be used because there are some legitimate situations in 
 
 During token validation, if the received token does not contain the right context (for example, if it has been replayed), then it must be rejected.
 
-### Implementation example
+#### Implementation example
 
 Code to create the token after successful authentication.
 
@@ -127,15 +129,15 @@ byte[] randomFgp = new byte[50];
 secureRandom.nextBytes(randomFgp);
 String userFingerprint = DatatypeConverter.printHexBinary(randomFgp);
 
-//Add the fingerprint in a hardened cookie - Add cookie manually because 
+//Add the fingerprint in a hardened cookie - Add cookie manually because
 //SameSite attribute is not supported by javax.servlet.http.Cookie class
-String fingerprintCookie = "__Secure-Fgp=" + userFingerprint 
+String fingerprintCookie = "__Secure-Fgp=" + userFingerprint
                            + "; SameSite=Strict; HttpOnly; Secure";
 response.addHeader("Set-Cookie", fingerprintCookie);
 
-//Compute a SHA256 hash of the fingerprint in order to store the 
+//Compute a SHA256 hash of the fingerprint in order to store the
 //fingerprint hash (instead of the raw value) in the token
-//to prevent an XSS to be able to read the fingerprint and 
+//to prevent an XSS to be able to read the fingerprint and
 //set the expected cookie itself
 MessageDigest digest = MessageDigest.getInstance("SHA-256");
 byte[] userFingerprintDigest = digest.digest(userFingerprint.getBytes("utf-8"));
@@ -177,7 +179,7 @@ if (request.getCookies() != null && request.getCookies().length > 0) {
  }
 }
 
-//Compute a SHA256 hash of the received fingerprint in cookie in order to compare 
+//Compute a SHA256 hash of the received fingerprint in cookie in order to compare
 //it to the fingerprint hash stored in the token
 MessageDigest digest = MessageDigest.getInstance("SHA-256");
 byte[] userFingerprintDigest = digest.digest(userFingerprint.getBytes("utf-8"));
@@ -193,13 +195,13 @@ JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyHMAC))
 DecodedJWT decodedToken = verifier.verify(token);
 ```
 
-## No Built-In Token Revocation by the User
+### No Built-In Token Revocation by the User
 
-### Symptom
+#### Symptom
 
 This problem is inherent to JWT because a token only becomes invalid when it expires. The user has no built-in feature to explicitly revoke the validity of a token. This means that if it is stolen, a user cannot revoke the token itself thereby blocking the attacker.
 
-### How to Prevent
+#### How to Prevent
 
 A way to protect against this is to implement a token blacklist that will be used to mimic the "logout" feature that exists with traditional session management system.
 
@@ -207,25 +209,25 @@ The blacklist will keep a digest (SHA-256 encoded in HEX) of the token with a re
 
 When the user wants to "logout" then it call a dedicated service that will add the provided user token to the blacklist resulting in an immediate invalidation of the token for further usage in the application.
 
-### Implementation Example
+#### Implementation Example
 
-#### Blacklist Storage
+##### Blacklist Storage
 
 A database table with the following structure will be used as the central blacklist storage.
 
 ``` sql
-create table if not exists revoked_token(jwt_token_digest varchar(255) primary key, 
+create table if not exists revoked_token(jwt_token_digest varchar(255) primary key,
 revocation_date timestamp default now());
 ```
 
-#### Token Revocation Management
+##### Token Revocation Management
 
 Code in charge of adding a token to the blacklist and checking if a token is revoked.
 
 ``` java
 /**
 * Handle the revocation of the token (logout).
-* Use a DB in order to allow multiple instances to check for revoked token 
+* Use a DB in order to allow multiple instances to check for revoked token
 * and allow cleanup at centralized DB level.
 */
 public class TokenRevoker {
@@ -235,7 +237,7 @@ public class TokenRevoker {
  private DataSource storeDS;
 
  /**
-  * Verify if a digest encoded in HEX of the ciphered token is present 
+  * Verify if a digest encoded in HEX of the ciphered token is present
   * in the revocation table
   *
   * @param jwtInHex Token encoded in HEX
@@ -305,13 +307,13 @@ public class TokenRevoker {
  }
 ```
 
-## Token Information Disclosure
+### Token Information Disclosure
 
-### Symptom
+#### Symptom
 
 This attack occurs when an attacker has access to a token (or a set of tokens) and extracts information stored in it (the contents of JWT tokens are base64 encoded, but is not encrypted by default) in order to obtain information about the system. Information can be for example the security roles, login format...
 
-### How to Prevent
+#### How to Prevent
 
 A way to protect against this attack is to cipher the token using, for example, a symmetric algorithm.
 
@@ -322,15 +324,15 @@ In order to achieve all these goals, the *AES-[GCM](https://en.wikipedia.org/wik
 More details from [here](https://github.com/google/tink/blob/master/docs/PRIMITIVES.md#deterministic-authenticated-encryption-with-associated-data):
 
 ```text
-AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric 
-authenticated encryption. 
+AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric
+authenticated encryption.
 
-Implementations of this primitive are secure against adaptive chosen ciphertext attacks. 
+Implementations of this primitive are secure against adaptive chosen ciphertext attacks.
 
-When encrypting a plaintext one can optionally provide associated data that should be authenticated 
-but not encrypted. 
+When encrypting a plaintext one can optionally provide associated data that should be authenticated
+but not encrypted.
 
-That is, the encryption with associated data ensures authenticity (ie. who the sender is) and 
+That is, the encryption with associated data ensures authenticity (ie. who the sender is) and
 integrity (ie. data has not been tampered with) of that data, but not its secrecy.
 
 See RFC5116: https://tools.ietf.org/html/rfc5116
@@ -340,9 +342,9 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 
 Here ciphering is added mainly to hide internal information but it's very important to remember that the first protection against tampering of the JWT token is the signature. So, the token signature and its verification must be always in place.
 
-### Implementation Example
+#### Implementation Example
 
-#### Token Ciphering
+##### Token Ciphering
 
 Code in charge of managing the ciphering. [Google Tink](https://github.com/google/tink) dedicated crypto library is used to handle ciphering operations in order to use built-in best practices provided by this library.
 
@@ -414,7 +416,7 @@ public class TokenCipher {
 }
 ```
 
-#### Creation / Validation of the Token
+##### Creation / Validation of the Token
 
 Use the token ciphering handler during the creation and the validation of the token.
 
@@ -451,9 +453,9 @@ String token = tokenCipher.decipherToken(cipheredToken, this.keyCiphering);
 //Verify access...
 ```
 
-## Token Storage on Client Side
+### Token Storage on Client Side
 
-### Symptom
+#### Symptom
 
 This occurs when an application stores the token in a manner exhibiting the following behavior:
 
@@ -461,11 +463,11 @@ This occurs when an application stores the token in a manner exhibiting the foll
 - Retrieved even if the browser is restarted (Use of browser *localStorage* container).
 - Retrieved in case of [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) issue (Cookie accessible to JavaScript code or Token stored in browser local/session storage).
 
-### How to Prevent
+#### How to Prevent
 
-1.  Store the token using the browser *sessionStorage* container.
-1.  Add it as a *Bearer* HTTP `Authentication` header with JavaScript when calling services.
-1.  Add [fingerprint](JSON_Web_Token_Cheat_Sheet_for_Java.md#token-sidejacking) information to the token.
+1. Store the token using the browser *sessionStorage* container.
+1. Add it as a *Bearer* HTTP `Authentication` header with JavaScript when calling services.
+1. Add [fingerprint](JSON_Web_Token_for_Java_Cheat_Sheet.md#token-sidejacking) information to the token.
 
 By storing the token in browser *sessionStorage* container it exposes the token to being stolen through a XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) to harden the execution context.
 
@@ -474,7 +476,7 @@ By storing the token in browser *sessionStorage* container it exposes the token 
 - The remaining case is when an attacker uses the user's browsing context as a proxy to use the target application through the legitimate user but the Content Security Policy can prevent communication with non expected domains.
 - It's also possible to implement the authentication service in a way that the token is issued within a hardened cookie, but in this case, protection against a [Cross-Site Request Forgery](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) attack must be implemented.
 
-### Implementation Example
+#### Implementation Example
 
 JavaScript code to store the token after authentication.
 
@@ -531,9 +533,9 @@ function validateToken() {
 }
 ```
 
-## Weak Token Secret
+### Weak Token Secret
 
-### Symptom
+#### Symptom
 
 When the token is protected using an HMAC based algorithm, the security of the token is entirely dependent on the strength of the secret used with the HMAC. If an attacker can obtain a valid JWT, they can then carry out an offline attack and attempt to crack the secret using tools such as [John the Ripper](https://github.com/magnumripper/JohnTheRipper) or [Hashcat](https://github.com/hashcat/hashcat).
 
@@ -541,13 +543,13 @@ If they are successful, they would then be able to modify the token and re-sign 
 
 There are a number of [guides](https://www.notsosecure.com/crafting-way-json-web-tokens/) that document this process in greater detail.
 
-### How to Prevent
+#### How to Prevent
 
 The simplest way to prevent this attack is to ensure that the secret used to sign the JWTs is strong and unique, in order to make it harder for an attacker to crack. As this secret would never need to be typed by a human, it should be at least 64 characters, and generated using a [secure source of randomness](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
 
 Alternatively, consider the use of tokens that are signed with RSA rather than using an HMAC and secret key.
 
-### Further Reading
+#### Further Reading
 
 - [{JWT}.{Attack}.Playbook](https://github.com/ticarpi/jwt_tool/wiki) - A project documents the known attacks and potential security vulnerabilities and misconfigurations of JSON Web Tokens.
 - [JWT Best Practices Internet Draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-bcp/)

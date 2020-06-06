@@ -1,12 +1,14 @@
-# Introduction
+# Ruby on Rails Cheatsheet
+
+## Introduction
 
 This *Cheatsheet* intends to provide quick basic Ruby on Rails security tips for developers. It complements, augments or emphasizes points brought up in the [Rails security guide](https://guides.rubyonrails.org/security.html) from rails core.
 
 The Rails framework abstracts developers from quite a bit of tedious work and provides the means to accomplish complex tasks quickly and with ease. New developers, those unfamiliar with the inner-workings of Rails, likely need a basic set of guidelines to secure fundamental aspects of their application. The intended purpose of this doc is to be that guide.
 
-# Items
+## Items
 
-## Command Injection
+### Command Injection
 
 Ruby offers a function called "eval" which will dynamically build new Ruby code based on Strings. It also has a number of ways to call system commands.
 
@@ -22,7 +24,7 @@ While the power of these commands is quite useful, extreme care should be taken 
 
 The guides from [Rails](https://guides.rubyonrails.org/security.html#command-line-injection) and [OWASP](https://owasp.org/www-community/attacks/Command_Injection) contain further information on command injection.
 
-## SQL Injection
+### SQL Injection
 
 Ruby on Rails is often used with an ORM called ActiveRecord, though it is flexible and can be used with other data sources. Typically very simple Rails applications use methods on the Rails models to query data. Many use cases protect for SQL Injection out of the box. However, it is possible to write code that allows for SQL Injection.
 
@@ -41,7 +43,7 @@ Here is the idiom for building this kind of statement:
 
 Use caution not to build SQL statements based on user controlled input. A list of more realistic and detailed examples is here: [rails-sqli.org](https://rails-sqli.org). OWASP has extensive information about [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection).
 
-## Cross-site Scripting (XSS)
+### Cross-site Scripting (XSS)
 
 By default, protection against XSS comes as the default behavior. When string data is shown in views, it is escaped prior to being sent back to the browser. This goes a long way, but there are common cases where developers bypass this protection - for example to enable rich text editing. In the event that you want to pass variables to the front end with tags intact, it is tempting to do the following in your .erb file (ruby markup).
 
@@ -97,7 +99,7 @@ Using [Content Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) 
 
 OWASP provides more general information about XSS in a top level page: [Cross-site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/).
 
-## Sessions
+### Sessions
 
 By default, Ruby on Rails uses a Cookie based session store. What that means is that unless you change something, the session will not expire on the server. That means that some default applications may be vulnerable to replay attacks. It also means that sensitive information should never be put in the session.
 
@@ -109,7 +111,7 @@ Project::Application.config.session_store :active_record_store
 
 There is an [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
 
-## Authentication
+### Authentication
 
 As with all sensitive data, start securing your authentication with enabling TLS in your configuration:
 
@@ -129,13 +131,13 @@ To enable authentication it is possible to use Devise gem.
 Install it using:
 
 ```bash
-$ gem 'devise'
+gem 'devise'
 ```
 
 Then install it to the user model:
 
 ```bash
-$ rails generate devise:install
+rails generate devise:install
 ```
 
 Next, specify which resources (routes) require authenticated access in routes:
@@ -178,7 +180,7 @@ You can try out [this PoC](https://github.com/qutorial/revise) to learn more abo
 
 Next, [omniauth gem](https://github.com/omniauth/omniauth) allows for multiple strategies for authentication. Using it one can configure secure authentication with Facebook, LDAP and many other providers. Read on [here](https://github.com/omniauth/omniauth#integrating-omniauth-into-your-application).
 
-### Token Authentication
+#### Token Authentication
 
 Devise usually uses Cookies for authentication.
 
@@ -205,7 +207,7 @@ And the User model is modified accordingly.
 These actions can be done with one command:
 
 ```bash
-$ rails g devise_token_auth:install [USER_CLASS] [MOUNT_PATH]
+rails g devise_token_auth:install [USER_CLASS] [MOUNT_PATH]
 ```
 
 You may need to edit the generated migration to avoid unnecessary fields and/or field duplication depending on your use case.
@@ -214,7 +216,7 @@ Note: when you use only token authentication, there is no more need in [CSRF](ht
 
 There is an [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
 
-## Insecure Direct Object Reference or Forceful Browsing
+### Insecure Direct Object Reference or Forceful Browsing
 
 By default, Ruby on Rails apps use a RESTful URI structure. That means that paths are often intuitive and guessable. To protect against a user trying to access or modify data that belongs to another user, it is important to specifically control actions. Out of the gate on a vanilla Rails application, there is no such built in protection. It is possible to do this by hand at the controller level.
 
@@ -222,7 +224,7 @@ It is also possible, and probably recommended, to consider resource-based access
 
 More general information about this class of vulnerability is in the [OWASP Top 10 Page](https://wiki.owasp.org/index.php/Top_10_2010-A4-Insecure_Direct_Object_References).
 
-## CSRF (Cross Site Request Forgery)
+### CSRF (Cross Site Request Forgery)
 
 Ruby on Rails has specific, built in support for CSRF tokens. To enable it, or ensure that it is enabled, find the base `ApplicationController` and look for a directive such as the following:
 
@@ -244,7 +246,7 @@ Also note that by default Rails does not provide CSRF protection for any HTTP `G
 
 There is a top level OWASP page for [Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf).
 
-## Redirects and Forwards
+### Redirects and Forwards
 
 Web applications often require the ability to dynamically redirect users based on client-supplied data. To clarify, dynamic redirection usually entails the client including a URL in a parameter within a request to the application. Once received by the application, the user is redirected to the URL specified in the request.
 
@@ -324,13 +326,13 @@ end
 
 There is a more general OWASP resource about [unvalidated redirects and forwards](Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md).
 
-## Dynamic Render Paths
+### Dynamic Render Paths
 
 In Rails, controller actions and views can dynamically determine which view or partial to render by calling the `render` method. If user input is used in or for the template name, an attacker could cause the application to render an arbitrary view, such as an administrative page.
 
 Care should be taken when using user input to determine which view to render. If possible, avoid any user input in the name or path to the view.
 
-## Cross Origin Resource Sharing
+### Cross Origin Resource Sharing
 
 Occasionally, a need arises to share resources with another domain. For example, a file-upload function that sends data via an AJAX request to another domain. In these cases, the same-origin rules followed by web browsers must be bent. Modern browsers, in compliance with HTML5 standards, will allow this to occur but in order to do this; a couple precautions must be taken.
 
@@ -344,13 +346,13 @@ When standard HTTP constructs are used:
 
 Whitelist in Rails:
 
-**Gemfile**
+**Gemfile:**
 
 ```bash
-$ gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors', :require => 'rack/cors'
 ```
 
-**config/application.rb**
+**config/application.rb:**
 
 ```ruby
 module Sample
@@ -367,7 +369,7 @@ module Sample
 end
 ```
 
-## Security-related headers
+### Security-related headers
 
 To set a header value, simply access the response.headers object as a hash inside your controller (often in a before/after_filter).
 
@@ -381,7 +383,7 @@ Rails provides the `default_headers` functionality that will automatically apply
 ActionDispatch::Response.default_headers = {
   'X-Frame-Options' => 'SAMEORIGIN',
   'X-Content-Type-Options' => 'nosniff',
-  'X-XSS-Protection' => '1;'
+  'X-XSS-Protection' => '0'
 }
 ```
 
@@ -393,11 +395,11 @@ config.force_ssl = true
 
 For those not on the edge, there is a library ([secure_headers](https://github.com/twitter/secureheaders)) for the same behavior with content security policy abstraction provided. It will automatically apply logic based on the user agent to produce a concise set of headers.
 
-## Business Logic Bugs
+### Business Logic Bugs
 
 Any application in any technology can contain business logic errors that result in security bugs. Business logic bugs are difficult to impossible to detect using automated tools. The best ways to prevent business logic security bugs are to do code review, pair program and write unit tests.
 
-## Attack Surface
+### Attack Surface
 
 Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URL's should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface.
 
@@ -405,12 +407,12 @@ An example might be as follows:
 
 ```ruby
 # this is an example of what NOT to do
-match ':controller(/:action(/:id(.:format)))' 
+match ':controller(/:action(/:id(.:format)))'
 ```
 
 In this case, this route allows any public method on any controller to be called as an action. As a developer, you want to make sure that users can only reach the controller methods intended and in the way intended.
 
-## Sensitive Files
+### Sensitive Files
 
 Many Ruby on Rails apps are open source and hosted on publicly available source code repositories. Whether that is the case or the code is committed to a corporate source control system, there are certain files that should be either excluded or carefully managed.
 
@@ -418,10 +420,10 @@ Many Ruby on Rails apps are open source and hosted on publicly available source 
 /config/database.yml                 -  May contain production credentials.
 /config/initializers/secret_token.rb -  Contains a secret used to hash session cookie.
 /db/seeds.rb                         -  May contain seed data including bootstrap admin user.
-/db/development.sqlite3              -  May contain real data. 
+/db/development.sqlite3              -  May contain real data.
 ```
 
-## Encryption
+### Encryption
 
 Rails uses OS encryption. Generally speaking, it is always a bad idea to write your own encryption.
 
@@ -433,7 +435,7 @@ Typically, the following config causes the 10 stretches for production: `/config
 config.stretches = Rails.env.test? ? 1 : 10
 ```
 
-# Updating Rails and Having a Process for Updating Dependencies
+## Updating Rails and Having a Process for Updating Dependencies
 
 In early 2013, a number of critical vulnerabilities were identified in the Rails Framework. Organizations that had fallen behind current versions had more trouble updating and harder decisions along the way, including patching the source code for the framework itself.
 
@@ -445,7 +447,7 @@ In general, it is important to have a process for updating dependencies. An exam
 - Every week important security vulnerabilities are taken into account and potentially trigger an update.
 - In EXCEPTIONAL conditions, emergency updates may need to be applied.
 
-# Tools
+## Tools
 
 Use [brakeman](https://brakemanscanner.org/), an open source code analysis tool for Rails applications, to identify many potential issues. It will not necessarily produce comprehensive security findings, but it can find easily exposed issues. A great way to see potential issues in Rails is to review the brakeman documentation of warning types.
 
@@ -455,7 +457,7 @@ Another area of tooling is the security testing tool [Gauntlt](http://gauntlt.or
 
 Launched in May 2013 and very similar to brakeman scanner, the [dawnscanner](https://github.com/thesp0nge/dawnscanner) rubygem is a static analyzer for security issues that work with Rails, Sinatra and Padrino web applications. Version 1.6.6 has more than 235 ruby specific CVE security checks.
 
-# Related Articles and References
+## Related Articles and References
 
 - [The Official Rails Security Guide](https://guides.rubyonrails.org/security.html)
 - [OWASP Ruby on Rails Security Guide](https://owasp.org/www-pdf-archive/Rails_Security_2.pdf)
