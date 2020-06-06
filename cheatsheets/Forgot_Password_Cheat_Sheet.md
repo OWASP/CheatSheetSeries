@@ -60,7 +60,7 @@ These methods can be used together and many times it is recommended to do so. No
 
 One Time Password (OTP) is the best method in order to implement a secure forgot password service that triggers as a 2FA functionality.
 
-The two most famous methods are Time-OTP ([TOTP](https://tools.ietf.org/html/rfc6238)), or HMAC-OTP ([HOTP](https://tools.ietf.org/html/rfc4226)). The main difference is in the counter, where TOTP focuses on the Unix time, and HOTP has a counter that gets incremented on every user call to generate the OTP.
+The two most well-known methods are Time-OTP ([TOTP](https://tools.ietf.org/html/rfc6238)), or HMAC-OTP ([HOTP](https://tools.ietf.org/html/rfc4226)). The main difference is in the counter, where TOTP focuses on the Unix time, and HOTP has a counter that gets incremented on every user call to generate the OTP.
 
 For a better description of OTP generation, refer to the [MFA CS](Multifactor_Authentication_Cheat_Sheet.md#something-you-have), where the pros and cons of every implementation are provided.
 
@@ -83,9 +83,7 @@ If a URL with a token is provided to the user, the user will have to follow the 
 
 ### Security Questions
 
-> This method should not be used as the sole method to reset a password, and should be used in conjunction with other methods.
-
-Kindly refer to the [Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) for further guidance.
+Security questions should not be used as the sole mechanism for resetting passwords due to weakness related to their implementations, where the questions could be either guessed or generic. However, if they are used as a factor, then ensure that secure questions are chosen as discussed in the [Security Questions CS](Choosing_and_Using_Security_Questions_Cheat_Sheet.md).
 
 ### Backup Codes
 
