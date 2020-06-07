@@ -192,8 +192,8 @@ This gem is configured similar to the devise gem itself. It also requires omniau
 
 ```bash
 # token-based authentication
-$ gem 'devise_token_auth'
-$ gem 'omniauth'
+gem 'devise_token_auth'
+gem 'omniauth'
 ```
 
 Then a route is defined:
