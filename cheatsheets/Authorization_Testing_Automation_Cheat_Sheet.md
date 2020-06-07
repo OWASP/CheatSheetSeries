@@ -55,19 +55,19 @@ This is an example of the XML used to represents the authorization:
 ``` xml
   <?xml version="1.0" encoding="UTF-8"?>
   <!--
-      This file materialize the authorization matrix for the different 
+      This file materialize the authorization matrix for the different
       services exposed by the system.
 
       It will be used by the tests as a input sources for the different tests cases:
       1) Evaluate legitimate access and is correct implementation
-      2) Identify not legitimate access (authorization definition issue 
+      2) Identify not legitimate access (authorization definition issue
       on service implementation)
 
       The "name" attribute is used for identify uniquely a SERVICE or a ROLE.
   -->
   <authorization-matrix>
 
-      <!-- Describe the possible logical roles used in the system, is used here to 
+      <!-- Describe the possible logical roles used in the system, is used here to
       provide a list+explanation
       of the different roles (authorization level) -->
       <roles>
@@ -79,7 +79,7 @@ This is an example of the XML used to represents the authorization:
           description="Role affected to a administrator user (highest access right)"/>
       </roles>
 
-      <!-- List and describe the available services exposed by the system and the associated 
+      <!-- List and describe the available services exposed by the system and the associated
       logical role(s) that can call them -->
       <services>
           <service name="ReadSingleMessage" uri="/{messageId}" http-method="GET"
@@ -378,7 +378,7 @@ This the implementation of the integration tests case class:
 In case of detection of a authorization issue(s) the output is the following:
 
 ```java
-testAccessUsingAnonymousUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  
+testAccessUsingAnonymousUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)
 Time elapsed: 1.009 s  ### FAILURE
 java.lang.AssertionError:
 Access issues detected using the ANONYMOUS USER point of view:
@@ -388,7 +388,7 @@ Access issues detected using the ANONYMOUS USER point of view:
     The service 'CreateMessage' when called with POV 'ANONYMOUS' return
     a response code 200 that is not the expected one (403 expected).
 
-testAccessUsingBasicUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)  
+testAccessUsingBasicUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)
 Time elapsed: 0.05 s  ### FAILURE!
 java.lang.AssertionError:
 Access issues detected using the BASIC USER point of view:
@@ -512,4 +512,4 @@ Example of the rendering:
 
 ## Sources of the prototype
 
-[Github repository](https://github.com/righettod/poc-authz-testing)
+[GitHub repository](https://github.com/righettod/poc-authz-testing)

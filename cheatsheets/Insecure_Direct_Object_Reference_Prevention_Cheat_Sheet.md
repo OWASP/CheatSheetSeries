@@ -193,4 +193,4 @@ public class Movie {
 
 ## Sources of the prototype
 
-[Github repository](https://github.com/righettod/poc-idor).
+[GitHub repository](https://github.com/righettod/poc-idor).
