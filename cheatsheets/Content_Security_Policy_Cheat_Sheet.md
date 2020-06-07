@@ -134,13 +134,13 @@ The most basic policy assumes:
 - All resources are hosted by the same domain of the document.
 - There are no inlines or evals for scripts and style resources.
 
-```
+```text
 Content-Security-Policy: default-src 'self';
 ```
 
 To tighten further, one can apply the following:
 
-```
+```text
 Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self';
 ```
 
@@ -201,7 +201,7 @@ var foo = "314"
 
 The inline code can be enabled by **specifying its SHA256 hash** in the CSP header:
 
-```
+```text
 Content-Security-Policy: script-src 'sha256-gPMJwWBMWDx0Cm7ZygJKZIU2vZpiYvzUQjl5Rh37hKs=';
 ```
 
