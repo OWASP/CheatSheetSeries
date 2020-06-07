@@ -37,7 +37,7 @@ feed_generator.author({"name": "Core team", "email": "dominique.righetto@owasp.o
 feed_generator.link({"href": "https://cheatsheetseries.owasp.org", "rel": "self"})
 feed_generator.link({"href": "https://github.com/OWASP/CheatSheetSeries", "rel": "alternate"})
 feed_generator.language("en")
-feed_generator.icon("https://cheatsheetseries.owasp.org/gitbook/images/favicon.ico")
+feed_generator.icon("https://cheatsheetseries.owasp.org/img/favicon.ico")
 feed_generator.pubDate(current_date)
 feed_generator.lastBuildDate(current_date)
 for pull_request in pull_requests:
