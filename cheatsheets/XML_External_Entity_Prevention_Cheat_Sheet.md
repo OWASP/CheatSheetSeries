@@ -559,9 +559,7 @@ A description of how to abuse this in PHP is presented in a good [SensePost arti
 
 ## Python
 
-The Python 3 official documentation contains a section on [xml vulnerabilities](https://docs.python.org/3/library/xml.html#xml-vulnerabilities). For Python 2, you can refer to this [page](https://docs.Python.org/2/library/xml.html#xml-vulnerabilities).
-
-> The end of life for Python 2 is expected to be January 1st, 2020.
+The Python 3 official documentation contains a section on [xml vulnerabilities](https://docs.python.org/3/library/xml.html#xml-vulnerabilities). As of the 1st January 2020 Python 2 is no longer supported, however the Python website still contains [some legacy documentation](https://docs.Python.org/2/library/xml.html#xml-vulnerabilities).
 
 The following table gives an overview of various modules in Python 3 used for XML parsing and whether or not they are vulnerable.
 
