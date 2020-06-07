@@ -1546,12 +1546,12 @@
 <li>All resources are hosted by the same domain of the document.</li>
 <li>There are no inlines or evals for scripts and style resources.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="c">Content-Security-Policy: default-src &#39;self&#39;;</span>
+<div class="codehilite"><pre><span></span><code>Content-Security-Policy: default-src &#39;self&#39;;
 </code></pre></div>
 
 
 <p>To tighten further, one can apply the following:</p>
-<div class="codehilite"><pre><span></span><code><span class="c">Content-Security-Policy: default-src &#39;none&#39;; script-src &#39;self&#39;; connect-src &#39;self&#39;; img-src &#39;self&#39;; style-src &#39;self&#39;;</span>
+<div class="codehilite"><pre><span></span><code>Content-Security-Policy: default-src &#39;none&#39;; script-src &#39;self&#39;; connect-src &#39;self&#39;; img-src &#39;self&#39;; style-src &#39;self&#39;;
 </code></pre></div>
 
 
@@ -1616,7 +1616,7 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
 
 
 <p>The inline code can be enabled by <strong>specifying its SHA256 hash</strong> in the CSP header:</p>
-<div class="codehilite"><pre><span></span><code><span class="c">Content-Security-Policy: script-src &#39;sha256-gPMJwWBMWDx0Cm7ZygJKZIU2vZpiYvzUQjl5Rh37hKs=&#39;;</span>
+<div class="codehilite"><pre><span></span><code>Content-Security-Policy: script-src &#39;sha256-gPMJwWBMWDx0Cm7ZygJKZIU2vZpiYvzUQjl5Rh37hKs=&#39;;
 </code></pre></div>
 
 
