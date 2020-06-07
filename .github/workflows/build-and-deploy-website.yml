@@ -80,7 +80,7 @@ jobs:
         git config --global user.email "action@github.com"
         git config --global user.name "GitHub Action"
         git add --all .
-        git commit -a -m "Deploy the generated website via Github Actions"
+        git commit -a -m "Deploy the generated website via GitHub Actions"
     - name: Publish the build to gh-pages
       uses: ad-m/github-push-action@master
       with:
