@@ -1276,19 +1276,19 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 </blockquote>
 <div class="codehilite"><pre><span></span><code>  <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
   <span class="c">&lt;!--</span>
-<span class="c">      This file materialize the authorization matrix for the different </span>
+<span class="c">      This file materialize the authorization matrix for the different</span>
 <span class="c">      services exposed by the system.</span>
 
 <span class="c">      It will be used by the tests as a input sources for the different tests cases:</span>
 <span class="c">      1) Evaluate legitimate access and is correct implementation</span>
-<span class="c">      2) Identify not legitimate access (authorization definition issue </span>
+<span class="c">      2) Identify not legitimate access (authorization definition issue</span>
 <span class="c">      on service implementation)</span>
 
 <span class="c">      The &quot;name&quot; attribute is used for identify uniquely a SERVICE or a ROLE.</span>
 <span class="c">  --&gt;</span>
   <span class="nt">&lt;authorization-matrix&gt;</span>
 
-      <span class="c">&lt;!-- Describe the possible logical roles used in the system, is used here to </span>
+      <span class="c">&lt;!-- Describe the possible logical roles used in the system, is used here to</span>
 <span class="c">      provide a list+explanation</span>
 <span class="c">      of the different roles (authorization level) --&gt;</span>
       <span class="nt">&lt;roles&gt;</span>
@@ -1300,7 +1300,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
           <span class="na">description=</span><span class="s">&quot;Role affected to a administrator user (highest access right)&quot;</span><span class="nt">/&gt;</span>
       <span class="nt">&lt;/roles&gt;</span>
 
-      <span class="c">&lt;!-- List and describe the available services exposed by the system and the associated </span>
+      <span class="c">&lt;!-- List and describe the available services exposed by the system and the associated</span>
 <span class="c">      logical role(s) that can call them --&gt;</span>
       <span class="nt">&lt;services&gt;</span>
           <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;ReadSingleMessage&quot;</span> <span class="na">uri=</span><span class="s">&quot;/{messageId}&quot;</span> <span class="na">http-method=</span><span class="s">&quot;GET&quot;</span>
@@ -1594,7 +1594,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 
 
 <p>In case of detection of a authorization issue(s) the output is the following:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">testAccessUsingAnonymousUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span>  
+<div class="codehilite"><pre><span></span><code><span class="n">testAccessUsingAnonymousUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span>
 <span class="n">Time</span> <span class="n">elapsed</span><span class="p">:</span> <span class="mf">1.009</span> <span class="n">s</span>  <span class="err">###</span> <span class="n">FAILURE</span>
 <span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">AssertionError</span><span class="p">:</span>
 <span class="n">Access</span> <span class="n">issues</span> <span class="n">detected</span> <span class="n">using</span> <span class="n">the</span> <span class="n">ANONYMOUS</span> <span class="n">USER</span> <span class="n">point</span> <span class="n">of</span> <span class="n">view</span><span class="p">:</span>
@@ -1604,7 +1604,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
     <span class="n">The</span> <span class="n">service</span> <span class="err">&#39;</span><span class="n">CreateMessage</span><span class="err">&#39;</span> <span class="n">when</span> <span class="n">called</span> <span class="n">with</span> <span class="n">POV</span> <span class="err">&#39;</span><span class="n">ANONYMOUS</span><span class="err">&#39;</span> <span class="k">return</span>
     <span class="n">a</span> <span class="n">response</span> <span class="n">code</span> <span class="mi">200</span> <span class="n">that</span> <span class="n">is</span> <span class="n">not</span> <span class="n">the</span> <span class="n">expected</span> <span class="nf">one</span> <span class="p">(</span><span class="mi">403</span> <span class="n">expected</span><span class="p">).</span>
 
-<span class="n">testAccessUsingBasicUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span>  
+<span class="n">testAccessUsingBasicUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span>
 <span class="n">Time</span> <span class="n">elapsed</span><span class="p">:</span> <span class="mf">0.05</span> <span class="n">s</span>  <span class="err">###</span> <span class="n">FAILURE</span><span class="o">!</span>
 <span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">AssertionError</span><span class="p">:</span>
 <span class="n">Access</span> <span class="n">issues</span> <span class="n">detected</span> <span class="n">using</span> <span class="n">the</span> <span class="n">BASIC</span> <span class="n">USER</span> <span class="n">point</span> <span class="n">of</span> <span class="n">view</span><span class="p">:</span>
@@ -1723,7 +1723,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <p>Example of the rendering:</p>
 <p><img alt="RenderingExample" src="../assets/Authorization_Testing_Automation_AutomationRendering.png" /></p>
 <h2 id="sources-of-the-prototype">Sources of the prototype<a class="headerlink" href="#sources-of-the-prototype" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/righettod/poc-authz-testing">Github repository</a></p>
+<p><a href="https://github.com/righettod/poc-authz-testing">GitHub repository</a></p>
                 
                   
                 
