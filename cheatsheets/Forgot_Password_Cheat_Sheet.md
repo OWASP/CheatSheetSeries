@@ -49,24 +49,24 @@ In order to allow a user to request a password reset, you will need to have some
 
 This can be done through any of the following methods:
 
-- [One Time Password (OTP)](#one-time-password).
 - [URL tokens](#url-tokens-or-codes).
+- [One Time Password (OTP)](#one-time-password).
 - [Security questions](#security-questions).
 - [Offline backup codes](#backup-codes).
 
 These methods can be used together and many times it is recommended to do so. No matter what you must ensure that a user always has a way to recover their account.
 
-### One Time Password
+### General Security Practices
 
-One Time Password (OTP) is the best method in order to implement a secure forgot password service that triggers as a 2FA functionality.
+It is essential to employ security practices for the reset codes and tokens that will be used in the methods.
 
-The two most well-known methods are Time-OTP ([TOTP](https://tools.ietf.org/html/rfc6238)), or HMAC-OTP ([HOTP](https://tools.ietf.org/html/rfc4226)). The main difference is in the counter, where TOTP focuses on the Unix time, and HOTP has a counter that gets incremented on every user call to generate the OTP.
-
-For a better description of OTP generation, refer to the [MFA CS](Multifactor_Authentication_Cheat_Sheet.md#something-you-have), where the pros and cons of every implementation are provided.
-
-One implementation can be found over for [Authy](https://www.twilio.com/docs/authy/tutorials/two-factor-authentication-python-flask). If you don't want to rely on applications (such as Authy, Google/Microsoft Authenticator, etc.), there are libraries like pyotp, which helps the developer implement on their own any of the methods discussed in this section.
-
-> OTPs can be sent through other channels as well, such as emails and SMSs. [Various attacks and weaknesses](https://en.wikipedia.org/wiki/SIM_swap_scam) have been identified in SMS that it is [preferrable not to use them for OTPs](https://auth0.com/blog/why-sms-multi-factor-still-matters/).
+- [Secure random generation](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
+- Short lifetime (*e.g.* 30 minutes).
+- Linked to the user requesting the token in the database.
+- One time use (should be removed from the database once used).
+- Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
+- Tokens should be long enough to avoid brute-force attacks (16 characters should be the minimum used).
+- Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. When need be, implement a robust whitelist of the allowed Hosts.
 
 ### URL Tokens or Codes
 
@@ -80,6 +80,18 @@ If a URL with a token is provided to the user, the user will have to follow the 
 2. Set the token in a cookie (recommended), or the client-storage mechanism that your application uses.
 3. Remove the token from the URL and redirect the user to the password reset service. This ensures that protection against [referer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
 4. Let the user create a new password and confirm it. Ensure that the password policy is applied.
+
+### One Time Password
+
+One Time Password (OTP) is the best method in order to implement a secure forgot password service that triggers as a 2FA functionality.
+
+The two most well-known methods are Time-OTP ([TOTP](https://tools.ietf.org/html/rfc6238)), or HMAC-OTP ([HOTP](https://tools.ietf.org/html/rfc4226)). The main difference is in the counter, where TOTP focuses on the Unix time, and HOTP has a counter that gets incremented on every user call to generate the OTP.
+
+For a better description of OTP generation, refer to the [MFA CS](Multifactor_Authentication_Cheat_Sheet.md#something-you-have), where the pros and cons of every implementation are provided.
+
+One implementation can be found over for [Authy](https://www.twilio.com/docs/authy/tutorials/two-factor-authentication-python-flask). If you don't want to rely on applications (such as Authy, Google/Microsoft Authenticator, etc.), there are libraries like pyotp, which helps the developer implement on their own any of the methods discussed in this section.
+
+> OTPs can be sent through other channels as well, such as emails and SMSs. [Various attacks and weaknesses](https://en.wikipedia.org/wiki/SIM_swap_scam) have been identified in SMS that it is [preferrable not to use them for OTPs](https://auth0.com/blog/why-sms-multi-factor-still-matters/).
 
 ### Security Questions
 
@@ -95,15 +107,3 @@ While implementing this method, the following practices should be followed:
 - If the service allows users to view the backup codes, the codes should be [securely stored](Cryptographic_Storage_Cheat_Sheet.md) and access should only happen in an authenticated session after asking for a user identifier (password, email token, 2FA, etc.).
 - A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
 - Code renewal or revocation service.
-
-### General Security Practices
-
-It is essential to employ security practices for the reset codes and tokens that will be used in the methods.
-
-- [Secure random generation](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
-- Short lifetime (*e.g.* 30 minutes).
-- Linked to the user requesting the token in the database.
-- One time use (should be removed from the database once used).
-- Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
-- Tokens should be long enough to avoid brute-force attacks (16 characters should be the minimum used).
-- Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. When need be, implement a robust whitelist of the allowed Hosts.
