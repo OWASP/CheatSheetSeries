@@ -81,22 +81,22 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 Attack is described in detail in this [article](https://owasp.org/www-community/attacks/Reverse_Tabnabbing).
 
-To summarize, it's the capacity to act on parent page's content or location from a newly opened page via the back link exposed by the **opener** javascript object instance.
+To summarize, it's the capacity to act on parent page's content or location from a newly opened page via the back link exposed by the **opener** JavaScript object instance.
 
-It applies to html link or a javascript `window.open` function using the attribute/instruction `target` to specify a [target loading location](https://www.w3schools.com/tags/att_a_target.asp) that does not replace the current location and then makes the current window/tab available.
+It applies to an HTML link or a JavaScript `window.open` function using the attribute/instruction `target` to specify a [target loading location](https://www.w3schools.com/tags/att_a_target.asp) that does not replace the current location and then makes the current window/tab available.
 
 To prevent this issue, the following actions are available:
 
 Cut the back link between the parent and the child pages:
 
-- For html link:
+- For HTML links:
     - To cut this back link, add the attribute `rel="noopener"` on the tag used to create the link from the parent page to the child page. This attribute value cuts the link, but depending on the browser, lets referrer information be present in the request to the child page.
     - To also remove the referrer information use this attribute value: `rel="noopener noreferrer"`.
-- For javascript `window.open` function, add the values `noopener,noreferrer` in the [windowFeatures](https://developer.mozilla.org/en-US/docs/Web/API/Window/open) parameter of the `window.open` function.
+- For the JavaScript `window.open` function, add the values `noopener,noreferrer` in the [windowFeatures](https://developer.mozilla.org/en-US/docs/Web/API/Window/open) parameter of the `window.open` function.
 
-As the behavior using the elements above is different between the browsers, either use html link or javascript to open a window (or tab), then use this configuration to maximize the cross supports:
+As the behavior using the elements above is different between the browsers, either use an HTML link or JavaScript to open a window (or tab), then use this configuration to maximize the cross supports:
 
-- For html link, add the attribute `rel="noopener noreferrer"` to every link.
+- For HTML links, add the attribute `rel="noopener noreferrer"` to every link.
 - For JavaScript, use this function to open a window (or tab):
 
 ``` javascript
