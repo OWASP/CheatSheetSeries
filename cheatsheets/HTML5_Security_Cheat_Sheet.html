@@ -1521,21 +1521,21 @@
 </ul>
 <h2 id="tabnabbing">Tabnabbing<a class="headerlink" href="#tabnabbing" title="Permanent link">&para;</a></h2>
 <p>Attack is described in detail in this <a href="https://owasp.org/www-community/attacks/Reverse_Tabnabbing">article</a>.</p>
-<p>To summarize, it's the capacity to act on parent page's content or location from a newly opened page via the back link exposed by the <strong>opener</strong> javascript object instance.</p>
-<p>It applies to html link or a javascript <code>window.open</code> function using the attribute/instruction <code>target</code> to specify a <a href="https://www.w3schools.com/tags/att_a_target.asp">target loading location</a> that does not replace the current location and then makes the current window/tab available.</p>
+<p>To summarize, it's the capacity to act on parent page's content or location from a newly opened page via the back link exposed by the <strong>opener</strong> JavaScript object instance.</p>
+<p>It applies to an HTML link or a JavaScript <code>window.open</code> function using the attribute/instruction <code>target</code> to specify a <a href="https://www.w3schools.com/tags/att_a_target.asp">target loading location</a> that does not replace the current location and then makes the current window/tab available.</p>
 <p>To prevent this issue, the following actions are available:</p>
 <p>Cut the back link between the parent and the child pages:</p>
 <ul>
-<li>For html link:<ul>
+<li>For HTML links:<ul>
 <li>To cut this back link, add the attribute <code>rel="noopener"</code> on the tag used to create the link from the parent page to the child page. This attribute value cuts the link, but depending on the browser, lets referrer information be present in the request to the child page.</li>
 <li>To also remove the referrer information use this attribute value: <code>rel="noopener noreferrer"</code>.</li>
 </ul>
 </li>
-<li>For javascript <code>window.open</code> function, add the values <code>noopener,noreferrer</code> in the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/open">windowFeatures</a> parameter of the <code>window.open</code> function.</li>
+<li>For the JavaScript <code>window.open</code> function, add the values <code>noopener,noreferrer</code> in the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/open">windowFeatures</a> parameter of the <code>window.open</code> function.</li>
 </ul>
-<p>As the behavior using the elements above is different between the browsers, either use html link or javascript to open a window (or tab), then use this configuration to maximize the cross supports:</p>
+<p>As the behavior using the elements above is different between the browsers, either use an HTML link or JavaScript to open a window (or tab), then use this configuration to maximize the cross supports:</p>
 <ul>
-<li>For html link, add the attribute <code>rel="noopener noreferrer"</code> to every link.</li>
+<li>For HTML links, add the attribute <code>rel="noopener noreferrer"</code> to every link.</li>
 <li>For JavaScript, use this function to open a window (or tab):</li>
 </ul>
 <div class="codehilite"><pre><span></span><code><span class="kd">function</span> <span class="nx">openPopup</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">windowFeatures</span><span class="p">){</span>
