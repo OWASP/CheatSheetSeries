@@ -2,19 +2,19 @@
 
 ## Introduction
 
-This article is focused on providing clear, simple, actionable guidance for providing access control security in your applications. The objective is to guide developers, reviewers, designers, architects on designing, creating and maintaining access controls in web applications.
+This article is focused on providing clear, simple, actionable guidance for providing access control security in your applications. The objective is to guide developers, reviewers, designers, architects on designing, creating, and maintaining access controls in web applications.
 
 ### What is Access Control / Authorization
 
-Authorization is the process where requests to access a particular resource should be granted or denied. It should be noted that authorization is not equivalent to authentication - as these terms and their definitions are frequently confused. Authentication is providing and validating identity. Authorization includes the execution rules that determine which functionality and data the user (or Principal) may access, ensuring the proper allocation of access rights after authentication is successful.
+Authorization is the process where requests to access a particular resource should be granted or denied. It should be noted that authorization is not equivalent to authentication - as these terms and their definitions are frequently confused. Authentication is providing and validating identity. The authorization includes the execution rules that determine which functionality and data the user (or Principal) may access, ensuring the proper allocation of access rights after authentication is successful.
 
-Web applications need access controls to allow users (with varying privileges) to use the application. They also need administrators to manage the applications access control rules and the granting of permissions or entitlements to users and other entities. Various access control design methodologies are available. To choose the most appropriate one, a risk assessment needs to be performed to identify threats and vulnerabilities specific to your application, so that the proper access control methodology is appropriate for your application.
+Web applications need access controls to allow users (with varying privileges) to use the application. They also need administrators to manage the application’s access control rules and the granting of permissions or entitlements to users and other entities. Various access control design methodologies are available. To choose the most appropriate one, a risk assessment needs to be performed to identify threats and vulnerabilities specific to your application, so that the proper access control methodology is appropriate for your application.
 
 ### Access Control Policy
 
 Why do we need an access control policy for web development?
 
-The intention of having an access control policy is to ensure that security requirements are described clearly to architects, designers, developers and support team, such that access control functionality is designed and implemented in a consistent manner.
+The intention of having an access control policy is to ensure that security requirements are described clearly to architects, designers, developers and support teams, such that access control functionality is designed and implemented in a consistent manner.
 
 ## Role-Based Access Control (RBAC)
 
@@ -96,3 +96,4 @@ The key concept in Permission Based Access Control is the abstraction of applica
 The *has* relationship between the user and permission may be satisfied by creating a direct relationship between the user and permission (called a *grant*), or an indirect one. In the indirect model, the permission *grant* is to an intermediate entity such as *user group*. A user is considered a member of a *user group* if and only if the user *inherits* permissions from the *user group*. The indirect model makes it easier to manage the permissions for a large number of users since changing the permissions assigned to the user group affects all members of the user group.
 
 In some Permission Based Access Control systems that provide fine-grained domain object-level access control, permissions may be grouped into *classes*. In this model, it is assumed that each domain object in the system can be associated with a *class* which determines the permissions applicable to the respective domain object. In such a system a "DOCUMENT" class may be defined with the permissions "READ", "WRITE" and DELETE"; a "SERVER" class may be defined with the permissions "START", "STOP", and "REBOOT".
+
