@@ -118,13 +118,13 @@ Most multifactor authentication systems make use of a password, as well as at le
 
 It should be noted that PINs, "secret words" and other similar type of information are all effectively the same as passwords. Using two different types of passwords **does not constitute MFA**.
 
-#### Pros
+**Pros**
 
 - Simple and well understood.
 - Native support in every authentication framework.
 - Easy to implement.
 
-#### Cons
+**Cons**
 
 - Users are prone to choosing weak passwords.
 - Passwords are commonly re-used between systems.
@@ -134,11 +134,11 @@ It should be noted that PINs, "secret words" and other similar type of informati
 
 Security questions require the user to choose (or create) a number of questions that only they will know the answer to. These are effectively the same as passwords, although they are generally considered weaker. The [Choosing and Using Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) contains further guidance on how to implement these securely.
 
-#### Pros
+**Pros**
 
 - Simple and well understood.
 
-#### Cons
+**Cons**
 
 - Questions often have easily guessable answers.
 - Answers to questions can often be obtained from social media or other sources.
@@ -157,12 +157,12 @@ The requirement to have a second factor can also limit certain types of users' a
 
 Physical hardware OTP tokens can be used which generate constantly changing numeric codes, which must be submitted when authentication on the application. Most most well-known of these is the [RSA SecureID](https://en.wikipedia.org/wiki/RSA_SecurID), which generates a six digit number that changes every 60 seconds.
 
-#### Pros
+**Pros**
 
 - As the tokens are separate physical devices, they are almost impossible for an attacker to compromise remotely.
 - Tokens can be used without requiring the user to have a mobile phone or other device.
 
-#### Cons
+**Cons**
 
 - Deploying physical tokens to users is expensive and complicated.
 - If a user loses their token it could take a significant amount of time to purchase and ship them a new one.
@@ -176,14 +176,14 @@ A cheaper and easier alternative to hardware tokens is using software to generat
 
 Most websites use standardised TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.
 
-#### Pros
+**Pros**
 
 - The absence of physical tokens greatly reduces the cost and administrative overhead of implementing the system.
 - When users lose access to their TOTP app, a new one can be configured without needing to ship a physical token to them.
 - TOTP is widely used, and many users will already have at least one TOTP app installed.
 - As long as the user has a screen lock on their phone, an attacker will be unable to use the code if they steal the phone.
 
-#### Cons
+**Cons**
 
 - TOTP apps are usually installed on mobile devices, which are vulnerable to compromise.
 - The TOTP app may be installed on the same mobile device (or workstation) that is used to authenticate.
@@ -196,13 +196,13 @@ Most websites use standardised TOTP tokens, allowing the user to install any aut
 
 Hardware U2F tokens communicate with the users workstation over USB or NFC, and implement challenge-response based authentication, rather than requiring the user to manually enter the code. This would typically be done by the user pressing a button on the token, or tapping it against their NFC reader.
 
-#### Pros
+**Pros**
 
 - Longer codes can be used, which may provide a higher level of security.
 - Users can simply press a button rather than typing in a code.
 - Resistant to phishing.
 
-#### Cons
+**Cons**
 
 - As with hardware OTP tokens, the use of physical tokens introduces significant costs and administrative overheads.
 - Stolen tokens can be used without a PIN or device unlock code.
@@ -214,14 +214,14 @@ Digital certificates are files that are stored on the user's device which are au
 
 Certificates are supported by all major web browsers, and once installed require no further interaction from the user. The certificates should be linked to an individual's user account in order to prevent users from trying to authenticate against other accounts.
 
-#### Pros
+**Pros**
 
 - There is no need to purchase and manage hardware tokens.
 - Once installed, certificates are very simple for users.
 - Certificates can be centrally managed and revoked.
 - Resistant to phishing.
 
-#### Cons
+**Cons**
 
 - Using digital certificates requires backend PKI system.
 - Installing certificates can be difficult for users, particularly in a highly restricted environment.
@@ -232,13 +232,13 @@ Certificates are supported by all major web browsers, and once installed require
 
 Smartcards are credit-card size cards with a chip containing a digital certificate for the user, which is unlocked with a PIN. They are commonly used for operating system authentication, but are rarely used in web applications.
 
-#### Pros
+**Pros**
 
 - Stolen smartcards cannot be used without the PIN.
 - Smartcards can be used across multiple applications and systems.
 - Resistant to phishing.
 
-#### Cons
+**Cons**
 
 - Managing and distributing smartcards has the same costs and overheads as hardware tokens.
 - Smartcards are not natively supported by modern browsers, so require third party software.
@@ -249,12 +249,12 @@ Smartcards are credit-card size cards with a chip containing a digital certifica
 
 SMS messages or phone calls can be used to provide users with a single-use code that they must submit as a second factor.
 
-#### Pros
+**Pros**
 
 - Relatively simple to implement.
 - Requires user to link their account to a mobile number.
 
-#### Cons
+**Cons**
 
 - Requires the user to have a mobile device or landline.
 - Require user to have signal to receive the call or message.
@@ -267,12 +267,12 @@ SMS messages or phone calls can be used to provide users with a single-use code 
 
 Email verification requires that the user enters a code or clicks a link sent to their email address. There is some debate as to whether email constitutes a form of MFA, because if the user does not have MFA configured on their email account, it simply requires knowledge of the user's email password (which is often the same as their application password). However, it is included here for completeness.
 
-#### Pros
+**Pros**
 
 - Very easy to implement.
 - No requirements for separate hardware or a mobile device.
 
-#### Cons
+**Cons**
 
 - Relies entirely on the security of the email account, which often lacks MFA.
 - Email passwords are commonly the same as application passwords.
@@ -293,11 +293,11 @@ The are a number of common types of biometrics that are used, including:
 - Iris scans
 - Handprint scans
 
-#### Pros
+**Pros**
 
 - Well-implemented biometrics are hard to spoof, and require a targeted attack.
 
-#### Cons
+**Cons**
 
 - Require manual enrolment of the user's physical attributes.
 - Custom (sometimes expensive) hardware is often required to read biometrics.
@@ -314,12 +314,12 @@ When talking about location, access to the application that the user is authenti
 
 The source IP address the user is connecting from can be used as a factor, typically in a white-list based approach. This could either be based on a static white-list (such as corporate office ranges) or a dynamic white-list (such as previous IP addresses the user has authenticated from).
 
-#### Pros
+**Pros**
 
 - Very easy for users.
 - Requires minimal configuration and management from administrative staff.
 
-#### Cons
+**Cons**
 
 - Doesn't provide any protection if the user's system is compromised.
 - Doesn't provide any protection against rogue insiders.
@@ -329,11 +329,11 @@ The source IP address the user is connecting from can be used as a factor, typic
 
 Rather than using the exact IP address of the user, the geographic location that the IP address is registered to can be used. This is less precise, but may be more feasible to implement in environments where IP addresses are not static. A common usage would be to require additional authentication factors when an authentication attempt is made from outside of the user's normal country.
 
-#### Pros
+**Pros**
 
 - Very easy for users
 
-#### Cons
+**Cons**
 
 - Doesn't provide any protection if the user's system is compromised.
 - Doesn't provide any protection against rogue insiders.
