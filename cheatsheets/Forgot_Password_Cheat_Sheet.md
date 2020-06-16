@@ -68,12 +68,18 @@ URL tokens provide access control to the user by sending a URL with a token appe
 
 If a code is provided to the user, the user will have to provide that code manually to the application.
 
-If a URL with a token is provided to the user, the user will have to follow the below steps:
+If a URL with a token is provided to the user, 2 flows present themselves:
+
+First flow:
 
 1. Access the URL with the attached token.
-2. Set the token in a cookie (recommended), or the client-storage mechanism that your application uses.
-3. Remove the token from the URL and redirect the user to the password reset service. This ensures that protection against [referer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
-4. Let the user create a new password and confirm it. Ensure that the password policy is applied.
+2. Create a restricted session from that token that permits the user to reset their password. If a JWT is used to replace the session creation, it is critical that security best practices are employed for the JWT (*e.g.* enforced algorithm, no sensitive data in the payload, etc.).
+3. Let the user create a new password and confirm it. Ensure that the password policy is applied.
+
+Second flow:
+
+1. Access the URL with the attached token. Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
+2. Let the user create a new password and confirm it. Ensure that the password policy is applied.
 
 ### One Time Password
 
