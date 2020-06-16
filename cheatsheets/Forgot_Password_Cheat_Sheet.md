@@ -15,22 +15,16 @@ The following short guidelines can be used as a quick reference to protect the f
 
 ## Forgot Password Service
 
-The service providing the Forgot Password functionality should follow secure practices on three stages, detailed below.
+The service providing the Forgot Password functionality should follow secure practices, as detailed below.
 
 ### Forgot Password Request
 
-The user uses the forgot password service and inputs their username or email. To ensure the security on this stage, the below should implemented:
+The user uses the forgot password service and inputs their username or email. To ensure the security on this stage, the below should be implemented:
 
 - Return a consistent message for both existent and nonexistent accounts.
 - Consistent user response time. That could be achieved by using asynchronous calls or by making sure that the same logic is followed, instead of using a quick exit method.
 - Rate-limiting (*e.g.* Captchas, blocking IPs for a period of time, etc.) to protect the application against [brute-force attacks](https://en.wikipedia.org/wiki/Brute-force_attack).
-- Employ normal security measures, such as [SQL Injection Prevention methods](SQL_Injection_Prevention_Cheat_Sheet.md), and [Input Validation](Input_Validation_Cheat_Sheet.md) where need be.
-
-### Code or Token Activation
-
-After a user uses the service to reset their password, a code or token is provided to the user following one of the [methods](#methods) discussed later in this document. Adding on the [forgot password request](#forgot-password-request) security measure, if the token is sent in the querystring:
-
-- The service should redirect the user after using that token and replacing it with a cookie in order to avoid [Cross-domain Referer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage). This [attack](https://hackerone.com/reports/209352) occurs when private information is sent in the querystring and third party services are called, thus *leaking* the querystring in the `Referer` header.
+- Employ normal security measures, such as [SQL Injection Prevention methods](SQL_Injection_Prevention_Cheat_Sheet.md) and [Input Validation](Input_Validation_Cheat_Sheet.md) where need be.
 
 ### User Resets Password
 
