@@ -69,7 +69,7 @@ spec:
           ...
 ```
 
-As a Kubernetes cluster administrator, you can for it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
+As a Kubernetes cluster administrator, you can configure it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
 
 ### RULE \#3 - Limit capabilities (Grant only specific capabilities, needed by a container)
 
