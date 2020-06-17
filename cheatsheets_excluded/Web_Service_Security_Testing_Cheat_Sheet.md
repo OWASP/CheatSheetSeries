@@ -139,13 +139,13 @@ Checklist
     \*\* Improper Boundary Checking
     \*\* XML Bomb (DoS)
     \*\* Basic Authentication
-    \*\* SSL/TLS Failback
+    \*\* SSL/TLS Fallback
 
 Testing REST Based Web Services
 -------------------------------
 
 There is already a great cheat sheet on how to properly test the security of REST based web services. You can find the guide at the following location:
-[1](https://www.owasp.org/index.php/REST_Assessment_Cheat_Sheet) <https://www.owasp.org/index.php/REST_Assessment_Cheat_Sheet>
+[1](../cheatsheets/REST_Assessment_Cheat_Sheet.md) <https://cheatsheetseries.owasp.org/cheatsheets/REST_Assessment_Cheat_Sheet.html>
 
 Testing Summary
 ---------------
@@ -162,14 +162,14 @@ References
 [6](http://resources.infosecinstitute.com/web-services-pen-test-part-3-automation-appscan-webinspect/) <http://resources.infosecinstitute.com/web-services-pen-test-part-3-automation-appscan-webinspect/>
 [7](https://www.youtube.com/watch?v=J-uO0ELZ2rk) <https://www.youtube.com/watch?v=J-uO0ELZ2rk>
 [8](http://www-01.ibm.com/support/docview.wss?uid=swg21404788) <http://www-01.ibm.com/support/docview.wss?uid=swg21404788>
-[9](https://www.owasp.org/index.php/Web_Service_Security_Cheat_Sheet) <https://www.owasp.org/index.php/Web_Service_Security_Cheat_Sheet>
+[9](https://cheatsheetseries.owasp.org/cheatsheets/Web_Service_Security_Cheat_Sheet.html) <https://cheatsheetseries.owasp.org/cheatsheets/Web_Service_Security_Cheat_Sheet.html>
 [10](http://www.pushtotest.com/blogs/60-the-cohen-blog/697-web-security-test-solutions-with-testmaker-and-soapui.html) <http://www.pushtotest.com/blogs/60-the-cohen-blog/697-web-security-test-solutions-with-testmaker-and-soapui.html>
 [11](https://msdn.microsoft.com/en-us/library/ff650168.aspx) <https://msdn.microsoft.com/en-us/library/ff650168.aspx>
 [12](http://www.soapui.org/security-testing/overview-of-security-scans.html) <http://www.soapui.org/security-testing/overview-of-security-scans.html>
-[13](https://www.owasp.org/index.php/Web_Application_Security_Testing_Cheat_Sheet) <https://www.owasp.org/index.php/Web_Application_Security_Testing_Cheat_Sheet>
+[13](https://owasp.org/www-project-web-security-testing-guide/) <https://owasp.org/www-project-web-security-testing-guide/>
 [14](http://resources.infosecinstitute.com/web-services-pen-test-part-4-manual-testing-soa-client/) <http://resources.infosecinstitute.com/web-services-pen-test-part-4-manual-testing-soa-client/>
 [15](http://projects.webappsec.org/w/page/13247002/XML%20Entity%20Expansion) <http://projects.webappsec.org/w/page/13247002/XML%20Entity%20Expansion>
-[16](https://www.owasp.org/index.php/Testing_WSDL_%28OWASP-WS-002%29) <https://www.owasp.org/index.php/Testing_WSDL_%28OWASP-WS-002%29>
+[16](https://wiki.owasp.org/index.php/Testing_WSDL_%28OWASP-WS-002%29) <https://wiki.owasp.org/index.php/Testing_WSDL_%28OWASP-WS-002%29>
 [17](https://www.youtube.com/watch?v=QLKM4USUlZs) <https://www.youtube.com/watch?v=QLKM4USUlZs>
 [18](https://www.youtube.com/watch?v=RHIkb9yEV1k) <https://www.youtube.com/watch?v=RHIkb9yEV1k>
 [19](https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91.pdf) <https://www.usenix.org/system/files/conference/usenixsecurity12/sec12-final91.pdf>
@@ -202,7 +202,7 @@ Online Resources
 -   [27](http://www.securitytube.net/video/8462) <http://www.securitytube.net/video/8462>
 -   [28](http://www.securitytube.net/video/1113) <http://www.securitytube.net/video/1113>
 -   [29](http://resources.infosecinstitute.com/web-services-pen-test-part-4-manual-testing-soa-client/) <http://resources.infosecinstitute.com/web-services-pen-test-part-4-manual-testing-soa-client/>
--   [30](https://www.owasp.org/index.php/REST_Assessment_Cheat_Sheet) <https://www.owasp.org/index.php/REST_Assessment_Cheat_Sheet>
+-   [30](../cheatsheets/REST_Assessment_Cheat_Sheet.md) <https://cheatsheetseries.owasp.org/cheatsheets/REST_Assessment_Cheat_Sheet.html>
 
 Primary Author
 --------------

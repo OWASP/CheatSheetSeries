@@ -1,3 +1,5 @@
+# VS Code Configuration File
+.vscode
 # Audit result files
 *.out
 # Website generation stuff
@@ -5,3 +7,5 @@ TOC.md
 node_modules/
 site/
 generated/
+.DS_Store
+news.xml

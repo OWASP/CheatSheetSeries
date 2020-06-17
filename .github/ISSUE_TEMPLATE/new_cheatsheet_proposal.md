@@ -1,18 +1,33 @@
 ---
-name: new_cheatsheet_proposal
-about: Used to allow a proposal to add a new cheat sheet to the project
-title: New cheat sheet proposal
-labels: ACK_WAITING, NEW_CS
+name: New Cheat Sheet Proposal
+about: Used to create a proposal to add a new cheat sheet to the project.
+title: 'New CS proposal: [PUT_TARGET_CS_NAME_HERE]'
+labels: ACK_WAITING, HELP_WANTED, NEW_CS
 assignees: ''
 
 ---
 
-Thanks you for proposing a new cheat sheet.
+<!--- Please complete the sections below -->
 
-Please provides the following information about your proposal:
+## What is the proposed Cheat Sheet about?
+<!--- A short summary of what the Cheat Sheet will be about -->
 
-1. Which security issues are bring or commonly meet when someone must work on this topic?
-2. What is the objective of the cheat sheet?
-3. What the CS will bring to the reader?
 
-Thanks you again for your contribution :smiley:
+## What security issues are commonly encountered related to this area?
+<!--- Common issues or vulnerabilities that would be addressed -->
+
+
+
+## What is the objective of the Cheat Sheet?
+<!--- What the Cheat Sheet will provide to the reader and wider community -->
+
+
+
+## What other resources exist in this area?
+<!--- Are there any other OWASP projects that cover this area? -->
+<!--- Would this content be better suited to the testing guide projects? -->
+<!--- What other third party guidelines or resources currently exist? -->
+
+
+
+<!-- Thank you again for your contribution -->

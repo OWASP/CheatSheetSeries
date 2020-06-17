@@ -1,0 +1,29 @@
+name: Identify old issues and PR
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  build:
+    name: Identify old issues and PR
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+    - name: Setup Action
+      uses: actions/checkout@v1
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: SetUp python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: Install python dependencies
+      run: pip install requests
+    - name: Set Permission
+      run: chmod +x scripts/Identify_Old_Issue_And_PR.py
+    - name: Run Script
+      run: python scripts/Identify_Old_Issue_And_PR.py ${{ secrets.SLACK_WEBHOOK }}

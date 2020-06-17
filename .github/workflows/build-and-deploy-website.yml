@@ -1,0 +1,98 @@
+name: Build and deploy offline website
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    name: Build offline website
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      WORKFLOW_GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
+    steps:
+    - name: Setup Action
+      uses: actions/checkout@v1
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Setup Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: Install Python dependencies
+      run: pip install requests feedgen wheel
+    - name: Install python mkdocs dependencies
+      run: pip install mkdocs mkdocs-material pymdown-extensions
+    - name: Set permission for build script
+      run: chmod +x scripts/Generate_Site_mkDocs.sh
+    - name: Run build script
+      run: cd scripts && bash Generate_Site_mkDocs.sh
+    - name: List generated files
+      run: ls -al generated/site/
+    - name: Create bundle
+      run: cd generated && zip -r ../bundle.zip site
+    - name: Test bundle
+      run: zip -T bundle.zip
+    - name: Upload bundle as artifcact
+      uses: actions/upload-artifact@v1
+      with:
+        name: Bundle
+        path: bundle.zip
+  deploy:
+    name: Deploy offline website
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+    - name: Setup Action
+      uses: actions/checkout@v1
+    - name: Install dependencies
+      run: sudo apt-get install -y unzip zip
+    - name: Swith to offline website (gh-pages) branch
+      run: git checkout gh-pages
+    - name: Remove previous version website files
+      run: |
+        shopt -s extglob
+        rm -rdfv !("CNAME"|"robots.txt"|"_config.yml")
+    - name: Download new build from artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: Bundle
+    - name: Replace bundle with new build
+      run: |
+        mv Bundle/bundle.zip bundle.zip
+        rm -rf Bundle 1>/dev/null 2>&1
+    - name: Test new bundle
+      run: zip -T bundle.zip
+    - name: Extract new bundle
+      run: |
+        unzip bundle.zip
+        mv site/* .
+        upd=`date +"%Y-%m-%d at %T"`; echo "Website last update: $upd." > README.md
+        rm -rf site
+    - name: Commit changes to gh-pages
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git add --all .
+        git commit -a -m "Deploy the generated website via GitHub Actions"
+    - name: Publish the build to gh-pages
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
+    - name: Send update to Slack
+      uses: innocarpe/actions-slack@v1
+      with:
+        status: ${{ job.status }}
+        success_text: 'Offline website deployment: **success**'
+        failure_text: 'Offline website deployment: **fail**'
+        cancelled_text: 'Offline website deployment **cancelled**'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}

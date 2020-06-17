@@ -1,12 +1,14 @@
-# Introduction
+# Logging Cheat Sheet
 
-This cheat sheet is focused on providing developers with concentrated guidance on building application logging mechanisms, especially related to security logging. 
+## Introduction
+
+This cheat sheet is focused on providing developers with concentrated guidance on building application logging mechanisms, especially related to security logging.
 
 Many systems enable network device, operating system, web server, mail server and database server logging, but often custom application event logging is missing, disabled or poorly configured. It provides much greater insight than infrastructure logging alone. Web application (e.g. web site or web service) logging is much more than having web server logs enabled (e.g. using Extended Log File Format).
 
 Application logging should be consistent within the application, consistent across an organization's application portfolio and use industry standards where relevant, so the logged event data can be consumed, correlated, analyzed and managed by a wide variety of systems.
 
-# Purpose
+## Purpose
 
 Application logging should be always be included for security events. Application logs are invaluable data for:
 
@@ -30,19 +32,19 @@ Application logging might also be used to record other types of events too such 
 - Legally sanctioned interception of data e.g application-layer wire-tapping
 - Other business-specific requirements
 
-Process monitoring, audit and transaction logs/trails etc are usually collected for different purposes than security event logging, and this often means they should be kept separate. 
+Process monitoring, audit and transaction logs/trails etc are usually collected for different purposes than security event logging, and this often means they should be kept separate.
 
-The types of events and details collected will tend to be different. 
+The types of events and details collected will tend to be different.
 
-For example a [PCIDSS](https://www.pcisecuritystandards.org/pci_security/) audit log will contain a chronological record of activities to provide an independently verifiable trail that permits reconstruction, review and examination to determine the original sequence of attributable transactions. It is important not to log too much, or too little. 
+For example a [PCIDSS](https://www.pcisecuritystandards.org/pci_security/) audit log will contain a chronological record of activities to provide an independently verifiable trail that permits reconstruction, review and examination to determine the original sequence of attributable transactions. It is important not to log too much, or too little.
 
 Use knowledge of the intended purposes to guide what, when and how much. The remainder of this cheat sheet primarily discusses security event logging.
 
-# Design, implementation and testing
+## Design, implementation and testing
 
-## Event data sources
+### Event data sources
 
-The application itself has access to a wide range of information events that should be used to generate log entries. Thus, the primary event data source is the application code itself. 
+The application itself has access to a wide range of information events that should be used to generate log entries. Thus, the primary event data source is the application code itself.
 
 The application has the most information about the user (e.g. identity, roles, permissions) and the context of the event (target, action, outcomes), and often this data is not available to either infrastructure devices, or even closely-related applications.
 
@@ -59,15 +61,15 @@ Other sources of information about application usage that could also be consider
 - Other applications e.g. fraud monitoring, CRM
 - Operating system e.g. mobile platform
 
-The degree of confidence in the event information has to be considered when including event data from systems in a different trust zone. Data may be missing, modified, forged, replayed and could be malicious – it must always be treated as untrusted data. 
+The degree of confidence in the event information has to be considered when including event data from systems in a different trust zone. Data may be missing, modified, forged, replayed and could be malicious – it must always be treated as untrusted data.
 
 Consider how the source can be verified, and how integrity and non-repudiation can be enforced.
 
-## Where to record event data
+### Where to record event data
 
-Applications commonly write event log data to the file system or a database (SQL or NoSQL). Applications installed on desktops and on mobile devices may use local storage and local databases, as well as sending data to remote storage. 
+Applications commonly write event log data to the file system or a database (SQL or NoSQL). Applications installed on desktops and on mobile devices may use local storage and local databases, as well as sending data to remote storage.
 
-Your selected framework may limit the available choices. All types of applications may send event data to remote systems (instead of or as well as more local storage). 
+Your selected framework may limit the available choices. All types of applications may send event data to remote systems (instead of or as well as more local storage).
 
 This could be a centralized log collection and management system (e.g. SIEM or SEM) or another application elsewhere. Consider whether the application can simply send its event stream, unbuffered, to stdout, for management by the execution environment.
 
@@ -79,11 +81,11 @@ This could be a centralized log collection and management system (e.g. SIEM or S
 
 Consider separate files/tables for extended event information such as error stack traces or a record of HTTP request and response headers and bodies.
 
-## Which events to log
+### Which events to log
 
-The level and content of security monitoring, alerting and reporting needs to be set during the requirements and design stage of projects, and should be proportionate to the information security risks. This can then be used to define what should be logged. 
+The level and content of security monitoring, alerting and reporting needs to be set during the requirements and design stage of projects, and should be proportionate to the information security risks. This can then be used to define what should be logged.
 
-There is no one size fits all solution, and a blind checklist approach can lead to unnecessary "alarm fog" that means real problems go undetected. 
+There is no one size fits all solution, and a blind checklist approach can lead to unnecessary "alarm fog" that means real problems go undetected.
 
 Where possible, always log:
 
@@ -107,11 +109,11 @@ Optionally consider if the following events can be logged and whether it is desi
 - Modifications to configuration
 - Application code file and/or memory changes
 
-## Event attributes
+### Event attributes
 
-Each log entry needs to include sufficient information for the intended subsequent monitoring and analysis. It could be full content data, but is more likely to be an extract or just summary properties. 
+Each log entry needs to include sufficient information for the intended subsequent monitoring and analysis. It could be full content data, but is more likely to be an extract or just summary properties.
 
-The application logs must record "when, where, who and what" for each event. 
+The application logs must record "when, where, who and what" for each event.
 
 The properties for these will be different depending on the architecture, class of application and host system/device, but often include the following:
 
@@ -157,7 +159,7 @@ For more information on these, see the "other" related articles listed at the en
 
 **Note B:** Each organisation should ensure it has a consistent, and documented, approach to classification of events (type, confidence, severity), the syntax of descriptions, and field lengths & data types including the format used for dates/times.
 
-## Data to exclude
+### Data to exclude
 
 Never log data unless it is legally sanctioned. For example intercepting some communications, monitoring employees, and collecting some data without consent may all be illegal.
 
@@ -189,7 +191,7 @@ Consider using personal data de-identification techniques such as deletion, scra
 
 In some systems, sanitization can be undertaken post log collection, and prior to log display.
 
-## Customizable logging
+### Customizable logging
 
 It may be desirable to be able to alter the level of logging (type of events based on severity or threat level, amount of detail recorded). If this is implemented, ensure that:
 
@@ -198,11 +200,11 @@ It may be desirable to be able to alter the level of logging (type of events bas
 - Alterations to the level/extent of logging must be intrinsic to the application (e.g. undertaken automatically by the application based on an approved algorithm) or follow change management processes (e.g. changes to configuration data, modification of source code)
 - The logging level must be verified periodically
 
-## Event collection
+### Event collection
 
-If your development framework supports suitable logging mechanisms use, or build upon that. Otherwise, implement an application-wide log handler which can be called from other modules/components. 
+If your development framework supports suitable logging mechanisms use, or build upon that. Otherwise, implement an application-wide log handler which can be called from other modules/components.
 
-Document the interface referencing the organisation-specific event classification and description syntax requirements. 
+Document the interface referencing the organisation-specific event classification and description syntax requirements.
 
 If possible create this log handler as a standard module that can is thoroughly tested, deployed in multiple application, and added to a list of approved & recommended modules.
 
@@ -219,7 +221,7 @@ Where possible record data in a standard format, or at least ensure it can be ex
 
 In some cases, events may be relayed or collected together in intermediate points. In the latter some data may be aggregated or summarized before forwarding on to a central repository and analysis system.
 
-## Verification
+### Verification
 
 Logging functionality and systems must be included in code review, application testing and security verification processes:
 
@@ -234,25 +236,25 @@ Logging functionality and systems must be included in code review, application t
 - Verify access controls on the event log data
 - If log data is utilized in any action against users (e.g. blocking access, account lock-out), ensure this cannot be used to cause denial of service (DoS) of other users
 
-# Deployment and operation
+## Deployment and operation
 
-## Release
+### Release
 
 - Provide security configuration information by adding details about the logging mechanisms to release documentation
 - Brief the application/process owner about the application logging mechanisms
 - Ensure the outputs of the monitoring (see below) are integrated with incident response processes
 
-## Operation
+### Operation
 
 Enable processes to detect whether logging has stopped, and to identify tampering or unauthorized access and deletion (see protection below).
 
-## Protection
+### Protection
 
-The logging mechanisms and collected event data must be protected from mis-use such as tampering in transit, and unauthorized access, modification and deletion once stored. Logs may contain personal and other sensitive information, or the data may contain information regarding the application's code and logic. 
+The logging mechanisms and collected event data must be protected from mis-use such as tampering in transit, and unauthorized access, modification and deletion once stored. Logs may contain personal and other sensitive information, or the data may contain information regarding the application's code and logic.
 
-In addition, the collected information in the logs may itself have business value (to competitors, gossip-mongers, journalists and activists) such as allowing the estimate of revenues, or providing performance information about employees. 
+In addition, the collected information in the logs may itself have business value (to competitors, gossip-mongers, journalists and activists) such as allowing the estimate of revenues, or providing performance information about employees.
 
-This data may be held on end devices, at intermediate points, in centralized repositories and in archives and backups. 
+This data may be held on end devices, at intermediate points, in centralized repositories and in archives and backups.
 
 Consider whether parts of the data may need to be excluded, masked, sanitized, hashed or encrypted during examination or extraction.
 
@@ -271,7 +273,7 @@ In transit:
 
 See `NIST SP 800-92` Guide to Computer Security Log Management for more guidance.
 
-## Monitoring of events
+### Monitoring of events
 
 The logged event data needs to be available to review and there are processes in place for appropriate monitoring, alerting and reporting:
 
@@ -280,33 +282,23 @@ The logged event data needs to be available to review and there are processes in
 - Enable alerting and signal the responsible teams about more serious events immediately
 - Share relevant event information with other detection systems, to related organizations and centralized intelligence gathering/sharing systems
 
-## Disposal of logs
+### Disposal of logs
 
-Log data, temporary debug logs, and backups/copies/extractions, must not be destroyed before the duration of the required data retention period, and must not be kept beyond this time. 
+Log data, temporary debug logs, and backups/copies/extractions, must not be destroyed before the duration of the required data retention period, and must not be kept beyond this time.
 
 Legal, regulatory and contractual obligations may impact on these periods.
 
-# Related articles
+## Related articles
 
-- OWASP [ESAPI Documentation](http://www.owasp.org/index.php/Category:OWASP_Enterprise_Security_API).
-- OWASP [Logging Project](https://www.owasp.org/index.php/Category:OWASP_Logging_Project).
-- IETF [syslog protocol](http://tools.ietf.org/html/rfc5424).
+- OWASP [ESAPI Documentation](https://owasp.org/www-project-enterprise-security-api/).
+- OWASP [Logging Project](https://owasp.org/www-project-security-logging/).
+- IETF [syslog protocol](https://tools.ietf.org/rfc/rfc5424.txt).
 - Mitre [Common Event Expression (CEE)](http://cee.mitre.org/) (as of 2014 no longer actively developed).
 - NIST [SP 800-92 Guide to Computer Security Log Management](http://csrc.nist.gov/publications/nistpubs/800-92/SP800-92.pdf).
 - PCISSC [PCI DSS v2.0 Requirement 10 and PA-DSS v2.0 Requirement 4](https://www.pcisecuritystandards.org/security_standards/documents.php).
 - W3C [Extended Log File Format](http://www.w3.org/TR/WD-logfile.html).
 - Other [Build Visibility In, Richard Bejtlich, TaoSecurity blog](http://taosecurity.blogspot.co.uk/2009/08/build-visibility-in.html).
-- Other [Common Event Format (CEF), Arcsight](http://www.arcsight.com/solutions/solutions-cef/).
+- Other [Common Event Format (CEF), Arcsight](https://community.microfocus.com/t5/ArcSight-Connectors/ArcSight-Common-Event-Format-CEF-Implementation-Standard/ta-p/1645557).
 - Other [Log Event Extended Format (**LEEF**), IBM](https://www.ibm.com/developerworks/community/wikis/form/anonymous/api/wiki/9989d3d7-02c1-444e-92be-576b33d2f2be/page/3dc63f46-4a33-4e0b-98bf-4e55b74e556b/attachment/a19b9122-5940-4c89-ba3e-4b4fc25e2328/media/QRadar_LEEF_Format_Guide.pdf).
 - Other [Common Log File System (CLFS), Microsoft](http://msdn.microsoft.com/en-us/library/windows/desktop/bb986747(v=vs.85).aspx).
 - Other [Building Secure Applications: Consistent Logging, Rohit Sethi & Nish Bhalla, Symantec Connect](http://www.symantec.com/connect/articles/building-secure-applications-consistent-logging).
-
-# Authors and Primary Contributors
-
-Most of the information included is based on content in the articles referenced in the text and listed above, but the following people have provided their ideas, knowledge and practical experience:
-
-Colin Watson - colin.watson@owasp.org
-
-Eoin Keary - eoin.keary@owasp.org
-
-Alexis Fitzgerald - alexis.fitzgerald@owasp.org

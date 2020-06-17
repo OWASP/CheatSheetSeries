@@ -1,14 +1,16 @@
-# Introduction
+# Mass Assignment Cheat Sheet
 
-## Definition
+## Introduction
 
-Software frameworks sometime allow developers to automatically bind HTTP request parameters into program code variables or objects to make using that framework easier on developers. This can sometimes cause harm. 
+### Definition
 
-Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended. 
+Software frameworks sometime allow developers to automatically bind HTTP request parameters into program code variables or objects to make using that framework easier on developers. This can sometimes cause harm.
+
+Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended.
 
 This is called a **Mass Assignment** vulnerability.
 
-## Alternative Names
+### Alternative Names
 
 Depending on the language/framework in question, this vulnerability can have several [alternative names](https://cwe.mitre.org/data/definitions/915.html):
 
@@ -16,7 +18,7 @@ Depending on the language/framework in question, this vulnerability can have sev
 - **Autobinding:** Spring MVC, ASP NET MVC.
 - **Object injection:** PHP.
 
-## Example
+### Example
 
 Suppose there is a form for editing a user's account information:
 
@@ -27,7 +29,7 @@ Suppose there is a form for editing a user's account information:
      <input name="email" text="text">
      <input type="submit">
 </form>  
-``` 
+```
 
 Here is the object that the form is binding to:
 
@@ -37,7 +39,7 @@ public class User {
    private String password;
    private String email;
    private boolean isAdmin;
- 
+
    //Getters & Setters
 }
 ```
@@ -46,7 +48,7 @@ Here is the controller handling the request:
 
 ```java
 @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-public String submit(User user) {   
+public String submit(User user) {
    userService.add(user);
    return "successPage";
 }
@@ -68,7 +70,7 @@ POST /addUser
 userid=bobbytables&password=hashedpass&email=bobby@tables.com&isAdmin=true
 ```
 
-## Exploitability
+### Exploitability
 
 This functionality becomes exploitable when:
 
@@ -76,17 +78,17 @@ This functionality becomes exploitable when:
 - Attacker has access to source code and can review the models for sensitive fields.
 - AND the object with sensitive fields has an empty constructor.
 
-## GitHub case study
+### GitHub case study
 
 In 2012, GitHub was hacked using mass assignment. A user was able to upload his public key to any organization and thus make any subsequent changes in their repositories. [GitHub's Blog Post](https://blog.github.com/2012-03-04-public-key-security-vulnerability-and-mitigation/).
 
-## Solutions
+### Solutions
 
 - Whitelist the bindable, non-sensitive fields.
 - Blacklist the non-bindable, sensitive fields.
 - Use [Data Transfer Objects](https://martinfowler.com/eaaCatalog/dataTransferObject.html) (DTOs).
 
-# General Solutions
+## General Solutions
 
 An architectural approach is to create Data Transfer Objects and avoid binding input directly to domain objects. Only the fields that are meant to be editable by the user are included in the DTO.
 
@@ -97,16 +99,16 @@ public class UserRegistrationFormDTO {
  private String email;
 
  //NOTE: isAdmin field is not present
- 
+
  //Getters & Setters
 }
 ```
 
-# Language & Framework specific solutions
+## Language & Framework specific solutions
 
-## Spring MVC
+### Spring MVC
 
-### Whitelisting
+#### Whitelisting
 
 ```java
 @Controller
@@ -123,7 +125,7 @@ public class UserController
 
 Take a look [here](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setAllowedFields-java.lang.String...-) for the documentation.
 
-### Blacklisting
+#### Blacklisting
 
 ```java
 @Controller
@@ -140,9 +142,9 @@ public class UserController
 
 Take a look [here](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setDisallowedFields-java.lang.String...-) for the documentation.
 
-## NodeJS + Mongoose
+### NodeJS + Mongoose
 
-### Whitelisting
+#### Whitelisting
 
 ```javascript
 var UserSchema = new mongoose.Schema({
@@ -164,20 +166,20 @@ var user = new User(_.pick(req.body, User.userCreateSafeFields));
 
 Take a look [here](http://underscorejs.org/#pick) for the documentation.
 
-### Blacklisting
+#### Blacklisting
 
 ```javascript
 var massAssign = require('mongoose-mass-assign');
- 
+
 var UserSchema = new mongoose.Schema({
     userid: String,
     password: String,
     email : String,
     isAdmin : { type: Boolean, protect: true, default: false }
 });
- 
+
 UserSchema.plugin(massAssign);
- 
+
 var User = mongoose.model('User', UserSchema);
 
 /** Static method, useful for creation **/
@@ -194,21 +196,21 @@ User.update({ '_id': someId }, { $set: User.massUpdate(input) }, console
 
 Take a look [here](https://www.npmjs.com/package/mongoose-mass-assign) for the documentation.
 
-## Ruby On Rails
+### Ruby On Rails
 
 Take a look [here](https://guides.rubyonrails.org/v3.2.9/security.html#mass-assignment) for the documentation.
 
-## Django
+### Django
 
 Take a look [here](https://coffeeonthekeyboard.com/mass-assignment-security-part-10-855/) for the documentation.
 
-## ASP NET
+### ASP NET
 
 Take a look [here](https://odetocode.com/Blogs/scott/archive/2012/03/11/complete-guide-to-mass-assignment-in-asp-net-mvc.aspx) for the documentation.
 
-## PHP Laravel + Eloquent
+### PHP Laravel + Eloquent
 
-### Whitelisting
+#### Whitelisting
 
 ```php
 <?php
@@ -230,7 +232,7 @@ class User extends Model
 
 Take a look [here](https://laravel.com/docs/5.2/eloquent#mass-assignment) for the documentation.
 
-### Blacklisting
+#### Blacklisting
 
 ```php
 <?php
@@ -252,34 +254,30 @@ class User extends Model
 
 Take a look [here](https://laravel.com/docs/5.2/eloquent#mass-assignment) for the documentation.
 
-## Grails
+### Grails
 
 Take a look [here](http://spring.io/blog/2012/03/28/secure-data-binding-with-grails/) for the documentation.
 
-## Play
+### Play
 
 Take a look [here](https://www.playframework.com/documentation/1.4.x/controllers#nobinding) for the documentation.
 
-## Jackson (JSON Object Mapper)
+### Jackson (JSON Object Mapper)
 
 Take a look [here](https://www.baeldung.com/jackson-field-serializable-deserializable-or-not) and [here](http://lifelongprogrammer.blogspot.com/2015/09/using-jackson-view-to-protect-mass-assignment.html) for the documentation.
 
-## GSON (JSON Object Mapper)
+### GSON (JSON Object Mapper)
 
 Take a look [here](https://sites.google.com/site/gson/gson-user-guide#TOC-Excluding-Fields-From-Serialization-and-Deserialization) and [here](https://stackoverflow.com/a/27986860) for the document.
 
-## JSON-Lib (JSON Object Mapper)
+### JSON-Lib (JSON Object Mapper)
 
 Take a look [here](http://json-lib.sourceforge.net/advanced.html) for the documentation.
 
-## Flexjson (JSON Object Mapper)
+### Flexjson (JSON Object Mapper)
 
 Take a look [here](http://flexjson.sourceforge.net/#Serialization) for the documentation.
 
-# References and future reading
+## References and future reading
 
 - [Mass Assignment, Rails and You](https://code.tutsplus.com/tutorials/mass-assignment-rails-and-you--net-31695)
-
-# Authors and Primary Editors
-
-Abashkin Anton - abashkin.anton@gmail.com

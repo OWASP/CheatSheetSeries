@@ -1,4 +1,6 @@
-# Introduction
+# Abuse Case Cheat Sheet
+
+## Introduction
 
 Often when the security level of an application is mentioned in requirements, the following *expressions* are met:
 
@@ -9,15 +11,15 @@ Often when the security level of an application is mentioned in requirements, th
 
 These security requirements are too generic, and thus useless for a development team...
 
-In order to build a secure application, from an pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context.
+In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context.
 
-# Objective
+### Objective
 
-The objective of this cheat sheet is to provide an explanation of about what an **Abuse Case** is, why abuse cases are important when considering the security of an application, and further finally, to provide a proposal for a pragmatic approach to builing  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).
+The objective of this cheat sheet is to provide an explanation of about what an **Abuse Case** is, why abuse cases are important when considering the security of an application, and further finally, to provide a proposal for a pragmatic approach to building  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).
 
 **Important note about this Cheat Sheet:**
 
-```
+```text
 The main objective is to provide a pragmatic approach in order to allow a company or a project team
 to start building and handling the list of abuse cases and then customize the elements
 proposed to its context/culture in order to, finally, build its own method.
@@ -25,9 +27,9 @@ proposed to its context/culture in order to, finally, build its own method.
 This cheat sheet can be seen as a getting-started tutorial.
 ```
 
-# Context & approach
+### Context & approach
 
-## Why clearly identify the attacks?
+#### Why clearly identify the attacks
 
 Clearly identifying the attacks against which the application must defend is essential in order to enable the following steps in a project or sprint:
 
@@ -36,13 +38,13 @@ Clearly identifying the attacks against which the application must defend is ess
 - Estimate the overhead of provision in the initial project/sprint charge that will be necessary to implement the countermeasures.
 - About countermeasures: Allow the project team to define them, and to determine in which location they are appropriate (network, infrastructure, code...) to be located.
 
-## Notion of Abuse Case
+#### Notion of Abuse Case
 
 In order to help build the list of attacks, the notion of **Abuse Cases** is helpful.
 
 An **Abuse Case** can be defined as:
 
-```
+```text
 A way to use a feature that was not expected by the implementer,
 allowing an attacker to influence the feature or outcome of use of
 the feature based on the attacker action (or input).
@@ -50,7 +52,7 @@ the feature based on the attacker action (or input).
 
 Synopsys define an **Abuse Case** like this:
 
-```
+```text
 Misuse and abuse cases describe how users misuse or exploit the weaknesses
 of controls in software features to attack an application.
 
@@ -64,20 +66,20 @@ that lead to proper protection of these critical business use cases.
 
 [Synopsys source](https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements)
 
-## How to define the list of Abuse Cases?
+#### How to define the list of Abuse Cases
 
 There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).
 
-The project [OWASP Open SAMM](https://www.owasp.org/index.php/OWASP_SAMM_Project) proposes the following approach in the *Activity A* of the Security Practice *Threat Assessment* for the Maturity level 2:
+The project [OWASP Open SAMM](https://owasp.org/www-project-samm/) proposes the following approach in the *Activity A* of the Security Practice *Threat Assessment* for the Maturity level 2:
 
-```
+```text
 Further considering the threats to the organization, conduct a more formal analysis to determine
 potential misuse or abuse of functionality. Typically, this process begins with identification of
 normal usage scenarios, e.g. use-case diagrams if available.
 
-If a formal abuse-case technique isn’t used, generate a set of abuse-cases for each scenario by
+If a formal abuse-case technique isn't used, generate a set of abuse-cases for each scenario by
 starting with a statement of normal usage and brainstorming ways in which the statement might be
-negated, in whole or in part. The simplest way to get started is to insert the word “no” or “not” into
+negated, in whole or in part. The simplest way to get started is to insert the word "no" or "not" into
 the usage statement in as many ways as possible, typically around nouns and verbs. Each usage scenario
 should generate several possible abuse-case statements.
 
@@ -91,7 +93,7 @@ phase. For existing projects, new requirements should be analyzed for potential 
 projects should opportunistically build abuse-cases for established functionality where practical.
 ```
 
-Open SAMM source: [Threat Assessment Level 2 Actvity A](https://www.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2)
+Open SAMM source: [Threat Assessment Level 2 Activity A](https://wiki.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2)
 
 Another way to achieve the building of the list can be the following (more bottom-up and collaboratively oriented):
 
@@ -112,9 +114,9 @@ It is important to take into account **Technical** and **Business** kind of abus
 - Technical flagged abuse case: Add Cross Site Scripting injection into a comment input field.
 - Business flagged abuse case: Ability to modify arbitrary the price of an article in an online shop prior to pass an order causing the user to pay a lower amount for the wanted article.
 
-## When to define the list of Abuse Cases?
+#### When to define the list of Abuse Cases
 
-On agile project, the definition workshop must be made after the meeting in which User Stories are includen in a Sprint.
+On agile project, the definition workshop must be made after the meeting in which User Stories are included in a Sprint.
 
 In waterfall projects, the definition workshop must be made when the business feature to implements are identified and known by the business.
 
@@ -126,13 +128,13 @@ An example of unique ID format can be **ABUSE_CASE_001**.
 
 The following figure provides an overview of the chaining of the different steps involved (from left to right):
 
-![OverviewSchema](../assets/Abuse_Case_Cheat_Sheet_Overview.png)
+![Overview Schema](../assets/Abuse_Case_Cheat_Sheet_Overview.png)
 
-# Proposal
+### Proposal
 
 The proposal will focus on the output of the workshop explained in the previous section.
 
-## Step 1: Preparation of the workshop
+#### Step 1: Preparation of the workshop
 
 First, even if it seems obvious, the key business people must be sure to know, understand and be able to explain the business features that will be processed during the workshop.
 
@@ -145,7 +147,7 @@ Secondly, create a new Microsoft Excel file (you can also use Google Sheets or a
 - **COUNTERMEASURES**
     - Will contain a table with the list of possible countermeasures (light description) imagined for the abuse cases identified.
     - This sheet is not mandatory, but it can be useful (for an abuse case to know), if a fix is easy to implement and then can impact the risk rating.
-    - Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks but also to build or identify defenses (it is not always the case for the Pentester profile because this person’s focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).
+    - Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks but also to build or identify defenses (it is not always the case for the Pentester profile because this person's focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).
 
 This is the representation of each sheet along with an example of content that will be filled during the workshop:
 
@@ -167,33 +169,33 @@ This is the representation of each sheet along with an example of content that w
 |:--------------------:|:-------------------:|:-----------------------------------------------------------------------:|:-------------------------------------:|:---------------------------:|:--------------------------------------------:|:------------------:|:----------------------------:|:-----------------------------------------------:|
 | ABUSE_CASE_001       | FEATURE_001         | Upload Office file with malicious macro in charge of dropping a malware | CAPEC-17                              | HIGH (7.7)                  | CVSS:3.0/AV:N/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:H | Technical          | DEFENSE_001                  | To Address                                      |
 
-## Step 2: During the workshop
+#### Step 2: During the workshop
 
 Use the spreadsheet to review all the features.
 
 For each feature, follow this flow:
 
-1.  Key business people explain the current feature from a business point of view.
-2.  Offensives propose and explain a set of attacks that they can perform against the feature.
-3.  For each attack proposed:
-    1.  Appsec proposes a countermeasure and a preferred set up location (infrastructure, network, code, design...).
-    2.  Technical people give feedback about the feasibility of the proposed countermeasure.
-    3.  Offsensives use the CVSS v3 (or other standard) calculator to determine a risk rating. (ex: [CVSS V3 calculator](https://www.first.org/cvss/calculator/3.0))
-    4.  Risk key people accept/increase/decrease the rating to have final one that match the real business impact for the company.
+1. Key business people explain the current feature from a business point of view.
+2. Offensives propose and explain a set of attacks that they can perform against the feature.
+3. For each attack proposed:
+    1. Appsec proposes a countermeasure and a preferred set up location (infrastructure, network, code, design...).
+    2. Technical people give feedback about the feasibility of the proposed countermeasure.
+    3. Offsensives use the CVSS v3 (or other standard) calculator to determine a risk rating. (ex: [CVSS V3 calculator](https://www.first.org/cvss/calculator/3.0))
+    4. Risk key people accept/increase/decrease the rating to have final one that match the real business impact for the company.
 
-4.  Business, Risk and Technical key peoples find a consensus and filter the list of abuses for the current feature to keep the ones that must be addressed, and then flag them accordingly in the *ABUSE CASES* sheet (**if risk is accepted then add a comment to explain why**).
-5.  Pass to next feature...
+4. Business, Risk and Technical key peoples find a consensus and filter the list of abuses for the current feature to keep the ones that must be addressed, and then flag them accordingly in the *ABUSE CASES* sheet (**if risk is accepted then add a comment to explain why**).
+5. Pass to next feature...
 
 If the presence of offensives is not possible then you can use the following references to identify the applicable attacks on your features:
 
--   [OWASP Automated Threats to Web Applications](https://www.owasp.org/index.php/OWASP_Automated_Threats_to_Web_Applications)
--   [OWASP Testing Guide](https://www.owasp.org/index.php/OWASP_Testing_Guide_v4_Table_of_Contents)
--   [OWASP Mobile Testing Guide](https://github.com/OWASP/owasp-mstg)
--   [Common Attack Pattern Enumeration and Classification (CAPEC)](https://capec.mitre.org/)
+- [OWASP Automated Threats to Web Applications](https://owasp.org/www-project-automated-threats-to-web-applications/)
+- [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/stable/)
+- [OWASP Mobile Testing Guide](https://github.com/OWASP/owasp-mstg)
+- [Common Attack Pattern Enumeration and Classification (CAPEC)](https://capec.mitre.org/)
 
 Important note on attacks and countermeasure knowledge base(s):
 
-```
+```text
 With the time and across projects, you will obtain your own dictionary of attacks and countermeasures
 that are applicable to the kind of application in your business domain.
 
@@ -204,16 +206,16 @@ of attacks and countermeasures identified in a central location (wiki, database,
 used during the next workshop in combination with input from offensives people.
 ```
 
-## Step 3: After the workshop
+#### Step 3: After the workshop
 
 The spreadsheet contains (at this stage) the list of all abuse cases that must be handled and, potentially (depending on the capacity) corresponding countermeasures.
 
 Now, there are two remaining task:
 
-1.  Key business people must update the specification of each feature (waterfall) or the User Story of each feature (agile) to include the associated abuse cases as Security Requirements (waterfall) or Acceptance Criteria (agile).
+1. Key business people must update the specification of each feature (waterfall) or the User Story of each feature (agile) to include the associated abuse cases as Security Requirements (waterfall) or Acceptance Criteria (agile).
 2. Key technical people must evaluate the overhead in terms of charge/effort to take into account the countermeasure.
 
-## Step 4: During implementation - Abuse cases handling tracking
+#### Step 4: During implementation - Abuse cases handling tracking
 
 In order to track the handling of all the abuse cases, the following approach can be used:
 
@@ -221,25 +223,25 @@ If one or several abuse cases are handled at:
 
 - **Design, Infrastructure or Network level**
     - Make a note in the documentation or schema to indicate that *This design/network/infrastructure takes into account the abuse cases ABUSE_CASE_001, ABUSE_CASE_002, ABUSE_CASE_xxx*.
--  **Code level**
+- **Code level**
     - Put a special comment in the classes/scripts/modules to indicate that *This class/module/script takes into account the abuse cases ABUSE_CASE_001, ABUSE_CASE_002, ABUSE_CASE_xxx*.
     - Dedicated annotation like `@AbuseCase(ids={"ABUSE_CASE_001","ABUSE_CASE_002"})` can be used to facilitate tracking and allow identification into integrated development environment.
 
-Using this way, it becomes possible (via some minor scripting) to identify where the the abuse cases are addressed.
+Using this way, it becomes possible (via some minor scripting) to identify where abuse cases are addressed.
 
-## Step 5: During implementation - Abuse cases handling validation
+#### Step 5: During implementation - Abuse cases handling validation
 
 As abuse cases are defined, it is possible to put in place automated or manual validations to ensure that:
 
--   All the selected abuse cases are handled.
--   An abuse case is correctly/completely handled.
+- All the selected abuse cases are handled.
+- An abuse case is correctly/completely handled.
 
 Validations can be of the following kinds:
 
 - Automated (run regularly at commit, daily or weekly in the Continuous Integration Jobs of the project):
-    -  Custom audit rules in Static Application Security Testing (SAST) or Dynamic Application Security Testing (DAST) tools.
-    -  Dedicated unit, integration or functional security oriented tests.
-    -  ...
+    - Custom audit rules in Static Application Security Testing (SAST) or Dynamic Application Security Testing (DAST) tools.
+    - Dedicated unit, integration or functional security oriented tests.
+    - ...
 - Manual:
     - Security code review between project's peers during the design or implementation.
     - Provide the list of all abuse cases addressed to pentesters so that they may validate the protection efficiency for each abuse case during an intrusion test against the application (the pentester will validate that the attacks identified are no longer effective and will also try to find other possible attacks).
@@ -247,9 +249,9 @@ Validations can be of the following kinds:
 
 Adding automated tests also allow teams to track that countermeasures against the abuse cases are still effective/in place during a maintenance or bug fixing phase of a project (to prevent accidental removal/disabling). It is also useful when a [Continuous Delivery](https://continuousdelivery.com/) approach is used, to ensure that all abuse cases protections are in place before opening access to the application.
 
-# Example of derivation of Abuse Cases as User Stories
+### Example of derivation of Abuse Cases as User Stories
 
-The following section show an example of derivation of Abuse Cases as User Stories, here using the [OWASP TOP 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) as input source.
+The following section show an example of derivation of Abuse Cases as User Stories, here using the [OWASP TOP 10](https://owasp.org/www-project-top-ten/) as input source.
 
 Threat Oriented Personas:
 
@@ -257,17 +259,17 @@ Threat Oriented Personas:
 - Abusive User
 - Unknowing User
 
-## A1:2017-Injection
+#### A1:2017-Injection
 
 *Epic:*
 
-Almost any source of data can be an injection vector, environment variables, parameters, external and internal web services, and all types of users. [Injection](https://www.owasp.org/index.php/Injection_Flaws) flaws occur when an attacker can send hostile data to an interpreter.
+Almost any source of data can be an injection vector, environment variables, parameters, external and internal web services, and all types of users. [Injection](https://owasp.org/www-community/Injection_Flaws) flaws occur when an attacker can send hostile data to an interpreter.
 
 *Abuse Case:*
 
 As an attacker, I will perform an injection attack (SQL, LDAP, XPath, or NoSQL queries, OS commands, XML parsers, SMTP headers, expression languages, and ORM queries) against input fields of the User or API interfaces
 
-## A2:2017-Broken Authentication
+#### A2:2017-Broken Authentication
 
 *Epic:*
 
@@ -285,11 +287,11 @@ As an attacker, I have default administrative account lists, automated brute for
 
 As an attacker, I manipulate session tokens using expired and fake tokens to gain access.
 
-## A3:2017-Sensitive Data Exposure
+#### A3:2017-Sensitive Data Exposure
 
 *Epic:*
 
-Rather than directly attacking crypto, attackers steal keys, execute man-in-the-middle attacks, or steal clear text data off the server, while in transit, or from the user’s client, e.g. browser. A manual attack is generally required. Previously retrieved password databases could be brute forced by Graphics Processing Units (GPUs).
+Rather than directly attacking crypto, attackers steal keys, execute man-in-the-middle attacks, or steal clear text data off the server, while in transit, or from the user's client, e.g. browser. A manual attack is generally required. Previously retrieved password databases could be brute forced by Graphics Processing Units (GPUs).
 
 *Abuse Case:*
 
@@ -301,13 +303,13 @@ As an attacker, I execute man-in-the-middle attacks to get access to traffic and
 
 *Abuse Case:*
 
-As an attacker, I steal clear text data off the server, while in transit, or from the user’s client, e.g. browser to get unauthorized access to the application or system.
+As an attacker, I steal clear text data off the server, while in transit, or from the user's client, e.g. browser to get unauthorized access to the application or system.
 
 *Abuse Case:*
 
 As an attacker, I find and target old or weak cryptographic algorithms by capturing traffic and breaking the encryption.
 
-## A4:2017-XML External Entities (XXE)
+#### A4:2017-XML External Entities (XXE)
 
 *Epic:*
 
@@ -325,7 +327,7 @@ As an attacker, I include hostile content in an XML document which is uploaded t
 
 As an attacker, I include malicious XML code to exploit vulnerable code, dependencies or integrations to extract data, execute a remote request from the server, scan internal systems, perform a denial-of-service attack (e.g. Billion Laughs attack), as well as execute other attacks.
 
-## A5:2017-Broken Access Control
+#### A5:2017-Broken Access Control
 
 *Epic:*
 
@@ -367,7 +369,7 @@ As an attacker, I target default crypto keys in use, weak crypto keys generated 
 
 As an attacker, I find areas where the user agent (e.g. app, mail client) does not verify if the received server certificate is valid and perform attacks where I get unauthorized access to data.
 
-## A6:2017-Security Misconfiguration
+#### A6:2017-Security Misconfiguration
 
 *Epic:*
 
@@ -401,7 +403,7 @@ As an attacker, I find security settings in the application servers, application
 
 As an attacker, I find the server does not send security headers or directives or they are not set to secure values.
 
-## A7:2017-Cross-Site Scripting (XSS)
+#### A7:2017-Cross-Site Scripting (XSS)
 
 *Epic:*
 
@@ -409,7 +411,7 @@ XSS is the second most prevalent issue in the OWASP Top 10, and is found in arou
 
 *Abuse Case:*
 
-As an attacker, I perform reflected XSS where the application or API includes unvalidated and unescaped user input as part of HTML output. My successful attack can allow the attacker to execution of arbitrary HTML and JavaScript in my victim’s browser. Typically the victim will need to interact with some malicious link that points to an attacker-controlled page, such as malicious watering hole websites, advertisements, or similar.
+As an attacker, I perform reflected XSS where the application or API includes unvalidated and unescaped user input as part of HTML output. My successful attack can allow the attacker to execution of arbitrary HTML and JavaScript in my victim's browser. Typically the victim will need to interact with some malicious link that points to an attacker-controlled page, such as malicious watering hole websites, advertisements, or similar.
 
 *Abuse Case:*
 
@@ -419,7 +421,7 @@ As an attacker, I perform stored XSS where the application or API stores unsanit
 
 As an attacker, I perform DOM XSS where JavaScript frameworks, single-page applications, and APIs that dynamically include attacker-controllable data to a page is vulnerable to DOM XSS.
 
-## A8:2017-Insecure Deserialization
+### A8:2017-Insecure Deserialization
 
 *Epic:*
 
@@ -429,7 +431,7 @@ Exploitation of deserialization is somewhat difficult, as off-the-shelf exploits
 
 As an attacker, I find areas of the application and APIs where deserialization of hostile or tampered objects can be supplied. As a result, I can focus on an object and data structure related attacks where the attacker modifies application logic or achieves arbitrary remote code execution if there are classes available to the application that can change behavior during or after deserialization. Or I focus on data tampering attacks such as access-control-related attacks where existing data structures are used but the content is changed.
 
-## A9:2017-Using Components with Known Vulnerabilities
+### A9:2017-Using Components with Known Vulnerabilities
 
 *Epic:*
 
@@ -439,7 +441,7 @@ While it is easy to find already-written exploits for many known vulnerabilities
 
 As an attacker, I find common open source or closed source packages with weaknesses and perform attacks against vulnerabilities and exploits which are disclosed
 
-## A10:2017-Insufficient Logging & Monitoring
+### A10:2017-Insufficient Logging & Monitoring
 
 *Epic:*
 
@@ -449,18 +451,10 @@ Exploitation of insufficient logging and monitoring is the bedrock of nearly eve
 
 As an attacker, I attack an organization and the logs, monitoring systems, and teams do not see or respond to my attacks.
 
-# Sources of the schemas
+## Sources of the schemas
 
-All figures were created using https://www.draw.io/ site and exported (as PNG image) for integration into this article.
+All figures were created using <https://www.draw.io/> site and exported (as PNG image) for integration into this article.
 
 All XML descriptor files for each schema are available below (using XML description, modification of the schema is possible using DRAW.IO site):
 
 [Schemas descriptors archive](../assets/Abuse_Case_Cheat_Sheet_SchemaBundle.zip)
-
-# Authors and Primary Editors
-
-James Robinson - jrobinson@netskope.com
-
-Dominique Righetto - dominique.righetto@owasp.org
-
-[Rick Mitchell](https://www.owasp.org/index.php/User:Rick.mitchell)

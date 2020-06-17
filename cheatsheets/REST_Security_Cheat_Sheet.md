@@ -1,14 +1,16 @@
-# Introduction
+# REST Security Cheat Sheet
 
-[REST](http://en.wikipedia.org/wiki/Representational_state_transfer) (or **RE**presentational **S**tate **T**ransfer) is an architectural style first described in [Roy Fielding](https://en.wikipedia.org/wiki/Roy_Fielding)'s Ph.D. dissertation on [Architectural Styles and the Design of Network-based Software Architectures](https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm). 
+## Introduction
+
+[REST](http://en.wikipedia.org/wiki/Representational_state_transfer) (or **RE**presentational **S**tate **T**ransfer) is an architectural style first described in [Roy Fielding](https://en.wikipedia.org/wiki/Roy_Fielding)'s Ph.D. dissertation on [Architectural Styles and the Design of Network-based Software Architectures](https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm).
 
 It evolved as Fielding wrote the HTTP/1.1 and URI specs and has been proven to be well-suited for developing distributed hypermedia applications. While REST is more widely applicable, it is most commonly used within the context of communicating with services via HTTP.
 
-The key abstraction of information in REST is a resource. A REST API resource is identified by a URI, usually a HTTP URL. REST components use connectors to perform actions on a resource by using a representation to capture the current or intended state of the resource and transferring that representation. 
+The key abstraction of information in REST is a resource. A REST API resource is identified by a URI, usually a HTTP URL. REST components use connectors to perform actions on a resource by using a representation to capture the current or intended state of the resource and transferring that representation.
 
 The primary connector types are client and server, secondary connectors include cache, resolver and tunnel.
 
-REST APIs are stateless. Stateful APIs do not adhere to the REST architectural style. State in the REST acronym refers to the state of the resource which the API accesses, not the state of a session within which the API is called. While there may be good reasons for building a stateful API, it is important to realize that managing sessions is complex and difficult to do securely. 
+REST APIs are stateless. Stateful APIs do not adhere to the REST architectural style. State in the REST acronym refers to the state of the resource which the API accesses, not the state of a session within which the API is called. While there may be good reasons for building a stateful API, it is important to realize that managing sessions is complex and difficult to do securely.
 
 Stateful services are out of scope of this Cheat Sheet: *Passing state from client to backend, while making the service technically stateless, is an anti-pattern that should also be avoided as it is prone to replay and impersonation attacks.*
 
@@ -16,9 +18,9 @@ In order to implement flows with REST APIs, resources are typically created, rea
 
 Another key feature of REST applications is the use of standard HTTP verbs and error codes in the pursuit or removing unnecessary variation among different services.
 
-Another key feature of REST applications is the use of [HATEOS or Hypermedia as the Engine of Application State](https://en.wikipedia.org/wiki/HATEOAS). This provides REST applications a self-documenting nature making it easier for developers to interact with a REST service without a priori knowledge. 
+Another key feature of REST applications is the use of [HATEOAS or Hypermedia As The Engine of Application State](https://en.wikipedia.org/wiki/HATEOAS). This provides REST applications a self-documenting nature making it easier for developers to interact with a REST service without prior knowledge.
 
-# HTTPS
+## HTTPS
 
 Secure REST services must only provide HTTPS endpoints. This protects authentication credentials in transit, for example passwords, API keys or JSON Web Tokens. It also allows clients to authenticate the service and guarantees integrity of the transmitted data.
 
@@ -26,18 +28,18 @@ See the [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Chea
 
 Consider the use of mutually authenticated client-side certificates to provide additional protection for highly privileged web services.
 
-# Access Control
+## Access Control
 
 Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple micro services following the RESTful style.
 
-- in order to minimise latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints
+- in order to minimize latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints
 - user authentication should be centralised in a Identity Provider (IdP), which issues access tokens
 
-# JWT
+## JWT
 
 There seems to be a convergence towards using [JSON Web Tokens](https://tools.ietf.org/html/rfc7519) (JWT) as the format for security tokens. JWTs are JSON data structures containing a set of claims that can be used for access control decisions. A cryptographic signature or message authentication code (MAC) can be used to protect the integrity of the JWT.
 
-- Ensure JWTs are integrity protected by either a signature or a MAC. Do not allow the unsecured JWTs: `{"alg":"none"}`. 
+- Ensure JWTs are integrity protected by either a signature or a MAC. Do not allow the unsecured JWTs: `{"alg":"none"}`.
     - See [here](https://tools.ietf.org/html/rfc7519#section-6.1)
 - In general, signatures should be preferred over MACs for integrity protection of JWTs.
 
@@ -54,7 +56,9 @@ Some claims have been standardised and should be present in JWT used for access 
 - `exp` or expiration time - is the current time before the end of the validity period of this token?
 - `nbf` or not before time - is the current time after the start of the validity period of this token?
 
-# API Keys
+As JWTs contain details of the authenticated entity (user etc.) a disconnect can occur between the JWT and the current state of the users session, for example, if the session is terminated earlier than the expiration time due to an explicit logout or an idle timeout. When an explicit session termination event occurs, a digest or hash of any associated JWTs should be submitted to a blacklist on the API which will invalidate that JWT for any requests until the expiration of the token. See the [JSON_Web_Token_for_Java_Cheat_Sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md#token-explicit-revocation-by-the-user) for further details.
+
+## API Keys
 
 Public REST services without access control run the risk of being farmed leading to excessive bills for bandwidth or compute cycles. API keys can be used to mitigate this risk. They are also often used by organisation to monetize APIs; instead of blocking high-frequency calls, clients are given access in accordance to a purchased access plan.
 
@@ -65,15 +69,15 @@ API keys can reduce the impact of denial-of-service attacks. However, when they 
 - Revoke the API key if the client violates the usage agreement.
 - Do not rely exclusively on API keys to protect sensitive, critical or high-value resources.
 
-# Restrict HTTP methods
+## Restrict HTTP methods
 
 - Apply a whitelist of permitted HTTP Methods e.g. `GET`, `POST`, `PUT`.
 - Reject all requests not matching the whitelist with HTTP response code `405 Method not allowed`.
 - Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record
 
-In Java EE in particular, this can be difficult to implement properly. See [Bypassing Web Authentication and Authorization with HTTP Verb Tampering](http://www.aspectsecurity.com/research-presentations/bypassing-vbaac-with-http-verb-tampering) for an explanation of this common misconfiguration.
+In Java EE in particular, this can be difficult to implement properly. See [Bypassing Web Authentication and Authorization with HTTP Verb Tampering](../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf) for an explanation of this common misconfiguration.
 
-# Input validation
+## Input validation
 
 - Do not trust input parameters/objects.
 - Validate input: length / range / format and type.
@@ -84,21 +88,21 @@ In Java EE in particular, this can be difficult to implement properly. See [Bypa
 - Define an appropriate request size limit and reject requests exceeding the limit with HTTP response status 413 Request Entity Too Large.
 - Consider logging input validation failures. Assume that someone who is performing hundreds of failed input validations per second is up to no good.
 - Have a look at input validation cheat sheet for comprehensive explanation.
-- Use a secure parser for parsing the incoming messages. If you are using XML, make sure to use a parser that is not vulnerable to [XXE](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing) and similar attacks.
+- Use a secure parser for parsing the incoming messages. If you are using XML, make sure to use a parser that is not vulnerable to [XXE](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing) and similar attacks.
 
-# Validate content types
+## Validate content types
 
 A REST request or response body should match the intended content type in the header. Otherwise this could cause misinterpretation at the consumer/producer side and lead to code injection/execution.
 
 - Document all supported content types in your API.
 
-## Validate request content types
+### Validate request content types
 
 - Reject requests containing unexpected or missing content type headers with HTTP response status `406 Unacceptable` or `415 Unsupported Media Type`.
 - For XML content types ensure appropriate XML parser hardening, see the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md).
-- Avoid accidentally exposing unintended content types by explicitly defining content types e.g. [Jersey](https://jersey.github.io/) (Java) `@consumes("application/json"); @produces("application/json")`. This avoids [XXE-attack](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing) vectors for example.
+- Avoid accidentally exposing unintended content types by explicitly defining content types e.g. [Jersey](https://jersey.github.io/) (Java) `@consumes("application/json"); @produces("application/json")`. This avoids [XXE-attack](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing) vectors for example.
 
-## Send safe response content types
+### Send safe response content types
 
 It is common for REST services to allow multiple response types (e.g. `application/xml` or `application/json`, and the client specifies the preferred order of response types by the Accept header in the request.
 
@@ -109,38 +113,38 @@ Services including script code (e.g. JavaScript) in their responses must be espe
 
 - Ensure sending intended content type headers in your response matching your body content e.g. `application/json` and not `application/javascript`.
 
-# Management endpoints
+## Management endpoints
 
 - Avoid exposing management endpoints via Internet.
 - If management endpoints must be accessible via the Internet, make sure that users must use a strong authentication mechanism, e.g. multi-factor.
 - Expose management endpoints via different HTTP ports or hosts preferably on a different NIC and restricted subnet.
 - Restrict access to these endpoints by firewall rules  or use of access control lists.
 
-# Error handling
+## Error handling
 
 - Respond with generic error messages - avoid revealing details of the failure unnecessarily.
 - Do not pass technical details (e.g. call stacks or other internal hints) to the client.
 
-# Audit logs
+## Audit logs
 
 - Write audit logs before and after security related events.
 - Consider logging token validation errors in order to detect attacks.
 - Take care of log injection attacks by sanitising log data beforehand.
 
-# Security headers
+## Security headers
 
-To make sure the content of a given resources is interpreted correctly by the browser, the server should always send the `Content-Type` header with the correct content type, and preferably the `Content-Type` header should include a charset. The server should also send the `X-Content-Type-Options: nosniff` [security header](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers) to make sure the browser does not try to detect a different `Content-Type` than what is actually sent (can lead to XSS).
+To make sure the content of a given resources is interpreted correctly by the browser, the server should always send the `Content-Type` header with the correct content type, and preferably the `Content-Type` header should include a charset. The server should also send the `X-Content-Type-Options: nosniff` [security header](https://owasp.org/www-project-secure-headers/) to make sure the browser does not try to detect a different `Content-Type` than what is actually sent (can lead to XSS).
 
-Additionally the client should send the `X-Frame-Options: deny` [security header](https://www.owasp.org/index.php/OWASP_Secure_Headers_Project#tab=Headers) to protect against drag'n drop clickjacking attacks in older browsers.
+Additionally the server should send the `X-Frame-Options: deny` [security header](https://owasp.org/www-project-secure-headers/) to protect against drag'n drop clickjacking attacks in older browsers.
 
-# CORS
+## CORS
 
 Cross-Origin Resource Sharing (CORS) is a W3C standard to flexibly specify what cross-domain requests are permitted. By delivering appropriate CORS Headers your REST API signals to the browser which domains, AKA origins, are allowed to make JavaScript calls to the REST service.
 
 - Disable CORS headers if cross-domain calls are not supported/expected.
 - Be as specific as possible and as general as necessary when setting the origins of cross-domain calls.
 
-# Sensitive information in HTTP requests
+## Sensitive information in HTTP requests
 
 RESTful web services should be careful to prevent leaking credentials. Passwords, security tokens, and API keys should not appear in the URL, as this can be captured in web server logs, which makes them intrinsically valuable.
 
@@ -157,17 +161,20 @@ RESTful web services should be careful to prevent leaking credentials. Passwords
 
 `https://example.com/controller/123/action?apiKey=a53f435643de32` because API Key is into the URL.
 
-# HTTP Return Code
+## HTTP Return Code
 
-HTTP defines [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). When designing REST API, don't just use `200` for success or `404` for error. Always use the semantically appropriate status code for the response. 
+HTTP defines [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). When designing REST API, don't just use `200` for success or `404` for error. Always use the semantically appropriate status code for the response.
 
-Here is a non-exhaustive selection of security related REST API **status codes**. Use it to ensure you return the correct code. 
+Here is a non-exhaustive selection of security related REST API **status codes**. Use it to ensure you return the correct code.
 
-| Code | Message                | Decription                                                                                                                                                                                                           |
+| Code | Message                | Description                                                                                                                                                                                                          |
 |-------------|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 200         | OK                     |  Response to a successful REST API action. The HTTP method can be GET, POST, PUT, PATCH or DELETE.                                                                                                                  |
 | 201         | Created                |  The request has been fulfilled and resource created. A URI for the created resource is returned in the Location header.                                                                                            |
 | 202         | Accepted               | The request has been accepted for processing, but processing is not yet complete.                                                                                                                                     |
+| 301         | Moved Permanently       | Permanent redirection.                                                                                                                                                                                                |
+| 304         | Not Modified           | Caching related response that returned when the client has the same copy of the resource as the server.                                                                                                                  |
+| 307         | Temporary Redirect     | Temporary redirection of resource.                                                                                                                                                                                   |
 | 400         | Bad Request            | The request is malformed, such as message body format error.                                                                                                                                                          |
 | 401         | Unauthorized           | Wrong or no authentication ID/password provided.                                                                                                                                                                      |
 | 403         | Forbidden              |  It's used when the authentication succeeded but authenticated user doesn't have permission to the request resource.                                                                                                |
@@ -181,16 +188,4 @@ Here is a non-exhaustive selection of security related REST API **status codes**
 | 501         | Not Implemented        | The REST service does not implement the requested operation yet.                                                                                                                                                      |
 | 503         | Service Unavailable    |  The REST service is temporarily unable to process the request. Used to inform the client it should retry at a later time.                                                                                         |
 
-# Authors and primary editors
-
-Erlend Oftedal - erlend.oftedal@owasp.org
-
-Andrew van der Stock - vanderaj@owasp.org
-
-Tony Hsu Hsiang Chih- Hsiang_chihi@yahoo.com
-
-Johan Peeters - yo@johanpeeters.com
-
-Jan Wolff - jan.wolff@owasp.org
-
-Rocco Gränitz - rocco.graenitz@owasp.org
+Additional information about HTTP return code usage in REST API can be found [here](https://www.restapitutorial.com/httpstatuscodes.html) and [here](https://restfulapi.net/http-status-codes).
