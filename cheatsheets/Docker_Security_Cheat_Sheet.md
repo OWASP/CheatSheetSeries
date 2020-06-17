@@ -131,7 +131,7 @@ spec:
           ...
 ```
 
-As a Kubernetes cluster administrator, you can refer to Kubernetes documentation for it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
+As a Kubernetes cluster administrator, you can refer to Kubernetes documentation to configure it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
 
 ### RULE \#5 - Disable inter-container communication (--icc=false)
 
