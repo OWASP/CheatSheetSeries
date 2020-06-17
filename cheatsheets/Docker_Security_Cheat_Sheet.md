@@ -30,7 +30,7 @@ volumes:
 
 ### RULE \#2 - Set a user
 
-Configuring container to use unprivileged user, is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways as follows:
+Configuring the container to use an unprivileged user is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways as follows:
 
 1. During runtime using `-u` option of `docker run` command e.g.:
 
