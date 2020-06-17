@@ -167,7 +167,7 @@ You can also do this inside Kubernetes: [Assign Memory Resources to Containers a
 docker run --read-only alpine sh -c 'echo "whatever" > /tmp'
 ```
 
-If application inside container has to save something temporarily combine `--read-only` flag with `--tmpfs` like this:
+If an application inside a container has to save something temporarily, combine `--read-only` flag with `--tmpfs` like this:
 
 ```bash
 docker run --read-only --tmpfs /tmp alpine sh -c 'echo "whatever" > /tmp/file'
