@@ -1311,24 +1311,24 @@
                 
                 <h1 id="docker-security-cheat-sheet">Docker Security Cheat Sheet<a class="headerlink" href="#docker-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Docker containers are the most popular containerisation technology. Used properly can increase level of security (in comparison to running application directly on the host). On the other hand some misconfigurations can lead to downgrade level of security or even introduce new vulnerabilities.</p>
-<p>The aim of this cheat sheet is to provide an easy to use list of common security mistakes and good practices that will help you securing your Docker containers.</p>
+<p>Docker is the most popular containerization technology. Upon proper use, it can increase the level of security (in comparison to running applications directly on the host). On the other hand, some misconfigurations can lead to downgrade the level of security or even introduce new vulnerabilities.</p>
+<p>The aim of this cheat sheet is to provide an easy to use list of common security mistakes and good practices that will help you secure your Docker containers.</p>
 <h2 id="rules">Rules<a class="headerlink" href="#rules" title="Permanent link">&para;</a></h2>
 <h3 id="rule-0-keep-host-and-docker-up-to-date">RULE #0 - Keep Host and Docker up to date<a class="headerlink" href="#rule-0-keep-host-and-docker-up-to-date" title="Permanent link">&para;</a></h3>
-<p>To prevent from known, container escapes vulnerabilities, which typically ends in escalating to root/administrator privileges, patching Docker Engine and Docker Machine is crucial.</p>
-<p>In addition containers (unlike in a virtual machines) share kernel with the host, therefore kernel exploit runned inside the container will directly hit host kernel. For example kernel privilege escalation exploit (<a href="https://github.com/scumjr/dirtycow-vdso">like Dirty COW</a>) runned inside well insulated container will result in root access in a host.</p>
+<p>To prevent from known, container escapes vulnerabilities, which typically end in escalating to root/administrator privileges, patching Docker Engine and Docker Machine is crucial.</p>
+<p>In addition, containers (unlike in virtual machines) share the kernel with the host, therefore kernel exploits executed inside the container will directly hit host kernel. For example, kernel privilege escalation exploit (<a href="https://github.com/scumjr/dirtycow-vdso">like Dirty COW</a>) executed inside a well-insulated container will result in root access in a host.</p>
 <h3 id="rule-1-do-not-expose-the-docker-daemon-socket-even-to-the-containers">RULE #1 - Do not expose the Docker daemon socket (even to the containers)<a class="headerlink" href="#rule-1-do-not-expose-the-docker-daemon-socket-even-to-the-containers" title="Permanent link">&para;</a></h3>
-<p>Docker socket <em>/var/run/docker.sock</em> is the UNIX socket that Docker is listening to. This is primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving a unrestricted root access to your host.</p>
-<p><strong>Do not enable <em>tcp</em> Docker daemon socket.</strong>  If you are running docker daemon with <code>-H tcp://0.0.0.0:XXX</code> or similar you are exposing un-encrypted and un-authenticated direct access to the Docker daemon.
-If you really, <strong>really</strong> have to do this you should secure it. Check how to do this <a href="https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option">following Docker official documentation</a>.</p>
-<p><strong>Do not expose <em>/var/run/docker.sock</em> to other containers</strong>. If you are running your docker image with <code>-v /var/run/docker.sock://var/run/docker.sock</code> or similar you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in docker-compose file is somethink like this:</p>
+<p>Docker socket <em>/var/run/docker.sock</em> is the UNIX socket that Docker is listening to. This is the primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving unrestricted root access to your host.</p>
+<p><strong>Do not enable <em>tcp</em> Docker daemon socket.</strong> If you are running docker daemon with <code>-H tcp://0.0.0.0:XXX</code> or similar you are exposing un-encrypted and un-authenticated direct access to the Docker daemon.
+If you really, <strong>really</strong> have to do this, you should secure it. Check how to do this <a href="https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option">following Docker official documentation</a>.</p>
+<p><strong>Do not expose <em>/var/run/docker.sock</em> to other containers</strong>. If you are running your docker image with <code>-v /var/run/docker.sock://var/run/docker.sock</code> or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in the docker-compose file is something like this:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">volumes</span><span class="p">:</span>
 <span class="p p-Indicator">-</span> <span class="s">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span>
 </code></pre></div>
 
 
 <h3 id="rule-2-set-a-user">RULE #2 - Set a user<a class="headerlink" href="#rule-2-set-a-user" title="Permanent link">&para;</a></h3>
-<p>Configuring container, to use unprivileged user, is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways:</p>
+<p>Configuring the container to use an unprivileged user is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways as follows:</p>
 <ol>
 <li>During runtime using <code>-u</code> option of <code>docker run</code> command e.g.:</li>
 </ol>
@@ -1349,8 +1349,8 @@ If you really, <strong>really</strong> have to do this you should secure it. Che
 <ol>
 <li>Enable user namespace support (<code>--userns-remap=default</code>) in <a href="https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon">Docker daemon</a></li>
 </ol>
-<p>More information about this topic can be found in <a href="https://docs.docker.com/engine/security/userns-remap/">Docker official documentation</a></p>
-<p>In kubernetes this can be configured in <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context</a> using <code>runAsNonRoot</code> field e.g.:</p>
+<p>More information about this topic can be found at <a href="https://docs.docker.com/engine/security/userns-remap/">Docker official documentation</a></p>
+<p>In kubernetes, this can be configured in <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context</a> using <code>runAsNonRoot</code> field e.g.:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -1367,9 +1367,9 @@ If you really, <strong>really</strong> have to do this you should secure it. Che
 </code></pre></div>
 
 
-<p>As an Kubernetes cluster administrator you can for it using <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">Pod Security Policies</a>.</p>
+<p>As a Kubernetes cluster administrator, you can configure it using <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">Pod Security Policies</a>.</p>
 <h3 id="rule-3-limit-capabilities-grant-only-specific-capabilities-needed-by-a-container">RULE #3 - Limit capabilities (Grant only specific capabilities, needed by a container)<a class="headerlink" href="#rule-3-limit-capabilities-grant-only-specific-capabilities-needed-by-a-container" title="Permanent link">&para;</a></h3>
-<p><a href="http://man7.org/linux/man-pages/man7/capabilities.7.html">Linux kernel capabilities</a> are set of privileges that can be used by privileged. Docker, by default, runs with only a  subset of capabilities.
+<p><a href="http://man7.org/linux/man-pages/man7/capabilities.7.html">Linux kernel capabilities</a> are a set of privileges that can be used by privileged. Docker, by default, runs with only a  subset of capabilities.
 You can change it and drop some capabilities (using <code>--cap-drop</code>) to harden your docker containers, or add some capabilities (using <code>--cap-add</code>) if needed.
 Remember not to run containers with the <code>--privileged</code> flag - this will add ALL Linux kernel capabilities to the container.</p>
 <p>The most secure setup is to drop all capabilities <code>--cap-drop all</code> and then add only required ones. For example:</p>
@@ -1399,10 +1399,10 @@ Remember not to run containers with the <code>--privileged</code> flag - this wi
 </code></pre></div>
 
 
-<p>As an Kubernetes cluster administrator you can for it using <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">Pod Security Policies</a>.</p>
+<p>As a Kubernetes cluster administrator, you can configure it using <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">Pod Security Policies</a>.</p>
 <h3 id="rule-4-add-no-new-privileges-flag">RULE #4 - Add –no-new-privileges flag<a class="headerlink" href="#rule-4-add-no-new-privileges-flag" title="Permanent link">&para;</a></h3>
 <p>Always run your docker images with <code>--security-opt=no-new-privileges</code> in order to prevent escalate privileges using <code>setuid</code> or <code>setgid</code> binaries.</p>
-<p>In kubernetes this can be configured in <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context</a> using <code>allowPrivilegeEscalation</code> field e.g.:</p>
+<p>In kubernetes, this can be configured in <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context</a> using <code>allowPrivilegeEscalation</code> field e.g.:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -1419,7 +1419,7 @@ Remember not to run containers with the <code>--privileged</code> flag - this wi
 </code></pre></div>
 
 
-<p>As an Kubernetes cluster administrator you can for it using <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">Pod Security Policies</a>.</p>
+<p>As a Kubernetes cluster administrator, you can refer to Kubernetes documentation to configure it using <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">Pod Security Policies</a>.</p>
 <h3 id="rule-5-disable-inter-container-communication-iccfalse">RULE #5 - Disable inter-container communication (--icc=false)<a class="headerlink" href="#rule-5-disable-inter-container-communication-iccfalse" title="Permanent link">&para;</a></h3>
 <p>By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using <a href="https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers"><code>docker0</code> bridged network</a>).
 This can be disabled by running docker daemon with <code>--icc=false</code> flag.
@@ -1427,11 +1427,11 @@ If icc is disabled (icc=false) it is required to tell which containers can commu
 See more in <a href="https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers">Docker documentation - container communication</a></p>
 <p>In Kubernetes <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Network Policies</a> can be used for it.</p>
 <h3 id="rule-6-use-linux-security-module-seccomp-apparmor-or-selinux">RULE #6 - Use Linux Security Module (seccomp, AppArmor, or SELinux)<a class="headerlink" href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux" title="Permanent link">&para;</a></h3>
-<p><strong>First of all do not disable default security profile!</strong></p>
+<p><strong>First of all, do not disable default security profile!</strong></p>
 <p>Consider using security profile like <a href="https://docs.docker.com/engine/security/seccomp/">seccomp</a> or <a href="https://docs.docker.com/engine/security/apparmor/">AppArmor</a>.</p>
-<p>Instructions how to do this inside Kubernetes can be found in <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context documentation</a> and in <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#securitycontext-v1-core">Kubernetes API documentation</a></p>
+<p>Instructions how to do this inside Kubernetes can be found at <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context documentation</a> and in <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#securitycontext-v1-core">Kubernetes API documentation</a></p>
 <h3 id="rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts">RULE #7 - Limit resources (memory, CPU, file descriptors, processes, restarts)<a class="headerlink" href="#rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts" title="Permanent link">&para;</a></h3>
-<p>The best way to avoid DoS attacks is limiting resources. You can limit <a href="https://docs.docker.com/config/containers/resource_constraints/#memory">memory</a>, <a href="https://docs.docker.com/config/containers/resource_constraints/#cpu">CPU</a>, maximum number of restarts (<code>--restart=on-failure:&lt;number_of_restarts&gt;</code>), maximum number of file descriptors (<code>--ulimit nofile=&lt;number&gt;</code>) and maximum number of processes (<code>--ulimit nproc=&lt;number&gt;</code>).</p>
+<p>The best way to avoid DoS attacks is by limiting resources. You can limit <a href="https://docs.docker.com/config/containers/resource_constraints/#memory">memory</a>, <a href="https://docs.docker.com/config/containers/resource_constraints/#cpu">CPU</a>, maximum number of restarts (<code>--restart=on-failure:&lt;number_of_restarts&gt;</code>), maximum number of file descriptors (<code>--ulimit nofile=&lt;number&gt;</code>) and maximum number of processes (<code>--ulimit nproc=&lt;number&gt;</code>).</p>
 <p><a href="https://docs.docker.com/engine/reference/commandline/run/#set-ulimits-in-container---ulimit">Check documentation for more details about ulimits</a></p>
 <p>You can also do this inside Kubernetes: <a href="https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/">Assign Memory Resources to Containers and Pods</a>, <a href="https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/">Assign CPU Resources to Containers and Pods</a> and <a href="https://kubernetes.io/docs/tasks/configure-pod-container/extended-resource/">Assign Extended Resources to a Container
 </a></p>
@@ -1441,12 +1441,12 @@ See more in <a href="https://docs.docker.com/v17.09/engine/userguide/networking/
 </code></pre></div>
 
 
-<p>If application inside container have to save something temporarily combine <code>--read-only</code> flag with <code>--tmpfs</code> like this:</p>
+<p>If an application inside a container has to save something temporarily, combine <code>--read-only</code> flag with <code>--tmpfs</code> like this:</p>
 <div class="codehilite"><pre><span></span><code>docker run --read-only --tmpfs /tmp alpine sh -c <span class="s1">&#39;echo &quot;whatever&quot; &gt; /tmp/file&#39;</span>
 </code></pre></div>
 
 
-<p>Equivalent in docker-compose file will be:</p>
+<p>Equivalent in the docker-compose file will be:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="s">&quot;3&quot;</span>
 <span class="nt">services</span><span class="p">:</span>
   <span class="nt">alpine</span><span class="p">:</span>
@@ -1472,7 +1472,7 @@ See more in <a href="https://docs.docker.com/v17.09/engine/userguide/networking/
 </code></pre></div>
 
 
-<p>In addition if volume is mounted only for reading <strong>mount them as a read-only</strong>
+<p>In addition, if the volume is mounted only for reading <strong>mount them as a read-only</strong>
 It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</p>
 <div class="codehilite"><pre><span></span><code>docker run -v volume-name:/path/in/container:ro alpine
 </code></pre></div>
@@ -1512,7 +1512,7 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
 <li><a href="https://dev-sec.io/baselines/docker/">dev-sec.io</a></li>
 </ul>
 <h3 id="rule-10-set-the-logging-level-to-at-least-info">RULE #10 - Set the logging level to at least INFO<a class="headerlink" href="#rule-10-set-the-logging-level-to-at-least-info" title="Permanent link">&para;</a></h3>
-<p>By default, the Docker daemon is configured to have a base logging level of 'info', and if this is not the case: set the Docker daemon log level to 'info'. Rationale: Setting up an appropriate log level, configures the Docker daemon to log events that you would want to review later. A base log level of 'info' and above would capture all logs except debug logs. Until and unless required, you should not run docker daemon at 'debug' log level.</p>
+<p>By default, the Docker daemon is configured to have a base logging level of 'info', and if this is not the case: set the Docker daemon log level to 'info'. Rationale: Setting up an appropriate log level, configures the Docker daemon to log events that you would want to review later. A base log level of 'info' and above would capture all logs except the debug logs. Until and unless required, you should not run docker daemon at the 'debug' log level.</p>
 <p>To configure the log level in docker-compose:</p>
 <div class="codehilite"><pre><span></span><code>docker-compose --log-level info up
 </code></pre></div>
