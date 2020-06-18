@@ -1,18 +1,15 @@
-Purpose
-=======
+# Purpose
 
 This page has some security recommendations and best practices to follow when developing an API powered by GraphQL.
 
-TL;DR
-=====
+# TL;DR
 
 *   Strict input validation and/or sanitization is highly recommended and easy
 *   Expensive queries can easily lead to a denial of service, but defending against this is not simple
 *   It can be tricky and is very important to implement proper access control (authorization)
 *   Common attacks become much more likely if input from external parties is directly ingested by the service
 
-Common Attacks
-==============
+# Common Attacks
 
 *   Injection
     *   [SSRF](https://portswigger.net/web-security/ssrf) (also [CRLF](https://owasp.org/www-community/vulnerabilities/CRLF_Injection) [injection](https://www.acunetix.com/websitesecurity/crlf-injection/) or [Request](https://portswigger.net/web-security/request-smuggling) [Smuggling](https://www.pentestpartners.com/security-blog/http-request-smuggling-a-how-to/))
@@ -21,11 +18,9 @@ Common Attacks
 *   [IDOR](https://portswigger.net/web-security/access-control/idor) 
 *   Abuse of improper/excessive access
 
-Best Practices and Recommendations
-==================================
+# Best Practices and Recommendations
 
-Input Validation/Sanitization
------------------------------
+## Input Validation/Sanitization
 
 Adding strict input validation/sanitization can help prevent against SSRF, SQL injection, and DoS. The main design for GraphQL is that an identifier is given and the backend has a number of fetchers making HTTP, DB, or other calls. This means that user input will be included in HTTP requests, DB queries, or other requests/calls and there is opportunity for injection that could lead to SSRF or SQL injection. Some pages that may be helpful here are OWASP Cheat Sheets for generic [Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html) or [Java Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html).
 
@@ -53,8 +48,7 @@ Anytime a DB or similar query is being made, any input should be properly parame
 
 When using user input, even if sanitized and/or validated it should not be used for certain purposes that would give a user control over data flow. For example, do not make an HTTP/resource request to a host that the user supplies (unless there is a business need).
 
-Resource Limiting (preventing DoS)
-----------------------------------
+## Resource Limiting (preventing DoS)
 
 > I assume we don't want the "internal vs external" API talk in here?
 
@@ -84,8 +78,7 @@ Enforcing rate limiting on a per IP/user basis can help limit a single user's ab
 
 Or you could get somewhat complex with throttling and implement it in your code (non-trivial). See [here](https://www.howtographql.com/advanced/4-security/) for more about GraphQL-specific throttling.
 
-Access Controls (Authorization)
--------------------------------
+## Access Controls (Authorization)
 
 There are three main areas for managing access/permissions with GraphQL:
 
@@ -109,8 +102,7 @@ Many implementations of GraphQL have Introspection enabled by default and leave 
 
 The safest and usually easiest approach is to just disable introspection system-wide. See [this page](https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/) or consult your GraphQL implementation's documentation to learn how to disable introspection altogether. If your implementation does not natively support disabling introspection or if you would like to allow some consumers/roles to have this access you can build a filter in your service to only allow approved consumers to access the introspection system.
 
-IDOR Protection
----------------
+## IDOR Protection
 
 See the [IDOR prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html) for a comprehensive rundown of preventing IDOR.
 
@@ -120,16 +112,14 @@ More specific to GraphQL, it's likely that you want consumers to be able to prov
 
 One alternative protection would be creating an abstraction of the ID that is usually mapped to the requester's session. For example, instead of the user requesting a picture via its direct ID, they would request picture 2 in their account and the backend would use that abstract ID with the user's ID to derive the actual direct ID of the picture. This prevents the user from being able to provide their own direct identifier for an object and ensures that the user can only access objects belonging to them. Another abstraction mechanism could involve using different IDs for the frontend vs the backend with some unpredictable translation that happens on the backend where the user does not have any influence.
 
-Follow General User Input Best Practices
-----------------------------------------
+## Follow General User Input Best Practices
 
 This section is meant to cover general best practices for handling user input and what not to do. Some of these would include:
 
 *   Do not add any user input to a system call or similar
 *   Do not add raw user input directly in an HTTP request or response (neither in the body nor the headers)
 
-Other Resources
-===============
+# Other Resources
 
 > I went overboard with external resources, so these should probably be pared down a bunch.
 
