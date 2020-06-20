@@ -58,7 +58,7 @@ It is essential to employ security practices for the reset codes and tokens that
 - Short lifetime (*e.g.* 30 minutes).
 - Linked to the user requesting the token in the database.
 - One time use (should be removed from the database once used).
-- Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md) and the [Cryptographic Storage CS](Cryptographic_Storage_Cheat_Sheet.md).
+- Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md).
 - Tokens should be long enough to avoid brute-force attacks (16 characters should be the minimum used).
 - Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. When need be, implement a robust whitelist of the allowed Hosts.
 
@@ -92,7 +92,6 @@ Backup codes should be provided to the user upon registering where the user shou
 While implementing this method, the following practices should be followed:
 
 - Minimum length of 8 digits, 12 for improved security.
-- If the service allows users to view the backup codes, the codes should be [securely stored](Cryptographic_Storage_Cheat_Sheet.md) and access should only happen in an authenticated session after asking for a user identifier (password, email token, 2FA, etc.).
 - A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
 - Code renewal or revocation service.
 
