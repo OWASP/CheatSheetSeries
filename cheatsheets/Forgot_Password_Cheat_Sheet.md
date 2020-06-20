@@ -94,6 +94,16 @@ While implementing this method, the following practices should be followed:
 - A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
 - Code renewal or revocation service.
 
+#### Multi-Factor Authentication
+
+Multi-Factor Authentication (MFA) can be used as a reset password mechanism if the configured MFA service is specific to this mechanism, and a user is not using it as part of their login process.
+
+This is configured on registration, or later on in the user's profile if they wish to enable it.
+
+For more on MFA, refer to the [MFA CS](Multifactor_Authentication_Cheat_Sheet.md).
+
+*Note:* Using the same MFA regitration for both the login process and the reset password process becomes a weakness. A user (or a malicious actor) is capable of resetting the password using the MFA for resetting the password, then using that password and MFA to login, which breaks the purpose of MFA.
+
 ### Security Questions
 
 Security questions should not be used as the sole mechanism for resetting passwords due to weakness related to their implementations, where the questions could be either guessed or generic. However, if they are used as a factor, then ensure that secure questions are chosen as discussed in the [Security Questions CS](Choosing_and_Using_Security_Questions_Cheat_Sheet.md).
