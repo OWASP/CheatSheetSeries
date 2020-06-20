@@ -81,23 +81,11 @@ Second flow:
 1. Access the URL with the attached token. Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
 2. Let the user create a new password and confirm it. Ensure that the password policy is applied.
 
-### One Time Password
+### Offline Methods
 
-One Time Password (OTP) is the best method in order to implement a secure forgot password service that triggers as a 2FA functionality.
+Offline methods provide the user at registration with methods that the user would store in an offline manner and then use at a later stage for the sole purpose of resetting their accounts.
 
-The two most well-known methods are Time-OTP ([TOTP](https://tools.ietf.org/html/rfc6238)), or HMAC-OTP ([HOTP](https://tools.ietf.org/html/rfc4226)). The main difference is in the counter, where TOTP focuses on the Unix time, and HOTP has a counter that gets incremented on every user call to generate the OTP.
-
-For a better description of OTP generation, refer to the [MFA CS](Multifactor_Authentication_Cheat_Sheet.md#something-you-have), where the pros and cons of every implementation are provided.
-
-One implementation can be found over for [Authy](https://www.twilio.com/docs/authy/tutorials/two-factor-authentication-python-flask). If you don't want to rely on applications (such as Authy, Google/Microsoft Authenticator, etc.), there are libraries like pyotp, which helps the developer implement on their own any of the methods discussed in this section.
-
-> OTPs can be sent through other channels as well, such as emails and SMSs. [Various attacks and weaknesses](https://en.wikipedia.org/wiki/SIM_swap_scam) have been identified in SMS that it is [preferrable not to use them for OTPs](https://auth0.com/blog/why-sms-multi-factor-still-matters/).
-
-### Security Questions
-
-Security questions should not be used as the sole mechanism for resetting passwords due to weakness related to their implementations, where the questions could be either guessed or generic. However, if they are used as a factor, then ensure that secure questions are chosen as discussed in the [Security Questions CS](Choosing_and_Using_Security_Questions_Cheat_Sheet.md).
-
-### Backup Codes
+#### Backup Codes
 
 Backup codes should be provided to the user upon registering where the user should store them offline in a secure place (password managers). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
 
@@ -107,3 +95,7 @@ While implementing this method, the following practices should be followed:
 - If the service allows users to view the backup codes, the codes should be [securely stored](Cryptographic_Storage_Cheat_Sheet.md) and access should only happen in an authenticated session after asking for a user identifier (password, email token, 2FA, etc.).
 - A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
 - Code renewal or revocation service.
+
+### Security Questions
+
+Security questions should not be used as the sole mechanism for resetting passwords due to weakness related to their implementations, where the questions could be either guessed or generic. However, if they are used as a factor, then ensure that secure questions are chosen as discussed in the [Security Questions CS](Choosing_and_Using_Security_Questions_Cheat_Sheet.md).
