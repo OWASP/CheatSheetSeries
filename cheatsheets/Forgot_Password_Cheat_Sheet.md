@@ -82,7 +82,7 @@ Second flow:
 
 ### Offline Methods
 
-Offline methods provide the user at registration with methods that the user would store in an offline manner and then use at a later stage for the sole purpose of resetting their accounts.
+Offline methods differ from other methods by allowing the user to reset their password without requesting a special identifier (*e.g.* tokens, codes, etc. that are requested to reset the password) from the backend. Validation still needs to be conducted by the backend. These offline methods provide a certain identifier either on registration, or when the user wishes to configure it. These identifiers should be stored offline and in a secure fashion (*e.g.* password managers), and the backend should properly follow the [general security practices](#general-security-practices)
 
 #### Backup Codes
 
