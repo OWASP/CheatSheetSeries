@@ -2,7 +2,7 @@
 
 ## Introduction
 
-- Strict input validation and/or sanitization is highly recommended and easy
+- Strict input validation is highly recommended and easy
 - Expensive queries can easily lead to a denial of service, but defending against this is not simple
 - It can be tricky and is very important to implement proper access control (authorization)
 - Common attacks become much more likely if input from external parties is directly ingested by the service
@@ -18,11 +18,11 @@
 
 ## Best Practices and Recommendations
 
-### Input Validation/Sanitization
+### Input Validation
 
-Adding strict input validation/sanitization can help prevent against SSRF, SQL injection, and DoS. The main design for GraphQL is that an identifier is given and the backend has a number of fetchers making HTTP, DB, or other calls. This means that user input will be included in HTTP requests, DB queries, or other requests/calls and there is opportunity for injection that could lead to SSRF or SQL injection. Some pages that may be helpful here are OWASP Cheat Sheets for generic [Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html) or [Java Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html).
+Adding strict input validation can help prevent against SSRF, SQL injection, and DoS. The main design for GraphQL is that an identifier is given and the backend has a number of fetchers making HTTP, DB, or other calls. This means that user input will be included in HTTP requests, DB queries, or other requests/calls and there is opportunity for injection that could lead to SSRF or SQL injection. Some pages that may be helpful here are OWASP Cheat Sheets for generic [Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html) or [Java Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html).
 
-#### How to: validation
+#### General Practices
 
 > We can probably nix this section and just link to the Input Validation Cheat Sheet. I'll leave for now in case there is anything of value somebody else sees and thinks should be left in.
 
@@ -32,21 +32,15 @@ This can be achieved by using specific GraphQL types (such as numbers or enums) 
 
 See the OWASP Cheat Sheet on [Input Validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) for more info.
 
-#### How to: sanitization
-
-A slight tweak to input validation that may be more user friendly is stripping any characters that are not in an allowed whitelist and using the resulting string that now has only allowed characters. This would not result in an error being thrown when given illegal characters but may confuse a user if the string they gave is not what is actually used for a data lookup or other call.
-
-Another option is sanitizing the input by encoding it with the proper encoding method for the context the data will be placed into. For example when placing user input in an HTTP GET parameter in a URI or in an HTTP POST body it must be [URL encoded](https://www.w3schools.com/tags/ref_urlencode.asp) (this is **not** the same as HTML encoding/entities). URL encoding is also known as "[standard percent encoding](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#output-encoding-rules-summary)".
-
-#### How to: parameterize downstream queries/calls
+#### SQL Injection Prevention
 
 Anytime a DB or similar query is being made, any input should be properly parameterized with prepared statements or stored procedures in order to prevent SQL/DB injection. See the [OWASP Cheat Sheet for SQL Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html) for more info.
 
-#### How to: use user input appropriately
+#### Process Validation
 
 When using user input, even if sanitized and/or validated it should not be used for certain purposes that would give a user control over data flow. For example, do not make an HTTP/resource request to a host that the user supplies (unless there is a business need).
 
-### Resource Limiting (preventing DoS)
+### Resource Management
 
 > I assume we don't want the "internal vs external" API talk in here?
 
@@ -76,7 +70,7 @@ Enforcing rate limiting on a per IP/user basis can help limit a single user's ab
 
 Or you could get somewhat complex with throttling and implement it in your code (non-trivial). See [here](https://www.howtographql.com/advanced/4-security/) for more about GraphQL-specific throttling.
 
-### Access Controls (Authorization)
+### Access Control
 
 There are three main areas for managing access/permissions with GraphQL:
 
@@ -86,15 +80,15 @@ There are three main areas for managing access/permissions with GraphQL:
 
 Each of these need to have permission checks for most GraphQL setups.
 
-#### How to: Query access
+#### Query Access
 
 As part of a GraphQL API there will be various data fields that can be returned. One thing to consider is if you want different levels of access around these fields. For example, you may only want certain consumers to be able to fetch certain data fields rather than allowing all consumers to be able to retrieve all available fields. This can be done by adding a check in the code to ensure that the requestor should be able to read a field they are trying to fetch. This may be best implemented with simple [role-based access control](https://auth0.com/docs/authorization/concepts/rbac) ([RBAC](https://en.wikipedia.org/wiki/Role-based_access_control)): by creating roles which have access to certain fields and then attaching the correct roles to individual consumers/users. ABAC or other access control methods could also work.
 
-#### How to: Mutation access
+#### Mutation Access
 
 GraphQL supports mutation, or manipulation of data, in addition to its most common use case of data fetching. If your service implements/allows mutation then there may need to be access controls put in place to restrict which consumers, if any, can modify data through the API. Setups requiring mutation access control include APIs where only read access is intended or where only certain parties should be able to modify certain fields. This should be implemented similarly to Query access: use [RBAC](https://auth0.com/docs/authorization/concepts/rbac) and have the code only allow certain roles to perform mutation on approved data fields.
 
-#### How to: Introspection system access
+#### Introspection
 
 Many implementations of GraphQL have Introspection enabled by default and leave it accessible to any incoming requests without requiring authentication. This is usually problematic because introspection allows the requester to learn all about supported schema and queries (see a [real-world example](https://hackerone.com/reports/291531) abusing this). Introspection might be how the API owner wants to educate consumers about how to use the API. However, the preferred way to educate consumers about a service is through a separate documentation channel such as a wiki, Git Readme, or readthedocs.
 
@@ -109,13 +103,6 @@ More specific to GraphQL, it's likely that you want consumers to be able to prov
 > The additional mitigation technique below probably belongs in the IDOR prevention cheat sheet but isn't there so I'll leave it here for now.
 
 One alternative protection would be creating an abstraction of the ID that is usually mapped to the requester's session. For example, instead of the user requesting a picture via its direct ID, they would request picture 2 in their account and the backend would use that abstract ID with the user's ID to derive the actual direct ID of the picture. This prevents the user from being able to provide their own direct identifier for an object and ensures that the user can only access objects belonging to them. Another abstraction mechanism could involve using different IDs for the frontend vs the backend with some unpredictable translation that happens on the backend where the user does not have any influence.
-
-### Follow General User Input Best Practices
-
-This section is meant to cover general best practices for handling user input and what not to do. Some of these would include:
-
-- Do not add any user input to a system call or similar
-- Do not add raw user input directly in an HTTP request or response (neither in the body nor the headers)
 
 ## Other Resources
 
