@@ -4,16 +4,19 @@
 
 In order to implement a proper user management system, systems integrate a **Forgot Password** service that allows the user to request a password reset.
 
-Even though this functionality looks straightforward and easy to implement, the details of its implementation makes it a sweet spot for security attacks, such as the renowned [user enumeration attack](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.html).
+Even though this functionality looks straightforward and easy to implement, it is a common source of vulnerabilities, such as the renowned [user enumeration attack](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.html).
 
 The following short guidelines can be used as a quick reference to protect the forgot password service:
 
-- **Return a consistent message for both existent and nonexistent accounts.**
+- **Return a consistent message for both existent and non-existent accounts.**
 - **Ensure that the time taken for the user response message is uniform.**
 - **Use a side-channel to communicate the method to reset their password.**
 - **Use [URL tokens](#url-tokens) for the simplest and fastest implementation.**
-- **Ensure the safe storage of the identifier generated.**
-- **Identifiers should be in most implementations one-time usage.**
+- **Ensure that generated tokens or codes are:**
+  - **Randomly genererated using a cryptographically safe algorithm.**
+  - **Sufficiently long to protect against brute-force attacks.**
+  - **Stored securely.**
+  - **Single use and expire after an appropriate period.**
 
 ## Forgot Password Service
 
@@ -23,21 +26,21 @@ The service providing the Forgot Password functionality should follow secure pra
 
 When a user uses the forgot password service and inputs their username or email, the below should be followed to implement a secure process:
 
-- Return a consistent message for both existent and nonexistent accounts.
-- Consistent user response time. That could be achieved by using asynchronous calls or by making sure that the same logic is followed, instead of using a quick exit method.
-- Rate-limiting (*e.g.* Captchas, blocking IPs for a period of time, etc.) to protect the application against [brute-force attacks](https://en.wikipedia.org/wiki/Brute-force_attack).
-- Employ normal security measures, such as [SQL Injection Prevention methods](SQL_Injection_Prevention_Cheat_Sheet.md) and [Input Validation](Input_Validation_Cheat_Sheet.md) where need be.
+- Return a consistent message for both existent and non-existent accounts.
+- Ensure that responses return in a consistent amount of time to prevent an attacker enumerating which accounts exist. This could be achieved by using asynchronous calls or by making sure that the same logic is followed, instead of using a quick exit method.
+- Implement protections against automated submissions such as CAPTCHA, rate-limiting or other controls.
+- Employ normal security measures, such as [SQL Injection Prevention methods](SQL_Injection_Prevention_Cheat_Sheet.md) and [Input Validation](Input_Validation_Cheat_Sheet.md).
 
 ### User Resets Password
 
-Once the user is validated through the provided token or code, they should reset their password to a new secure one. In order to secure this step, the measures that should be taken are:
+Once the user has proved their identify by providing the token (sent via an email) or code (sent via SMS or other mechanisms), they should reset their password to a new secure one. In order to secure this step, the measures that should be taken are:
 
-- Validate that a secure password policy is in place.
 - The user should confirm the password they set by writing it twice.
+- Ensure that a secure password policy is in place, and is consistent with the rest of the application.
 - Update and store the password following [secure practices](Password_Storage_Cheat_Sheet.md).
 - Send the user an email informing them that their password has been reset (do not send the password in the email!).
-- Ask the user to re-login. Don't auto-login users on password reset!
-- Ask the user if they want to invalidate all of the sessions, or invalidate the sessions by default without prompting the user.
+- Once they have set their new password, the user should then login through the usual mechanism. Don't automatically log the user.
+- Ask the user if they want to invalidate all of their existing sessions, or invalidate the sessions automatically.
 
 ## Methods
 
@@ -50,53 +53,64 @@ This can be done through any of the following methods:
 - [Offline methods](#offline-methods)
 - [Security questions](#security-questions).
 
-These methods can be used together, and in a lot of implementations, it is recommended to do so. No matter what, you must ensure that a user always has a way to recover their account.
+These methods can be used together to provide a greater degree of assurance that the user is who they claim to be. No matter what, you must ensure that a user always has a way to recover their account, even if that involves contacting the support team and proving their identity to staff.
 
 ### General Security Practices
 
-It is essential to employ security practices for the reset identifiers (tokens, codes, PINs, etc.). Some points don't apply to the [offline methods](#offline-methods), such as the lifetime restriction.
+It is essential to employ good security practices for the reset identifiers (tokens, codes, PINs, etc.). Some points don't apply to the [offline methods](#offline-methods), such as the lifetime restriction. All tokens and codes should be:
 
-- [Secure random generation](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
-- Linked to the user in the database.
-- One time use (should be removed from the database once used).
-- Ensure that they are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md).
+- Generated [cryptographically secure random number generator](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
+  - It is also possible to use JSON Web Tokens (JWTs) in place of random tokens, although this can introduce additional vulnerability, such as those discussed in the [JSON Web Token Cheat Sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md).
+- Long enough to protect against brute-force attacks.
+- Linked to an individual user in the database.
+- Invalidated after they have been used.
+- Stored in a secure manner, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md).
 
 ### URL Tokens
 
-URL tokens provide access control to the user by sending a URL with a token appended in the querystring. It is sent through a side-channel, *e.g.* email.
+URL tokens are passed in the query string of the URL, and are typically sent to the user via email. The basic overview of the process is as follows:
 
-1. Generate a token to the user and attach it in the URL querystring.
-   - If a JWT is used to replace the session creation, it is critical that security best practices are employed for the JWT (*e.g.* enforced algorithm, no sensitive data in the payload, etc.).
-   - Tokens should be long enough to avoid brute-force attacks (16 characters should be the minimum used).
-   - Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. When need be, implement a robust whitelist of the allowed Hosts.
-2. Access the URL with the attached token. Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
-3. Let the user create a new password and confirm it. Ensure that the password policy is applied.
+1. Generate a token to the user and attach it in the URL query string.
+2. Send this token to the user via email.
+   - Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. The URL should be either be hard-coded, or should be validated against a whitelist of trusted domains.
+   - Ensure that the URL is using HTTPS.
+3. The user receives the email, and browses to the URL with the attached token.
+  - Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
+  - Implement appropriate protection to prevent users from brute-forcing tokens in the URL, such as rate limiting.
+4. If required, perform any additional validation steps such as requiring the user to answer [security questions](#security-questions).
+5. Let the user create a new password and confirm it. Ensure that the same password policy used elsewhere in the application is applied.
 
 *Note:* URL tokens can follow on the same behavior of the [PINs](#pins) by creating a restricted session from the token. Decision should be made based on the needs and the expertise of the developer.
 
 ### PINs
 
-PINs are numbers (between 6 and 12 digits) that are sent to the user through a side-channel, *e.g.* email.
+PINs are numbers (between 6 and 12 digits) that are sent to the user through a side-channel such as SMS.
 
-1. Generate a PIN to the user.
-2. The user will have to set that PIN on the reset password page.
-3. Create a restricted session from that PIN that permits the user to reset their password.
-4. Let the user create a new password and confirm it. Ensure that the password policy is applied.
+1. Generate a PIN.
+2. Send it to the user via SMS or another mechanism.
+  - Breaking the PIN up with spaces makes it easier for the user to read and enter.
+3. The user then enters the PIN along with their username on the password reset page.
+4. Create a limited session from that PIN that only permits the user to reset their password.
+5. Let the user create a new password and confirm it. Ensure that the same password policy used elsewhere in the application is applied.
 
 ### Offline Methods
 
-Offline methods differ from other methods by allowing the user to reset their password without requesting a special identifier (*e.g.* tokens, codes, etc. that are requested to reset the password) from the backend. Validation still needs to be conducted by the backend. These offline methods provide a certain identifier either on registration, or when the user wishes to configure it. These identifiers should be stored offline and in a secure fashion (*e.g.* password managers), and the backend should properly follow the [general security practices](#general-security-practices). Some implementations are built on [hardware OTP tokens](Multifactor_Authentication_Cheat_Sheet.md#hardware-otp-tokens), [certificates](Multifactor_Authentication_Cheat_Sheet.md#certificates), or any other implementation that could be used inside of an enterprise. These are out of scope for this CS.
+Offline methods differ from other methods by allowing the user to reset their password without requesting a special identifier (such as a token or PIN) from the backend. However, authentication still needs to be conducted by the backend to ensure that the request is legitimate. Offline methods provide a certain identifier either on registration, or when the user wishes to configure it.
+
+
+These identifiers should be stored offline and in a secure fashion (*e.g.* password managers), and the backend should properly follow the [general security practices](#general-security-practices). Some implementations are built on [hardware OTP tokens](Multifactor_Authentication_Cheat_Sheet.md#hardware-otp-tokens), [certificates](Multifactor_Authentication_Cheat_Sheet.md#certificates), or any other implementation that could be used inside of an enterprise. These are out of scope for this cheat sheet.
 
 #### Backup Codes
 
-Backup codes should be provided to the user upon registering where the user should store them offline in a secure place (password managers). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
+Backup codes should be provided to the user upon registering where the user should store them offline in a secure place (such as their password manager). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
 
 While implementing this method, the following practices should be followed:
 
 - Minimum length of 8 digits, 12 for improved security.
-- A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
-- Code renewal or revocation service.
+- A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with ten backup codes).
+- A process should be implemented to allow the user to invalidate all existing recovery codes, in case they are compromised by a third party.
+- Rate limiting and other protections should be implemented to prevent an attacker from brute-forcing the backup codes.
 
 ### Security Questions
 
-Security questions should not be used as the sole mechanism for resetting passwords due to weakness related to their implementations, where the questions could be either guessed or generic. However, if they are used as a factor, then ensure that secure questions are chosen as discussed in the [Security Questions CS](Choosing_and_Using_Security_Questions_Cheat_Sheet.md).
+Security questions should not be used as the sole mechanism for resetting passwords due to their answers frequently being easily guessable or obtainable by attackers. However, they can provide an additional layer of security when combined with the other methods discussed in this cheat sheet. If they are used, then ensure that secure questions are chosen as discussed in the [Security Questions cheat sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md).
