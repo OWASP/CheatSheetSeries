@@ -39,7 +39,7 @@ Once the user has proved their identify by providing the token (sent via an emai
 - Ensure that a secure password policy is in place, and is consistent with the rest of the application.
 - Update and store the password following [secure practices](Password_Storage_Cheat_Sheet.md).
 - Send the user an email informing them that their password has been reset (do not send the password in the email!).
-- Once they have set their new password, the user should then login through the usual mechanism. Don't automatically log the user.
+- Once they have set their new password, the user should then login through the usual mechanism. Don't automatically log the user in, as this introduces additional complexity to the authentication and session handling code, and increases the likelihood of introducing vulnerabilities.
 - Ask the user if they want to invalidate all of their existing sessions, or invalidate the sessions automatically.
 
 ## Methods
