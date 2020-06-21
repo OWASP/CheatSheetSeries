@@ -13,10 +13,10 @@ The following short guidelines can be used as a quick reference to protect the f
 - **Use a side-channel to communicate the method to reset their password.**
 - **Use [URL tokens](#url-tokens) for the simplest and fastest implementation.**
 - **Ensure that generated tokens or codes are:**
-  - **Randomly genererated using a cryptographically safe algorithm.**
-  - **Sufficiently long to protect against brute-force attacks.**
-  - **Stored securely.**
-  - **Single use and expire after an appropriate period.**
+    - **Randomly genererated using a cryptographically safe algorithm.**
+    - **Sufficiently long to protect against brute-force attacks.**
+    - **Stored securely.**
+    - **Single use and expire after an appropriate period.**
 
 This cheat sheet is focused on resetting users passwords. For guidance on resetting multifactor authentication (MFA), see the relevant section in the [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.html#resetting-mfa).
 
@@ -62,7 +62,7 @@ These methods can be used together to provide a greater degree of assurance that
 It is essential to employ good security practices for the reset identifiers (tokens, codes, PINs, etc.). Some points don't apply to the [offline methods](#offline-methods), such as the lifetime restriction. All tokens and codes should be:
 
 - Generated [cryptographically secure random number generator](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
-  - It is also possible to use JSON Web Tokens (JWTs) in place of random tokens, although this can introduce additional vulnerability, such as those discussed in the [JSON Web Token Cheat Sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md).
+    - It is also possible to use JSON Web Tokens (JWTs) in place of random tokens, although this can introduce additional vulnerability, such as those discussed in the [JSON Web Token Cheat Sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md).
 - Long enough to protect against brute-force attacks.
 - Linked to an individual user in the database.
 - Invalidated after they have been used.
@@ -77,8 +77,8 @@ URL tokens are passed in the query string of the URL, and are typically sent to 
    - Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. The URL should be either be hard-coded, or should be validated against a whitelist of trusted domains.
    - Ensure that the URL is using HTTPS.
 3. The user receives the email, and browses to the URL with the attached token.
-  - Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
-  - Implement appropriate protection to prevent users from brute-forcing tokens in the URL, such as rate limiting.
+   - Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
+   - Implement appropriate protection to prevent users from brute-forcing tokens in the URL, such as rate limiting.
 4. If required, perform any additional validation steps such as requiring the user to answer [security questions](#security-questions).
 5. Let the user create a new password and confirm it. Ensure that the same password policy used elsewhere in the application is applied.
 
@@ -90,7 +90,7 @@ PINs are numbers (between 6 and 12 digits) that are sent to the user through a s
 
 1. Generate a PIN.
 2. Send it to the user via SMS or another mechanism.
-  - Breaking the PIN up with spaces makes it easier for the user to read and enter.
+   - Breaking the PIN up with spaces makes it easier for the user to read and enter.
 3. The user then enters the PIN along with their username on the password reset page.
 4. Create a limited session from that PIN that only permits the user to reset their password.
 5. Let the user create a new password and confirm it. Ensure that the same password policy used elsewhere in the application is applied.
@@ -98,7 +98,6 @@ PINs are numbers (between 6 and 12 digits) that are sent to the user through a s
 ### Offline Methods
 
 Offline methods differ from other methods by allowing the user to reset their password without requesting a special identifier (such as a token or PIN) from the backend. However, authentication still needs to be conducted by the backend to ensure that the request is legitimate. Offline methods provide a certain identifier either on registration, or when the user wishes to configure it.
-
 
 These identifiers should be stored offline and in a secure fashion (*e.g.* password managers), and the backend should properly follow the [general security practices](#general-security-practices). Some implementations are built on [hardware OTP tokens](Multifactor_Authentication_Cheat_Sheet.md#hardware-otp-tokens), [certificates](Multifactor_Authentication_Cheat_Sheet.md#certificates), or any other implementation that could be used inside of an enterprise. These are out of scope for this cheat sheet.
 
