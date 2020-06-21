@@ -43,7 +43,8 @@ In order to allow a user to request a password reset, you will need to have some
 
 This can be done through any of the following methods:
 
-- [URL tokens](#url-tokens-or-codes).
+- [URL tokens](#url-tokens).
+- [PINs](#pins)
 - [Offline methods](#offline-methods)
 - [Security questions](#security-questions).
 
@@ -51,34 +52,34 @@ These methods can be used together and many times it is recommended to do so. No
 
 ### General Security Practices
 
-It is essential to employ security practices for the reset codes and tokens that will be used in the methods.
+It is essential to employ security practices for the reset identifiers (tokens, codes, PINs, etc.). Some points don't apply to the [offline methods](#offline-methods) such as the lifetime restriction.
 
 - [Secure random generation](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
-- Short lifetime (*e.g.* 30 minutes).
-- Linked to the user requesting the token in the database.
+- Linked to the user in the database.
 - One time use (should be removed from the database once used).
-- Ensure that the tokens and codes are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md).
-- Tokens should be long enough to avoid brute-force attacks (16 characters should be the minimum used).
-- Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. When need be, implement a robust whitelist of the allowed Hosts.
+- Ensure that they are stored in a secure fashion by following the [Password Storage CS](Password_Storage_Cheat_Sheet.md).
 
-### URL Tokens or Codes
+### URL Tokens
 
-URL tokens provide access control to the user by sending a URL with a token appended in the querystring, or by sending a code. They are both sent through a side-channel, *e.g.* email.
+URL tokens provide access control to the user by sending a URL with a token appended in the querystring. It is sent through a side-channel, *e.g.* email.
 
-If a code is provided to the user, the user will have to provide that code manually to the application.
-
-If a URL with a token is provided to the user, 2 flows present themselves:
-
-First flow:
-
-1. Access the URL with the attached token.
-2. Create a restricted session from that token that permits the user to reset their password. If a JWT is used to replace the session creation, it is critical that security best practices are employed for the JWT (*e.g.* enforced algorithm, no sensitive data in the payload, etc.).
+1. Generate a token to the user and attach it in the URL querystring.
+   - If a JWT is used to replace the session creation, it is critical that security best practices are employed for the JWT (*e.g.* enforced algorithm, no sensitive data in the payload, etc.).
+   - Tokens should be long enough to avoid brute-force attacks (16 characters should be the minimum used).
+   - Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. When need be, implement a robust whitelist of the allowed Hosts.
+2. Access the URL with the attached token. Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
 3. Let the user create a new password and confirm it. Ensure that the password policy is applied.
 
-Second flow:
+*Note:* URL tokens can follow on the same behavior of the [PINs](#pins) by creating a restricted session from the token. Decision should be made based on the needs and the expertise of the developer.
 
-1. Access the URL with the attached token. Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
-2. Let the user create a new password and confirm it. Ensure that the password policy is applied.
+### PINs
+
+PINs are numbers (between 6 and 12 digits) that are sent to the user through a side-channel, *e.g.* email.
+
+1. Generate a PIN to the user.
+2. The user will have to set that PIN on the reset password page.
+3. Create a restricted session from that PIN that permits the user to reset their password.
+4. Let the user create a new password and confirm it. Ensure that the password policy is applied.
 
 ### Offline Methods
 
