@@ -18,6 +18,8 @@ The following short guidelines can be used as a quick reference to protect the f
   - **Stored securely.**
   - **Single use and expire after an appropriate period.**
 
+This cheat sheet is focused on resetting users passwords. For guidance on resetting multifactor authentication (MFA), see the relevant section in the [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.html#resetting-mfa).
+
 ## Forgot Password Service
 
 The service providing the Forgot Password functionality should follow secure practices, as detailed below.
