@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In order to implement a proper user management system, almost all systems integrate a **Forgot Password** service, which allows the user to request a reset to their password whenever they forget any of them, or if their account ever gets breached.
+In order to implement a proper user management system, systems integrate a **Forgot Password** service that allows the user to request a password reset.
 
 Even though this functionality looks straightforward and easy to implement, the details of its implementation makes it a sweet spot for security attacks, such as the renowned [user enumeration attack](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.html).
 
@@ -11,7 +11,9 @@ The following short guidelines can be used as a quick reference to protect the f
 - **Return a consistent message for both existent and nonexistent accounts.**
 - **Ensure that the time taken for the user response message is uniform.**
 - **Use a side-channel to communicate the method to reset their password.**
-- **For critical services and applications, MFA should be used.**
+- **Use [URL tokens](#url-tokens) for the simplest and fastest implementation.**
+- **Ensure the safe storage of the identifier generated.**
+- **Identifiers should be in most implementations one-time usage.**
 
 ## Forgot Password Service
 
@@ -19,7 +21,7 @@ The service providing the Forgot Password functionality should follow secure pra
 
 ### Forgot Password Request
 
-The user uses the forgot password service and inputs their username or email. To ensure the security on this stage, the below should be implemented:
+When a user uses the forgot password service and inputs their username or email, the below should be followed to implement a secure process:
 
 - Return a consistent message for both existent and nonexistent accounts.
 - Consistent user response time. That could be achieved by using asynchronous calls or by making sure that the same logic is followed, instead of using a quick exit method.
@@ -28,7 +30,7 @@ The user uses the forgot password service and inputs their username or email. To
 
 ### User Resets Password
 
-Once the user is validated through the provided token or code, they should reset their password to a new secure one. In order to secure this last step, the measures should be taken:
+Once the user is validated through the provided token or code, they should reset their password to a new secure one. In order to secure this step, the measures that should be taken are:
 
 - Validate that a secure password policy is in place.
 - The user should confirm the password they set by writing it twice.
@@ -48,11 +50,11 @@ This can be done through any of the following methods:
 - [Offline methods](#offline-methods)
 - [Security questions](#security-questions).
 
-These methods can be used together and many times it is recommended to do so. No matter what you must ensure that a user always has a way to recover their account.
+These methods can be used together, and in a lot of implementations, it is recommended to do so. No matter what, you must ensure that a user always has a way to recover their account.
 
 ### General Security Practices
 
-It is essential to employ security practices for the reset identifiers (tokens, codes, PINs, etc.). Some points don't apply to the [offline methods](#offline-methods) such as the lifetime restriction.
+It is essential to employ security practices for the reset identifiers (tokens, codes, PINs, etc.). Some points don't apply to the [offline methods](#offline-methods), such as the lifetime restriction.
 
 - [Secure random generation](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
 - Linked to the user in the database.
