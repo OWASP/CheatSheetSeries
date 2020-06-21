@@ -83,7 +83,7 @@ PINs are numbers (between 6 and 12 digits) that are sent to the user through a s
 
 ### Offline Methods
 
-Offline methods differ from other methods by allowing the user to reset their password without requesting a special identifier (*e.g.* tokens, codes, etc. that are requested to reset the password) from the backend. Validation still needs to be conducted by the backend. These offline methods provide a certain identifier either on registration, or when the user wishes to configure it. These identifiers should be stored offline and in a secure fashion (*e.g.* password managers), and the backend should properly follow the [general security practices](#general-security-practices)
+Offline methods differ from other methods by allowing the user to reset their password without requesting a special identifier (*e.g.* tokens, codes, etc. that are requested to reset the password) from the backend. Validation still needs to be conducted by the backend. These offline methods provide a certain identifier either on registration, or when the user wishes to configure it. These identifiers should be stored offline and in a secure fashion (*e.g.* password managers), and the backend should properly follow the [general security practices](#general-security-practices). Some implementations are built on [hardware OTP tokens](Multifactor_Authentication_Cheat_Sheet.md#hardware-otp-tokens), [certificates](Multifactor_Authentication_Cheat_Sheet.md#certificates), or any other implementation that could be used inside of an enterprise. These are out of scope for this CS.
 
 #### Backup Codes
 
@@ -94,16 +94,6 @@ While implementing this method, the following practices should be followed:
 - Minimum length of 8 digits, 12 for improved security.
 - A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with 10 backup codes).
 - Code renewal or revocation service.
-
-#### Multi-Factor Authentication
-
-Multi-Factor Authentication (MFA) can be used as a reset password mechanism if the configured MFA service is specific to this mechanism, and a user is not using it as part of their login process.
-
-This is configured on registration, or later on in the user's profile if they wish to enable it.
-
-For more on MFA, refer to the [MFA CS](Multifactor_Authentication_Cheat_Sheet.md).
-
-*Note:* Using the same MFA regitration for both the login process and the reset password process becomes a weakness. A user (or a malicious actor) is capable of resetting the password using the MFA for resetting the password, then using that password and MFA to login, which breaks the purpose of MFA.
 
 ### Security Questions
 
