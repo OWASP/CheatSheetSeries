@@ -35,7 +35,7 @@ When a user uses the forgot password service and inputs their username or email,
 
 ### User Resets Password
 
-Once the user has proved their identify by providing the token (sent via an email) or code (sent via SMS or other mechanisms), they should reset their password to a new secure one. In order to secure this step, the measures that should be taken are:
+Once the user has proved their identity by providing the token (sent via an email) or code (sent via SMS or other mechanisms), they should reset their password to a new secure one. In order to secure this step, the measures that should be taken are:
 
 - The user should confirm the password they set by writing it twice.
 - Ensure that a secure password policy is in place, and is consistent with the rest of the application.
