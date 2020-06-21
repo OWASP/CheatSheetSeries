@@ -30,7 +30,7 @@ Consider the use of mutually authenticated client-side certificates to provide a
 
 ## Access Control
 
-Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple micro services following the RESTful style.
+Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple microservices following the RESTful style.
 
 - in order to minimize latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints
 - user authentication should be centralised in a Identity Provider (IdP), which issues access tokens
@@ -56,7 +56,7 @@ Some claims have been standardised and should be present in JWT used for access 
 - `exp` or expiration time - is the current time before the end of the validity period of this token?
 - `nbf` or not before time - is the current time after the start of the validity period of this token?
 
-As JWTs contain details of the authenticated entity (user etc.) a disconnect can occur between the JWT and the current state of the users session, for example, if the session is terminated earlier than the expiration time due to an explicit logout or an idle timeout. When an explicit session termination event occurs, a digest or hash of any associated JWTs should be submitted to a blacklist on the API which will invalidate that JWT for any requests until the expiration of the token. See the [JSON_Web_Token_for_Java_Cheat_Sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md#token-explicit-revocation-by-the-user) for further details.
+As JWTs contain details of the authenticated entity (user etc.) a disconnect can occur between the JWT and the current state of the users session, for example, if the session is terminated earlier than the expiration time due to an explicit logout or an idle timeout. When an explicit session termination event occurs, a digest or hash of any associated JWTs should be submitted to a deny list on the API which will invalidate that JWT for any requests until the expiration of the token. See the [JSON_Web_Token_for_Java_Cheat_Sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md#token-explicit-revocation-by-the-user) for further details.
 
 ## API Keys
 
@@ -71,8 +71,8 @@ API keys can reduce the impact of denial-of-service attacks. However, when they 
 
 ## Restrict HTTP methods
 
-- Apply a whitelist of permitted HTTP Methods e.g. `GET`, `POST`, `PUT`.
-- Reject all requests not matching the whitelist with HTTP response code `405 Method not allowed`.
+- Apply a allow list of permitted HTTP Methods e.g. `GET`, `POST`, `PUT`.
+- Reject all requests not matching the allow list with HTTP response code `405 Method not allowed`.
 - Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record
 
 In Java EE in particular, this can be difficult to implement properly. See [Bypassing Web Authentication and Authorization with HTTP Verb Tampering](../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf) for an explanation of this common misconfiguration.
@@ -82,7 +82,7 @@ In Java EE in particular, this can be difficult to implement properly. See [Bypa
 - Do not trust input parameters/objects.
 - Validate input: length / range / format and type.
 - Achieve an implicit input validation by using strong types like numbers, booleans, dates, times or fixed data ranges in API parameters.
-- Constrain string inputs with regexps.
+- Constrain string inputs with regular expressions.
 - Reject unexpected/illegal content.
 - Make use of validation/sanitation libraries or frameworks in your specific language.
 - Define an appropriate request size limit and reject requests exceeding the limit with HTTP response status 413 Request Entity Too Large.

@@ -23,7 +23,7 @@ In order to balance security and usability, multi-factor authentication can be c
 - An IP address that has tried to login to multiple accounts.
 - A login attempt that appears to be scripted rather than manual.
 
-Additionally, for enterprise applications, known trusted IP ranges could be added to a whitelist so that MFA is not required when users connect from these ranges.
+Additionally, for enterprise applications, known trusted IP ranges could be added to a allow list so that MFA is not required when users connect from these ranges.
 
 ## Alternative Defenses
 
@@ -49,7 +49,7 @@ To improve usability, it may be desirable to only require the user solve a CAPTC
 
 ### IP Blacklisting
 
-Less sophisticated attacks will often use a relatively small number of IP addresses, which can be blacklisted after a number of failed login attempts. These failures should be tracked separately to the per-user failures, which are intended to protect against brute-force attacks. The blacklist should be temporary, in order to reduce the likelihood of permanently blocking legitimate users.
+Less sophisticated attacks will often use a relatively small number of IP addresses, which can be blacklisted after a number of failed login attempts. These failures should be tracked separately to the per-user failures, which are intended to protect against brute-force attacks. The deny list should be temporary, in order to reduce the likelihood of permanently blocking legitimate users.
 
 Additionally, there are publicly available blacklists of known bad IP addresses which are collected by websites such as [AbuseIPDB](https://www.abuseipdb.com) based on abuse reports from users.
 

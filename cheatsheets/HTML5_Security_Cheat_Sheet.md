@@ -46,7 +46,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 - Validate URLs passed to the `EventSource` constructor, even though only same-origin URLs are allowed.
 - As mentioned before, process the messages (`event.data`) as data and never evaluate the content as HTML or script code.
-- Always check the origin attribute of the message (`event.origin`) to ensure the message is coming from a trusted domain. Use a whitelist approach.
+- Always check the origin attribute of the message (`event.origin`) to ensure the message is coming from a trusted domain. Use a allow list approach.
 
 ## Storage APIs
 
@@ -62,7 +62,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 ### Client-side databases
 
-- On November 2010, the W3C announced Web SQL Database (relational SQL database) as a deprecated specification. A new standard Indexed Database API or IndexedDB (formerly WebSimpleDB) is actively developed, which provides key/value database storage and methods for performing advanced queries.
+- On November 2010, the W3C announced Web SQL Database (relational SQL database) as a deprecated specification. A new standard Indexed Database API or IndexedDB (formerly WebSimpleDB) is actively developed, which provides key-value database storage and methods for performing advanced queries.
 - Underlying storage mechanisms may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it's recommended not to store any sensitive information in local storage.
 - If utilized, WebDatabase content on the client side can be vulnerable to SQL injection and needs to have proper validation and parameterization.
 - Like Local Storage, a single [Cross Site Scripting](https://owasp.org/www-community/attacks/xss/) can be used to load malicious data into a web database as well. Don't consider data in these to be trusted.
@@ -730,13 +730,13 @@ Note that the same approach is used in the messages handling part of the POC. Al
 
 Authorization information is stored in the access token using the JWT *Claim* feature (in the POC the name of the claim is *access_level*). Authorization is validated when a request is received and before any other action using the user input information.
 
-The access token is passed with every message sent to the message endpoint and a blacklist is used in order to allow the user to request an explicit token invalidation.
+The access token is passed with every message sent to the message endpoint and a deny list is used in order to allow the user to request an explicit token invalidation.
 
 Explicit token invalidation is interesting from a user's point of view because, often when tokens are used, the validity timeframe of the token is relatively long (it's common to see a valid timeframe superior to 1 hour) so it's important to allow a user to have a way to indicate to the system "OK, I have finished my exchange with you, so you can close our exchange session and cleanup associated links".
 
 It also helps the user to revoke itself of current access if a malicious concurrent access is detected using the same token (case of token stealing).
 
-**Token blacklist** - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore
+**Token deny list** - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore
 
 ``` java
 import org.apache.commons.jcs.JCS;
@@ -941,7 +941,7 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
 
 ### Confidentiality and Integrity
 
-If the raw version of the protocol is used (protocol `ws://`) then the transfered data is exposed to eavesdropping and potential on-the-fly alteration.
+If the raw version of the protocol is used (protocol `ws://`) then the transferred data is exposed to eavesdropping and potential on-the-fly alteration.
 
 Example of capture using [Wireshark](https://www.wireshark.org/) and searching for password exchanges in the stored PCAP file, not printable characters has been explicitly removed from the command result:
 

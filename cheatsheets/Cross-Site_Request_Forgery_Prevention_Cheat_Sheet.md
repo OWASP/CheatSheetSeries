@@ -69,7 +69,7 @@ The Encrypted Token Pattern leverages an encryption, rather than comparison meth
 
 The server generates a token comprised of the user's session ID and a timestamp (to prevent replay attacks) using a unique key available only on the server (AES256-with GCM mode/GCM-SIV is recommended. Usage of ECB mode is strictly not recommended. If you would like to use any other block cipher mode of operation, refer [here](Cryptographic_Storage_Cheat_Sheet.md) and [here](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) for more information). This token is returned to the client and embedded in a hidden field for forms, in the request-header/parameter for AJAX requests. On receipt of this request, the server reads and decrypts the token value with the same key used to create the token.
 
-If the value cannot be decrypted then this suggests an intrusion attempt (which should be blocked and logged for debugging or incident response purposes). Once decrypted, the users session ID and timestamp contained within the token are validated. The session ID is compared against the currently logged in user, and the timestamp is compared against the current time to verify that its not beyond the defined token expiry time. If session id matches and the timestamp is under the defined token expiry time, request is allowed.
+If the value cannot be decrypted then this suggests an intrusion attempt (which should be blocked and logged for debugging or incident response purposes). Once decrypted, the users session ID and timestamp contained within the token are validated. The session ID is compared against the currently logged in user, and the timestamp is compared against the current time to verify that its not beyond the defined token expiry time. If session ID matches and the timestamp is under the defined token expiry time, request is allowed.
 
 The [Key Management Cheat Sheet](Key_Management_Cheat_Sheet.md#key-management-lifecycle-best-practices) contains best practices about managing encryption keys.
 
@@ -151,7 +151,7 @@ If you are behind a proxy, there are a number of options to consider.
 
 This mitigation is working properly when origin or referrer headers are present in the requests. Though these headers are included **majority** of the time, there are few use cases where they are not included (most of them are for legitimate reasons to safeguard users privacy/to tune to browsers ecosystem). The following lists some use cases:
 
-- Internet Explorer 11 does not add the Origin header on a CORS request across sites of a trusted zone. The Referer header will remain the only indication of the UI origin. See the following references in stackoverflow [here](https://stackoverflow.com/questions/20784209/internet-explorer-11-does-not-add-the-origin-header-on-a-cors-request) and [here](https://github.com/silverstripe/silverstripe-graphql/issues/118).
+- Internet Explorer 11 does not add the Origin header on a CORS request across sites of a trusted zone. The Referer header will remain the only indication of the UI origin. See the following references in Stack Overflow [here](https://stackoverflow.com/questions/20784209/internet-explorer-11-does-not-add-the-origin-header-on-a-cors-request) and [here](https://github.com/silverstripe/silverstripe-graphql/issues/118).
 - In an instance following a [302 redirect cross-origin](https://stackoverflow.com/questions/22397072/are-there-any-browsers-that-set-the-origin-header-to-null-for-privacy-sensitiv), Origin is not included in the redirected request because that may be considered sensitive information that should not be sent to the other origin.
 - There are some [privacy contexts](https://wiki.mozilla.org/Security/Origin#Privacy-Sensitive_Contexts) where Origin is set to "null" For example, see the following [here](https://www.google.com/search?q=origin+header+sent+null+value+site%3Astackoverflow.com&oq=origin+header+sent+null+value+site%3Astackoverflow.com).
 - Origin header is included for all cross origin requests but for same origin requests, in most browsers it is only included in POST/DELETE/PUT **Note:** Although it is not ideal, many developers use GET requests to do state changing operations.
@@ -165,7 +165,7 @@ If maintaining the state for CSRF token at server side is problematic, an altern
 
 Because subdomains can write cookies to the parent domains and because cookies can be set for the domain over plain HTTP connections this technique works as long as you are sure that your subdomains are fully secured and only accept HTTPS connections.
 
-To enhance the security of this solution include the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for ajax calls. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.
+To enhance the security of this solution include the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for AJAX calls. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.
 
 A simpler alternative to an encrypted cookie is to hash the token with a secret salt known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a salted-hash is used, an attacker won't be able to recreate the cookie value from the plain token without knowledge of the server secrets.
 
@@ -322,7 +322,7 @@ This code snippet has been tested with Axios version 0.18.0.
 
 JQuery exposes an API called $.ajaxSetup() which can be used to add the `anti-csrf-token` header to the AJAX request. API documentation for `$.ajaxSetup()` can be found here. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
 
-You can configure JQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:
+You can configure jQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:
 
 ```html
 <script type="text/javascript">

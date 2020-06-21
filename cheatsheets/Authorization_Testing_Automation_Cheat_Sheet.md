@@ -46,7 +46,7 @@ The XML structure contains 3 main sections:
 
 - Node **roles**: This node describe the possible logical roles used in the system, is used to provide a list and the explanation of the different roles (authorization level).
 - Node **services**: This node list and describe the available services exposed by the system and the associated logical role(s) that can call them.
-- Node **services-testing**: This node provide a test payload for each service if the service use input data other than coming from url or path.
+- Node **services-testing**: This node provide a test payload for each service if the service use input data other than coming from URL or path.
 
 This is an example of the XML used to represents the authorization:
 
@@ -400,7 +400,7 @@ Access issues detected using the BASIC USER point of view:
 
 Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.
 
-The Following XSL stylesheet can be used:
+The Following XSL style sheet can be used:
 
 ``` xslt
 <?xml version="1.0" encoding="UTF-8"?>

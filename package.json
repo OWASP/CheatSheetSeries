@@ -10,7 +10,9 @@
     "textlint-rule-terminology": "^2.1.4"
   },
   "scripts": {
-    "test": "markdownlint ./cheatsheets/ --ignore node_modules",
+    "test": "npm run lint-markdown && npm run lint-terminology",
+    "lint-terminology": "textlint ./cheatsheets/",
+    "lint-markdown": "markdownlint ./cheatsheets/ --ignore node_modules",
     "link-check": "find  cheatsheets -name \\*.md -exec markdown-link-check -c markdown-link-check-config.json 1> log 2> err {} \\; && if [ -e err ] && grep -q  \"ERROR:\" err ; then exit 113  ; else echo -e \"All good\"; fi"
   },
   "repository": {

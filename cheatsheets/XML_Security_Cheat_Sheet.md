@@ -97,7 +97,7 @@ If there is no control on the document's structure, the application could also p
 </buy>
 ```
 
-Notice again how the value 123 is supplied as an `id`, but now the document includes additional opening and closing tags. The attacker closed the `id` element and sets a bogus `price` element to the value 0. The final step to keep the structure well-formed is to add one empty `id` element. After this, the application adds the closing tag for `id` and set the `price` to 10. If the application processes only the first values provided for the id and the value without performing any type of control on the structure, it could benefit the attacker by providing the ability to buy a book without actually paying for it.
+Notice again how the value 123 is supplied as an `id`, but now the document includes additional opening and closing tags. The attacker closed the `id` element and sets a bogus `price` element to the value 0. The final step to keep the structure well-formed is to add one empty `id` element. After this, the application adds the closing tag for `id` and set the `price` to 10. If the application processes only the first values provided for the ID and the value without performing any type of control on the structure, it could benefit the attacker by providing the ability to buy a book without actually paying for it.
 
 ### Unrestrictive Schema
 
@@ -218,7 +218,7 @@ After selecting the appropriate data type, developers may apply additional restr
 
 ##### Prefixed Values
 
-Certain types of values should only be restricted to specific sets: traffic lights will have only three types of colors, only 12 months are available, and so on. It is possible that the schema has these restrictions in place for each element or attribute. This is the most perfect whitelist scenario for an application: only specific values will be accepted. Such a constraint is called `enumeration` in XML schema. The following example restricts the contents of the element month to 12 possible values:
+Certain types of values should only be restricted to specific sets: traffic lights will have only three types of colors, only 12 months are available, and so on. It is possible that the schema has these restrictions in place for each element or attribute. This is the most perfect allow list scenario for an application: only specific values will be accepted. Such a constraint is called `enumeration` in XML schema. The following example restricts the contents of the element month to 12 possible values:
 
 ```xml
 <xs:element name="month">

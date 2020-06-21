@@ -15,7 +15,7 @@ The virtual patch works when the security enforcement layer analyzes transaction
 From a purely technical perspective, the number one remediation strategy would be for an organization to correct the identified vulnerability within the source code of the web application. This concept is universally agreed upon by both web application security experts and system owners. Unfortunately, in real world business situations, there arise many scenarios where updating the source code of a web application is not easy such as:
 
 - **Lack of resources** - Devs are already allocated to other projects.
-- **3rd Party Software** - Code can not be modified by the user.
+- **Third-party Software** - Code can not be modified by the user.
 - **Outsourced App Dev** - Changes would require a new project.
 
 The important point is this - **Code level fixes and Virtual Patching are NOT mutually exclusive**. They are processes that are executed by different team (OWASP Builders/Devs vs. OWASP Defenders/OpSec) and can be run in tandem.
@@ -73,7 +73,7 @@ The importance of properly utilizing the preparation phase with regards to virtu
 Here are a few critical items that should be addressed during the preparation phase:
 
 - **Public/Vendor Vulnerability Monitoring** - Ensure that you are signed up for all vendor alert mail-lists for commercial software that you are using. This will ensure that you will be notified in the event that the vendor releases vulnerability information and patching data.
-- **Virtual Patching Pre-Authorization** – Virtual Patches need to be implemented quickly so the normal governance processes and authorizations steps for standard software patches need to be expedited. Since virtual patches are not actually modifying source code, they do not require the same amount of regression testing as normal software patches. Categorizing virtual patches in the same group as Anti-Virus updates or Network IDS signatures helps to speed up the authorization process and minimize extended testing phases.
+- **Virtual Patching Pre-Authorization** – Virtual Patches need to be implemented quickly so the normal governance processes and authorizations steps for standard software patches need to be expedited. Since virtual patches are not actually modifying source code, they do not require the same amount of regression testing as normal software patches. Categorizing virtual patches in the same group as Anti-Virus updates or Network IDs signatures helps to speed up the authorization process and minimize extended testing phases.
 - **Deploy Virtual Patching Tool In Advance** - As time is critical during incident response, it would be a poor time to have to get approvals to install new software. For instance, you can install ModSecurity WAF in embedded mode on your Apache servers, or an Apache reverse proxy server. The advantage with this deployment is that you can create fixes for non-Apache back-end servers. Even if you do not use ModSecurity under normal circumstances, it is best to have it "on deck" ready to be enabled if need be.
 - **Increase HTTP Audit Logging** – The standard Common Log Format (CLF) utilized by most web servers does not provide adequate data for conducting proper incident response. You need to have access to the following HTTP data:
     - Request URI (including QUERY_STRING)
@@ -93,7 +93,7 @@ This occurs when an organization takes it upon themselves to assess their web se
 - **Dynamic Application Assessments** - Whitehat attackers conduct penetration tests or automated web assessment tools are run against the live web application to identify flaws.
 - **Source code reviews** - Whitehat attackers use manual/automated means to analyze the source code of the web application to identify flaws.
 
-Due to the fact that custom coded web applications are unique, these proactive identification tasks are extremely important as you are not able to rely upon 3rd party vulnerability notifications.
+Due to the fact that custom coded web applications are unique, these proactive identification tasks are extremely important as you are not able to rely upon third-party vulnerability notifications.
 
 ### Reactive Identification
 
@@ -130,9 +130,9 @@ Care should be taken to attempt to minimize either of these two rules. It may no
 
 Positive security model (whitelist) is a comprehensive security mechanism that provides an independent input validation envelope to an application. The model specifies the characteristics of valid input (character set, length, etc…) and denies anything that does not conform. By defining rules for every parameter in every page in the application the application is protected by an additional security envelop independent from its code.
 
-##### Example Whitelist ModSecurity Virtual Patch
+##### Example allow list ModSecurity Virtual Patch
 
-In order to create a whitelist virtual patch, you must be able to verify what the normal, expected input values are. If you have implemented proper audit logging as part of the Preparation Phase, then you should be able to review audit logs to identify the format of expected input types. In this case, the `reqID` parameter is supposed to only hold integer characters so we can use this virtual patch:
+In order to create a allow list virtual patch, you must be able to verify what the normal, expected input values are. If you have implemented proper audit logging as part of the Preparation Phase, then you should be able to review audit logs to identify the format of expected input types. In this case, the `reqID` parameter is supposed to only hold integer characters so we can use this virtual patch:
 
 ```text
 ##
@@ -157,7 +157,7 @@ This virtual patch will inspect the `reqID` parameter value on the specified pag
 
 A negative security model (blacklist) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.
 
-##### Example Blacklist ModSecurity Virtual Patch
+##### Example deny list ModSecurity Virtual Patch
 
 Here is the example [PoC code](https://packetstormsecurity.com/files/119217/WordPress-Shopping-Cart-8.1.14-Shell-Upload-SQL-Injection.html) that was supplied by the public advisory:
 
@@ -207,7 +207,7 @@ Three examples include:
 In order to accurately test out the newly created virtual patches, it may be necessary to use an application other than a web browser. Some useful tools are:
 
 - Web browser.
-- Command line web clients such as Curl and Wget.
+- Command-line web clients such as Curl and Wget.
 - Local Proxy Servers such as [OWASP ZAP](https://www.zaproxy.org/).
 - [ModSecurity AuditViewer](https://web.archive.org/web/20181011065823/http://www.jwall.org/web/audit/viewer.jsp) – which allows you to load a ModSecurity audit log file, manipulate it and then re-inject the data back into any web server.
 

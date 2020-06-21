@@ -8,7 +8,7 @@ This article is focused on providing clear and simple examples for the cipher st
 
 ### Scenarios
 
-The cipher strings are based on the recommendation to setup your policy to get a whitelist for your ciphers as described in the *[Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)](Transport_Layer_Protection_Cheat_Sheet.md)*. The latest and strongest ciphers are solely available with TLSv1.2, older protocols don't support them. Please find enclosed all supported protocols by the scenario.
+The cipher strings are based on the recommendation to setup your policy to get a allow list for your ciphers as described in the *[Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)](Transport_Layer_Protection_Cheat_Sheet.md)*. The latest and strongest ciphers are solely available with TLSv1.2, older protocols don't support them. Please find enclosed all supported protocols by the scenario.
 
 We have not included any `ChaCha20-Poly1305` ciphers, yet. One reason is that we haven't found various assessments yet, the other is that implementations of new ciphers may be more buggy.
 
@@ -27,28 +27,28 @@ The recommended cipher strings are based on different scenarios:
 
 **OWASP Cipher String 'B'** (Broad compatibility to browsers, check the compatibility to other protocols before using it, e.g. IMAPS):
 
-- Recommended if you solely control the server, the clients use their browsers and if you check the compatibility before using it for other protocols than https.
+- Recommended if you solely control the server, the clients use their browsers and if you check the compatibility before using it for other protocols than HTTPS.
 - Includes solely the strongest and stronger [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers.
 - Protocols: `TLSv1.2` (and newer or better).
-- Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 30/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7, IE 11/WinPhone 8.1, Java8b132, OpenSSL 1.0.1e, Opera 17/Win 7, Safari 5/iOS 5.1.1, Safari 7/OS X 10.9, Yahoo Slurp Jun 2014, YandexBot Sep 2014
+- Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 30/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7, IE 11/WinPhone 8.1, Java8b132, OpenSSL 1.0.1e, Opera 17/Win 7, Safari 5/iOS 5.1.1, Safari 7/macOS 10.9, Yahoo Slurp Jun 2014, YandexBot Sep 2014
 
 **OWASP Cipher String 'C'** (Widest Compatibility, compatibility to most legacy browsers, legacy libraries (still patched) and other application protocols besides https, e.g. IMAPS):
 
-- You may use this if you solely control the server, your clients use elder browsers and other elder libraries or if you use other protocols than https.
+- You may use this if you solely control the server, your clients use elder browsers and other elder libraries or if you use other protocols than HTTPS.
 - Includes solely [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers.
 - Be aware of additional risks and of new vulnerabilities that may appear are more likely than above.
-- Plan to phase out SHA-1 and TLSv1, TLSv1.1 for https in middle-term.
+- Plan to phase out SHA-1 and TLSv1, TLSv1.1 for HTTPS in middle-term.
 - Protocols: `TLSv1.3`, `TLSv1.2`, `TLSv1.1`, `TLSv1` (and newer or better).
-- Oldest known clients that are compatible: Android 2.3.7/4.0.4, Baidu Jan 2015, BingPreview Dec 2013, Chrome 27/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 10.0.12 ESR/Win 7, Firefox 21/Win 7+Fedora 19, Googlebot Oct 2013, IE 7/Vista, IE 10/WinPhone 8.0, Java 7u25, OpenSSL 0.9.8y, Opera 12.15/Win 7, Safari 5/iOS 5.1.1, Safari 5.1.9/OS X 10.6.8, Yahoo Slurp Oct 2013, YandexBot May 2014
+- Oldest known clients that are compatible: Android 2.3.7/4.0.4, Baidu Jan 2015, BingPreview Dec 2013, Chrome 27/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 10.0.12 ESR/Win 7, Firefox 21/Win 7+Fedora 19, Googlebot Oct 2013, IE 7/Vista, IE 10/WinPhone 8.0, Java 7u25, OpenSSL 0.9.8y, Opera 12.15/Win 7, Safari 5/iOS 5.1.1, Safari 5.1.9/macOS 10.6.8, Yahoo Slurp Oct 2013, YandexBot May 2014
 
 **OWASP Cipher String 'D'** (Legacy, widest compatibility to real old browsers and legacy libraries and other application protocols like SMTP):
 
-- Take care, use this cipher string only if you are forced to support non [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) for real old clients with very old libraries or for other protocols besides https.
+- Take care, use this cipher string only if you are forced to support non [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) for real old clients with very old libraries or for other protocols besides HTTPS.
 - Be aware of the existing risks (e.g. ciphers without PFS, ciphers with 3DES) and of new vulnerabilities that may appear the most likely.
 - **Do not use** WEAK ciphers based on `3DES` e.g. (`TLS_RSA_WITH_3DES_EDE_CBC_SHA`, `DES-CBC3-SHA`)
 - **Never use** even more INSECURE or elder ciphers based on `RC2`, `RC4`, `DES`, `MD4`, `MD5`, `EXP`, `EXP1024`, `AH`, `ADH`, `aNULL`, `eNULL`, `SEED` nor `IDEA`.
 - [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers are preferred, except all [DHE](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange) ciphers that use SHA-1 (to prevent possible incompatibility issues caused by the length of the [DHparameter](https://wiki.openssl.org/index.php/Diffie-Hellman_parameters)).
-- Plan to move to 'A' for https or at least 'B' otherwise in middle-term.
+- Plan to move to 'A' for HTTPS or at least 'B' otherwise in middle-term.
 - Protocols: `TLSv1.3`, `TLSv1.2`, `TLSv1.1`, `TLSv1` (and newer or better).
 
 ### Table of the ciphers (and their priority from high (1) to low (e.g. 18))
@@ -125,7 +125,7 @@ SSLCipherSuite 'DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AE
 
 **Remarks:**
 
-- The cipher string is compiled as a whitelist of individual ciphers to get a better compatibility even with old versions of OpenSSL.
+- The cipher string is compiled as a allow list of individual ciphers to get a better compatibility even with old versions of OpenSSL.
 - Monitor the performance of your server, e.g. the TLS handshake with DHE hinders the CPU about 2.4 times more than ECDHE, cf. *[Vincent Bernat, 2011](http://vincent.bernat.im/en/blog/2011-ssl-perfect-forward-secrecy.html#some-benchmarks)*, *[nmav's Blog, 2011](https://nikmav.blogspot.com/2011/12/price-to-pay-for-perfect-forward.html)*.
 - Verify your cipher string using your crypto library, e.g. openssl using cipher string 'B':
 

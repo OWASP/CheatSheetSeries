@@ -42,7 +42,7 @@ You can start building a baseline description of the Attack Surface in a picture
 - Databases
 - Other local storage
 - Email or other kinds of messages
-- Run-time arguments
+- Runtime arguments
 - ...Your points of entry/exit
 
 The total number of different attack points can easily add up into the thousands or more. To make this manageable, break the model into different types based on function, design and technology:
@@ -72,7 +72,7 @@ Once you have a map of the Attack Surface, identify the high risk areas. Focus o
 - Network-facing, especially internet-facing code
 - Web forms
 - Files from outside of the network
-- Backwards compatible interfaces with other systems – old protocols, sometimes old code and libraries, hard to maintain and test multiple versions
+- Backward compatible interfaces with other systems – old protocols, sometimes old code and libraries, hard to maintain and test multiple versions
 - Custom APIs – protocols etc – likely to have mistakes in design and implementation
 - Security code: anything to do with cryptography, authentication, authorization (access control) and session management
 
@@ -96,7 +96,7 @@ The first web page that you create opens up the system's Attack Surface signific
 
 If you add another web page that follows the same design and using the same technology as existing web pages, it's easy to understand how much security testing and review it needs. If you add a new web services API or file that can be uploaded from the Internet, each of these changes have a different risk profile again - see if if the change fits in an existing bucket, see if the existing controls and protections apply. If you're adding something that doesn't fall into an existing bucket, this means that you have to go through a more thorough risk assessment to understand what kind of security holes you may open and what protections you need to put in place.
 
-Changes to session management, authentication and password management directly affect the Attack Surface and need to be reviewed. So do changes to authorization and access control logic, especially adding or changing role definitions, adding admin users or admin functions with high privileges. Similarly for changes to the code that handles encryption and secrets. Fundamental changes to how data validation is done. And major architectural changes to layering and trust relationships, or fundamental changes in technical architecture – swapping out your web server or database platform, or changing the run-time operating system.
+Changes to session management, authentication and password management directly affect the Attack Surface and need to be reviewed. So do changes to authorization and access control logic, especially adding or changing role definitions, adding admin users or admin functions with high privileges. Similarly for changes to the code that handles encryption and secrets. Fundamental changes to how data validation is done. And major architectural changes to layering and trust relationships, or fundamental changes in technical architecture – swapping out your web server or database platform, or changing the runtime operating system.
 
 As you add new user types or roles or privilege levels, you do the same kind of analysis and risk assessment. Overlay the type of access across the data and functions and look for problems and inconsistencies. It's important to understand the access model for the application, whether it is positive (access is deny by default) or negative (access is allow by default). In a positive access model, any mistakes in defining what data or functions are permitted to a new user type or role are easy to see. In a negative access model, you have to be much more careful to ensure that a user does not get access to data/functions that they should not be permitted to.
 

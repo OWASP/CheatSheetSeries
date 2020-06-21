@@ -1,4 +1,4 @@
-# Ajax Security Cheat Sheet
+# AJAX Security Cheat Sheet
 
 ## Introduction
 
@@ -105,4 +105,4 @@ Use the framework and be safe, do it by hand and have security issues.
 
 #### Use JSON And XML Schema for Webservices
 
-You need to use a 3rd party library to validate web services.
+You need to use a third-party library to validate web services.

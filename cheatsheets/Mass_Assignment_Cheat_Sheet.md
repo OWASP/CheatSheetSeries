@@ -84,8 +84,8 @@ In 2012, GitHub was hacked using mass assignment. A user was able to upload his 
 
 ### Solutions
 
-- Whitelist the bindable, non-sensitive fields.
-- Blacklist the non-bindable, sensitive fields.
+- Allow list the bindable, non-sensitive fields.
+- Deny list the non-bindable, sensitive fields.
 - Use [Data Transfer Objects](https://martinfowler.com/eaaCatalog/dataTransferObject.html) (DTOs).
 
 ## General Solutions

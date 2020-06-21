@@ -31,7 +31,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 
 - Use [Parameterized SQL](https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlcommand.prepare?view=netframework-4.7.2) commands for all data access, without exception.
 - Do not use [SqlCommand](https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlcommand) with a string parameter made up of a [concatenated SQL String](https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca2100-review-sql-queries-for-security-vulnerabilities?view=vs-2017).
-- Whitelist allowable values coming from the user. Use enums, [TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.int32.tryparse#System_Int32_TryParse_System_String_System_Int32__) or lookup values to assure that the data coming from the user is as expected.
+- Allow list allowable values coming from the user. Use enums, [TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.int32.tryparse#System_Int32_TryParse_System_String_System_Int32__) or lookup values to assure that the data coming from the user is as expected.
     - Enums are still vulnerable to unexpected values because .NET only validates a successful cast to the underlying data type, integer by default. [Enum.IsDefined](https://docs.microsoft.com/en-us/dotnet/api/system.enum.isdefined) can validate whether the input value is valid within the list of defined constants.
 - Apply the principle of least privilege when setting up the Database User in your database of choice. The database user should only be able to access items that make sense for the use case.
 - Use of the [Entity Framework](https://docs.microsoft.com/en-us/ef/) is a very effective [SQL injection](https://owasp.org/www-community/attacks/SQL_Injection) prevention mechanism. **Remember that building your own ad hoc queries in Entity Framework is just as susceptible to SQLi as a plain SQL query**.
@@ -54,7 +54,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 
 - Lock down the config file.
     - Remove all aspects of configuration that are not in use.
-    - Encrypt sensitive parts of the `web.config` using `aspnet_regiis -pe` ([command line help](https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80))).
+    - Encrypt sensitive parts of the `web.config` using `aspnet_regiis -pe` ([command-line help](https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80))).
 - For Click Once applications the .Net Framework should be upgraded to use version `4.6.2` to ensure `TLS 1.1/1.2` support.
 
 ## ASP NET Web Forms Guidance
@@ -199,9 +199,9 @@ HttpContext.Current.Response.Headers.Remove("Server");
 
 ### HTTP validation and encoding
 
-- Do not disable [validateRequest](http://www.asp.net/whitepapers/request-validation) in the `web.config` or the page setup. This value enables limited XSS protection in ASP.NET and should be left intact as it provides partial prevention of Cross Site Scripting. Complete request validation is recommended in addition to the built in protections.
+- Do not disable [validateRequest](http://www.asp.net/whitepapers/request-validation) in the `web.config` or the page setup. This value enables limited XSS protection in ASP.NET and should be left intact as it provides partial prevention of Cross Site Scripting. Complete request validation is recommended in addition to the built-in protections.
 - The 4.5 version of the .NET Frameworks includes the [AntiXssEncoder](https://docs.microsoft.com/en-us/dotnet/api/system.web.security.antixss.antixssencoder?view=netframework-4.7.2) library, which has a comprehensive input encoding library for the prevention of XSS. Use it.
-- Whitelist allowable values anytime user input is accepted.
+- Allow list allowable values anytime user input is accepted.
 - Validate the URI format using [Uri.IsWellFormedUriString](https://docs.microsoft.com/en-us/dotnet/api/system.uri.iswellformeduristring).
 
 ### Forms authentication
@@ -274,7 +274,7 @@ process.StartInfo = startInfo;
 process.Start();
 ```
 
-DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+DO: Use allow list validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
 e.g Validating user input using [IPAddress.TryParse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8)
 
@@ -446,7 +446,7 @@ SlidingExpiration = false
 
 See [here](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/App_Start/Startup.Auth.cs) for full startup code snippet
 
-Ensure cookie is sent over https in the production environment. This should be enforced in the config transforms:
+Ensure cookie is sent over HTTPS in the production environment. This should be enforced in the config transforms:
 
 ```xml
 <httpCookies requireSSL="true" xdt:Transform="SetAttributes(requireSSL)"/>
@@ -707,7 +707,7 @@ More information can be found [here](Cross-Site_Request_Forgery_Prevention_Cheat
 
 ### A7 Cross-Site Scripting (XSS)
 
-DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists
+DO NOT: Trust any data the user sends you, prefer allow lists (always safe) over deny lists
 
 You get encoding of all HTML content with MVC3, to properly encode all content whether HTML, javascript, CSS, LDAP etc use the Microsoft AntiXSS library:
 
@@ -768,7 +768,7 @@ DO: Ensure all login, access control failures and server-side input validation f
 
 DO: Establish effective monitoring and alerting so suspicious activities are detected and responded to in a timely fashion.
 
-DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was thrown");``` rather log the stack trace, error message and user Id who caused the error.
+DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was thrown");``` rather log the stack trace, error message and user ID who caused the error.
 
 DO NOT: Log sensitive data such as user's passwords.
 
@@ -906,7 +906,7 @@ For more information on all of the above and code samples incorporated into a sa
 
 ## Windows Forms Guidance
 
-- Use partial trust when possible. Partially trusted Windows applications reduce the attack surface of an application. Manage a list of what permissions your app must use, and what it may use, and then make the request for those permissions declaratively at run time.
+- Use partial trust when possible. Partially trusted Windows applications reduce the attack surface of an application. Manage a list of what permissions your app must use, and what it may use, and then make the request for those permissions declaratively at runtime.
 - Use ClickOnce deployment. For enhanced permissions, use permission elevation at runtime or trusted application deployment at install time.
 
 ### WCF Guidance

@@ -312,7 +312,7 @@ When talking about location, access to the application that the user is authenti
 
 ### Source IP Ranges
 
-The source IP address the user is connecting from can be used as a factor, typically in a white-list based approach. This could either be based on a static white-list (such as corporate office ranges) or a dynamic white-list (such as previous IP addresses the user has authenticated from).
+The source IP address the user is connecting from can be used as a factor, typically in a allow list based approach. This could either be based on a static allow list (such as corporate office ranges) or a dynamic allow list (such as previous IP addresses the user has authenticated from).
 
 #### Pros
 
@@ -323,7 +323,7 @@ The source IP address the user is connecting from can be used as a factor, typic
 
 - Doesn't provide any protection if the user's system is compromised.
 - Doesn't provide any protection against rogue insiders.
-- Trusted IP addresses must be carefully restricted (for example, if the open guest WiFi uses the main corporate IP range).
+- Trusted IP addresses must be carefully restricted (for example, if the open guest Wi-Fi uses the main corporate IP range).
 
 ### Geolocation
 

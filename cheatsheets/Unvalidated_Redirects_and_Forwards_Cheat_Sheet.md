@@ -132,7 +132,7 @@ Example:
 http://www.example.com/function.jsp?fwd=admin.jsp
 ```
 
-The following code is a Java servlet that will receive a `GET` request with a url parameter named `fwd` in the request to forward to the address specified in the url parameter. The servlet will retrieve the url parameter value [from the request](https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-) and complete the server-side forward processing before responding to the browser.
+The following code is a Java servlet that will receive a `GET` request with a URL parameter named `fwd` in the request to forward to the address specified in the URL parameter. The servlet will retrieve the URL parameter value [from the request](https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-) and complete the server-side forward processing before responding to the browser.
 
 ```java
 public class ForwardServlet extends HttpServlet
@@ -167,12 +167,12 @@ Safe use of redirects and forwards can be done in a number of ways:
     - Be careful that this doesn't introduce an enumeration vulnerability where a user could cycle through IDs to find all possible redirect targets
 - If user input can’t be avoided, ensure that the supplied **value** is valid, appropriate for the application, and is **authorized** for the user.
 - Sanitize input by creating a list of trusted URLs (lists of hosts or a regex).
-    - This should be based on a white-list approach, rather than a blacklist.
+    - This should be based on a allow list approach, rather than a deny list.
 - Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.
 
 ### Validating URLs
 
-When attempting to validate and sanitise user-input to determine whether the URL is safe, wherever possible you should use a built in library or function to parse the URLs, such as `parse_url()` in PHP, rather than rolling your own parser using regex. Additionally, make sure that you take the following into account:
+When attempting to validate and sanitise user-input to determine whether the URL is safe, wherever possible you should use a built-in library or function to parse the URLs, such as `parse_url()` in PHP, rather than rolling your own parser using regular expression. Additionally, make sure that you take the following into account:
 
 - Input starting with a `/` to redirect to local pages is **not safe**. `//example.org` is a valid URL.
 - Input starting with the desired domain name is **not safe**. `https://example.org.attacker.com` is valid.

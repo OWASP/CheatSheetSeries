@@ -238,7 +238,7 @@ The compromise-recovery plan should contain:
 
 ## Trust Stores
 
-1. Design controls to secure the trust store against injection of 3rd party root certificates. The access controls are managed and enforced on an entity and application basis.
+1. Design controls to secure the trust store against injection of third-party root certificates. The access controls are managed and enforced on an entity and application basis.
 2. Implement integrity controls on objects stored in the trust store.
 3. Do not allow for export of keys held within the trust store without authentication and authorization.
 4. Setup strict policies and procedures for exporting key material from applications to network applications and other components.
@@ -246,7 +246,7 @@ The compromise-recovery plan should contain:
 
 ## Cryptographic Key Management Libraries
 
-Use only reputable crypto libraries that are well maintained and updated, as well as tested and validated by 3rd party organizations (e.g., `NIST`/`FIPS`)
+Use only reputable crypto libraries that are well maintained and updated, as well as tested and validated by third-party organizations (e.g., `NIST`/`FIPS`)
 
 ## Documentation
 

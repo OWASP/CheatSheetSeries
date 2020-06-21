@@ -96,11 +96,11 @@ Both of these techniques have the same effectiveness in preventing SQL injection
 
 *Note:* 'Implemented safely' means the stored procedure does not include any unsafe dynamic SQL generation.
 
-###### Defense Option 3: White List Input Validation
+###### Defense Option 3: allow list Input Validation
 
 Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.
 
-But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full re-write should be considered if time allows.
+But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full rewrite should be considered if time allows.
 
 ###### Defense Option 4: Escaping All User-Supplied Input
 
@@ -254,7 +254,7 @@ Any web interface that is not properly sanitized is subject to this exploit. Wit
 
 Check if any command execute methods are called and in unvalidated user input are taken as data for that command.
 
-Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. `%3B` is url encoded and decodes to semicolon. This is because the `;` is interpreted as a command separator.
+Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. `%3B` is URL encoded and decodes to semicolon. This is because the `;` is interpreted as a command separator.
 
 Example: `http://sensitive/something.php?dir=%3Bcat%20/etc/passwd`
 
@@ -268,10 +268,10 @@ If it is considered unavoidable the call to a system command incorporated with u
 
 1. **Parameterization** - If available, use structured mechanisms that automatically enforce the separation between data and command. These mechanisms can help to provide the relevant quoting, encoding.
 2. **Input validation** - the values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:
-    - When it comes to the **commands** used, these must be validated against a whitelist of allowed commands.
+    - When it comes to the **commands** used, these must be validated against a allow list of allowed commands.
     - In regards to the **arguments** used for these commands, they should be validated using the following options:
         - Positive or "whitelist" input validation - where are the arguments allowed explicitly defined
-        - White list Regular Expression - where is explicitly defined a whitelist of good characters allowed and the maximum length of the string. Ensure that metacharacters like `& | ; $ > < \` \ !` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:
+        - Allow list Regular Expression - where is explicitly defined a allow list of good characters allowed and the maximum length of the string. Ensure that metacharacters like `& | ; $ > < \` \ !` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:
 
 `^[a-z0-9]{3,10}$`
 

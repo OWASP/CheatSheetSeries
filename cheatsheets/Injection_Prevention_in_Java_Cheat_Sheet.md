@@ -16,7 +16,7 @@ Sample codes used in tips are located [here](https://github.com/righettod/inject
 
 The following point can be applied, in a general way, to prevent *Injection* issue:
 
-1. Apply **Input Validation** (using whitelist approach) combined with **Output Sanitizing+Escaping** on user input/output.
+1. Apply **Input Validation** (using allow list approach) combined with **Output Sanitizing+Escaping** on user input/output.
 2. If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.
 
 Additional advices are provided on this [cheatsheet](Input_Validation_Cheat_Sheet.md).
@@ -252,7 +252,7 @@ Injection of this type occur when the application use untrusted user input to bu
 
 #### How to prevent
 
-Either apply strict input validation (whitelist approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).
+Either apply strict input validation (allow list approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).
 
 #### Example
 
@@ -304,7 +304,7 @@ Assert.assertEquals(finalSafeOutputExpected, safeOutput);
 - [XSS](https://owasp.org/www-community/attacks/xss/)
 - [OWASP Java HTML Sanitizer](https://github.com/owasp/java-html-sanitizer)
 - [OWASP Java Encoder](https://github.com/owasp/owasp-java-encoder)
-- [Java RegEx](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html)
+- [Java regular expression](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html)
 
 ### LDAP
 
