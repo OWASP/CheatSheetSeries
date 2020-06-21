@@ -37,7 +37,8 @@ When submitting changes in a PR, consider the following areas:
 ## Cheat Sheet Structure
 
 - Start with a H1 of the cheat sheet name
-- Generally the first two sections should be `Introduction` and `Contents`, followed by the body of the cheat sheet.
+- The first section of the cheat sheet should be an introduction which briefly sums up the contents, and provides a short list of key bullet points.
+- The table of contents will be automatically generated on the site, so does not need to be added as a section.
 - Headings should have a blank line after them.
 
 ## Language
