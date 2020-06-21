@@ -22,7 +22,7 @@ This cheat sheet is focused on resetting users passwords. For guidance on resett
 
 ## Forgot Password Service
 
-The service providing the Forgot Password functionality should follow secure practices, as detailed below.
+The password reset process can be broken into two main steps, detailed in the following sections.
 
 ### Forgot Password Request
 
