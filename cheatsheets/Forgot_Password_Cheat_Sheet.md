@@ -2,61 +2,116 @@
 
 ## Introduction
 
-This article provides a simple model to follow when implementing a *forgot password* web application feature.
+In order to implement a proper user management system, systems integrate a **Forgot Password** service that allows the user to request a password reset.
 
-## The Problem
+Even though this functionality looks straightforward and easy to implement, it is a common source of vulnerabilities, such as the renowned [user enumeration attack](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.html).
 
-There is no industry standard for implementing a **Forgot Password** feature. The result is that you see applications forcing users to jump through myriad hoops involving emails, special URLs, temporary passwords, personal security questions, and so on. In the end you have to reset it to a new value.
+The following short guidelines can be used as a quick reference to protect the forgot password service:
 
-## Steps
+- **Return a consistent message for both existent and non-existent accounts.**
+- **Ensure that the time taken for the user response message is uniform.**
+- **Use a side-channel to communicate the method to reset their password.**
+- **Use [URL tokens](#url-tokens) for the simplest and fastest implementation.**
+- **Ensure that generated tokens or codes are:**
+    - **Randomly genererated using a cryptographically safe algorithm.**
+    - **Sufficiently long to protect against brute-force attacks.**
+    - **Stored securely.**
+    - **Single use and expire after an appropriate period.**
 
-### Step 1) Gather Identity Data or Security Questions
+This cheat sheet is focused on resetting users passwords. For guidance on resetting multifactor authentication (MFA), see the relevant section in the [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md#resetting-mfa).
 
-The first page of a secure Forgot Password feature asks the user for multiple pieces of hard data that should have been previously collected (generally when the user first registers).
+## Forgot Password Service
 
-Steps for this are detailed in the identity section of the [Choosing and Using Security Questions Cheat Sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md#choosing-security-questions).
+The password reset process can be broken into two main steps, detailed in the following sections.
 
-At a minimum, you should have collected some data that will allow you to send the password reset information to some out-of-band side-channel, such as a (possibly different) email address or an SMS text number, etc. to be used in Step 3.
+### Forgot Password Request
 
-### Step 2) Verify Security Questions
+When a user uses the forgot password service and inputs their username or email, the below should be followed to implement a secure process:
 
-After the form on Step 1 is submitted, the application verifies that each piece of data is correct for the given username. If anything is incorrect, or if the username is not recognized, the second page displays a generic error message such as *Sorry, invalid data*.
+- Return a consistent message for both existent and non-existent accounts.
+- Ensure that responses return in a consistent amount of time to prevent an attacker enumerating which accounts exist. This could be achieved by using asynchronous calls or by making sure that the same logic is followed, instead of using a quick exit method.
+- Implement protections against automated submissions such as CAPTCHA, rate-limiting or other controls.
+- Employ normal security measures, such as [SQL Injection Prevention methods](SQL_Injection_Prevention_Cheat_Sheet.md) and [Input Validation](Input_Validation_Cheat_Sheet.md).
 
-If all submitted data is correct, Step 2 should display at least two of the user's pre-established personal security questions, along with input fields for the answers. It's important that the answer fields are part of a single HTML form.
+### User Resets Password
 
-Do not provide a drop-down list for the user to select the questions he wants to answer. Avoid sending the username as a parameter (hidden or otherwise) when the form on this page is submitted. The username should be stored in the server-side session where it can be retrieved as needed.
+Once the user has proved their identity by providing the token (sent via an email) or code (sent via SMS or other mechanisms), they should reset their password to a new secure one. In order to secure this step, the measures that should be taken are:
 
-Because users' security questions / answers generally contains much less entropy than a well-chosen password (how many likely answers are there to the typical *What's your favorite sports team?* or *In what city where you born?* security questions anyway?), make sure you limit the number of guesses attempted and if some threshold is exceeded for that user (say 3 to 5), lock out the user's account for some reasonable duration (say at least 5 minutes) and then challenge the user with some form of challenge token per standard multi-factor workflow (see \#3, below) to mitigate attempts by hackers to guess the questions and reset the user's password. It is not unreasonable to think that a user's email account may have already been compromised, so tokens that do not involve email, such as SMS or a mobile soft-token, are best.
+- The user should confirm the password they set by writing it twice.
+- Ensure that a secure password policy is in place, and is consistent with the rest of the application.
+- Update and store the password following [secure practices](Password_Storage_Cheat_Sheet.md).
+- Send the user an email informing them that their password has been reset (do not send the password in the email!).
+- Once they have set their new password, the user should then login through the usual mechanism. Don't automatically log the user in, as this introduces additional complexity to the authentication and session handling code, and increases the likelihood of introducing vulnerabilities.
+- Ask the user if they want to invalidate all of their existing sessions, or invalidate the sessions automatically.
 
-### Step 3) Send a Token Over a Side-Channel
+## Methods
 
-After step 2, lock out the user's account immediately. Then SMS or utilize some other multi-factor token challenge with a randomly-generated code having 8 or more characters.
+In order to allow a user to request a password reset, you will need to have some way to identify the user, or a means to reach out to them through a side-channel.
 
-This introduces an *out-of-band* communication channel and adds defense-in-depth as it is another barrier for a hacker to overcome. If the bad guy has somehow managed to successfully get past steps 1 and 2, he is unlikely to have compromised the side-channel. It is also a good idea to have the random code which your system generates to only have a limited validity period, say no more than 20 minutes or so. That way if the user doesn't get around to checking their email and their email account is later compromised, the random token used to reset the password would no longer be valid if the user never reset their password and the *reset password* token was discovered by an attacker.
+This can be done through any of the following methods:
 
-The user should always be sent a token rather than a new password for their account. There are numerous problems with directly sending the user a password, especially via email. These include:
+- [URL tokens](#url-tokens).
+- [PINs](#pins)
+- [Offline methods](#offline-methods)
+- [Security questions](#security-questions).
 
-- The transport mechanism used to send the password (email, SMS, etc) may not be encrypted.
-- The password may be stored in the users' mailbox or device for an indefinite period.
-- The password may be accessible to IT staff or other users who have access to the mailbox or device.
-- The password may be logged by third parties such as mail security scanning platforms.
+These methods can be used together to provide a greater degree of assurance that the user is who they claim to be. No matter what, you must ensure that a user always has a way to recover their account, even if that involves contacting the support team and proving their identity to staff.
 
-Of course, by all means, once a user's password has been reset, the randomly-generated token should no longer be valid.
+### General Security Practices
 
-### Step 4) Allow user to change password in the existing session
+It is essential to employ good security practices for the reset identifiers (tokens, codes, PINs, etc.). Some points don't apply to the [offline methods](#offline-methods), such as the lifetime restriction. All tokens and codes should be:
 
-Step 4 requires input of the code sent in step 3 in the existing session where the challenge questions were answered in step 2, and allows the user to reset his password. Display a simple HTML form with one input field for the code, one for the new password, and one to confirm the new password. Verify the correct code is provided and be sure to enforce all password complexity requirements that exist in other areas of the application.
+- Generated [cryptographically secure random number generator](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
+    - It is also possible to use JSON Web Tokens (JWTs) in place of random tokens, although this can introduce additional vulnerability, such as those discussed in the [JSON Web Token Cheat Sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md).
+- Long enough to protect against brute-force attacks.
+- Linked to an individual user in the database.
+- Invalidated after they have been used.
+- Stored in a secure manner, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md).
 
-As before, avoid sending the username as a parameter when the form is submitted. Finally, it's critical to have a check to prevent a user from accessing this last step without first completing steps 1 and 2 correctly. Otherwise, a [forced browsing](https://owasp.org/www-community/attacks/Forced_browsing) attack may be possible. Ensure the user changes their password and does not simply surf to another page in the application.
+### URL Tokens
 
-The reset must be performed before any other operations can be performed by the user.
+URL tokens are passed in the query string of the URL, and are typically sent to the user via email. The basic overview of the process is as follows:
 
-### Step 5) Logging
+1. Generate a token to the user and attach it in the URL query string.
+2. Send this token to the user via email.
+   - Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. The URL should be either be hard-coded, or should be validated against a whitelist of trusted domains.
+   - Ensure that the URL is using HTTPS.
+3. The user receives the email, and browses to the URL with the attached token.
+   - Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
+   - Implement appropriate protection to prevent users from brute-forcing tokens in the URL, such as rate limiting.
+4. If required, perform any additional validation steps such as requiring the user to answer [security questions](#security-questions).
+5. Let the user create a new password and confirm it. Ensure that the same password policy used elsewhere in the application is applied.
 
-It is important to keep audit records when password change requests were submitted. This includes whether or not security questions were answered, when reset messages were sent to users and when users utilize them. It is especially important to log failed attempts to answer security questions and failed attempted use of expired tokens. This data can be used to detect abuse and malicious behavior. Data such as time, IP address, and browser information can be used to spot trends of suspicious use.
+*Note:* URL tokens can follow on the same behavior of the [PINs](#pins) by creating a restricted session from the token. Decision should be made based on the needs and the expertise of the developer.
 
-## Other Considerations
+### PINs
 
-- Whenever a successful password reset occurs, all other sessions should be invalidated. Note the current session is already authenticated and does not require a login prompt.
-- Strength of questions used for reset should vary based on the nature of the credential. Administrator credentials should have a higher requirement.
-- The ideal implementation should rotate the questions asked in order to avoid automation.
+PINs are numbers (between 6 and 12 digits) that are sent to the user through a side-channel such as SMS.
+
+1. Generate a PIN.
+2. Send it to the user via SMS or another mechanism.
+   - Breaking the PIN up with spaces makes it easier for the user to read and enter.
+3. The user then enters the PIN along with their username on the password reset page.
+4. Create a limited session from that PIN that only permits the user to reset their password.
+5. Let the user create a new password and confirm it. Ensure that the same password policy used elsewhere in the application is applied.
+
+### Offline Methods
+
+Offline methods differ from other methods by allowing the user to reset their password without requesting a special identifier (such as a token or PIN) from the backend. However, authentication still needs to be conducted by the backend to ensure that the request is legitimate. Offline methods provide a certain identifier either on registration, or when the user wishes to configure it.
+
+These identifiers should be stored offline and in a secure fashion (*e.g.* password managers), and the backend should properly follow the [general security practices](#general-security-practices). Some implementations are built on [hardware OTP tokens](Multifactor_Authentication_Cheat_Sheet.md#hardware-otp-tokens), [certificates](Multifactor_Authentication_Cheat_Sheet.md#certificates), or any other implementation that could be used inside of an enterprise. These are out of scope for this cheat sheet.
+
+#### Backup Codes
+
+Backup codes should be provided to the user upon registering where the user should store them offline in a secure place (such as their password manager). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
+
+While implementing this method, the following practices should be followed:
+
+- Minimum length of 8 digits, 12 for improved security.
+- A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with ten backup codes).
+- A process should be implemented to allow the user to invalidate all existing recovery codes, in case they are compromised by a third party.
+- Rate limiting and other protections should be implemented to prevent an attacker from brute-forcing the backup codes.
+
+### Security Questions
+
+Security questions should not be used as the sole mechanism for resetting passwords due to their answers frequently being easily guessable or obtainable by attackers. However, they can provide an additional layer of security when combined with the other methods discussed in this cheat sheet. If they are used, then ensure that secure questions are chosen as discussed in the [Security Questions cheat sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md).
