@@ -540,7 +540,7 @@ iOS also provides an `NSXMLDocument` type, which is built on top of libxml2.
 
 However, `NSXMLDocument` provides some additional protections against XXE that aren't available in libxml2 directly.
 
-Per the 'NSXMLDocument External Entity Restriction API' section of this [page](https://developer.apple.com/library/ios/#releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html):
+Per the 'NSXMLDocument External Entity Restriction API' section of this [page](https://developer.apple.com/library/archive/releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html):
 
 - iOS4 and earlier: All external entities are loaded by default.
 - iOS5 and later: Only entities that don't require network access are loaded. (which is safer)
