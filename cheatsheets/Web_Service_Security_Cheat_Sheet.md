@@ -2,15 +2,15 @@
 
 ## Introduction
 
-This article is focused on providing guidance to securing web services and preventing web services related attacks.
+This article is focused on providing guidance for securing web services and preventing web services related attacks.
 
-Please notice that due to the difference of implementation between different frameworks, this cheat sheet is kept at a high level.
+Please notice that due to the difference in implementation between different frameworks, this cheat sheet is kept at a high level.
 
 ## Transport Confidentiality
 
 Transport confidentiality protects against eavesdropping and man-in-the-middle attacks against web service communications to/from the server.
 
-**Rule**: All communication with and between web services containing sensitive features, an authenticated session, or transfer of sensitive data must be encrypted using well configured [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security). This is recommended even if the messages themselves are encrypted because [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) provides numerous benefits beyond traffic confidentiality including integrity protection, replay defenses, and server authentication. For more information on how to do this properly see the [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md).
+**Rule**: All communication with and between web services containing sensitive features, an authenticated session, or transfer of sensitive data must be encrypted using well-configured [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security). This is recommended even if the messages themselves are encrypted because [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) provides numerous benefits beyond traffic confidentiality including integrity protection, replay defenses, and server authentication. For more information on how to do this properly see the [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md).
 
 ## Server Authentication
 
@@ -32,7 +32,7 @@ User authentication verifies the identity of the user or the system trying to co
 
 ## Message Integrity
 
-This is for data at rest. Integrity of data in transit can easily be provided by [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security).
+This is for data at rest. The integrity of data in transit can easily be provided by [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security).
 
 When using [public key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography), encryption does guarantee confidentiality but it does not guarantee integrity since the receiver's public key is public. For the same reason, encryption does not ensure the identity of the sender.
 
@@ -40,7 +40,7 @@ When using [public key cryptography](https://en.wikipedia.org/wiki/Public-key_cr
 
 ## Message Confidentiality
 
-Data elements meant to be kept confidential must be encrypted using a strong encryption cipher with an adequate key length to deter brute forcing.
+Data elements meant to be kept confidential must be encrypted using a strong encryption cipher with an adequate key length to deter brute-forcing.
 
 **Rule**: Messages containing sensitive data must be encrypted using a strong encryption cipher. This could be transport encryption or message encryption.
 
@@ -48,7 +48,7 @@ Data elements meant to be kept confidential must be encrypted using a strong enc
 
 ## Authorization
 
-Web services need to authorize web service clients the same way web applications authorize users. A web service needs to make sure a web service client is authorized to: perform a certain action (coarse-grained); on the requested data (fine-grained).
+Web services need to authorize web service clients the same way web applications authorize users. A web service needs to make sure a web service client is authorized to perform a certain action (coarse-grained) on the requested data (fine-grained).
 
 **Rule**: A web service should authorize its clients whether they have access to the method in question. Following authentication, the web service should check the privileges of the requesting entity whether they have access to the requested resource. This should be done on every request.
 
@@ -75,17 +75,17 @@ Schema validation enforces constraints and syntax defined by the schema.
 
 ## Output Encoding
 
-Web services need to ensure that output sent to clients is encoded to be consumed as data and not as scripts. This gets pretty important when web service clients use the output to render HTML pages either directly or indirectly using AJAX objects.
+Web services need to ensure that the output sent to clients is encoded to be consumed as data and not as scripts. This gets pretty important when web service clients use the output to render HTML pages either directly or indirectly using AJAX objects.
 
-**Rule**: All the rules of output encoding applies as per [Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) .
+**Rule**: All the rules of output encoding applies as per [Cross Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
 ## Virus Protection
 
-[SOAP](https://en.wikipedia.org/wiki/SOAP) provides the ability to attach files and document to [SOAP](https://en.wikipedia.org/wiki/SOAP) messages. This gives the opportunity for hackers to attach viruses and malware to these [SOAP](https://en.wikipedia.org/wiki/SOAP) messages.
+[SOAP](https://en.wikipedia.org/wiki/SOAP) provides the ability to attach files and documents to [SOAP](https://en.wikipedia.org/wiki/SOAP) messages. This gives the opportunity for hackers to attach viruses and malware to these [SOAP](https://en.wikipedia.org/wiki/SOAP) messages.
 
 **Rule**: Ensure Virus Scanning technology is installed and preferably inline so files and attachments could be checked before being saved on disk.
 
-**Rule**: Ensure Virus Scanning technology is regularly updated with the latest virus definitions / rules.
+**Rule**: Ensure Virus Scanning technology is regularly updated with the latest virus definitions/rules.
 
 ## Message Size
 
