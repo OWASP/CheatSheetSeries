@@ -2226,7 +2226,7 @@
 <h3 id="nsxmldocument">NSXMLDocument<a class="headerlink" href="#nsxmldocument" title="Permanent link">&para;</a></h3>
 <p>iOS also provides an <code>NSXMLDocument</code> type, which is built on top of libxml2.</p>
 <p>However, <code>NSXMLDocument</code> provides some additional protections against XXE that aren't available in libxml2 directly.</p>
-<p>Per the 'NSXMLDocument External Entity Restriction API' section of this <a href="https://developer.apple.com/library/ios/#releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html">page</a>:</p>
+<p>Per the 'NSXMLDocument External Entity Restriction API' section of this <a href="https://developer.apple.com/library/archive/releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html">page</a>:</p>
 <ul>
 <li>iOS4 and earlier: All external entities are loaded by default.</li>
 <li>iOS5 and later: Only entities that don't require network access are loaded. (which is safer)</li>
