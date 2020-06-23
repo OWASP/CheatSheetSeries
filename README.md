@@ -36,25 +36,6 @@ Feel free to ask questions, suggest ideas, or share your best recipes.
 
 This [link](https://cheatsheetseries.owasp.org/bundle.zip) allows you to download a build (ZIP archive) of the offline website.
 
-## Conversion Rules
-
-* Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).
-* Use this [sheet](https://gist.github.com/molomby/9bc092e4a125f529ae362de7e46e8176) for superscript and subscript characters.
-* Use this [sheet](https://meta.askubuntu.com/a/7383) for arrows (left, right, top, down) characters.
-* Store all assets in the **assets** folder and use the following syntax:
-    * `![ALTERNATE_NAME](../assets/ASSET_NAME.png)` for the insertion of an image. Use `PNG` format for the images (this [software](https://www.gimp.org/downloads/) can be used to handle format conversion).
-    * `[ALTERNATE_NAME](../assets/ASSET_NAME.EXT)` for the insertion of other kinds of media (PDF, ZIP etc.).
-* Use ATX style (`#` syntax) for section head.
-* Use `**bold**` syntax for **bold** text.
-* Use `*italic*` syntax for *italic* text.
-* Use `TAB` for nested lists and not spaces.
-* Use [code fencing syntax along syntax highlighting](https://help.github.com/articles/creating-and-highlighting-code-blocks/) for code snippet (prevent when possible horizontal scrollbar).
-* If you use `{{` or `}}` pattern in code fencing then add a space between both curly braces (ex: `{ {`) otherwise it will break the GitBook generation process.
-* Same remark about the cheat sheet file name, only the following syntax is allowed: `[a-zA-Z_]+`.
-* No HTML code is allowed, only markdown syntax is allowed.
-* Use this [site](https://www.tablesgenerator.com/markdown_tables) for generation of tables.
-* Use a single new line between a section head and the beginning of its content.
-
 ## Editor & validation policy
 
 [Visual Studio Code](https://code.visualstudio.com/) is used for the work on the markdown files. It is also used for the work on the scripts.
@@ -71,16 +52,16 @@ The file **.markdownlinkcheck.json** defines the configuration used to validate 
 
 ## Contributors
 
-* **From 2014 to 2018:** [V1](CONTRIBUTOR-V1.md) - Initial version of the project hosted on the [OWASP WIKI](https://wiki.owasp.org).
-* **From 2019:** [V2](https://github.com/OWASP/CheatSheetSeries/graphs/contributors) - Hosted on [GitHub](https://github.com/OWASP/CheatSheetSeries).
+- **From 2014 to 2018:** [V1](CONTRIBUTOR-V1.md) - Initial version of the project hosted on the [OWASP WIKI](https://wiki.owasp.org).
+- **From 2019:** [V2](https://github.com/OWASP/CheatSheetSeries/graphs/contributors) - Hosted on [GitHub](https://github.com/OWASP/CheatSheetSeries).
 
 ## Special thanks
 
 A special thank you to the following people for their help provided during the migration:
 
-* [Dominique Righetto](https://github.com/righettod): For his special leadership and guidance.
-* [Elie Saad](https://github.com/ThunderSon): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
-* [Jakub Maćkowski](https://github.com/mackowski): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
+- [Dominique Righetto](https://github.com/righettod): For his special leadership and guidance.
+- [Elie Saad](https://github.com/ThunderSon): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
+- [Jakub Maćkowski](https://github.com/mackowski): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
 
 ## License
 
