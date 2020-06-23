@@ -1,7 +1,7 @@
 # Welcome to the OWASP Cheat Sheet Series
 
 [![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)
-![LicenseBadge](https://img.shields.io/badge/license-C_C-blue.svg)
+[![Creative Commons License](https://licensebuttons.net/l/by-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-sa/4.0/ "CC BY-SA 4.0")
 
 Welcome to the official repository for the Open Web Application Security Project® (OWASP®) Cheat Sheet Series project. The project focuses on providing good security practices for builders in order to secure their applications.
 
@@ -36,20 +36,6 @@ Feel free to ask questions, suggest ideas, or share your best recipes.
 
 This [link](https://cheatsheetseries.owasp.org/bundle.zip) allows you to download a build (ZIP archive) of the offline website.
 
-## Editor & validation policy
-
-[Visual Studio Code](https://code.visualstudio.com/) is used for the work on the markdown files. It is also used for the work on the scripts.
-
-The file **Project.code-workspace** is the workspace file in order to open the project in VSCode.
-
-The following [plugin](https://github.com/DavidAnson/vscode-markdownlint) is used to validate the markdown content.
-
-The file **.markdownlint.json** defines the central validation policy applied at VSCode (IDE) and TravisCI (CI) levels.
-
-Details about rules can be found [here](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md).
-
-The file **.markdownlinkcheck.json** defines the configuration used to validate using this [tool](https://github.com/tcort/markdown-link-check), at TravisCI level, all web and relatives links used in cheat sheets.
-
 ## Contributors
 
 - **From 2014 to 2018:** [V1](CONTRIBUTOR-V1.md) - Initial version of the project hosted on the [OWASP WIKI](https://wiki.owasp.org).
@@ -62,7 +48,3 @@ A special thank you to the following people for their help provided during the m
 - [Dominique Righetto](https://github.com/righettod): For his special leadership and guidance.
 - [Elie Saad](https://github.com/ThunderSon): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
 - [Jakub Maćkowski](https://github.com/mackowski): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
-
-## License
-
-The entire project content is under the **[Creative Commons v3.0](https://creativecommons.org/licenses/by-sa/3.0/)** license.
