@@ -1,10 +1,9 @@
-# How to contribute?
+# Contributing Guide
 
-**Notes:** 
-* Regarding fixing of a typo in existing cheat sheet, you can directly create a Pull Request otherwise follow the process below.
-* :heavy_exclamation_mark: Focus on updating a single file by Pull Request to facilitate the review by the core team.
-* :warning: Pull Request marked as **WAITING_UPDATE** (indicate that the core team wait an update from the author of the Pull Request) that do not receive any update from the author in a timeframe superior to one month then will be closed.
-* :warning: If the assignees of an issue do not provide any Pull Request in a timeframe superior to one month then the issue will go back to the **HELP_WANTED** state and assignees will be removed.
+- Regarding fixing of a typo in existing cheat sheet, you can directly create a Pull Request otherwise follow the process below.
+- :heavy_exclamation_mark: Focus on updating a single file by Pull Request to facilitate the review by the core team.
+- :warning: Pull Request marked as **WAITING_UPDATE** (indicate that the core team wait an update from the author of the Pull Request) that do not receive any update from the author in a timeframe superior to one month then will be closed.
+- :warning: If the assignees of an issue do not provide any Pull Request in a timeframe superior to one month then the issue will go back to the **HELP_WANTED** state and assignees will be removed.
 
 Follow these steps:
 
@@ -35,7 +34,7 @@ Follow these steps:
 - No HTML code is allowed, only markdown syntax is allowed.
 - Use this [site](https://www.tablesgenerator.com/markdown_tables) for generation of tables.
 
-# Content Guidelines
+## Content Guidelines
 
 The intended audience of the cheat sheets is developers, _not_ security experts. As such, do not assume that the person reading the cheat sheet has a strong understanding of security topics. In depth or academic discussions are generally not appropriate in cheat sheets, and should be linked to as external references where appropriate.
 
@@ -48,29 +47,29 @@ When submitting changes in a PR, consider the following areas:
 - Statements should be supported by authoritative references where possible.
 - Recommendations should be feasible for the majority of developers to implement.
 
-# Style Guidelines
+## Style Guidelines
 
-## Cheat Sheet Structure
+### Cheat Sheet Structure
 
 - Start with a H1 of the cheat sheet name
 - The first section of the cheat sheet should be an introduction which briefly sums up the contents, and provides a short list of key bullet points.
 - The table of contents will be automatically generated on the site, so does not need to be added as a section.
 - Headings should have a blank line after them.
 
-## Language
+### Language
 
 - Use US English.
-  * Spell check before submitted a PR.
+    - Spell check before submitted a PR.
 - Try and keep the language relatively simple to make it easier for non-native speakers
 - Define any non-ubiquitous acronyms when they are first used.
-  * This is not necessary for extremely common acronyms such as "HTTP" or "URL".
+    - This is not necessary for extremely common acronyms such as "HTTP" or "URL".
 
-## Markdown Formatting
+### Markdown Formatting
 
 - Nested lists should use different characters for each level. The characters should be (in order), `-`, `*` and `+`.
 - `**Bold**` and `_italic_` formatting can be used occasionally for emphasis.
 - Links should be inline with a useful description, such as `[Description](https://example.org)`.
-  * Always use HTTPS links where possible
+    - Always use HTTPS links where possible
 - Quotes from other articles should use quote syntax: `> Quote here`
 - Code snippets should be short and should be appropriately marked to provide syntax highlighting:
 
@@ -81,7 +80,7 @@ When submitting changes in a PR, consider the following areas:
     ```
 ```
 
-# How to setup my contributor environment?
+## How to setup my contributor environment
 
 Follow these steps:
 
@@ -92,17 +91,17 @@ Follow these steps:
 
 :alarm_clock: Before to push my update to my fork, what I need to verify?
 
-1. Ensure that the markdown file you have created/modified do not have any warnings/errors raised by the linter, you can see it in this bottom bar when the markdown file is opened in VSCode: 
+1. Ensure that the markdown file you have created/modified do not have any warnings/errors raised by the linter, you can see it in this bottom bar when the markdown file is opened in VSCode:
 
 ![PluginWarningUI](assets/README_PluginWarningUI.png)
 
 2. Ensure that the markdown file you have created/modified do not have any deadlinks. You can verify that by using this [plugin](https://www.npmjs.com/package/markdown-link-check), if you cannot use this plugin then, at least, verify that all the links are valid before to push:
     1. Install [NodeJS](https://nodejs.org/en/download/) to install NPM.
     2. Install the validation plugin via the command `npm install -g markdown-link-check`
-    3. Use this command (from the repository root folder) on your markdown file to verify the presence of any deadlinks: 
+    3. Use this command (from the repository root folder) on your markdown file to verify the presence of any deadlinks:
 
 ```bash
-$ markdown-link-check -c .markdownlinkcheck.json [MD_FILE]
+markdown-link-check -c .markdownlinkcheck.json [MD_FILE]
 ```
 
 See the example below:
