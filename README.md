@@ -3,15 +3,9 @@
 [![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)
 ![LicenseBadge](https://img.shields.io/badge/license-C_C-blue.svg)
 
-This repository contains all the cheat sheets of the project and represent the V2 of the **OWASP Cheat Sheet Series** project.
+Welcome to the official repository for the Open Web Application Security Project® (OWASP®) Cheat Sheet Series project. The project focuses on providing good security practices for builders in order to secure their applications.
 
-Links:
-* [OWASP home page of the project](https://owasp.org/www-project-cheat-sheets/)
-* [Official website](https://cheatsheetseries.owasp.org)
-
-## Reference to the Cheat Sheets
-
-When a reference to a cheat sheet needs to be created, then a link pointing to the project (generated) official web site hosted on **https://cheatsheetseries.owasp.org** must be used.
+In order to read the cheat sheets and **reference** them, use the project's [official website](https://cheatsheetseries.owasp.org). The project details can be viewed on the [OWASP® main website](https://owasp.org/www-project-cheat-sheets/) without the cheat sheets.
 
 :triangular_flag_on_post: Markdown files are the working sources and are not intended to be referenced in any external documentation/book/website/etc.
 
@@ -19,15 +13,15 @@ When a reference to a cheat sheet needs to be created, then a link pointing to t
 
 ### Project Leaders
 
-* [Jim Manico](https://github.com/jmanico).
-* [Elie Saad](https://github.com/ThunderSon).
+- [Jim Manico](https://github.com/jmanico).
+- [Elie Saad](https://github.com/ThunderSon).
 
 ### Core Team
 
-* [Jakub Maćkowski](https://github.com/mackowski).
-* [Robin Bailey](https://github.com/rbsec).
+- [Jakub Maćkowski](https://github.com/mackowski).
+- [Robin Bailey](https://github.com/rbsec).
 
-The core team contains a set of knowledgeable people that assist the project leaders in maintaining the repository and take on actions on their own. The team follows a well documented process in issues and pull requests, whether in accepting or rejecting them.
+The core team contains a set of knowledgeable people that assist the project leaders in maintaining the repository and take actions on their own. The team follows a well documented process in issues and pull requests, whether in accepting or rejecting them.
 
 ## Chat With Us
 
@@ -50,7 +44,7 @@ This [link](https://cheatsheetseries.owasp.org/bundle.zip) allows you to downloa
 * Store all assets in the **assets** folder and use the following syntax:
     * `![ALTERNATE_NAME](../assets/ASSET_NAME.png)` for the insertion of an image. Use `PNG` format for the images (this [software](https://www.gimp.org/downloads/) can be used to handle format conversion).
     * `[ALTERNATE_NAME](../assets/ASSET_NAME.EXT)` for the insertion of other kinds of media (PDF, ZIP etc.).
-* Use ATX style (`#` syntax) for section head. 
+* Use ATX style (`#` syntax) for section head.
 * Use `**bold**` syntax for **bold** text.
 * Use `*italic*` syntax for *italic* text.
 * Use `TAB` for nested lists and not spaces.
