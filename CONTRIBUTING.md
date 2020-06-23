@@ -19,6 +19,22 @@ Follow these steps:
     3. Submit your [Pull Request](https://help.github.com/articles/creating-a-pull-request/).
     4. Verify that the CI job [applied on your Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) do not fail!
 
+## Conversion Rules
+
+- Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).
+- Use this [sheet](https://gist.github.com/molomby/9bc092e4a125f529ae362de7e46e8176) for superscript and subscript characters.
+- Use this [sheet](https://meta.askubuntu.com/a/7383) for arrows (left, right, top, down) characters.
+- Store all assets in the **assets** folder and use the following syntax:
+    - `![ALTERNATE_NAME](../assets/ASSET_NAME.png)` for the insertion of an image. Use `PNG` format for the images (this [software](https://www.gimp.org/downloads/) can be used to handle format conversion).
+    - `[ALTERNATE_NAME](../assets/ASSET_NAME.EXT)` for the insertion of other kinds of media (PDF, ZIP etc.).
+- Use `**bold**` syntax for **bold** text.
+- Use `*italic*` syntax for *italic* text.
+- Use [code fencing syntax along syntax highlighting](https://help.github.com/articles/creating-and-highlighting-code-blocks/) for code snippet (prevent when possible horizontal scrollbar).
+- If you use `{{` or `}}` pattern in code fencing then add a space between both curly braces (ex: `{ {`) otherwise it will break the GitBook generation process.
+- Same remark about the cheat sheet file name, only the following syntax is allowed: `[a-zA-Z_]+`.
+- No HTML code is allowed, only markdown syntax is allowed.
+- Use this [site](https://www.tablesgenerator.com/markdown_tables) for generation of tables.
+
 # Content Guidelines
 
 The intended audience of the cheat sheets is developers, _not_ security experts. As such, do not assume that the person reading the cheat sheet has a strong understanding of security topics. In depth or academic discussions are generally not appropriate in cheat sheets, and should be linked to as external references where appropriate.
