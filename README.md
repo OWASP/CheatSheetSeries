@@ -1,10 +1,7 @@
-[![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)
-![CSCounterBadge](https://img.shields.io/badge/cheat_sheets_available-63-orange.svg)
-![LicenseBadge](https://img.shields.io/badge/license-C_C-blue.svg)
-
-![ProjectLogoOfficial](assets/Preface_Cheatsheet_Logo.png)
-
 # Welcome to the OWASP Cheat Sheet Series
+
+[![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)
+![LicenseBadge](https://img.shields.io/badge/license-C_C-blue.svg)
 
 This repository contains all the cheat sheets of the project and represent the V2 of the **OWASP Cheat Sheet Series** project.
 
