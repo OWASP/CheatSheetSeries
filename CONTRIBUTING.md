@@ -1,22 +1,22 @@
 # Contributing Guide
 
 - For minor fixes such as a typo in existing cheat sheet, a simple pull request is all that's needed. For more involved changes, please follow the process laid out below.
-- :heavy_exclamation_mark: Focus on updating a single file in a Pull Request to make the review processes simpler for teh core team.
+- :heavy_exclamation_mark: Focus on updating a single file in a Pull Request to make the review processes simpler for the core team.
 - :warning: Pull Requests marked as **WAITING_UPDATE** (indicating that the core team are waiting for an update from the author of the Pull Request) that do not receive any updates from the author in one month will be closed.
 - :warning: If the assignees of an issue do not provide a Pull Request within one month then the issue will go back to the **HELP_WANTED** state and assignees will be removed.
 
-To proposed changes to the existing cheat sheets or the creation of a new one, the process is as follows:
+To propose changes to the existing cheat sheets or the creation of a new one, the process is as follows:
 
-1. Create an new [Issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using either:
+1. Create an new [issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using either:
    - The `new_cheatsheet_proposal` template if you want to propose a new cheat sheet.
    - The `update_cheatsheet_proposal` template if you want to modify a existing cheat sheet.
-2. One the issues has been discussed and approved:
+2. Once the issue has been discussed and approved:
     1. Fork and clone this repository.
     2. Either:
       - Create the cheat sheet using the [new cheat sheet template](templates/New_CheatSheet.md).
-      - Modify the target cheat sheet in case of a update or refactor.
+      - Modify the target cheat sheet in case of an update or refactor.
     3. Submit your [Pull Request](https://help.github.com/articles/creating-a-pull-request/).
-    4. Verify that the CI job [applied on your Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) do not fail!
+    4. Verify that the CI job [applied on your Pull Request](https://travis-ci.org/OWASP/CheatSheetSeries/pull_requests) does not fail!
       - If you believe they're failing due to something that's not your fault (such as another untouched file), add a comment in the Pull Request.
 
 ## Style Guide
@@ -25,10 +25,10 @@ To proposed changes to the existing cheat sheets or the creation of a new one, t
 
 - Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).
 - Use `**bold**` syntax for **bold** text.
-- Nested lists should use different characters for each level. The characters should be (in order), `-`, `*` and `+`.
+- Lists and nested lists should use `-` strictly.
 - Avoid the use of HTML in the cheat sheets (stick to pure Markdown).
 - Quotes from other articles should use quote syntax: `> Quote here`
-- If you use `{{` or `}}` pattern in code fencing then add a space between both curly braces (ex: `{ {`) otherwise it will break the GitBook generation process.
+- If you use `{{` or `}}` pattern in code fencing then add a space between both curly braces (ex: `{ {`).
 - Cheat Sheet filenames should only contain letters, numbers, hyphens and underscores.
 - Store all assets in the **assets** folder and use the following syntax:
     - `![ALTERNATE_NAME](../assets/ASSET_NAME.png)` for images (which should be in the PNG format).
@@ -54,7 +54,7 @@ The purpose of the cheat sheets is to provide **useful, practical advice** that 
 When submitting changes in a PR, consider the following areas:
 
 - The content should be useful to developers.
-- The contents should be factual and correct.
+- The content should be factual and correct.
 - Statements should be supported by authoritative references where possible.
 - Recommendations should be feasible for the majority of developers to implement.
 
@@ -82,7 +82,7 @@ Follow these steps:
 3. Open the file [Project.code-workspace](Project.code-workspace) from VSCode via the menu `File > Open Workspace...`.
 4. You are ready to contribute :+1:
 
-:alarm_clock: Before to push my update to my fork, what I need to verify?
+:alarm_clock: What to verify before pushing the updates?
 
 1. Ensure that the markdown files you have created or modified do not have any warnings/errors raised by the linter. You can see it in this bottom bar when the markdown file is opened in VSCode:
 
