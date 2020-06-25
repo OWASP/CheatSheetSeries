@@ -3,9 +3,9 @@
 [![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)
 [![Creative Commons License](https://licensebuttons.net/l/by-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-sa/4.0/ "CC BY-SA 4.0")
 
-Welcome to the official repository for the Open Web Application Security Project® (OWASP®) Cheat Sheet Series project. The project focuses on providing good security practices for builders in order to secure their applications.
+Welcome to the official repository for the Open Web Application Security Project® (OWASP) Cheat Sheet Series project. The project focuses on providing good security practices for builders in order to secure their applications.
 
-In order to read the cheat sheets and **reference** them, use the project's [official website](https://cheatsheetseries.owasp.org). The project details can be viewed on the [OWASP® main website](https://owasp.org/www-project-cheat-sheets/) without the cheat sheets.
+In order to read the cheat sheets and **reference** them, use the project's [official website](https://cheatsheetseries.owasp.org). The project details can be viewed on the [OWASP main website](https://owasp.org/www-project-cheat-sheets/) without the cheat sheets.
 
 :triangular_flag_on_post: Markdown files are the working sources and are not intended to be referenced in any external documentation, books or websites.
 
