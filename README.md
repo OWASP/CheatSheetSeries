@@ -1,54 +1,50 @@
 # Welcome to the OWASP Cheat Sheet Series
 
 [![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)
-![LicenseBadge](https://img.shields.io/badge/license-C_C-blue.svg)
+[![Creative Commons License](https://licensebuttons.net/l/by-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-sa/4.0/ "CC BY-SA 4.0")
 
 Welcome to the official repository for the Open Web Application Security Project® (OWASP®) Cheat Sheet Series project. The project focuses on providing good security practices for builders in order to secure their applications.
 
 In order to read the cheat sheets and **reference** them, use the project's [official website](https://cheatsheetseries.owasp.org). The project details can be viewed on the [OWASP® main website](https://owasp.org/www-project-cheat-sheets/) without the cheat sheets.
 
-:triangular_flag_on_post: Markdown files are the working sources and are not intended to be referenced in any external documentation/book/website/etc.
+:triangular_flag_on_post: Markdown files are the working sources and are not intended to be referenced in any external documentation, books or websites.
 
 ## Cheat Sheet Series Team
 
 ### Project Leaders
 
-- [Jim Manico](https://github.com/jmanico).
-- [Elie Saad](https://github.com/ThunderSon).
+- [Jim Manico](https://github.com/jmanico)
+- [Elie Saad](https://github.com/ThunderSon)
 
 ### Core Team
 
-- [Jakub Maćkowski](https://github.com/mackowski).
-- [Robin Bailey](https://github.com/rbsec).
+- [Jakub Maćkowski](https://github.com/mackowski)
+- [Robin Bailey](https://github.com/rbsec)
 
-The core team contains a set of knowledgeable people that assist the project leaders in maintaining the repository and take actions on their own. The team follows a well documented process in issues and pull requests, whether in accepting or rejecting them.
+The core team contains a set of knowledgeable people that assist the project leaders in maintaining the repository and take actions on their own. The team follows a well documented process for issues and pull requests.
 
 ## Chat With Us
 
 We're easy to find on Slack:
 
 1. Join the OWASP Group Slack with this [invitation link](https://owasp-slack.herokuapp.com/).
-2. Join this project's [channel, #cheatsheets](https://owasp.slack.com/messages/C073YNUQG).
+2. Join the [#cheatsheets channel](https://owasp.slack.com/messages/C073YNUQG).
 
 Feel free to ask questions, suggest ideas, or share your best recipes.
+
+## Contributions, Feature Requests, and Feedback
+
+We are actively inviting new contributors! To start, please read the [contribution guide](CONTRIBUTING.md).
+
+This project is only possible thanks to the work of many dedicated volunteers. Everyone is encouraged to help in ways large and small. Here are a few ways you can help:
+
+- Read the current content and help us fix any spelling mistakes or grammatical errors.
+- Choose an existing [issue](https://github.com/OWASP/CheatSheetSeries/issues) on GitHub and submit a pull request to fix it.
+- Open a new issue to report an opportunity for improvement.
 
 ### Automated Build
 
 This [link](https://cheatsheetseries.owasp.org/bundle.zip) allows you to download a build (ZIP archive) of the offline website.
-
-## Editor & validation policy
-
-[Visual Studio Code](https://code.visualstudio.com/) is used for the work on the markdown files. It is also used for the work on the scripts.
-
-The file **Project.code-workspace** is the workspace file in order to open the project in VSCode.
-
-The following [plugin](https://github.com/DavidAnson/vscode-markdownlint) is used to validate the markdown content.
-
-The file **.markdownlint.json** defines the central validation policy applied at VSCode (IDE) and TravisCI (CI) levels.
-
-Details about rules can be found [here](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md).
-
-The file **.markdownlinkcheck.json** defines the configuration used to validate using this [tool](https://github.com/tcort/markdown-link-check), at TravisCI level, all web and relatives links used in cheat sheets.
 
 ## Contributors
 
@@ -63,6 +59,4 @@ A special thank you to the following people for their help provided during the m
 - [Elie Saad](https://github.com/ThunderSon): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
 - [Jakub Maćkowski](https://github.com/mackowski): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
 
-## License
-
-The entire project content is under the **[Creative Commons v3.0](https://creativecommons.org/licenses/by-sa/3.0/)** license.
+Open Web Application Security Project and OWASP are registered trademarks of the OWASP Foundation, Inc.
