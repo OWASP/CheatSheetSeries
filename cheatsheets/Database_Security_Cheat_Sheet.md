@@ -95,7 +95,8 @@ The following sections gives some further recommendations for specific database 
 
 ### Microsoft SQL Server
 
-- Disable `xp_cmdshell`.
+- Disable `xp_cmdshell`, `xp_dirtree` and other stored procedures that are not required.
+- Disable Common Language Runtime (CLR) execution.
 - Disable the SQL Browser service.
 - Disable [Mixed Mode Authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15) unless it is required.
 - Ensure that the sample [Northwind and AdventureWorks databases](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases) have been removed.
