@@ -1396,7 +1396,8 @@
 <p>The following sections gives some further recommendations for specific database software, in addition to the more general recommendations given above.</p>
 <h3 id="microsoft-sql-server">Microsoft SQL Server<a class="headerlink" href="#microsoft-sql-server" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Disable <code>xp_cmdshell</code>.</li>
+<li>Disable <code>xp_cmdshell</code>, <code>xp_dirtree</code> and other stored procedures that are not required.</li>
+<li>Disable Common Language Runtime (CLR) execution.</li>
 <li>Disable the SQL Browser service.</li>
 <li>Disable <a href="https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15">Mixed Mode Authentication</a> unless it is required.</li>
 <li>Ensure that the sample <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases">Northwind and AdventureWorks databases</a> have been removed.</li>
