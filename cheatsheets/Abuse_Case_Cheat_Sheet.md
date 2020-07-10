@@ -101,7 +101,7 @@ Make a workshop that includes people with the following profiles:
 
 - **Business analyst**: Will be the business key people that will describe each feature from a business point of view.
 - **Risk analyst**: Will be the company's risk personnel that will evaluate the business risk from a proposed attack (sometimes it is the **Business analyst** depending on the company).
-- **Offensives (Pentester or Application Security people with offensive mindset)**: Will be the *attacker* that will propose all attacks that he can perform on the business feature(s) in question. If the company does not have a person with this profile then it is possible to request the service of an external specialist (Pentester or AppSec consultant from a security firm). If possible, include 2 offensives people (ex: 1 Pentester + 1 AppSec) in order to increase the number of possible attacks that will be identified and considered.
+- **Penetration Tester**: Will be the *attacker* that will propose all attacks that he can perform on the business feature(s) in question. If the company does not have a person with this profile then it is possible to request the service of an external specialist (Pentester or AppSec consultant from a security firm). If possible, include 2 Penetration Testers from diverse backgrounds in order to increase the number of possible attacks that will be identified and considered.
 - **Technical leaders of the projects**: Will be the project technical people and will allow technical exchange about attacks and countermeasures identified during the workshop.
 - **Quality assurance analyst or functional tester**: Personnel that may have a good sense of how the application/functionality is intended to work (positive testing), not work (negative testing), and what things cause it to fail (failure cases).
 
@@ -176,17 +176,17 @@ Use the spreadsheet to review all the features.
 For each feature, follow this flow:
 
 1. Key business people explain the current feature from a business point of view.
-2. Offensives propose and explain a set of attacks that they can perform against the feature.
+2. Penetration Testers propose and explain a set of attacks that they can perform against the feature.
 3. For each attack proposed:
     1. Appsec proposes a countermeasure and a preferred set up location (infrastructure, network, code, design...).
     2. Technical people give feedback about the feasibility of the proposed countermeasure.
-    3. Offsensives use the CVSS v3 (or other standard) calculator to determine a risk rating. (ex: [CVSS V3 calculator](https://www.first.org/cvss/calculator/3.0))
+    3. Penetration Testers use the CVSS v3 (or other standard) calculator to determine a risk rating. (ex: [CVSS V3 calculator](https://www.first.org/cvss/calculator/3.0))
     4. Risk key people accept/increase/decrease the rating to have final one that match the real business impact for the company.
 
 4. Business, Risk and Technical key peoples find a consensus and filter the list of abuses for the current feature to keep the ones that must be addressed, and then flag them accordingly in the *ABUSE CASES* sheet (**if risk is accepted then add a comment to explain why**).
 5. Pass to next feature...
 
-If the presence of offensives is not possible then you can use the following references to identify the applicable attacks on your features:
+If the presence of Penetration Testers is not possible then you can use the following references to identify the applicable attacks on your features:
 
 - [OWASP Automated Threats to Web Applications](https://owasp.org/www-project-automated-threats-to-web-applications/)
 - [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/stable/)
@@ -203,7 +203,7 @@ This dictionary will speed up the future workshops in a significant way.
 
 To promote the creation of this dictionary, you can, at the end of the project/sprint, gather the list
 of attacks and countermeasures identified in a central location (wiki, database, file...) that will be
-used during the next workshop in combination with input from offensives people.
+used during the next workshop in combination with input from Penetration Testers.
 ```
 
 #### Step 3: After the workshop
