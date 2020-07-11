@@ -71,7 +71,7 @@ The method `html_safe` of String is somewhat confusingly named. It means that we
 
 If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: Markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious.
 
-If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the `#sanitize` method that let's you allow list allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.
+If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the `#sanitize` method that let's you whitelist allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.
 
 An often overlooked XSS attack vector for older versions of rails is the `href` value of a link:
 

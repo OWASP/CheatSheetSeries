@@ -4,6 +4,7 @@
         "whitelist": {
             "allow": [
                 "XSL stylesheet",
+                "OS X 10.9"
             ]
         }
     },

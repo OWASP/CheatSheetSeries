@@ -88,7 +88,7 @@ Safe NET Example
 Beyond adopting one of the two primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:
 
 - **Least Privilege**
-- **White ListInput Validation**
+- **White List Input Validation**
 
 #### Least Privilege
 

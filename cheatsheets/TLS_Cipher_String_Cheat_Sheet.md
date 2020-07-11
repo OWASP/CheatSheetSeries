@@ -30,7 +30,7 @@ The recommended cipher strings are based on different scenarios:
 - Recommended if you solely control the server, the clients use their browsers and if you check the compatibility before using it for other protocols than HTTPS.
 - Includes solely the strongest and stronger [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers.
 - Protocols: `TLSv1.2` (and newer or better).
-- Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 30/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7, IE 11/WinPhone 8.1, Java8b132, OpenSSL 1.0.1e, Opera 17/Win 7, Safari 5/iOS 5.1.1, Safari 7/macOS 10.9, Yahoo Slurp Jun 2014, YandexBot Sep 2014
+- Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 30/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7, IE 11/WinPhone 8.1, Java8b132, OpenSSL 1.0.1e, Opera 17/Win 7, Safari 5/iOS 5.1.1, Safari 7/OS X 10.9, Yahoo Slurp Jun 2014, YandexBot Sep 2014
 
 **OWASP Cipher String 'C'** (Widest Compatibility, compatibility to most legacy browsers, legacy libraries (still patched) and other application protocols besides https, e.g. IMAPS):
 
