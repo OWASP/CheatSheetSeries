@@ -182,7 +182,7 @@ HTTP Strict Transport Security (HSTS) instructs the user's browser to always req
 
 HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the [Certificate and Public Key Pinning article](https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning#http-pinning) for further information in implementing HPKP.
 
-HPKP is controversial, and that while it is currently supported in Firefox and some other browsers, it has been removed from [Chrome](https://www.chromestatus.com/feature/5903385005916160), and is considered deprecated by [Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins). As such, careful consideration of the risks should be made before implementing it.
+**Note:** HPKP was deprecated by all major browsers ([source](https://developer.mozilla.org/en-US/docs/Web/HTTP/Public_Key_Pinning#Browser_compatibility)) mostly due to concerns regarding human error causing "HPKP Suicide" or malicious actors obtaining access to the servers and enabling HPKP with a newly issued certificate to perform "Ransom PKP" ([more info](https://scotthelme.co.uk/using-security-features-to-do-bad-things/)). HPKP is still possible in some cases, but careful consideration of the risks should be made before implementing it.
 
 ### Consider the use of Client-Side Certificates
 
