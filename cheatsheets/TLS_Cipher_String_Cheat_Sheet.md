@@ -8,7 +8,7 @@ This article is focused on providing clear and simple examples for the cipher st
 
 ### Scenarios
 
-The cipher strings are based on the recommendation to setup your policy to get a allow list for your ciphers as described in the *[Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)](Transport_Layer_Protection_Cheat_Sheet.md)*. The latest and strongest ciphers are solely available with TLSv1.2, older protocols don't support them. Please find enclosed all supported protocols by the scenario.
+The cipher strings are based on the recommendation to setup your policy to get a whitelist for your ciphers as described in the *[Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)](Transport_Layer_Protection_Cheat_Sheet.md)*. The latest and strongest ciphers are solely available with TLSv1.2, older protocols don't support them. Please find enclosed all supported protocols by the scenario.
 
 We have not included any `ChaCha20-Poly1305` ciphers, yet. One reason is that we haven't found various assessments yet, the other is that implementations of new ciphers may be more buggy.
 
@@ -125,7 +125,7 @@ SSLCipherSuite 'DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AE
 
 **Remarks:**
 
-- The cipher string is compiled as a allow list of individual ciphers to get a better compatibility even with old versions of OpenSSL.
+- The cipher string is compiled as a whitelist of individual ciphers to get a better compatibility even with old versions of OpenSSL.
 - Monitor the performance of your server, e.g. the TLS handshake with DHE hinders the CPU about 2.4 times more than ECDHE, cf. *[Vincent Bernat, 2011](http://vincent.bernat.im/en/blog/2011-ssl-perfect-forward-secrecy.html#some-benchmarks)*, *[nmav's Blog, 2011](https://nikmav.blogspot.com/2011/12/price-to-pay-for-perfect-forward.html)*.
 - Verify your cipher string using your crypto library, e.g. openssl using cipher string 'B':
 

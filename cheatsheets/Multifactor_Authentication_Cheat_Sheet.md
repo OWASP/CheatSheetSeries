@@ -312,7 +312,7 @@ When talking about location, access to the application that the user is authenti
 
 ### Source IP Ranges
 
-The source IP address the user is connecting from can be used as a factor, typically in a allow list based approach. This could either be based on a static allow list (such as corporate office ranges) or a dynamic allow list (such as previous IP addresses the user has authenticated from).
+The source IP address the user is connecting from can be used as a factor, typically in a white-list based approach. This could either be based on a static white-list (such as corporate office ranges) or a dynamic white-list (such as previous IP addresses the user has authenticated from).
 
 #### Pros
 

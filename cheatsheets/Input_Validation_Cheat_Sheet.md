@@ -35,11 +35,11 @@ Input validation can be implemented using any programming technique that allows 
 
 ### Whitelisting vs blacklisting
 
-It is a common mistake to use deny list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.
+It is a common mistake to use black list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.
 
 Plus, such filters frequently prevent authorized input, like `O'Brian`, where the `'` character is fully legitimate. For more information on XSS filter evasion please see the [this wiki page](https://owasp.org/www-community/xss-filter-evasion-cheatsheet).
 
-Allow list validation is appropriate for all input fields provided by the user. Allow list validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.
+White list validation is appropriate for all input fields provided by the user. White list validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.
 
 If it's well structured data, like dates, social security numbers, zip codes, email addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.
 
@@ -65,7 +65,7 @@ References:
 
 Developing regular expressions can be complicated, and is well beyond the scope of this cheat sheet.
 
-There are lots of resources on the internet about how to write regular expressions, including this [site](https://www.regular-expressions.info/) and the [OWASP Validation regular expression Repository](https://owasp.org/www-community/OWASP_Validation_Regex_Repository).
+There are lots of resources on the internet about how to write regular expressions, including this [site](https://www.regular-expressions.info/) and the [OWASP Validation Regex Repository](https://owasp.org/www-community/OWASP_Validation_Regex_Repository).
 
 In summary, input validation should:
 
@@ -73,7 +73,7 @@ In summary, input validation should:
 - Define the allowed set of characters to be accepted.
 - Define a minimum and maximum length for the data (e.g. `{1,25}` ).
 
-## Allow list Regular Expression Examples
+## White List Regular Expression Examples
 
 Validating a U.S. Zip Code (5 digits plus optional -4)
 
@@ -90,7 +90,7 @@ NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PW|PA|PR|RI|SC|SD|TN|
 TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 ```
 
-**Java regular expression Usage Example:**
+**Java Regex Usage Example:**
 
 Example validating the parameter "zip" using a regular expression.
 
@@ -110,7 +110,7 @@ public void doPost( HttpServletRequest request, HttpServletResponse respon
 }
 ```
 
-Some allow list validators have also been predefined in various open source packages that you can leverage. For example:
+Some white list validators have also been predefined in various open source packages that you can leverage. For example:
 
 - [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/)
 
@@ -155,7 +155,7 @@ Check the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md).
 
 ### Beware of "special" files
 
-The upload feature should be using a allow list approach to only allow specific file types and extensions. However, it is important to be aware of the following file types that, if allowed, could result in security vulnerabilities:
+The upload feature should be using a whitelist approach to only allow specific file types and extensions. However, it is important to be aware of the following file types that, if allowed, could result in security vulnerabilities:
 
 - **crossdomain.xml** / **clientaccesspolicy.xml:** allows cross-domain data loading in Flash, Java and Silverlight. If permitted on sites with authentication this can permit cross-domain data theft and CSRF attacks. Note this can get pretty complicated depending on the specific plugin version in question, so its best to just prohibit files named "crossdomain.xml" or "clientaccesspolicy.xml".
 - **.htaccess** and **.htpasswd:** Provides server configuration options on a per-directory basis, and should not be permitted. See [HTACCESS documentation](http://en.wikipedia.org/wiki/Htaccess).
@@ -178,7 +178,7 @@ The format of email addresses is defined by [RFC 5321](https://tools.ietf.org/ht
 - `user@[IPv6:2001:db8::1]`
 - `" "@example.org`
 
-Properly parsing email addresses for validity with regular expressions is very complicated, although there are a number of [publicly available documents on regular expression](https://tools.ietf.org/id/draft-seantek-mail-regexen-03.html#rfc.section.3).
+Properly parsing email addresses for validity with regular expressions is very complicated, although there are a number of [publicly available documents on regex](https://tools.ietf.org/id/draft-seantek-mail-regexen-03.html#rfc.section.3).
 
 The biggest caveat on this is that although the RFC defines a very flexible format for email addresses, most real world implementations (such as mail servers) use a far more restricted address format, meaning that they will reject addresses that are *technically* valid.  Although they may be technically correct, these addresses are of little use if your application will not be able to actually send emails to them.
 

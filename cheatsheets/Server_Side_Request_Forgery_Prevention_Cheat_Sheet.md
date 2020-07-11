@@ -27,8 +27,8 @@ SSRF is an attack vector that abuses an application to interact with the interna
 
 Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:
 
-- Application can send request only to **identified and trusted applications**: Case when [allow list](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
-- Application can send requests to **ANY external IP address or domain name**: Case when [allow list](https://en.wikipedia.org/wiki/Whitelisting) approach is not available.
+- Application can send request only to **identified and trusted applications**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
+- Application can send requests to **ANY external IP address or domain name**: Case when [whitelist](https://en.wikipedia.org/wiki/Whitelisting) approach is not available.
 
 Because these two cases are very different, this cheat sheet will describe defences against them separately.
 
@@ -42,7 +42,7 @@ Sometimes, an application need to perform request to another application, often 
  > Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system.
  > The user leverages the web application as a proxy to the HR system.
 
-The allow list approach is a viable option in this case since the internal application called by the *VulnerableApplication* is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.
+The whitelist approach is a viable option in this case since the internal application called by the *VulnerableApplication* is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.
 
 #### Available protections
 
@@ -69,7 +69,7 @@ The request sent to the internal application will be based on the following info
 
 In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected.
 
-A [regular expression](https://www.regular-expressions.info/) can be used to ensure that data received is valid from a security point of view if the input data have a simple format (*e.g.* token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the `string` object because regular expression for complex formats are difficult to maintain and are highly error-prone.
+A [regex](https://www.regular-expressions.info/) can be used to ensure that data received is valid from a security point of view if the input data have a simple format (*e.g.* token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the `string` object because regex for complex formats are difficult to maintain and are highly error-prone.
 
 User input is assumed to be non-network related and consists of the user's personal information.
 
@@ -107,9 +107,9 @@ The first layer of validation can be applied using libraries that ensure the sec
 - **Ruby**: Class [IPAddr](https://ruby-doc.org/stdlib-2.0.0/libdoc/ipaddr/rdoc/IPAddr.html) from the SDK.
     - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 
-> **Use the output value of the method/library as the IP address to compare against the allow list.**
+> **Use the output value of the method/library as the IP address to compare against the whitelist.**
 
-After ensuring the validity of the incoming IP address, the second layer of validation is applied. A allow list is created after determining all the IP addresses (v4 and v6 in order to avoid bypasses) of the identified and trusted applications. The valid IP is cross checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).
+After ensuring the validity of the incoming IP address, the second layer of validation is applied. A whitelist is created after determining all the IP addresses (v4 and v6 in order to avoid bypasses) of the identified and trusted applications. The valid IP is cross checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).
 
 ###### Domain name
 
@@ -136,7 +136,7 @@ Similar to the IP address validation, the first layer of validation can be appli
     - [domainator](https://github.com/mhuggins/domainator), [public_suffix](https://github.com/weppos/publicsuffix-ruby) and [addressable](https://github.com/sporkmonger/addressable) has been tested but unfortunately they all consider `<script>alert(1)</script>.owasp.org` as a valid domain name.
     - This regex, taken from [here](https://stackoverflow.com/a/26987741), can be used: `^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$`
 
-Example of execution of the proposed regular expression for Ruby:
+Example of execution of the proposed regex for Ruby:
 
 ```ruby
 domain_names = ["owasp.org","owasp-test.org","doc-test.owasp.org","doc.owasp.org",
@@ -162,13 +162,13 @@ $ ruby test.rb
 
 After ensuring the validity of the incoming domain name, the second layer of validation is applied:
 
-1. Build a allow list with all the domain names of every identified and trusted applications.
-2. Verify that the domain name received is part of this allow list (string strict comparison with case sensitive).
+1. Build a whitelist with all the domain names of every identified and trusted applications.
+2. Verify that the domain name received is part of this whitelist (string strict comparison with case sensitive).
 
 Unfortunately here, the application is still vulnerable to the `DNS pinning` bypass mentioned in this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf). Indeed, a DNS resolution will be made when the business code will be executed. To address that issue, the following action must be taken in addition of the validation on the domain name:
 
 1. Ensure that the domains that are part of your organization are resolved by your internal DNS server first in the chains of DNS resolvers.
-2. Monitor the domains allow list in order to detect when any of them resolves to a/an:
+2. Monitor the domains whitelist in order to detect when any of them resolves to a/an:
    - Local IP address (V4 + V6).
    - Internal IP of your organization (expected to be in private IP ranges) for the domain that are not part of your organization.
 
@@ -261,7 +261,7 @@ In the schema below, a Firewall component is leveraged to limit the application'
 
 ### Case 2 - Application can send requests to ANY external IP address or domain name
 
-This case happens when a user can control a URL to an **External** resource and the application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). allow list cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.
+This case happens when a user can control a URL to an **External** resource and the application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.
 
 In this scenario, *External* refers to any IP that doesn't belong to the internal network, and should be reached by going over the public internet.
 
@@ -272,7 +272,7 @@ Thus, the call from the *Vulnerable Application*:
 
 #### Challenges in blocking URLs at application layer
 
-Based on the business requirements of the above mentioned applications, the allow list approach is not a valid solution. Despite knowing that the deny list approach is not an impenetrable wall, it is the best solution in this scenario. It is informing the application what it should **not** do.
+Based on the business requirements of the above mentioned applications, the whitelist approach is not a valid solution. Despite knowing that the blacklist approach is not an impenetrable wall, it is the best solution in this scenario. It is informing the application what it should **not** do.
 
 Here is why filtering URLs is hard at the Application layer:
 
@@ -287,14 +287,14 @@ Taking into consideration the same assumption in the following [example](Server_
 
 Like for the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#case-1---application-can-send-request-only-to-identified-and-trusted-applications), it is assumed that the `IP Address` or `domain name` is required to create the request that will be sent to the *TargetApplication*.
 
-The first validation on the input data presented in the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer) on the 3 types of data will be the same for this case **BUT the second validation will differ**. Indeed, here we must use the deny list approach.
+The first validation on the input data presented in the case [n°1](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer) on the 3 types of data will be the same for this case **BUT the second validation will differ**. Indeed, here we must use the blacklist approach.
 
 > **Regarding the proof of legitimacy of the request**: The *TargetedApplication* that will receive the request must generate a random token (ex: alphanumeric of 20 characters) that is expected to be passed by the caller (in body via a parameter for which the name is also defined by the application itself and only allow characters set `[a-z]{1,10}`) to perform a valid request. The receiving endpoint must only accept HTTP POST requests.
 
 **Validation flow (if one the validation steps fail then the request is rejected):**
 
-1. The application will receive the IP address or domain name of the *TargetedApplication* and it will apply the first validation on the input data using the libraries/regular expression mentioned in this [section](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer).
-2. The second validation will be applied against the IP address or domain name of the *TargetedApplication* using the following deny list approach:
+1. The application will receive the IP address or domain name of the *TargetedApplication* and it will apply the first validation on the input data using the libraries/regex mentioned in this [section](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer).
+2. The second validation will be applied against the IP address or domain name of the *TargetedApplication* using the following blacklist approach:
    - For IP address:
      - The application will verify that it is a public one (see the hint provided in the next paragraph with the python code sample).
    - For domain name:
@@ -308,7 +308,7 @@ The first validation on the input data presented in the case [n°1](Server_Side_
 
 **Hints for the step 2 regarding the verification on an IP address:**
 
-As mentioned above, not every SDK provide a built-in feature to verify if an IP (V4 + V6) is private/public. So, the following approach can be used based on a deny list composed of the private IP ranges (*example is given in python in order to be easy to understand and portable to others technologies*) :
+As mentioned above, not every SDK provide a built-in feature to verify if an IP (V4 + V6) is private/public. So, the following approach can be used based on a blacklist composed of the private IP ranges (*example is given in python in order to be easy to understand and portable to others technologies*) :
 
 ```python
 def is_private_ip(ip_address):

@@ -130,9 +130,9 @@ Care should be taken to attempt to minimize either of these two rules. It may no
 
 Positive security model (whitelist) is a comprehensive security mechanism that provides an independent input validation envelope to an application. The model specifies the characteristics of valid input (character set, length, etc…) and denies anything that does not conform. By defining rules for every parameter in every page in the application the application is protected by an additional security envelop independent from its code.
 
-##### Example allow list ModSecurity Virtual Patch
+##### Example Whitelist ModSecurity Virtual Patch
 
-In order to create a allow list virtual patch, you must be able to verify what the normal, expected input values are. If you have implemented proper audit logging as part of the Preparation Phase, then you should be able to review audit logs to identify the format of expected input types. In this case, the `reqID` parameter is supposed to only hold integer characters so we can use this virtual patch:
+In order to create a whitelist virtual patch, you must be able to verify what the normal, expected input values are. If you have implemented proper audit logging as part of the Preparation Phase, then you should be able to review audit logs to identify the format of expected input types. In this case, the `reqID` parameter is supposed to only hold integer characters so we can use this virtual patch:
 
 ```text
 ##
@@ -157,7 +157,7 @@ This virtual patch will inspect the `reqID` parameter value on the specified pag
 
 A negative security model (blacklist) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.
 
-##### Example deny list ModSecurity Virtual Patch
+##### Example Blacklist ModSecurity Virtual Patch
 
 Here is the example [PoC code](https://packetstormsecurity.com/files/119217/WordPress-Shopping-Cart-8.1.14-Shell-Upload-SQL-Injection.html) that was supplied by the public advisory:
 

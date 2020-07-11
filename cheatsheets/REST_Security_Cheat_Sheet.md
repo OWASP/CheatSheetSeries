@@ -71,8 +71,8 @@ API keys can reduce the impact of denial-of-service attacks. However, when they 
 
 ## Restrict HTTP methods
 
-- Apply a allow list of permitted HTTP Methods e.g. `GET`, `POST`, `PUT`.
-- Reject all requests not matching the allow list with HTTP response code `405 Method not allowed`.
+- Apply a whitelist of permitted HTTP Methods e.g. `GET`, `POST`, `PUT`.
+- Reject all requests not matching the whitelist with HTTP response code `405 Method not allowed`.
 - Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record
 
 In Java EE in particular, this can be difficult to implement properly. See [Bypassing Web Authentication and Authorization with HTTP Verb Tampering](../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf) for an explanation of this common misconfiguration.
@@ -82,7 +82,7 @@ In Java EE in particular, this can be difficult to implement properly. See [Bypa
 - Do not trust input parameters/objects.
 - Validate input: length / range / format and type.
 - Achieve an implicit input validation by using strong types like numbers, booleans, dates, times or fixed data ranges in API parameters.
-- Constrain string inputs with regular expressions.
+- Constrain string inputs with regexps.
 - Reject unexpected/illegal content.
 - Make use of validation/sanitation libraries or frameworks in your specific language.
 - Define an appropriate request size limit and reject requests exceeding the limit with HTTP response status 413 Request Entity Too Large.

@@ -16,7 +16,7 @@ Sample codes used in tips are located [here](https://github.com/righettod/inject
 
 The following point can be applied, in a general way, to prevent *Injection* issue:
 
-1. Apply **Input Validation** (using allow list approach) combined with **Output Sanitizing+Escaping** on user input/output.
+1. Apply **Input Validation** (using whitelist approach) combined with **Output Sanitizing+Escaping** on user input/output.
 2. If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.
 
 Additional advices are provided on this [cheatsheet](Input_Validation_Cheat_Sheet.md).
@@ -252,7 +252,7 @@ Injection of this type occur when the application use untrusted user input to bu
 
 #### How to prevent
 
-Either apply strict input validation (allow list approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).
+Either apply strict input validation (whitelist approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).
 
 #### Example
 
@@ -304,7 +304,7 @@ Assert.assertEquals(finalSafeOutputExpected, safeOutput);
 - [XSS](https://owasp.org/www-community/attacks/xss/)
 - [OWASP Java HTML Sanitizer](https://github.com/owasp/java-html-sanitizer)
 - [OWASP Java Encoder](https://github.com/owasp/owasp-java-encoder)
-- [Java regular expression](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html)
+- [Java RegEx](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html)
 
 ### LDAP
 
@@ -395,7 +395,7 @@ Configuration of a logging policy to roll on 10 files of 5MB each, and encode/li
     <Appenders>
         <RollingFile name="RollingFile" fileName="App.log" filePattern="App-%i.log" ignoreExceptions="false">
             <PatternLayout>
-                <!-- Encode any CRLF chars in the message and limit its 
+                <!-- Encode any CRLF chars in the message and limit its
                      maximum size to 500 characters -->
                 <Pattern>%d{ISO8601} %-5p - %encode{ %.-500m }{CRLF}%n</Pattern>
             </PatternLayout>
@@ -446,7 +446,7 @@ Configuration of a logging policy to roll on 10 files of 5MB each, and encode/li
             <maxFileSize>5MB</maxFileSize>
         </triggeringPolicy>
         <encoder>
-            <!-- Encode any CRLF chars in the message and limit 
+            <!-- Encode any CRLF chars in the message and limit
                  its maximum size to 500 characters -->
             <pattern>%relative [%thread] %-5level %logger{35} - %crlf(%.-500msg) %n</pattern>
         </encoder>

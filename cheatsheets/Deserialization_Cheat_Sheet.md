@@ -155,7 +155,7 @@ More complete implementations of this approach have been proposed by various com
 
 As mentioned above, the `java.io.ObjectInputStream` class is used to deserialize objects. It's possible to harden its behavior by subclassing it. However, if you don't own the code or can't wait for a patch, using an agent to weave in hardening to `java.io.ObjectInputStream` is the best solution.
 
-Globally changing `ObjectInputStream` is only safe for blacklisting known malicious types, because it's not possible to know for all applications what the expected classes to be deserialized are. Fortunately, there are very few classes needed in the deny list to be safe from all the known attack vectors, today.
+Globally changing `ObjectInputStream` is only safe for blacklisting known malicious types, because it's not possible to know for all applications what the expected classes to be deserialized are. Fortunately, there are very few classes needed in the blacklist to be safe from all the known attack vectors, today.
 
 It's inevitable that more "gadget" classes will be discovered that can be abused. However, there is an incredible amount of vulnerable software exposed today, in need of a fix. In some cases, "fixing" the vulnerability may involve re-architecting messaging systems and breaking backwards compatibility as developers move towards not accepting serialized objects.
 
@@ -221,7 +221,7 @@ Attackers should be prevented from steering the type that will be instantiated. 
 
 ```csharp
 // Action below is dangerous if the attacker can change the data in the database
-var typename = GetTransactionTypeFromDatabase();  
+var typename = GetTransactionTypeFromDatabase();
 
 var serializer = new DataContractJsonSerializer(Type.GetType(typename));
 
@@ -240,7 +240,7 @@ if (suspectObject is SomeDangerousObjectType)
 }
 ```
 
-For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of allow list control using a custom `SerializationBinder`.
+For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of white list control using a custom `SerializationBinder`.
 
 Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. **A deserializer can only instantiate types that it knows about**.
 
@@ -272,7 +272,7 @@ If the application knows before deserialization which messages will need to be p
 ## Mitigation Tools/Libraries
 
 - [Java secure deserialization library](https://github.com/ikkisoft/SerialKiller)
-- [SWAT](https://github.com/cschneider4711/SWAT) (Serial allow list Application Trainer)
+- [SWAT](https://github.com/cschneider4711/SWAT) (Serial Whitelist Application Trainer)
 - [NotSoSerial](https://github.com/kantega/notsoserial)
 
 ## Detection Tools

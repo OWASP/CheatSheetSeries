@@ -20,7 +20,7 @@ exec("os command here")
 open("\| os command here")
 ```
 
-While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, a allow list of possible values should be used and any input should be validated as thoroughly as possible.
+While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, a whitelist of possible values should be used and any input should be validated as thoroughly as possible.
 
 The guides from [Rails](https://guides.rubyonrails.org/security.html#command-line-injection) and [OWASP](https://owasp.org/www-community/attacks/Command_Injection) contain further information on command injection.
 
@@ -338,13 +338,13 @@ Occasionally, a need arises to share resources with another domain. For example,
 
 When using a nonstandard HTTP construct, such as an atypical Content-Type header, for example, the following applies:
 
-The receiving site should allow list only those domains allowed to make such requests as well as set the `Access-Control-Allow-Origin` header in both the response to the `OPTIONS` request and `POST` request. This is because the OPTIONS request is sent first, in order to determine if the remote or receiving site allows the requesting domain. Next, a second request, a `POST` request, is sent. Once again, the header must be set in order for the transaction to be shown as successful.
+The receiving site should whitelist only those domains allowed to make such requests as well as set the `Access-Control-Allow-Origin` header in both the response to the `OPTIONS` request and `POST` request. This is because the OPTIONS request is sent first, in order to determine if the remote or receiving site allows the requesting domain. Next, a second request, a `POST` request, is sent. Once again, the header must be set in order for the transaction to be shown as successful.
 
 When standard HTTP constructs are used:
 
 *The request is sent and the browser, upon receiving a response, inspects the response headers in order to determine if the response can and should be processed.*
 
-Allow list in Rails:
+Whitelist in Rails:
 
 **Gemfile:**
 

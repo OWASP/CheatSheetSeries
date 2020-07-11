@@ -1,10 +1,19 @@
 {
+    "filters": {
+        "comments": true,
+        "whitelist": {
+            "allow": [
+                "XSL stylesheet",
+            ]
+        }
+    },
 	"rules": {
 		"terminology": {
 			// Load default terms (see terms.json in the repository)
 			"defaultTerms": false,
 			// Syntax elements to skip. Overrides the default
 			"skip": [
+                "Link",
 				"Blockquote"
 			],
 			// List of terms
@@ -179,14 +188,6 @@
 					"re-direct",
 					"redirect"
 				],
-				[
-					"black[- ]list|blacklist",
-					"deny list"
-				],
-				[
-					"white[- ]list|whitelist",
-					"allow list"
-				],
 
 				// Single word
 				[
@@ -351,10 +352,6 @@
 				[
 					"file-?type(s)?",
 					"file type$1"
-				],
-				[
-					"regexp?(s)?",
-					"regular expression$1"
 				],
 				[
 					"style-?guide(s)?",

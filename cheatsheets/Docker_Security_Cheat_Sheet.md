@@ -252,7 +252,7 @@ docker-compose --log-level info up
 References:
 
 - [Docker Baselines on DevSec](https://dev-sec.io/baselines/docker/)
-- [Use the Docker command-line](https://docs.docker.com/engine/reference/commandline/cli/)
+- [Use the Docker command line](https://docs.docker.com/engine/reference/commandline/cli/)
 - [Overview of docker-compose CLI](https://docs.docker.com/compose/reference/overview/)
 - [Configuring Logging Drivers](https://docs.docker.com/config/containers/logging/configure/)
 - [View logs for a container or service](https://docs.docker.com/config/containers/logging/)

@@ -76,7 +76,7 @@ When it comes to error handling, the Hibernate Validator returns a `BindingResul
 
 **Use**:
 
-Checks if the annotated string matches the regular expression regular expression considering the given flag match. Please visit [OWASP Validation regular expression Repository](https://owasp.org/www-community/OWASP_Validation_Regex_Repository) for other useful regex's.
+Checks if the annotated string matches the regular expression regex considering the given flag match. Please visit [OWASP Validation Regex Repository](https://owasp.org/www-community/OWASP_Validation_Regex_Repository) for other useful regex's.
 
 **Reference**:
 
@@ -87,13 +87,13 @@ Checks if the annotated string matches the regular expression regular expression
 ```java
 import org.hibernate.validator.constraints.Pattern;
 
-public class Article  {  
+public class Article  {
  //Constraint: Alpha Numeric article titles only using a regular expression
  @Pattern(regexp = "[a-zA-Z0-9 ]")
  private String articleTitle;
  public String getArticleTitle()  {
   return  articleTitle;
- }  
+ }
  public void setArticleTitle(String  articleTitle)  {
    this.articleTitle  =  articleTitle;
   }
@@ -115,7 +115,7 @@ public class ArticleController  {
  ...
 
  @RequestMapping(value = "/postArticle",  method = RequestMethod.POST)
- public @ResponseBody String postArticle(@Valid  Article  article,  BindingResult  result,  
+ public @ResponseBody String postArticle(@Valid  Article  article,  BindingResult  result,
  HttpServletResponse  response) {
   if (result.hasErrors()) {
    String errorMessage  =  "";
@@ -126,7 +126,7 @@ public class ArticleController  {
    }
    return  errorMessage;
   } else {
-   return  "Validation Successful";  
+   return  "Validation Successful";
   }
  }
 }
@@ -184,7 +184,7 @@ public class CustomerController  {
  ...
 
  @RequestMapping(value = "/registerCustomer",  method = RequestMethod.POST)
- public @ResponseBody String registerCustomer(@Valid Customer customer, BindingResult result,  
+ public @ResponseBody String registerCustomer(@Valid Customer customer, BindingResult result,
  HttpServletResponse  response) {
 
   if (result.hasErrors()) {

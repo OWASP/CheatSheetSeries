@@ -20,7 +20,7 @@ A host or service's certificate or public key can be added to an application at 
 
 You should pin anytime you want to be relatively certain of the remote host's identity or when operating in a hostile environment. Since one or both are almost always true, you should probably pin all the time.
 
-### When Do You allow list
+### When Do You Whitelist
 
 If you are working for an organization which practices "egress filtering" as part of a Data Loss Prevention (DLP) strategy, you will likely encounter *Interception Proxies*. I like to refer to these things as **"good" bad guys** (as opposed to **"bad" bad guys**) since both break end-to-end security and we can't tell them apart. In this case, **do not** offer to allow list the interception proxy since it defeats your security goals. Add the interception proxy's public key to your pinset after being **instructed** to do so by the folks in Risk Acceptance.
 

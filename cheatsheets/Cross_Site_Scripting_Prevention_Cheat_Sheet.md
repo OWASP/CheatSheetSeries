@@ -39,7 +39,7 @@ The [OWASP Java Encoder Project](https://owasp.org/www-project-java-encoder/) pr
 
 The following rules are intended to prevent all XSS in your application. While these rules do not allow absolute freedom in putting untrusted data into an HTML document, they should cover the vast majority of common use cases. You do not have to allow **all** the rules in your organization. Many organizations may find that **allowing only Rule \#1 and Rule \#2 are sufficient for their needs**. Please add a note to the discussion page if there is an additional context that is often required and can be secured with escaping.
 
-**Do NOT** simply escape the list of example characters provided in the various rules. It is NOT sufficient to escape only that list. Deny list approaches are quite fragile. The allow list rules here have been carefully designed to provide protection even against future vulnerabilities introduced by browser changes.
+**Do NOT** simply escape the list of example characters provided in the various rules. It is NOT sufficient to escape only that list. Blacklist approaches are quite fragile. The whitelist rules here have been carefully designed to provide protection even against future vulnerabilities introduced by browser changes.
 
 ### RULE \#0 - Never Insert Untrusted Data Except in Allowed Locations
 
@@ -162,7 +162,9 @@ Inside quoted event handler:
 <div onmouseover="x='...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...'"</div>
 ```
 
-Please note there are some JavaScript functions that can never safely use untrusted data as input - **EVEN IF JavaScript ESCAPED!**
+<!-- textlint-disable terminology -->
+Please note there are some JavaScript functions that can never safely use untrusted data as input - **EVEN IF JAVASCRIPT ESCAPED!**
+<!-- textlint-enable -->
 
 For example:
 

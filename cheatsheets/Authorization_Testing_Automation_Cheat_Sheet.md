@@ -400,7 +400,7 @@ Access issues detected using the BASIC USER point of view:
 
 Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.
 
-The Following XSL style sheet can be used:
+The Following XSL stylesheet can be used:
 
 ``` xslt
 <?xml version="1.0" encoding="UTF-8"?>
