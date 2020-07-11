@@ -4,7 +4,8 @@
         "whitelist": {
             "allow": [
                 "XSL stylesheet",
-                "OS X 10.9"
+                "OS X 10.9",
+                "Argon2**id**"
             ]
         }
     },
@@ -140,10 +141,6 @@
 					"build system(s)?",
 					"build tool$1"
 				],
-				//[
-				//	"client-side",
-				//	"client side"
-				//],
 				[
 					"CLI tool(s)?",
 					"command-line tool$1"
@@ -171,14 +168,6 @@
 				[
 					"repo\\b",
 					"repository"
-				],
-				//[
-				//	"server-side",
-				//	"server side"
-				//],
-				[
-					"smartphone(s)?",
-					"mobile phone$1"
 				],
 				// https://stackoverflow.com/questions/44934828/is-it-spread-syntax-or-the-spread-operator
 				[
