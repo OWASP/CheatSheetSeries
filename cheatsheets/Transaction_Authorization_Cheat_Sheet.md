@@ -69,7 +69,7 @@ Safeguards should allow the user to easily distinguish authentication from trans
 
 - Using different methods to authenticate and to authorize,
 - Or using different actions in an external security component (e.g. different mode of operation in CAP reader),
-- Or presenting the user a clear message about what they is "signing" (What You See Is What You Sign Principle).
+- Or presenting the user a clear message about what they are "signing" (What You See Is What You Sign Principle).
 
 ### 1.5 Each transaction should be authorized using unique authorization credentials
 

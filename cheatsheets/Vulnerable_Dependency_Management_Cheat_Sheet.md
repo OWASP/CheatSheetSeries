@@ -56,7 +56,7 @@ Here a CVE is not always created then the vulnerability is not always in the CVE
 
 ## Remark about the security issue handling decision
 
-When a security issue is detected, it's possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the [Chief Risk Officer](https://en.wikipedia.org/wiki/Chief_risk_officer) (fallback possible to [Chief Information Security Officer](https://en.wikipedia.org/wiki/Chief_information_security_officer)) of the company based on technical feedback from the development team that have analyzed the issue (see the *[Cases](#cases)* section) as well as the CVE's [CVSS](https://www.first.org/cvss/user-guide) score indicators.
+When a security issue is detected, it's possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the [Chief Risk Officer](https://en.wikipedia.org/wiki/Chief_risk_officer) (fallback possible to [Chief Information Security Officer](https://en.wikipedia.org/wiki/Chief_information_security_officer)) of the company based on technical feedback from the development team that have analyzed the issue (see the *[Cases](#cases)* section) as well as the CVEs [CVSS](https://www.first.org/cvss/user-guide) score indicators.
 
 ## Cases
 
@@ -191,7 +191,7 @@ The description of the CVE is as follows:
 
 ```text
 XML external entity (XXE) vulnerability in XmlMapper in the Data format extension for Jackson
-(aka jackson-dataformat-xml) allows attackers to have unspecified impact via unknown vectors.  
+(aka jackson-dataformat-xml) allows attackers to have unspecified impact via unknown vectors.
 ```
 
 Based on these information, the team determines that the necessary patching will be to add a [pre-validation of any XML data](XML_External_Entity_Prevention_Cheat_Sheet.md) passed to the Jakson API to prevent [XML external entity (XXE)](https://www.acunetix.com/blog/articles/xml-external-entity-xxe-vulnerabilities/) vulnerability.

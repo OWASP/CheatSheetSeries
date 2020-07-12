@@ -92,7 +92,7 @@ In order to avoid the above mentioned threat, creating a **random string** as a 
 
 - Implement a maximum length
 - Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods
-    - If this is not possible, blacklist  dangerous characters that could endanger the framework and system that is storing and using the files.
+    - If this is not possible, blacklist dangerous characters that could endanger the framework and system that is storing and using the files.
 
 ### File Content Validation
 
