@@ -1,0 +1,536 @@
+{
+    "filters": {
+        "comments": true,
+        "whitelist": {
+            "allow": [
+                "XSL stylesheet",
+                "OS X 10.9",
+                "Argon2**id**",
+                "Network IDS"
+            ]
+        }
+    },
+	"rules": {
+		"terminology": {
+			// Load default terms (see terms.json in the repository)
+			"defaultTerms": false,
+			// Syntax elements to skip. Overrides the default
+			"skip": [
+                "Link",
+				"Blockquote"
+			],
+			// List of terms
+			"terms": [
+				// Brands
+				"Airbnb",
+				"Android",
+				"AppleScript",
+				"AppVeyor",
+				"AVA",
+				"BrowserStack",
+				"Browsersync",
+				"Codecov",
+				"CodePen",
+				"CodeSandbox",
+				"DefinitelyTyped",
+				"EditorConfig",
+				"ESLint",
+				"GitHub",
+				"GraphQL",
+				"GraphiQL",
+				"iOS",
+				"JavaScript",
+				"JetBrains",
+				"jQuery",
+				"LinkedIn",
+				"Lodash",
+				"MacBook",
+				"Markdown",
+				"OpenType",
+				"PayPal",
+				"PhpStorm",
+				"RubyMine",
+				"SemVer",
+				"TypeScript",
+				"UglifyJS",
+				"Wasm",
+				"WebAssembly",
+				"WebStorm",
+				"WordPress",
+				"YouTube",
+				[
+					"StackOverflow",
+					"Stack Overflow"
+				],
+				[
+					"styled ?components",
+					"styled-components"
+				],
+				[
+					"HTTP[ /]2(?:\\.0)?",
+					"HTTP/2"
+				],
+				[
+					"OS X",
+					"macOS"
+				],
+				[
+					"Mac ?OS",
+					"macOS"
+				],
+				[
+					"a npm",
+					"an npm"
+				],
+
+				// Abbreviations
+				"3D",
+				[
+					"3-D",
+					"3D"
+				],
+				"AJAX",
+				"API",
+				[
+					"API['’]?s",
+					"APIs"
+				],
+				"CSS",
+				"GIF",
+				"HTML",
+				"HTTPS",
+				"IoT",
+				"I/O",
+				[
+					"I-O",
+					"I/O"
+				],
+				"JPEG",
+				"MIME",
+				"OK",
+				"PaaS",
+				"PDF",
+				"PNG",
+				"SaaS",
+				"URL",
+				[
+					"URL['’]?s",
+					"URLs"
+				],
+				[
+					"an URL",
+					"a URL"
+				],
+				[
+					"wi[- ]?fi",
+					"Wi-Fi"
+				],
+                [
+                    "CVE['’]?s",
+                    "CVEs"
+                ],
+
+				// Words and phrases
+				"ID",
+				"JavaScript",
+				// http://stackoverflow.com/questions/1151338/id-or-id-on-user-interface
+				[
+					"id['’]?s",
+					"IDs"
+				],
+				[
+					"backwards compatible",
+					"backward compatible"
+				],
+				[
+					"build system(s)?",
+					"build tool$1"
+				],
+				[
+					"CLI tool(s)?",
+					"command-line tool$1"
+				],
+				[
+					"he or she",
+					"they"
+				],
+				[
+					"he/she",
+					"they"
+				],
+				[
+					"\\(s\\)he",
+					"they"
+				],
+				[
+					"his/her",
+					"their"
+				],
+				[
+					"his or her",
+					"their"
+				],
+				[
+					"repo\\b",
+					"repository"
+				],
+				// https://stackoverflow.com/questions/44934828/is-it-spread-syntax-or-the-spread-operator
+				[
+					"spread operator",
+					"spread syntax"
+				],
+				[
+					"re-direct",
+					"redirect"
+				],
+
+				// Single word
+				[
+					"auto[- ]complete",
+					"autocomplete"
+				],
+				[
+					"auto[- ]format",
+					"autoformat"
+				],
+				[
+					"auto[- ]fix",
+					"autofix"
+				],
+				[
+					"auto[- ]fixing",
+					"autofixing"
+				],
+				[
+					"bug[- ]fix(es)?",
+					"bugfix$1"
+				],
+				[
+					"change[- ]log(s)?",
+					"changelog$1"
+				],
+				[
+					"check[- ]box(es)?",
+					"checkbox$1"
+				],
+				[
+					"code[- ]base(es)?",
+					"codebase$1"
+				],
+				[
+					"co[- ]locate(d?)",
+					"colocate$1"
+				],
+				[
+					"end[- ]point(s)?",
+					"endpoint$1"
+				],
+				[
+					"e[- ]mail(s)?",
+					"email$1"
+				],
+				[
+					"file[- ]name(s)?",
+					"filename$1"
+				],
+				[
+					"hack[- ]a[- ]thon(s)?",
+					"hackathon$1"
+				],
+				[
+					"host[- ]name(s)?",
+					"hostname$1"
+				],
+				[
+					"hot[- ]key(s)?",
+					"hotkey$1"
+				],
+				[
+					"lock[- ]file(s)?",
+					"lockfile$1"
+				],
+				[
+					"mark-up",
+					"markup"
+				],
+				// “mark up” as a verb is OK
+				[
+					"meta[- ]data",
+					"metadata"
+				],
+				[
+					"micro[- ]service(s)?",
+					"microservice$1"
+				],
+				[
+					"name[- ]space(s)?",
+					"namespace$1"
+				],
+				[
+					"pre[- ]condition(s)?",
+					"precondition$1"
+				],
+				[
+					"pre[- ]defined",
+					"predefined"
+				],
+				[
+					"pre[- ]release(s)?",
+					"prerelease$1"
+				],
+				[
+					"re[- ]write",
+					"rewrite"
+				],
+				[
+					"run[- ]time",
+					"runtime"
+				],
+				[
+					"screen[- ]shot(s)?",
+					"screenshot$1"
+				],
+				[
+					"screen[- ]?snap(s)?",
+					"screenshot$1"
+				],
+				[
+					"sub[- ]class((?:es|ing)?)",
+					"subclass$1"
+				],
+				[
+					"sub[- ]tree(s)?",
+					"subtree$1"
+				],
+				[
+					"time[- ]stamp(s)?",
+					"timestamp$1"
+				],
+				[
+					"touch[- ]screen(s)?",
+					"touchscreen$1"
+				],
+				[
+					"user[- ]name(s)?",
+					"username$1"
+				],
+				[
+					"walk[- ]through",
+					"walkthrough"
+				],
+				[
+					"white[- ]space",
+					"whitespace"
+				],
+				[
+					"wild[- ]card(s)?",
+					"wildcard$1"
+				],
+
+				// Multiple words
+				[
+					"css-?in-?js",
+					"CSS in JS"
+				],
+				[
+					"code-?review(s)?",
+					"code review$1"
+				],
+				[
+					"code-?splitting",
+					"code splitting"
+				],
+				[
+					"end-?user(s)?",
+					"end user$1"
+				],
+				[
+					"file-?type(s)?",
+					"file type$1"
+				],
+				[
+					"style-?guide(s)?",
+					"style guide$1"
+				],
+				[
+					"source-?map(s)?",
+					"source map$1"
+				],
+				[
+					"style-?sheet(s)?",
+					"style sheet$1"
+				],
+				[
+					"user-?base",
+					"user base"
+				],
+				[
+					"web-page(s)?",
+					"webpage$1"
+				],
+
+				// Hyphenated
+				[
+					"built ?in",
+					"built-in"
+				],
+				[
+					"command ?line",
+					"command-line"
+				],
+				[
+					"end ?to ?end",
+					"end-to-end"
+				],
+				[
+					"end[- ]?2[- ]?end",
+					"end-to-end"
+				],
+				[
+					"error ?prone",
+					"error-prone"
+				],
+				[
+					"higher ?order",
+					"higher-order"
+				],
+				[
+					"key[/ ]?value",
+					"key-value"
+				],
+				[
+					"two ?steps? authentication",
+					"two-step authentication"
+				],
+				[
+					"two ?steps? verification",
+					"two-step verification"
+				],
+				[
+					"2 ?steps? authentication",
+					"two-step authentication"
+				],
+				[
+					"2 ?steps? verification",
+					"two-step verification"
+				],
+				[
+					"3rd[- ]party",
+					"third-party"
+				],
+
+				// Starts from a lower case letter in the middle of a sentence
+				[
+					"(?<=(?:\\w+[^.?!])? )stylelint\\b",
+					"stylelint"
+				],
+				[
+					"(?<=(?:\\w+[^.?!])? )webpack\\b",
+					"webpack"
+				],
+				[
+					"(?<=(?:\\w+[^.?!])? )npm\\b",
+					"npm"
+				],
+
+				// Typos
+				[
+					"accidentially",
+					"accidentally"
+				],
+				[
+					"busineess",
+					"business"
+				],
+				[
+					"busines",
+					"business"
+				],
+				[
+					"analysed",
+					"analyzed"
+				],
+				[
+					"cancelling",
+					"canceling"
+				],
+				[
+					"environemnt(s)?",
+					"environment$1"
+				],
+				[
+					"explotation",
+					"exploitation"
+				],
+				[
+					"encyprtion",
+					"encryption"
+				],
+				[
+					"flacky test(s)?",
+					"flaky test$1"
+				],
+				[
+					"falsey",
+					"falsy"
+				],
+				[
+					"hsot",
+					"host"
+				],
+				[
+					"intiated",
+					"initiated"
+				],
+				[
+					"localised",
+					"localized"
+				],
+				[
+					"pacakge(s)?",
+					"package$1"
+				],
+				[
+					"perfomed",
+					"performed"
+				],
+				[
+					"refernece(s)?",
+					"reference$1"
+				],
+				[
+					"renegotiaion(s)?",
+					"renegotiation$1"
+				],
+				[
+					"traget",
+					"target"
+				],
+				[
+					"tagret",
+					"target"
+				],
+				[
+					"tilda",
+					"tilde"
+				],
+				[
+					"teh",
+					"the"
+				],
+				[
+					"transfered",
+					"transferred"
+				],
+				[
+					"unlkely",
+					"unlikely"
+				],
+				[
+					"utilising",
+					"utilizing"
+				]
+			]
+		}
+	}
+}

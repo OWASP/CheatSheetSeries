@@ -69,7 +69,7 @@ The request sent to the internal application will be based on the following info
 
 In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected.
 
-A [regex](https://www.regular-expressions.info/) can be used to ensure that data received is valid from a security point of view if the input data have a simple format (*e.g.* token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the `string` object because regex for complex formats are difficult to maintain and are highly error prone.
+A [regex](https://www.regular-expressions.info/) can be used to ensure that data received is valid from a security point of view if the input data have a simple format (*e.g.* token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the `string` object because regex for complex formats are difficult to maintain and are highly error-prone.
 
 User input is assumed to be non-network related and consists of the user's personal information.
 
@@ -261,7 +261,7 @@ In the schema below, a Firewall component is leveraged to limit the application'
 
 ### Case 2 - Application can send requests to ANY external IP address or domain name
 
-This case happens when a user can control an URL to an **External** resource and the application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.
+This case happens when a user can control a URL to an **External** resource and the application makes a request to this URL (e.g. in case of [WebHooks](https://en.wikipedia.org/wiki/Webhook)). Whitelist cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.
 
 In this scenario, *External* refers to any IP that doesn't belong to the internal network, and should be reached by going over the public internet.
 

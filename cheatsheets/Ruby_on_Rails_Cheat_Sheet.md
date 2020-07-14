@@ -69,9 +69,9 @@ content_tag("/><script>alert('hack!');</script>") # XSS example
 
 The method `html_safe` of String is somewhat confusingly named. It means that we know for sure the content of the string is safe to include in HTML without escaping. **This method itself is un-safe!**
 
-If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious.
+If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: Markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious.
 
-If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any javascript. And finally, consider using the `#sanitize` method that let's you whitelist allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.
+If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the `#sanitize` method that let's you whitelist allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.
 
 An often overlooked XSS attack vector for older versions of rails is the `href` value of a link:
 
@@ -218,7 +218,7 @@ There is an [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
 
 ### Insecure Direct Object Reference or Forceful Browsing
 
-By default, Ruby on Rails apps use a RESTful URI structure. That means that paths are often intuitive and guessable. To protect against a user trying to access or modify data that belongs to another user, it is important to specifically control actions. Out of the gate on a vanilla Rails application, there is no such built in protection. It is possible to do this by hand at the controller level.
+By default, Ruby on Rails apps use a RESTful URI structure. That means that paths are often intuitive and guessable. To protect against a user trying to access or modify data that belongs to another user, it is important to specifically control actions. Out of the gate on a vanilla Rails application, there is no such built-in protection. It is possible to do this by hand at the controller level.
 
 It is also possible, and probably recommended, to consider resource-based access control libraries such as [cancancan](https://github.com/CanCanCommunity/cancancan) (cancan replacement) or [pundit](https://github.com/elabs/pundit) to do this. This ensures that all operations on a database object are authorized by the business logic of the application.
 
@@ -226,14 +226,14 @@ More general information about this class of vulnerability is in the [OWASP Top 
 
 ### CSRF (Cross Site Request Forgery)
 
-Ruby on Rails has specific, built in support for CSRF tokens. To enable it, or ensure that it is enabled, find the base `ApplicationController` and look for a directive such as the following:
+Ruby on Rails has specific, built-in support for CSRF tokens. To enable it, or ensure that it is enabled, find the base `ApplicationController` and look for a directive such as the following:
 
 ``` ruby
 class ApplicationController < ActionController::Base
   protect_from_forgery
 ```
 
-Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API's or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide [CSRF](https://owasp.org/www-community/attacks/csrf) protection for the show method.
+Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for APIs or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide [CSRF](https://owasp.org/www-community/attacks/csrf) protection for the show method.
 
 ``` ruby
 class ProjectController < ApplicationController
@@ -401,7 +401,7 @@ Any application in any technology can contain business logic errors that result 
 
 ### Attack Surface
 
-Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URL's should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface.
+Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URLs should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface.
 
 An example might be as follows:
 

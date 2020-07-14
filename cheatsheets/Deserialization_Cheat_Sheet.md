@@ -221,7 +221,7 @@ Attackers should be prevented from steering the type that will be instantiated. 
 
 ```csharp
 // Action below is dangerous if the attacker can change the data in the database
-var typename = GetTransactionTypeFromDatabase();  
+var typename = GetTransactionTypeFromDatabase();
 
 var serializer = new DataContractJsonSerializer(Type.GetType(typename));
 

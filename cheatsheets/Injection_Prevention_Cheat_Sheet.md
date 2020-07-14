@@ -100,7 +100,7 @@ Both of these techniques have the same effectiveness in preventing SQL injection
 
 Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.
 
-But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full re-write should be considered if time allows.
+But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full rewrite should be considered if time allows.
 
 ###### Defense Option 4: Escaping All User-Supplied Input
 
@@ -118,7 +118,7 @@ The following code example uses a `PreparedStatement`, Java's implementation of 
 // This should REALLY be validated too
 String custname = request.getParameter("customerName");
 // Perform input validation to detect attacks
-String query = "SELECT account_balance FROM user_data WHERE user_name = ?";  
+String query = "SELECT account_balance FROM user_data WHERE user_name = ?";
 PreparedStatement pstmt = connection.prepareStatement(query);
 pstmt.setString(1, custname);
 ResultSet results = pstmt.executeQuery();
@@ -133,7 +133,7 @@ The following code example uses a `CallableStatement`, Java's implementation of 
 ```java
 // This should REALLY be validated
 String custname = request.getParameter("customerName");
-try {  
+try {
  CallableStatement cs = connection.prepareCall("{call sp_getAccountBalance(?)}");
  cs.setString(1, custname);
  ResultSet results = cs.executeQuery();
@@ -229,7 +229,7 @@ public String escapeSearchFilter (String filter) {
  escapedStr = escapedStr.replaceAll("\\\\" +
                Character.toString('\\u0000'), "\\\\\\\\00");
  return escapedStr;
-}  
+}
 ```
 
 #### XPath Injection
@@ -254,7 +254,7 @@ Any web interface that is not properly sanitized is subject to this exploit. Wit
 
 Check if any command execute methods are called and in unvalidated user input are taken as data for that command.
 
-Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. `%3B` is url encoded and decodes to semicolon. This is because the `;` is interpreted as a command separator.
+Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. `%3B` is URL encoded and decodes to semicolon. This is because the `;` is interpreted as a command separator.
 
 Example: `http://sensitive/something.php?dir=%3Bcat%20/etc/passwd`
 

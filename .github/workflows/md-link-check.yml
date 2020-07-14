@@ -19,9 +19,9 @@ jobs:
       with:
         node-version: 12.x
     - name: Install dependencies
-      run: npm install -g markdown-link-check
+      run: npm install
     - name: Run link check
-      run: npm run-script link-check
+      run: npm run link-check
     - name: Show broken links
       if: failure()
       run: |

@@ -344,7 +344,7 @@ As such, we'd strongly recommend completely avoiding the use of this class and r
 
 ### Other XML Parsers
 
-There are many 3rd party libraries that parse XML either directly or through their use of other libraries. Please test and verify their XML parser is secure against XXE by default. If the parser is not secure by default, look for flags supported by the parser to disable all possible external resource inclusions like the examples given above. If there's no control exposed to the outside, make sure the untrusted content is passed through a secure parser first and then passed to insecure 3rd party parser similar to how the Unmarshaller is secured.
+There are many third-party libraries that parse XML either directly or through their use of other libraries. Please test and verify their XML parser is secure against XXE by default. If the parser is not secure by default, look for flags supported by the parser to disable all possible external resource inclusions like the examples given above. If there's no control exposed to the outside, make sure the untrusted content is passed through a secure parser first and then passed to insecure third-party parser similar to how the Unmarshaller is secured.
 
 #### Spring Framework MVC/OXM XXE Vulnerabilities
 
