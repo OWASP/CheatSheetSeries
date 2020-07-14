@@ -1762,7 +1762,7 @@
 </code></pre></div>
 
 
-<div class="codehilite"><pre><span></span><code><span class="c1">//The following does NOT work because the event handler is being set to a string.  </span>
+<div class="codehilite"><pre><span></span><code><span class="c1">//The following does NOT work because the event handler is being set to a string.</span>
 <span class="c1">//&quot;alert(7)&quot; is JavaScript encoded.</span>
 <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="s2">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0029&quot;</span><span class="p">;</span>
 
@@ -1778,7 +1778,7 @@
 <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span> <span class="o">=</span> <span class="nx">\u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073</span>
                                             <span class="nx">\u0074\u0049\u0074</span><span class="p">;</span>
 
-<span class="c1">//The following DOES WORK because the encoded value is a valid variable name or function reference.  </span>
+<span class="c1">//The following DOES WORK because the encoded value is a valid variable name or function reference.</span>
 <span class="c1">//&quot;testIt&quot; is JavaScript encoded</span>
 <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span> <span class="o">=</span> <span class="nx">\u0074\u0065\u0073\u0074\u0049\u0074</span><span class="p">;</span>
 
@@ -1937,12 +1937,12 @@
 <p>Then client-side encode (using a JavaScript encoding library such as <a href="https://owasp.org/www-project-enterprise-security-api/">ESAPI4JS</a>) for the individual subcontext (DOM methods) which untrusted data is passed to. <a href="https://owasp.org/www-project-enterprise-security-api/">ESAPI4JS</a> and <a href="https://github.com/chrisisbeef/jquery-encoder/blob/master/src/jquery.jquery-encoder.js">jQuery Encoder</a> are two client side encoding libraries developed by Chris Schmidt.</p>
 <p>Here are some examples of how they are used:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1">//server-side encoding</span>
-<span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="s2">&quot;&lt;%=Encoder.encodeForJS(untrustedData)%&gt;&quot;</span><span class="p">;</span>  
+<span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="s2">&quot;&lt;%=Encoder.encodeForJS(untrustedData)%&gt;&quot;</span><span class="p">;</span>
 </code></pre></div>
 
 
 <div class="codehilite"><pre><span></span><code><span class="c1">//HTML encoding is happening in JavaScript</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="nx">ESAPI4JS</span><span class="p">.</span><span class="nx">encodeForHTML</span><span class="p">(</span><span class="nx">input</span><span class="p">));</span>  
+<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="nx">ESAPI4JS</span><span class="p">.</span><span class="nx">encodeForHTML</span><span class="p">(</span><span class="nx">input</span><span class="p">));</span>
 </code></pre></div>
 
 
@@ -2074,7 +2074,7 @@ Click Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt
 <p>Finally there is the problem that certain methods in JavaScript which are usually safe can be unsafe in certain contexts.</p>
 <h3 id="usually-safe-methods">Usually Safe Methods<a class="headerlink" href="#usually-safe-methods" title="Permanent link">&para;</a></h3>
 <p>One example of an attribute which is thought to be safe is <code>innerText</code>.</p>
-<p>Some papers or guides advocate its use as an alternative to <code>innerHTML</code> to mitigate against XSS in <code>innerHTML</code>. However, depending on the tag which <code>innerText</code> is applied, code can be executed.  </p>
+<p>Some papers or guides advocate its use as an alternative to <code>innerHTML</code> to mitigate against XSS in <code>innerHTML</code>. However, depending on the tag which <code>innerText</code> is applied, code can be executed.</p>
 <div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
  <span class="kd">var</span> <span class="nx">tag</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;script&quot;</span><span class="p">);</span>
  <span class="nx">tag</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="s2">&quot;&lt;%=untrustedData%&gt;&quot;</span><span class="p">;</span>  <span class="c1">//executes code</span>

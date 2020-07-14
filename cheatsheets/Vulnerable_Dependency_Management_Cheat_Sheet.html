@@ -1543,7 +1543,7 @@
 <p>The researcher decides to release all the information including exploitation code/method on services like <a href="https://seclists.org/fulldisclosure/">Full Disclosure mailing list</a>, <a href="https://www.exploit-db.com">Exploit-DB</a>.</p>
 <p>Here a CVE is not always created then the vulnerability is not always in the CVE global database causing the detection tools to be potentially blind about unless the tools use other input sources.</p>
 <h2 id="remark-about-the-security-issue-handling-decision">Remark about the security issue handling decision<a class="headerlink" href="#remark-about-the-security-issue-handling-decision" title="Permanent link">&para;</a></h2>
-<p>When a security issue is detected, it's possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the <a href="https://en.wikipedia.org/wiki/Chief_risk_officer">Chief Risk Officer</a> (fallback possible to <a href="https://en.wikipedia.org/wiki/Chief_information_security_officer">Chief Information Security Officer</a>) of the company based on technical feedback from the development team that have analysed the issue (see the <em><a href="#cases">Cases</a></em> section) as well as the CVE's <a href="https://www.first.org/cvss/user-guide">CVSS</a> score indicators.</p>
+<p>When a security issue is detected, it's possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the <a href="https://en.wikipedia.org/wiki/Chief_risk_officer">Chief Risk Officer</a> (fallback possible to <a href="https://en.wikipedia.org/wiki/Chief_information_security_officer">Chief Information Security Officer</a>) of the company based on technical feedback from the development team that have analyzed the issue (see the <em><a href="#cases">Cases</a></em> section) as well as the CVEs <a href="https://www.first.org/cvss/user-guide">CVSS</a> score indicators.</p>
 <h2 id="cases">Cases<a class="headerlink" href="#cases" title="Permanent link">&para;</a></h2>
 <p>When a security issue is detected, the development team can meet one of the situations (named <em>Case</em> in the rest of the cheat sheet) presented in the sub sections below.</p>
 <p>If the vulnerably impact a <a href="https://en.wikipedia.org/wiki/Transitive_dependency">transitive dependency</a> then the action will be taken on the direct dependency of the project because acting on a transitive dependency often impact the stability of the application.</p>
@@ -1624,7 +1624,7 @@
 </ul>
 <p>In all cases, here, we need to handle the vulnerability right now.</p>
 <p><strong>Step 2:</strong></p>
-<p>As we know the vulnerable dependency, we know where it is used in the application (if it's a transitive dependency then we can identify the first level dependency using it using the <a href="https://en.wikipedia.org/wiki/Integrated_development_environment">IDE</a> built-in feature or the dependency management system used (Maven, Gradle, Nuget, NPM, etc.). Note that IDE is also used to identify the calls to the dependency.</p>
+<p>As we know the vulnerable dependency, we know where it is used in the application (if it's a transitive dependency then we can identify the first level dependency using it using the <a href="https://en.wikipedia.org/wiki/Integrated_development_environment">IDE</a> built-in feature or the dependency management system used (Maven, Gradle, Nuget, npm, etc.). Note that IDE is also used to identify the calls to the dependency.</p>
 <p>Identifying calls to this dependency is fine but it is the first step. The team still lacks information on what kind of patching needs to be performed.</p>
 <p>To obtain these informations, the team uses the CVE content to know which kind of vulnerability affects the dependency. The <code>description</code> property provides the answer: SQL injection, Remote Code Execution, Cross-Site Scripting, Cross-Site Request Forgery, etc.</p>
 <p>After identifying the above 2 points, the team is aware of the type of patching that needs to be taken (<a href="#case-2">Case 2</a> with the protective code) and where to add it.</p>
@@ -1632,7 +1632,7 @@
 <p>The team has an application using the Jackson API in a version exposed to the <a href="https://nvd.nist.gov/vuln/detail/CVE-2016-3720">CVE-2016-3720</a>.</p>
 <p>The description of the CVE is as follows:</p>
 <div class="codehilite"><pre><span></span><code>XML external entity (XXE) vulnerability in XmlMapper in the Data format extension for Jackson
-(aka jackson-dataformat-xml) allows attackers to have unspecified impact via unknown vectors.  
+(aka jackson-dataformat-xml) allows attackers to have unspecified impact via unknown vectors.
 </code></pre></div>
 
 

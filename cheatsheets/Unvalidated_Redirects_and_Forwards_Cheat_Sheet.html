@@ -1356,7 +1356,7 @@
 </code></pre></div>
 
 
-<p>The following code is a Java servlet that will receive a <code>GET</code> request with a url parameter named <code>fwd</code> in the request to forward to the address specified in the url parameter. The servlet will retrieve the url parameter value <a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">from the request</a> and complete the server-side forward processing before responding to the browser.</p>
+<p>The following code is a Java servlet that will receive a <code>GET</code> request with a URL parameter named <code>fwd</code> in the request to forward to the address specified in the URL parameter. The servlet will retrieve the URL parameter value <a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">from the request</a> and complete the server-side forward processing before responding to the browser.</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ForwardServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span>
 <span class="p">{</span>
   <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span>
@@ -1397,7 +1397,7 @@
 <li>Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.</li>
 </ul>
 <h3 id="validating-urls">Validating URLs<a class="headerlink" href="#validating-urls" title="Permanent link">&para;</a></h3>
-<p>When attempting to validate and sanitise user-input to determine whether the URL is safe, wherever possible you should use a built in library or function to parse the URLs, such as <code>parse_url()</code> in PHP, rather than rolling your own parser using regex. Additionally, make sure that you take the following into account:</p>
+<p>When attempting to validate and sanitise user-input to determine whether the URL is safe, wherever possible you should use a built-in library or function to parse the URLs, such as <code>parse_url()</code> in PHP, rather than rolling your own parser using regex. Additionally, make sure that you take the following into account:</p>
 <ul>
 <li>Input starting with a <code>/</code> to redirect to local pages is <strong>not safe</strong>. <code>//example.org</code> is a valid URL.</li>
 <li>Input starting with the desired domain name is <strong>not safe</strong>. <code>https://example.org.attacker.com</code> is valid.</li>

@@ -2114,7 +2114,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
     <span class="nt">&lt;Appenders&gt;</span>
         <span class="nt">&lt;RollingFile</span> <span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span> <span class="na">fileName=</span><span class="s">&quot;App.log&quot;</span> <span class="na">filePattern=</span><span class="s">&quot;App-%i.log&quot;</span> <span class="na">ignoreExceptions=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
             <span class="nt">&lt;PatternLayout&gt;</span>
-                <span class="c">&lt;!-- Encode any CRLF chars in the message and limit its </span>
+                <span class="c">&lt;!-- Encode any CRLF chars in the message and limit its</span>
 <span class="c">                     maximum size to 500 characters --&gt;</span>
                 <span class="nt">&lt;Pattern&gt;</span>%d{ISO8601} %-5p - %encode{ %.-500m }{CRLF}%n<span class="nt">&lt;/Pattern&gt;</span>
             <span class="nt">&lt;/PatternLayout&gt;</span>
@@ -2162,7 +2162,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
             <span class="nt">&lt;maxFileSize&gt;</span>5MB<span class="nt">&lt;/maxFileSize&gt;</span>
         <span class="nt">&lt;/triggeringPolicy&gt;</span>
         <span class="nt">&lt;encoder&gt;</span>
-            <span class="c">&lt;!-- Encode any CRLF chars in the message and limit </span>
+            <span class="c">&lt;!-- Encode any CRLF chars in the message and limit</span>
 <span class="c">                 its maximum size to 500 characters --&gt;</span>
             <span class="nt">&lt;pattern&gt;</span>%relative [%thread] %-5level %logger{35} - %crlf(%.-500msg) %n<span class="nt">&lt;/pattern&gt;</span>
         <span class="nt">&lt;/encoder&gt;</span>

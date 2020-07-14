@@ -1475,8 +1475,8 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 
 
 <p>The method <code>html_safe</code> of String is somewhat confusingly named. It means that we know for sure the content of the string is safe to include in HTML without escaping. <strong>This method itself is un-safe!</strong></p>
-<p>If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious.</p>
-<p>If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any javascript. And finally, consider using the <code>#sanitize</code> method that let's you whitelist allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.</p>
+<p>If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: Markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious.</p>
+<p>If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the <code>#sanitize</code> method that let's you whitelist allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.</p>
 <p>An often overlooked XSS attack vector for older versions of rails is the <code>href</code> value of a link:</p>
 <div class="codehilite"><pre><span></span><code><span class="o">&lt;%=</span> <span class="n">link_to</span> <span class="s2">&quot;Personal Website&quot;</span><span class="p">,</span> <span class="vi">@user</span><span class="o">.</span><span class="n">website</span> <span class="o">%&gt;</span>
 </code></pre></div>
@@ -1588,17 +1588,17 @@ gem <span class="s1">&#39;omniauth&#39;</span>
 <p>Note: when you use only token authentication, there is no more need in <a href="https://owasp.org/www-community/attacks/csrf">CSRF</a> protection in controllers. If you use both ways: cookies and tokens, the paths where cookies are used for authentication still must be protected from forgery!</p>
 <p>There is an <a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a>.</p>
 <h3 id="insecure-direct-object-reference-or-forceful-browsing">Insecure Direct Object Reference or Forceful Browsing<a class="headerlink" href="#insecure-direct-object-reference-or-forceful-browsing" title="Permanent link">&para;</a></h3>
-<p>By default, Ruby on Rails apps use a RESTful URI structure. That means that paths are often intuitive and guessable. To protect against a user trying to access or modify data that belongs to another user, it is important to specifically control actions. Out of the gate on a vanilla Rails application, there is no such built in protection. It is possible to do this by hand at the controller level.</p>
+<p>By default, Ruby on Rails apps use a RESTful URI structure. That means that paths are often intuitive and guessable. To protect against a user trying to access or modify data that belongs to another user, it is important to specifically control actions. Out of the gate on a vanilla Rails application, there is no such built-in protection. It is possible to do this by hand at the controller level.</p>
 <p>It is also possible, and probably recommended, to consider resource-based access control libraries such as <a href="https://github.com/CanCanCommunity/cancancan">cancancan</a> (cancan replacement) or <a href="https://github.com/elabs/pundit">pundit</a> to do this. This ensures that all operations on a database object are authorized by the business logic of the application.</p>
 <p>More general information about this class of vulnerability is in the <a href="https://wiki.owasp.org/index.php/Top_10_2010-A4-Insecure_Direct_Object_References">OWASP Top 10 Page</a>.</p>
 <h3 id="csrf-cross-site-request-forgery">CSRF (Cross Site Request Forgery)<a class="headerlink" href="#csrf-cross-site-request-forgery" title="Permanent link">&para;</a></h3>
-<p>Ruby on Rails has specific, built in support for CSRF tokens. To enable it, or ensure that it is enabled, find the base <code>ApplicationController</code> and look for a directive such as the following:</p>
+<p>Ruby on Rails has specific, built-in support for CSRF tokens. To enable it, or ensure that it is enabled, find the base <code>ApplicationController</code> and look for a directive such as the following:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
   <span class="n">protect_from_forgery</span>
 </code></pre></div>
 
 
-<p>Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for API's or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide <a href="https://owasp.org/www-community/attacks/csrf">CSRF</a> protection for the show method.</p>
+<p>Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for APIs or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide <a href="https://owasp.org/www-community/attacks/csrf">CSRF</a> protection for the show method.</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ProjectController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
   <span class="n">protect_from_forgery</span> <span class="ss">except</span><span class="p">:</span> <span class="ss">:show</span>
 </code></pre></div>
@@ -1722,7 +1722,7 @@ gem <span class="s1">&#39;omniauth&#39;</span>
 <h3 id="business-logic-bugs">Business Logic Bugs<a class="headerlink" href="#business-logic-bugs" title="Permanent link">&para;</a></h3>
 <p>Any application in any technology can contain business logic errors that result in security bugs. Business logic bugs are difficult to impossible to detect using automated tools. The best ways to prevent business logic security bugs are to do code review, pair program and write unit tests.</p>
 <h3 id="attack-surface">Attack Surface<a class="headerlink" href="#attack-surface" title="Permanent link">&para;</a></h3>
-<p>Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URL's should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface.</p>
+<p>Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URLs should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface.</p>
 <p>An example might be as follows:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># this is an example of what NOT to do</span>
 <span class="n">match</span> <span class="s1">&#39;:controller(/:action(/:id(.:format)))&#39;</span>

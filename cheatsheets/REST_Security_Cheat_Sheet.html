@@ -1367,7 +1367,7 @@
 <p>See the <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a> for additional information.</p>
 <p>Consider the use of mutually authenticated client-side certificates to provide additional protection for highly privileged web services.</p>
 <h2 id="access-control">Access Control<a class="headerlink" href="#access-control" title="Permanent link">&para;</a></h2>
-<p>Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple micro services following the RESTful style.</p>
+<p>Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple microservices following the RESTful style.</p>
 <ul>
 <li>in order to minimize latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints</li>
 <li>user authentication should be centralised in a Identity Provider (IdP), which issues access tokens</li>

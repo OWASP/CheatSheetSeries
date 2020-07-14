@@ -1296,28 +1296,28 @@
 </ul>
 <p><strong>OWASP Cipher String 'B'</strong> (Broad compatibility to browsers, check the compatibility to other protocols before using it, e.g. IMAPS):</p>
 <ul>
-<li>Recommended if you solely control the server, the clients use their browsers and if you check the compatibility before using it for other protocols than https.</li>
+<li>Recommended if you solely control the server, the clients use their browsers and if you check the compatibility before using it for other protocols than HTTPS.</li>
 <li>Includes solely the strongest and stronger <a href="https://scotthelme.co.uk/perfect-forward-secrecy/">PFS</a> ciphers.</li>
 <li>Protocols: <code>TLSv1.2</code> (and newer or better).</li>
 <li>Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 30/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7, IE 11/WinPhone 8.1, Java8b132, OpenSSL 1.0.1e, Opera 17/Win 7, Safari 5/iOS 5.1.1, Safari 7/OS X 10.9, Yahoo Slurp Jun 2014, YandexBot Sep 2014</li>
 </ul>
 <p><strong>OWASP Cipher String 'C'</strong> (Widest Compatibility, compatibility to most legacy browsers, legacy libraries (still patched) and other application protocols besides https, e.g. IMAPS):</p>
 <ul>
-<li>You may use this if you solely control the server, your clients use elder browsers and other elder libraries or if you use other protocols than https.</li>
+<li>You may use this if you solely control the server, your clients use elder browsers and other elder libraries or if you use other protocols than HTTPS.</li>
 <li>Includes solely <a href="https://scotthelme.co.uk/perfect-forward-secrecy/">PFS</a> ciphers.</li>
 <li>Be aware of additional risks and of new vulnerabilities that may appear are more likely than above.</li>
-<li>Plan to phase out SHA-1 and TLSv1, TLSv1.1 for https in middle-term.</li>
+<li>Plan to phase out SHA-1 and TLSv1, TLSv1.1 for HTTPS in middle-term.</li>
 <li>Protocols: <code>TLSv1.3</code>, <code>TLSv1.2</code>, <code>TLSv1.1</code>, <code>TLSv1</code> (and newer or better).</li>
-<li>Oldest known clients that are compatible: Android 2.3.7/4.0.4, Baidu Jan 2015, BingPreview Dec 2013, Chrome 27/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 10.0.12 ESR/Win 7, Firefox 21/Win 7+Fedora 19, Googlebot Oct 2013, IE 7/Vista, IE 10/WinPhone 8.0, Java 7u25, OpenSSL 0.9.8y, Opera 12.15/Win 7, Safari 5/iOS 5.1.1, Safari 5.1.9/OS X 10.6.8, Yahoo Slurp Oct 2013, YandexBot May 2014</li>
+<li>Oldest known clients that are compatible: Android 2.3.7/4.0.4, Baidu Jan 2015, BingPreview Dec 2013, Chrome 27/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 10.0.12 ESR/Win 7, Firefox 21/Win 7+Fedora 19, Googlebot Oct 2013, IE 7/Vista, IE 10/WinPhone 8.0, Java 7u25, OpenSSL 0.9.8y, Opera 12.15/Win 7, Safari 5/iOS 5.1.1, Safari 5.1.9/macOS 10.6.8, Yahoo Slurp Oct 2013, YandexBot May 2014</li>
 </ul>
 <p><strong>OWASP Cipher String 'D'</strong> (Legacy, widest compatibility to real old browsers and legacy libraries and other application protocols like SMTP):</p>
 <ul>
-<li>Take care, use this cipher string only if you are forced to support non <a href="https://scotthelme.co.uk/perfect-forward-secrecy/">PFS</a> for real old clients with very old libraries or for other protocols besides https.</li>
+<li>Take care, use this cipher string only if you are forced to support non <a href="https://scotthelme.co.uk/perfect-forward-secrecy/">PFS</a> for real old clients with very old libraries or for other protocols besides HTTPS.</li>
 <li>Be aware of the existing risks (e.g. ciphers without PFS, ciphers with 3DES) and of new vulnerabilities that may appear the most likely.</li>
 <li><strong>Do not use</strong> WEAK ciphers based on <code>3DES</code> e.g. (<code>TLS_RSA_WITH_3DES_EDE_CBC_SHA</code>, <code>DES-CBC3-SHA</code>)</li>
 <li><strong>Never use</strong> even more INSECURE or elder ciphers based on <code>RC2</code>, <code>RC4</code>, <code>DES</code>, <code>MD4</code>, <code>MD5</code>, <code>EXP</code>, <code>EXP1024</code>, <code>AH</code>, <code>ADH</code>, <code>aNULL</code>, <code>eNULL</code>, <code>SEED</code> nor <code>IDEA</code>.</li>
 <li><a href="https://scotthelme.co.uk/perfect-forward-secrecy/">PFS</a> ciphers are preferred, except all <a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange">DHE</a> ciphers that use SHA-1 (to prevent possible incompatibility issues caused by the length of the <a href="https://wiki.openssl.org/index.php/Diffie-Hellman_parameters">DHparameter</a>).</li>
-<li>Plan to move to 'A' for https or at least 'B' otherwise in middle-term.</li>
+<li>Plan to move to 'A' for HTTPS or at least 'B' otherwise in middle-term.</li>
 <li>Protocols: <code>TLSv1.3</code>, <code>TLSv1.2</code>, <code>TLSv1.1</code>, <code>TLSv1</code> (and newer or better).</li>
 </ul>
 <h3 id="table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-18">Table of the ciphers (and their priority from high (1) to low (e.g. 18))<a class="headerlink" href="#table-of-the-ciphers-and-their-priority-from-high-1-to-low-eg-18" title="Permanent link">&para;</a></h3>

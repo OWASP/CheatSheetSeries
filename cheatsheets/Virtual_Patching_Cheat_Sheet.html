@@ -1533,7 +1533,7 @@
 <p>From a purely technical perspective, the number one remediation strategy would be for an organization to correct the identified vulnerability within the source code of the web application. This concept is universally agreed upon by both web application security experts and system owners. Unfortunately, in real world business situations, there arise many scenarios where updating the source code of a web application is not easy such as:</p>
 <ul>
 <li><strong>Lack of resources</strong> - Devs are already allocated to other projects.</li>
-<li><strong>3rd Party Software</strong> - Code can not be modified by the user.</li>
+<li><strong>Third-party Software</strong> - Code can not be modified by the user.</li>
 <li><strong>Outsourced App Dev</strong> - Changes would require a new project.</li>
 </ul>
 <p>The important point is this - <strong>Code level fixes and Virtual Patching are NOT mutually exclusive</strong>. They are processes that are executed by different team (OWASP Builders/Devs vs. OWASP Defenders/OpSec) and can be run in tandem.</p>
@@ -1597,7 +1597,7 @@ reqID Parameter prone to SQL Injection.
 <li><strong>Dynamic Application Assessments</strong> - Whitehat attackers conduct penetration tests or automated web assessment tools are run against the live web application to identify flaws.</li>
 <li><strong>Source code reviews</strong> - Whitehat attackers use manual/automated means to analyze the source code of the web application to identify flaws.</li>
 </ul>
-<p>Due to the fact that custom coded web applications are unique, these proactive identification tasks are extremely important as you are not able to rely upon 3rd party vulnerability notifications.</p>
+<p>Due to the fact that custom coded web applications are unique, these proactive identification tasks are extremely important as you are not able to rely upon third-party vulnerability notifications.</p>
 <h3 id="reactive-identification">Reactive Identification<a class="headerlink" href="#reactive-identification" title="Permanent link">&para;</a></h3>
 <p>There are three main reactive methods for identifying vulnerabilities:</p>
 <ul>
@@ -1686,7 +1686,7 @@ SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scri
 <p>In order to accurately test out the newly created virtual patches, it may be necessary to use an application other than a web browser. Some useful tools are:</p>
 <ul>
 <li>Web browser.</li>
-<li>Command line web clients such as Curl and Wget.</li>
+<li>Command-line web clients such as Curl and Wget.</li>
 <li>Local Proxy Servers such as <a href="https://www.zaproxy.org/">OWASP ZAP</a>.</li>
 <li><a href="https://web.archive.org/web/20181011065823/http://www.jwall.org/web/audit/viewer.jsp">ModSecurity AuditViewer</a> – which allows you to load a ModSecurity audit log file, manipulate it and then re-inject the data back into any web server.</li>
 </ul>

@@ -1704,7 +1704,7 @@
 <p>Even if you have limited the types that can be deserialised remember that some types have properties that are risky. <code>System.ComponentModel.DataAnnotations.ValidationException</code>, for example has a property <code>Value</code> of type <code>Object</code>. if this type is the type allowed for deserialization then an attacker can set the <code>Value</code> property to any object type they choose.</p>
 <p>Attackers should be prevented from steering the type that will be instantiated. If this is possible then even <code>DataContractSerializer</code> or <code>XmlSerializer</code> can be subverted e.g.</p>
 <div class="codehilite"><pre><span></span><code><span class="c1">// Action below is dangerous if the attacker can change the data in the database</span>
-<span class="kt">var</span> <span class="n">typename</span> <span class="p">=</span> <span class="n">GetTransactionTypeFromDatabase</span><span class="p">();</span>  
+<span class="kt">var</span> <span class="n">typename</span> <span class="p">=</span> <span class="n">GetTransactionTypeFromDatabase</span><span class="p">();</span>
 
 <span class="kt">var</span> <span class="n">serializer</span> <span class="p">=</span> <span class="k">new</span> <span class="n">DataContractJsonSerializer</span><span class="p">(</span><span class="n">Type</span><span class="p">.</span><span class="n">GetType</span><span class="p">(</span><span class="n">typename</span><span class="p">));</span>
 

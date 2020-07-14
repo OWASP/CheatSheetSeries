@@ -1324,7 +1324,7 @@ Where:
 
 
 <ul>
-<li>When executed, the 1st command line argument is the stanza from the config file. The Stanza names the <code>LoginModule</code> to be used. The 2nd argument is the <code>CallbackHandler</code>.</li>
+<li>When executed, the 1st command-line argument is the stanza from the config file. The Stanza names the <code>LoginModule</code> to be used. The 2nd argument is the <code>CallbackHandler</code>.</li>
 <li>Create a new <code>LoginContext</code> with the arguments passed to <code>Main.java</code>.<ul>
 <li><code>loginContext = new LoginContext (args[0], new AppCallbackHandler());</code></li>
 </ul>
@@ -1368,7 +1368,7 @@ Where:
 </li>
 </ul>
 <h3 id="login">login()<a class="headerlink" href="#login" title="Permanent link">&para;</a></h3>
-<p>Captures user supplied login information. The code snippet below declares an array of two callback objects which, when passed to the <code>callbackHandler.handle</code> method in the <code>callbackHandler.java</code> program, will be loaded with a user name and password provided interactively by the user:</p>
+<p>Captures user supplied login information. The code snippet below declares an array of two callback objects which, when passed to the <code>callbackHandler.handle</code> method in the <code>callbackHandler.java</code> program, will be loaded with a username and password provided interactively by the user:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">NameCallback</span> <span class="n">nameCB</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NameCallback</span><span class="p">(</span><span class="s">&quot;Username&quot;</span><span class="p">);</span>
 <span class="n">PasswordCallback</span> <span class="n">passwordCB</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PasswordCallback</span> <span class="p">(</span><span class="s">&quot;Password&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 <span class="n">Callback</span><span class="o">[]</span> <span class="n">callbacks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Callback</span><span class="o">[]</span> <span class="p">{</span> <span class="n">nameCB</span><span class="p">,</span> <span class="n">passwordCB</span> <span class="p">};</span>
@@ -1412,7 +1412,7 @@ Where:
 
 
 <h3 id="abort">abort()<a class="headerlink" href="#abort" title="Permanent link">&para;</a></h3>
-<p>The <code>abort()</code> method is called when authentication doesn't succeed. Before the <code>abort()</code> method exits the <code>LoginModule</code>, care should be taken to reset state including the user name and password input fields.</p>
+<p>The <code>abort()</code> method is called when authentication doesn't succeed. Before the <code>abort()</code> method exits the <code>LoginModule</code>, care should be taken to reset state including the username and password input fields.</p>
 <h3 id="logout">logout()<a class="headerlink" href="#logout" title="Permanent link">&para;</a></h3>
 <p>The release of the users principals and credentials when <code>LoginContext.logout</code> is called:</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">logout</span><span class="p">()</span> <span class="p">{</span>

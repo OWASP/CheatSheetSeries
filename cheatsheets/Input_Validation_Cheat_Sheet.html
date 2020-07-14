@@ -1483,7 +1483,7 @@
 <p>It is a common mistake to use black list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe <code>'</code> character, the string <code>1=1</code>, or the <code>&lt;script&gt;</code> tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.</p>
 <p>Plus, such filters frequently prevent authorized input, like <code>O'Brian</code>, where the <code>'</code> character is fully legitimate. For more information on XSS filter evasion please see the <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">this wiki page</a>.</p>
 <p>White list validation is appropriate for all input fields provided by the user. White list validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.</p>
-<p>If it's well structured data, like dates, social security numbers, zip codes, e-mail addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.</p>
+<p>If it's well structured data, like dates, social security numbers, zip codes, email addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.</p>
 <p>If the input field comes from a fixed set of options, like a drop down list or radio buttons, then the input needs to match exactly one of the values offered to the user in the first place.</p>
 <h3 id="validating-free-form-unicode-text">Validating free-form Unicode text<a class="headerlink" href="#validating-free-form-unicode-text" title="Permanent link">&para;</a></h3>
 <p>Free-form text, especially with Unicode characters, is perceived as difficult to validate due to a relatively large space of characters that need to be whitelisted.</p>
@@ -1548,7 +1548,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 <h2 id="validating-rich-user-content">Validating Rich User Content<a class="headerlink" href="#validating-rich-user-content" title="Permanent link">&para;</a></h2>
 <p>It is very difficult to validate rich content submitted by a user. For more information, please see the XSS cheatsheet on <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Sanitizing HTML Markup with a Library Designed for the Job</a>.</p>
 <h2 id="preventing-xss-and-content-security-policy">Preventing XSS and Content Security Policy<a class="headerlink" href="#preventing-xss-and-content-security-policy" title="Permanent link">&para;</a></h2>
-<p>All user data controlled must be encoded when returned in the html page to prevent the execution of malicious data (e.g. XSS). For example <code>&lt;script&gt;</code> would be returned as <code>&amp;lt;script&amp;gt;</code></p>
+<p>All user data controlled must be encoded when returned in the HTML page to prevent the execution of malicious data (e.g. XSS). For example <code>&lt;script&gt;</code> would be returned as <code>&amp;lt;script&amp;gt;</code></p>
 <p>The type of encoding is specific to the context of the page where the user controlled data is inserted. For example, HTML entity encoding is appropriate for data placed into the HTML body. However, user data placed into a script would need JavaScript specific output encoding.</p>
 <p>Detailed information on XSS prevention here: <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">OWASP XSS Prevention Cheat Sheet</a></p>
 <h2 id="file-upload-validation">File Upload Validation<a class="headerlink" href="#file-upload-validation" title="Permanent link">&para;</a></h2>
@@ -1563,7 +1563,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 <h3 id="upload-storage">Upload Storage<a class="headerlink" href="#upload-storage" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Use a new filename to store the file on the OS. Do not use any user controlled text for this filename or for the temporary filename.</li>
-<li>When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is <em>test.JPG</em>, rename it to <em>JAI1287uaisdjhf.JPG</em> with a random file name. The purpose of doing it to prevent the risks of direct file access and ambiguous filename to evalide the filter, such as <code>test.jpg;.asp or /../../../../../test.jpg</code>.</li>
+<li>When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is <em>test.JPG</em>, rename it to <em>JAI1287uaisdjhf.JPG</em> with a random filename. The purpose of doing it to prevent the risks of direct file access and ambiguous filename to evalide the filter, such as <code>test.jpg;.asp or /../../../../../test.jpg</code>.</li>
 <li>Uploaded files should be analyzed for malicious content (anti-malware, static analysis, etc).</li>
 <li>The file path should not be able to specify by client side. It's decided by server side.</li>
 </ul>

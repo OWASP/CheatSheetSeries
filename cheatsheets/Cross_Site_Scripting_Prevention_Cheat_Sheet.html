@@ -562,7 +562,7 @@
         
           <li class="md-nav__item">
   <a href="#rule-7-avoid-javascript-urls" class="md-nav__link">
-    RULE #7 - Avoid JavaScript URL's
+    RULE #7 - Avoid JavaScript URLs
   </a>
   
 </li>
@@ -1410,7 +1410,7 @@
         
           <li class="md-nav__item">
   <a href="#rule-7-avoid-javascript-urls" class="md-nav__link">
-    RULE #7 - Avoid JavaScript URL's
+    RULE #7 - Avoid JavaScript URLs
   </a>
   
 </li>
@@ -1522,7 +1522,7 @@ tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or 
 <p>The following rules are intended to prevent all XSS in your application. While these rules do not allow absolute freedom in putting untrusted data into an HTML document, they should cover the vast majority of common use cases. You do not have to allow <strong>all</strong> the rules in your organization. Many organizations may find that <strong>allowing only Rule #1 and Rule #2 are sufficient for their needs</strong>. Please add a note to the discussion page if there is an additional context that is often required and can be secured with escaping.</p>
 <p><strong>Do NOT</strong> simply escape the list of example characters provided in the various rules. It is NOT sufficient to escape only that list. Blacklist approaches are quite fragile. The whitelist rules here have been carefully designed to provide protection even against future vulnerabilities introduced by browser changes.</p>
 <h3 id="rule-0-never-insert-untrusted-data-except-in-allowed-locations">RULE #0 - Never Insert Untrusted Data Except in Allowed Locations<a class="headerlink" href="#rule-0-never-insert-untrusted-data-except-in-allowed-locations" title="Permanent link">&para;</a></h3>
-<p>The first rule is to <strong>deny all</strong> - don't put untrusted data into your HTML document unless it is within one of the slots defined in Rule #1 through Rule #5. The reason for Rule #0 is that there are so many strange contexts within HTML that the list of escaping rules gets very complicated. We can't think of any good reason to put untrusted data in these contexts. This includes "nested contexts" like a URL inside a javascript -- the encoding rules for those locations are tricky and dangerous.</p>
+<p>The first rule is to <strong>deny all</strong> - don't put untrusted data into your HTML document unless it is within one of the slots defined in Rule #1 through Rule #5. The reason for Rule #0 is that there are so many strange contexts within HTML that the list of escaping rules gets very complicated. We can't think of any good reason to put untrusted data in these contexts. This includes "nested contexts" like a URL inside a JavaScript -- the encoding rules for those locations are tricky and dangerous.</p>
 <p>If you insist on putting untrusted data into nested contexts, please do a lot of cross-browser testing and let us know what you find out.</p>
 <p>Directly in a script:</p>
 <div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;...</span><span class="nx">NEVER</span> <span class="nx">PUT</span> <span class="nx">UNTRUSTED</span> <span class="nx">DATA</span> <span class="nx">HERE</span><span class="p">...&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
@@ -1613,11 +1613,14 @@ tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or 
 
 
 <p>Inside quoted event handler:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">onmouseover</span><span class="o">=</span><span class="s">&quot;x=&#39;...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&#39;&quot;</span><span class="err">&lt;/</span><span class="na">div</span><span class="p">&gt;</span>  
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">onmouseover</span><span class="o">=</span><span class="s">&quot;x=&#39;...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&#39;&quot;</span><span class="err">&lt;/</span><span class="na">div</span><span class="p">&gt;</span>
 </code></pre></div>
 
 
-<p>Please note there are some JavaScript functions that can never safely use untrusted data as input - <strong>EVEN IF JAVASCRIPT ESCAPED!</strong></p>
+<!-- textlint-disable terminology -->
+
+<p>Please note there are some JavaScript functions that can never safely use untrusted data as input - <strong>EVEN IF JAVASCRIPT ESCAPED!</strong>
+<!-- textlint-enable --></p>
 <p>For example:</p>
 <div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="nb">window</span><span class="p">.</span><span class="nx">setInterval</span><span class="p">(</span><span class="s1">&#39;...EVEN IF YOU ESCAPE UNTRUSTED DATA YOU ARE XSSED HERE...&#39;</span><span class="p">);</span>
@@ -1629,8 +1632,8 @@ tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or 
 <p>If an event handler is properly quoted, breaking out requires the corresponding quote. However, we have intentionally made this rule quite broad because event handler attributes are often left unquoted. Unquoted attributes can be broken out of with many characters including <code>[space]</code> <code>%</code> <code>*</code> <code>+</code> <code>,</code> <code>-</code> <code>/</code> <code>;</code> <code>&lt;</code> <code>=</code> <code>&gt;</code> <code>^</code> and <code>|</code>.</p>
 <p>Also, a <code>&lt;/script&gt;</code> closing tag will close a script block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note this is an aggressive escaping policy that over-encodes. If there is a guarantee that proper quoting is accomplished then a much smaller character set is needed. Please look at the <a href="https://wiki.owasp.org/index.php/OWASP_Java_Encoder_Project#tab=Use_the_Java_Encoder_Project">OWASP Java Encoder</a> JavaScript escaping examples for examples of proper JavaScript use that requires minimal escaping.</p>
 <h4 id="rule-31-html-escape-json-values-in-an-html-context-and-read-the-data-with-jsonparse">RULE #3.1 - HTML escape JSON values in an HTML context and read the data with JSON.parse<a class="headerlink" href="#rule-31-html-escape-json-values-in-an-html-context-and-read-the-data-with-jsonparse" title="Permanent link">&para;</a></h4>
-<p>In a Web 2.0 world, the need for having data dynamically generated by an application in a javascript context is common. One strategy is to make an AJAX call to get the values, but this isn't always performant. Often, an initial block of JSON is loaded into the page to act as a single place to store multiple values. This data is tricky, though not impossible, to escape correctly without breaking the format and content of the values.</p>
-<p><strong>Ensure returned <code>Content-Type</code> header is application/json and not text/html.</strong> This shall instruct the browser not misunderstand the context and execute injected script</p>
+<p>In a Web 2.0 world, the need for having data dynamically generated by an application in a JavaScript context is common. One strategy is to make an AJAX call to get the values, but this isn't always performant. Often, an initial block of JSON is loaded into the page to act as a single place to store multiple values. This data is tricky, though not impossible, to escape correctly without breaking the format and content of the values.</p>
+<p><strong>Ensure returned <code>Content-Type</code> header is <code>application/json</code> and not <code>text/html</code>.</strong> This shall instruct the browser not misunderstand the context and execute injected script</p>
 <p><strong>Bad HTTP response:</strong></p>
 <div class="codehilite"><pre><span></span><code>HTTP/1.1 200
 Date: Wed, 06 Feb 2013 10:28:54 GMT
@@ -1666,7 +1669,7 @@ Content-Type: application/json; charset=utf-8 &lt;--good
 <h5 id="json-serialization">JSON serialization<a class="headerlink" href="#json-serialization" title="Permanent link">&para;</a></h5>
 <p>A safe JSON serializer will allow developers to serialize JSON as string of literal JavaScript which can be embedded in an HTML in the contents of the <code>&lt;script&gt;</code> tag. HTML characters and JavaScript line terminators need be escaped. Consider the <a href="https://github.com/yahoo/serialize-javascript">Yahoo JavaScript Serializer</a> for this task.</p>
 <h5 id="html-entity-encoding">HTML entity encoding<a class="headerlink" href="#html-entity-encoding" title="Permanent link">&para;</a></h5>
-<p>This technique has the advantage that html entity escaping is widely supported and helps separate data from server side code without crossing any context boundaries. Consider placing the JSON block on the page as a normal element and then parsing the innerHTML to get the contents. The javascript that reads the span can live in an external file, thus making the implementation of <a href="https://content-security-policy.com/">CSP</a> enforcement easier.</p>
+<p>This technique has the advantage that HTML entity escaping is widely supported and helps separate data from server side code without crossing any context boundaries. Consider placing the JSON block on the page as a normal element and then parsing the innerHTML to get the contents. The JavaScript that reads the span can live in an external file, thus making the implementation of <a href="https://content-security-policy.com/">CSP</a> enforcement easier.</p>
 <div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;init_data&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;display: none&quot;</span><span class="p">&gt;</span>
  <span class="err">&lt;</span>%= html_escape(data.to_json) %&gt;
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
@@ -1682,7 +1685,7 @@ Content-Type: application/json; charset=utf-8 &lt;--good
 
 <p>An alternative to escaping and unescaping JSON directly in JavaScript, is to normalize JSON server-side by converting <code>&lt;</code> to <code>\u003c</code> before delivering it to the browser.</p>
 <h3 id="rule-4-css-escape-and-strictly-validate-before-inserting-untrusted-data-into-html-style-property-values">RULE #4 - CSS Escape And Strictly Validate Before Inserting Untrusted Data into HTML Style Property Values<a class="headerlink" href="#rule-4-css-escape-and-strictly-validate-before-inserting-untrusted-data-into-html-style-property-values" title="Permanent link">&para;</a></h3>
-<p>Rule #4 is for when you want to put untrusted data into a stylesheet or a style tag. CSS is surprisingly powerful, and can be used for numerous attacks. Therefore, it's important that you only use untrusted data in a property <strong>value</strong> and not into other places in style data. You should stay away from putting untrusted data into complex properties like <code>url</code>, <code>behavior</code>, and custom (<code>-moz-binding</code>).</p>
+<p>Rule #4 is for when you want to put untrusted data into a style sheet or a style tag. CSS is surprisingly powerful, and can be used for numerous attacks. Therefore, it's important that you only use untrusted data in a property <strong>value</strong> and not into other places in style data. You should stay away from putting untrusted data into complex properties like <code>url</code>, <code>behavior</code>, and custom (<code>-moz-binding</code>).</p>
 <p>You should also not put untrusted data into IE's expression property value which allows JavaScript.</p>
 <p>Property value:</p>
 <div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
@@ -1714,17 +1717,17 @@ Content-Type: application/json; charset=utf-8 &lt;--good
 <p>Also, the <code>&lt;/style&gt;</code> tag will close the style block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note that we recommend aggressive CSS encoding and validation to prevent XSS attacks for both quoted and unquoted attributes.</p>
 <h3 id="rule-5-url-escape-before-inserting-untrusted-data-into-html-url-parameter-values">RULE #5 - URL Escape Before Inserting Untrusted Data into HTML URL Parameter Values<a class="headerlink" href="#rule-5-url-escape-before-inserting-untrusted-data-into-html-url-parameter-values" title="Permanent link">&para;</a></h3>
 <p>Rule #5 is for when you want to put untrusted data into HTTP GET parameter value.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://www.somesite.com?test=...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span> <span class="p">&gt;</span>  
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://www.somesite.com?test=...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span> <span class="p">&gt;</span>
 </code></pre></div>
 
 
 <p>Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the <code>%HH</code> escaping format. Including untrusted data in <code>data:</code> URLs should not be allowed as there is no good way to disable attacks with escaping to prevent switching out of the URL.</p>
 <p>All attributes should be quoted. Unquoted attributes can be broken out of with many characters including <code>[space]</code> <code>%</code> <code>*</code> <code>+</code> <code>,</code> <code>-</code> <code>/</code> <code>;</code> <code>&lt;</code> <code>=</code> <code>&gt;</code> <code>^</code> and <code>|</code>. Note that entity encoding is useless in this context.</p>
-<p>WARNING: Do not encode complete or relative URL's with URL encoding! If untrusted input is meant to be placed into <code>href</code>, <code>src</code> or other URL-based attributes, it should be validated to make sure it does not point to an unexpected protocol, especially <code>javascript</code> links. URL's should then be encoded based on the context of display like any other piece of data. For example, user driven URL's in <code>HREF</code> links should be attribute encoded.</p>
+<p>WARNING: Do not encode complete or relative URLs with URL encoding! If untrusted input is meant to be placed into <code>href</code>, <code>src</code> or other URL-based attributes, it should be validated to make sure it does not point to an unexpected protocol, especially <code>javascript</code> links. URLs should then be encoded based on the context of display like any other piece of data. For example, user driven URLs in <code>HREF</code> links should be attribute encoded.</p>
 <p>For example:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">String</span> <span class="n">userURL</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span> <span class="s">&quot;userURL&quot;</span> <span class="p">)</span>
 <span class="kt">boolean</span> <span class="n">isValidURL</span> <span class="o">=</span> <span class="n">Validator</span><span class="p">.</span><span class="na">IsValidURL</span><span class="p">(</span><span class="n">userURL</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">isValidURL</span><span class="p">)</span> <span class="p">{</span>  
+<span class="k">if</span> <span class="p">(</span><span class="n">isValidURL</span><span class="p">)</span> <span class="p">{</span>
     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;&lt;%=encoder.encodeForHTMLAttribute(userURL)%&gt;&quot;</span><span class="o">&gt;</span><span class="n">link</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -1762,8 +1765,8 @@ Content-Type: application/json; charset=utf-8 &lt;--good
 <li><a href="http://htmlpurifier.org/">PHP HTML Purifier</a></li>
 <li><a href="https://pypi.python.org/pypi/bleach">Python Bleach</a></li>
 </ul>
-<h3 id="rule-7-avoid-javascript-urls">RULE #7 - Avoid JavaScript URL's<a class="headerlink" href="#rule-7-avoid-javascript-urls" title="Permanent link">&para;</a></h3>
-<p>Untrusted URL's that include the protocol javascript: will execute javascript code when used in URL DOM locations such as anchor tag HREF attributes or iFrame src locations. Be sure to validate all untrusted URL's to ensure they only contain safe schemes such as HTTPS.</p>
+<h3 id="rule-7-avoid-javascript-urls">RULE #7 - Avoid JavaScript URLs<a class="headerlink" href="#rule-7-avoid-javascript-urls" title="Permanent link">&para;</a></h3>
+<p>Untrusted URLs that include the protocol javascript: will execute JavaScript code when used in URL DOM locations such as anchor tag HREF attributes or iFrame src locations. Be sure to validate all untrusted URLs to ensure they only contain safe schemes such as HTTPS.</p>
 <h3 id="rule-8-prevent-dom-based-xss">RULE #8 - Prevent DOM-based XSS<a class="headerlink" href="#rule-8-prevent-dom-based-xss" title="Permanent link">&para;</a></h3>
 <p>For details on what DOM-based XSS is, and defenses against this type of XSS flaw, please see the OWASP article on <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a>.</p>
 <h3 id="bonus-rule-1-use-httponly-cookie-flag">Bonus Rule #1: Use HTTPOnly cookie flag<a class="headerlink" href="#bonus-rule-1-use-httponly-cookie-flag" title="Permanent link">&para;</a></h3>
@@ -1810,7 +1813,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 </tbody>
 </table>
 <p>Avoid template injection in Angular by building with <code>--prod</code> parameter (<code>ng build --prod</code>).</p>
-<p>Also remember to keep your framework updated to the latest version with all possible bug fixes.</p>
+<p>Also remember to keep your framework updated to the latest version with all possible bugfixes.</p>
 <h3 id="x-xss-protection-header">X-XSS-Protection Header<a class="headerlink" href="#x-xss-protection-header" title="Permanent link">&para;</a></h3>
 <p>The <code>X-XSS-Protection</code> header has been deprecated by modern browsers and its use can introduce <strong>additional</strong> security issues on the client side. As such, it is recommended to set the header as <code>X-XSS-Protection: 0</code> in order to disable the XSS Auditor, and not allow it to take the default behavior of the browser handling the response. Check the below references for a better understanding on this topic:</p>
 <ul>
@@ -1842,7 +1845,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 <td>String</td>
 <td>Safe HTML Attributes</td>
 <td><code>&lt;input type="text" name="fname" value="UNTRUSTED DATA "&gt;</code></td>
-<td>Aggressive HTML Entity Encoding (rule #2), Only place untrusted data into a whitelist of safe attributes (listed below), Strictly validate unsafe attributes such as background, id and name.</td>
+<td>Aggressive HTML Entity Encoding (rule #2), Only place untrusted data into a whitelist of safe attributes (listed below), Strictly validate unsafe attributes such as background, ID and name.</td>
 </tr>
 <tr>
 <td>String</td>
@@ -1854,7 +1857,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 <td>String</td>
 <td>Untrusted URL in a SRC or HREF attribute</td>
 <td><code>&lt;a href="UNTRUSTED URL "&gt;clickme&lt;/a&gt; &lt;iframe src="UNTRUSTED URL " /&gt;</code></td>
-<td>Canonicalize input, URL Validation, Safe URL verification, Whitelist http and https URL's only (Avoid the JavaScript Protocol to Open a new Window), Attribute encoder.</td>
+<td>Canonicalize input, URL Validation, Safe URL verification, Whitelist http and HTTPS URLs only (Avoid the JavaScript Protocol to Open a new Window), Attribute encoder.</td>
 </tr>
 <tr>
 <td>String</td>

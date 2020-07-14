@@ -1967,7 +1967,7 @@
 <p><em>Note:</em> 'Implemented safely' means the stored procedure does not include any unsafe dynamic SQL generation.</p>
 <h6 id="defense-option-3-white-list-input-validation">Defense Option 3: White List Input Validation<a class="headerlink" href="#defense-option-3-white-list-input-validation" title="Permanent link">&para;</a></h6>
 <p>Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.</p>
-<p>But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full re-write should be considered if time allows.</p>
+<p>But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full rewrite should be considered if time allows.</p>
 <h6 id="defense-option-4-escaping-all-user-supplied-input">Defense Option 4: Escaping All User-Supplied Input<a class="headerlink" href="#defense-option-4-escaping-all-user-supplied-input" title="Permanent link">&para;</a></h6>
 <p>This technique should only be used as a last resort, when none of the above are feasible. Input validation is probably a better choice as this methodology is frail compared to other defenses and we cannot guarantee it will prevent all SQL Injection in all situations.</p>
 <p>This technique is to escape user input before putting it in a query. It's usually only recommended to retrofit legacy code when implementing input validation isn't cost effective.</p>
@@ -1977,7 +1977,7 @@
 <div class="codehilite"><pre><span></span><code><span class="c1">// This should REALLY be validated too</span>
 <span class="n">String</span> <span class="n">custname</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
 <span class="c1">// Perform input validation to detect attacks</span>
-<span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>  
+<span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>
 <span class="n">PreparedStatement</span> <span class="n">pstmt</span> <span class="o">=</span> <span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">);</span>
 <span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">custname</span><span class="p">);</span>
 <span class="n">ResultSet</span> <span class="n">results</span> <span class="o">=</span> <span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">();</span>
@@ -1989,7 +1989,7 @@
 <p>The following code example uses a <code>CallableStatement</code>, Java's implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.</p>
 <div class="codehilite"><pre><span></span><code><span class="c1">// This should REALLY be validated</span>
 <span class="n">String</span> <span class="n">custname</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
-<span class="k">try</span> <span class="p">{</span>  
+<span class="k">try</span> <span class="p">{</span>
  <span class="n">CallableStatement</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">connection</span><span class="p">.</span><span class="na">prepareCall</span><span class="p">(</span><span class="s">&quot;{call sp_getAccountBalance(?)}&quot;</span><span class="p">);</span>
  <span class="n">cs</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">custname</span><span class="p">);</span>
  <span class="n">ResultSet</span> <span class="n">results</span> <span class="o">=</span> <span class="n">cs</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">();</span>
@@ -2066,7 +2066,7 @@
  <span class="n">escapedStr</span> <span class="o">=</span> <span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\&quot;</span> <span class="o">+</span>
                <span class="n">Character</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="err">&#39;\\</span><span class="n">u0000</span><span class="err">&#39;</span><span class="p">),</span> <span class="s">&quot;\\\\\\\\00&quot;</span><span class="p">);</span>
  <span class="k">return</span> <span class="n">escapedStr</span><span class="p">;</span>
-<span class="p">}</span>  
+<span class="p">}</span>
 </code></pre></div>
 
 
@@ -2081,7 +2081,7 @@
 <h4 id="how-to-test-for-the-issue_2">How to test for the issue<a class="headerlink" href="#how-to-test-for-the-issue_2" title="Permanent link">&para;</a></h4>
 <h5 id="during-code-review_2">During code review<a class="headerlink" href="#during-code-review_2" title="Permanent link">&para;</a></h5>
 <p>Check if any command execute methods are called and in unvalidated user input are taken as data for that command.</p>
-<p>Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. <code>%3B</code> is url encoded and decodes to semicolon. This is because the <code>;</code> is interpreted as a command separator.</p>
+<p>Out side of that, appending a semicolon to the end of a URL query parameter followed by an operating system command, will execute the command. <code>%3B</code> is URL encoded and decodes to semicolon. This is because the <code>;</code> is interpreted as a command separator.</p>
 <p>Example: <code>http://sensitive/something.php?dir=%3Bcat%20/etc/passwd</code></p>
 <p>If the application responds with the output of the <code>/etc/passwd</code> file then you know the attack has been successful. Many web application scanners can be used to test for this attack as they inject variations of command injections and test the response.</p>
 <p>Equally Static Code Analysis tools check the data flow of untrusted user input into a web application and check if the data is then entered into a dangerous method which executes the user input as a command.</p>

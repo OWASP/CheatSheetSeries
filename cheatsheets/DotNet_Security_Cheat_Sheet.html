@@ -1989,7 +1989,7 @@
 
 <h3 id="http-validation-and-encoding">HTTP validation and encoding<a class="headerlink" href="#http-validation-and-encoding" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Do not disable <a href="http://www.asp.net/whitepapers/request-validation">validateRequest</a> in the <code>web.config</code> or the page setup. This value enables limited XSS protection in ASP.NET and should be left intact as it provides partial prevention of Cross Site Scripting. Complete request validation is recommended in addition to the built in protections.</li>
+<li>Do not disable <a href="http://www.asp.net/whitepapers/request-validation">validateRequest</a> in the <code>web.config</code> or the page setup. This value enables limited XSS protection in ASP.NET and should be left intact as it provides partial prevention of Cross Site Scripting. Complete request validation is recommended in addition to the built-in protections.</li>
 <li>The 4.5 version of the .NET Frameworks includes the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.web.security.antixss.antixssencoder?view=netframework-4.7.2">AntiXssEncoder</a> library, which has a comprehensive input encoding library for the prevention of XSS. Use it.</li>
 <li>Whitelist allowable values anytime user input is accepted.</li>
 <li>Validate the URI format using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.uri.iswellformeduristring">Uri.IsWellFormedUriString</a>.</li>
@@ -2188,7 +2188,7 @@ e.g Web.config</p>
 
 
 <p>See <a href="https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/App_Start/Startup.Auth.cs">here</a> for full startup code snippet</p>
-<p>Ensure cookie is sent over https in the production environment. This should be enforced in the config transforms:</p>
+<p>Ensure cookie is sent over HTTPS in the production environment. This should be enforced in the config transforms:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">&lt;httpCookies</span> <span class="na">requireSSL=</span><span class="s">&quot;true&quot;</span> <span class="na">xdt:Transform=</span><span class="s">&quot;SetAttributes(requireSSL)&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;authentication&gt;</span>
     <span class="nt">&lt;forms</span> <span class="na">requireSSL=</span><span class="s">&quot;true&quot;</span> <span class="na">xdt:Transform=</span><span class="s">&quot;SetAttributes(requireSSL)&quot;</span><span class="nt">/&gt;</span>
@@ -2448,7 +2448,7 @@ If a deserialized hostile object tries to initiate a system processes or access 
 <h3 id="a10-insufficient-logging-monitoring">A10 Insufficient Logging &amp; Monitoring<a class="headerlink" href="#a10-insufficient-logging-monitoring" title="Permanent link">&para;</a></h3>
 <p>DO: Ensure all login, access control failures and server-side input validation failures can be logged with sufficient user context to identify suspicious or malicious accounts.</p>
 <p>DO: Establish effective monitoring and alerting so suspicious activities are detected and responded to in a timely fashion.</p>
-<p>DO NOT: Log generic error messages such as: <code>csharp Log.Error("Error was thrown");</code> rather log the stack trace, error message and user Id who caused the error.</p>
+<p>DO NOT: Log generic error messages such as: <code>csharp Log.Error("Error was thrown");</code> rather log the stack trace, error message and user ID who caused the error.</p>
 <p>DO NOT: Log sensitive data such as user's passwords.</p>
 <h4 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h4>
 <p>What Logs to Collect and more information about Logging can be found on this <a href="Logging_Cheat_Sheet.html">cheat sheet</a>.</p>
@@ -2568,7 +2568,7 @@ If a deserialized hostile object tries to initiate a system processes or access 
 </ul>
 <h2 id="windows-forms-guidance">Windows Forms Guidance<a class="headerlink" href="#windows-forms-guidance" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Use partial trust when possible. Partially trusted Windows applications reduce the attack surface of an application. Manage a list of what permissions your app must use, and what it may use, and then make the request for those permissions declaratively at run time.</li>
+<li>Use partial trust when possible. Partially trusted Windows applications reduce the attack surface of an application. Manage a list of what permissions your app must use, and what it may use, and then make the request for those permissions declaratively at runtime.</li>
 <li>Use ClickOnce deployment. For enhanced permissions, use permission elevation at runtime or trusted application deployment at install time.</li>
 </ul>
 <h3 id="wcf-guidance">WCF Guidance<a class="headerlink" href="#wcf-guidance" title="Permanent link">&para;</a></h3>

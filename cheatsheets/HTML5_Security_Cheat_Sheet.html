@@ -1505,7 +1505,7 @@
 </ul>
 <h3 id="client-side-databases">Client-side databases<a class="headerlink" href="#client-side-databases" title="Permanent link">&para;</a></h3>
 <ul>
-<li>On November 2010, the W3C announced Web SQL Database (relational SQL database) as a deprecated specification. A new standard Indexed Database API or IndexedDB (formerly WebSimpleDB) is actively developed, which provides key/value database storage and methods for performing advanced queries.</li>
+<li>On November 2010, the W3C announced Web SQL Database (relational SQL database) as a deprecated specification. A new standard Indexed Database API or IndexedDB (formerly WebSimpleDB) is actively developed, which provides key-value database storage and methods for performing advanced queries.</li>
 <li>Underlying storage mechanisms may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it's recommended not to store any sensitive information in local storage.</li>
 <li>If utilized, WebDatabase content on the client side can be vulnerable to SQL injection and needs to have proper validation and parameterization.</li>
 <li>Like Local Storage, a single <a href="https://owasp.org/www-community/attacks/xss/">Cross Site Scripting</a> can be used to load malicious data into a web database as well. Don't consider data in these to be trusted.</li>
@@ -2357,7 +2357,7 @@
 
 
 <h3 id="confidentiality-and-integrity">Confidentiality and Integrity<a class="headerlink" href="#confidentiality-and-integrity" title="Permanent link">&para;</a></h3>
-<p>If the raw version of the protocol is used (protocol <code>ws://</code>) then the transfered data is exposed to eavesdropping and potential on-the-fly alteration.</p>
+<p>If the raw version of the protocol is used (protocol <code>ws://</code>) then the transferred data is exposed to eavesdropping and potential on-the-fly alteration.</p>
 <p>Example of capture using <a href="https://www.wireshark.org/">Wireshark</a> and searching for password exchanges in the stored PCAP file, not printable characters has been explicitly removed from the command result:</p>
 <div class="codehilite"><pre><span></span><code>$ grep -aE <span class="s1">&#39;(password)&#39;</span> capture.pcap
 <span class="o">{</span><span class="s2">&quot;login&quot;</span>:<span class="s2">&quot;bob&quot;</span>,<span class="s2">&quot;password&quot;</span>:<span class="s2">&quot;bob123&quot;</span><span class="o">}</span>

@@ -1617,7 +1617,7 @@
 
 <h3 id="defense-option-3-whitelist-input-validation">Defense Option 3: Whitelist Input Validation<a class="headerlink" href="#defense-option-3-whitelist-input-validation" title="Permanent link">&para;</a></h3>
 <p>Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.</p>
-<p>But if user parameter values are used for targeting different table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full re-write should be considered if time allows.</p>
+<p>But if user parameter values are used for targeting different table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full rewrite should be considered if time allows.</p>
 <p>Here is an example of table name validation.</p>
 <div class="codehilite"><pre><span></span><code>String tableName;
 switch(PARAM):

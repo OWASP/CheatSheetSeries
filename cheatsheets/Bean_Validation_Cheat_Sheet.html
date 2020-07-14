@@ -406,11 +406,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pre-defined-constraints" class="md-nav__link">
-    Pre-defined Constraints
+  <a href="#predefined-constraints" class="md-nav__link">
+    Predefined Constraints
   </a>
   
-    <nav class="md-nav" aria-label="Pre-defined Constraints">
+    <nav class="md-nav" aria-label="Predefined Constraints">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1244,11 +1244,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pre-defined-constraints" class="md-nav__link">
-    Pre-defined Constraints
+  <a href="#predefined-constraints" class="md-nav__link">
+    Predefined Constraints
   </a>
   
-    <nav class="md-nav" aria-label="Pre-defined Constraints">
+    <nav class="md-nav" aria-label="Predefined Constraints">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1381,7 +1381,7 @@
 </ul>
 <p>For the sake of simplicity all the examples below feature field constraints and all validation is triggered by the controller. Refer to the Bean Validation documentation for a full list of examples.</p>
 <p>When it comes to error handling, the Hibernate Validator returns a <code>BindingResult</code> object which contains a <code>List&lt;ObjectError&gt;</code>. The examples below feature simplistic error handling, while a production ready application would have a more elaborate design that takes care of logging and error page redirection.</p>
-<h2 id="pre-defined-constraints">Pre-defined Constraints<a class="headerlink" href="#pre-defined-constraints" title="Permanent link">&para;</a></h2>
+<h2 id="predefined-constraints">Predefined Constraints<a class="headerlink" href="#predefined-constraints" title="Permanent link">&para;</a></h2>
 <h3 id="pattern">@Pattern<a class="headerlink" href="#pattern" title="Permanent link">&para;</a></h3>
 <p><strong>Annotation</strong>:</p>
 <p><code>@Pattern(regex=,flag=)</code></p>
@@ -1394,13 +1394,13 @@
 <p><strong>Model</strong>:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Pattern</span><span class="p">;</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Article</span>  <span class="p">{</span>  
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Article</span>  <span class="p">{</span>
  <span class="c1">//Constraint: Alpha Numeric article titles only using a regular expression</span>
  <span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span> <span class="o">=</span> <span class="s">&quot;[a-zA-Z0-9 ]&quot;</span><span class="p">)</span>
  <span class="kd">private</span> <span class="n">String</span> <span class="n">articleTitle</span><span class="p">;</span>
  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getArticleTitle</span><span class="p">()</span>  <span class="p">{</span>
   <span class="k">return</span>  <span class="n">articleTitle</span><span class="p">;</span>
- <span class="p">}</span>  
+ <span class="p">}</span>
  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setArticleTitle</span><span class="p">(</span><span class="n">String</span>  <span class="n">articleTitle</span><span class="p">)</span>  <span class="p">{</span>
    <span class="k">this</span><span class="p">.</span><span class="na">articleTitle</span>  <span class="o">=</span>  <span class="n">articleTitle</span><span class="p">;</span>
   <span class="p">}</span>
@@ -1421,7 +1421,7 @@
  <span class="p">...</span>
 
  <span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/postArticle&quot;</span><span class="p">,</span>  <span class="n">method</span> <span class="o">=</span> <span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
- <span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span> <span class="nf">postArticle</span><span class="p">(</span><span class="nd">@Valid</span>  <span class="n">Article</span>  <span class="n">article</span><span class="p">,</span>  <span class="n">BindingResult</span>  <span class="n">result</span><span class="p">,</span>  
+ <span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span> <span class="nf">postArticle</span><span class="p">(</span><span class="nd">@Valid</span>  <span class="n">Article</span>  <span class="n">article</span><span class="p">,</span>  <span class="n">BindingResult</span>  <span class="n">result</span><span class="p">,</span>
  <span class="n">HttpServletResponse</span>  <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">())</span> <span class="p">{</span>
    <span class="n">String</span> <span class="n">errorMessage</span>  <span class="o">=</span>  <span class="s">&quot;&quot;</span><span class="p">;</span>
@@ -1432,7 +1432,7 @@
    <span class="p">}</span>
    <span class="k">return</span>  <span class="n">errorMessage</span><span class="p">;</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-   <span class="k">return</span>  <span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>  
+   <span class="k">return</span>  <span class="s">&quot;Validation Successful&quot;</span><span class="p">;</span>
   <span class="p">}</span>
  <span class="p">}</span>
 <span class="p">}</span>
@@ -1479,7 +1479,7 @@
  <span class="p">...</span>
 
  <span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/registerCustomer&quot;</span><span class="p">,</span>  <span class="n">method</span> <span class="o">=</span> <span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
- <span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span> <span class="nf">registerCustomer</span><span class="p">(</span><span class="nd">@Valid</span> <span class="n">Customer</span> <span class="n">customer</span><span class="p">,</span> <span class="n">BindingResult</span> <span class="n">result</span><span class="p">,</span>  
+ <span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="n">String</span> <span class="nf">registerCustomer</span><span class="p">(</span><span class="nd">@Valid</span> <span class="n">Customer</span> <span class="n">customer</span><span class="p">,</span> <span class="n">BindingResult</span> <span class="n">result</span><span class="p">,</span>
  <span class="n">HttpServletResponse</span>  <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
 
   <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">hasErrors</span><span class="p">())</span> <span class="p">{</span>
@@ -1713,7 +1713,7 @@
 </ul>
 <p>Take a look at this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints">table</a> for the complete list.</p>
 <h2 id="custom-constraints">Custom Constraints<a class="headerlink" href="#custom-constraints" title="Permanent link">&para;</a></h2>
-<p>One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built in constraints.</p>
+<p>One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built-in constraints.</p>
 <p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html">documentation</a>.</p>
 <h2 id="error-messages">Error Messages<a class="headerlink" href="#error-messages" title="Permanent link">&para;</a></h2>
 <p>It is possible to specify a message ID with the validation annotation, so that error messages are customized :</p>
@@ -1722,7 +1722,7 @@
 </code></pre></div>
 
 
-<p>Spring MVC will then look up a message with id <em>article.title.error</em> in a defined MessageSource. More on this <a href="https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/">documentation</a>.</p>
+<p>Spring MVC will then look up a message with ID <em>article.title.error</em> in a defined MessageSource. More on this <a href="https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/">documentation</a>.</p>
                 
                   
                 
