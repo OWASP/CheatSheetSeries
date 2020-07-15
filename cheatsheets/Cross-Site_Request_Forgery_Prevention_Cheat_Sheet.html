@@ -1730,7 +1730,7 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 <li>Must have the path of <code>/</code>.</li>
 <li>Must be marked as Secure (i.e, cannot be send over unencrypted HTTP).</li>
 </ul>
-<p>However, as of January 2020 cookie prefixes <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility">are not supported by IE and Edge</a>.</p>
+<p>As of July 2020 cookie prefixes <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility">are supported by all major browsers except Internet Explorer</a>.</p>
 <p>See the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives">Mozilla Developer Network</a> and <a href="https://tools.ietf.org/html/draft-west-cookie-prefixes-05">IETF Draft</a> for further information about cookie prefixes.</p>
 <h3 id="use-of-custom-request-headers">Use of Custom Request Headers<a class="headerlink" href="#use-of-custom-request-headers" title="Permanent link">&para;</a></h3>
 <p>Adding CSRF tokens, a double submit cookie and value, an encrypted token, or other defense that involves changing the UI can frequently be complex or otherwise problematic. An alternate defense that is particularly well suited for AJAX or API endpoints is the use of a <strong>custom request header</strong>. This defense relies on the <a href="https://en.wikipedia.org/wiki/Same-origin_policy">same-origin policy (SOP)</a> restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests with custom headers.</p>
