@@ -177,7 +177,7 @@ Another solution for this problem is use of `Cookie Prefixes` for cookie with CS
 - Must have the path of `/`.
 - Must be marked as Secure (i.e, cannot be send over unencrypted HTTP).
 
-However, as of January 2020 cookie prefixes [are not supported by IE and Edge](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility).
+As of July 2020 cookie prefixes [are supported by all major browsers except Internet Explorer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility).
 
 See the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) and [IETF Draft](https://tools.ietf.org/html/draft-west-cookie-prefixes-05) for further information about cookie prefixes.
 
