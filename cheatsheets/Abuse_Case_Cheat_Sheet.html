@@ -1583,7 +1583,7 @@ projects should opportunistically build abuse-cases for established functionalit
 <ul>
 <li><strong>Business analyst</strong>: Will be the business key people that will describe each feature from a business point of view.</li>
 <li><strong>Risk analyst</strong>: Will be the company's risk personnel that will evaluate the business risk from a proposed attack (sometimes it is the <strong>Business analyst</strong> depending on the company).</li>
-<li><strong>Offsensives (Pentester or Application Security people with offensive mindset)</strong>: Will be the <em>attacker</em> that will propose all attacks that he can perform on the business feature(s) in question. If the company does not have a person with this profile then it is possible to request the service of an external specialist (Pentester or AppSec consultant from a security firm). If possible, include 2 offensives people (ex: 1 Pentester + 1 AppSec) in order to increase the number of possible attacks that will be identified and considered.</li>
+<li><strong>Penetration tester</strong>: Will be the <em>attacker</em> that will propose attacks that they can perform on the business feature(s) in question. If the company does not have a person with this profile then it is possible to request the service of an external specialist. If possible, include 2 penetration testers with different backgrounds in order to increase the number of possible attacks that will be identified and considered.</li>
 <li><strong>Technical leaders of the projects</strong>: Will be the project technical people and will allow technical exchange about attacks and countermeasures identified during the workshop.</li>
 <li><strong>Quality assurance analyst or functional tester</strong>: Personnel that may have a good sense of how the application/functionality is intended to work (positive testing), not work (negative testing), and what things cause it to fail (failure cases).</li>
 </ul>
@@ -1692,13 +1692,13 @@ projects should opportunistically build abuse-cases for established functionalit
 <p>For each feature, follow this flow:</p>
 <ol>
 <li>Key business people explain the current feature from a business point of view.</li>
-<li>Offensives propose and explain a set of attacks that they can perform against the feature.</li>
+<li>Penetration testers propose and explain a set of attacks that they can perform against the feature.</li>
 <li>
 <p>For each attack proposed:</p>
 <ol>
 <li>Appsec proposes a countermeasure and a preferred set up location (infrastructure, network, code, design...).</li>
 <li>Technical people give feedback about the feasibility of the proposed countermeasure.</li>
-<li>Offsensives use the CVSS v3 (or other standard) calculator to determine a risk rating. (ex: <a href="https://www.first.org/cvss/calculator/3.0">CVSS V3 calculator</a>)</li>
+<li>Penetration testers use the CVSS v3 (or other standard) calculator to determine a risk rating. (ex: <a href="https://www.first.org/cvss/calculator/3.0">CVSS V3 calculator</a>)</li>
 <li>Risk key people accept/increase/decrease the rating to have final one that match the real business impact for the company.</li>
 </ol>
 </li>
@@ -1707,7 +1707,7 @@ projects should opportunistically build abuse-cases for established functionalit
 </li>
 <li>Pass to next feature...</li>
 </ol>
-<p>If the presence of offensives is not possible then you can use the following references to identify the applicable attacks on your features:</p>
+<p>If the presence of penetration testers is not possible then you can use the following references to identify the applicable attacks on your features:</p>
 <ul>
 <li><a href="https://owasp.org/www-project-automated-threats-to-web-applications/">OWASP Automated Threats to Web Applications</a></li>
 <li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/">OWASP Testing Guide</a></li>
@@ -1722,7 +1722,7 @@ This dictionary will speed up the future workshops in a significant way.
 
 To promote the creation of this dictionary, you can, at the end of the project/sprint, gather the list
 of attacks and countermeasures identified in a central location (wiki, database, file...) that will be
-used during the next workshop in combination with input from offensives people.
+used during the next workshop in combination with input from penetration pesters.
 </code></pre></div>
 
 
