@@ -167,7 +167,7 @@ Because subdomains can write cookies to the parent domains and because cookies c
 
 To enhance the security of this solution include the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for AJAX calls. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.
 
-A simpler alternative to an encrypted cookie is to hash the token with a secret salt known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a salted-hash is used, an attacker won't be able to recreate the cookie value from the plain token without knowledge of the server secrets.
+A simpler alternative to an encrypted cookie is to HMAC the token with a secret key known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a HMAC is used, an attacker won't be able to recreate the cookie value from the plain token without knowledge of the server secrets.
 
 #### Cookie with __Host- prefix
 
