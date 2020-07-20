@@ -140,7 +140,7 @@ The following headers should be included in all API responses:
 | Header | Rationale |
 |--------|-----------|
 | `Cache-Control: no-store` | Prevent sensitive information from being cached. |
-| `Content-Security-Policy: frame-ancestors 'none'` | To protect against drag-and-drop style clickjacking attacks. |
+| `Content-Security-Policy: frame-ancestors 'none'` | To protect against [drag-and-drop](https://www.w3.org/Security/wiki/Clickjacking_Threats#Drag_and_drop_attacks) style clickjacking attacks. |
 | `Content-Type` | To specify the content type of the response. This should be `application/json` for JSON responses. |
 | `Strict-Transport-Security` | To require connections over HTTPS and to protect against spoofed certificates. |
 | `X-Content-Type-Options: nosniff` | To prevent browsers from performing MIME sniffing, and inappropriately interpreting responses as HTML. |
