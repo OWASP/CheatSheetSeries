@@ -149,9 +149,9 @@ The headers below are only intended to provide additional security when response
 
 | Header | Rationale |
 |--------|-----------|
-| `Content-Security-Policy` | The majority of CSP functionality only affects pages rendered as HTML. |
-| `Feature-Policy` | Feature policies only affect pages rendered as HTML. |
-| `Referred-Policy` | Non-HTML responses should not trigger additional requests. |
+| `Content-Security-Policy: default-src 'none'` | The majority of CSP functionality only affects pages rendered as HTML. |
+| `Feature-Policy: 'none'` | Feature policies only affect pages rendered as HTML. |
+| `Referred-Policy: no-referrer` | Non-HTML responses should not trigger additional requests. |
 
 ## CORS
 
