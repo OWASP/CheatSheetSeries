@@ -178,12 +178,6 @@ Expires: 0
 
 HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS, and also prevents the user from bypassing certificate warnings. See the [HTTP Strict Transport Security cheatsheet](HTTP_Strict_Transport_Security_Cheat_Sheet.md) for further information on implementing HSTS.
 
-### Consider Using Public Key Pinning
-
-HTTP Public Key Pinning (HPKP) is used to associate a specific certificate with a domain name, in order to prevent an attacker performing a man in the middle attack with a different (but trusted) certificate. See the [Certificate and Public Key Pinning article](https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning#http-pinning) for further information in implementing HPKP.
-
-HPKP is controversial, and that while it is currently supported in Firefox and some other browsers, it has been removed from [Chrome](https://www.chromestatus.com/feature/5903385005916160), and is considered deprecated by [Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins). As such, careful consideration of the risks should be made before implementing it.
-
 ### Consider the use of Client-Side Certificates
 
 In a typical configuration, TLS is used with a certificate on the server so that the client is able to verify the identity of the server, and to provide an encrypted connection between them. However, there are two main weaknesses with this approach:
@@ -201,6 +195,14 @@ Client certificates are rarely used on public systems due to a number of issues:
 - TLS decryption used by many organisations will cause client certificate authentication to fail.
 
 However, they should be considered for high-value applications or APIs, especially where there are a small number of technically sophisticated users, or where all users are part of the same organisation.
+
+### Consider Using Public Key Pinning
+
+Public key pinning can be used to provides assurance that the server's certificate is not only valid and trusted, but also that it matches the certificate expected for the server. This provides protection against an attacker who is able to obtain a valid certificate, either by exploiting a weakness in the validation process, compromising a trusted certificate authority, or having administrative access to the client.
+
+Public key pinning was added to browsers in the HTTP Public Key Pinning (HPKP) standard. However, due to a number of issues, it has subsequently been deprecated and is no longer recommended or [supported by modern browsers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins).
+
+However, public key pinning can still provide security benefits for mobile applications, thick clients and server-to-server communication. This is discussed in further detail in the [Pinning Cheat Sheet](Pinning_Cheat_Sheet.md).
 
 ## Related Articles
 
