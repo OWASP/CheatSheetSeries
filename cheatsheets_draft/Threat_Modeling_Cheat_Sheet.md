@@ -2,79 +2,28 @@
 
 ## Introduction
 
-Threat modelling works to identify, communicate, and understand threats and mitigations within the context of protecting something of value. Threat Modeling is a team activity that can be performed on a wide range of procedures and systems.
+Threat Modeling is a team activity, facilitated by one or two people, whereby sections of a system or process are laid out infront of the team and are reviewed for potential security vulnerabilities.
 
-This cheat sheet provides guidance on how to identify threats, validate threats, and prioritize threats using the Threat Modeling process.
+TODO, why should I care, what is the output etc.
 
-## The 4 Questions
+## Getting started
 
-### What are we building
+Threat modeling can be done at any time, however the most fitting time to threat model a system or process is just after the design phase. Threat modeling after the design phase will both help to highlight potential vulnerabilities and inform the necessary countermeasures, all before a line of code is written. 
 
-The first step is to define the scope of the Threat Model. It can be helpful to draw a [Data-flow diagram](https://en.wikipedia.org/wiki/Data-flow_diagram) with the team to help conceptualize the context of the system which may help to inform the scope of the Threat Model. Ensure that the scope of the Threat Model does not contain systems or procedures that you do not control.
+Threat modeling can also be performed retrospectively on existing systems or processes to help identify current vulnerabilites.
 
-#### Things to do
+### Agree on the scope
 
-- Scope to what is under your control.
-- Understand the context your system will live in. This includes, but is not limited to, the environment, security controls, etc
-- If you get stuck either:
-    - Look at the entry and exit points of the system.
-    - Ask the Subject Matter Expert (SME) to explain a user story or scenario.
+TODO, agree what is in scope and out of scope, only threat model the bits you have control over. Explain TM-ing an entire system may take a long time, better to focus on parts of the domain (vertically sliced)? e.g. authorisation flow, user management, account management etc.
 
-#### Things to avoid
+### Visualize the system
 
-- Avoid going beyond or deeper than the design level.
-- Avoid using the Threat Modeling process like a kitchen sink; don’t try to put everything in at once.
+TODO, draw out the system, using C4 or a simple DFD (boxes and lines even), on whiteboard, pen/paper, online diagram tools, important to keep these diagrams up to date going forward
 
-### What can go wrong
+### Identify threats
 
-Once the scope of the Threat Model is defined and the context is understood you may begin identifying potential threats. Structures such as [STRIDE](https://en.wikipedia.org/wiki/STRIDE_%28security%29) and [Kill Chain](https://en.wikipedia.org/wiki/Kill_chain) can help with prompts and discussion points.
+TODO, step through the diagram with team using STRIDE or LINDUNN, important to stick with a particular risk framework the first few times and then make changes/improvements as you become more comfortable with the TM process.
 
-#### Things to do
+### Share the results
 
-- Include the whole team: security operations, product owners, marketing, and design (don’t limit yourself or shut down the brainstorming too early).
-- Use existing libraries, practices, and structures such as STRIDE, CAPEC, Kill Chain, and Story Mapping (don't reinvent the wheel).
-- Capture good notes, use open questions, and own the follow-up process.
-- Engage constructively and blamelessly; create a safe space.
-
-#### Things to avoid
-
-- Avoid getting stuck in a framework or discrediting ideas because they don’t fit the framework (do admit when you are stuck and be wary of diminishing returns).
-
-### What are we going to do about it
-
-This section of the Threat Modeling process is concerned with the validation, prioritization and mitigation of the threats identified in the previous section: "What can go wrong".
-
-The [OWASP Risk Rating Methodology](https://owasp.org/www-community/OWASP_Risk_Rating_Methodology) provides an approach to calculating the risk for a given threat.
-
-#### Things to do
-
-- Collaborate, validate, and prioritize (findings, threats, and first assumptions)
-- Draw on, extend, and customise existing countermeasures:
-    - Organisational standards, e.g. Single sign-on (SSO) and web application firewalls (WAF)
-    - Common standards, e.g. access control lists (ACL) and password hashing
-- Write tests and test cases
-- Integrate with partner or team tools and processes
-
-#### Things to avoid
-
-- Avoid confusing "can" and "should"
-
-### Did we do a good enough job
-
-It is important to continuously review the priority and risk associated with the identified threats and to review the Threat Modeling process as a whole. Organize retrospectives with the team to help inform the Threat Modeling process so that it meets your team's needs. Ensure that outputs from the previous section ("What are we going to do about it") are shared and actioned by the team.
-
-#### Things to do
-
-- Follow up and document actionable outputs
-- Follow up with a survey and a Lessons Learned retrospective
-- Keep what works and lose what fails
-- Action the outputs
-- Continuously validate the process
-- Compare Q1 (what are we building) with Q3 (what are we going to do about it)
-- Validate assumptions
-- Compare outputs with bug bounty submissions, penetration test findings and audit findings
-- Share outputs with the whole team
-
-#### Things to avoid
-
-- Do not skip this step!
+TODO, document and share findings with team, score each identified risk high, medium, low (OWASP risk rating?), priotise with team and fix.
