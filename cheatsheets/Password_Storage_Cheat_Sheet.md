@@ -109,9 +109,7 @@ In some cases, it may be possible to increase the work factor of the hashes with
 
 ### Pre-Hashing Passwords
 
-Some hashing algorithms such as bcrypt have a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, it is preudent to pre-hash the user-supplied password with HMAC-SHA-512, and to then hash the resultant hash with a more secure algorithm such as bcrypt (i.e, `bcrypt(HMAC-SHA-512($password))`). This approach solves the problem of arbitrary length user inputs to slower hashing algorithms.
-
-Please note that HMAC-SHA-512 itself requires a password which can be a simple static password for pre-hash usage. We recommend HMAC-SHA-512 over standard hashing algorithms for pre-hashing to avoid breach correlation attacks.
+Some hashing algorithms such as bcrypt have a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, it is preudent to pre-hash the user-supplied password with a fast algorithm such as SHA-512, and then to hash the resultant hash with a more secure algorithm such as bcrypt (i.e, `bcrypt(sha512($password))`). This approach solves the problem of arbitrary length user inputs to slower hashing algorithms.
 
 ## Password Hashing Algorithms
 
