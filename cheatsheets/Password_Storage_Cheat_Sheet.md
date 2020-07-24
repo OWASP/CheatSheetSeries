@@ -156,7 +156,3 @@ An alternative approach is to use the existing password hashes as inputs for a m
 Writing custom cryptographic code such as a hashing algorithm is **really hard** and should **never be done** outside of an academic exercise. Any potential benefit that you might have from using an unknown or bespoke algorithm will be vastly overshadowed by the weaknesses that exist in it.
 
 **Do not do this.**
-
-## Challenges
-
-Even among experts, there is significant variance regarding how to configure password storage algorithms. Please read and keep a close eye on changes to [https://tools.ietf.org/html/draft-ietf-kitten-password-storage-00] for more information from a formal standard body on this challenging topic.
