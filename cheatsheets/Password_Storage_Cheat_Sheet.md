@@ -159,4 +159,4 @@ Writing custom cryptographic code such as a hashing algorithm is **really hard**
 
 ## Challenges
 
-Even among experts, there is significant variance regarding how to configure password storage algorithms. Please read and keep a close eye on changes to [https://tools.ietf.org/html/draft-ietf-kitten-password-storage-00] for more information from a formal standard body on this challenging topic.
+Even among experts, there is significant variance regarding how to configure password storage algorithms. Please read and keep a close eye on changes to the [IETF Best practices for password hashing and storage](https://tools.ietf.org/html/draft-ietf-kitten-password-storage-00) document for more information from a formal standard body on this challenging topic.
