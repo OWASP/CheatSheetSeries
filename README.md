@@ -19,7 +19,6 @@ In order to read the cheat sheets and **reference** them, use the project's [off
 ### Core Team
 
 - [Jakub Maćkowski](https://github.com/mackowski)
-- [Robin Bailey](https://github.com/rbsec)
 
 The core team contains a set of knowledgeable people that assist the project leaders in maintaining the repository and take actions on their own. The team follows a well documented process for issues and pull requests.
 

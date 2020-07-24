@@ -19,7 +19,6 @@ Core team:
 
 - [Elie Saad](https://github.com/ThunderSon)
 - [Jakub Maćkowski](https://github.com/mackowski)
-- [Robin Bailey](https://github.com/rbsec)
 - [Jim Manico](https://github.com/jmanico)
 
 Project links:
