@@ -49,7 +49,7 @@ This [link](https://cheatsheetseries.owasp.org/bundle.zip) allows you to downloa
 A special thank you to the following people for their help provided during the migration:
 
 - [Dominique Righetto](https://github.com/righettod): For his special leadership and guidance.
-- [Elie Saad](https://github.com/ThunderSon): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
+- [Elie Saad](https://github.com/ThunderSon): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets and for years of leadership and other project support.
 - [Jakub Maćkowski](https://github.com/mackowski): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
 
 Open Web Application Security Project and OWASP are registered trademarks of the OWASP Foundation, Inc.
