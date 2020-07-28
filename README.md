@@ -14,13 +14,7 @@ In order to read the cheat sheets and **reference** them, use the project's [off
 ### Project Leaders
 
 - [Jim Manico](https://github.com/jmanico)
-- [Elie Saad](https://github.com/ThunderSon)
-
-### Core Team
-
 - [Jakub Maćkowski](https://github.com/mackowski)
-
-The core team contains a set of knowledgeable people that assist the project leaders in maintaining the repository and take actions on their own. The team follows a well documented process for issues and pull requests.
 
 ## Chat With Us
 
