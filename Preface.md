@@ -13,13 +13,7 @@ An ATOM feed is available [here](News.xml) with the latest updates.
 Project leaders:
 
 - [Jim Manico](https://github.com/jmanico)
-- [Elie Saad](https://github.com/ThunderSon)
-
-Core team:
-
-- [Elie Saad](https://github.com/ThunderSon)
 - [Jakub Maćkowski](https://github.com/mackowski)
-- [Jim Manico](https://github.com/jmanico)
 
 Project links:
 
