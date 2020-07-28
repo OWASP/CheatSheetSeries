@@ -14,7 +14,6 @@ In order to read the cheat sheets and **reference** them, use the project's [off
 ### Project Leaders
 
 - [Jim Manico](https://github.com/jmanico)
-- [Elie Saad](https://github.com/ThunderSon)
 
 ### Core Team
 
