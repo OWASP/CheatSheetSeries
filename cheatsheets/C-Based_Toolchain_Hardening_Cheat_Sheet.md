@@ -24,7 +24,7 @@ Code **must** be correct. It **should** be secure. It **can** be efficient.
 
 ## Configuration
 
-Configuration is the first opportunity to configure your project for success. Not only do you have to configure your project to meet reliability and security goals, you must also configure integrated libraries properly. You typically have has three choices. First, you can use auto-configuration utilities if on Linux or Unix. Second, you can write a makefile by hand. This is predominant on Linux, Mac OS X, and Unix, but it applies to Windows as well. Finally, you can use an integrated development environment or IDE.
+Configuration is the first opportunity to configure your project for success. Not only do you have to configure your project to meet reliability and security goals, you must also configure integrated libraries properly. You typically have has three choices. First, you can use auto-configuration utilities if on Linux or Unix. Second, you can write a makefile by hand. This is predominant on Linux, macOS, and Unix, but it applies to Windows as well. Finally, you can use an integrated development environment or IDE.
 
 ### Build Configurations
 
@@ -116,7 +116,7 @@ A recent discussion on the Automake mailing list illuminates the issue: *[Enabli
 
 ### Makefiles
 
-Make is one of the earliest build systems dating back to the 1970s. Its available on Linux, Mac OS X and Unix, so you will frequently encounter projects using it. Unfortunately, Make has a number of short comings (*[Recursive Make Considered Harmful](https://embeddedartistry.com/blog/2017/04/10/recursive-make-considered-harmful/)* and *[What's Wrong With GNU make?](https://www.conifersystems.com/whitepapers/gnu-make/)*), and can cause some discomfort. Despite issues with Make, ESAPI C++ uses Make primarily for three reasons: first, its omnipresent; second, its easier to manage than the Auto Tools family; and third, `libtool` was out of the question.
+Make is one of the earliest build tools dating back to the 1970s. Its available on Linux, macOS and Unix, so you will frequently encounter projects using it. Unfortunately, Make has a number of short comings (*[Recursive Make Considered Harmful](https://embeddedartistry.com/blog/2017/04/10/recursive-make-considered-harmful/)* and *[What's Wrong With GNU make?](https://www.conifersystems.com/whitepapers/gnu-make/)*), and can cause some discomfort. Despite issues with Make, ESAPI C++ uses Make primarily for three reasons: first, its omnipresent; second, its easier to manage than the Auto Tools family; and third, `libtool` was out of the question.
 
 Consider what happens when you: (1) type `make` `debug`, and then type `make` `release`. Each build would require different `CFLAGS` due to optimizations and level of debug support. In your makefile, you would extract the relevant target and set `CFLAGS` and `CXXFLAGS` similar to below (taken from [ESAPI C++ Makefile](https://code.google.com/archive/p/owasp-esapi-cplusplus/source/default/source)):
 
@@ -165,7 +165,7 @@ Make will first build the program in a debug configuration for a session under t
 
 When you want the release build, Make will do nothing because it considers everything up to date despite the fact `CFLAGS` and `CXXFLAGS` have changed. Hence, your program will actually be in a debug configuration and risk a `SIGABRT` at runtime because debug instrumentation is present (recall `assert` calls `abort()` when `NDEBUG` is **not** defined). In essence, you have DoS'd yourself due to `make`.
 
-In addition, many projects do not honor the user's command line. ESAPI C++ does its best to ensure a user's flags are honored via `override` as shown above, but other projects do not. For example, consider a project that should be built with Position Independent Executable (PIE or ASLR) enabled and data execution prevention (DEP) enabled. Dismissing user settings combined with insecure out of the box settings (and not picking them up during auto-setup or auto-configure) means a program built with the following will likely have neither defense:
+In addition, many projects do not honor the user's command-line. ESAPI C++ does its best to ensure a user's flags are honored via `override` as shown above, but other projects do not. For example, consider a project that should be built with Position Independent Executable (PIE or ASLR) enabled and data execution prevention (DEP) enabled. Dismissing user settings combined with insecure out of the box settings (and not picking them up during auto-setup or auto-configure) means a program built with the following will likely have neither defense:
 
 ```bash
 make CFLAGS="-fPIE" CXXFLAGS="-fPIE" LDFLAGS="-pie -z,noexecstack, -z,noexecheap"
@@ -208,7 +208,7 @@ Even more egregious is the answer given to auditors who specifically ask about c
 
 ## Preprocessor
 
-The preprocessor is crucial to setting up a project for success. The C committee provided one macro - `NDEBUG` - and the macro can be used to derive a number of configurations and drive engineering processes. Unfortunately, the committee also left many related items to chance, which has resulted in programmers abusing builtin facilities. This section will help you set up you projects to integrate well with other projects and ensure reliability and security.
+The preprocessor is crucial to setting up a project for success. The C committee provided one macro - `NDEBUG` - and the macro can be used to derive a number of configurations and drive engineering processes. Unfortunately, the committee also left many related items to chance, which has resulted in programmers abusing built-in facilities. This section will help you set up you projects to integrate well with other projects and ensure reliability and security.
 
 There are three topics to discuss when hardening the preprocessor. The first is well defined configurations which produce well defined behaviors, the second is useful behavior from assert, and the third is proper use of macros when integrating vendor code and third party libraries.
 
@@ -255,7 +255,7 @@ ESAPI C++ supplies its own assert with the behavior described above. In the code
 // A debug assert which should be sprinkled liberally.
 // This assert fires and then continues rather
 // than calling abort(). Useful when examining negative
-// test cases from the command line.
+// test cases from the command-line.
 ##if (defined(ESAPI_BUILD_DEBUG) && defined(ESAPI_OS_STARNIX))
 ##  define ESAPI_ASSERT1(exp) {                                    \
     if(!(exp)) {                                                  \
@@ -358,7 +358,7 @@ e) Force temporary tables into memory (no unencrypted data to disk).
 
 ## Compiler and Linker
 
-Compiler writers provide a rich set of warnings from the analysis of code during compilation. Both GCC and Visual Studio have static analysis capabilities to help find mistakes early in the development process. The built in static analysis capabilities of GCC and Visual Studio are usually sufficient to ensure proper API usage and catch a number of mistakes such as using an uninitialized variable or comparing a negative signed int and a positive unsigned int.
+Compiler writers provide a rich set of warnings from the analysis of code during compilation. Both GCC and Visual Studio have static analysis capabilities to help find mistakes early in the development process. The built-in static analysis capabilities of GCC and Visual Studio are usually sufficient to ensure proper API usage and catch a number of mistakes such as using an uninitialized variable or comparing a negative signed int and a positive unsigned int.
 
 As a concrete example, (and for those not familiar with C/C++ promotion rules), a warning will be issued if a signed integer is promoted to an unsigned integer and then compared because a side effect is `-1 > 1` after promotion! GCC and Visual Studio will not currently catch, for example, SQL injections and other tainted data usage. For that, you will need a tool designed to perform data flow analysis or taint analysis.
 
@@ -501,7 +501,7 @@ Visual Studio offers a convenient Integrated Development Environment (IDE) for m
 
 The table below lists the compiler and linker switches which should be used under Visual Studio. Refer to Howard and LeBlanc's Writing Secure Code (Microsoft Press) for a detailed discussion; or *[Protecting Your Code with Visual C++ Defenses](https://docs.microsoft.com/en-us/archive/msdn-magazine/2008/march/security-briefs-protecting-your-code-with-visual-c-defenses)* in Security Briefs by Michael Howard. In the table below, "Visual Studio" refers to nearly all versions of the development environment, including Visual Studio 5.0 and 6.0.
 
-For a project compiled and linked with hardened settings, those settings can be verified with BinScope. BinScope is a verification tool from Microsoft that analyzes binaries to ensure that they have been built in compliance with Microsoft's Security Development Lifecycle (SDLC) requirements and recommendations. See the *[BinScope Binary Analyzer](https://www.microsoft.com/en-us/download/details.aspx?id=44995)* download page for details.
+For a project compiled and linked with hardened settings, those settings can be verified with BinScope. BinScope is a verification tool from Microsoft that analyzes binaries to ensure that they have been built-in compliance with Microsoft's Security Development Lifecycle (SDLC) requirements and recommendations. See the *[BinScope Binary Analyzer](https://www.microsoft.com/en-us/download/details.aspx?id=44995)* download page for details.
 
 ![VStudioWarningOptionsTable](../assets/C-Based_Toolchain_Hardening_VStudioWarningOptionsTable.png)
 
