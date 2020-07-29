@@ -50,7 +50,7 @@ The session ID must be unpredictable (random enough) to prevent guessing attacks
 
 The session ID value must provide at least `64 bits` of entropy (if a good [PRNG](https://en.wikipedia.org/wiki/Pseudorandom_number_generator) is used, this value is estimated to be half the length of the session ID).
 
-Additionally, a random session id is not enough; it must also be unique to avoid duplicated ID's. A random session ID must not already exist in the current session ID space. 
+Additionally, a random session id is not enough; it must also be unique to avoid duplicated ID's. A random session ID must not already exist in the current session ID space.
 
 **NOTE**:
 
