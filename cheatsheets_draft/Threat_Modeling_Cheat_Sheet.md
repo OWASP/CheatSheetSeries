@@ -23,7 +23,18 @@ Before anything else, you must agree with the team on what should be threat mode
 
 ### Visualize the system
 
-TODO, draw out the system, using C4 or a simple DFD (boxes and lines even), on whiteboard, pen/paper, online diagram tools, important to keep these diagrams up to date going forward
+Once you have a good idea about which part of the wider system or wider process you're going to threat model, and what is in scope and out of scope, you're ready to diagram it.
+
+Spending the time to diagram what you're going to threat model will provide you with a piece of documentation which can be used as a tangible discussion point by the team. Diagraming as a team will help team members understand which types of data are in present in the system, and how data flows through the system. Having a clear diagram to guide and inform discussions can help keep the conversations and questions relevant.
+
+System diagrams (for the purposes of threat modeling) don't have to be elegant. Diagrams drawn using a whiteboard and dry marker, or pen and paper, are more than enough to facilitate a threat modeling session. Making a digital copy of these diagrams after the session is beneficial as digital copies are easier to keep up to date. If team members are separated and are working from different locations, online whiteboarding or diagramming tools may be used.
+
+System diagrams drawn as part of a threat model should be kept fairly high level, concerned more with components and context and less concerned with exact implementations. It is very easy to become bogged down in the smaller details. You may also have less experienced members of the team present, so drawing high level diagrams will make it easier for them to contribute.
+
+[C4](https://c4model.com/) is a model that defines a set of patterns for documenting system architectures in a clear and consistent way. The different levels of C4 diagrams [can be seen here](https://c4model.com/#CoreDiagrams). Generally, Level 2 diagrams provide enough detail for threat modelling.
+
+TODO example C4
+TODO include DFD's, or is there enough with C4 alone?
 
 ### Identify threats
 
