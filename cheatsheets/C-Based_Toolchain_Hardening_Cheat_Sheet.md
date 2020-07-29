@@ -98,7 +98,7 @@ Auto configuration tools are popular on many Linux and Unix based systems, and t
 
 When using auto configuration tools, there are a few files of interest worth mentioning. The files are part of the auto tools chain and include `m4` and the various `*.in`, `*.ac` (autoconf), and `*.am` (automake) files. At times, you will have to open them, or the resulting makefiles, to tune the "stock" configuration.
 
-There are three downsides to the command line configuration tools in the toolchain: (1) they often ignore user requests, (2) they cannot create configurations, and (3) security is often not a goal.
+There are three downsides to the command-line configuration tools in the toolchain: (1) they often ignore user requests, (2) they cannot create configurations, and (3) security is often not a goal.
 
 To demonstrate the first issue, confider your project with the following: `configure` `CFLAGS="-Wall` `-fPIE"` `CXXFLAGS="-Wall` `-fPIE"` `LDFLAGS="-pie"`. You will probably find the auto tools ignored your request, which means the command below will not produce expected results. As a work around, you will have to open an `m4` scripts, `Makefile.in` or `Makefile.am` and fix the configuration.
 
