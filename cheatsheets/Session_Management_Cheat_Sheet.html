@@ -2040,8 +2040,9 @@
 <li>It can provide a very good effective entropy, and as a result, can be considered long enough to avoid guessing or brute force attacks.</li>
 </ul>
 <h3 id="session-id-entropy">Session ID Entropy<a class="headerlink" href="#session-id-entropy" title="Permanent link">&para;</a></h3>
-<p>The session ID must be unpredictable (random enough) to prevent guessing attacks, where an attacker is able to guess or predict the ID of a valid session through statistical analysis techniques. For this purpose, a good <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">PRNG</a> (Pseudo Random Number Generator) must be used.</p>
-<p>The session ID value must provide at least <code>64 bits</code> of entropy (if a good PRNG is used, this value is estimated to be half the length of the session ID).</p>
+<p>The session ID must be unpredictable (random enough) to prevent guessing attacks, where an attacker is able to guess or predict the ID of a valid session through statistical analysis techniques. For this purpose, a good <a href="https://en.wikipedia.org/wiki/Cryptographically_secure_pseudorandom_number_generator">CSPRNG</a> (Cryptographically Secure Pseudorandom Number Generator) must be used.</p>
+<p>The session ID value must provide at least <code>64 bits</code> of entropy (if a good <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">PRNG</a> is used, this value is estimated to be half the length of the session ID).</p>
+<p>Additionally, a random session ID is not enough; it must also be unique to avoid duplicated IDs. A random session ID must not already exist in the current session ID space.</p>
 <p><strong>NOTE</strong>:</p>
 <ul>
 <li>The session ID entropy is really affected by other external and difficult to measure factors, such as the number of concurrent active sessions the web application commonly has, the absolute session expiration timeout, the amount of session ID guesses per second the attacker can make and the target web application can support, etc.</li>
