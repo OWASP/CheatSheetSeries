@@ -188,7 +188,7 @@ Follow [Oracle reomendation]('https://docs.oracle.com/en/database/oracle/oracle-
 
 ``` java
     // Extend oracle.xml.parser.v2.XMLParser
-    DOMParser domParser = new DOMParser(); 
+    DOMParser domParser = new DOMParser();
 
     // Do not expand entity references
     domParser.setAttribute(DOMParser.EXPAND_ENTITYREF, false);
@@ -197,7 +197,7 @@ Follow [Oracle reomendation]('https://docs.oracle.com/en/database/oracle/oracle-
     domParser.setAttribute(DOMParser.DTD_OBJECT, dtdObj);
 
     // Do not allow more than 11 levels of entity expansion
-    domParser.setAttribute(DOMParser.ENTITY_EXPANSION_DEPTH, 12); 
+    domParser.setAttribute(DOMParser.ENTITY_EXPANSION_DEPTH, 12);
 ```
 
 ### TransformerFactory
