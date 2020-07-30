@@ -931,7 +931,7 @@
       
         <li class="md-nav__item">
   <a href="#security-headers" class="md-nav__link">
-    Security headers
+    Security Headers
   </a>
   
 </li>
@@ -1321,7 +1321,7 @@
       
         <li class="md-nav__item">
   <a href="#security-headers" class="md-nav__link">
-    Security headers
+    Security Headers
   </a>
   
 </li>
@@ -1367,7 +1367,7 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p><a href="http://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> (or <strong>RE</strong>presentational <strong>S</strong>tate <strong>T</strong>ransfer) is an architectural style first described in <a href="https://en.wikipedia.org/wiki/Roy_Fielding">Roy Fielding</a>'s Ph.D. dissertation on <a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">Architectural Styles and the Design of Network-based Software Architectures</a>.</p>
 <p>It evolved as Fielding wrote the HTTP/1.1 and URI specs and has been proven to be well-suited for developing distributed hypermedia applications. While REST is more widely applicable, it is most commonly used within the context of communicating with services via HTTP.</p>
-<p>The key abstraction of information in REST is a resource. A REST API resource is identified by a URI, usually a HTTP URL. REST components use connectors to perform actions on a resource by using a representation to capture the current or intended state of the resource and transferring that representation.</p>
+<p>The key abstraction of information in REST is a resource. A REST API resource is identified by a URI, usually a HTTP URL. REST components use connectors to perform actions on a resource by using a representation to capture the current or intended state of the resource and transferring that representation.</p>
 <p>The primary connector types are client and server, secondary connectors include cache, resolver and tunnel.</p>
 <p>REST APIs are stateless. Stateful APIs do not adhere to the REST architectural style. State in the REST acronym refers to the state of the resource which the API accesses, not the state of a session within which the API is called. While there may be good reasons for building a stateful API, it is important to realize that managing sessions is complex and difficult to do securely.</p>
 <p>Stateful services are out of scope of this Cheat Sheet: <em>Passing state from client to backend, while making the service technically stateless, is an anti-pattern that should also be avoided as it is prone to replay and impersonation attacks.</em></p>
@@ -1388,15 +1388,15 @@
 <p>There seems to be a convergence towards using <a href="https://tools.ietf.org/html/rfc7519">JSON Web Tokens</a> (JWT) as the format for security tokens. JWTs are JSON data structures containing a set of claims that can be used for access control decisions. A cryptographic signature or message authentication code (MAC) can be used to protect the integrity of the JWT.</p>
 <ul>
 <li>Ensure JWTs are integrity protected by either a signature or a MAC. Do not allow the unsecured JWTs: <code>{"alg":"none"}</code>.<ul>
-<li>See <a href="https://tools.ietf.org/html/rfc7519#section-6.1">here</a></li>
+<li>See <a href="https://tools.ietf.org/html/rfc7519#section-6.1">here</a></li>
 </ul>
 </li>
 <li>In general, signatures should be preferred over MACs for integrity protection of JWTs.</li>
 </ul>
-<p>If MACs are used for integrity protection, every service that is able to validate JWTs can also create new JWTs using the same key. This means that all services using the same key have to mutually trust each other. Another consequence of this is that a compromise of any service also compromises all other services sharing the same key. See <a href="https://tools.ietf.org/html/rfc7515#section-10.5">here</a> for additional information.</p>
+<p>If MACs are used for integrity protection, every service that is able to validate JWTs can also create new JWTs using the same key. This means that all services using the same key have to mutually trust each other. Another consequence of this is that a compromise of any service also compromises all other services sharing the same key. See <a href="https://tools.ietf.org/html/rfc7515#section-10.5">here</a> for additional information.</p>
 <p>The relying party or token consumer validates a JWT by verifying its integrity and claims contained.</p>
 <ul>
-<li>A relying party must verify the integrity of the JWT based on its own configuration or hard-coded logic. It must not rely on the information of the JWT header to select the verification algorithm. See <a href="https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html">here</a> and <a href="https://www.youtube.com/watch?v=bW5pS4e_MX8&gt;">here</a></li>
+<li>A relying party must verify the integrity of the JWT based on its own configuration or hard-coded logic. It must not rely on the information of the JWT header to select the verification algorithm. See <a href="https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html">here</a> and <a href="https://www.youtube.com/watch?v=bW5pS4e_MX8&gt;">here</a></li>
 </ul>
 <p>Some claims have been standardised and should be present in JWT used for access controls. At least the following of the standard claims should be verified:</p>
 <ul>
@@ -1430,13 +1430,13 @@
 <li>Constrain string inputs with regexps.</li>
 <li>Reject unexpected/illegal content.</li>
 <li>Make use of validation/sanitation libraries or frameworks in your specific language.</li>
-<li>Define an appropriate request size limit and reject requests exceeding the limit with HTTP response status 413 Request Entity Too Large.</li>
+<li>Define an appropriate request size limit and reject requests exceeding the limit with HTTP response status 413 Request Entity Too Large.</li>
 <li>Consider logging input validation failures. Assume that someone who is performing hundreds of failed input validations per second is up to no good.</li>
 <li>Have a look at input validation cheat sheet for comprehensive explanation.</li>
 <li>Use a secure parser for parsing the incoming messages. If you are using XML, make sure to use a parser that is not vulnerable to <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing">XXE</a> and similar attacks.</li>
 </ul>
 <h2 id="validate-content-types">Validate content types<a class="headerlink" href="#validate-content-types" title="Permanent link">&para;</a></h2>
-<p>A REST request or response body should match the intended content type in the header. Otherwise this could cause misinterpretation at the consumer/producer side and lead to code injection/execution.</p>
+<p>A REST request or response body should match the intended content type in the header. Otherwise this could cause misinterpretation at the consumer/producer side and lead to code injection/execution.</p>
 <ul>
 <li>Document all supported content types in your API.</li>
 </ul>
@@ -1461,7 +1461,7 @@
 <li>Avoid exposing management endpoints via Internet.</li>
 <li>If management endpoints must be accessible via the Internet, make sure that users must use a strong authentication mechanism, e.g. multi-factor.</li>
 <li>Expose management endpoints via different HTTP ports or hosts preferably on a different NIC and restricted subnet.</li>
-<li>Restrict access to these endpoints by firewall rules  or use of access control lists.</li>
+<li>Restrict access to these endpoints by firewall rules  or use of access control lists.</li>
 </ul>
 <h2 id="error-handling">Error handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1474,9 +1474,66 @@
 <li>Consider logging token validation errors in order to detect attacks.</li>
 <li>Take care of log injection attacks by sanitising log data beforehand.</li>
 </ul>
-<h2 id="security-headers">Security headers<a class="headerlink" href="#security-headers" title="Permanent link">&para;</a></h2>
-<p>To make sure the content of a given resources is interpreted correctly by the browser, the server should always send the <code>Content-Type</code> header with the correct content type, and preferably the <code>Content-Type</code> header should include a charset. The server should also send the <code>X-Content-Type-Options: nosniff</code> <a href="https://owasp.org/www-project-secure-headers/">security header</a> to make sure the browser does not try to detect a different <code>Content-Type</code> than what is actually sent (can lead to XSS).</p>
-<p>Additionally the server should send the <code>X-Frame-Options: deny</code> <a href="https://owasp.org/www-project-secure-headers/">security header</a> to protect against drag'n drop clickjacking attacks in older browsers.</p>
+<h2 id="security-headers">Security Headers<a class="headerlink" href="#security-headers" title="Permanent link">&para;</a></h2>
+<p>There are a number of <a href="https://owasp.org/www-project-secure-headers/">security related headers</a> that can be returned in the HTTP responses to instruct browsers to act in specific ways. However, some of these headers are intended to be used with HTML responses, and as such may provide little or no security benefits on an API that does not return HTML.</p>
+<p>The following headers should be included in all API responses:</p>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Cache-Control: no-store</code></td>
+<td>Prevent sensitive information from being cached.</td>
+</tr>
+<tr>
+<td><code>Content-Security-Policy: frame-ancestors 'none'</code></td>
+<td>To protect against <a href="https://www.w3.org/Security/wiki/Clickjacking_Threats#Drag_and_drop_attacks">drag-and-drop</a> style clickjacking attacks.</td>
+</tr>
+<tr>
+<td><code>Content-Type</code></td>
+<td>To specify the content type of the response. This should be <code>application/json</code> for JSON responses.</td>
+</tr>
+<tr>
+<td><code>Strict-Transport-Security</code></td>
+<td>To require connections over HTTPS and to protect against spoofed certificates.</td>
+</tr>
+<tr>
+<td><code>X-Content-Type-Options: nosniff</code></td>
+<td>To prevent browsers from performing MIME sniffing, and inappropriately interpreting responses as HTML.</td>
+</tr>
+<tr>
+<td><code>X-Frame-Options: DENY</code></td>
+<td>To protect against drag-and-drop style clickjacking attacks.</td>
+</tr>
+</tbody>
+</table>
+<p>The headers below are only intended to provide additional security when responses are rendered as HTML. As such, if the API will <strong>never</strong> return HTML in responses, then these headers may not be necessary. However, if there is any uncertainty about the function of the headers, or the types of information that the API returns (or may return in future), then it is recommended to include them as part of a defence-in-depth approach.</p>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Content-Security-Policy: default-src 'none'</code></td>
+<td>The majority of CSP functionality only affects pages rendered as HTML.</td>
+</tr>
+<tr>
+<td><code>Feature-Policy: 'none'</code></td>
+<td>Feature policies only affect pages rendered as HTML.</td>
+</tr>
+<tr>
+<td><code>Referrer-Policy: no-referrer</code></td>
+<td>Non-HTML responses should not trigger additional requests.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="cors">CORS<a class="headerlink" href="#cors" title="Permanent link">&para;</a></h2>
 <p>Cross-Origin Resource Sharing (CORS) is a W3C standard to flexibly specify what cross-domain requests are permitted. By delivering appropriate CORS Headers your REST API signals to the browser which domains, AKA origins, are allowed to make JavaScript calls to the REST service.</p>
 <ul>
