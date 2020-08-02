@@ -34,7 +34,10 @@ System diagrams drawn as part of a threat model should be kept fairly high level
 [C4](https://c4model.com/) is a model that defines a set of patterns for documenting system architectures clearly and consistently. The different levels of C4 diagrams [can be seen here](https://c4model.com/#CoreDiagrams). Generally, Level 2 diagrams provide enough detail for threat modeling.
 
 TODO example C4
-TODO include DFD's
+
+[Data-flow diagrams](https://en.wikipedia.org/wiki/Data-flow_diagram) are less prescriptive than C4 diagrams but are effective at communicating how data flows through a given system or process. The connections between components in data-flow diagrams can serve to be excellent discussion points.
+
+![Data-flow example diagram](../assets/Threat_Modeling_Cheat_Sheet_dfd.png)
 
 ### Identify threats
 
@@ -53,11 +56,9 @@ Another framework, that is more privacy-focused, is [LINDDUN](https://www.linddu
 
 Choosing a framework will depend on the types of systems you build and maintain. If team members are unfamiliar with threat modeling it is beneficial to use the same framework for the first few threat modeling sessions, so that team members can become familiar with the threat modeling process. Improvements can be made to the threat modeling process once it has been established within the team.
 
-It may help to think like an attacker during this activity, imagining that you are going to try and break the system or process in some way, or extract data unlawfully: how would you do it? The team should be open to all ideas put forward by members and should not disregard ideas without consideration. This section of the threat model process requires "out of the box" thinking and, as such, it is crucial to have a range of backgrounds and abilities present in the team. If the team starts to struggle ask an SME (subject matter expert) to explain a scenario and follow the flow through the diagram.
+It may help to think like an attacker during this activity, imagining that you are tasked with breaking the system or process in some way, or extracting data unlawfully: how would you do it? The team should be open to all ideas put forward by members and should not disregard ideas without consideration. This section of the threat model process requires "out of the box" thinking and, as such, it is crucial to have a range of backgrounds and abilities present in the team. If the team starts to struggle ask an SME (subject matter expert) to explain a scenario and follow the flow through the diagram.
 
 A nominated person should take notes during discussions, noting down the type of threat (e.g. spoofing, tampering, etc.) and a short description of the threat. These notes will be used in the next section of the threat modeling process, where threats are scored based on risk and fixes are prioritized.
-
-TODO not too sure on a link for STRIDE, but I like the microsoft one above.
 
 ### Share the results
 
