@@ -182,6 +182,24 @@ xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
 ```
 
+### Oracle DOM Parser
+
+Follow [Oracle reomendation]('https://docs.oracle.com/en/database/oracle/oracle-database/18/adxdk/security-considerations-oracle-xml-developers-kit.html#GUID-45303542-41DE-4455-93B3-854A826EF8BB') e.g.:
+
+``` java
+    // Extend oracle.xml.parser.v2.XMLParser
+    DOMParser domParser = new DOMParser();
+
+    // Do not expand entity references
+    domParser.setAttribute(DOMParser.EXPAND_ENTITYREF, false);
+
+    // dtdObj is an instance of oracle.xml.parser.v2.DTD
+    domParser.setAttribute(DOMParser.DTD_OBJECT, dtdObj);
+
+    // Do not allow more than 11 levels of entity expansion
+    domParser.setAttribute(DOMParser.ENTITY_EXPANSION_DEPTH, 12);
+```
+
 ### TransformerFactory
 
 To protect a `javax.xml.transform.TransformerFactory` from XXE, do this:
