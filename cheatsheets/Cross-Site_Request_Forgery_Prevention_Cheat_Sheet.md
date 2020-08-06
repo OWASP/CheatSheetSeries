@@ -82,12 +82,17 @@ HMAC Based Token Pattern mitigation is also achieved without maintaining any sta
 
 Below are the steps for the proper implementation of the HMAC based CSRF protection:
 
-1. Generate the token\
-Using key K, generate `HMAC(session ID + timestamp`) and append the same timestamp value to it which results in your CSRF token.
-2. Include the token (*i.e.* `HMAC+timestamp`)\
-Include token in a hidden field for forms and in the request-header field/request body parameter for AJAX requests.
-3. Validating the token\
-When the request is received at the server, re-generate the token with same key K (parameters are the session ID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.
+1. Generate the token
+
+   Using key K, generate `HMAC(session ID + timestamp`) and append the same timestamp value to it which results in your CSRF token.
+
+2. Include the token (*i.e.* `HMAC+timestamp`)
+
+   Include token in a hidden field for forms and in the request-header field/request body parameter for AJAX requests.
+
+3. Validating the token
+
+   When the request is received at the server, re-generate the token with same key K (parameters are the session ID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.
 
 The [Key Management Cheat Sheet](Key_Management_Cheat_Sheet.md#key-management-lifecycle-best-practices) contains best practices about managing the HMAC key.
 
@@ -143,7 +148,7 @@ You might think it's easy to determine the target origin, but it's frequently no
 
 If you are behind a proxy, there are a number of options to consider.
 
-- **Configure your application to simply know its target origin:** It's your application, so you can find its target origin and set that value in some server configuration entry. This would be the most secure approach as its defined server side, so it is a trusted value. However, this might be problematic to maintain if your application is deployed in many places, e.g., dev, test, QA, production, and possibly multiple production instances. Setting the correct value for each of these situations might be difficult, but if you can do it via some central configuration and providing your instances to grab value from it, that's great! (**Note:** Make sure the centralized configuration store is maintained securely because major part of your CSRF defense depends on it.)
+- **Configure your application to simply know its target origin:** It's your application, so you can find its target origin and set that value in some server configuration entry. This would be the most secure approach as it's defined server side, so it is a trusted value. However, this might be problematic to maintain if your application is deployed in many places, e.g., dev, test, QA, production, and possibly multiple production instances. Setting the correct value for each of these situations might be difficult, but if you can do it via some central configuration and providing your instances to grab value from it, that's great! (**Note:** Make sure the centralized configuration store is maintained securely because major part of your CSRF defense depends on it.)
 
 - **Use the Host header value:** If you prefer that the application find its own target so it doesn't have to be configured for each deployed instance, we recommend using the Host family of headers. The Host header's purpose is to contain the target origin of the request. But, if your app server is sitting behind a proxy, the Host header value is most likely changed by the proxy to the target origin of the URL behind the proxy, which is different than the original URL. This modified Host header origin won't match the source origin in the original Origin or Referer headers.
 
@@ -157,7 +162,7 @@ This mitigation is working properly when origin or referrer headers are present 
 - Origin header is included for all cross origin requests but for same origin requests, in most browsers it is only included in POST/DELETE/PUT **Note:** Although it is not ideal, many developers use GET requests to do state changing operations.
 - Referer header is no exception. There are multiple use cases where referrer header is omitted as well ([1](https://stackoverflow.com/questions/6880659/in-what-cases-will-http-referer-be-empty), [2](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer), [3](https://en.wikipedia.org/wiki/HTTP_referer#Referer_hiding), [4](https://seclab.stanford.edu/websec/csrf/csrf.pdf) and [5](https://www.google.com/search?q=referrer+header+sent+null+value+site:stackoverflow.com)). Load balancers, proxies and embedded network devices are also well known to strip the referrer header due to privacy reasons in logging them.
 
-Usually, a minor percentage of traffic does fall under above categories ([1-2%](http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html)) and no enterprise would want to lose this traffic. One of the popular technique used across Internet to make this technique more usable is to accept the request if the Origin/referrer matches your configured list of domains "OR" a null value (Examples [here](http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html). null value is to cover the edge cases mentioned above where these headers are not sent). Please note that, attackers can exploit this but people prefer to use this technique as a defense in depth measure because of minor effort involved in deploying it
+Usually, a minor percentage of traffic does fall under above categories ([1-2%](http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html)) and no enterprise would want to lose this traffic. One of the popular technique used across the Internet to make this technique more usable is to accept the request if the Origin/referrer matches your configured list of domains "OR" a null value (Examples [here](http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html). The null value is to cover the edge cases mentioned above where these headers are not sent). Please note that, attackers can exploit this but people prefer to use this technique as a defense in depth measure because of the minor effort involved in deploying it.
 
 ### Double Submit Cookie
 
@@ -175,7 +180,7 @@ Another solution for this problem is use of `Cookie Prefixes` for cookie with CS
 
 - Cannot be (over)written from another subdomain.
 - Must have the path of `/`.
-- Must be marked as Secure (i.e, cannot be send over unencrypted HTTP).
+- Must be marked as Secure (i.e, cannot be sent over unencrypted HTTP).
 
 As of July 2020 cookie prefixes [are supported by all major browsers except Internet Explorer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility).
 
