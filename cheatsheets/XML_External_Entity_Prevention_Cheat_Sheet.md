@@ -111,12 +111,14 @@ try {
     // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities
     // Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities
     // JDK7+ - http://xml.org/sax/features/external-general-entities
+    //This feature has to be used together with the following one, otherwise it will not protect you from XXE for sure
     FEATURE = "http://xml.org/sax/features/external-general-entities";
     dbf.setFeature(FEATURE, false);
 
     // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-parameter-entities
     // Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities
     // JDK7+ - http://xml.org/sax/features/external-parameter-entities
+    //This feature has to be used together with the previous one, otherwise it will not protect you from XXE for sure
     FEATURE = "http://xml.org/sax/features/external-parameter-entities";
     dbf.setFeature(FEATURE, false);
 
