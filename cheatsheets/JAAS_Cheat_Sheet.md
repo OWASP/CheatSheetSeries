@@ -50,7 +50,7 @@ Where:
     Stanza1 is the name of the stanza Main() should read from the config file.
 ```
 
-- When executed, the 1st command line argument is the stanza from the config file. The Stanza names the `LoginModule` to be used. The 2nd argument is the `CallbackHandler`.
+- When executed, the 1st command-line argument is the stanza from the config file. The Stanza names the `LoginModule` to be used. The 2nd argument is the `CallbackHandler`.
 - Create a new `LoginContext` with the arguments passed to `Main.java`.
     - `loginContext = new LoginContext (args[0], new AppCallbackHandler());`
 - Call the LoginContext.Login Module:
@@ -87,7 +87,7 @@ In `Main()`, after the `LoginContext` reads the correct stanza from the config f
 
 ### login()
 
-Captures user supplied login information. The code snippet below declares an array of two callback objects which, when passed to the `callbackHandler.handle` method in the `callbackHandler.java` program, will be loaded with a user name and password provided interactively by the user:
+Captures user supplied login information. The code snippet below declares an array of two callback objects which, when passed to the `callbackHandler.handle` method in the `callbackHandler.java` program, will be loaded with a username and password provided interactively by the user:
 
 ```java
 NameCallback nameCB = new NameCallback("Username");
@@ -135,7 +135,7 @@ public boolean commit() {
 
 ### abort()
 
-The `abort()` method is called when authentication doesn't succeed. Before the `abort()` method exits the `LoginModule`, care should be taken to reset state including the user name and password input fields.
+The `abort()` method is called when authentication doesn't succeed. Before the `abort()` method exits the `LoginModule`, care should be taken to reset state including the username and password input fields.
 
 ### logout()
 

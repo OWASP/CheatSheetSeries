@@ -395,7 +395,7 @@ Configuration of a logging policy to roll on 10 files of 5MB each, and encode/li
     <Appenders>
         <RollingFile name="RollingFile" fileName="App.log" filePattern="App-%i.log" ignoreExceptions="false">
             <PatternLayout>
-                <!-- Encode any CRLF chars in the message and limit its 
+                <!-- Encode any CRLF chars in the message and limit its
                      maximum size to 500 characters -->
                 <Pattern>%d{ISO8601} %-5p - %encode{ %.-500m }{CRLF}%n</Pattern>
             </PatternLayout>
@@ -446,7 +446,7 @@ Configuration of a logging policy to roll on 10 files of 5MB each, and encode/li
             <maxFileSize>5MB</maxFileSize>
         </triggeringPolicy>
         <encoder>
-            <!-- Encode any CRLF chars in the message and limit 
+            <!-- Encode any CRLF chars in the message and limit
                  its maximum size to 500 characters -->
             <pattern>%relative [%thread] %-5level %logger{35} - %crlf(%.-500msg) %n</pattern>
         </encoder>

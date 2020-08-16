@@ -15,7 +15,7 @@ The virtual patch works when the security enforcement layer analyzes transaction
 From a purely technical perspective, the number one remediation strategy would be for an organization to correct the identified vulnerability within the source code of the web application. This concept is universally agreed upon by both web application security experts and system owners. Unfortunately, in real world business situations, there arise many scenarios where updating the source code of a web application is not easy such as:
 
 - **Lack of resources** - Devs are already allocated to other projects.
-- **3rd Party Software** - Code can not be modified by the user.
+- **Third-party Software** - Code can not be modified by the user.
 - **Outsourced App Dev** - Changes would require a new project.
 
 The important point is this - **Code level fixes and Virtual Patching are NOT mutually exclusive**. They are processes that are executed by different team (OWASP Builders/Devs vs. OWASP Defenders/OpSec) and can be run in tandem.
@@ -93,7 +93,7 @@ This occurs when an organization takes it upon themselves to assess their web se
 - **Dynamic Application Assessments** - Whitehat attackers conduct penetration tests or automated web assessment tools are run against the live web application to identify flaws.
 - **Source code reviews** - Whitehat attackers use manual/automated means to analyze the source code of the web application to identify flaws.
 
-Due to the fact that custom coded web applications are unique, these proactive identification tasks are extremely important as you are not able to rely upon 3rd party vulnerability notifications.
+Due to the fact that custom coded web applications are unique, these proactive identification tasks are extremely important as you are not able to rely upon third-party vulnerability notifications.
 
 ### Reactive Identification
 
@@ -207,7 +207,7 @@ Three examples include:
 In order to accurately test out the newly created virtual patches, it may be necessary to use an application other than a web browser. Some useful tools are:
 
 - Web browser.
-- Command line web clients such as Curl and Wget.
+- Command-line web clients such as Curl and Wget.
 - Local Proxy Servers such as [OWASP ZAP](https://www.zaproxy.org/).
 - [ModSecurity AuditViewer](https://web.archive.org/web/20181011065823/http://www.jwall.org/web/audit/viewer.jsp) – which allows you to load a ModSecurity audit log file, manipulate it and then re-inject the data back into any web server.
 

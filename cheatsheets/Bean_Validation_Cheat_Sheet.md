@@ -62,7 +62,7 @@ For the sake of simplicity all the examples below feature field constraints and 
 
 When it comes to error handling, the Hibernate Validator returns a `BindingResult` object which contains a `List<ObjectError>`. The examples below feature simplistic error handling, while a production ready application would have a more elaborate design that takes care of logging and error page redirection.
 
-## Pre-defined Constraints
+## Predefined Constraints
 
 ### @Pattern
 
@@ -87,13 +87,13 @@ Checks if the annotated string matches the regular expression regex considering 
 ```java
 import org.hibernate.validator.constraints.Pattern;
 
-public class Article  {  
+public class Article  {
  //Constraint: Alpha Numeric article titles only using a regular expression
  @Pattern(regexp = "[a-zA-Z0-9 ]")
  private String articleTitle;
  public String getArticleTitle()  {
   return  articleTitle;
- }  
+ }
  public void setArticleTitle(String  articleTitle)  {
    this.articleTitle  =  articleTitle;
   }
@@ -115,7 +115,7 @@ public class ArticleController  {
  ...
 
  @RequestMapping(value = "/postArticle",  method = RequestMethod.POST)
- public @ResponseBody String postArticle(@Valid  Article  article,  BindingResult  result,  
+ public @ResponseBody String postArticle(@Valid  Article  article,  BindingResult  result,
  HttpServletResponse  response) {
   if (result.hasErrors()) {
    String errorMessage  =  "";
@@ -126,7 +126,7 @@ public class ArticleController  {
    }
    return  errorMessage;
   } else {
-   return  "Validation Successful";  
+   return  "Validation Successful";
   }
  }
 }
@@ -184,7 +184,7 @@ public class CustomerController  {
  ...
 
  @RequestMapping(value = "/registerCustomer",  method = RequestMethod.POST)
- public @ResponseBody String registerCustomer(@Valid Customer customer, BindingResult result,  
+ public @ResponseBody String registerCustomer(@Valid Customer customer, BindingResult result,
  HttpServletResponse  response) {
 
   if (result.hasErrors()) {
@@ -456,7 +456,7 @@ Take a look at this [table](https://docs.jboss.org/hibernate/validator/5.2/refer
 
 ## Custom Constraints
 
-One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built in constraints.
+One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built-in constraints.
 
 Creating custom constraints is beyond the scope of this guide. Please see this [documentation](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html).
 
@@ -469,4 +469,4 @@ It is possible to specify a message ID with the validation annotation, so that e
 private String articleTitle;
 ```
 
-Spring MVC will then look up a message with id *article.title.error* in a defined MessageSource. More on this [documentation](https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/).
+Spring MVC will then look up a message with ID *article.title.error* in a defined MessageSource. More on this [documentation](https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/).

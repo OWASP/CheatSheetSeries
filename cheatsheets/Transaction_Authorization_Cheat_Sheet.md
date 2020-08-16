@@ -14,7 +14,7 @@ Some applications use a second factor to check whether an authorized user is per
 
 For the purpose of this document we will call that process: *transaction authorization*.
 
-Usage scenarios are not only limited to financial systems. For example: an e-mail with a secret code or a link with some kind of token to unlock a user account is also a special case of transaction authorization. A user authorizes the operation of account unlocking by using a second factor (a unique code sent to his email address). Transaction authorization can be implemented using various methods, e.g.:
+Usage scenarios are not only limited to financial systems. For example: an email with a secret code or a link with some kind of token to unlock a user account is also a special case of transaction authorization. A user authorizes the operation of account unlocking by using a second factor (a unique code sent to his email address). Transaction authorization can be implemented using various methods, e.g.:
 
 - Cards with transaction authorization numbers (TAN),
 - Time based OTP tokens, such as [OATH TOTP (Time-based One-Time Password)](https://en.wikipedia.org/wiki/Time-based_One-time_Password_Algorithm),
@@ -69,7 +69,7 @@ Safeguards should allow the user to easily distinguish authentication from trans
 
 - Using different methods to authenticate and to authorize,
 - Or using different actions in an external security component (e.g. different mode of operation in CAP reader),
-- Or presenting the user a clear message about what he/she is "signing" (What You See Is What You Sign Principle).
+- Or presenting the user a clear message about what they are "signing" (What You See Is What You Sign Principle).
 
 ### 1.5 Each transaction should be authorized using unique authorization credentials
 
@@ -96,7 +96,7 @@ To avoid tampering, additional safeguards should be considered. For example by c
 
 When multiple transaction authorization methods are available to the user. The server should enforce the use of the current authorization method chosen by the user in the application settings or enforced by application policies. It should be impossible to change an authorization method by manipulating the parameters provided from the client. Otherwise, malware can downgrade an authorization method to a less or even the least secure authorization method.
 
-This is especially important when an application is developed to add a new, more secure authorization method. It is not very rare,that a new authorization method is built on top of an old code base. As a result, when a client is sending parameters using the old method, the transaction may be authorized, despite the fact that the user has already switched to a new method.
+This is especially important when an application is developed to add a new, more secure authorization method. It is not very rare,that a new authorization method is built on top of an old codebase. As a result, when a client is sending parameters using the old method, the transaction may be authorized, despite the fact that the user has already switched to a new method.
 
 ### 2.3 Transaction verification data should be generated server-side
 

@@ -6,7 +6,7 @@
 
 It evolved as Fielding wrote the HTTP/1.1 and URI specs and has been proven to be well-suited for developing distributed hypermedia applications. While REST is more widely applicable, it is most commonly used within the context of communicating with services via HTTP.
 
-The key abstraction of information in REST is a resource. A REST API resource is identified by a URI, usually a HTTP URL. REST components use connectors to perform actions on a resource by using a representation to capture the current or intended state of the resource and transferring that representation.
+The key abstraction of information in REST is a resource. A REST API resource is identified by a URI, usually a HTTP URL. REST components use connectors to perform actions on a resource by using a representation to capture the current or intended state of the resource and transferring that representation.
 
 The primary connector types are client and server, secondary connectors include cache, resolver and tunnel.
 
@@ -30,7 +30,7 @@ Consider the use of mutually authenticated client-side certificates to provide a
 
 ## Access Control
 
-Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple micro services following the RESTful style.
+Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple microservices following the RESTful style.
 
 - in order to minimize latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints
 - user authentication should be centralised in a Identity Provider (IdP), which issues access tokens
@@ -40,14 +40,14 @@ Non-public REST services must perform access control at each API endpoint. Web s
 There seems to be a convergence towards using [JSON Web Tokens](https://tools.ietf.org/html/rfc7519) (JWT) as the format for security tokens. JWTs are JSON data structures containing a set of claims that can be used for access control decisions. A cryptographic signature or message authentication code (MAC) can be used to protect the integrity of the JWT.
 
 - Ensure JWTs are integrity protected by either a signature or a MAC. Do not allow the unsecured JWTs: `{"alg":"none"}`.
-    - See [here](https://tools.ietf.org/html/rfc7519#section-6.1)
+    - See [here](https://tools.ietf.org/html/rfc7519#section-6.1)
 - In general, signatures should be preferred over MACs for integrity protection of JWTs.
 
-If MACs are used for integrity protection, every service that is able to validate JWTs can also create new JWTs using the same key. This means that all services using the same key have to mutually trust each other. Another consequence of this is that a compromise of any service also compromises all other services sharing the same key. See [here](https://tools.ietf.org/html/rfc7515#section-10.5) for additional information.
+If MACs are used for integrity protection, every service that is able to validate JWTs can also create new JWTs using the same key. This means that all services using the same key have to mutually trust each other. Another consequence of this is that a compromise of any service also compromises all other services sharing the same key. See [here](https://tools.ietf.org/html/rfc7515#section-10.5) for additional information.
 
 The relying party or token consumer validates a JWT by verifying its integrity and claims contained.
 
-- A relying party must verify the integrity of the JWT based on its own configuration or hard-coded logic. It must not rely on the information of the JWT header to select the verification algorithm. See [here](https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html) and [here](https://www.youtube.com/watch?v=bW5pS4e_MX8>)
+- A relying party must verify the integrity of the JWT based on its own configuration or hard-coded logic. It must not rely on the information of the JWT header to select the verification algorithm. See [here](https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html) and [here](https://www.youtube.com/watch?v=bW5pS4e_MX8>)
 
 Some claims have been standardised and should be present in JWT used for access controls. At least the following of the standard claims should be verified:
 
@@ -85,14 +85,14 @@ In Java EE in particular, this can be difficult to implement properly. See [Bypa
 - Constrain string inputs with regexps.
 - Reject unexpected/illegal content.
 - Make use of validation/sanitation libraries or frameworks in your specific language.
-- Define an appropriate request size limit and reject requests exceeding the limit with HTTP response status 413 Request Entity Too Large.
+- Define an appropriate request size limit and reject requests exceeding the limit with HTTP response status 413 Request Entity Too Large.
 - Consider logging input validation failures. Assume that someone who is performing hundreds of failed input validations per second is up to no good.
 - Have a look at input validation cheat sheet for comprehensive explanation.
 - Use a secure parser for parsing the incoming messages. If you are using XML, make sure to use a parser that is not vulnerable to [XXE](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing) and similar attacks.
 
 ## Validate content types
 
-A REST request or response body should match the intended content type in the header. Otherwise this could cause misinterpretation at the consumer/producer side and lead to code injection/execution.
+A REST request or response body should match the intended content type in the header. Otherwise this could cause misinterpretation at the consumer/producer side and lead to code injection/execution.
 
 - Document all supported content types in your API.
 
@@ -118,7 +118,7 @@ Services including script code (e.g. JavaScript) in their responses must be espe
 - Avoid exposing management endpoints via Internet.
 - If management endpoints must be accessible via the Internet, make sure that users must use a strong authentication mechanism, e.g. multi-factor.
 - Expose management endpoints via different HTTP ports or hosts preferably on a different NIC and restricted subnet.
-- Restrict access to these endpoints by firewall rules  or use of access control lists.
+- Restrict access to these endpoints by firewall rules  or use of access control lists.
 
 ## Error handling
 
@@ -131,11 +131,28 @@ Services including script code (e.g. JavaScript) in their responses must be espe
 - Consider logging token validation errors in order to detect attacks.
 - Take care of log injection attacks by sanitising log data beforehand.
 
-## Security headers
+## Security Headers
 
-To make sure the content of a given resources is interpreted correctly by the browser, the server should always send the `Content-Type` header with the correct content type, and preferably the `Content-Type` header should include a charset. The server should also send the `X-Content-Type-Options: nosniff` [security header](https://owasp.org/www-project-secure-headers/) to make sure the browser does not try to detect a different `Content-Type` than what is actually sent (can lead to XSS).
+There are a number of [security related headers](https://owasp.org/www-project-secure-headers/) that can be returned in the HTTP responses to instruct browsers to act in specific ways. However, some of these headers are intended to be used with HTML responses, and as such may provide little or no security benefits on an API that does not return HTML.
 
-Additionally the server should send the `X-Frame-Options: deny` [security header](https://owasp.org/www-project-secure-headers/) to protect against drag'n drop clickjacking attacks in older browsers.
+The following headers should be included in all API responses:
+
+| Header | Rationale |
+|--------|-----------|
+| `Cache-Control: no-store` | Prevent sensitive information from being cached. |
+| `Content-Security-Policy: frame-ancestors 'none'` | To protect against [drag-and-drop](https://www.w3.org/Security/wiki/Clickjacking_Threats#Drag_and_drop_attacks) style clickjacking attacks. |
+| `Content-Type` | To specify the content type of the response. This should be `application/json` for JSON responses. |
+| `Strict-Transport-Security` | To require connections over HTTPS and to protect against spoofed certificates. |
+| `X-Content-Type-Options: nosniff` | To prevent browsers from performing MIME sniffing, and inappropriately interpreting responses as HTML. |
+| `X-Frame-Options: DENY` | To protect against drag-and-drop style clickjacking attacks. |
+
+The headers below are only intended to provide additional security when responses are rendered as HTML. As such, if the API will __never__ return HTML in responses, then these headers may not be necessary. However, if there is any uncertainty about the function of the headers, or the types of information that the API returns (or may return in future), then it is recommended to include them as part of a defence-in-depth approach.
+
+| Header | Rationale |
+|--------|-----------|
+| `Content-Security-Policy: default-src 'none'` | The majority of CSP functionality only affects pages rendered as HTML. |
+| `Feature-Policy: 'none'` | Feature policies only affect pages rendered as HTML. |
+| `Referrer-Policy: no-referrer` | Non-HTML responses should not trigger additional requests. |
 
 ## CORS
 

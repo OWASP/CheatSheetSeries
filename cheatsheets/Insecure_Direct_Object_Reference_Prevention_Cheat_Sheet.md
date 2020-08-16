@@ -41,7 +41,7 @@ An object reference map is first populated with a list of authorized values whic
 
 I'm "down" with DOR's for files, directories, etc. But not so much for ALL databases primary keys. That's just insane, like you are suggesting. I think that anytime database primary keys are exposed, an access control rule is required. There is no way to practically DOR all database primary keys in a real enterprise or post-enterprise system.
 
-But, suppose a user has a list of accounts, like a bank where database id 23456 is their checking account. I'd DOR that in a heartbeat. You need to be prudent about this.
+But, suppose a user has a list of accounts, like a bank where database ID 23456 is their checking account. I'd DOR that in a heartbeat. You need to be prudent about this.
 
 ## Objective
 

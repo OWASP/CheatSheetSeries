@@ -147,7 +147,7 @@ An alternative to using `Element.setAttribute(...)` to set DOM attributes is to 
 ```
 
 ``` javascript
-//The following does NOT work because the event handler is being set to a string.  
+//The following does NOT work because the event handler is being set to a string.
 //"alert(7)" is JavaScript encoded.
 document.getElementById("bb").onclick = "\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0029";
 
@@ -163,7 +163,7 @@ document.getElementById("bb").onmouseover = \u0061\u006c\u0065\u0072\u0074\u0028
 document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073
                                             \u0074\u0049\u0074;
 
-//The following DOES WORK because the encoded value is a valid variable name or function reference.  
+//The following DOES WORK because the encoded value is a valid variable name or function reference.
 //"testIt" is JavaScript encoded
 document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074;
 
@@ -374,12 +374,12 @@ Here are some examples of how they are used:
 
 ```javascript
 //server-side encoding
-var input = "<%=Encoder.encodeForJS(untrustedData)%>";  
+var input = "<%=Encoder.encodeForJS(untrustedData)%>";
 ```
 
 ```javascript
 //HTML encoding is happening in JavaScript
-document.writeln(ESAPI4JS.encodeForHTML(input));  
+document.writeln(ESAPI4JS.encodeForHTML(input));
 ```
 
 One option is utilize ECMAScript 5 immutable properties in the JavaScript library.
@@ -547,7 +547,7 @@ Finally there is the problem that certain methods in JavaScript which are usuall
 
 One example of an attribute which is thought to be safe is `innerText`.
 
-Some papers or guides advocate its use as an alternative to `innerHTML` to mitigate against XSS in `innerHTML`. However, depending on the tag which `innerText` is applied, code can be executed.  
+Some papers or guides advocate its use as an alternative to `innerHTML` to mitigate against XSS in `innerHTML`. However, depending on the tag which `innerText` is applied, code can be executed.
 
 ```html
 <script>

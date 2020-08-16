@@ -5,11 +5,17 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "markdownlint-cli": "^0.19.0"
+    "markdownlint-cli": "^0.19.0",
+    "textlint": "^11.6.3",
+    "textlint-filter-rule-comments": "^1.2.2",
+    "textlint-filter-rule-whitelist": "^2.0.0",
+    "textlint-rule-terminology": "^2.1.4"
   },
   "scripts": {
-    "test": "markdownlint ./cheatsheets/ --ignore node_modules",
-    "link-check" : "find  cheatsheets -name \\*.md -exec markdown-link-check -c markdown-link-check-config.json 1> log 2> err {} \\; && if [ -e err ] && grep -q  \"ERROR:\" err ; then exit 113  ; else echo -e \"All good\"; fi"
+    "test": "npm run lint-markdown && npm run lint-terminology",
+    "lint-terminology": "textlint ./cheatsheets/",
+    "lint-markdown": "markdownlint ./cheatsheets/ --ignore node_modules",
+    "link-check": "find  cheatsheets -name \\*.md -exec markdown-link-check -c markdown-link-check-config.json 1> log 2> err {} \\; && if [ -e err ] && grep -q  \"ERROR:\" err ; then exit 113  ; else echo -e \"All good\"; fi"
   },
   "repository": {
     "type": "git",

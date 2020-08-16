@@ -19,6 +19,6 @@ jobs:
       with:
         node-version: 12.x
     - name: Install dependencies
-      run: npm install -g markdownlint-cli
+      run: npm install
     - name: Run linter
       run: npm test

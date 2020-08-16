@@ -53,13 +53,13 @@ Database credentials should never be stored in the application source code, espe
 - Has appropriate permissions so that it can only be read by the required user(s).
 - Is not checked into source code repositories.
 
-Where possible, these credentials should also be encrypted or otherwise protected using built in functionality, such as the `web.config` encryption available in [ASP.NET](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
+Where possible, these credentials should also be encrypted or otherwise protected using built-in functionality, such as the `web.config` encryption available in [ASP.NET](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
 
 ## Permissions
 
 The permissions assigned to database user accounts should be based on the principle of least privilege (i.e, the accounts should only have the minimal permissions required for the application to function). This can be applied at a number of increasingly granular levels levels depending on the functionality available in the database. The following steps should be applicable to all environments:
 
-- Do not use the built in `root`, `sa` or `SYS` accounts.
+- Do not use the built-in `root`, `sa` or `SYS` accounts.
 - Do not grant the account administrative rights over the database instance.
 - Only allow the account to connect from whitelisted hosts.
     - This would often be `localhost` or the address of the application server.
@@ -95,7 +95,8 @@ The following sections gives some further recommendations for specific database 
 
 ### Microsoft SQL Server
 
-- Disable `xp_cmdshell`.
+- Disable `xp_cmdshell`, `xp_dirtree` and other stored procedures that are not required.
+- Disable Common Language Runtime (CLR) execution.
 - Disable the SQL Browser service.
 - Disable [Mixed Mode Authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15) unless it is required.
 - Ensure that the sample [Northwind and AdventureWorks databases](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases) have been removed.

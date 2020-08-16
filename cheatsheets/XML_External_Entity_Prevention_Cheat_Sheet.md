@@ -111,12 +111,14 @@ try {
     // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities
     // Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities
     // JDK7+ - http://xml.org/sax/features/external-general-entities
+    //This feature has to be used together with the following one, otherwise it will not protect you from XXE for sure
     FEATURE = "http://xml.org/sax/features/external-general-entities";
     dbf.setFeature(FEATURE, false);
 
     // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-parameter-entities
     // Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities
     // JDK7+ - http://xml.org/sax/features/external-parameter-entities
+    //This feature has to be used together with the previous one, otherwise it will not protect you from XXE for sure
     FEATURE = "http://xml.org/sax/features/external-parameter-entities";
     dbf.setFeature(FEATURE, false);
 
@@ -180,6 +182,24 @@ To protect a Java `XMLInputFactory` from XXE, do this:
 xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 // disable external entities
 xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
+```
+
+### Oracle DOM Parser
+
+Follow [Oracle reomendation]('https://docs.oracle.com/en/database/oracle/oracle-database/18/adxdk/security-considerations-oracle-xml-developers-kit.html#GUID-45303542-41DE-4455-93B3-854A826EF8BB') e.g.:
+
+``` java
+    // Extend oracle.xml.parser.v2.XMLParser
+    DOMParser domParser = new DOMParser();
+
+    // Do not expand entity references
+    domParser.setAttribute(DOMParser.EXPAND_ENTITYREF, false);
+
+    // dtdObj is an instance of oracle.xml.parser.v2.DTD
+    domParser.setAttribute(DOMParser.DTD_OBJECT, dtdObj);
+
+    // Do not allow more than 11 levels of entity expansion
+    domParser.setAttribute(DOMParser.ENTITY_EXPANSION_DEPTH, 12);
 ```
 
 ### TransformerFactory
@@ -344,7 +364,7 @@ As such, we'd strongly recommend completely avoiding the use of this class and r
 
 ### Other XML Parsers
 
-There are many 3rd party libraries that parse XML either directly or through their use of other libraries. Please test and verify their XML parser is secure against XXE by default. If the parser is not secure by default, look for flags supported by the parser to disable all possible external resource inclusions like the examples given above. If there's no control exposed to the outside, make sure the untrusted content is passed through a secure parser first and then passed to insecure 3rd party parser similar to how the Unmarshaller is secured.
+There are many third-party libraries that parse XML either directly or through their use of other libraries. Please test and verify their XML parser is secure against XXE by default. If the parser is not secure by default, look for flags supported by the parser to disable all possible external resource inclusions like the examples given above. If there's no control exposed to the outside, make sure the untrusted content is passed through a secure parser first and then passed to insecure third-party parser similar to how the Unmarshaller is secured.
 
 #### Spring Framework MVC/OXM XXE Vulnerabilities
 
@@ -540,7 +560,7 @@ iOS also provides an `NSXMLDocument` type, which is built on top of libxml2.
 
 However, `NSXMLDocument` provides some additional protections against XXE that aren't available in libxml2 directly.
 
-Per the 'NSXMLDocument External Entity Restriction API' section of this [page](https://developer.apple.com/library/ios/#releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html):
+Per the 'NSXMLDocument External Entity Restriction API' section of this [page](https://developer.apple.com/library/archive/releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html):
 
 - iOS4 and earlier: All external entities are loaded by default.
 - iOS5 and later: Only entities that don't require network access are loaded. (which is safer)

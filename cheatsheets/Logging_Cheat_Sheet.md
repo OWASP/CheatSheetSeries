@@ -119,11 +119,11 @@ The properties for these will be different depending on the architecture, class 
 
 - When
     - Log date and time (international format)
-    - Event date and time - the event time stamp may be different to the time of logging e.g. server logging where the client application is hosted on remote device that is only periodically or intermittently online
+    - Event date and time - the event timestamp may be different to the time of logging e.g. server logging where the client application is hosted on remote device that is only periodically or intermittently online
     - Interaction identifier `Note A`
 - Where
     - Application identifier e.g. name and version
-    - Application address e.g. cluster/host name or server IPv4 or IPv6 address and port number, workstation identity, local device identifier
+    - Application address e.g. cluster/hostname or server IPv4 or IPv6 address and port number, workstation identity, local device identifier
     - Service e.g. name and protocol
     - Geolocation
     - Window/form/page e.g. entry point URL and HTTP method for a web application, dialogue box name
@@ -215,7 +215,7 @@ If possible create this log handler as a standard module that can is thoroughly 
 - Ensure failures in the logging processes/systems do not prevent the application from otherwise running or allow information leakage
 - Synchronize time across all servers and devices `Note C`
 
-**Note C:** This is not always possible where the application is running on a device under some other party's control (e.g. on an individual's mobile phone, on a remote customer's workstation which is on another corporate network). In these cases attempt to measure the time offset, or record a confidence level in the event time stamp.
+**Note C:** This is not always possible where the application is running on a device under some other party's control (e.g. on an individual's mobile phone, on a remote customer's workstation which is on another corporate network). In these cases attempt to measure the time offset, or record a confidence level in the event timestamp.
 
 Where possible record data in a standard format, or at least ensure it can be exported/broadcast using an industry-standard format.
 

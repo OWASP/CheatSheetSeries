@@ -323,7 +323,7 @@ The source IP address the user is connecting from can be used as a factor, typic
 
 - Doesn't provide any protection if the user's system is compromised.
 - Doesn't provide any protection against rogue insiders.
-- Trusted IP addresses must be carefully restricted (for example, if the open guest WiFi uses the main corporate IP range).
+- Trusted IP addresses must be carefully restricted (for example, if the open guest Wi-Fi uses the main corporate IP range).
 
 ### Geolocation
 

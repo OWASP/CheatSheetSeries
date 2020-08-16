@@ -199,7 +199,7 @@ HttpContext.Current.Response.Headers.Remove("Server");
 
 ### HTTP validation and encoding
 
-- Do not disable [validateRequest](http://www.asp.net/whitepapers/request-validation) in the `web.config` or the page setup. This value enables limited XSS protection in ASP.NET and should be left intact as it provides partial prevention of Cross Site Scripting. Complete request validation is recommended in addition to the built in protections.
+- Do not disable [validateRequest](http://www.asp.net/whitepapers/request-validation) in the `web.config` or the page setup. This value enables limited XSS protection in ASP.NET and should be left intact as it provides partial prevention of Cross Site Scripting. Complete request validation is recommended in addition to the built-in protections.
 - The 4.5 version of the .NET Frameworks includes the [AntiXssEncoder](https://docs.microsoft.com/en-us/dotnet/api/system.web.security.antixss.antixssencoder?view=netframework-4.7.2) library, which has a comprehensive input encoding library for the prevention of XSS. Use it.
 - Whitelist allowable values anytime user input is accepted.
 - Validate the URI format using [Uri.IsWellFormedUriString](https://docs.microsoft.com/en-us/dotnet/api/system.uri.iswellformeduristring).
@@ -446,7 +446,7 @@ SlidingExpiration = false
 
 See [here](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/App_Start/Startup.Auth.cs) for full startup code snippet
 
-Ensure cookie is sent over https in the production environment. This should be enforced in the config transforms:
+Ensure cookie is sent over HTTPS in the production environment. This should be enforced in the config transforms:
 
 ```xml
 <httpCookies requireSSL="true" xdt:Transform="SetAttributes(requireSSL)"/>
@@ -768,7 +768,7 @@ DO: Ensure all login, access control failures and server-side input validation f
 
 DO: Establish effective monitoring and alerting so suspicious activities are detected and responded to in a timely fashion.
 
-DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was thrown");``` rather log the stack trace, error message and user Id who caused the error.
+DO NOT: Log generic error messages such as: ```csharp Log.Error("Error was thrown");``` rather log the stack trace, error message and user ID who caused the error.
 
 DO NOT: Log sensitive data such as user's passwords.
 
@@ -906,7 +906,7 @@ For more information on all of the above and code samples incorporated into a sa
 
 ## Windows Forms Guidance
 
-- Use partial trust when possible. Partially trusted Windows applications reduce the attack surface of an application. Manage a list of what permissions your app must use, and what it may use, and then make the request for those permissions declaratively at run time.
+- Use partial trust when possible. Partially trusted Windows applications reduce the attack surface of an application. Manage a list of what permissions your app must use, and what it may use, and then make the request for those permissions declaratively at runtime.
 - Use ClickOnce deployment. For enhanced permissions, use permission elevation at runtime or trusted application deployment at install time.
 
 ### WCF Guidance

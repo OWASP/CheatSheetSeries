@@ -41,7 +41,7 @@ Plus, such filters frequently prevent authorized input, like `O'Brian`, where th
 
 White list validation is appropriate for all input fields provided by the user. White list validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.
 
-If it's well structured data, like dates, social security numbers, zip codes, e-mail addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.
+If it's well structured data, like dates, social security numbers, zip codes, email addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.
 
 If the input field comes from a fixed set of options, like a drop down list or radio buttons, then the input needs to match exactly one of the values offered to the user in the first place.
 
@@ -124,7 +124,7 @@ It is very difficult to validate rich content submitted by a user. For more info
 
 ## Preventing XSS and Content Security Policy
 
-All user data controlled must be encoded when returned in the html page to prevent the execution of malicious data (e.g. XSS). For example `<script>` would be returned as `&lt;script&gt;`
+All user data controlled must be encoded when returned in the HTML page to prevent the execution of malicious data (e.g. XSS). For example `<script>` would be returned as `&lt;script&gt;`
 
 The type of encoding is specific to the context of the page where the user controlled data is inserted. For example, HTML entity encoding is appropriate for data placed into the HTML body. However, user data placed into a script would need JavaScript specific output encoding.
 
@@ -145,7 +145,7 @@ Check the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md).
 ### Upload Storage
 
 - Use a new filename to store the file on the OS. Do not use any user controlled text for this filename or for the temporary filename.
-- When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is *test.JPG*, rename it to *JAI1287uaisdjhf.JPG* with a random file name. The purpose of doing it to prevent the risks of direct file access and ambiguous filename to evalide the filter, such as `test.jpg;.asp or /../../../../../test.jpg`.
+- When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is *test.JPG*, rename it to *JAI1287uaisdjhf.JPG* with a random filename. The purpose of doing it to prevent the risks of direct file access and ambiguous filename to evalide the filter, such as `test.jpg;.asp or /../../../../../test.jpg`.
 - Uploaded files should be analyzed for malicious content (anti-malware, static analysis, etc).
 - The file path should not be able to specify by client side. It's decided by server side.
 

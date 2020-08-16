@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This article provides a simple positive model for preventing [XSS](https://owasp.org/www-community/attacks/xss/) using output escaping/encoding properly. While there are a huge number of XSS attack vectors, following a few simple rules can completely defend against this serious attack.
+This article provides a simple positive model for preventing [XSS](https://owasp.org/www-community/attacks/xss/) using output encoding properly. While there are a huge number of XSS attack vectors, following a few simple rules can completely defend against this serious attack.
 
 This article does not explore the technical or business impact of XSS. Suffice it to say that it can lead to an attacker gaining the ability to do anything a victim can do through their browser.
 
-Both [reflected and stored XSS](https://owasp.org/www-community/attacks/xss/#stored-and-reflected-xss-attacks) can be addressed by performing the appropriate validation and escaping on the server-side. [DOM Based XSS](https://owasp.org/www-community/attacks/DOM_Based_XSS) can be addressed with a special subset of rules described in the [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md).
+Both [reflected and stored XSS](https://owasp.org/www-community/attacks/xss/#stored-and-reflected-xss-attacks) can be addressed by performing the appropriate validation and encoding on the server-side. [DOM Based XSS](https://owasp.org/www-community/attacks/DOM_Based_XSS) can be addressed with a special subset of rules described in the [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md).
 
 For a cheatsheet on the attack vectors related to XSS, please refer to the [XSS Filter Evasion Cheat Sheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet). More background on browser security and the various browsers can be found in the [Browser Security Handbook](https://code.google.com/archive/p/browsersec/).
 
@@ -16,7 +16,7 @@ Before reading this cheatsheet, it is important to have a fundamental understand
 
 This article treats an HTML page like a template, with slots where a developer is allowed to put untrusted data. These slots cover the vast majority of the common places where a developer might want to put untrusted data. Putting untrusted data in other places in the HTML is not allowed. This is a "whitelist" model, that denies everything that is not specifically allowed.
 
-Given the way browsers parse HTML, each of the different types of slots has slightly different security rules. When you put untrusted data into these slots, you need to take certain steps to make sure that the data does not break out of that slot into a context that allows code execution. In a way, this approach treats an HTML document like a parameterized database query - the data is kept in specific places and is isolated from code contexts with escaping.
+Given the way browsers parse HTML, each of the different types of slots has slightly different security rules. When you put untrusted data into these slots, you need to take certain steps to make sure that the data does not break out of that slot into a context that allows code execution. In a way, this approach treats an HTML document like a parameterized database query - the data is kept in specific places and is isolated from code contexts with encoding.
 
 This document sets out the most common types of slots and the rules for putting untrusted data into them safely. Based on the various specifications, known XSS vectors, and a great deal of manual testing with all the popular browsers, we have determined that the rules proposed here are safe.
 
@@ -25,7 +25,7 @@ The slots are defined and a few examples of each are provided. Developers **SHOU
 ### Why Can't I Just HTML Entity Encode Untrusted Data
 
 HTML entity encoding is okay for untrusted data that you put in the body of the HTML document, such as inside a `<div>` tag. It even sort of works for untrusted data that goes into attributes, particularly if you're religious about using quotes around your attributes. But HTML entity encoding doesn't work if you're putting untrusted data inside a `<script>`
-tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or in a URL. So even if you use an HTML entity encoding method everywhere, you are still most likely vulnerable to XSS. **You MUST use the escape syntax for the part of the HTML document you're putting untrusted data into.** That's what the rules below are all about.
+tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or in a URL. So even if you use an HTML entity encoding method everywhere, you are still most likely vulnerable to XSS. **You MUST use the encode syntax for the part of the HTML document you're putting untrusted data into.** That's what the rules below are all about.
 
 ### You Need a Security Encoding Library
 
@@ -37,13 +37,13 @@ The [OWASP Java Encoder Project](https://owasp.org/www-project-java-encoder/) pr
 
 ## XSS Prevention Rules
 
-The following rules are intended to prevent all XSS in your application. While these rules do not allow absolute freedom in putting untrusted data into an HTML document, they should cover the vast majority of common use cases. You do not have to allow **all** the rules in your organization. Many organizations may find that **allowing only Rule \#1 and Rule \#2 are sufficient for their needs**. Please add a note to the discussion page if there is an additional context that is often required and can be secured with escaping.
+The following rules are intended to prevent all XSS in your application. While these rules do not allow absolute freedom in putting untrusted data into an HTML document, they should cover the vast majority of common use cases. You do not have to allow **all** the rules in your organization. Many organizations may find that **allowing only Rule \#1 and Rule \#2 are sufficient for their needs**. Please add a note to the discussion page if there is an additional context that is often required and can be secured with encoding.
 
-**Do NOT** simply escape the list of example characters provided in the various rules. It is NOT sufficient to escape only that list. Blacklist approaches are quite fragile. The whitelist rules here have been carefully designed to provide protection even against future vulnerabilities introduced by browser changes.
+**Do NOT** simply encode/escape the list of example characters provided in the various rules. It is NOT sufficient to encode/escape only that list. Blacklist approaches are quite fragile. The whitelist rules here have been carefully designed to provide protection even against future vulnerabilities introduced by browser changes.
 
 ### RULE \#0 - Never Insert Untrusted Data Except in Allowed Locations
 
-The first rule is to **deny all** - don't put untrusted data into your HTML document unless it is within one of the slots defined in Rule \#1 through Rule \#5. The reason for Rule \#0 is that there are so many strange contexts within HTML that the list of escaping rules gets very complicated. We can't think of any good reason to put untrusted data in these contexts. This includes "nested contexts" like a URL inside a javascript -- the encoding rules for those locations are tricky and dangerous.
+The first rule is to **deny all** - don't put untrusted data into your HTML document unless it is within one of the slots defined in Rule \#1 through Rule \#5. The reason for Rule \#0 is that there are so many strange contexts within HTML that the list of encoding rules gets very complicated. We can't think of any good reason to put untrusted data in these contexts. This includes "nested contexts" like a URL inside a JavaScript -- the encoding rules for those locations are tricky and dangerous.
 
 If you insist on putting untrusted data into nested contexts, please do a lot of cross-browser testing and let us know what you find out.
 
@@ -79,25 +79,25 @@ Directly in CSS:
 </style>
 ```
 
-Most importantly, never accept actual JavaScript code from an untrusted source and then run it. For example, a parameter named "callback" that contains a JavaScript code snippet. No amount of escaping can fix that.
+Most importantly, never accept actual JavaScript code from an untrusted source and then run it. For example, a parameter named "callback" that contains a JavaScript code snippet. No amount of encoding/escaping can fix that.
 
-### RULE \#1 - HTML Escape Before Inserting Untrusted Data into HTML Element Content
+### RULE \#1 - HTML Encode Before Inserting Untrusted Data into HTML Element Content
 
-Rule \#1 is for when you want to put untrusted data directly into the HTML body somewhere. This includes inside normal tags like `div`, `p`, `b`, `td`, etc. Most web frameworks have a method for HTML escaping for the characters detailed below. However, this is **absolutely not sufficient for other HTML contexts.** You need to implement the other rules detailed here as well.
+Rule \#1 is for when you want to put untrusted data directly into the HTML body somewhere. This includes inside normal tags like `div`, `p`, `b`, `td`, etc. Most web frameworks have a method for HTML encoding/escaping for the characters detailed below. However, this is **absolutely not sufficient for other HTML contexts.** You need to implement the other rules detailed here as well.
 
 ```html
 <body>
-...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...
+...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...
 </body>
 ```
 
 ```html
 <div>
-...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...
+...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...
 </div>
 ```
 
-Escape the following characters with HTML entity encoding to prevent switching into any execution context, such as script, style, or event handlers. Using hex entities is recommended in the spec. In addition to the 5 characters significant in XML (`&`, `<`, `>`, `"`, `'`), the forward slash is included as it helps to end an HTML entity.
+Encode the following characters with HTML entity encoding to prevent switching into any execution context, such as script, style, or event handlers. Using hex entities is recommended in the spec. In addition to the 5 characters significant in XML (`&`, `<`, `>`, `"`, `'`), the forward slash is included as it helps to end an HTML entity.
 
 ```text
  & --> &amp;
@@ -112,77 +112,79 @@ Escape the following characters with HTML entity encoding to prevent switching i
  Forward slash is included as it helps end an HTML entity
 ```
 
-### RULE \#2 - Attribute Escape Before Inserting Untrusted Data into HTML Common Attributes
+### RULE \#2 - Attribute Encode Before Inserting Untrusted Data into HTML Common Attributes
 
 Rule \#2 is for putting untrusted data into typical attribute values like `width`, `name`, `value`, etc. This should not be used for complex attributes like `href`, `src`, `style`, or any of the event handlers like onmouseover. It is extremely important that event handler attributes should follow Rule \#3 for HTML JavaScript Data Values.
 
 Inside **UNquoted** attribute:
 
 ```html
-<div attr=...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...>content
+<div attr=...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...>content
 ```
 
 Inside single quoted attribute:
 
 ```html
-<div attr='...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...'>content
+<div attr='...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...'>content
 ```
 
 Inside double quoted attribute :
 
 ```html
-<div attr="...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...">content
+<div attr="...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...">content
 ```
 
-Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the `&#xHH;` format (or a named entity if available) to prevent switching out of the attribute.
+Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the `&#xHH;` format (or a named entity if available) to prevent switching out of the attribute.
 
 The reason this rule is so broad is that developers frequently leave attributes unquoted. Properly quoted attributes can only be escaped with the corresponding quote.
 
 Unquoted attributes can be broken out of with many characters, including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`.
 
-### RULE \#3 - JavaScript Escape Before Inserting Untrusted Data into JavaScript Data Values
+### RULE \#3 - JavaScript Encode Before Inserting Untrusted Data into JavaScript Data Values
 
 Rule \#3 concerns dynamically generated JavaScript code - both script blocks and event-handler attributes. The only safe place to put untrusted data into this code is inside a quoted "data value." Including untrusted data inside any other JavaScript context is quite dangerous, as it is extremely easy to switch into an execution context with characters including (but not limited to) semi-colon, equals, space, plus, and many more, so use with caution.
 
 Inside a quoted string:
 
 ```html
-<script>alert('...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...')</script>
+<script>alert('...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...')</script>
 ```
 
 One side of a quoted expression:
 
 ```html
-<script>x='...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...'</script>
+<script>x='...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...'</script>
 ```
 
 Inside quoted event handler:
 
 ```html
-<div onmouseover="x='...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...'"</div>  
+<div onmouseover="x='...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...'"</div>
 ```
 
-Please note there are some JavaScript functions that can never safely use untrusted data as input - **EVEN IF JAVASCRIPT ESCAPED!**
+<!-- textlint-disable terminology -->
+Please note there are some JavaScript functions that can never safely use untrusted data as input - **EVEN IF JAVASCRIPT ENCODED!**
+<!-- textlint-enable -->
 
 For example:
 
 ```html
 <script>
-window.setInterval('...EVEN IF YOU ESCAPE UNTRUSTED DATA YOU ARE XSSED HERE...');
+window.setInterval('...EVEN IF YOU ENCODE UNTRUSTED DATA YOU ARE XSSED HERE...');
 </script>
 ```
 
-Except for alphanumeric characters, escape all characters less than 256 with the `\xHH` format to prevent switching out of the data value into the script context or into another attribute. **DO NOT** use any escaping shortcuts like `\"` because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to **escape-the-escape attacks** where the attacker sends `\"` and the vulnerable code turns that into `\\"` which enables the quote.
+Except for alphanumeric characters, encode all characters less than 256 with the `\xHH` format to prevent switching out of the data value into the script context or into another attribute. **DO NOT** use any escaping shortcuts like `\"` because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to **escape-the-escape attacks** where the attacker sends `\"` and the vulnerable code turns that into `\\"` which enables the quote.
 
 If an event handler is properly quoted, breaking out requires the corresponding quote. However, we have intentionally made this rule quite broad because event handler attributes are often left unquoted. Unquoted attributes can be broken out of with many characters including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`.
 
-Also, a `</script>` closing tag will close a script block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note this is an aggressive escaping policy that over-encodes. If there is a guarantee that proper quoting is accomplished then a much smaller character set is needed. Please look at the [OWASP Java Encoder](https://wiki.owasp.org/index.php/OWASP_Java_Encoder_Project#tab=Use_the_Java_Encoder_Project) JavaScript escaping examples for examples of proper JavaScript use that requires minimal escaping.
+Also, a `</script>` closing tag will close a script block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note this is an aggressive encoding policy that over-encodes. If there is a guarantee that proper quoting is accomplished then a much smaller character set is needed. Please look at the [OWASP Java Encoder](https://wiki.owasp.org/index.php/OWASP_Java_Encoder_Project#tab=Use_the_Java_Encoder_Project) JavaScript encoding examples for examples of proper JavaScript use that requires minimal encoding.
 
-#### RULE \#3.1 - HTML escape JSON values in an HTML context and read the data with JSON.parse
+#### RULE \#3.1 - HTML Encode JSON values in an HTML context and read the data with JSON.parse
 
-In a Web 2.0 world, the need for having data dynamically generated by an application in a javascript context is common. One strategy is to make an AJAX call to get the values, but this isn't always performant. Often, an initial block of JSON is loaded into the page to act as a single place to store multiple values. This data is tricky, though not impossible, to escape correctly without breaking the format and content of the values.
+In a Web 2.0 world, the need for having data dynamically generated by an application in a JavaScript context is common. One strategy is to make an AJAX call to get the values, but this isn't always performant. Often, an initial block of JSON is loaded into the page to act as a single place to store multiple values. This data is tricky, though not impossible, to encode/escape correctly without breaking the format and content of the values.
 
-**Ensure returned `Content-Type` header is application/json and not text/html.** This shall instruct the browser not misunderstand the context and execute injected script
+**Ensure returned `Content-Type` header is `application/json` and not `text/html`.** This shall instruct the browser not misunderstand the context and execute injected script
 
 **Bad HTTP response:**
 
@@ -221,15 +223,15 @@ var initData = <%= data.to_json %>;
 
 ##### JSON serialization
 
-A safe JSON serializer will allow developers to serialize JSON as string of literal JavaScript which can be embedded in an HTML in the contents of the `<script>` tag. HTML characters and JavaScript line terminators need be escaped. Consider the [Yahoo JavaScript Serializer](https://github.com/yahoo/serialize-javascript) for this task.
+A safe JSON serializer will allow developers to serialize JSON as string of literal JavaScript which can be embedded in an HTML in the contents of the `<script>` tag. HTML characters and JavaScript line terminators need be encoded. Consider the [Yahoo JavaScript Serializer](https://github.com/yahoo/serialize-javascript) for this task.
 
 ##### HTML entity encoding
 
-This technique has the advantage that html entity escaping is widely supported and helps separate data from server side code without crossing any context boundaries. Consider placing the JSON block on the page as a normal element and then parsing the innerHTML to get the contents. The javascript that reads the span can live in an external file, thus making the implementation of [CSP](https://content-security-policy.com/) enforcement easier.
+This technique has the advantage that HTML entity encoding is widely supported and helps separate data from server side code without crossing any context boundaries. Consider placing the JSON block on the page as a normal element and then parsing the innerHTML to get the contents. The JavaScript that reads the span can live in an external file, thus making the implementation of [CSP](https://content-security-policy.com/) enforcement easier.
 
 ```html
 <div id="init_data" style="display: none">
- <%= html_escape(data.to_json) %>
+ <%= html_encode(data.to_json) %>
 </div>
 ```
 
@@ -240,11 +242,11 @@ var dataElement = document.getElementById('init_data');
 var initData = JSON.parse(dataElement.textContent);
 ```
 
-An alternative to escaping and unescaping JSON directly in JavaScript, is to normalize JSON server-side by converting `<` to `\u003c` before delivering it to the browser.
+An alternative to encoding and decoding JSON directly in JavaScript, is to normalize JSON server-side by converting `<` to `\u003c` before delivering it to the browser.
 
-### RULE \#4 - CSS Escape And Strictly Validate Before Inserting Untrusted Data into HTML Style Property Values
+### RULE \#4 - CSS Encode And Strictly Validate Before Inserting Untrusted Data into HTML Style Property Values
 
-Rule \#4 is for when you want to put untrusted data into a stylesheet or a style tag. CSS is surprisingly powerful, and can be used for numerous attacks. Therefore, it's important that you only use untrusted data in a property **value** and not into other places in style data. You should stay away from putting untrusted data into complex properties like `url`, `behavior`, and custom (`-moz-binding`).
+Rule \#4 is for when you want to put untrusted data into a style sheet or a style tag. CSS is surprisingly powerful, and can be used for numerous attacks. Therefore, it's important that you only use untrusted data in a property **value** and not into other places in style data. You should stay away from putting untrusted data into complex properties like `url`, `behavior`, and custom (`-moz-binding`).
 
 You should also not put untrusted data into IE's expression property value which allows JavaScript.
 
@@ -252,21 +254,21 @@ Property value:
 
 ```html
 <style>
-selector { property : ...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...; }
+selector { property : ...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...; }
 </style>
 ```
 
 ```html
 <style>
-selector { property : "...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE..."; }
+selector { property : "...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE..."; }
 </style>
 ```
 
 ```html
-<span style="property : ...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...">text</span>
+<span style="property : ...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...">text</span>
 ```
 
-Please note there are some CSS contexts that can never safely use untrusted data as input - **EVEN IF PROPERLY CSS ESCAPED!** You will have to ensure that URLs only start with `http` not `javascript` and that properties never start with "expression".
+Please note there are some CSS contexts that can never safely use untrusted data as input - **EVEN IF PROPERLY CSS ENCODED!** You will have to ensure that URLs only start with `http` not `javascript` and that properties never start with "expression".
 
 For example:
 
@@ -275,7 +277,7 @@ For example:
 { text-size: "expression(alert('XSS'))"; }   // only in IE
 ```
 
-Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the \HH escaping format. **DO NOT** use any escaping shortcuts like `\"` because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to **escape-the-escape attacks** where the attacker sends `\"` and the vulnerable code turns that into `\\"` which enables the quote.
+Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the \HH encoding format. **DO NOT** use any escaping shortcuts like `\"` because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to **escape-the-escape attacks** where the attacker sends `\"` and the vulnerable code turns that into `\\"` which enables the quote.
 
 If attribute is quoted, breaking out requires the corresponding quote. All attributes should be quoted but your encoding should be strong enough to prevent XSS when untrusted data is placed in unquoted contexts.
 
@@ -283,26 +285,26 @@ Unquoted attributes can be broken out of with many characters including `[space]
 
 Also, the `</style>` tag will close the style block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note that we recommend aggressive CSS encoding and validation to prevent XSS attacks for both quoted and unquoted attributes.
 
-### RULE \#5 - URL Escape Before Inserting Untrusted Data into HTML URL Parameter Values
+### RULE \#5 - URL Encode Before Inserting Untrusted Data into HTML URL Parameter Values
 
 Rule \#5 is for when you want to put untrusted data into HTTP GET parameter value.
 
 ```html
-<a href="http://www.somesite.com?test=...ESCAPE UNTRUSTED DATA BEFORE PUTTING HERE...">link</a >  
+<a href="http://www.somesite.com?test=...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...">link</a >
 ```
 
-Except for alphanumeric characters, escape all characters with ASCII values less than 256 with the `%HH` escaping format. Including untrusted data in `data:` URLs should not be allowed as there is no good way to disable attacks with escaping to prevent switching out of the URL.
+Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the `%HH` encoding format. Including untrusted data in `data:` URLs should not be allowed as there is no good way to disable attacks with encoding/escaping to prevent switching out of the URL.
 
 All attributes should be quoted. Unquoted attributes can be broken out of with many characters including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`. Note that entity encoding is useless in this context.
 
-WARNING: Do not encode complete or relative URL's with URL encoding! If untrusted input is meant to be placed into `href`, `src` or other URL-based attributes, it should be validated to make sure it does not point to an unexpected protocol, especially `javascript` links. URL's should then be encoded based on the context of display like any other piece of data. For example, user driven URL's in `HREF` links should be attribute encoded.
+WARNING: Do not encode complete or relative URLs with URL encoding! If untrusted input is meant to be placed into `href`, `src` or other URL-based attributes, it should be validated to make sure it does not point to an unexpected protocol, especially `javascript` links. URLs should then be encoded based on the context of display like any other piece of data. For example, user driven URLs in `HREF` links should be attribute encoded.
 
 For example:
 
 ```java
 String userURL = request.getParameter( "userURL" )
 boolean isValidURL = Validator.IsValidURL(userURL, 255);
-if (isValidURL) {  
+if (isValidURL) {
     <a href="<%=encoder.encodeForHTMLAttribute(userURL)%>">link</a>
 }
 ```
@@ -347,9 +349,9 @@ The `SanitizeHelper` module provides a set of methods for scrubbing text of unde
 - [PHP HTML Purifier](http://htmlpurifier.org/)
 - [Python Bleach](https://pypi.python.org/pypi/bleach)
 
-### RULE \#7 - Avoid JavaScript URL's
+### RULE \#7 - Avoid JavaScript URLs
 
-Untrusted URL's that include the protocol javascript: will execute javascript code when used in URL DOM locations such as anchor tag HREF attributes or iFrame src locations. Be sure to validate all untrusted URL's to ensure they only contain safe schemes such as HTTPS.
+Untrusted URLs that include the protocol javascript: will execute JavaScript code when used in URL DOM locations such as anchor tag HREF attributes or iFrame src locations. Be sure to validate all untrusted URLs to ensure they only contain safe schemes such as HTTPS.
 
 ### RULE \#8 - Prevent DOM-based XSS
 
@@ -392,7 +394,7 @@ If you **really** have to use them remember that now all the data must be [sanit
 
 Avoid template injection in Angular by building with `--prod` parameter (`ng build --prod`).
 
-Also remember to keep your framework updated to the latest version with all possible bug fixes.
+Also remember to keep your framework updated to the latest version with all possible bugfixes.
 
 ### X-XSS-Protection Header
 
@@ -410,9 +412,9 @@ The `X-XSS-Protection` header has been deprecated by modern browsers and its use
 | Data Type | Context                                  | Code Sample                                                                                                        | Defense                                                                                                                                                                                        |
 |-----------|------------------------------------------|--------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | String    | HTML Body                                |  `<span>UNTRUSTED DATA </span>`                                                                          | HTML Entity Encoding (rule \#1).                                                                                                                                                               |
-| String    | Safe HTML Attributes                     | `<input type="text" name="fname" value="UNTRUSTED DATA ">`                                               | Aggressive HTML Entity Encoding (rule \#2), Only place untrusted data into a whitelist of safe attributes (listed below), Strictly validate unsafe attributes such as background, id and name. |
+| String    | Safe HTML Attributes                     | `<input type="text" name="fname" value="UNTRUSTED DATA ">`                                               | Aggressive HTML Entity Encoding (rule \#2), Only place untrusted data into a whitelist of safe attributes (listed below), Strictly validate unsafe attributes such as background, ID and name. |
 | String    | GET Parameter                            | `<a href="/site/search?value=UNTRUSTED DATA ">clickme</a>`                                               | URL Encoding (rule \#5).                                                                                                                                                                       |
-| String    | Untrusted URL in a SRC or HREF attribute | `<a href="UNTRUSTED URL ">clickme</a> <iframe src="UNTRUSTED URL " />`                                   | Canonicalize input, URL Validation, Safe URL verification, Whitelist http and https URL's only (Avoid the JavaScript Protocol to Open a new Window), Attribute encoder.                        |
+| String    | Untrusted URL in a SRC or HREF attribute | `<a href="UNTRUSTED URL ">clickme</a> <iframe src="UNTRUSTED URL " />`                                   | Canonicalize input, URL Validation, Safe URL verification, Whitelist http and HTTPS URLs only (Avoid the JavaScript Protocol to Open a new Window), Attribute encoder.                        |
 | String    | CSS Value                                | `html <div style="width: UNTRUSTED DATA ;">Selection</div>`                                                   | Strict structural validation (rule \#4), CSS Hex encoding, Good design of CSS Features.                                                                                                        |
 | String    | JavaScript Variable                      | `<script>var currentValue='UNTRUSTED DATA ';</script> <script>someFunction('UNTRUSTED DATA ');</script>` | Ensure JavaScript variables are quoted, JavaScript Hex Encoding, JavaScript Unicode Encoding, Avoid backslash encoding (`\"` or `\'` or `\\`).                                                 |
 | HTML      | HTML Body                                | `<div>UNTRUSTED HTML</div>`                                                                             | HTML Validation (JSoup, AntiSamy, HTML Sanitizer...).                                                                                                                                          |
@@ -429,10 +431,10 @@ The purpose of output encoding (as it relates to Cross Site Scripting) is to con
 | Encoding Type           | Encoding Mechanism                                                                                                                                                                                                                                                                                                               |
 |-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | HTML Entity Encoding    | Convert `&` to `&amp;`, Convert `<` to `&lt;`, Convert `>` to `&gt;`, Convert `"` to `&quot;`, Convert `'` to `&#x27;`, Convert `/` to `&#x2F;`                                                                                                                                                                                  |
-| HTML Attribute Encoding | Except for alphanumeric characters, escape all characters with the HTML  Entity `&#xHH;` format, including spaces. (**HH** = Hex Value)                                                                                                                                                                                              |
+| HTML Attribute Encoding | Except for alphanumeric characters, encode all characters with the HTML  Entity `&#xHH;` format, including spaces. (**HH** = Hex Value)                                                                                                                                                                                              |
 | URL Encoding            | Standard percent encoding, see [here](http://www.w3schools.com/tags/ref_urlencode.asp). URL encoding should only be used to encode parameter values, not the entire URL or path fragments of a URL.                                                                                                                              |
-| JavaScript Encoding     | Except for alphanumeric characters, escape all characters with the `\uXXXX` unicode escaping format (**X** = Integer).                                                                                                                                                                                                               |
-| CSS Hex Encoding        | CSS escaping supports `\XX` and `\XXXXXX`. Using a two character escape can  cause problems if the next character continues the escape sequence.  There are two solutions (a) Add a space after the CSS escape (will be  ignored by the CSS parser) (b) use the full amount of CSS escaping  possible by zero padding the value. |
+| JavaScript Encoding     | Except for alphanumeric characters, encode all characters with the `\uXXXX` unicode encoding format (**X** = Integer).                                                                                                                                                                                                               |
+| CSS Hex Encoding        | CSS encoding supports `\XX` and `\XXXXXX`. Using a two character encode can  cause problems if the next character continues the encode sequence.  There are two solutions (a) Add a space after the CSS encode (will be  ignored by the CSS parser) (b) use the full amount of CSS encoding  possible by zero padding the value. |
 
 ## Related Articles
 
