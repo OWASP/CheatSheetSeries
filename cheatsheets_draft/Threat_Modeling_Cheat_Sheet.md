@@ -56,10 +56,14 @@ Another framework, that is more privacy-focused, is [LINDDUN](https://www.linddu
 
 Choosing a framework will depend on the types of systems you build and maintain. If team members are unfamiliar with threat modeling it is beneficial to use the same framework for the first few threat modeling sessions, so that team members can become familiar with the threat modeling process. Improvements can be made to the threat modeling process once it has been established within the team.
 
-It may help to think like an attacker during this activity, imagining that you are tasked with breaking the system or process in some way, or extracting data unlawfully: how would you do it? The team should be open to all ideas put forward by members and should not disregard ideas without consideration. This section of the threat model process requires "out of the box" thinking and, as such, it is crucial to have a range of backgrounds and abilities present in the team. If the team starts to struggle ask an SME (subject matter expert) to explain a scenario and follow the flow through the diagram.
+It may help to think like an attacker during this activity, imagining that you are tasked with breaking the system or process in some way, or extracting data unlawfully: how would you do it? The team should be open to all ideas put forward by members and should not disregard ideas without consideration. This section of the threat model process requires "out of the box" thinking and, as such, it is crucial to have a range of backgrounds and abilities present in the team. If the team begins to struggle ask an SME (subject matter expert) to explain a scenario and follow the flow through the diagram.
 
 A nominated person should take notes during discussions, noting down the type of threat (e.g. spoofing, tampering, etc.) and a short description of the threat. These notes will be used in the next section of the threat modeling process, where threats are scored based on risk and fixes are prioritized.
 
-### Share the results
+### Document and share the results
 
-TODO, document and share findings with team, score each identified risk high, medium, low (OWASP risk rating?), priotise with team and fix.
+As the threat modeling session comes to an end and discussions start to close, ensure that you have complete and clear notes, writing down anything that you may have missed. The next step is to formalise the risks identified and score them accordingly, so they can be reviewed and prioritized by the team.
+
+TODO scoring, review each threat identified etc.
+
+Where you document, store the identified threats, and how you prioritize the work required will very much depend on how work is currently managed. It might be that threats are stored as individual tickets in your backlog, or it might be that threats are stored in a separate risk log. Wherever you decide to store the identified threats, it's important to communicate where they are located to your team and review them during planning and prioritization sessions. To help with prioritization it may be useful to briefly outline the work required to fix or mitigate each threat: is it a small change to a configuration file, or do large parts of the system or process need to be restructured?
