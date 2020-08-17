@@ -25,10 +25,6 @@ Often sensitive data is stored in databases which need to be secured, in order t
 ## File System Security
 If a filesystem is used to store Sensitive Data, then please refer to the [file storage location |File_Upload_Cheat_Sheet.md#file-storage-location], [user permissions|File_Upload_Cheat_Sheet.md#user-permissions] and [file system permissions | File_Upload_Cheat_Sheet.md#filesystem-permissions]
 
-
-## Cloud Storage
-<there isn't a relevant cheatsheet for this>
-
 # Managing Secrets
 For managing secrets you can refer to the [Cryptographic Storage Cheatsheet | Cryptographic_Storage_Cheat_Sheet.md]
 
@@ -43,8 +39,3 @@ contains all the relevant information
 ## Encrypting Per User
 If the sensitive data can be clearly associated with a single user (e.g. medical records, financial transactions) then the user's data can be encrypted with a key that is associated with the user. The Cryptographic Storage Cheatsheet can be used as a guidance on how to do this. This approach protects against an attacker who already has access to the data store, since the attacker will also have to get access to the storage location of the user's keys.
 The unintented advantage of this approach is that if a user's data needs to be deleted, only the associated key needs to be destroyed as this will make data unusable.
-
-## Tokenizing
-<this can be a cheatsheet by itself which does not exist currently do we want to do this?>
-
-
