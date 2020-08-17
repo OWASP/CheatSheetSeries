@@ -20,23 +20,23 @@ Since sensitive data storage is not a new concept but instead can be referrenced
 # Storage Systems
 
 ## DBMS Security
-Often sensitive data is stored in databases which need to be secured, in order to do so, please refer to the [database security cheatsheet|https://github.com/owasp/CheatSheetSeries/blob/master/cheatsheets/Database_Security_Cheat_Sheet.md]
+Often sensitive data is stored in databases which need to be secured, in order to do so, please refer to the [database security cheatsheet|Database_Security_Cheat_Sheet.md]
 
 ## File System Security
-If a filesystem is used to store Sensitive Data, then please refer to the [file storage location |https://github.com/owasp/CheatSheetSeries/blob/toc/cheatsheets/File_Upload_Cheat_Sheet.md#file-storage-location], [user permissions| https://github.com/owasp/CheatSheetSeries/blob/toc/cheatsheets/File_Upload_Cheat_Sheet.md#user-permissions] and [file system permissions | https://github.com/northdpole/CheatSheetSeries/blob/toc/cheatsheets/File_Upload_Cheat_Sheet.md#filesystem-permissions]
+If a filesystem is used to store Sensitive Data, then please refer to the [file storage location |File_Upload_Cheat_Sheet.md#file-storage-location], [user permissions|File_Upload_Cheat_Sheet.md#user-permissions] and [file system permissions | File_Upload_Cheat_Sheet.md#filesystem-permissions]
 
 
 ## Cloud Storage
 <there isn't a relevant cheatsheet for this>
 
 # Managing Secrets
-For managing secrets you can refer to the [Cryptographic Storage Cheatsheet | https://github.com/owasp/CheatSheetSeries/blob/toc/cheatsheets/Cryptographic_Storage_Cheat_Sheet.md]
+For managing secrets you can refer to the [Cryptographic Storage Cheatsheet | Cryptographic_Storage_Cheat_Sheet.md]
 
 ## Key Management Systems
-< this could reference hashicorp vault, aws kms etc?) >
+Please refer to the relevant Key Management Section of the [Cryptographic Storage Cheatsheet | Cryptographic_Storage_Cheat_Sheet.md#key-management]
 
 # Permissions and Access
-The [Access Control Cheatsheet | https://github.com/owasp/CheatSheetSeries/blob/toc/cheatsheets/Access_Control_Cheat_Sheet.md]
+The [Access Control Cheatsheet | Access_Control_Cheat_Sheet.md]
 contains all the relevant information
 
 # Bonus Considerations
