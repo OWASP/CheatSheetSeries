@@ -470,6 +470,7 @@ For example, a deployment containing a vulnerability with severity score of 7 or
 
 ## References
 
+Master documentation - https://kubernetes.io/
 1. Kubernetes Security Best Practices everyone must follow - https://www.cncf.io/blog/2019/01/14/9-kubernetes-security-best-practices-everyone-must-follow/ 
 2. Securing a Cluster - https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment/ 
 3. Security Best Practices for Kubernetes Deployment - https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/ 
@@ -480,3 +481,5 @@ For example, a deployment containing a vulnerability with severity score of 7 or
 8. A hacker's guide to Kubernetes security - https://techbeacon.com/enterprise-it/hackers-guide-kubernetes-security
 9. 11 Ways (Not) to Get Hacked - https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/ 
 10. 12 Kubernetes configuration best practices - https://www.stackrox.com/post/2019/09/12-kubernetes-configuration-best-practices/#6-securely-configure-the-kubernetes-api-server
+11. Kubernetes Web UI (Dashboard) - https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
+12. Tesla cloud resources are hacked to run cryptocurrency-mining malware - https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/
