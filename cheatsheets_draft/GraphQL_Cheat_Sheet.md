@@ -44,7 +44,7 @@ When handling input meant to be passed to another interpreter (e.g. SQL/NoSQL/OR
 
 - Always prefer safe tools with support for parameterized statements
     - Ensure that you follow the documentation so you are properly using the tool
-    - For SQL, using ORMs/ORDs is a good option but they must be used properly to avoid [ORM injection](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.7-Testing_for_ORM_Injection).
+    - Using ORMs and ODMs are a good option but they must be used properly to avoid flaws such as [ORM injection](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.7-Testing_for_ORM_Injection).
 - If such tools are not available, always escape/encode input data according to best practices of the target interpreter
     - Choose a well-documented and actively maintained escaping/encoding library. Many languages and frameworks have this functionality built-in.
 
