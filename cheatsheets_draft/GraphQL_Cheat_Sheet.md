@@ -42,7 +42,7 @@ Validate all incoming data to only allow valid values (i.e. whitelist).
 
 When handling input meant to be passed to another interpreter (e.g. SQL/NoSQL/ORM, OS, LDAP, XML):
 
-- Always prefer safe tools with support for parameterized statements
+- Always choose libraries/modules/packages offering safe APIs, such as parameterized statements.
     - Ensure that you follow the documentation so you are properly using the tool
     - Using ORMs and ODMs are a good option but they must be used properly to avoid flaws such as [ORM injection](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.7-Testing_for_ORM_Injection).
 - If such tools are not available, always escape/encode input data according to best practices of the target interpreter
