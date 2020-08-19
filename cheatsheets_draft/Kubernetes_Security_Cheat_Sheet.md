@@ -132,6 +132,17 @@ Kubelets expose HTTPS endpoints which grant powerful control over the node and c
 
 For more information, refer to Kubelet authentication/authorization documentation at https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-authentication-authorization/ 
 
+### Securing Kubernetes Dashboard
+The Kubernetes dashboard is a webapp for monitoring your cluster. It it is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard.
+
+To prevent attacks via the dashboard, you should follow some tips:
+* Do not expose the dashboard to the public. There is no need to access such a powerful tool from outside your LAN
+* Turn on RBAC, so you can limit the service account the dashboard uses
+* Do not grant the service account of the dashboard high privileges
+* Grant permissions per user, so each user only can see what he is supposed to see
+* If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)
+* Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.
+
 ## Kubernetes Security Best Practices: Build Phase
 Securing containers and Kubernetes starts in the build phase with securing your container images. The two main things to do here are to build secure images and to scan those images for any known vulnerabilities.
 
@@ -171,6 +182,7 @@ Kubernetes infrastructure should be configured securely prior to workloads being
 
 ### Use Kubernetes namespaces to properly isolate your Kubernetes resources
 Namespaces give you the ability to create logical partitions and enforce separation of your resources as well as limit the scope of user permissions. 
+
 #### Setting the namespace for a request
 To set the namespace for a current request, use the --namespace flag. Refer to the following examples:
 ```
@@ -365,6 +377,22 @@ Pod Security Policies address several critical security use cases, including:
 * Restricting Linux capabilities to bare minimum in adherence with least privilege principles
 
 For more information on Pod security policies, refer to the documentation at https://kubernetes.io/docs/concepts/policy/pod-security-policy/.
+
+### Container Runtime Security
+Hardening containers at runtime gives security teams the ability to detect and respond to threats and anomalies while the containers or workloads are in a running state. This is typically carried out by intercepting the low-level system calls and looking for events that may indicate compromise. Some examples of events that should trigger an alert would include:
+* A shell is run inside a container
+* A container mounts a sensitive path from the host such as /proc
+* A sensitive file is unexpectedly read in a running container such as /etc/shadow
+* An outbound network connection is established
+* Open source tools such as Falco from Sysdig are available to help operators get up an running with container runtime security by providing a large number of out-of-the-box detections as well as the flexibility to create custom rules.
+
+### Container Sandboxing
+Container runtimes typically are permitted to make direct calls to the host kernel then the kernel interacts with hardware and devices to respond to the request. Cgroups and namespaces exist to give containers a certain amount of isolation but the still kernel presents a large attack surface area. Often times in multi-tenant and highly untrusted clusters an additional layer of sandboxing is required to ensure container breakout and kernel exploits are not present. Below we will explore a few OSS technologies that help further isolate running containers from the host kernel:
+* Kata Containers: Kata Containers is OSS project that uses stripped-down VMs to keep the resource footprint minimal and maximize performance to ultimately isolate containers further.
+
+* gVisor : gVisor is a more lightweight than a VM (even stripped down). gVisor is its own independent kernel written in Go to sit in the middle of a container and the host kernel. Strong sandbox. gVisor supports ~70% of the linux system calls from the container but ONLY users about 20 system calls to the host kernel.
+
+* Firecracker: Firecracker super lightweight VM that runs in user space. Locked down by seccomp, cgroup and namespace policies so system calls are very limited. Firecracker is built with security in mind but may not support all Kubernetes or container runtime deployments.
 
 ### Preventing containers from loading unwanted kernel modules
 The Linux kernel automatically loads kernel modules from disk if needed in certain circumstances, such as when a piece of hardware is attached or a filesystem is mounted. Of particular relevance to Kubernetes, even unprivileged processes can cause certain network-protocol-related kernel modules to be loaded, just by creating a socket of the appropriate type. This may allow an attacker to exploit a security hole in a kernel module that the administrator assumed was not in use.
