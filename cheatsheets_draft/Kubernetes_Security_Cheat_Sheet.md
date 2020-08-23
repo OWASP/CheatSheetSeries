@@ -25,7 +25,7 @@ Node components run on every node, maintaining running pods and providing the Ku
 | kube-proxy        | kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept |
 | Container runtime | The container runtime is the software that is responsible for running containers.                                         |
 
-![Kubernetes Architecture](./Kubernetes_Architecture.png)
+![Kubernetes Architecture](./Kubernetes_Architecture.png)	
 
 This cheatsheet provides a starting point for securing Kubernetes cluster. It is divided into the following categories:
 * Securing Kubernetes hosts
@@ -33,6 +33,7 @@ This cheatsheet provides a starting point for securing Kubernetes cluster. It is
 * Kubernetes Security Best Practices: Build Phase
 * Kubernetes Security Best Practices: Deploy Phase
 * Kubernetes Security Best Practices: Runtime Phase
+  
 ## Securing Kubernetes hosts
 There are several options available to deploy Kubernetes: on bare metal, on-premise, and in the public cloud (custom Kubernetes build on virtual machines OR use a managed service). Kubernetes was designed to be highly portable and customers can easily switch between these installations, migrating their workloads.
 
@@ -46,7 +47,6 @@ It has become impossible to track all potential attack vectors. This fact is unf
 The Kubernetes project maintains release branches for the most recent three minor releases and it backports the applicable fixes, including security fixes, to those three release branches, depending on severity and feasibility. Patch releases are cut from those branches at a regular cadence, plus additional urgent releases, when required. Hence it is always recommended to upgrade the Kubernetes cluster to the latest available stable version. It is recommended to refer to the version skew policy for further details https://kubernetes.io/docs/setup/release/version-skew-policy/.
 
 There are several techniques such as rolling updates, and node pool migrations that allow you to complete an update with minimal disruption and downtime.
-
 
 ## Securing Kubernetes components
 
@@ -132,16 +132,15 @@ Kubelets expose HTTPS endpoints which grant powerful control over the node and c
 
 For more information, refer to Kubelet authentication/authorization documentation at https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-authentication-authorization/ 
 
-### Securing Kubernetes Dashboard
-The Kubernetes dashboard is a webapp for monitoring your cluster. It it is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard.
-
-To prevent attacks via the dashboard, you should follow some tips:
-* Do not expose the dashboard to the public. There is no need to access such a powerful tool from outside your LAN
-* Turn on RBAC, so you can limit the service account the dashboard uses
-* Do not grant the service account of the dashboard high privileges
-* Grant permissions per user, so each user only can see what he is supposed to see
-* If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)
-* Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.
+### Securing Kubernetes Dashboard	
+The Kubernetes dashboard is a webapp for monitoring your cluster. It it is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard.	
+To prevent attacks via the dashboard, you should follow some tips:	
+* Do not expose the dashboard to the public. There is no need to access such a powerful tool from outside your LAN	
+* Turn on RBAC, so you can limit the service account the dashboard uses	
+* Do not grant the service account of the dashboard high privileges	
+* Grant permissions per user, so each user only can see what he is supposed to see	
+* If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)	
+* Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.	
 
 ## Kubernetes Security Best Practices: Build Phase
 Securing containers and Kubernetes starts in the build phase with securing your container images. The two main things to do here are to build secure images and to scan those images for any known vulnerabilities.
@@ -214,7 +213,6 @@ New vulnerabilities are published every day and containers might include outdate
 In case vulnerabilities are found in running containers, it is recommended to always update the source image and redeploy the containers.
 
 #### NOTE
-
 Try to avoid direct updates to the running containers as this can break the image-container relationship. 
 
 ``` 
@@ -378,20 +376,18 @@ Pod Security Policies address several critical security use cases, including:
 
 For more information on Pod security policies, refer to the documentation at https://kubernetes.io/docs/concepts/policy/pod-security-policy/.
 
-### Container Runtime Security
-Hardening containers at runtime gives security teams the ability to detect and respond to threats and anomalies while the containers or workloads are in a running state. This is typically carried out by intercepting the low-level system calls and looking for events that may indicate compromise. Some examples of events that should trigger an alert would include:
-* A shell is run inside a container
-* A container mounts a sensitive path from the host such as /proc
-* A sensitive file is unexpectedly read in a running container such as /etc/shadow
-* An outbound network connection is established
-* Open source tools such as Falco from Sysdig are available to help operators get up an running with container runtime security by providing a large number of out-of-the-box detections as well as the flexibility to create custom rules.
+### Container Runtime Security	
+Hardening containers at runtime gives security teams the ability to detect and respond to threats and anomalies while the containers or workloads are in a running state. This is typically carried out by intercepting the low-level system calls and looking for events that may indicate compromise. Some examples of events that should trigger an alert would include:	
+* A shell is run inside a container	
+* A container mounts a sensitive path from the host such as /proc	
+* A sensitive file is unexpectedly read in a running container such as /etc/shadow	
+* An outbound network connection is established	
+* Open source tools such as Falco from Sysdig are available to help operators get up an running with container runtime security by providing a large number of out-of-the-box detections as well as the flexibility to create custom rules.	
 
-### Container Sandboxing
-Container runtimes typically are permitted to make direct calls to the host kernel then the kernel interacts with hardware and devices to respond to the request. Cgroups and namespaces exist to give containers a certain amount of isolation but the still kernel presents a large attack surface area. Often times in multi-tenant and highly untrusted clusters an additional layer of sandboxing is required to ensure container breakout and kernel exploits are not present. Below we will explore a few OSS technologies that help further isolate running containers from the host kernel:
-* Kata Containers: Kata Containers is OSS project that uses stripped-down VMs to keep the resource footprint minimal and maximize performance to ultimately isolate containers further.
-
-* gVisor : gVisor is a more lightweight than a VM (even stripped down). gVisor is its own independent kernel written in Go to sit in the middle of a container and the host kernel. Strong sandbox. gVisor supports ~70% of the linux system calls from the container but ONLY users about 20 system calls to the host kernel.
-
+### Container Sandboxing	
+Container runtimes typically are permitted to make direct calls to the host kernel then the kernel interacts with hardware and devices to respond to the request. Cgroups and namespaces exist to give containers a certain amount of isolation but the still kernel presents a large attack surface area. Often times in multi-tenant and highly untrusted clusters an additional layer of sandboxing is required to ensure container breakout and kernel exploits are not present. Below we will explore a few OSS technologies that help further isolate running containers from the host kernel:	
+* Kata Containers: Kata Containers is OSS project that uses stripped-down VMs to keep the resource footprint minimal and maximize performance to ultimately isolate containers further.	
+* gVisor : gVisor is a more lightweight than a VM (even stripped down). gVisor is its own independent kernel written in Go to sit in the middle of a container and the host kernel. Strong sandbox. gVisor supports ~70% of the linux system calls from the container but ONLY users about 20 system calls to the host kernel.	
 * Firecracker: Firecracker super lightweight VM that runs in user space. Locked down by seccomp, cgroup and namespace policies so system calls are very limited. Firecracker is built with security in mind but may not support all Kubernetes or container runtime deployments.
 
 ### Preventing containers from loading unwanted kernel modules
@@ -413,10 +409,6 @@ To block module loading more generically, you can use a Linux Security Module (s
 
 ### Compare and analyze different runtime activity in pods of the same deployments
 Containerized applications are replicated for high availability, fault tolerance, or scale reasons. Replicas should behave nearly identically; replicas with significant deviations from the others warrant further investigation. Integrate your Kubernetes security tool with other external systems (email, PagerDuty, Slack, Google Cloud Security Command Center, SIEMs [security information and event management], etc.) and leverage deployment labels or annotations to alert the team responsible for a given application when a potential threat is detected. Commercial Kubernetes security vendors should support a wide array of integrations with external tools
-
-### Controlling which nodes pods may access
-
-
 
 ### Monitor network traffic to limit unnecessary or insecure communication
 Observe your active network traffic and compare that traffic to what is allowed based on your Kubernetes network policies. Containerized applications typically make extensive use of cluster networking, and observing active networking traffic is a good way to understand how applications interact with each other and identify unexpected communication.
@@ -444,6 +436,35 @@ Ensure logs are monitoring for anomalous or unwanted API calls, especially any a
 
 Managed Kubernetes providers, including GKE, provide access to this data in their cloud console and may allow you to set up alerts on authorization failures.
 
+##### Audit logs
+Audit logs can be useful for compliance as they should help you answer the questions of what happened, who did what and when. Kubernetes provides flexible auditing of kube-apiserver requests based on policies. These help you track all activities in chronological order.
+
+Here is an example of an audit log:
+```
+{
+  "kind":"Event",
+  "apiVersion":"audit.k8s.io/v1beta1",
+  "metadata":{ "creationTimestamp":"2019-08-22T12:00:00Z" },
+  "level":"Metadata",
+  "timestamp":"2019-08-22T12:00:00Z",
+  "auditID":"23bc44ds-2452-242g-fsf2-4242fe3ggfes",
+  "stage":"RequestReceived",
+  "requestURI":"/api/v1/namespaces/default/persistentvolumeclaims",
+  "verb":"list",
+  "user": {
+    "username":"user@example.org",
+    "groups":[ "system:authenticated" ]
+  },
+  "sourceIPs":[ "172.12.56.1" ],
+  "objectRef": {
+    "resource":"persistentvolumeclaims",
+    "namespace":"default",
+    "apiVersion":"v1"
+  },
+  "requestReceivedTimestamp":"2019-08-22T12:00:00Z",
+  "stageTimestamp":"2019-08-22T12:00:00Z"
+}
+```
 #### Define Audit Policies
 Audit policy defines rules about what events should be recorded and what data they should include. The audit policy object structure is defined in the audit.k8s.io API group. When an event is processed, it's compared against the list of rules in order. The first matching rule sets the "audit level" of the event. 
 
@@ -455,6 +476,114 @@ The known audit levels are as follows:
 
 You can pass a file with the policy to kube-apiserver using the --audit-policy-file flag. If the flag is omitted, no events are logged. Note that the rules field must be provided in the audit policy file. A policy with no (0) rules is treated as illegal.
 
+#### Understanding Logging
+One main challenge with logging Kubernetes is understanding what logs are generated and how to use them. Let’s start by examining the Kubernetes logging architecture from a birds eye view.
+
+##### Container logging
+The first layer of logs that can be collected from a Kubernetes cluster are those being generated by your containerized applications. 
+* The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.
+  
+  Manifest is as follows. 
+    ```
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    name: example
+    spec:
+    containers:
+    - name: example
+    image: busybox
+    args: [/bin/sh, -c, 'while true; do echo $(date); sleep 1; done']
+    ```
+  
+  To apply the manifest, run:
+    ```
+    kubectl apply -f example.yaml 
+    ```
+
+  To take a look the logs for this container, run:
+    ```
+    kubectl log <container-name> command.
+    ```
+
+* For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately. 
+  
+  Pod Manifest is as follows:
+  ```
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: example
+  spec:
+    containers:
+    - name: example
+      image: busybox
+      args:
+      - /bin/sh
+      - -c
+      - >
+        while true;
+        do
+          echo "$(date)\n" >> /var/log/example.log;
+          sleep 1;
+        done
+      volumeMounts:
+      - name: varlog
+        mountPath: /var/log
+    - name: sidecar
+      image: busybox
+      args: [/bin/sh, -c, 'tail -f /var/log/example.log']
+      volumeMounts:
+      - name: varlog
+        mountPath: /var/log
+    volumes:
+    - name: varlog
+      emptyDir: {}
+  ```
+
+##### Node logging
+When a container running on Kubernetes writes its logs to stdout or stderr streams, the container engine streams them to the logging driver configured in Kubernetes. 
+
+In most cases, these logs will end up in the /var/log/containers directory on your host. Docker supports multiple logging drivers but unfortunately, driver configuration is not supported via the Kubernetes API.
+
+Once a container is terminated or restarted, kubelet stores logs on the node. To prevent these files from consuming all of the host’s storage, the Kubernetes node implements a log rotation mechanism. When a container is evicted from the node, all containers with corresponding log files are evicted.
+
+Depending on what operating system and additional services you’re running on your host machine, you might need to take a look at additional logs. 
+For example, systemd logs can be retrieved using the following command:
+  ```
+  # journalctl -u 
+  ```
+
+##### Cluster logging
+On the level of the Kubernetes cluster itself, there is a long list of cluster components that can be logged as well as additional data types that can be used (events, audit logs). Together, these different types of data can give you visibility into how Kubernetes is performing as a ystem.
+
+Some of these components run in a container, and some of them run on the operating system level (in most cases, a systemd service). The systemd services write to journald, and components running in containers write logs to the /var/log directory, unless the container engine has been configured to stream logs differently.
+
+#### Events
+Kubernetes events can indicate any Kubernetes resource state changes and errors, such as exceeded resource quota or pending pods, as well as any informational messages.
+Kubernetes events can indicate any Kubernetes resource state changes and errors, such as exceeded resource quota or pending pods, as well as any informational messages.
+
+The kubectl get events -n <namespace> command returns all events within a specific namespace:
+```
+NAMESPACE	LAST SEEN	TYPE	  REASON OBJECT	MESSAGE
+kube-system 	8m22s		Normal	  Scheduled            pod/metrics-server-66dbbb67db-lh865                                       Successfully assigned kube-system/metrics-server-66dbbb67db-lh865 to aks-agentpool-42213468-1
+kube-system     8m14s               Normal    Pulling                   pod/metrics-server-66dbbb67db-lh865                                       Pulling image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
+kube-system     7m58s               Normal    Pulled                    pod/metrics-server-66dbbb67db-lh865                                       Successfully pulled image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
+kube-system     7m57s               Normal     Created                   pod/metrics-server-66dbbb67db-lh865                                       Created container metrics-server
+kube-system     7m57s               Normal    Started                   pod/metrics-server-66dbbb67db-lh865                                       Started container metrics-server
+kube-system     8m23s               Normal    SuccessfulCreate          replicaset/metrics-server-66dbbb67db             Created pod: metrics-server-66dbbb67db-lh865
+```
+
+Using kubectl describe pod <pod-name> will show the latest events for this specific Kubernetes resource:
+```
+Events:
+  Type    Reason     Age   From                               Message
+  ----    ------     ----  ----                               -------
+  Normal  Scheduled  14m   default-scheduler                  Successfully assigned kube-system/coredns-7b54b5b97c-dpll7 to aks-agentpool-42213468-1
+  Normal  Pulled     13m   kubelet, aks-agentpool-42213468-1  Container image "aksrepos.azurecr.io/mirror/coredns:1.3.1" already present on machine
+  Normal  Created    13m   kubelet, aks-agentpool-42213468-1  Created container coredns
+  Normal  Started    13m   kubelet, aks-agentpool-42213468-1  Started container coredns
+```
 ## Final thoughts
 
 ### Embed security earlier into the container lifecycle
@@ -469,8 +598,7 @@ In sprawling Kubernetes environments, manually triaging security incidents and p
 For example, a deployment containing a vulnerability with severity score of 7 or greater should be moved up in remediation priority if that deployment contains privileged containers and is open to the Internet but moved down if it’s in a test environment and supporting a non-critical app.
 
 ## References
-
-Master documentation - https://kubernetes.io/
+Master documentation - https://kubernetes.io/	
 1. Kubernetes Security Best Practices everyone must follow - https://www.cncf.io/blog/2019/01/14/9-kubernetes-security-best-practices-everyone-must-follow/ 
 2. Securing a Cluster - https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment/ 
 3. Security Best Practices for Kubernetes Deployment - https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/ 
@@ -481,5 +609,6 @@ Master documentation - https://kubernetes.io/
 8. A hacker's guide to Kubernetes security - https://techbeacon.com/enterprise-it/hackers-guide-kubernetes-security
 9. 11 Ways (Not) to Get Hacked - https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/ 
 10. 12 Kubernetes configuration best practices - https://www.stackrox.com/post/2019/09/12-kubernetes-configuration-best-practices/#6-securely-configure-the-kubernetes-api-server
-11. Kubernetes Web UI (Dashboard) - https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
-12. Tesla cloud resources are hacked to run cryptocurrency-mining malware - https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/
+11. A Practical Guide to Kubernetes Logging - https://logz.io/blog/a-practical-guide-to-kubernetes-logging/
+12. Kubernetes Web UI (Dashboard) - https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/	
+13. Tesla cloud resources are hacked to run cryptocurrency-mining malware - https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/
