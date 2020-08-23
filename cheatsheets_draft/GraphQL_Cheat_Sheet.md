@@ -5,7 +5,7 @@
 Below are some quick high-level ideas to keep in mind when building a secure API with GraphQL.
 
 - Strict input validation is highly recommended and easy
-- Expensive queries can easily lead to a denial of service; there are several defenses ranging from simple to complex
+- Expensive queries can easily lead to Denial of Service (DoS); there are several defenses ranging from simple to complex
 - It is very important to implement proper access control (authorization) but it can be tricky
 - Some default configurations (Introspection, GraphiQL) should be disabled/changed before releasing an API to production
 
