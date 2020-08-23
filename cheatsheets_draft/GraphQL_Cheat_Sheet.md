@@ -62,7 +62,7 @@ When using user input, even if sanitized and/or validated, it should not be used
 
 ### DoS Prevention
 
-DoS (denial of service) is an attack against the availability and stability of the API that can make it slow, unresponsive, or completely unavailable. This Cheat Sheet details several methods to limit the possibility of a denial of service attack at the application level and other layers of the tech stack. There is also a Cheat Sheet dedicated to topic of [denial of service](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html).
+DoS (Denial of Service) is an attack against the availability and stability of the API that can make it slow, unresponsive, or completely unavailable. This Cheat Sheet details several methods to limit the possibility of a denial of service attack at the application level and other layers of the tech stack. There is also a Cheat Sheet dedicated to topic of [Denial of Service](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html).
 
 Here are recommendations specific to GraphQL to limit the potential for DoS:
 
