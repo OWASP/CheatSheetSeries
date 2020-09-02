@@ -76,7 +76,7 @@ Here are recommendations specific to GraphQL to limit the potential for DoS:
 
 #### Query Limiting (Depth & Amount)
 
-In GraphQL each query has a depth (e.g. nested objects) and each object requested in a query can have an amount specified (e.g. 999999 of an object). By default these can both be unlimited which may lead to a DoS. You should set limits on depth and amount to prevent DoS, but this usually requires a small custom implementation as it is not natively supported by GraphQL. See [this](https://www.apollographql.com/blog/securing-your-graphql-api-from-malicious-queries-16130a324a6b) and [this](https://www.howtographql.com/advanced/4-security/) page for more information about these attacks and how to add depth and amount limiting. Adding [pagination](https://graphql.org/learn/pagination/) can also help performance.
+In GraphQL each query has a depth (e.g. nested objects) and each object requested in a query can have an amount specified (e.g. 99999999 of an object). By default these can both be unlimited which may lead to a DoS. You should set limits on depth and amount to prevent DoS, but this usually requires a small custom implementation as it is not natively supported by GraphQL. See [this](https://www.apollographql.com/blog/securing-your-graphql-api-from-malicious-queries-16130a324a6b) and [this](https://www.howtographql.com/advanced/4-security/) page for more information about these attacks and how to add depth and amount limiting. Adding [pagination](https://graphql.org/learn/pagination/) can also help performance.
 
 APIs using graphql-java can utilize the built-in [MaxQueryDepthInstrumentation](https://github.com/graphql-java/graphql-java/blob/master/src/main/java/graphql/analysis/MaxQueryDepthInstrumentation.java) for depth limiting. APIs using JavaScript can use [graphql-depth-limit](https://github.com/stems/graphql-depth-limit) to implement depth limiting and [graphql-input-number](https://github.com/joonhocho/graphql-input-number) to implement amount limiting.
 
@@ -95,7 +95,17 @@ query evil {            # Depth: 0
 }
 ```
 
-> We should have an example of someone taking advantage of no amount limiting and requesting N of an object. I'm not sure if a query can ask for N of an object directly or if the query has to use aliases and make N separate requests within the query for the same object.
+Here is an example of a GraphQL query requesting 99999999 of an object:
+
+```javascript
+query {
+  author(id: "abc") {
+    posts(first: 99999999) {
+      title
+    }
+  }
+}
+```
 
 #### Timeouts
 
