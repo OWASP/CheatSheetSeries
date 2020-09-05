@@ -287,19 +287,21 @@ Also, the `</style>` tag will close the style block even though it is inside a q
 
 ### RULE \#5 - URL Encode Before Inserting Untrusted Data into URL Parameter Values
 
-This rule is for when you want to put untrusted data into URL parameter values. It is adviced to follow this rule to prevent from [HTTP Parameter Pollution](https://owasp.org/www-pdf-archive/AppsecEU09_CarettoniDiPaola_v0.8.pdf). HTTP Parameter Pollution itself can be dangerous enough and also it can increase an XSS flaw’s impact in some ways. 
+This rule is for when you want to put untrusted data into URL parameter values. It is adviced to follow this rule to prevent from [HTTP Parameter Pollution](https://owasp.org/www-pdf-archive/AppsecEU09_CarettoniDiPaola_v0.8.pdf). HTTP Parameter Pollution itself can be dangerous enough and also it can increase an XSS flaw’s impact in some ways.
 
 Step 1: URL encode URL parameter values
+
 ```java
 String theUrl = "/share?content_type=1&title=" + Encode.forUriComponent(untrustedParameter);
 ```
 
 Step 2: To print it in output use a context based encoding
+
 ```html
 <a href="<%=Encode.forHtmlAttribute(theUrl) %>"><%=Encode.forHtml(theUrl)%></a>
 ```
 
-URL encoding, encodes all characters with ASCII values less than 256 to the %HH encoding format, except for alphanumeric characters. 
+URL encoding, encodes all characters with ASCII values less than 256 to the %HH encoding format, except for alphanumeric characters.
 
 WARNING: Do not encode complete or relative URLs with URL encoding, this will break your links. If untrusted input is meant to be placed into `href`, `src` or other URL-based attributes, it should be validated to make sure it does not point to an unexpected protocol, especially `javascript` or `data` links. URLs should then be encoded based on the context of display like any other piece of data. For example, user driven URLs in `HREF` links should be HTML attribute encoded.
 
@@ -316,8 +318,6 @@ if (isValidURL) {
 Including untrusted data in `data:` URLs should not be allowed as there is no good way to disable attacks with encoding/escaping to prevent switching out of the URL.
 
 All attributes should be quoted. Unquoted attributes can be broken out of with many characters including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`. Note that entity encoding is useless in this context.
-
-
 
 ### RULE \#6 - Sanitize HTML Markup with a Library Designed for the Job
 
