@@ -232,13 +232,16 @@ document.body.style.backgroundImage = "url(<%=Encoder.encodeForJS(Encoder.encode
 
 ## RULE \#5 - URL Escape then JavaScript Escape Before Inserting Untrusted Data into URL Attribute Subcontext within the Execution Context
 
-This rule is for when you want to put untrusted data into URL parameter values at server side and set URL within the execution (DOM) context. It is adviced to follow this rule to prevent from [HTTP Parameter Pollution](https://owasp.org/www-pdf-archive/AppsecEU09_CarettoniDiPaola_v0.8.pdf). HTTP Parameter Pollution itself can be dangerous enough and also it can increase an XSS flaw’s impact in some ways. 
+This rule is for when you want to put untrusted data into URL parameter values at server side and set URL within the execution (DOM) context. It is adviced to follow this rule to prevent from [HTTP Parameter Pollution](https://owasp.org/www-pdf-archive/AppsecEU09_CarettoniDiPaola_v0.8.pdf). HTTP Parameter Pollution itself can be dangerous enough and also it can increase an XSS flaw’s impact in some ways.
 
 Step 1: URL escape URL parameter values
+
 ```java
 String theUrl = "/share?content_type=1&title=" + Encode.forUriComponent (untrustedParameter);
 ```
+
 Step 2: JavaScript escape the entire URL
+
 ```javascript
 var x = document.createElement("a");
 x.setAttribute("href", '<%=Encoder.encodeForJS(theUrl)%>');
