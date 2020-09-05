@@ -287,11 +287,11 @@ Also, the `</style>` tag will close the style block even though it is inside a q
 
 ### RULE \#5 - URL Encode Before Inserting Untrusted Data into URL Parameter Values
 
-Rule \#5 is for when you want to put untrusted data into URL parameter values. It is adviced to follow this rule to prevent from [HTTP Parameter Pollution](https://owasp.org/www-pdf-archive/AppsecEU09_CarettoniDiPaola_v0.8.pdf). HTTP Parameter Pollution itself can be dangerous enough and also it can increase an XSS flaw’s impact in some ways. To prevent follow these steps:  
+This rule is for when you want to put untrusted data into URL parameter values. It is adviced to follow this rule to prevent from [HTTP Parameter Pollution](https://owasp.org/www-pdf-archive/AppsecEU09_CarettoniDiPaola_v0.8.pdf). HTTP Parameter Pollution itself can be dangerous enough and also it can increase an XSS flaw’s impact in some ways. 
 
-Step 1: URL encode, URL parameter values
+Step 1: URL encode URL parameter values
 ```java
-String theUrl = "/share?content_type=1&title=" + Encode.forUriComponent(untrustedParameter1);
+String theUrl = "/share?content_type=1&title=" + Encode.forUriComponent(untrustedParameter);
 ```
 
 Step 2: To print it in output use a context based encoding
