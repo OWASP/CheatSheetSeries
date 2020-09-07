@@ -1054,6 +1054,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#semgrep-rules" class="md-nav__link">
+    Semgrep Rules
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     References
   </a>
@@ -1440,6 +1447,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#semgrep-rules" class="md-nav__link">
+    Semgrep Rules
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     References
   </a>
@@ -1811,6 +1825,10 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>In cloud environments SSRF is often used to access and steal credentials and access tokens from metadata services (e.g. AWS Instance Metadata Service, Azure Instance Metadata Service, GCP metadata server).</p>
 <p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/">IMDSv2</a> is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF.</p>
 <p>To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html">AWS documentation</a> for more details.</p>
+<h2 id="semgrep-rules">Semgrep Rules<a class="headerlink" href="#semgrep-rules" title="Permanent link">&para;</a></h2>
+<p><a href="https://semgrep.dev/">Semgrep</a> is a command-line tool for offline static analysis. Use pre-built or custom rules to enforce code and security standards in your codebase.
+Checkout the Semgrep rule for SSRF to identify/investigate for SSRF vulnerabilities in Java
+<a href="https://semgrep.dev/salecharohit:owasp_java_ssrf">https://semgrep.dev/salecharohit:owasp_java_ssrf</a></p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <p>Online version of the <a href="https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM">SSRF bible</a> (PDF version is used in this cheat sheet).</p>
 <p>Article about <a href="https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b">Bypassing SSRF Protection</a>.</p>
