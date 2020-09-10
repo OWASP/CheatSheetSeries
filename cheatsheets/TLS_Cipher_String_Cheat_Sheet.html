@@ -1284,24 +1284,23 @@
 <p>This article is focused on providing clear and simple examples for the cipher string. They are based on different scenarios where you use the Transport Layer Security (TLS) protocol.</p>
 <h2 id="recommendations-for-a-cipher-string">Recommendations for a cipher string<a class="headerlink" href="#recommendations-for-a-cipher-string" title="Permanent link">&para;</a></h2>
 <h3 id="scenarios">Scenarios<a class="headerlink" href="#scenarios" title="Permanent link">&para;</a></h3>
-<p>The cipher strings are based on the recommendation to setup your policy to get a whitelist for your ciphers as described in the <em><a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)</a></em>. The latest and strongest ciphers are solely available with TLSv1.2, older protocols don't support them. Please find enclosed all supported protocols by the scenario.</p>
-<p>We have not included any <code>ChaCha20-Poly1305</code> ciphers, yet. One reason is that we haven't found various assessments yet, the other is that implementations of new ciphers may be more buggy.</p>
+<p>The cipher strings are based on the recommendation to setup your policy to get a whitelist for your ciphers as described in the <em><a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)</a></em>. The latest and strongest ciphers as well as additional improvements are solely available with TLSv1.3, older protocols don't support them. Please find enclosed all supported protocols by the scenario.</p>
 <p>Finally we have compiled the oldest versions of different client agents that are still compatible with a cipher string. We provide this information according to the ciphers and protocols supported by browsers, libraries, bots on the basis of <em><a href="https://www.ssllabs.com/ssltest/clients.html">ssllabs's list of user agent capabilities</a></em> and tests on our own.</p>
 <p>We have checked this thoroughly, but please accept that all data is provided without any warranty of any kind. The list of the oldest supported clients assumes that the server supports all ciphers by the scenario (Please contact the authors if you find any errors or if you can provide additional data).</p>
 <p>The recommended cipher strings are based on different scenarios:</p>
 <p><strong>OWASP Cipher String 'A'</strong> (Advanced, wide browser compatibility, e.g. to most newer browser versions):</p>
 <ul>
 <li>Recommended if you control the server and the clients. Make sure to check the compatibility before using it.</li>
-<li>Includes solely the strongest <a href="https://scotthelme.co.uk/perfect-forward-secrecy/">Perfect Forward Secrecy (PFS)</a> ciphers.</li>
+<li>Includes solely the strongest <a href="https://scotthelme.co.uk/perfect-forward-secrecy/">Perfect Forward Secrecy (PFS)</a> and <a href="https://en.wikipedia.org/wiki/Authenticated_encryption">authenticated</a> ciphers.</li>
 <li>Protocols: <code>TLSv1.3</code>, <code>TLSv1.2</code> (and newer or better).</li>
-<li>Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 32/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7 + MS14-066, Java8b132, OpenSSL 1.0.1e, Safari 9/iOS 9, Yahoo Slurp Jun 2014, YandexBot Sep 2014.</li>
+<li>Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 32/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7 + MS14-066, Java 8b132, OpenSSL 1.0.1e, Safari 9/iOS 9, Yahoo Slurp Jun 2014, YandexBot Sep 2014.</li>
 </ul>
 <p><strong>OWASP Cipher String 'B'</strong> (Broad compatibility to browsers, check the compatibility to other protocols before using it, e.g. IMAPS):</p>
 <ul>
 <li>Recommended if you solely control the server, the clients use their browsers and if you check the compatibility before using it for other protocols than HTTPS.</li>
 <li>Includes solely the strongest and stronger <a href="https://scotthelme.co.uk/perfect-forward-secrecy/">PFS</a> ciphers.</li>
-<li>Protocols: <code>TLSv1.2</code> (and newer or better).</li>
-<li>Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 30/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7, IE 11/WinPhone 8.1, Java8b132, OpenSSL 1.0.1e, Opera 17/Win 7, Safari 5/iOS 5.1.1, Safari 7/OS X 10.9, Yahoo Slurp Jun 2014, YandexBot Sep 2014</li>
+<li>Protocols: <code>TLSv1.3</code>, <code>TLSv1.2</code> (and newer or better).</li>
+<li>Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 30/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7, IE 11/WinPhone 8.1, Java 8b132, OpenSSL 1.0.1e, Opera 17/Win 7, Safari 5/iOS 5.1.1, Safari 7/OS X 10.9, Yahoo Slurp Jun 2014, YandexBot Sep 2014</li>
 </ul>
 <p><strong>OWASP Cipher String 'C'</strong> (Widest Compatibility, compatibility to most legacy browsers, legacy libraries (still patched) and other application protocols besides https, e.g. IMAPS):</p>
 <ul>
