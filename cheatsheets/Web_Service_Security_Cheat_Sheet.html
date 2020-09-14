@@ -1128,6 +1128,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#resources-limiting" class="md-nav__link">
+    Resources Limiting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#message-throughput" class="md-nav__link">
     Message Throughput
   </a>
@@ -1312,6 +1319,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#resources-limiting" class="md-nav__link">
+    Resources Limiting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#message-throughput" class="md-nav__link">
     Message Throughput
   </a>
@@ -1405,6 +1419,11 @@
 <p>Web services like web applications could be a target for DOS attacks by automatically sending the web services thousands of large size <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> messages. This either cripples the application making it unable to respond to legitimate messages or it could take it down entirely.</p>
 <p><strong>Rule</strong>: <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> Messages size should be limited to an appropriate size limit. Larger size limit (or no limit at all) increases the chances of a successful DoS attack.</p>
 <h2 id="availability">Availability<a class="headerlink" href="#availability" title="Permanent link">&para;</a></h2>
+<h3 id="resources-limiting">Resources Limiting<a class="headerlink" href="#resources-limiting" title="Permanent link">&para;</a></h3>
+<p>During regular operation, web services require computational power such as CPU cycles and memory. Due to malfunctioning or while under attack, a web service may required too much resources, leaving the host system unstable.</p>
+<p><strong>Rule</strong>: Limit the amount of CPU cycles the web service can use based on expected service rate, in order to have a stable system.</p>
+<p><strong>Rule</strong>: Limit the amount of memory the web service can use to avoid system running out of memory. In some cases the host system may start killing processes to free up memory.</p>
+<p><strong>Rule</strong>: Limit the number of simultaneous open files, network connections and started processes.</p>
 <h3 id="message-throughput">Message Throughput<a class="headerlink" href="#message-throughput" title="Permanent link">&para;</a></h3>
 <p>Throughput represents the number of web service requests served during a specific amount of time.</p>
 <p><strong>Rule</strong>: Configuration should be optimized for maximum message throughput to avoid running into DoS-like situations.</p>

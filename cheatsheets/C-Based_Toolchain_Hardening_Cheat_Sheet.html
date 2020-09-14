@@ -1711,11 +1711,11 @@ override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 
 
 <p>At program startup, a <code>SIGTRAP</code> handler will be installed if one is not provided by another component:</p>
-<div class="codehilite"><pre><span></span><code>    <span class="k">struct</span> <span class="n">DebugTrapHandler</span>
+<div class="codehilite"><pre><span></span><code>    <span class="k">struct</span> <span class="nc">DebugTrapHandler</span>
     <span class="p">{</span>
       <span class="n">DebugTrapHandler</span><span class="p">()</span>
       <span class="p">{</span>
-        <span class="k">struct</span> <span class="n">sigaction</span> <span class="n">new_handler</span><span class="p">,</span> <span class="n">old_handler</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">sigaction</span> <span class="n">new_handler</span><span class="p">,</span> <span class="n">old_handler</span><span class="p">;</span>
 
         <span class="k">do</span>
           <span class="p">{</span>
@@ -1745,7 +1745,7 @@ override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 
     <span class="c1">// We specify a relatively low priority, to make sure we run before other CTORs</span>
     <span class="c1">// http://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Attributes.html#C_002b_002b-Attributes</span>
-    <span class="k">static</span> <span class="k">const</span> <span class="n">DebugTrapHandler</span> <span class="n">g_dummyHandler</span> <span class="nf">__attribute__</span> <span class="p">((</span><span class="n">init_priority</span> <span class="p">(</span><span class="mi">110</span><span class="p">)));</span>
+    <span class="k">static</span> <span class="k">const</span> <span class="n">DebugTrapHandler</span> <span class="n">g_dummyHandler</span> <span class="n">__attribute__</span> <span class="p">((</span><span class="n">init_priority</span> <span class="p">(</span><span class="mi">110</span><span class="p">)));</span>
 </code></pre></div>
 
 
@@ -1910,7 +1910,7 @@ override LDFLAGS :<span class="o">=</span> <span class="k">$(</span>MY_LD_FLAGS<
 
 <p>Notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with <code>x</code>. Just run the program and wait for it to tell you there is a problem. If there is a problem, the program will snap the debugger (and more importantly, not call a useless <code>abort()</code> as specified by Posix). It beats the snot out of <code>printf</code> that are removed when no longer needed or pollute outputs.</p>
 <p>Another conversion problem you will encounter conversion between types, and <code>-Wconversion</code> will also catch it for you. The following will always have an opportunity to fail, and should light up like a Christmas tree:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">addr</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><code><span class="k">struct</span> <span class="nc">sockaddr_in</span> <span class="n">addr</span><span class="p">;</span>
 <span class="err">…</span>
 
 <span class="n">addr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]));</span>
@@ -1953,10 +1953,10 @@ override LDFLAGS :<span class="o">=</span> <span class="k">$(</span>MY_LD_FLAGS<
 <span class="err">…</span>
 
 <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;%s/%s&quot;</span><span class="p">,</span> <span class="n">GetDirectory</span><span class="p">(),</span> <span class="n">GetObjectName</span><span class="p">());</span>
-<span class="n">ASSERT</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">ASSERT</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">-1</span><span class="p">);</span>
 <span class="n">ASSERT</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">ret</span> <span class="o">&gt;=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">)));</span>
 
-<span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="n">ret</span> <span class="o">&gt;=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+<span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="mi">-1</span> <span class="o">||</span> <span class="n">ret</span> <span class="o">&gt;=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
     <span class="n">throw</span> <span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Unable to build full object name&quot;</span><span class="p">);</span>
 
 <span class="c1">// OK to use path</span>
@@ -1965,7 +1965,7 @@ override LDFLAGS :<span class="o">=</span> <span class="k">$(</span>MY_LD_FLAGS<
 
 
 <p>The problem is pandemic, and not just boring user land programs. Projects which offer high integrity code, such as SELinux, suffer silent truncations. The following is from an approved SELinux patch even though a comment was made that it suffered silent truncations in its <code>security_compute_create_name</code> function from <code>compute_create.c</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="mi">12</span>  <span class="kt">int</span> <span class="nf">security_compute_create_raw</span><span class="p">(</span><span class="n">security_context_t</span> <span class="n">scon</span><span class="p">,</span>
+<div class="codehilite"><pre><span></span><code><span class="mi">12</span>  <span class="kt">int</span> <span class="n">security_compute_create_raw</span><span class="p">(</span><span class="n">security_context_t</span> <span class="n">scon</span><span class="p">,</span>
 <span class="mi">13</span>                                  <span class="n">security_context_t</span> <span class="n">tcon</span><span class="p">,</span>
 <span class="mi">14</span>                                  <span class="n">security_class_t</span>   <span class="n">tclass</span><span class="p">,</span>
 <span class="mi">15</span>                                  <span class="n">security_context_t</span> <span class="o">*</span> <span class="n">newcon</span><span class="p">)</span>
@@ -1977,7 +1977,7 @@ override LDFLAGS :<span class="o">=</span> <span class="k">$(</span>MY_LD_FLAGS<
 <span class="mi">21</span>
 <span class="mi">22</span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">selinux_mnt</span><span class="p">)</span> <span class="p">{</span>
 <span class="mi">23</span>      <span class="n">errno</span> <span class="o">=</span> <span class="n">ENOENT</span><span class="p">;</span>
-<span class="mi">24</span>      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="mi">24</span>      <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
 <span class="mi">25</span>    <span class="p">}</span>
 <span class="mi">26</span>
 <span class="mi">27</span>    <span class="n">snprintf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">path</span><span class="p">,</span> <span class="s">&quot;%s/create&quot;</span><span class="p">,</span> <span class="n">selinux_mnt</span><span class="p">);</span>

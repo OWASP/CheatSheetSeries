@@ -1612,14 +1612,14 @@
 <h3 id="no-content-flushing">No-Content Flushing<a class="headerlink" href="#no-content-flushing" title="Permanent link">&para;</a></h3>
 <p>While the previous attack requires user interaction, the same attack can be done without prompting the user. Most browsers (IE7, IE8, Google Chrome, and Firefox) enable an attacker to automatically cancel the incoming navigation request in an <code>onBeforeUnload</code> event handler by repeatedly submitting a navigation request to a site responding with "<em>204 - No Content</em>".</p>
 <p>Navigating to a No Content site is effectively a NOP, but flushes the request pipeline, thus canceling the original navigation request. Here is sample code to do this:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">preventbust</span> <span class="o">=</span> <span class="mi">0</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">preventbust</span> <span class="o">=</span> <span class="mf">0</span>
 <span class="nb">window</span><span class="p">.</span><span class="nx">onbeforeunload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">killbust</span><span class="o">++</span> <span class="p">}</span>
 <span class="nx">setInterval</span><span class="p">(</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">killbust</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
-    <span class="nx">killbust</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">killbust</span> <span class="o">&gt;</span> <span class="mf">0</span><span class="p">){</span>
+    <span class="nx">killbust</span> <span class="o">=</span> <span class="mf">2</span><span class="p">;</span>
     <span class="nb">window</span><span class="p">.</span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="s1">&#39;http://nocontent204.com&#39;</span>
     <span class="p">}</span>
-<span class="p">},</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">},</span> <span class="mf">1</span><span class="p">);</span>
 </code></pre></div>
 
 
