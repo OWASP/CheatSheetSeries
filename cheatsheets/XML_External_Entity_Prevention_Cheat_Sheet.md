@@ -8,6 +8,7 @@ XXE issue is referenced under the ID [611](https://cwe.mitre.org/data/definition
 
 This attack occurs when untrusted XML input containing a **reference to an external entity is processed by a weakly configured XML parser**.
 
+This attack may lead to the disclosure of confidential data, denial of service, [Server Side Request Forgery](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery) (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.
 
 For more information on XXE, please visit [XML External Entity (XXE)](https://en.wikipedia.org/wiki/XML_external_entity_attack).
 
