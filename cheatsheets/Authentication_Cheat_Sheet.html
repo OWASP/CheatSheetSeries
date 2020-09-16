@@ -1848,7 +1848,7 @@ ENDIF
 <p>Multi-factor authentication (MFA) is by far the best defence against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984">99.9% of account compromises</a>. As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.</p>
 <p>The <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet</a> contains further guidance on implementing MFA.</p>
 <h4 id="account-lockout">Account Lockout<a class="headerlink" href="#account-lockout" title="Permanent link">&para;</a></h4>
-<p>The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.</p>
+<p>The most common protection against these attacks is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.</p>
 <p>The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker from making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:</p>
 <ul>
 <li>The number of failed attempts before the account is locked out (lockout threshold).</li>
