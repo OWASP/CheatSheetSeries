@@ -333,10 +333,6 @@ Unmarshaller um = jc.createUnmarshaller();
 um.unmarshal(xmlSource);
 ```
 
-#### Java 8 and up
-
-Since [JDK-8010393](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8010393), which is in OpenJDK 8 beta 86, `javax.xml.bind.Unmarshaller` instances are safe by default. The other classes mentioned here are still unsafe by default in Java 8.
-
 ### XPathExpression
 
 A `javax.xml.xpath.XPathExpression` can not be configured securely by itself, so the untrusted data must be parsed through another securable XML parser first.
