@@ -595,7 +595,7 @@ To protect your application from the applicable attacks, [two packages](https://
 
 ## Semgrep Rules
 
-Semgrep is a command-line tool for offline static analysis. Use pre-built or custom rules to enforce code and security standards in your codebase.
+[Semgrep](https://semgrep.dev/) is a command-line tool for offline static analysis. Use pre-built or custom rules to enforce code and security standards in your codebase.
 
 ### Java
 
