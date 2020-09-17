@@ -1357,6 +1357,81 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#semgrep-rules" class="md-nav__link">
+    Semgrep Rules
+  </a>
+  
+    <nav class="md-nav" aria-label="Semgrep Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java_1" class="md-nav__link">
+    Java
+  </a>
+  
+    <nav class="md-nav" aria-label="Java">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digester" class="md-nav__link">
+    Digester
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentbuilderfactory" class="md-nav__link">
+    DocumentBuilderFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxbuilder_1" class="md-nav__link">
+    SAXBuilder
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxparserfactory" class="md-nav__link">
+    SAXParserFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxreader_1" class="md-nav__link">
+    SAXReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlinputfactory" class="md-nav__link">
+    XMLInputFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlreader_2" class="md-nav__link">
+    XMLReader
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     References
   </a>
@@ -1723,6 +1798,81 @@
   <a href="#python" class="md-nav__link">
     Python
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#semgrep-rules" class="md-nav__link">
+    Semgrep Rules
+  </a>
+  
+    <nav class="md-nav" aria-label="Semgrep Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java_1" class="md-nav__link">
+    Java
+  </a>
+  
+    <nav class="md-nav" aria-label="Java">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digester" class="md-nav__link">
+    Digester
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentbuilderfactory" class="md-nav__link">
+    DocumentBuilderFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxbuilder_1" class="md-nav__link">
+    SAXBuilder
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxparserfactory" class="md-nav__link">
+    SAXParserFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saxreader_1" class="md-nav__link">
+    SAXReader
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlinputfactory" class="md-nav__link">
+    XMLInputFactory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmlreader_2" class="md-nav__link">
+    XMLReader
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2303,6 +2453,31 @@
 </tbody>
 </table>
 <p>To protect your application from the applicable attacks, <a href="https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages">two packages</a> exist to help you sanitize your input and protect your application against DDoS and remote attacks.</p>
+<h2 id="semgrep-rules">Semgrep Rules<a class="headerlink" href="#semgrep-rules" title="Permanent link">&para;</a></h2>
+<p><a href="https://semgrep.dev/">Semgrep</a> is a command-line tool for offline static analysis. Use pre-built or custom rules to enforce code and security standards in your codebase.</p>
+<h3 id="java_1">Java<a class="headerlink" href="#java_1" title="Permanent link">&para;</a></h3>
+<p>Below are the rules for different XML parsers in Java</p>
+<h4 id="digester">Digester<a class="headerlink" href="#digester" title="Permanent link">&para;</a></h4>
+<p>Identifying XXE vulnerability in the <code>org.apache.commons.digester3.Digester</code> library
+Rule can be played here <a href="https://semgrep.dev/s/salecharohit:xxe-Digester">https://semgrep.dev/s/salecharohit:xxe-Digester</a></p>
+<h4 id="documentbuilderfactory">DocumentBuilderFactory<a class="headerlink" href="#documentbuilderfactory" title="Permanent link">&para;</a></h4>
+<p>Identifying XXE vulnerability in the <code>javax.xml.parsers.DocumentBuilderFactory</code> library
+Rule can be played here <a href="https://semgrep.dev/s/salecharohit:xxe-dbf">https://semgrep.dev/s/salecharohit:xxe-dbf</a></p>
+<h4 id="saxbuilder_1">SAXBuilder<a class="headerlink" href="#saxbuilder_1" title="Permanent link">&para;</a></h4>
+<p>Identifying XXE vulnerability in the <code>org.jdom2.input.SAXBuilder</code> library
+Rule can be played here <a href="https://semgrep.dev/s/salecharohit:xxe-saxbuilder">https://semgrep.dev/s/salecharohit:xxe-saxbuilder</a></p>
+<h4 id="saxparserfactory">SAXParserFactory<a class="headerlink" href="#saxparserfactory" title="Permanent link">&para;</a></h4>
+<p>Identifying XXE vulnerability in the <code>javax.xml.parsers.SAXParserFactory</code> library
+Rule can be played here <a href="https://semgrep.dev/s/salecharohit:xxe-SAXParserFactory">https://semgrep.dev/s/salecharohit:xxe-SAXParserFactory</a></p>
+<h4 id="saxreader_1">SAXReader<a class="headerlink" href="#saxreader_1" title="Permanent link">&para;</a></h4>
+<p>Identifying XXE vulnerability in the <code>org.dom4j.io.SAXReader</code> library
+Rule can be played here <a href="https://semgrep.dev/s/salecharohit:xxe-SAXReader">https://semgrep.dev/s/salecharohit:xxe-SAXReader</a></p>
+<h4 id="xmlinputfactory">XMLInputFactory<a class="headerlink" href="#xmlinputfactory" title="Permanent link">&para;</a></h4>
+<p>Identifying XXE vulnerability in the <code>javax.xml.stream.XMLInputFactory</code> library
+Rule can be played here <a href="https://semgrep.dev/s/salecharohit:xxe-XMLInputFactory">https://semgrep.dev/s/salecharohit:xxe-XMLInputFactory</a></p>
+<h4 id="xmlreader_2">XMLReader<a class="headerlink" href="#xmlreader_2" title="Permanent link">&para;</a></h4>
+<p>Identifying XXE vulnerability in the <code>org.xml.sax.XMLReader</code> library
+Rule can be played here <a href="https://semgrep.dev/s/salecharohit:xxe-XMLReader">https://semgrep.dev/s/salecharohit:xxe-XMLReader</a></p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/">XXE by InfoSecInstitute</a></li>
