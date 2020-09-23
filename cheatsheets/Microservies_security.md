@@ -47,6 +47,7 @@ In that pattern access control rules are defined centrally but stored and evalua
 ![Centralized pattern with embedded policy decision point HLD](../assets/Embed_PDP_HLD.png)
 PDP code in that case can be implemented as microservice built-in library or sidecar in service mesh architecture. Due to possible network/host failures and network latency it is advisable to implement embedded PDP as microservice library or sidecar on the same host with microservice. Embedded PDP usually store authorization policy and policy-related data in-memory to minimize external dependencies during authorization enforcement and get low latency. Main difference from “Centralized pattern with single policy decision point” with caching approach is that authorization decisions do not store on the microservice side, up to date authorization policy are stored on microservice side instead. It should be mentioned that caching authorization decisions may lead to applying outdated authorization rules and access control violations.
 Netfix presented ([link](https://www.youtube.com/watch?v=R6tUNpRpdnY), [link](https://conferences.oreilly.com/velocity/vl-ca-2018/public/schedule/detail/66606.html)) a real case of using “Centralized pattern with embedded PDP” pattern to implement authorization on the microservices level.
+
 ![Centralized pattern with embedded policy decision point HLD](../assets/Netflix_AC.png)
 
 - Policy portal and Policy repository is UI-based system for creating, managing and versioning access control rules;
