@@ -59,18 +59,14 @@ Netfix presented ([link](https://www.youtube.com/watch?v=R6tUNpRpdnY), [link](ht
 1. To achieve scalability it is not advisable to hardcode authorization policy in source code (decentralized pattern), but use special language to express policy instead. The goal is to externalize/decouple authorization from code, and not just with a gateway/proxy that acts as a checkpoints. Recommended pattern for service-level authorization is “Centralized pattern with embedded PDP” due to its resilience and wide adoption.
 2. Authorization solution should be platform-level solution; dedicated team (e.g., Platform security team) must be accountable for development and operation of authorization solution as well as sharing microservice blueprint/library/components that implement authorization among development teams.
 3. Authorization solution should be based on widely used solution, because implementing custom solution has following cons:
-
-> - security or engineering team have to build and maintain custom solution;
-> - it is necessary to build and maintain client library SDKs for every language used in system architecture;
-> - necessity to train every developer on custom authorization service API and integration, and there’s no open source community to source information from.
-
+    - security or engineering team have to build and maintain custom solution;
+    - it is necessary to build and maintain client library SDKs for every language used in system architecture;
+    - necessity to train every developer on custom authorization service API and integration, and there’s no open source community to source information from.
 4. There is a probability that not all access control policy can be enforced by gateways/proxies and shared authorization library/components, so some specific access control rules still have to be implemented on microservice buisnes code level. In order to do that it is advisiable to have and use by microservice development teams simple questionary/check-list to uncover such security requriments and handle its properly during microservice development.
 5. It is advisable to implement “defense in depth” principle   enforce authorization on:
-
-> - gateways and proxies level at a coarse level of granularity;
-> - microservice level using shared authorization library/components to enforce fine-granted decisions;
-> - microservice business code level to implement business-specific access control rules.
-
+    - gateways and proxies level at a coarse level of granularity;
+    - microservice level using shared authorization library/components to enforce fine-granted decisions;
+    - microservice business code level to implement business-specific access control rules.
 6. Access control policy formal procedures like development, approvement, rolling-out must be implemented.
 
 ## External entity identity propagation
@@ -122,19 +118,15 @@ Token based approach works at the application layer. Token is a container and ma
 ![Signed ID propogation](../assets/Token_validation.png)
 
 1. Online scenario:
-
-> - to validate incoming token microservice invokes centralized service token service via network call;
-> - revoked (compromised) token can be detected
-> - high latency
-> - should be apply to critical requests
-
+    - to validate incoming token microservice invokes centralized service token service via network call;
+    - revoked (compromised) token can be detected
+    - high latency
+    - should be apply to critical requests
 2. Offline scenario:
-
-> - to validate incoming token microservice use downloaded service token service public key;
-> - revoked (compromised) token may not be detected
-> - low latency
-> - should be apply to non-critical requests
-
+    - to validate incoming token microservice use downloaded service token service public key;
+    - revoked (compromised) token may not be detected
+    - low latency
+    - should be apply to non-critical requests
 In most cases, token-based authentication works over TLS that provides confidentiality and integrity of data in transit.
 
 ## References
