@@ -2,52 +2,54 @@
 
 ## Introduction
 
-Objective of the Threat Modelling Control Cheat Sheet – To provide guidance to architects, designers and reviewers, on deriving threat models for applications.
+Threat modeling is a structured approach of identifying and prioritizing potential threats to a system, and determining the value that potential mitigations would have in reducing or neutralizing those threats. This cheat sheet aims to provide guidance on how to create threat models for both existing systems or applications as well as new systems.
 
-Audience for this cheat sheet
+You do not need to be a security expert in order to implement the techniques covered in this cheat sheet. All developers, software and system designers, and architects should strive to include threat modeling in their software development life cycle. Optimally, you will create your threat models and determine which mitigations are needed during an early stage of the development of a new system, application, or feature. Assessing potential threats during the design phase of your project can save significant resources that might be needed to refactor the project to include risk mitigations during a later phase of the project.
 
-1. Designers and Architects.
-2. Threat Modeling SMEs or Security Assessors who are responsible for analyzing the security of the entire applications’ components.
+When you produce a threat model, you will:
 
-This cheat sheet provides guidance to assess existing apps as well as new apps. The instructions in here will help designer and architects address applications risks in an early stage of the development life cycle to help developers consider these risks while writing the code. It will also help assessors to look at risks from a comprehensive perspective.
+- Document how data flows through a system to identify where the system might be attacked.
+- Document as many potential threats to the system as possible.
+- Document security controls that may be put in place to reduce the likelihood or impact
+  of a potential threat.
 
-Following the guidance in this cheat sheet, the assessors will list all possible risks and then verifies whether there are enough security controls to protect against these risks. The assessor will then give better recommendations on how to mitigate these risks. It will help the assessor discover logical attacks. In general, the threat modeling will help designers, architects and assessors discover logical attacks.
+Note that throughout the document, the terms "systems" and "applications" are used interchangeably. The principles in the document apply equally to designing and building systems such as network infrastructures or server clusters as they do to designing or developing desktop, mobile, or web applications.
 
-## Preparation
+### Threat Modeling Terminology
 
-### Understand Risk Management Basics in the context of Application Security
+You should be familiar with the following terms that will be used throughout this cheat sheet.
 
-Understand the Relation between Risk, Threats, and Vulnerabilities.
+A *threat agent* is an individual or group that is capable of carrying out a particular threat. It is fundamental to identify who would want to exploit the assets of a company, how they might use them against the company, and if they would be capable of doing so. Some threats require more expertise or resources, and thus raise the level of threat actor needed. For example, if a threat requires hundreds of thousands of dollars of computing power to implement, it is likely that only organized corporate, criminal, or government actors would be valid threat actors for such a threat. However, with the rise of cloud computing and the prevalence of attack software on the internet, other threats may be easy to implement with relatively little skill and few resources.
 
-### Threat Modeling Terminologies
+*Impact* is a measure of the potential damage caused by a particular threat. Impact and damage can take a variety of forms. A threat may result in damage to physical assets, or may result in obvious financial loss. Indirect loss may also result from an attack, and needs to be considered as part of the impact. For example, if your company's website were defaced this could cause damage to your company's reputation, which may in turn cause a loss of business because of the loss of confidence by your users. Depending on the business you are in, attacks that expose user information could potentially result in a physical threat of harm or loss of life to your users, greatly raising the impact of threats that would allow such exposure.
 
-*Information Asset*, a body of knowledge that is organized and managed as a single entity. Like any other corporate asset, an organization's information assets have financial value.
+*Likelihood* is a measure of the possibility of a threat being carried out. A variety of factors can impact the likelihood of a threat being carried out, including how difficult the implementation of the threat is, and how rewarding it would be to the attacker. For example, if a threat required a skilled threat actor with tens of thousands of dollars of computing resources to implement, and the only reward was that they were able to gain access to information that is already public in some other form, the likelihood is low. However, if the threat is relatively easy to accomplish, or if the attacker were to gain valuable information from which they could profit, the likelihood may be higher.
 
-*Threat Agent*, an individual or group that can manifest a threat. It is fundamental to identify who would want to exploit the assets of a company, and how they might use them against the company.
+*Controls* are safeguards or countermeasures that you put in place in order to avoid, detect, counteract, or minimize potential threats against your information, systems, or other assets.
 
-*Attack Surface*, the sum of the different points (the "attack vectors") where an unauthorized user (the "attacker") can try to enter data to or extract data from an environment.
+*Preventions* are controls that may completely prevent a particular attack from being possible. For example, if you identify a threat that your users' personal information may be identified by certain application logging, and you decide to completely remove that logging, you have prevented that particular threat.
 
-*Likelihood*, the possibility of a a threat event occurring where a threat actor will exploit a weakness. The likelihood of threat events resulting in adverse impacts estimates the possibility that a threat event would result in an actual outcome. The combined analysis of both threat assessment vectors impacts established an overall threat likelihood.
+*Mitigations* are controls that are put in place to reduce either the likelihood or the impact of a threat, while not necessarily completely preventing it. For example, if you store your user's passwords as hashes in a database, two users who have the same password will have the same hash. Thus, if an attacker has access to the hashed passwords and is able to determine the password associated with one hash, he is easily able to find all the other users who share the same password simply by looking for the same hash. However, if you [add salts to each user's password](Password_Storage_Cheat_Sheet.md#salting), the cost of this particular attack is greatly increased, as the attacker must crack each password individual. An increase in cost reduces the likelihood, and thus has _mitigated_ the attack.
 
-*Impact*, the potential damage (physical, logical, monetary loss, etc) of a threat event.
+A *data flow diagram* is a depiction of how information flows through your system. It shows each place that data is input into or output from each process or subsystem. It includes anywhere that data is stored in the system, either temporarily or long-term.
 
-*Control* a safeguard or countermeasure to avoid, detect, counteract, or minimize security risks to information, computer systems, or other assets.
+A *trust boundary* (in the context of threat modeling) is a location on the data flow diagram where data changes its level of trust. Any place where data is passed between two processes is typically a trust boundary. If your application reads a file from disk, there's a trust boundary between the application and the file because outside processes and users can modify the data in the file. If your application makes a call to a remote process, or a remote process makes calls to your application, that's a trust boundary. If you read data from a database, there's typically a trust boundary because other processes can modify the data in the database. Any place you accept user input in any form is always a trust boundary.
 
-*Mitigation* A systematic reduction of risk or likelihood's impact to an asset.
+## Getting Started
 
-*Tractability Matrix*, a grid that allows documentation and easy viewing of what is required for a system's security.
+### Define Business Objectives
 
-### Define Objectives
+Before starting the threat modeling process it is important to identify business objectives of the applications you are assessing, and to identify security and compliance requirements that may be necessary due to business or government regulation. Having these objectives and requirements in mind before the threat assessment begins will help you to evaluate the impact of any threat you find during the risk analysis process.
 
-Before starting the threat modeling process; it is important to identify business objectives of the applications, and identify security & compliance requirements. This is very important to be defined in advance to help to evaluate the impact of any vulnerability during the risk analysis process.
+### Identify application design
 
-## Identify application design
+Early in the threat modeling process, you will need to draw a data flow diagram of the entire system that is being assessed, including its trust boundaries. Thus, understanding the design of the application is key to performing threat modeling. Even if you are very familiar with the application design, you may identify additional data flows and trust boundaries throughout the threat modeling process.
 
-Understanding application design is a key activity to perform application threat modeling. It will enable the user of this cheat sheet to draw an accurate data flow diagram. Therefore, it will be easier to identify all possible risks. Moreover, the more the user of this cheat sheet understands application design, the better they will understand logical application attacks. The objective of the design document is to enumerate application components.
+A thorough understanding of how the system is designed will also help you assess the likelihood and potential impact of any particular threat that you identify.
 
-### Review the application design document
+When you are assessing an existing system that has existing design documentation, spend time reviewing that documentation. The documentation may be out of date, requiring you to gather new information to update the documentation. Or, there may be not documentation at all, requiring you to create the design documents.
 
-If you are not performing threat modeling during the development (in the design phase) so you have to review the application design documents to understand the application structure and to help to generate the data flow diagram. If there are no available design documents so you have to create one. Move to the next section
+In the optimal case, you are performing your assessment during the design phase of the project, and the design documentation will be up-to-date and available. In any event, this cheat sheet outlines steps you can take to create design documents if they are needed.
 
 ### Create design documents
 

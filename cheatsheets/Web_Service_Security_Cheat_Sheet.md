@@ -95,6 +95,16 @@ Web services like web applications could be a target for DOS attacks by automati
 
 ## Availability
 
+### Resources Limiting
+
+During regular operation, web services require computational power such as CPU cycles and memory. Due to malfunctioning or while under attack, a web service may required too much resources, leaving the host system unstable.
+
+**Rule**: Limit the amount of CPU cycles the web service can use based on expected service rate, in order to have a stable system.
+
+**Rule**: Limit the amount of memory the web service can use to avoid system running out of memory. In some cases the host system may start killing processes to free up memory.
+
+**Rule**: Limit the number of simultaneous open files, network connections and started processes.
+
 ### Message Throughput
 
 Throughput represents the number of web service requests served during a specific amount of time.

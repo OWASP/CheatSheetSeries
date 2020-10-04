@@ -204,7 +204,7 @@ The [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sh
 
 #### Account Lockout
 
-The most common protection against these accounts is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.
+The most common protection against these attacks is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.
 
 The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker from making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:
 
