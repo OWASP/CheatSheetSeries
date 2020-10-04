@@ -270,6 +270,29 @@ spec:
 
 For more information on security context for Pods, refer to the documentation at https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
+### Implement Service Mesh
+A service mesh is an infrastructure layer for microservices applications that can help reduce the complexity of managing microservices and deployments by handling infrastructure service communication quickly, securely and reliably. Service meshes are great at solving operational challenges and issues when running containers and microservices because they provide a uniform way to secure, connect and monitor microservices. Service mesh provides the following advantages:
+
+#### Obeservability 
+Service Mesh provides tracing and telemetry metrics that make it easy to understand your system and quickly root cause any problems.
+	
+#### Security
+A service mesh provides security features aimed at securing the services inside your network and quickly identifying any compromising traffic entering your cluster. A service mesh can help you more easily manage security through mTLS, ingress and egress control, and more.
+
+* mTLS and Why it Matters
+		Securing microservices is hard. There are a multitude of tools that address microservices security, but service mesh is the most elegant solution for addressing encryption of on-the-wire traffic within the network.
+		Service mesh provides defense with mutual TLS (mTLS) encryption of the traffic between your services. The mesh can automatically encrypt and decrypt requests and responses, removing that burden from the application developer. It can also improve performance by prioritizing the reuse of existing, persistent connections, reducing the need for the computationally expensive creation of new ones. With service mesh, you can secure traffic over the wire and also make strong identity-based authentication and authorizations for each microservice.
+		We see a lot of value in this for enterprise companies. With a good service mesh, you can see whether mTLS is enabled and working between each of your services and get immediate alerts if security status changes.
+
+* Ingress & Egress Control
+Service mesh adds a layer of security that allows you to monitor and address compromising traffic as it enters the mesh. Istio integrates with Kubernetes as an ingress controller and takes care of load balancing for ingress. This allows you to add a level of security at the perimeter with ingress rules. Egress control allows you to see and manage external services and control how your services interact with them.
+
+#### Operational Control
+A service mesh allows security and platform teams to set the right macro controls to enforce access controls, while allowing developers to make customizations they need to move quickly within these guardrails.
+
+#### RBAC
+A strong Role Based Access Control (RBAC) system is arguably one of the most critical requirements in large engineering organizations, since even the most secure system can be easily circumvented by overprivileged users or employees. Restricting privileged users to least privileges necessary to perform job responsibilities, ensuring access to systems are set to “deny all” by default, and ensuring proper documentation detailing roles and responsibilities are in place is one of the most critical security concerns in the enterprise.
+
 ### Implementing Open Policy Agent (OPA) for a centralized policy management 
 OPA is a project that started in 2016 aimed at unifying policy enforcement across different technologies and systems. It can be used to enforce policies on their platforms (like Kubernetes clusters). When it comes to Kubernetes, RBAC and Pod security policies to impose fine-grained control over the cluster. But again, this will only apply to the cluster but not outside the cluster. That’s where Open Policy Agent (OPA) comes into play. OPA was introduced to create a unified method of enforcing security policy in the stack.
 
@@ -324,7 +347,6 @@ Assign a resource quota to namespace:
 ```
   # kubectl create -f ./compute-resources.yaml --namespace=myspace
 ```
-
 
 ### Use Kubernetes network policies to control traffic between pods and clusters
 Running different applications on the same Kubernetes cluster creates a risk of one compromised application attacking a neighboring application. Network segmentation is important to ensure that containers can communicate only with those they are supposed to. 
@@ -639,3 +661,4 @@ Master documentation - https://kubernetes.io/
 13. Tesla cloud resources are hacked to run cryptocurrency-mining malware - https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/
 14. OPEN POLICY AGENT: CLOUD-NATIVE AUTHORIZATION - https://blog.styra.com/blog/open-policy-agent-authorization-for-the-cloud
 15. Introducing Policy As Code: The Open Policy Agent (OPA) - https://www.magalix.com/blog/introducing-policy-as-code-the-open-policy-agent-opa
+16. What service mesh provides - https://aspenmesh.io/what-service-mesh-provides/
