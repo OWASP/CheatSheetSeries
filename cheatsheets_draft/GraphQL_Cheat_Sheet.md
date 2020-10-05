@@ -16,8 +16,7 @@ Below are some quick high-level ideas to keep in mind when building a secure API
     - [OS Command injection](https://owasp.org/www-community/attacks/Command_Injection)
     - [SSRF](https://portswigger.net/web-security/ssrf) and [CRLF](https://owasp.org/www-community/vulnerabilities/CRLF_Injection) [injection](https://www.acunetix.com/websitesecurity/crlf-injection/)/[Request](https://portswigger.net/web-security/request-smuggling) [Smuggling](https://www.pentestpartners.com/security-blog/http-request-smuggling-a-how-to/)
 - [DoS](https://owasp.org/www-community/attacks/Denial_of_Service) ([Denial of Service](https://www.cloudflare.com/learning/ddos/glossary/denial-of-service/))
-- [IDOR](https://portswigger.net/web-security/access-control/idor)
-- Broken authorization: either [improper](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md) or [excessive](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa3-excessive-data-exposure.md) access
+- Broken authorization: either [improper](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md) or [excessive](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa3-excessive-data-exposure.md) access, including [IDOR](https://portswigger.net/web-security/access-control/idor)
 
 ## Best Practices and Recommendations
 
@@ -191,11 +190,20 @@ Not properly limiting the amount of resources your API can use (e.g. CPU or memo
 To ensure that a GraphQL API has proper access control, do the following:
 
 - Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with [RBAC](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Access_Control_Cheat_Sheet.md#role-based-access-control-rbac) or other access control mechanisms.
+    - This will prevent [IDOR](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html) issues, including both [BOLA](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md) and [BFLA](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa5-broken-function-level-authorization.md).
 - Enforce authorization checks on both edges and nodes (see example [bug report](https://hackerone.com/reports/489146) where nodes did not have authorization checks but edges did).
 - Use [Interfaces](https://graphql.org/learn/schema/#interfaces) and [Unions](https://graphql.org/learn/schema/#union-types) to create structured, hierarchical data types which can be used to return more or fewer object properties, according to requester permissions.
 - Query and Mutation [Resolvers](https://graphql.org/learn/execution/#root-fields-resolvers) can be used to perform access control validation, possibly using some RBAC middleware.
 - [Disable introspection queries](https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/) system-wide in any production or publicly accessible environments.
 - Disable [GraphiQL](https://github.com/graphql/graphiql) and other similar schema exploration tools in production or publicly accessible environments.
+
+#### General Data Access
+
+It's commonplace for GraphQL requests to include one or more direct IDs of objects in order to fetch or modify them. For example, a request for a certain picture may include the ID that is actually the primary key in the database for that picture. As with any request, the server must verify that the caller has access to the object they are requesting. But sometimes developers make the mistake of assuming that possession of the object's ID means the caller should have access. Failure to verify the requester's access in this case is called [Broken Object Level Authentication](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md), which is a subset of a weakness called [IDOR](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html).
+
+> New section from nikitastupin. Not something I can personally verify with my limited GraphQL experience, so would be great if someone else can check this out.
+
+It's possible for a GraphQL API to support access to objects using their ID even if that is not intended. Sometimes there are `node` or `nodes` or both fields in a query object, and these can be used to access objects directly by `ID`. You can check whether your schema has these fields by running this on the command line (assuming that `schema.json` contains your GraphQL schema): `cat schema.json | jq ".data.__schema.types[] | select(.name==\"Query\") | .fields[] | .name" | grep node`. You can remove these fields from the schema to disable the functionality. Or as stated above you can apply proper authorization checks to verify the caller has access to the object they are requesting.
 
 #### Query Access (Data Fetching)
 
@@ -233,14 +241,6 @@ app.use('/graphql', graphqlHTTP({
   graphiql: process.env.NODE_ENV === 'development',
 }));
 ```
-
-### IDOR Protection
-
-In general, proper access controls will prevent any IDOR attacks since IDOR merely represents 2 separate authorization issues: [Broken Object Level Authorization](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md) and [Broken Function Level Authorization](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa5-broken-function-level-authorization.md). See the [IDOR prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html) for a comprehensive rundown of preventing IDOR.
-
-> New section from nikitastupin. Not something I can personally verify with my limited GraphQL experience, so would be great if someone else can check this out.
-
-Sometimes there are `node` or `nodes` or both fields in a query object. They can be used to access objects directly by `ID` which often introduces authorization vulnerabilities. You can check whether your schema has these fields by running this on the command line (assuming that `schema.json` contains your GraphQL schema): `cat schema.json | jq ".data.__schema.types[] | select(.name==\"Query\") | .fields[] | .name" | grep node`. To prevent such vulnerabilities either remove these fields or apply proper authorization checks when objects accessed directly by `ID` as discussed earlier in the "Access Control" section.
 
 ## Other Resources
 
