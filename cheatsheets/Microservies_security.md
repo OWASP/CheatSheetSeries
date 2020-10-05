@@ -20,7 +20,7 @@ The microservice architecture is being increasingly used for designing and imple
     - [Recommendation on how to implement identity propogation](#Recommendation-on-how-to-implement-identity-propogation)
 - [Service-to-service authentication](#Service-to-service-authentication)
     - [Service-to-service authentication: existing patterns](#Service-to-service-authentication:-existing-patterns)
-        - [Mutual transport layer security (mTLS)](#Mutual-transport-layer-security-(mTLS))
+        - [Mutual transport layer security](#Mutual-transport-layer-security)
         - [Token based](#Token-based)
 - [References](#References)
 
@@ -129,7 +129,7 @@ It should be mentioned that pattern is external access token agnostic and allows
 
 ### Existing patterns
 
-#### Mutual transport layer security (mTLS)
+#### Mutual transport layer security
 
 In mTLS approach each microservice can legitimately identify who it talks to, in addition to achieving confidentiality and integrity of the transmitted data. Each microservice in the deployment has to carry a public/private key pair and uses that key pair to authenticate to the recipient microservices via mTLS. mTLS usually is implemented with a self-hosted Public Key Infrastructure. The main challenges using mTLS are: key provisioning and trust bootstrap, certificate revocation and key rotation.
 
