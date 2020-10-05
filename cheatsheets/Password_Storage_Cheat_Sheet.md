@@ -7,7 +7,7 @@ As the majority of users will re-use passwords between different applications, i
 This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
 - **Use [Bcrypt](#modern-algorithms) unless you have a good reason not to.**
-- **Set a reasonable [work factor](#work-factors) for you system.**
+- **Set a reasonable [work factor](#work-factors) for your system.**
 - **Use a [salt](#salting) (modern algorithms do this for you automatically).**
 - **Consider using a [pepper](#peppering) to provide an additional layer of security.**
 
