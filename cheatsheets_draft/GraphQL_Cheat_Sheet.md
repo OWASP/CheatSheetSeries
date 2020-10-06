@@ -203,7 +203,7 @@ It's commonplace for GraphQL requests to include one or more direct IDs of objec
 
 > New section from nikitastupin. Not something I can personally verify with my limited GraphQL experience, so would be great if someone else can check this out.
 
-It's possible for a GraphQL API to support access to objects using their ID even if that is not intended. Sometimes there are `node` or `nodes` or both fields in a query object, and these can be used to access objects directly by `ID`. You can check whether your schema has these fields by running this on the command line (assuming that `schema.json` contains your GraphQL schema): `cat schema.json | jq ".data.__schema.types[] | select(.name==\"Query\") | .fields[] | .name" | grep node`. You can remove these fields from the schema to disable the functionality. Or as stated above you can apply proper authorization checks to verify the caller has access to the object they are requesting.
+It's possible for a GraphQL API to support access to objects using their ID even if that is not intended. Sometimes there are `node` or `nodes` or both fields in a query object, and these can be used to access objects directly by `ID`. You can check whether your schema has these fields by running this on the command line (assuming that `schema.json` contains your GraphQL schema): `cat schema.json | jq ".data.__schema.types[] | select(.name==\"Query\") | .fields[] | .name" | grep node`. Removing these fields from the schema should disable the functionality, but you should always apply proper authorization checks to verify the caller has access to the object they are requesting.
 
 #### Query Access (Data Fetching)
 
