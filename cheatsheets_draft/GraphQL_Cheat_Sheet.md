@@ -7,7 +7,7 @@ Below are some quick high-level ideas to keep in mind when building a secure API
 - Strict input validation is highly recommended and easy
 - Expensive queries can easily lead to Denial of Service (DoS); there are several defenses ranging from simple to complex
 - It is very important to implement proper access control (authorization) but it can be tricky
-- Some default configurations (Introspection, GraphiQL) should be disabled/changed before releasing an API to production
+- Some default configurations (Introspection, GraphiQL, excessive errors) should be disabled/changed before releasing an API to production
 
 ## Common Attacks
 
@@ -213,16 +213,6 @@ As part of a GraphQL API there will be various data fields that can be returned.
 
 GraphQL supports mutation, or manipulation of data, in addition to its most common use case of data fetching. If an API implements/allows mutation then there may need to be access controls put in place to restrict which consumers, if any, can modify data through the API. Setups that require mutation access control would include APIs where only read access is intended for requesters or where only certain parties should be able to modify certain fields.
 
-#### Introspection + GraphiQL
-
-Many implementations of GraphQL have Introspection and GraphiQL enabled by default and leave them accessible without requiring authentication. This is problematic because introspection allows the requester to learn all about supported schema and queries (see a [real-world example](https://hackerone.com/reports/291531) abusing this). Introspection might be how the API owner wants to educate consumers about how to use the API. However, the preferred way to educate consumers about a service is through a separate documentation channel such as a wiki, Git Readme, or readthedocs.
-
-The safest and usually easiest approach is to just disable introspection and GraphiQL system-wide. See [this page](https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/) or consult your GraphQL implementation's documentation to learn how to disable introspection altogether. If your implementation does not natively support disabling introspection or if you would like to allow some consumers/roles to have this access you can build a filter in your service to only allow approved consumers to access the introspection system.
-
-> This blurb is from nikitastupin. Would be great if we knew the name of this "hint" feature and link to documentation to disable it. I couldn't find anything from a quick Google.
-
-Keep in mind that even if introspection is disabled you can still guess fields by brute forcing them. Furthermore, some GraphQL implementations give you a hint when a field name you provide is similar to an existing field (e.g. you provide `usr` and the response may ask if you meant the valid `user` field instead). You should consider disabling this feature.
-
 ***Disable Introspection - Java***
 
 ```Java
@@ -241,6 +231,25 @@ app.use('/graphql', graphqlHTTP({
   graphiql: process.env.NODE_ENV === 'development',
 }));
 ```
+
+### Secure Configurations
+
+By default, most GraphQL implementations have some insecure default configurations which should be changed:
+
+- Disable/restrict introspection + GraphiQL
+- Don't return excessive error messages (e.g. disable stack traces and debug mode)
+
+#### Introspection + GraphiQL
+
+Many implementations of GraphQL have Introspection and GraphiQL enabled by default and leave them accessible without requiring authentication. This is problematic because introspection allows the requester to learn all about supported schema and queries (see a [real-world example](https://hackerone.com/reports/291531) abusing this). Introspection might be how the API owner wants to educate consumers about how to use the API. However, the preferred way to educate consumers about a service is through a separate documentation channel such as a wiki, Git Readme, or readthedocs.
+
+The safest and usually easiest approach is to just disable introspection and GraphiQL system-wide. See [this page](https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/) or consult your GraphQL implementation's documentation to learn how to disable introspection altogether. If your implementation does not natively support disabling introspection or if you would like to allow some consumers/roles to have this access you can build a filter in your service to only allow approved consumers to access the introspection system.
+
+Keep in mind that even if introspection is disabled, attackers can still guess fields by brute forcing them. Furthermore, GraphQL has a built-in feature to return a hint when a field name that the requester provides is similar (but incorrect) to an existing field (e.g. request has `usr` and the response will ask `Did you mean "user?"`). You should consider disabling this feature to decrease the exposure, but not all implementations of GraphQL support doing so. [Shapeshifter](https://github.com/szski/shapeshifter) is one tool that [should be able to do this](https://www.youtube.com/watch?v=NPDp7GHmMa0&t=2580).
+
+#### Don't Return Excessive Errors
+
+GraphQL APIs in production shouldn't return stack traces or be in debug mode. Doing this is implementation specific, but using middleware is one popular way to have better control over errors the server returns. To [disable excessive errors](https://www.apollographql.com/docs/apollo-server/data/errors/) with Apollo Server, either pass `debug: false` to the Apollo Server constructor or set the `NODE_ENV` environment variable to 'production' or 'test'. However, if you would like to log the stack trace internally without returning it to the user see [here](https://www.apollographql.com/docs/apollo-server/data/errors/#masking-and-logging-errors) for how to mask and log errors so they are available to the developers but not callers of the API.
 
 ## Other Resources
 
