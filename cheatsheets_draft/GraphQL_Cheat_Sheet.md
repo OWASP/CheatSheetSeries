@@ -6,7 +6,7 @@ Below are some quick high-level ideas to keep in mind when building a secure API
 
 - Strict input validation is highly recommended and easy
 - Expensive queries can easily lead to Denial of Service (DoS); there are several defenses ranging from simple to complex
-- It is very important to implement proper access control (authorization) but it can be tricky
+- It is very important to implement proper access control (authorization), but this can be tricky
 - Some default configurations (Introspection, GraphiQL, excessive errors) should be disabled/changed before releasing an API to production
 
 ## Common Attacks
@@ -112,9 +112,9 @@ Adding timeouts can be a simple way to limit how many resources any single reque
 
 At the application level, timeouts can be added for queries and resolver functions. This option is usually more effective since the query/resolution can be stopped once the timeout is reached. GraphQL does not natively support query timeouts so custom code is required. See [this blog post](https://medium.com/workflowgen/graphql-query-timeout-and-complexity-management-fab4d7315d8d) for more about using timeouts with GraphQL or the two examples below.
 
-> I grabbed the JavaScript snippet from the medium blog post I linked above and the java snippet from [this SO answer](https://stackoverflow.com/a/53277955/1200388). I haven't tested the code to verify it works. Is that something we should do?
-
 ***JavaScript Timeout Example***
+
+Code snippet from [this SO answer](https://stackoverflow.com/a/53277955/1200388):
 
 ```javascript
 request.incrementResolverCount =  function () {
@@ -173,17 +173,7 @@ To increase efficiency of a GraphQL API and reduce its resource consumption, [th
 
 #### OS/Container Resource Management
 
-> Planning to leave this section in until it's replaced by a better section in the "Availability" section of the [Web Security CS](https://cheatsheetseries.owasp.org/cheatsheets/Web_Service_Security_Cheat_Sheet.html#availability).
-
-> Also we are lacking advice for OS resource limitation on Windows. I have no idea how to do that but come across some [freeware](https://superuser.com/questions/214566/are-there-solutions-that-can-limit-the-cpu-usage-of-a-process) and [open-source](https://github.com/lowleveldesign/process-governor) options. Also found some [MS](https://docs.microsoft.com/en-us/windows/win32/procthread/processor-groups) [documentation](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/ff384148(v=ws.10)) and [pages](https://blogs.iis.net/thomad/put-the-brakes-on-your-application-pools-cpu-rate-limits-in-windows-7) that maybe cover this.
-
-Not properly limiting the amount of resources your API can use (e.g. CPU or memory), may compromise your API responsiveness and availability, leaving it vulnerable to DoS attacks. Some limiting can be done at the operating system level with a combination of [Control Groups(cgroups)](https://en.wikipedia.org/wiki/Cgroups), [User Limits (ulimits)](https://linuxhint.com/linux_ulimit_command/), and [Linux Containers (LXC)](https://linuxcontainers.org/lxc/security/). However, containerization platforms tend to make this task much easier. See the resource limiting section in the [Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts) for how to prevent DoS when using containers.
-
-#### Batching Attack
-
-[GraphQL batching attack](https://lab.wallarm.com/graphql-batching-attack/)?
-
-> This is an interesting attack that we should add. It seems like Amount Limiting will prevent it but I am not sure if that is the case. Needs some investigation. This may also belong in a different section since it's not DoS, it's brute force.
+Not properly limiting the amount of resources your API can use (e.g. CPU or memory), may compromise your API responsiveness and availability, leaving it vulnerable to DoS attacks. Some limiting can be done at the operating system level with a combination of [Control Groups(cgroups)](https://en.wikipedia.org/wiki/Cgroups), [User Limits (ulimits)](https://linuxhint.com/linux_ulimit_command/), and [Linux Containers (LXC)](https://linuxcontainers.org/lxc/security/) when using Linux. There are also some options that [may work](https://docs.microsoft.com/en-us/windows/win32/procthread/processor-groups) on [Windows](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/ff384148(v=ws.10)), both [native](https://blogs.iis.net/thomad/put-the-brakes-on-your-application-pools-cpu-rate-limits-in-windows-7) and [third](https://superuser.com/questions/214566/are-there-solutions-that-can-limit-the-cpu-usage-of-a-process) [party](https://github.com/lowleveldesign/process-governor). However, containerization platforms tend to make this task much easier. See the resource limiting section in the [Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts) for how to prevent DoS when using containers.
 
 ### Access Control
 
@@ -200,8 +190,6 @@ To ensure that a GraphQL API has proper access control, do the following:
 #### General Data Access
 
 It's commonplace for GraphQL requests to include one or more direct IDs of objects in order to fetch or modify them. For example, a request for a certain picture may include the ID that is actually the primary key in the database for that picture. As with any request, the server must verify that the caller has access to the object they are requesting. But sometimes developers make the mistake of assuming that possession of the object's ID means the caller should have access. Failure to verify the requester's access in this case is called [Broken Object Level Authentication](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md), also known as [IDOR](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html).
-
-> New section from nikitastupin. Not something I can personally verify with my limited GraphQL experience, so would be great if someone else can check this out.
 
 It's possible for a GraphQL API to support access to objects using their ID even if that is not intended. Sometimes there are `node` or `nodes` or both fields in a query object, and these can be used to access objects directly by `ID`. You can check whether your schema has these fields by running this on the command line (assuming that `schema.json` contains your GraphQL schema): `cat schema.json | jq ".data.__schema.types[] | select(.name==\"Query\") | .fields[] | .name" | grep node`. Removing these fields from the schema should disable the functionality, but you should always apply proper authorization checks to verify the caller has access to the object they are requesting.
 
@@ -231,6 +219,42 @@ app.use('/graphql', graphqlHTTP({
   graphiql: process.env.NODE_ENV === 'development',
 }));
 ```
+
+### Batching Attacks
+
+Because GraphQL supports batching requests for multiple different objects of the same type in a single network call it allows what is called a [batching attack](https://lab.wallarm.com/graphql-batching-attack/). This is a form of brute force attack, specific to GraphQL, that usually allows for faster and less detectable exploits. Here is an example query of a single batched GraphQL call requesting multiple different objects of type `droid`:
+
+```javascript
+query {
+  droid(id: "2000") {
+    name
+  }
+  second:droid(id: "2001") {
+    name
+  }
+  third:droid(id: "2002") {
+    name
+  }
+}
+```
+
+In this case it could be used to enumerate every possible `droid` object that is stored on the server in very few network requests as opposed to a standard REST API where the requester would need to submit a different network request for every different `droid` ID they want to request. This type of attack can lead to the following issues:
+
+- Enumerating every instance of an object on the server, such as users, emails, and user IDs.
+- Brute forcing passwords, 2 factor authentication codes (OTPs), session tokens, or other sensitive values.
+- WAFs, RASPs, IDS/IPS, SIEMs, or other security tooling will likely not detect these attacks since they only appear to be one single request rather than an a massive amount of network traffic.
+- This attack will likely bypass existing rate limits in tools like Nginx or other proxies/gateways since they rely on looking at the raw number of requests.
+
+#### Mitigating Batching Attacks
+
+In order to mitigate this type of attack you should put limits on incoming requests at the code level so that they can be applied per request. There are 2 main options:
+
+- Prevent batching for sensitive objects
+- Add object request rate limiting in code
+
+One option is to prevent batching for sensitive objects that you don't want to be brute forced, such as usernames, emails, passwords, OTPs, session tokens, etc. This way an attacker is forced to attack the API like a REST API and make a different network call per object instance. This is not supported natively so it will require a custom solution. However once this control is put in place other standard controls will function normally to help prevent any brute forcing.
+
+Another option is to create a code-level rate limit on how many objects that callers can request. This means the backend would track how many different object instances the caller has requested, so that they will be blocked after requesting too many objects even if they batch the object requests in a single network call. This replicates a network-level rate limit that a WAF or other tool would do.
 
 ### Secure Configurations
 
