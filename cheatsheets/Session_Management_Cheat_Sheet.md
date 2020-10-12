@@ -176,7 +176,7 @@ Unlike HTTP cookies, the contents of `localStorage` and `sessionStorage` are not
 
 #### Scope
 
-Data stored using the `localStorage` API is accessible by pages which are loaded from the same origin, which is defined as the scheme (`https:\\`), host (`example.com`), port (`443`) and domain/realm (`example.com`).
+Data stored using the `localStorage` API is accessible by pages which are loaded from the same origin, which is defined as the scheme (`https://`), host (`example.com`), port (`443`) and domain/realm (`example.com`).
 This provides similar access to this data as would be achieved by using the `secure` flag on a cookie, meaning that data stored from `https` could not be retrieved via `http`. Due to potential concurrent access from separate windows/threads, data stored using `localStorage` may be susceptible to shared access issues (such as race-conditions) and should be considered non-locking ([Web Storage API Spec](https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute)).
 
 #### Duration
@@ -196,7 +196,7 @@ WHATWG suggests the use of `localStorage` for data that needs to be accessed acr
 #### Scope
 
 The `sessionStorage` API stores data within the window context from which it was called, meaning that Tab 1 cannot access data which was stored from Tab 2.
-Also, like the `localStorage` API, data stored using the `sessionStorage` API is accessible by pages which are loaded from the same origin, which is defined as the scheme (`https:\\`), host (`example.com`), port (`443`) and domain/realm (`example.com`).
+Also, like the `localStorage` API, data stored using the `sessionStorage` API is accessible by pages which are loaded from the same origin, which is defined as the scheme (`https://`), host (`example.com`), port (`443`) and domain/realm (`example.com`).
 This provides similar access to this data as would be achieved by using the `secure` flag on a cookie, meaning that data stored from `https` could not be retrieved via `http`.
 
 #### Duration
