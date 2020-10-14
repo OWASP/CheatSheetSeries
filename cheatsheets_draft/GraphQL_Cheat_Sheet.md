@@ -222,7 +222,26 @@ app.use('/graphql', graphqlHTTP({
 
 ### Batching Attacks
 
-Because GraphQL supports batching requests for multiple different objects of the same type in a single network call it allows what is called a [batching attack](https://lab.wallarm.com/graphql-batching-attack/). This is a form of brute force attack, specific to GraphQL, that usually allows for faster and less detectable exploits. Here is an example query of a single batched GraphQL call requesting multiple different objects of type `droid`:
+GraphQL supports batching requests, also known as [query batching](https://www.apollographql.com/blog/query-batching-in-apollo-63acfd859862/). This lets callers to either batch multiple queries or batch requests for multiple object instances in a single network call, which allows for what is called a [batching attack](https://lab.wallarm.com/graphql-batching-attack/). This is a form of brute force attack, specific to GraphQL, that usually allows for faster and less detectable exploits. Here is the most common way to do query batching:
+
+```javascript
+[
+  {
+    query: < query 0 >,
+    variables: < variables for query 0 >,
+  },
+  {
+    query: < query 1 >,
+    variables: < variables for query 1 >,
+  },
+  {
+    query: < query n >
+    variables: < variables for query n >,
+  }
+]
+```
+
+And here is an example query of a single batched GraphQL call requesting multiple different instances of the `droid` object:
 
 ```javascript
 query {
@@ -240,6 +259,7 @@ query {
 
 In this case it could be used to enumerate every possible `droid` object that is stored on the server in very few network requests as opposed to a standard REST API where the requester would need to submit a different network request for every different `droid` ID they want to request. This type of attack can lead to the following issues:
 
+- DoS attacks - A high number of queries or object requests in a single network call could cause a database to hang or exhaust other available resources (e.g. memory, CPU, downstream services).
 - Enumerating every instance of an object on the server, such as users, emails, and user IDs.
 - Brute forcing passwords, 2 factor authentication codes (OTPs), session tokens, or other sensitive values.
 - WAFs, RASPs, IDS/IPS, SIEMs, or other security tooling will likely not detect these attacks since they only appear to be one single request rather than an a massive amount of network traffic.
@@ -251,11 +271,14 @@ In order to mitigate this type of attack you should put limits on incoming reque
 
 - Prevent batching for sensitive objects
 - Add object request rate limiting in code
+- Limit the number of queries that can run at one time
 
 One option is to prevent batching for sensitive objects that you don't want to be brute forced, such as usernames, emails, passwords, OTPs, session tokens, etc. This way an attacker is forced to attack the API like a REST API and make a different network call per object instance. This is not supported natively so it will require a custom solution. However once this control is put in place other standard controls will function normally to help prevent any brute forcing.
 
 Another option is to create a code-level rate limit on how many objects that callers can request. This means the backend would track how many different object instances the caller has requested, so that they will be blocked after requesting too many objects even if they batch the object requests in a single network call. This replicates a network-level rate limit that a WAF or other tool would do.
+
 Limiting the number of operations that can be batched and run at once, is another option to mitigate GraphQL batching attacks leading to Denial of Service (DoS).
+
 ### Secure Configurations
 
 By default, most GraphQL implementations have some insecure default configurations which should be changed:
