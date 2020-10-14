@@ -333,10 +333,6 @@ Unmarshaller um = jc.createUnmarshaller();
 um.unmarshal(xmlSource);
 ```
 
-#### Java 8 and up
-
-Since [JDK-8010393](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8010393), which is in OpenJDK 8 beta 86, `javax.xml.bind.Unmarshaller` instances are safe by default. The other classes mentioned here are still unsafe by default in Java 8.
-
 ### XPathExpression
 
 A `javax.xml.xpath.XPathExpression` can not be configured securely by itself, so the untrusted data must be parsed through another securable XML parser first.
@@ -592,6 +588,49 @@ The following table gives an overview of various modules in Python 3 used for XM
 | Decompression Bomb        | Safe       | Safe       | Safe       | Safe       | Vulnerable |
 
 To protect your application from the applicable attacks, [two packages](https://docs.python.org/3/library/xml.html#the-defusedxml-and-defusedexpat-packages) exist to help you sanitize your input and protect your application against DDoS and remote attacks.
+
+## Semgrep Rules
+
+[Semgrep](https://semgrep.dev/) is a command-line tool for offline static analysis. Use pre-built or custom rules to enforce code and security standards in your codebase.
+
+### Java
+
+Below are the rules for different XML parsers in Java
+
+#### Digester
+
+Identifying XXE vulnerability in the `org.apache.commons.digester3.Digester` library
+Rule can be played here [https://semgrep.dev/s/salecharohit:xxe-Digester](https://semgrep.dev/s/salecharohit:xxe-Digester)
+
+#### DocumentBuilderFactory
+
+Identifying XXE vulnerability in the `javax.xml.parsers.DocumentBuilderFactory` library
+Rule can be played here [https://semgrep.dev/s/salecharohit:xxe-dbf](https://semgrep.dev/s/salecharohit:xxe-dbf)
+
+#### SAXBuilder
+
+Identifying XXE vulnerability in the `org.jdom2.input.SAXBuilder` library
+Rule can be played here [https://semgrep.dev/s/salecharohit:xxe-saxbuilder](https://semgrep.dev/s/salecharohit:xxe-saxbuilder)
+
+#### SAXParserFactory
+
+Identifying XXE vulnerability in the `javax.xml.parsers.SAXParserFactory` library
+Rule can be played here [https://semgrep.dev/s/salecharohit:xxe-SAXParserFactory](https://semgrep.dev/s/salecharohit:xxe-SAXParserFactory)
+
+#### SAXReader
+
+Identifying XXE vulnerability in the `org.dom4j.io.SAXReader` library
+Rule can be played here [https://semgrep.dev/s/salecharohit:xxe-SAXReader](https://semgrep.dev/s/salecharohit:xxe-SAXReader)
+
+#### XMLInputFactory
+
+Identifying XXE vulnerability in the `javax.xml.stream.XMLInputFactory` library
+Rule can be played here [https://semgrep.dev/s/salecharohit:xxe-XMLInputFactory](https://semgrep.dev/s/salecharohit:xxe-XMLInputFactory)
+
+#### XMLReader
+
+Identifying XXE vulnerability in the `org.xml.sax.XMLReader` library
+Rule can be played here [https://semgrep.dev/s/salecharohit:xxe-XMLReader](https://semgrep.dev/s/salecharohit:xxe-XMLReader)
 
 ## References
 

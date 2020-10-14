@@ -8,9 +8,7 @@ This article is focused on providing clear and simple examples for the cipher st
 
 ### Scenarios
 
-The cipher strings are based on the recommendation to setup your policy to get a whitelist for your ciphers as described in the *[Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)](Transport_Layer_Protection_Cheat_Sheet.md)*. The latest and strongest ciphers are solely available with TLSv1.2, older protocols don't support them. Please find enclosed all supported protocols by the scenario.
-
-We have not included any `ChaCha20-Poly1305` ciphers, yet. One reason is that we haven't found various assessments yet, the other is that implementations of new ciphers may be more buggy.
+The cipher strings are based on the recommendation to setup your policy to get a whitelist for your ciphers as described in the *[Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)](Transport_Layer_Protection_Cheat_Sheet.md)*. The latest and strongest ciphers as well as additional improvements are solely available with TLSv1.3, older protocols don't support them. Please find enclosed all supported protocols by the scenario.
 
 Finally we have compiled the oldest versions of different client agents that are still compatible with a cipher string. We provide this information according to the ciphers and protocols supported by browsers, libraries, bots on the basis of *[ssllabs's list of user agent capabilities](https://www.ssllabs.com/ssltest/clients.html)* and tests on our own.
 
@@ -21,16 +19,16 @@ The recommended cipher strings are based on different scenarios:
 **OWASP Cipher String 'A'** (Advanced, wide browser compatibility, e.g. to most newer browser versions):
 
 - Recommended if you control the server and the clients. Make sure to check the compatibility before using it.
-- Includes solely the strongest [Perfect Forward Secrecy (PFS)](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers.
+- Includes solely the strongest [Perfect Forward Secrecy (PFS)](https://scotthelme.co.uk/perfect-forward-secrecy/) and [authenticated](https://en.wikipedia.org/wiki/Authenticated_encryption) ciphers.
 - Protocols: `TLSv1.3`, `TLSv1.2` (and newer or better).
-- Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 32/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7 + MS14-066, Java8b132, OpenSSL 1.0.1e, Safari 9/iOS 9, Yahoo Slurp Jun 2014, YandexBot Sep 2014.
+- Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 32/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7 + MS14-066, Java 8b132, OpenSSL 1.0.1e, Safari 9/iOS 9, Yahoo Slurp Jun 2014, YandexBot Sep 2014.
 
 **OWASP Cipher String 'B'** (Broad compatibility to browsers, check the compatibility to other protocols before using it, e.g. IMAPS):
 
 - Recommended if you solely control the server, the clients use their browsers and if you check the compatibility before using it for other protocols than HTTPS.
 - Includes solely the strongest and stronger [PFS](https://scotthelme.co.uk/perfect-forward-secrecy/) ciphers.
-- Protocols: `TLSv1.2` (and newer or better).
-- Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 30/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7, IE 11/WinPhone 8.1, Java8b132, OpenSSL 1.0.1e, Opera 17/Win 7, Safari 5/iOS 5.1.1, Safari 7/OS X 10.9, Yahoo Slurp Jun 2014, YandexBot Sep 2014
+- Protocols: `TLSv1.3`, `TLSv1.2` (and newer or better).
+- Oldest known clients that are compatible: Android 4.4.2, BingPreview Jan 2015, Chrome 30/Win 7, Chrome 34/OS X, Edge 12/Win 10, Firefox 27/Win 8, Googlebot Feb 2015, IE11/Win 7, IE 11/WinPhone 8.1, Java 8b132, OpenSSL 1.0.1e, Opera 17/Win 7, Safari 5/iOS 5.1.1, Safari 7/OS X 10.9, Yahoo Slurp Jun 2014, YandexBot Sep 2014
 
 **OWASP Cipher String 'C'** (Widest Compatibility, compatibility to most legacy browsers, legacy libraries (still patched) and other application protocols besides https, e.g. IMAPS):
 
