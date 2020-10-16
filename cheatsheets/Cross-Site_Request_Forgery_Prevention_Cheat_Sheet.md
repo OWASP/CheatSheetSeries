@@ -33,6 +33,7 @@ External components that add CSRF defenses to existing applications are also rec
 
 - For Java: OWASP [CSRF Guard](https://owasp.org/www-project-csrfguard/) or [Spring Security](https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html)
 - For PHP and Apache: [CSRFProtector Project](https://owasp.org/www-project-csrfprotector/)
+- For AngularJS: [Cross-Site Request Forgery (XSRF) Protection](https://docs.angularjs.org/api/ng/service/$http#cross-site-request-forgery-xsrf-protection)
 
 ### Synchronizer Token Pattern
 
