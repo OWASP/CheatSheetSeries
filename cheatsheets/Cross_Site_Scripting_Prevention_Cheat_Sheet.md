@@ -134,7 +134,7 @@ Inside double quoted attribute :
 <div attr="...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...">content
 ```
 
-Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the `&#xHH;` format (or a named entity if available) to prevent switching out of the attribute.
+Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the "&amp;#xHH;" format (or a named entity if available) to prevent switching out of the attribute.
 
 The reason this rule is so broad is that developers frequently leave attributes unquoted. Properly quoted attributes can only be escaped with the corresponding quote.
 
