@@ -256,6 +256,7 @@ References:
 - [Overview of docker-compose CLI](https://docs.docker.com/compose/reference/overview/)
 - [Configuring Logging Drivers](https://docs.docker.com/config/containers/logging/configure/)
 - [View logs for a container or service](https://docs.docker.com/config/containers/logging/)
+- [Dockerfile Security Best Practices](https://cloudberry.engineering/article/dockerfile-security-best-practices/)
 
 ## Related Projects
 
