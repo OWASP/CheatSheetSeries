@@ -19,7 +19,7 @@ The use of dedicated secret or key management systems can provide an additional 
 Encryption can be performed on a number of levels in the application stack, such as:
 
 - At the application level.
-- At the database level (e.g, [SQL Server TDE](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/transparent-data-encryption?view=sql-server-ver15)
+- At the database level (e.g, [SQL Server TDE](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/transparent-data-encryption?view=sql-server-ver15))
 - At the filesystem level (e.g, BitLocker or LUKS)
 - At the hardware level (e.g, encrypted RAID cards or SSDs)
 
