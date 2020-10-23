@@ -38,8 +38,8 @@ Validate all incoming data to only allow valid values (i.e. whitelist).
 - Define [schemas for mutations input](https://graphql.org/learn/schema/#input-types).
 - [Whitelist allowed characters](Input_Validation_Cheat_Sheet.md#whitelisting-vs-blacklisting) - don't use a blacklist
     - The stricter the whitelist the better. A lot of times a good starting point is only allowing alphanumeric, non-unicode characters because it will disallow many attacks.
-- To properly handle unicode input, use a [single internal character encoding](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html#validating-free-form-unicode-text)
-- Gracefully [reject invalid input](https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html), being careful not to reveal excessive information about how the API and its validation works.
+- To properly handle unicode input, use a [single internal character encoding](Input_Validation_Cheat_Sheet.md#validating-free-form-unicode-text)
+- Gracefully [reject invalid input](Error_Handling_Cheat_Sheet.md), being careful not to reveal excessive information about how the API and its validation works.
 
 #### Injection Prevention
 
@@ -53,11 +53,11 @@ When handling input meant to be passed to another interpreter (_e.g._ SQL/NoSQL/
 
 For more information see the below pages:
 
-- [SQL Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
+- [SQL Injection Prevention](SQL_Injection_Prevention_Cheat_Sheet.md)
 - [NoSQL Injection Prevention](https://www.netsparker.com/blog/web-security/what-is-nosql-injection/)
-- [LDAP Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.html)
-- [OS Command Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html)
-- [XML Security](https://cheatsheetseries.owasp.org/cheatsheets/XML_Security_Cheat_Sheet.html) and [XXE Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html)
+- [LDAP Injection Prevention](LDAP_Injection_Prevention_Cheat_Sheet.md)
+- [OS Command Injection Prevention](OS_Command_Injection_Defense_Cheat_Sheet.md)
+- [XML Security](XML_Security_Cheat_Sheet.md) and [XXE Injection Prevention](XML_External_Entity_Prevention_Cheat_Sheet.md)
 
 #### Process Validation
 
@@ -181,14 +181,14 @@ Not properly limiting the amount of resources your API can use (_e.g._ CPU or me
 
 On Linux, a combination of [Control Groups(cgroups)](https://en.wikipedia.org/wiki/Cgroups), [User Limits (ulimits)](https://linuxhint.com/linux_ulimit_command/), and [Linux Containers (LXC)](https://linuxcontainers.org/lxc/security/) can be used.
 
-However, containerization platforms tend to make this task much easier. See the resource limiting section in the [Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts) for how to prevent DoS when using containers.
+However, containerization platforms tend to make this task much easier. See the resource limiting section in the [Docker Security Cheat Sheet](Docker_Security_Cheat_Sheet.md#rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts) for how to prevent DoS when using containers.
 
 ### Access Control
 
 To ensure that a GraphQL API has proper access control, do the following:
 
-- Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with [RBAC](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Access_Control_Cheat_Sheet.md#role-based-access-control-rbac) or other access control mechanisms.
-    - This will prevent [IDOR](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html) issues, including both [BOLA](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md) and [BFLA](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa5-broken-function-level-authorization.md).
+- Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with [RBAC](Access_Control_Cheat_Sheet.md#role-based-access-control-rbac) or other access control mechanisms.
+    - This will prevent [IDOR](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md) issues, including both [BOLA](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md) and [BFLA](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa5-broken-function-level-authorization.md).
 - Enforce authorization checks on both edges and nodes (see example [bug report](https://hackerone.com/reports/489146) where nodes did not have authorization checks but edges did).
 - Use [Interfaces](https://graphql.org/learn/schema/#interfaces) and [Unions](https://graphql.org/learn/schema/#union-types) to create structured, hierarchical data types which can be used to return more or fewer object properties, according to requester permissions.
 - Query and Mutation [Resolvers](https://graphql.org/learn/execution/#root-fields-resolvers) can be used to perform access control validation, possibly using some RBAC middleware.
@@ -197,7 +197,7 @@ To ensure that a GraphQL API has proper access control, do the following:
 
 #### General Data Access
 
-It's commonplace for GraphQL requests to include one or more direct IDs of objects in order to fetch or modify them. For example, a request for a certain picture may include the ID that is actually the primary key in the database for that picture. As with any request, the server must verify that the caller has access to the object they are requesting. But sometimes developers make the mistake of assuming that possession of the object's ID means the caller should have access. Failure to verify the requester's access in this case is called [Broken Object Level Authentication](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md), also known as [IDOR](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html).
+It's commonplace for GraphQL requests to include one or more direct IDs of objects in order to fetch or modify them. For example, a request for a certain picture may include the ID that is actually the primary key in the database for that picture. As with any request, the server must verify that the caller has access to the object they are requesting. But sometimes developers make the mistake of assuming that possession of the object's ID means the caller should have access. Failure to verify the requester's access in this case is called [Broken Object Level Authentication](https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md), also known as [IDOR](Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md).
 
 It's possible for a GraphQL API to support access to objects using their ID even if that is not intended. Sometimes there are `node` or `nodes` or both fields in a query object, and these can be used to access objects directly by `ID`. You can check whether your schema has these fields by running this on the command line (assuming that `schema.json` contains your GraphQL schema): `cat schema.json | jq ".data.__schema.types[] | select(.name==\"Query\") | .fields[] | .name" | grep node`. Removing these fields from the schema should disable the functionality, but you should always apply proper authorization checks to verify the caller has access to the object they are requesting.
 
