@@ -123,7 +123,7 @@ Code snippet from [this SO answer](https://stackoverflow.com/a/53277955/1200388)
 ```javascript
 request.incrementResolverCount =  function () {
     var runTime = Date.now() - startTime;
-    if (runTime > 10) {  // a timeout of 10 seconds
+    if (runTime > 10000) {  // a timeout of 10 seconds
       if (request.logTimeoutError) {
         logger('ERROR', `Request ${request.uuid} query execution timeout`);
       }
