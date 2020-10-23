@@ -121,7 +121,7 @@ request.incrementResolverCount =  function () {
     var runTime = Date.now() - startTime;
     if (runTime > 10) {  // a timeout of 10 seconds
       if (request.logTimeoutError) {
-        logger('ERROR', 'Request ' + request.uuid + ' query execution timeout');
+        logger('ERROR', `Request ${request.uuid} query execution timeout`);
       }
       request.logTimeoutError = false;
       throw 'Query execution has timeout. Field resolution aborted';
