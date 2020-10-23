@@ -266,7 +266,7 @@ One option is to create a code-level rate limit on how many objects that callers
 
 Another option is to prevent batching for sensitive objects that you don't want to be brute forced, such as usernames, emails, passwords, OTPs, session tokens, etc. This way an attacker is forced to attack the API like a REST API and make a different network call per object instance. This is not supported natively so it will require a custom solution. However once this control is put in place other standard controls will function normally to help prevent any brute forcing.
 
-Limiting the number of operations that can be batched and run at once, is another option to mitigate GraphQL batching attacks leading to Denial of Service (DoS).
+Limiting the number of operations that can be batched and run at once is another option to mitigate GraphQL batching attacks leading to DoS. This is not a silver bullet though and should be used in conjunction with other methods.
 
 ### Secure Configurations
 
