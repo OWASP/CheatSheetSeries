@@ -75,7 +75,7 @@ Additionally, there are a number of offline tools that can be used:
 - [O-Saft - OWASP SSL advanced forensic tool](https://wiki.owasp.org/index.php/O-Saft)
 - [testssl.sh - Testing any TLS/SSL encryption](https://testssl.sh)
 - [SSLScan - Fast SSL Scanner](https://github.com/rbsec/sslscan)
-- [SSLyze](https://github.com/iSECPartners/sslyze)
+- [SSLyze](https://github.com/nabla-c0d3/sslyze)
 
 ## Certificates
 
