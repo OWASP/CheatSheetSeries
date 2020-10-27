@@ -68,14 +68,21 @@ Once the server has been hardened, the configuration should be tested. The [OWAS
 There are a number of online tools that can be used to quickly validate the configuration of a server, including:
 
 - [SSL Labs Server Test](https://www.ssllabs.com/ssltest)
+- [CryptCheck](https://cryptcheck.fr/)
+- [CypherCraft](https://www.cyphercraft.io/)
+- [Hardenize](https://www.hardenize.com/)
+- [ImmuniWeb](https://www.immuniweb.com/ssl/)
 - [Observatory by Mozilla](https://observatory.mozilla.org)
 
 Additionally, there are a number of offline tools that can be used:
 
 - [O-Saft - OWASP SSL advanced forensic tool](https://wiki.owasp.org/index.php/O-Saft)
-- [testssl.sh - Testing any TLS/SSL encryption](https://testssl.sh)
+- [CipherScan](https://github.com/mozilla/cipherscan)
+- [CryptoLyzer](https://gitlab.com/coroner/cryptolyzer)
 - [SSLScan - Fast SSL Scanner](https://github.com/rbsec/sslscan)
-- [SSLyze](https://github.com/iSECPartners/sslyze)
+- [SSLyze](https://github.com/nabla-c0d3/sslyze)
+- [testssl.sh - Testing any TLS/SSL encryption](https://testssl.sh)
+- [tls-scan](https://github.com/prbinu/tls-scan)
 
 ## Certificates
 
