@@ -133,7 +133,8 @@ Kubelets expose HTTPS endpoints which grant powerful control over the node and c
 For more information, refer to Kubelet authentication/authorization documentation at https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-authentication-authorization/ 
 
 ### Securing Kubernetes Dashboard	
-The Kubernetes dashboard is a webapp for monitoring your cluster. It it is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard.	
+The Kubernetes dashboard is a webapp for monitoring your cluster. It it is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard. (Reference: Tesla cloud resources are hacked to run cryptocurrency-mining malware - https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/)
+
 To prevent attacks via the dashboard, you should follow some tips:	
 * Do not expose the dashboard to the public. There is no need to access such a powerful tool from outside your LAN	
 * Turn on RBAC, so you can limit the service account the dashboard uses	
@@ -292,6 +293,13 @@ A service mesh allows security and platform teams to set the right macro control
 
 #### RBAC
 A strong Role Based Access Control (RBAC) system is arguably one of the most critical requirements in large engineering organizations, since even the most secure system can be easily circumvented by overprivileged users or employees. Restricting privileged users to least privileges necessary to perform job responsibilities, ensuring access to systems are set to “deny all” by default, and ensuring proper documentation detailing roles and responsibilities are in place is one of the most critical security concerns in the enterprise.
+
+#### Disadvantages
+Along with the many advantages, Service mesh also brings in its set of challenges, few of them are listed below:
+* Added Complexity: The introduction of proxies, sidecars and other components into an already sophisticated environment dramatically increases the complexity of development and operations.
+* Required Expertise: Adding a service mesh such as Istio on top of an orchestrator such as Kubernetes often requires operators to become experts in both technologies.
+* Slowness: Service meshes are an invasive and intricate technology that can add significant slowness to an architecture.
+* Adoption of a Platform: The invasiveness of service meshes force both developers and operators to adapt to a highly opinionated platform and conform to its rules.
 
 ### Implementing Open Policy Agent (OPA) for a centralized policy management 
 OPA is a project that started in 2016 aimed at unifying policy enforcement across different technologies and systems. It can be used to enforce policies on their platforms (like Kubernetes clusters). When it comes to Kubernetes, RBAC and Pod security policies to impose fine-grained control over the cluster. But again, this will only apply to the cluster but not outside the cluster. That’s where Open Policy Agent (OPA) comes into play. OPA was introduced to create a unified method of enforcing security policy in the stack.
@@ -662,3 +670,4 @@ Master documentation - https://kubernetes.io/
 14. OPEN POLICY AGENT: CLOUD-NATIVE AUTHORIZATION - https://blog.styra.com/blog/open-policy-agent-authorization-for-the-cloud
 15. Introducing Policy As Code: The Open Policy Agent (OPA) - https://www.magalix.com/blog/introducing-policy-as-code-the-open-policy-agent-opa
 16. What service mesh provides - https://aspenmesh.io/what-service-mesh-provides/
+17. Three Technical Benefits of Service Meshes and their Operational Limitations, Part 1 - https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1#:~:text=Limitations%20of%20Service%20Meshes&text=Required%20Expertise%3A%20Adding%20a%20service,significant%20slowness%20to%20an%20architecture. 
