@@ -193,7 +193,7 @@ Adding CSRF tokens, a double submit cookie and value, an encrypted token, or oth
 
 If this is the case for your system, you can simply verify the presence of this header and value on all your server side AJAX endpoints in order to protect against CSRF attacks. This approach has the double advantage of usually requiring no UI changes and not introducing any server side state, which is particularly attractive to REST services. You can always add your own **custom header** and value if that is preferred.
 
-This technique obviously works for AJAX calls and you have to still need protect `<form>` tags with approaches described in this document such as tokens. Also, CORS configuration should also be robust to make this solution work effectively (as custom headers for requests coming from other domains trigger a pre-flight CORS check).
+This technique obviously works for AJAX calls, but you still need to protect `<form>` tags with approaches described in this document such as tokens. Also, CORS configuration should also be robust to make this solution work effectively (as custom headers for requests coming from other domains trigger a pre-flight CORS check).
 
 ### User Interaction Based CSRF Defense
 
