@@ -1644,6 +1644,7 @@
 <ul>
 <li>For Java: OWASP <a href="https://owasp.org/www-project-csrfguard/">CSRF Guard</a> or <a href="https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html">Spring Security</a></li>
 <li>For PHP and Apache: <a href="https://owasp.org/www-project-csrfprotector/">CSRFProtector Project</a></li>
+<li>For AngularJS: <a href="https://docs.angularjs.org/api/ng/service/$http#cross-site-request-forgery-xsrf-protection">Cross-Site Request Forgery (XSRF) Protection</a></li>
 </ul>
 <h3 id="synchronizer-token-pattern">Synchronizer Token Pattern<a class="headerlink" href="#synchronizer-token-pattern" title="Permanent link">&para;</a></h3>
 <p>CSRF tokens should be generated on the server-side. They can be generated once per user session or for each request. Per-request tokens are more secure than per-session tokens as the time range for an attacker to exploit the stolen tokens is minimal. However, this may result in usability concerns. For example, the "Back" button browser capability is often hindered as the previous page may contain a token that is no longer valid. Interaction with this previous page will result in a CSRF false positive security event at the server. In per-session token implementation after initial generation of token, the value is stored in the session and is used for each subsequent request until the session expires.</p>
