@@ -231,7 +231,7 @@ Pod Security Policies are one way to control the security-related attributes of 
 * Do not allow privilege escalation.
 * Use a read-only root filesystem.
 * Use the default (masked) /proc filesystem mount
-* Do not use the host network or process space.
+* Do not use the host network or process space - using "hostNetwork:true" will cause NetworkPolicies to be ignored since the Pod will use its host network. 
 * Drop unused and unnecessary Linux capabilities.
 * Use SELinux options for more fine-grained process controls.
 * Give each application its own Kubernetes Service Account.
