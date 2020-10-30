@@ -74,7 +74,7 @@ Here are recommendations specific to GraphQL to limit the potential for DoS:
 - Add [pagination](https://graphql.org/learn/pagination/) to limit the amount of data that can be returned in a single response
 - Add reasonable timeouts at the application layer, infrastructure layer, or both
 - Consider performing query cost analysis and enforcing a maximum allowed cost per query
-- Enforce rate limiting on incoming requests per IP or user (or both) to prevent basic DoS attacks 
+- Enforce rate limiting on incoming requests per IP or user (or both) to prevent basic DoS attacks
 - Implement the [batching and caching technique](https://graphql.org/learn/best-practices/#server-side-batching-caching) on the server-side (Facebook's [DataLoader](https://github.com/facebook/dataloader) can be used for this)
 
 #### Query Limiting (Depth & Amount)
