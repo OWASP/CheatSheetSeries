@@ -1,0 +1,1958 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html">
+      
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.0">
+    
+    
+      
+        <title>GraphQL - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bc7e593a.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab28b872.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#graphql-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              GraphQL
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+      C-Based Toolchain Hardening
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        GraphQL
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+      GraphQL
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-attacks" class="md-nav__link">
+    Common Attacks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices-and-recommendations" class="md-nav__link">
+    Best Practices and Recommendations
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices and Recommendations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-validation" class="md-nav__link">
+    Input Validation
+  </a>
+  
+    <nav class="md-nav" aria-label="Input Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-practices" class="md-nav__link">
+    General Practices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#injection-prevention" class="md-nav__link">
+    Injection Prevention
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-validation" class="md-nav__link">
+    Process Validation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dos-prevention" class="md-nav__link">
+    DoS Prevention
+  </a>
+  
+    <nav class="md-nav" aria-label="DoS Prevention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-limiting-depth-amount" class="md-nav__link">
+    Query Limiting (Depth &amp; Amount)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeouts" class="md-nav__link">
+    Timeouts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-cost-analysis" class="md-nav__link">
+    Query Cost Analysis
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    Rate Limiting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-side-batching-and-caching" class="md-nav__link">
+    Server-side Batching and Caching
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-resource-management" class="md-nav__link">
+    System Resource Management
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-control" class="md-nav__link">
+    Access Control
+  </a>
+  
+    <nav class="md-nav" aria-label="Access Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-data-access" class="md-nav__link">
+    General Data Access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-access-data-fetching" class="md-nav__link">
+    Query Access (Data Fetching)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mutation-access-data-manipulation" class="md-nav__link">
+    Mutation Access (Data Manipulation)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batching-attacks" class="md-nav__link">
+    Batching Attacks
+  </a>
+  
+    <nav class="md-nav" aria-label="Batching Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mitigating-batching-attacks" class="md-nav__link">
+    Mitigating Batching Attacks
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-configurations" class="md-nav__link">
+    Secure Configurations
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Configurations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introspection-graphiql" class="md-nav__link">
+    Introspection + GraphiQL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-return-excessive-errors" class="md-nav__link">
+    Don't Return Excessive Errors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-resources" class="md-nav__link">
+    Other Resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Other Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    Tools
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#graphql-security-best-practices-documentation" class="md-nav__link">
+    GraphQL Security Best Practices + Documentation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-on-graphql-attacks" class="md-nav__link">
+    More on GraphQL Attacks
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Microservies_security.html" class="md-nav__link">
+      Microservies security.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-attacks" class="md-nav__link">
+    Common Attacks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices-and-recommendations" class="md-nav__link">
+    Best Practices and Recommendations
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices and Recommendations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-validation" class="md-nav__link">
+    Input Validation
+  </a>
+  
+    <nav class="md-nav" aria-label="Input Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-practices" class="md-nav__link">
+    General Practices
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#injection-prevention" class="md-nav__link">
+    Injection Prevention
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-validation" class="md-nav__link">
+    Process Validation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dos-prevention" class="md-nav__link">
+    DoS Prevention
+  </a>
+  
+    <nav class="md-nav" aria-label="DoS Prevention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-limiting-depth-amount" class="md-nav__link">
+    Query Limiting (Depth &amp; Amount)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeouts" class="md-nav__link">
+    Timeouts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-cost-analysis" class="md-nav__link">
+    Query Cost Analysis
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    Rate Limiting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-side-batching-and-caching" class="md-nav__link">
+    Server-side Batching and Caching
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-resource-management" class="md-nav__link">
+    System Resource Management
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-control" class="md-nav__link">
+    Access Control
+  </a>
+  
+    <nav class="md-nav" aria-label="Access Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-data-access" class="md-nav__link">
+    General Data Access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-access-data-fetching" class="md-nav__link">
+    Query Access (Data Fetching)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mutation-access-data-manipulation" class="md-nav__link">
+    Mutation Access (Data Manipulation)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batching-attacks" class="md-nav__link">
+    Batching Attacks
+  </a>
+  
+    <nav class="md-nav" aria-label="Batching Attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mitigating-batching-attacks" class="md-nav__link">
+    Mitigating Batching Attacks
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-configurations" class="md-nav__link">
+    Secure Configurations
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Configurations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#introspection-graphiql" class="md-nav__link">
+    Introspection + GraphiQL
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-return-excessive-errors" class="md-nav__link">
+    Don't Return Excessive Errors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-resources" class="md-nav__link">
+    Other Resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Other Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    Tools
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#graphql-security-best-practices-documentation" class="md-nav__link">
+    GraphQL Security Best Practices + Documentation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-on-graphql-attacks" class="md-nav__link">
+    More on GraphQL Attacks
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="graphql-cheat-sheet">GraphQL Cheat Sheet<a class="headerlink" href="#graphql-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p><a href="https://graphql.org">GraphQL</a> is an open source query language originally developed by Facebook that can be used to build APIs as an alternative to REST and SOAP. It has gained popularity since its inception in 2012 because of the native flexibility it offers to those building and calling the API. There are GraphQL servers and clients implemented in various languages. <a href="https://foundation.graphql.org/">Many companies</a> use GraphQL including GitHub, Credit Karma, Intuit, and PayPal.</p>
+<p>This Cheat Sheet provides guidance on the various areas that need to be considered when working with GraphQL:</p>
+<ul>
+<li>Apply proper <a href="Input_Validation_Cheat_Sheet.html">input validation</a> checks on all incoming data.</li>
+<li>Expensive queries will lead to <a href="Denial_of_Service_Cheat_Sheet.html">Denial of Service (DoS)</a>, so add checks to limit or prevent queries that are too expensive.</li>
+<li>Ensure that the API has proper <a href="Access_Control_Cheat_Sheet.html">access control</a> checks.</li>
+<li>Disable insecure default configurations (<em>e.g.</em> introspection, GraphiQL, excessive errors, etc.).</li>
+</ul>
+<h2 id="common-attacks">Common Attacks<a class="headerlink" href="#common-attacks" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa8-injection.md">Injection</a> - this usually includes but is not limited to:<ul>
+<li><a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL</a> and <a href="https://www.netsparker.com/blog/web-security/what-is-nosql-injection/">NoSQL</a> injection</li>
+<li><a href="https://owasp.org/www-community/attacks/Command_Injection">OS Command injection</a></li>
+<li><a href="https://portswigger.net/web-security/ssrf">SSRF</a> and <a href="https://owasp.org/www-community/vulnerabilities/CRLF_Injection">CRLF</a> <a href="https://www.acunetix.com/websitesecurity/crlf-injection/">injection</a>/<a href="https://portswigger.net/web-security/request-smuggling">Request</a> <a href="https://www.pentestpartners.com/security-blog/http-request-smuggling-a-how-to/">Smuggling</a></li>
+</ul>
+</li>
+<li><a href="https://owasp.org/www-community/attacks/Denial_of_Service">DoS</a> (<a href="https://www.cloudflare.com/learning/ddos/glossary/denial-of-service/">Denial of Service</a>)</li>
+<li>Abuse of broken authorization: either <a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md">improper</a> or <a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa3-excessive-data-exposure.md">excessive</a> access, including <a href="https://portswigger.net/web-security/access-control/idor">IDOR</a></li>
+<li>Batching Attacks, a GraphQL-specific method of brute force attack</li>
+<li>Abuse of insecure default configurations</li>
+</ul>
+<h2 id="best-practices-and-recommendations">Best Practices and Recommendations<a class="headerlink" href="#best-practices-and-recommendations" title="Permanent link">&para;</a></h2>
+<h3 id="input-validation">Input Validation<a class="headerlink" href="#input-validation" title="Permanent link">&para;</a></h3>
+<p>Adding strict input validation can help prevent against injection and DoS. The main design for GraphQL is that the user supplies one or more identifiers and the backend has a number of data fetchers making HTTP, DB, or other calls using the given identifiers. This means that user input will be included in HTTP requests, DB queries, or other requests/calls which provides opportunity for injection that could lead to various injection attacks or DoS.</p>
+<p>See the OWASP Cheat Sheets on <a href="Input_Validation_Cheat_Sheet.html">Input Validation</a> and general <a href="Injection_Prevention_Cheat_Sheet.html">injection prevention</a> for full details to best perform input validation and prevent injection.</p>
+<h4 id="general-practices">General Practices<a class="headerlink" href="#general-practices" title="Permanent link">&para;</a></h4>
+<p>Validate all incoming data to only allow valid values (i.e. whitelist).</p>
+<ul>
+<li>Use specific GraphQL <a href="https://graphql.org/learn/schema/#type-language">data types</a> such as <a href="https://graphql.org/learn/schema/#scalar-types">scalars</a> or <a href="https://graphql.org/learn/schema/#enumeration-types">enums</a>. Write custom GraphQL <a href="https://graphql.org/learn/validation/">validators</a> for more complex validations. <a href="https://itnext.io/custom-scalars-in-graphql-9c26f43133f3">Custom scalars</a> may also come in handy.</li>
+<li>Define <a href="https://graphql.org/learn/schema/#input-types">schemas for mutations input</a>.</li>
+<li><a href="Input_Validation_Cheat_Sheet.html#whitelisting-vs-blacklisting">Whitelist allowed characters</a> - don't use a blacklist<ul>
+<li>The stricter the whitelist the better. A lot of times a good starting point is only allowing alphanumeric, non-unicode characters because it will disallow many attacks.</li>
+</ul>
+</li>
+<li>To properly handle unicode input, use a <a href="Input_Validation_Cheat_Sheet.html#validating-free-form-unicode-text">single internal character encoding</a></li>
+<li>Gracefully <a href="Error_Handling_Cheat_Sheet.html">reject invalid input</a>, being careful not to reveal excessive information about how the API and its validation works.</li>
+</ul>
+<h4 id="injection-prevention">Injection Prevention<a class="headerlink" href="#injection-prevention" title="Permanent link">&para;</a></h4>
+<p>When handling input meant to be passed to another interpreter (<em>e.g.</em> SQL/NoSQL/ORM, OS, LDAP, XML):</p>
+<ul>
+<li>Always choose libraries/modules/packages offering safe APIs, such as parameterized statements.<ul>
+<li>Ensure that you follow the documentation so you are properly using the tool</li>
+<li>Using ORMs and ODMs are a good option but they must be used properly to avoid flaws such as <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.7-Testing_for_ORM_Injection">ORM injection</a>.</li>
+</ul>
+</li>
+<li>If such tools are not available, always escape/encode input data according to best practices of the target interpreter<ul>
+<li>Choose a well-documented and actively maintained escaping/encoding library. Many languages and frameworks have this functionality built-in.</li>
+</ul>
+</li>
+</ul>
+<p>For more information see the below pages:</p>
+<ul>
+<li><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention</a></li>
+<li><a href="https://www.netsparker.com/blog/web-security/what-is-nosql-injection/">NoSQL Injection Prevention</a></li>
+<li><a href="LDAP_Injection_Prevention_Cheat_Sheet.html">LDAP Injection Prevention</a></li>
+<li><a href="OS_Command_Injection_Defense_Cheat_Sheet.html">OS Command Injection Prevention</a></li>
+<li><a href="XML_Security_Cheat_Sheet.html">XML Security</a> and <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE Injection Prevention</a></li>
+</ul>
+<h4 id="process-validation">Process Validation<a class="headerlink" href="#process-validation" title="Permanent link">&para;</a></h4>
+<p>When using user input, even if sanitized and/or validated, it should not be used for certain purposes that would give a user control over data flow. For example, do not make an HTTP/resource request to a host that the user supplies (unless there is an absolute business need).</p>
+<h3 id="dos-prevention">DoS Prevention<a class="headerlink" href="#dos-prevention" title="Permanent link">&para;</a></h3>
+<p>DoS is an attack against the availability and stability of the API that can make it slow, unresponsive, or completely unavailable. This CS details several methods to limit the possibility of a DoS attack at the application level and other layers of the tech stack. There is also a CS dedicated to the topic of <a href="Denial_of_Service_Cheat_Sheet.html">DoS</a>.</p>
+<p>Here are recommendations specific to GraphQL to limit the potential for DoS:</p>
+<ul>
+<li>Add depth limiting to incoming queries</li>
+<li>Add amount limiting to incoming queries</li>
+<li>Add <a href="https://graphql.org/learn/pagination/">pagination</a> to limit the amount of data that can be returned in a single response</li>
+<li>Add reasonable timeouts at the application layer, infrastructure layer, or both</li>
+<li>Consider performing query cost analysis and enforcing a maximum allowed cost per query</li>
+<li>Enforce rate limiting on incoming requests per IP or user (or both) to prevent basic DoS attacks </li>
+<li>Implement the <a href="https://graphql.org/learn/best-practices/#server-side-batching-caching">batching and caching technique</a> on the server-side (Facebook's <a href="https://github.com/facebook/dataloader">DataLoader</a> can be used for this)</li>
+</ul>
+<h4 id="query-limiting-depth-amount">Query Limiting (Depth &amp; Amount)<a class="headerlink" href="#query-limiting-depth-amount" title="Permanent link">&para;</a></h4>
+<p>In GraphQL each query has a depth (<em>e.g.</em> nested objects) and each object requested in a query can have an amount specified (<em>e.g.</em> 99999999 of an object). By default these can both be unlimited which may lead to a DoS. You should set limits on depth and amount to prevent DoS, but this usually requires a small custom implementation as it is not natively supported by GraphQL. See <a href="https://www.apollographql.com/blog/securing-your-graphql-api-from-malicious-queries-16130a324a6b">this</a> and <a href="https://www.howtographql.com/advanced/4-security/">this</a> page for more information about these attacks and how to add depth and amount limiting. Adding <a href="https://graphql.org/learn/pagination/">pagination</a> can also help performance.</p>
+<p>APIs using graphql-java can utilize the built-in <a href="https://github.com/graphql-java/graphql-java/blob/master/src/main/java/graphql/analysis/MaxQueryDepthInstrumentation.java">MaxQueryDepthInstrumentation</a> for depth limiting. APIs using JavaScript can use <a href="https://github.com/stems/graphql-depth-limit">graphql-depth-limit</a> to implement depth limiting and <a href="https://github.com/joonhocho/graphql-input-number">graphql-input-number</a> to implement amount limiting.</p>
+<p>Here is an example of a GraphQL query with depth N:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">query</span> <span class="nx">evil</span> <span class="p">{</span>            <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="mf">0</span>
+  <span class="nx">album</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span> <span class="mf">42</span><span class="p">)</span> <span class="p">{</span>       <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="mf">1</span>
+    <span class="nx">songs</span> <span class="p">{</span>             <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="mf">2</span>
+      <span class="nx">album</span> <span class="p">{</span>           <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="mf">3</span>
+        <span class="p">...</span>             <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="p">...</span>
+        <span class="nx">album</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="nx">N</span><span class="p">}</span>   <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="nx">N</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Here is an example of a GraphQL query requesting 99999999 of an object:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">query</span> <span class="p">{</span>
+  <span class="nx">author</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">posts</span><span class="p">(</span><span class="nx">first</span><span class="o">:</span> <span class="mf">99999999</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">title</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h4 id="timeouts">Timeouts<a class="headerlink" href="#timeouts" title="Permanent link">&para;</a></h4>
+<p>Adding timeouts can be a simple way to limit how many resources any single request can consume. But timeouts are not always effective since they may not activate until a malicious query has already consumed excessive resources. Timeout requirements will differ by API and data fetching mechanism; there isn't one timeout value that will work across the board.</p>
+<p>At the application level, timeouts can be added for queries and resolver functions. This option is usually more effective since the query/resolution can be stopped once the timeout is reached. GraphQL does not natively support query timeouts so custom code is required. See <a href="https://medium.com/workflowgen/graphql-query-timeout-and-complexity-management-fab4d7315d8d">this blog post</a> for more about using timeouts with GraphQL or the two examples below.</p>
+<p><strong><em>JavaScript Timeout Example</em></strong></p>
+<p>Code snippet from <a href="https://stackoverflow.com/a/53277955/1200388">this SO answer</a>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">request</span><span class="p">.</span><span class="nx">incrementResolverCount</span> <span class="o">=</span>  <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">runTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">startTime</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">runTime</span> <span class="o">&gt;</span> <span class="mf">10000</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// a timeout of 10 seconds</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">logTimeoutError</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">logger</span><span class="p">(</span><span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="sb">`Request </span><span class="si">${</span><span class="nx">request</span><span class="p">.</span><span class="nx">uuid</span><span class="si">}</span><span class="sb"> query execution timeout`</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="nx">request</span><span class="p">.</span><span class="nx">logTimeoutError</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="k">throw</span> <span class="s1">&#39;Query execution has timeout. Field resolution aborted&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">resolverCount</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">};</span>
+</code></pre></div>
+
+<p><strong><em>Java Timeout Example using <a href="https://www.graphql-java.com/documentation/v11/instrumentation/">Instrumentation</a></em></strong></p>
+<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TimeoutInstrumentation</span> <span class="kd">extends</span> <span class="n">SimpleInstrumentation</span> <span class="p">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">DataFetcher</span><span class="o">&lt;?&gt;</span> <span class="n">instrumentDataFetcher</span><span class="p">(</span>
+            <span class="n">DataFetcher</span><span class="o">&lt;?&gt;</span> <span class="n">dataFetcher</span><span class="p">,</span> <span class="n">InstrumentationFieldFetchParameters</span> <span class="n">parameters</span>
+    <span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">environment</span> <span class="o">-&gt;</span>
+            <span class="n">Observable</span><span class="p">.</span><span class="na">fromCallable</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">dataFetcher</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">environment</span><span class="p">))</span>
+                <span class="p">.</span><span class="na">subscribeOn</span><span class="p">(</span><span class="n">Schedulers</span><span class="p">.</span><span class="na">computation</span><span class="p">())</span>
+                <span class="p">.</span><span class="na">timeout</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">)</span>  <span class="c1">// timeout of 10 seconds</span>
+                <span class="p">.</span><span class="na">blockingFirst</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong><em>Infrastructure Timeout</em></strong></p>
+<p>Another option to add a timeout that is usually easier is adding a timeout on an HTTP server (<a href="https://httpd.apache.org/docs/2.4/mod/core.html#timeout">Apache/httpd</a>, <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#send_timeout">nginx</a>), reverse proxy, or load balancer. However, infrastructure timeouts are often inaccurate and can be bypassed more easily than application-level ones.</p>
+<h4 id="query-cost-analysis">Query Cost Analysis<a class="headerlink" href="#query-cost-analysis" title="Permanent link">&para;</a></h4>
+<p>Query cost analysis involves assigning costs to the resolution of fields or types in incoming queries so that the server can reject queries that cost too much to run or will consume too many resources. This is not easy to implement and may not always be necessary but it is the most thorough approach to preventing DoS. See "Query Cost Analysis" in <a href="https://www.apollographql.com/blog/securing-your-graphql-api-from-malicious-queries-16130a324a6b">this blog post</a> for more details on implementing this control.</p>
+<p>Apollo recommends:</p>
+<blockquote>
+<p><strong>Before you go ahead and spend a ton of time implementing query cost analysis be certain you need it.</strong> Try to crash or slow down your staging API with a nasty query and see how far you get — maybe your API doesn’t have these kinds of nested relationships, or maybe it can handle fetching thousands of records at a time perfectly fine and doesn’t need query cost analysis!</p>
+</blockquote>
+<p>APIs using graphql-java can utilize the built-in <a href="https://github.com/graphql-java/graphql-java/blob/master/src/main/java/graphql/analysis/MaxQueryComplexityInstrumentation.java">MaxQueryComplexityInstrumentationto</a> to enforce max query complexity. APIs using JavaScript can utilize <a href="https://github.com/pa-bru/graphql-cost-analysis">graphql-cost-analysis</a> or <a href="https://github.com/4Catalyzer/graphql-validation-complexity">graphql-validation-complexity</a> to enforce max query cost.</p>
+<h4 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h4>
+<p>Enforcing rate limiting on a per IP (for anonymous access) or user (for authenticated access) basis can help limit a single user's ability to spam requests to the service and impact performance. Ideally this can be done with a WAF, API gateway, or web server (<a href="https://www.nginx.com/blog/rate-limiting-nginx/">Nginx</a>, <a href="https://httpd.apache.org/docs/2.4/mod/mod_ratelimit.html">Apache</a>/<a href="https://github.com/jzdziarski/mod_evasive">HTTPD</a>) to reduce the effort of adding rate limiting.</p>
+<p>Or you could get somewhat complex with throttling and implement it in your code (non-trivial). See "Throttling" <a href="https://www.howtographql.com/advanced/4-security/">here</a> for more about GraphQL-specific rate limiting.</p>
+<h4 id="server-side-batching-and-caching">Server-side Batching and Caching<a class="headerlink" href="#server-side-batching-and-caching" title="Permanent link">&para;</a></h4>
+<p>To increase efficiency of a GraphQL API and reduce its resource consumption, <a href="https://graphql.org/learn/best-practices/#server-side-batching-caching">the batching and caching technique</a> can be used to prevent making duplicate requests for pieces of data within a small time frame. Facebook's <a href="https://github.com/facebook/dataloader">DataLoader</a> tool is one way to implement this.</p>
+<h4 id="system-resource-management">System Resource Management<a class="headerlink" href="#system-resource-management" title="Permanent link">&para;</a></h4>
+<p>Not properly limiting the amount of resources your API can use (<em>e.g.</em> CPU or memory), may compromise your API responsiveness and availability, leaving it vulnerable to DoS attacks. Some limiting can be done at the operating system level.</p>
+<p>On Linux, a combination of <a href="https://en.wikipedia.org/wiki/Cgroups">Control Groups(cgroups)</a>, <a href="https://linuxhint.com/linux_ulimit_command/">User Limits (ulimits)</a>, and <a href="https://linuxcontainers.org/lxc/security/">Linux Containers (LXC)</a> can be used.</p>
+<p>However, containerization platforms tend to make this task much easier. See the resource limiting section in the <a href="Docker_Security_Cheat_Sheet.html#rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts">Docker Security Cheat Sheet</a> for how to prevent DoS when using containers.</p>
+<h3 id="access-control">Access Control<a class="headerlink" href="#access-control" title="Permanent link">&para;</a></h3>
+<p>To ensure that a GraphQL API has proper access control, do the following:</p>
+<ul>
+<li>Always validate that the requester is authorized to view or mutate/modify the data they are requesting. This can be done with <a href="Access_Control_Cheat_Sheet.html#role-based-access-control-rbac">RBAC</a> or other access control mechanisms.<ul>
+<li>This will prevent <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">IDOR</a> issues, including both <a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md">BOLA</a> and <a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa5-broken-function-level-authorization.md">BFLA</a>.</li>
+</ul>
+</li>
+<li>Enforce authorization checks on both edges and nodes (see example <a href="https://hackerone.com/reports/489146">bug report</a> where nodes did not have authorization checks but edges did).</li>
+<li>Use <a href="https://graphql.org/learn/schema/#interfaces">Interfaces</a> and <a href="https://graphql.org/learn/schema/#union-types">Unions</a> to create structured, hierarchical data types which can be used to return more or fewer object properties, according to requester permissions.</li>
+<li>Query and Mutation <a href="https://graphql.org/learn/execution/#root-fields-resolvers">Resolvers</a> can be used to perform access control validation, possibly using some RBAC middleware.</li>
+<li><a href="https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/">Disable introspection queries</a> system-wide in any production or publicly accessible environments.</li>
+<li>Disable <a href="https://github.com/graphql/graphiql">GraphiQL</a> and other similar schema exploration tools in production or publicly accessible environments.</li>
+</ul>
+<h4 id="general-data-access">General Data Access<a class="headerlink" href="#general-data-access" title="Permanent link">&para;</a></h4>
+<p>It's commonplace for GraphQL requests to include one or more direct IDs of objects in order to fetch or modify them. For example, a request for a certain picture may include the ID that is actually the primary key in the database for that picture. As with any request, the server must verify that the caller has access to the object they are requesting. But sometimes developers make the mistake of assuming that possession of the object's ID means the caller should have access. Failure to verify the requester's access in this case is called <a href="https://github.com/OWASP/API-Security/blob/master/2019/en/src/0xa1-broken-object-level-authorization.md">Broken Object Level Authentication</a>, also known as <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">IDOR</a>.</p>
+<p>It's possible for a GraphQL API to support access to objects using their ID even if that is not intended. Sometimes there are <code>node</code> or <code>nodes</code> or both fields in a query object, and these can be used to access objects directly by <code>ID</code>. You can check whether your schema has these fields by running this on the command line (assuming that <code>schema.json</code> contains your GraphQL schema): <code>cat schema.json | jq ".data.__schema.types[] | select(.name==\"Query\") | .fields[] | .name" | grep node</code>. Removing these fields from the schema should disable the functionality, but you should always apply proper authorization checks to verify the caller has access to the object they are requesting.</p>
+<h4 id="query-access-data-fetching">Query Access (Data Fetching)<a class="headerlink" href="#query-access-data-fetching" title="Permanent link">&para;</a></h4>
+<p>As part of a GraphQL API there will be various data fields that can be returned. One thing to consider is if you want different levels of access around these fields. For example, you may only want certain consumers to be able to fetch certain data fields rather than allowing all consumers to be able to retrieve all available fields. This can be done by adding a check in the code to ensure that the requester should be able to read a field they are trying to fetch.</p>
+<h4 id="mutation-access-data-manipulation">Mutation Access (Data Manipulation)<a class="headerlink" href="#mutation-access-data-manipulation" title="Permanent link">&para;</a></h4>
+<p>GraphQL supports mutation, or manipulation of data, in addition to its most common use case of data fetching. If an API implements/allows mutation then there may need to be access controls put in place to restrict which consumers, if any, can modify data through the API. Setups that require mutation access control would include APIs where only read access is intended for requesters or where only certain parties should be able to modify certain fields.</p>
+<h3 id="batching-attacks">Batching Attacks<a class="headerlink" href="#batching-attacks" title="Permanent link">&para;</a></h3>
+<p>GraphQL supports batching requests, also known as <a href="https://www.apollographql.com/blog/query-batching-in-apollo-63acfd859862/">query batching</a>. This lets callers to either batch multiple queries or batch requests for multiple object instances in a single network call, which allows for what is called a <a href="https://lab.wallarm.com/graphql-batching-attack/">batching attack</a>. This is a form of brute force attack, specific to GraphQL, that usually allows for faster and less detectable exploits. Here is the most common way to do query batching:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nx">query</span><span class="o">:</span> <span class="o">&lt;</span> <span class="nx">query</span> <span class="mf">0</span> <span class="o">&gt;</span><span class="p">,</span>
+    <span class="nx">variables</span><span class="o">:</span> <span class="o">&lt;</span> <span class="nx">variables</span> <span class="k">for</span> <span class="nx">query</span> <span class="mf">0</span> <span class="o">&gt;</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">query</span><span class="o">:</span> <span class="o">&lt;</span> <span class="nx">query</span> <span class="mf">1</span> <span class="o">&gt;</span><span class="p">,</span>
+    <span class="nx">variables</span><span class="o">:</span> <span class="o">&lt;</span> <span class="nx">variables</span> <span class="k">for</span> <span class="nx">query</span> <span class="mf">1</span> <span class="o">&gt;</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nx">query</span><span class="o">:</span> <span class="o">&lt;</span> <span class="nx">query</span> <span class="nx">n</span> <span class="o">&gt;</span>
+    <span class="nx">variables</span><span class="o">:</span> <span class="o">&lt;</span> <span class="nx">variables</span> <span class="k">for</span> <span class="nx">query</span> <span class="nx">n</span> <span class="o">&gt;</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<p>And here is an example query of a single batched GraphQL call requesting multiple different instances of the <code>droid</code> object:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">query</span> <span class="p">{</span>
+  <span class="nx">droid</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;2000&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">name</span>
+  <span class="p">}</span>
+  <span class="nx">second</span><span class="o">:</span><span class="nx">droid</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;2001&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">name</span>
+  <span class="p">}</span>
+  <span class="nx">third</span><span class="o">:</span><span class="nx">droid</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;2002&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">name</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>In this case it could be used to enumerate every possible <code>droid</code> object that is stored on the server in very few network requests as opposed to a standard REST API where the requester would need to submit a different network request for every different <code>droid</code> ID they want to request. This type of attack can lead to the following issues:</p>
+<ul>
+<li>Application-level DoS attacks - A high number of queries or object requests in a single network call could cause a database to hang or exhaust other available resources (<em>e.g.</em> memory, CPU, downstream services).</li>
+<li>Enumeration of objects on the server, such as users, emails, and user IDs.</li>
+<li>Brute forcing passwords, 2 factor authentication codes (OTPs), session tokens, or other sensitive values.</li>
+<li>WAFs, RASPs, IDS/IPS, SIEMs, or other security tooling will likely not detect these attacks since they only appear to be one single request rather than an a massive amount of network traffic.</li>
+<li>This attack will likely bypass existing rate limits in tools like Nginx or other proxies/gateways since they rely on looking at the raw number of requests.</li>
+</ul>
+<h4 id="mitigating-batching-attacks">Mitigating Batching Attacks<a class="headerlink" href="#mitigating-batching-attacks" title="Permanent link">&para;</a></h4>
+<p>In order to mitigate this type of attack you should put limits on incoming requests at the code level so that they can be applied per request. There are 3 main options:</p>
+<ul>
+<li>Add object request rate limiting in code</li>
+<li>Prevent batching for sensitive objects</li>
+<li>Limit the number of queries that can run at one time</li>
+</ul>
+<p>One option is to create a code-level rate limit on how many objects that callers can request. This means the backend would track how many different object instances the caller has requested, so that they will be blocked after requesting too many objects even if they batch the object requests in a single network call. This replicates a network-level rate limit that a WAF or other tool would do.</p>
+<p>Another option is to prevent batching for sensitive objects that you don't want to be brute forced, such as usernames, emails, passwords, OTPs, session tokens, etc. This way an attacker is forced to attack the API like a REST API and make a different network call per object instance. This is not supported natively so it will require a custom solution. However once this control is put in place other standard controls will function normally to help prevent any brute forcing.</p>
+<p>Limiting the number of operations that can be batched and run at once is another option to mitigate GraphQL batching attacks leading to DoS. This is not a silver bullet though and should be used in conjunction with other methods.</p>
+<h3 id="secure-configurations">Secure Configurations<a class="headerlink" href="#secure-configurations" title="Permanent link">&para;</a></h3>
+<p>By default, most GraphQL implementations have some insecure default configurations which should be changed:</p>
+<ul>
+<li>Disable or restrict Introspection and GraphiQL based on your needs; these should only be used for development purposes.</li>
+<li>Don't return excessive error messages (<em>e.g.</em> disable stack traces and debug mode).</li>
+</ul>
+<h4 id="introspection-graphiql">Introspection + GraphiQL<a class="headerlink" href="#introspection-graphiql" title="Permanent link">&para;</a></h4>
+<p>Many implementations of GraphQL have Introspection and GraphiQL enabled by default and leave them accessible without requiring authentication. This is problematic because introspection allows the requester to learn all about supported schema and queries (see a <a href="https://hackerone.com/reports/291531">real-world example</a> abusing this). Introspection might be how the API owner wants to educate consumers about how to use the API. However, the preferred way to educate consumers about a service is through a separate documentation channel such as a wiki, Git Readme, or readthedocs.</p>
+<p>The safest and usually easiest approach is to just disable introspection and GraphiQL system-wide. See <a href="https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/">this page</a> or consult your GraphQL implementation's documentation to learn how to disable introspection altogether. If your implementation does not natively support disabling introspection or if you would like to allow some consumers/roles to have this access you can build a filter in your service to only allow approved consumers to access the introspection system.</p>
+<p>Keep in mind that even if introspection is disabled, attackers can still guess fields by brute forcing them. Furthermore, GraphQL has a built-in feature to return a hint when a field name that the requester provides is similar (but incorrect) to an existing field (<em>e.g.</em> request has <code>usr</code> and the response will ask <code>Did you mean "user?"</code>). You should consider disabling this feature to decrease the exposure, but not all implementations of GraphQL support doing so. <a href="https://github.com/szski/shapeshifter">Shapeshifter</a> is one tool that <a href="https://www.youtube.com/watch?v=NPDp7GHmMa0&amp;t=2580">should be able to do this</a>.</p>
+<p><strong><em>Disable Introspection - Java</em></strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">GraphQLSchema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">GraphQLSchema</span><span class="p">.</span><span class="na">newSchema</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">query</span><span class="p">(</span><span class="n">StarWarsSchema</span><span class="p">.</span><span class="na">queryType</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">fieldVisibility</span><span class="p">(</span> <span class="n">NoIntrospectionGraphqlFieldVisibility</span><span class="p">.</span><span class="na">NO_INTROSPECTION_FIELD_VISIBILITY</span> <span class="p">)</span>
+    <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+
+<p><strong><em>Disable Introspection &amp; GraphiQL - JavaScript</em></strong></p>
+<div class="codehilite"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/graphql&#39;</span><span class="p">,</span> <span class="nx">graphqlHTTP</span><span class="p">({</span>
+  <span class="nx">schema</span><span class="o">:</span> <span class="nx">MySessionAwareGraphQLSchema</span><span class="p">,</span>
+<span class="o">+</span> <span class="nx">validationRules</span><span class="o">:</span> <span class="p">[</span><span class="nx">NoIntrospection</span><span class="p">]</span>
+  <span class="nx">graphiql</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="s1">&#39;development&#39;</span><span class="p">,</span>
+<span class="p">}));</span>
+</code></pre></div>
+
+<h4 id="dont-return-excessive-errors">Don't Return Excessive Errors<a class="headerlink" href="#dont-return-excessive-errors" title="Permanent link">&para;</a></h4>
+<p>GraphQL APIs in production shouldn't return stack traces or be in debug mode. Doing this is implementation specific, but using middleware is one popular way to have better control over errors the server returns. To <a href="https://www.apollographql.com/docs/apollo-server/data/errors/">disable excessive errors</a> with Apollo Server, either pass <code>debug: false</code> to the Apollo Server constructor or set the <code>NODE_ENV</code> environment variable to 'production' or 'test'. However, if you would like to log the stack trace internally without returning it to the user see <a href="https://www.apollographql.com/docs/apollo-server/data/errors/#masking-and-logging-errors">here</a> for how to mask and log errors so they are available to the developers but not callers of the API.</p>
+<h2 id="other-resources">Other Resources<a class="headerlink" href="#other-resources" title="Permanent link">&para;</a></h2>
+<h3 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://github.com/doyensec/inql">InQL Scanner</a> - Security scanner for GraphQL. Particularly useful for generating queries and mutations automatically from given schema and them feeding them to scanner.</li>
+<li><a href="https://github.com/graphql/graphiql">GraphiQL</a> - Schema/object exploration</li>
+<li><a href="https://github.com/APIs-guru/graphql-voyager">GraphQL Voyager</a> - Schema/object exploration</li>
+</ul>
+<h3 id="graphql-security-best-practices-documentation">GraphQL Security Best Practices + Documentation<a class="headerlink" href="#graphql-security-best-practices-documentation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://leapgraph.com/graphql-api-security">GraphQL security best practices</a></li>
+<li><a href="https://medium.com/swlh/protecting-your-graphql-api-from-security-vulnerabilities-e8afdfa6fbe4">Protecting GraphQL APIs from security threats - blog post</a></li>
+<li><a href="https://nordicapis.com/security-points-to-consider-before-implementing-graphql/">https://nordicapis.com/security-points-to-consider-before-implementing-graphql/</a></li>
+<li><a href="https://developer.github.com/v4/guides/resource-limitations/">Limiting resource usage to prevent DoS (timeouts, throttling, complexity management, depth limiting, etc.)</a></li>
+<li><a href="https://www.abhaybhargav.com/from-the-trenches-diy-security-perspectives-of-graphql/">GraphQL Security Perspectives</a></li>
+<li><a href="https://medium.com/planes-agency/how-to-survive-a-penetration-test-as-a-graphql-developer-2759cababf8e">A developer's security perspective of GraphQL</a></li>
+</ul>
+<h3 id="more-on-graphql-attacks">More on GraphQL Attacks<a class="headerlink" href="#more-on-graphql-attacks" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://blog.doyensec.com/2018/05/17/graphql-security-overview.html">Some common GraphQL attacks + attacker mindset</a></li>
+<li><a href="https://labs.detectify.com/2018/03/14/graphql-abuse/">Bypassing permissions by smuggling parameters</a></li>
+<li><a href="https://medium.com/bugbountywriteup/graphql-voyager-as-a-tool-for-security-testing-86d3c634bcd9">Bug bounty writeup about GraphQL</a></li>
+<li><a href="https://www.youtube.com/watch?v=NPDp7GHmMa0">Security talk about Abusing GraphQL</a></li>
+<li><a href="https://vulners.com/myhack58/MYHACK58:62201994269">Real</a> <a href="https://www.pentestpartners.com/security-blog/pwning-wordpress-graphql/">world</a> <a href="https://hackerone.com/reports/419883">attacks</a> <a href="https://vulners.com/hackerone/H1:435066">against</a> <a href="https://www.jonbottarini.com/2018/01/02/abusing-internal-api-to-achieve-idor-in-new-relic/">GraphQL</a> <a href="https://about.gitlab.com/blog/2019/07/03/security-release-gitlab-12-dot-0-dot-3-released/#authorization-issues-in-graphql">in the</a> past</li>
+<li><a href="https://raz0r.name/articles/looting-graphql-endpoints-for-fun-and-profit/">Attack examples against GraphQL</a></li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Forgot_Password_Cheat_Sheet.html" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Forgot Password
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="HTML5_Security_Cheat_Sheet.html" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                HTML5 Security
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.6a3d08fc.min.js"></script>
+      <script src="../assets/javascripts/bundle.71201edf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
