@@ -296,7 +296,7 @@ The first validation on the input data presented in the case [n°1](Server_Side_
 1. The application will receive the IP address or domain name of the *TargetedApplication* and it will apply the first validation on the input data using the libraries/regex mentioned in this [section](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer).
 2. The second validation will be applied against the IP address or domain name of the *TargetedApplication* using the following blacklist approach:
    - For IP address:
-     - The application will verify that it is a public one (see the hint provided in the next paragraph with the python code sample).
+     - The application will verify that it is a public one. We recommend an allow list of public IPs/ranges rather than a deny list of private IPs. This is because IPs can be in many valid encodings that may bypass the deny list, such as hexadecimal or octal (`127.0.0.1` can be written as `0177.0.0.1`)
    - For domain name:
         1. The application will verify that it is a public one by trying to resolve the domain name against the DNS resolver that will only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.
         2. To prevent the `DNS pinning` attack described in this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf), the application will retrieve all the IP addresses behind the domain name provided (taking records *A* + *AAAA* for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.
@@ -306,65 +306,6 @@ The first validation on the input data presented in the case [n°1](Server_Side_
 6. The application will receive and validate (from a security point of view) any business data needed to perform a valid call.
 7. The application will build the HTTP POST request **using only validated informations** and will send it (*don't forget to disable the support for [redirection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections) in the web client used*).
 
-**Hints for the step 2 regarding the verification on an IP address:**
-
-As mentioned above, not every SDK provide a built-in feature to verify if an IP (V4 + V6) is private/public. So, the following approach can be used based on a blacklist composed of the private IP ranges (*example is given in python in order to be easy to understand and portable to others technologies*) :
-
-```python
-def is_private_ip(ip_address):
-    is_private = False
-    """
-    Determine if a IP address provided is a private one.
-    Return TRUE if it's the case, FALSE otherwise.
-    """
-    # Build the list of IP prefix for V4 and V6 addresses
-    ip_prefix = []
-    # Add prefix for loopback addresses
-    ip_prefix.append("127.")
-    ip_prefix.append("0.")
-    # Add IP V4 prefix for private addresses
-    # See https://en.wikipedia.org/wiki/Private_network
-    ip_prefix.append("10.")
-    ip_prefix.append("172.16.")
-    ip_prefix.append("172.17.")
-    ip_prefix.append("172.18.")
-    ip_prefix.append("172.19.")
-    ip_prefix.append("172.20.")
-    ip_prefix.append("172.21.")
-    ip_prefix.append("172.22.")
-    ip_prefix.append("172.23.")
-    ip_prefix.append("172.24.")
-    ip_prefix.append("172.25.")
-    ip_prefix.append("172.26.")
-    ip_prefix.append("172.27.")
-    ip_prefix.append("172.28.")
-    ip_prefix.append("172.29.")
-    ip_prefix.append("172.30.")
-    ip_prefix.append("172.31.")
-    ip_prefix.append("192.168.")
-    ip_prefix.append("169.254.")
-    # Add IP V6 prefix for private addresses
-    # See https://en.wikipedia.org/wiki/Unique_local_address
-    # See https://en.wikipedia.org/wiki/Private_network
-    # See https://simpledns.com/private-ipv6
-    ip_prefix.append("fc")
-    ip_prefix.append("fd")
-    ip_prefix.append("fe")
-    ip_prefix.append("ff")
-    ip_prefix.append("::1")
-    # Verify the provided IP address
-    # Remove whitespace characters from the beginning/end of the string
-    # and convert it to lower case
-    # Lower case is for preventing any IPV6 case bypass using mixed case
-    # depending on the source used to get the IP address
-    ip_to_verify = ip_address.strip().lower()
-    # Perform the check against the list of prefix
-    for prefix in ip_prefix:
-        if ip_to_verify.startswith(prefix):
-            is_private = True
-            break
-    return is_private
-```
 
 ##### Network layer
 
