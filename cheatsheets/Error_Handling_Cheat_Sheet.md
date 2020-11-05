@@ -240,8 +240,8 @@ namespace MyProject
                 //exception handler to call this API controller
                 //on any unexpected exception raised by the application
                 app.UseExceptionHandler("/api/error");
-                
-                //To customize the response content type and text, use the overload of 
+
+                //To customize the response content type and text, use the overload of
                 //UseStatusCodePages that takes a content type and format string.
                 app.UseStatusCodePages("text/plain", "Status code page, status code: {0}");
             }
