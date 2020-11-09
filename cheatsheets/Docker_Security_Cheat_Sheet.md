@@ -249,6 +249,17 @@ To configure the log level in docker-compose:
 docker-compose --log-level info up
 ```
 
+### Rule \#11 - Lint the Dockerfile at build time
+
+Many issues can be prevented by following some best practices when writing the Dockerfile. Adding a security linter as a step in the the build pipeline can go a long way in avoiding further headaches. Some issues that are worth checking are:
+
+- Ensure a `USER` directive is specified
+- Ensure the base image version is pinned
+- Ensure the OS packages versions are pinned
+- Avoid the use of `ADD` in favor of `COPY`
+- Avoid the use of `apt/apk upgrade`
+- Avoid curl bashing in `RUN` directives
+
 References:
 
 - [Docker Baselines on DevSec](https://dev-sec.io/baselines/docker/)
@@ -256,6 +267,7 @@ References:
 - [Overview of docker-compose CLI](https://docs.docker.com/compose/reference/overview/)
 - [Configuring Logging Drivers](https://docs.docker.com/config/containers/logging/configure/)
 - [View logs for a container or service](https://docs.docker.com/config/containers/logging/)
+- [Dockerfile Security Best Practices](https://cloudberry.engineering/article/dockerfile-security-best-practices/)
 
 ## Related Projects
 
