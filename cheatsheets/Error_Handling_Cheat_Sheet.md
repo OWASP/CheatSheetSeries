@@ -240,6 +240,10 @@ namespace MyProject
                 //exception handler to call this API controller
                 //on any unexpected exception raised by the application
                 app.UseExceptionHandler("/api/error");
+
+                //To customize the response content type and text, use the overload of
+                //UseStatusCodePages that takes a content type and format string.
+                app.UseStatusCodePages("text/plain", "Status code page, status code: {0}");
             }
 
             //We configure others middlewares, remember that the declaration order is important...
@@ -368,9 +372,24 @@ namespace MyProject
 }
 ```
 
+Setting ccustomErrors section to the **Web.config** file within the ```csharp <system.web>``` node as follows.
+
+```csharp
+<configuration>
+    ...
+    <system.web>
+        <customErrors mode="RemoteOnly"
+                      defaultRedirect="~/ErrorPages/Oops.aspx" />
+        ...
+    </system.web>
+</configuration>
+```
+
 References:
 
 - [Exception handling with ASP.Net Web API](https://exceptionnotfound.net/the-asp-net-web-api-exception-handling-pipeline-a-guided-tour/)
+
+- [ASP.NET Error Handling](https://docs.microsoft.com/en-us/aspnet/web-forms/overview/getting-started/getting-started-with-aspnet-45-web-forms/aspnet-error-handling)
 
 ## Sources of the prototype
 
