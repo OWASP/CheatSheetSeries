@@ -1,4 +1,4 @@
-# Microservies Security Cheat Sheet
+# Microservices Security Cheat Sheet
 
 ## Introduction
 
