@@ -1476,6 +1476,10 @@ in D:\app\index_new.php on line 188
                 <span class="c1">//exception handler to call this API controller</span>
                 <span class="c1">//on any unexpected exception raised by the application</span>
                 <span class="n">app</span><span class="p">.</span><span class="n">UseExceptionHandler</span><span class="p">(</span><span class="s">&quot;/api/error&quot;</span><span class="p">);</span>
+
+                <span class="c1">//To customize the response content type and text, use the overload of</span>
+                <span class="c1">//UseStatusCodePages that takes a content type and format string.</span>
+                <span class="n">app</span><span class="p">.</span><span class="n">UseStatusCodePages</span><span class="p">(</span><span class="s">&quot;text/plain&quot;</span><span class="p">,</span> <span class="s">&quot;Status code page, status code: {0}&quot;</span><span class="p">);</span>
             <span class="p">}</span>
 
             <span class="c1">//We configure others middlewares, remember that the declaration order is important...</span>
@@ -1596,9 +1600,25 @@ in D:\app\index_new.php on line 188
 <span class="p">}</span>
 </code></pre></div>
 
+<p>Setting ccustomErrors section to the <strong>Web.config</strong> file within the <code>csharp &lt;system.web&gt;</code> node as follows.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="n">configuration</span><span class="p">&gt;</span>
+    <span class="p">...</span>
+    <span class="p">&lt;</span><span class="n">system</span><span class="p">.</span><span class="n">web</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="n">customErrors</span> <span class="n">mode</span><span class="p">=</span><span class="s">&quot;RemoteOnly&quot;</span>
+                      <span class="n">defaultRedirect</span><span class="p">=</span><span class="s">&quot;~/ErrorPages/Oops.aspx&quot;</span> <span class="p">/&gt;</span>
+        <span class="p">...</span>
+    <span class="p">&lt;/</span><span class="n">system</span><span class="p">.</span><span class="n">web</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="n">configuration</span><span class="p">&gt;</span>
+</code></pre></div>
+
 <p>References:</p>
 <ul>
-<li><a href="https://exceptionnotfound.net/the-asp-net-web-api-exception-handling-pipeline-a-guided-tour/">Exception handling with ASP.Net Web API</a></li>
+<li>
+<p><a href="https://exceptionnotfound.net/the-asp-net-web-api-exception-handling-pipeline-a-guided-tour/">Exception handling with ASP.Net Web API</a></p>
+</li>
+<li>
+<p><a href="https://docs.microsoft.com/en-us/aspnet/web-forms/overview/getting-started/getting-started-with-aspnet-45-web-forms/aspnet-error-handling">ASP.NET Error Handling</a></p>
+</li>
 </ul>
 <h2 id="sources-of-the-prototype">Sources of the prototype<a class="headerlink" href="#sources-of-the-prototype" title="Permanent link">&para;</a></h2>
 <p>The source code of all the sandbox projects created to find the right setup to use is stored in this <a href="https://github.com/righettod/poc-error-handling">GitHub repository</a>.</p>
