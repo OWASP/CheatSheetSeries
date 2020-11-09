@@ -1592,17 +1592,14 @@ tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or 
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </code></pre></div>
 
-<p>Encode the following characters with HTML entity encoding to prevent switching into any execution context, such as script, style, or event handlers. Using hex entities is recommended in the spec. In addition to the 5 characters significant in XML (<code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>"</code>, <code>'</code>), the forward slash is included as it helps to end an HTML entity.</p>
+<p>Encode the following characters with HTML entity encoding to prevent switching into any execution context, such as script, style, or event handlers. Using hex entities is recommended in the spec. The 5 characters significant in XML (<code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>"</code>, <code>'</code>):</p>
 <div class="codehilite"><pre><span></span><code> &amp; --&gt; &amp;amp;
  &lt; --&gt; &amp;lt;
  &gt; --&gt; &amp;gt;
  &quot; --&gt; &amp;quot;
  &#39; --&gt; &amp;#x27;
- / --&gt; &amp;#x2F;
 
  &amp;apos; not recommended because its not in the HTML spec (See: section 24.4.1) &amp;apos; is in the XML and XHTML specs.
-
- Forward slash is included as it helps end an HTML entity
 </code></pre></div>
 
 <h3 id="rule-2-attribute-encode-before-inserting-untrusted-data-into-html-common-attributes">RULE #2 - Attribute Encode Before Inserting Untrusted Data into HTML Common Attributes<a class="headerlink" href="#rule-2-attribute-encode-before-inserting-untrusted-data-into-html-common-attributes" title="Permanent link">&para;</a></h3>
