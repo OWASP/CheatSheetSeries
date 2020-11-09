@@ -614,6 +614,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#rule-11-lint-the-dockerfile-at-build-time" class="md-nav__link">
+    Rule #11 - Lint the Dockerfile at build time
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1317,6 +1324,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#rule-11-lint-the-dockerfile-at-build-time" class="md-nav__link">
+    Rule #11 - Lint the Dockerfile at build time
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1537,6 +1551,16 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
 <div class="codehilite"><pre><span></span><code>docker-compose --log-level info up
 </code></pre></div>
 
+<h3 id="rule-11-lint-the-dockerfile-at-build-time">Rule #11 - Lint the Dockerfile at build time<a class="headerlink" href="#rule-11-lint-the-dockerfile-at-build-time" title="Permanent link">&para;</a></h3>
+<p>Many issues can be prevented by following some best practices when writing the Dockerfile. Adding a security linter as a step in the the build pipeline can go a long way in avoiding further headaches. Some issues that are worth checking are:</p>
+<ul>
+<li>Ensure a <code>USER</code> directive is specified</li>
+<li>Ensure the base image version is pinned</li>
+<li>Ensure the OS packages versions are pinned</li>
+<li>Avoid the use of <code>ADD</code> in favor of <code>COPY</code></li>
+<li>Avoid the use of <code>apt/apk upgrade</code></li>
+<li>Avoid curl bashing in <code>RUN</code> directives</li>
+</ul>
 <p>References:</p>
 <ul>
 <li><a href="https://dev-sec.io/baselines/docker/">Docker Baselines on DevSec</a></li>
@@ -1544,6 +1568,7 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
 <li><a href="https://docs.docker.com/compose/reference/overview/">Overview of docker-compose CLI</a></li>
 <li><a href="https://docs.docker.com/config/containers/logging/configure/">Configuring Logging Drivers</a></li>
 <li><a href="https://docs.docker.com/config/containers/logging/">View logs for a container or service</a></li>
+<li><a href="https://cloudberry.engineering/article/dockerfile-security-best-practices/">Dockerfile Security Best Practices</a></li>
 </ul>
 <h2 id="related-projects">Related Projects<a class="headerlink" href="#related-projects" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/OWASP/Docker-Security">OWASP Docker Top 10</a></p>
