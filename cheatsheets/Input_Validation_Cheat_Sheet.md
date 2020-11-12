@@ -227,7 +227,7 @@ Sub-addressing allows a user to specify a _tag_ in the local part of the email a
 - `user+site1@example.org`
 - `user+site2@example.org`
 
-Many mail providers (such as Microsoft Exchange/Office 365) do not support sub-addressing. The most notable provider who does is Gmail, although there are many others that also do.
+Many mail providers (such as Microsoft Exchange) do not support sub-addressing. The most notable provider who does is Gmail, although there are many others that also do.
 
 Some users will use a different _tag_ for each website they register on, so that if they start receiving spam to one of the sub-addresses they can identify which website leaked or sold their email address.
 
