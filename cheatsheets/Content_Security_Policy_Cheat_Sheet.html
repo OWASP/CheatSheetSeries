@@ -10,11 +10,11 @@
       
       
       
+      
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">
       
-      
       <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
     
     
       
@@ -22,10 +22,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6910b76c.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3b61ea93.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.196e0c26.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.39b8e14a.min.css">
         
       
     
@@ -33,7 +33,7 @@
     
       
         
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
       
@@ -59,6 +59,7 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
       
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -87,18 +88,20 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
-      
-        <div class="md-header-nav__ellipsis">
-          <span class="md-header-nav__topic md-ellipsis">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             OWASP Cheat Sheet Series
           </span>
-          <span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             
               Content Security Policy
             
           </span>
         </div>
-      
+      </div>
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
@@ -157,10 +160,14 @@
         <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
+
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
@@ -192,6 +199,7 @@
       
 
 
+
   <li class="md-nav__item">
     <a href="../index.html" class="md-nav__link">
       Introduction
@@ -202,6 +210,7 @@
       
       
       
+
 
 
   <li class="md-nav__item">
@@ -216,6 +225,7 @@
       
 
 
+
   <li class="md-nav__item">
     <a href="../IndexASVS.html" class="md-nav__link">
       Index ASVS
@@ -226,6 +236,7 @@
       
       
       
+
 
 
   <li class="md-nav__item">
@@ -239,12 +250,16 @@
       
       
 
+
   
 
 
+  
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
     <label class="md-nav__link" for="nav-5">
       Cheatsheets
       <span class="md-nav__icon md-icon"></span>
@@ -262,6 +277,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
       AJAX Security
@@ -272,6 +288,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -286,6 +303,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
       Access Control
@@ -296,6 +314,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -310,6 +329,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
       Authentication
@@ -320,6 +340,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -334,6 +355,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
       Bean Validation
@@ -344,6 +366,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -358,6 +381,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
       Choosing and Using Security Questions
@@ -370,6 +394,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
       Clickjacking Defense
@@ -380,6 +405,7 @@
           
           
           
+
 
   
 
@@ -576,6 +602,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
       Credential Stuffing Prevention
@@ -586,6 +613,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -600,6 +628,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
       Cross Site Scripting Prevention
@@ -610,6 +639,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -624,6 +654,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
       DOM based XSS Prevention
@@ -634,6 +665,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -648,6 +680,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
       Denial of Service
@@ -658,6 +691,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -672,6 +706,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
       Docker Security
@@ -682,6 +717,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -696,6 +732,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
       Error Handling
@@ -706,6 +743,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -720,6 +758,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
       Forgot Password
@@ -730,6 +769,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -744,6 +784,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
       HTML5 Security
@@ -754,6 +795,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -768,6 +810,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
       Injection Prevention
@@ -778,6 +821,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -792,6 +836,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
       Input Validation
@@ -802,6 +847,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -816,6 +862,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
       JAAS
@@ -826,6 +873,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -840,6 +888,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
       Key Management
@@ -850,6 +899,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -864,6 +914,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
       Logging
@@ -874,6 +925,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -888,6 +940,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
       Microservices based Security Arch Doc
@@ -898,6 +951,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -912,6 +966,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
       Multifactor Authentication
@@ -922,6 +977,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -936,6 +992,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
       OS Command Injection Defense
@@ -946,6 +1003,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -960,6 +1018,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
       Password Storage
@@ -970,6 +1029,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -984,6 +1044,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
       Query Parameterization
@@ -994,6 +1055,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1008,6 +1070,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
       REST Security
@@ -1018,6 +1081,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1032,6 +1096,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
       SAML Security
@@ -1042,6 +1107,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1056,6 +1122,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
       Securing Cascading Style Sheets
@@ -1066,6 +1133,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1080,6 +1148,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
       Session Management
@@ -1090,6 +1159,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1104,6 +1174,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
       Third Party Javascript Management
@@ -1114,6 +1185,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1128,6 +1200,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
       Transaction Authorization
@@ -1138,6 +1211,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1152,6 +1226,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
       Unvalidated Redirects and Forwards
@@ -1162,6 +1237,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1176,6 +1252,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
       Virtual Patching
@@ -1186,6 +1263,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1200,6 +1278,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
       Vulnerable Dependency Management
@@ -1210,6 +1289,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1224,6 +1304,7 @@
           
 
 
+
   <li class="md-nav__item">
     <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
       XML External Entity Prevention
@@ -1234,6 +1315,7 @@
           
           
           
+
 
 
   <li class="md-nav__item">
@@ -1255,7 +1337,8 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -1747,15 +1830,15 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
       
     </div>
     
-      <script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
-      <script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.08c56446.min.js"></script>
+      <script src="../assets/javascripts/bundle.6ced434e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+            worker: "../assets/javascripts/worker/search.8c7e0a7e.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
