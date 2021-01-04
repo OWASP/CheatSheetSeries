@@ -2143,7 +2143,7 @@
 <span class="k">EXEC</span> <span class="n">strQry</span> <span class="o">//</span> <span class="k">SQL</span> <span class="n">Injection</span> <span class="n">vulnerability</span><span class="o">!</span>
 </code></pre></div>
 
-<p>DO: Practise Least Privilege - Connect to the database using an account with a minimum set of permissions required to do it's job i.e. not the sa account</p>
+<p>DO: Practice Least Privilege - Connect to the database using an account with a minimum set of permissions required to do it's job i.e. not the sa account</p>
 <h4 id="os-injection">OS Injection<a class="headerlink" href="#os-injection" title="Permanent link">&para;</a></h4>
 <p>Information about OS Injection can be found on this <a href="OS_Command_Injection_Defense_Cheat_Sheet.html#net">cheat sheet</a>.</p>
 <p>DO: Use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2">System.Diagnostics.Process.Start</a> to call underlying OS functions.</p>
@@ -2229,7 +2229,7 @@ ASP.net Core Identity framework is well configured by default, where it uses sec
 Apply the following test: Would you be happy leaving the data on a spreadsheet on a bus for everyone to read. Assume the attacker can get direct access to your database and protect it accordingly. More information can be found <a href="Transport_Layer_Protection_Cheat_Sheet.html">here</a>.</p>
 <p>DO: Use TLS 1.2 for your entire site. Get a free certificate <a href="https://letsencrypt.org/">LetsEncrypt.org</a>.</p>
 <p>DO NOT: <a href="https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices">Allow SSL, this is now obsolete</a>.</p>
-<p>DO: Have a strong TLS policy (see <a href="https://www.ssllabs.com/projects/best-practices/index.html">SSL Best Practises</a>), use TLS 1.2 wherever possible. Then check the configuration using <a href="https://www.ssllabs.com/ssltest/">SSL Test</a> or <a href="https://testssl.sh/">TestSSL</a>.</p>
+<p>DO: Have a strong TLS policy (see <a href="https://www.ssllabs.com/projects/best-practices/index.html">SSL Best Practices</a>), use TLS 1.2 wherever possible. Then check the configuration using <a href="https://www.ssllabs.com/ssltest/">SSL Test</a> or <a href="https://testssl.sh/">TestSSL</a>.</p>
 <p>DO: Ensure headers are not disclosing information about your application. See <a href="https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs">HttpHeaders.cs</a> , <a href="https://github.com/Dionach/StripHeaders/">Dionach StripHeaders</a>, disable via <code>web.config</code> or <a href="https://medium.com/bugbountywriteup/security-headers-1c770105940b">startup.cs</a>:</p>
 <p>More information on Transport Layer Protection can be found <a href="Transport_Layer_Protection_Cheat_Sheet.html">here</a>.
 e.g Web.config</p>
