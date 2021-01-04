@@ -1238,6 +1238,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#web-workers" class="md-nav__link">
+    Web Workers
+  </a>
+  
+    <nav class="md-nav" aria-label="Web Workers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-case_2" class="md-nav__link">
+    Use Case
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-id-life-cycle" class="md-nav__link">
     Session ID Life Cycle
   </a>
@@ -1893,6 +1913,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#web-workers" class="md-nav__link">
+    Web Workers
+  </a>
+  
+    <nav class="md-nav" aria-label="Web Workers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-case_2" class="md-nav__link">
+    Use Case
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-id-life-cycle" class="md-nav__link">
     Session ID Life Cycle
   </a>
@@ -2196,7 +2236,7 @@
 <p>Forcing the web application to only use HTTPS for its communication (even when port TCP/80, HTTP, is closed in the web application host) does not protect against session ID disclosure if the <code>Secure</code> cookie has not been set - the web browser can be deceived to disclose the session ID over an unencrypted HTTP connection. The attacker can intercept and manipulate the victim user traffic and inject an HTTP unencrypted reference to the web application that will force the web browser to submit the session ID in the clear.</p>
 <p>See also: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies">SecureFlag</a></p>
 <h3 id="httponly-attribute">HttpOnly Attribute<a class="headerlink" href="#httponly-attribute" title="Permanent link">&para;</a></h3>
-<p>The <code>HttpOnly</code> cookie attribute instructs web browsers not to allow scripts (e.g. JavaScript or VBscript) an ability to access the cookies via the DOM document.cookie object. This session ID protection is mandatory to prevent session ID stealing through XSS attacks.</p>
+<p>The <code>HttpOnly</code> cookie attribute instructs web browsers not to allow scripts (e.g. JavaScript or VBscript) an ability to access the cookies via the DOM document.cookie object. This session ID protection is mandatory to prevent session ID stealing through XSS attacks. However, if an XSS attack is combined with a CSRF attack, the requests sent to the web application will include the session cookie, as the browser always includes the cookies when sending requests. The <code>HttpOnly</code> cookie only protects the confidentiality of the cookie; the attacker cannot use it offline, outside of the context of an XSS attack.</p>
 <p>See the OWASP <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS (Cross Site Scripting) Prevention Cheat Sheet</a>.</p>
 <p>See also: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies">HttpOnly</a></p>
 <h3 id="samesite-attribute">SameSite Attribute<a class="headerlink" href="#samesite-attribute" title="Permanent link">&para;</a></h3>
@@ -2255,6 +2295,12 @@ Due to the potential to access Web Storage APIs via an XSS attack, session ident
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage">SessionStorage API</a></li>
 <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#webstorage">WHATWG Web Storage Spec</a></li>
 </ul>
+<h2 id="web-workers">Web Workers<a class="headerlink" href="#web-workers" title="Permanent link">&para;</a></h2>
+<p>Web Workers run JavaScript code in a global context separate from the one of the current window. A communication channel with the main execution window exists, which is called <code>MessageChannel</code>.</p>
+<h3 id="use-case_2">Use Case<a class="headerlink" href="#use-case_2" title="Permanent link">&para;</a></h3>
+<p>Web Workers are an alternative for browser storage of (session) secrets when storage persistence across page refresh is not a requirement. For Web Workers to provide secure browser storage, any code that requires the secret should exist within the Web Worker and the secret should never be transmitted to the main window context.</p>
+<p>Storing secrets within the memory of a Web Worker offers the same security guarantees as an HttpOnly cookie: the confidentiality of the secret is protected. Still, an XSS attack can be used to send messages to the Web Worker to perform an operation that requires the secret. The Web Worker will return the result of the operation to the main execution thread.</p>
+<p>The advantage of a Web Worker implementation compared to an HttpOnly cookie is that a Web Worker allows for some isolated JavaScript code to access the secret; an HttpOnly cookie is not accessible to any JavaScript. If the frontend JavaScript code requires access to the secret, the Web Worker implementation is the only browser storage option that preserves the secret confidentiality.</p>
 <h2 id="session-id-life-cycle">Session ID Life Cycle<a class="headerlink" href="#session-id-life-cycle" title="Permanent link">&para;</a></h2>
 <h3 id="session-id-generation-and-verification-permissive-and-strict-session-management">Session ID Generation and Verification: Permissive and Strict Session Management<a class="headerlink" href="#session-id-generation-and-verification-permissive-and-strict-session-management" title="Permanent link">&para;</a></h3>
 <p>There are two types of session management mechanisms for web applications, permissive and strict, related to session fixation vulnerabilities. The permissive mechanism allows the web application to initially accept any session ID value set by the user as valid, creating a new session for it, while the strict mechanism enforces that the web application will only accept session ID values that have been previously generated by the web application.</p>
