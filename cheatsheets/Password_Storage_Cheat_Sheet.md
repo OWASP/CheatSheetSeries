@@ -7,7 +7,7 @@ As the majority of users will re-use passwords between different applications, i
 This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
 - **Use [Bcrypt](#modern-algorithms) unless you have a good reason not to.**
-- **Set a reasonable [work factor](#work-factors) for you system.**
+- **Set a reasonable [work factor](#work-factors) for your system.**
 - **Use a [salt](#salting) (modern algorithms do this for you automatically).**
 - **Consider using a [pepper](#peppering) to provide an additional layer of security.**
 
@@ -89,7 +89,7 @@ An alternative approach is to hash the passwords as usual and then encrypt the h
 
 The main issues with peppers is their long term maintenance. Changing the pepper in use will invalidate all of the existing passwords stored in the database, which means that it can't easily be changed in the event of the pepper being compromised.
 
-One solution to this is to store the ID of the pepper in the database alongside the associated password hashes. When the pepper needs to be updated, this ID can updated for hashes using the new pepper. Although the application will need to store all of the peppers that are currently in use, this does provide a way to replace a compromised pepper.
+One solution to this is to store the ID of the pepper in the database alongside the associated password hashes. When the pepper needs to be updated, this ID can be updated for hashes using the new pepper. Although the application will need to store all of the peppers that are currently in use, this does provide a way to replace a compromised pepper.
 
 ### Work Factors
 

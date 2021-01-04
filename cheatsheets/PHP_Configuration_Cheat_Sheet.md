@@ -115,4 +115,11 @@ html_errors             = Off
 
 [Suhosin](https://www.hardened-php.net/suhosin/index.html) is a patch to PHP which provides a number of hardening and security features that are not available in the default PHP build. However, Suhosin only works with PHP 5, which is **unsupported** and **should not be used**.
 
-There are a number of projects that have attempted to implement similar features for PHP 7 such as [Snuffleupagus](https://snuffleupagus.readthedocs.io/) and [Suhosin-ng](https://github.com/sektioneins/suhosin-ng/wiki/News), but these are both in the prerelease stage, and as such **should not be used in production**.
+For PHP 7, there is [Suhosin-ng](https://github.com/sektioneins/suhosin-ng/wiki/News), but it's in a prerelease stage, and as such **should not be used in production**.
+
+### Snuffleupagus
+
+[Snuffleupagus](https://snuffleupagus.readthedocs.io) is the spiritual
+descendent of Suhosin for PHP 7 and onwards, with [modern
+features](https://snuffleupagus.readthedocs.io/features.html). It's considered
+stable, and is usable in production.

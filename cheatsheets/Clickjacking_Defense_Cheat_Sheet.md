@@ -98,7 +98,7 @@ This approach is discussed on the [JavaScript.info website](https://javascript.i
 
 If the Clickjacking attack does not require the user to be authenticated, this attribute will not provide any protection.
 
-Additionally, while `SameSite` attribute is supported by [most modern browsers](https://caniuse.com/#feat=same-site-cookie-attribute), there are still many users (approximately 12% as of August 2019) with browsers that do not support it.
+Additionally, while `SameSite` attribute is supported by [most modern browsers](https://caniuse.com/#feat=same-site-cookie-attribute), there are still some users (approximately 6% as of November 2020) with browsers that do not support it.
 
 The use of this attribute should be considered as part of a defence-in-depth approach, and it should not be relied upon as the sole protective measure against Clickjacking.
 

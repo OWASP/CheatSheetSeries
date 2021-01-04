@@ -97,7 +97,7 @@ Rule \#1 is for when you want to put untrusted data directly into the HTML body 
 </div>
 ```
 
-Encode the following characters with HTML entity encoding to prevent switching into any execution context, such as script, style, or event handlers. Using hex entities is recommended in the spec. In addition to the 5 characters significant in XML (`&`, `<`, `>`, `"`, `'`), the forward slash is included as it helps to end an HTML entity.
+Encode the following characters with HTML entity encoding to prevent switching into any execution context, such as script, style, or event handlers. Using hex entities is recommended in the spec. The 5 characters significant in XML (`&`, `<`, `>`, `"`, `'`):
 
 ```text
  & --> &amp;
@@ -105,11 +105,8 @@ Encode the following characters with HTML entity encoding to prevent switching i
  > --> &gt;
  " --> &quot;
  ' --> &#x27;
- / --> &#x2F;
 
  &apos; not recommended because its not in the HTML spec (See: section 24.4.1) &apos; is in the XML and XHTML specs.
-
- Forward slash is included as it helps end an HTML entity
 ```
 
 ### RULE \#2 - Attribute Encode Before Inserting Untrusted Data into HTML Common Attributes
@@ -134,7 +131,7 @@ Inside double quoted attribute :
 <div attr="...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...">content
 ```
 
-Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the `&#xHH;` format (or a named entity if available) to prevent switching out of the attribute.
+Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the "&amp;#xHH;" format (or a named entity if available) to prevent switching out of the attribute.
 
 The reason this rule is so broad is that developers frequently leave attributes unquoted. Properly quoted attributes can only be escaped with the corresponding quote.
 
