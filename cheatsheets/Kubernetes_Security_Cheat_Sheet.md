@@ -25,7 +25,7 @@ Node components run on every node, maintaining running pods and providing the Ku
 | kube-proxy        | kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept |
 | Container runtime | The container runtime is the software that is responsible for running containers.                                         |
 
-![Kubernetes Architecture](./assests/Kubernetes_Architecture.png)	
+![Kubernetes Architecture](../assests/Kubernetes_Architecture.png)	
 
 This cheatsheet provides a starting point for securing Kubernetes cluster. It is divided into the following categories:
 * Securing Kubernetes hosts
