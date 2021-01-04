@@ -33,7 +33,7 @@ A key concern when using passwords for authentication is password strength. A "s
 - Ensure credential rotation when a password leak, or at the time of compromise identification.
 - Include password strength meter to help users create a more complex password and block common and previously breached passwords
     - [zxcvbn library](https://github.com/dropbox/zxcvbn) can be used for this purpose. (Note that this library is no longer maintained)
-    - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service where passwords can be checked against previously breached passwords. You can host it yourself or use [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
+    - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service where passwords can be checked against previously breached passwords. You can host it yourself or use [API](https://haveibeenpwned.com/API/v3#PwnedPasswords).
 
 #### For more detailed information check
 
