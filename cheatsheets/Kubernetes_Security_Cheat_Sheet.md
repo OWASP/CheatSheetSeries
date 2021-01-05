@@ -670,4 +670,4 @@ Master documentation - https://kubernetes.io/
 14. OPEN POLICY AGENT: CLOUD-NATIVE AUTHORIZATION - https://blog.styra.com/blog/open-policy-agent-authorization-for-the-cloud
 15. Introducing Policy As Code: The Open Policy Agent (OPA) - https://www.magalix.com/blog/introducing-policy-as-code-the-open-policy-agent-opa
 16. What service mesh provides - https://aspenmesh.io/what-service-mesh-provides/
-17. Three Technical Benefits of Service Meshes and their Operational Limitations, Part 1 - https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1#:~:text=Limitations%20of%20Service%20Meshes&text=Required%20Expertise%3A%20Adding%20a%20service,significant%20slowness%20to%20an%20architecture. 
+17. Three Technical Benefits of Service Meshes and their Operational Limitations, Part 1 - https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1.
