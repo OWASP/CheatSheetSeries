@@ -13,7 +13,7 @@ The control plane's components make global decisions about the cluster, as well 
 | Component                | Description                                                                                                                                                                                            |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | kube-apiserver           | kube-apiserver exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.                                                                                                          |
-| etcd                     | etcd is a consistent and highly-available key value store used as Kubernetes' backing store for all cluster data.                                                                                                     |
+| etcd                     | etcd is a consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.                                                                                                     |
 | kube-scheduler           | kube-scheduler watches for newly created Pods with no assigned node, and selects a node for them to run on.                                                                                                           |
 | kube-controller-manager  | kube-controller-manager runs controller processes. Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process.                |
 | cloud-controller-manager | The cloud controller manager lets you link your cluster into your cloud provider's API, and separates out the components that interact with that cloud platform from components that just interact with your cluster. |
@@ -143,7 +143,7 @@ Allowing other components within the cluster to access the master etcd instance 
 
 ### Controlling access to the Kubelet
 
-Kubelets expose <https endpoints which grant powerful control over the node and containers. By default Kubelets allow unauthenticated access to this API. Production clusters should enable Kubelet authentication and authorization.
+Kubelets expose HTTPS endpoints which grant powerful control over the node and containers. By default Kubelets allow unauthenticated access to this API. Production clusters should enable Kubelet authentication and authorization.
 
 For more information, refer to Kubelet authentication/authorization documentation at <https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-authentication-authorization>
 
