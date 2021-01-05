@@ -424,7 +424,7 @@ POST /apis/net.alpha.kubernetes.io/v1alpha1/namespaces/tenant-a/networkpolicys
   "kind": "NetworkPolicy",
   "metadata": {
     "name": "pol1"
-  }, 
+  },
   "spec": {
     "allowIncoming": {
       "from": [{
@@ -634,7 +634,7 @@ The first layer of logs that can be collected from a Kubernetes cluster are thos
   To apply the manifest, run:
 
     ```bash
-    kubectl apply -f example.yaml 
+    kubectl apply -f example.yaml
     ```
 
   To take a look the logs for this container, run:
@@ -691,7 +691,7 @@ Depending on what operating system and additional services you’re running on y
 For example, systemd logs can be retrieved using the following command:
 
   ```bash
-  journalctl -u 
+  journalctl -u
   ```
 
 ##### Cluster logging
@@ -708,7 +708,7 @@ Kubernetes events can indicate any Kubernetes resource state changes and errors,
 The following command returns all events within a specific namespace:
 
   ```bash
-  kubectl get events -n <namespace> 
+  kubectl get events -n <namespace>
 
   NAMESPACE LAST SEEN TYPE   REASON OBJECT MESSAGE
   kube-system  8m22s  Normal   Scheduled            pod/metrics-server-66dbbb67db-lh865                                       Successfully assigned kube-system/metrics-server-66dbbb67db-lh865 to aks-agentpool-42213468-1
@@ -722,7 +722,7 @@ The following command returns all events within a specific namespace:
 The following command will show the latest events for this specific Kubernetes resource:
 
 ```bash
-  kubectl describe pod <pod-name> 
+  kubectl describe pod <pod-name>
 
 Events:
   Type    Reason     Age   From                               Message
