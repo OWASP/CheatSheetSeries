@@ -1,0 +1,3146 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html">
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
+    
+    
+      
+        <title>Kubernetes Security - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3b61ea93.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kubernetes-security-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              Kubernetes Security
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../Glossary.html" class="md-nav__link">
+      Index Alphabetical
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../IndexASVS.html" class="md-nav__link">
+      Index ASVS
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  <li class="md-nav__item">
+    <a href="../IndexProactiveControls.html" class="md-nav__link">
+      Index Proactive Controls
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  
+
+
+  
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Cheatsheets
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon"></span>
+        Cheatsheets
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+      AJAX Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+      Abuse Case
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+      Access Control
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+      Attack Surface Analysis
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+      Authorization Testing Automation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+      Bean Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+      C-Based Toolchain Hardening
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+      Choosing and Using Security Questions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+      Clickjacking Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+      Content Security Policy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Credential Stuffing Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Cross-Site Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Cross Site Scripting Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+      Cryptographic Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      DOM based XSS Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+      Database Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+      Denial of Service
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+      Deserialization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+      Docker Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+      DotNet Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+      Error Handling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+      File Upload
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+      Forgot Password
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+      GraphQL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+      HTML5 Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+      HTTP Strict Transport Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+      Injection Prevention in Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+      Input Validation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Insecure Direct Object Reference Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+      JAAS
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+      JSON Web Token for Java
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+      Key Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Kubernetes Security
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+      Kubernetes Security
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes" class="md-nav__link">
+    Kubernetes
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#control-plane-components" class="md-nav__link">
+    Control Plane Components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node-components" class="md-nav__link">
+    Node Components
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#securing-kubernetes-hosts" class="md-nav__link">
+    Securing Kubernetes hosts
+  </a>
+  
+    <nav class="md-nav" aria-label="Securing Kubernetes hosts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-version" class="md-nav__link">
+    Kubernetes Version
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#securing-kubernetes-components" class="md-nav__link">
+    Securing Kubernetes components
+  </a>
+  
+    <nav class="md-nav" aria-label="Securing Kubernetes components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#control-network-access-to-sensitive-ports" class="md-nav__link">
+    Control network access to sensitive ports
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limit-direct-access-to-kubernetes-nodes" class="md-nav__link">
+    Limit Direct Access to Kubernetes Nodes
+  </a>
+  
+    <nav class="md-nav" aria-label="Limit Direct Access to Kubernetes Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controlling-access-to-the-kubernetes-api" class="md-nav__link">
+    Controlling access to the Kubernetes API
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-transport-layer-security" class="md-nav__link">
+    Use Transport Layer Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-authentication" class="md-nav__link">
+    API Authentication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-authorization-implement-role-based-access-control" class="md-nav__link">
+    API Authorization - Implement role-based access control
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restrict-access-to-etcd" class="md-nav__link">
+    Restrict access to etcd
+  </a>
+  
+    <nav class="md-nav" aria-label="Restrict access to etcd">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#caution" class="md-nav__link">
+    Caution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlling-access-to-the-kubelet" class="md-nav__link">
+    Controlling access to the Kubelet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#securing-kubernetes-dashboard" class="md-nav__link">
+    Securing Kubernetes Dashboard
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-security-best-practices-build-phase" class="md-nav__link">
+    Kubernetes Security Best Practices: Build Phase
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes Security Best Practices: Build Phase">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ensure-that-only-authorized-images-are-used-in-your-environment" class="md-nav__link">
+    Ensure That Only Authorized Images are used in Your Environment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-registry-and-the-use-of-an-image-scanner-to-identify-known-vulnerabilities" class="md-nav__link">
+    Container registry and the use of an image scanner to identify known vulnerabilities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-minimal-base-images-and-avoid-adding-unnecessary-components" class="md-nav__link">
+    Use minimal base images and avoid adding unnecessary components
+  </a>
+  
+    <nav class="md-nav" aria-label="Use minimal base images and avoid adding unnecessary components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distroless-images" class="md-nav__link">
+    Distroless images
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-latest-imagesensure-images-are-up-to-date" class="md-nav__link">
+    Use the latest images/ensure images are up to date
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-security-best-practices-deploy-phase" class="md-nav__link">
+    Kubernetes Security Best Practices: Deploy Phase
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes Security Best Practices: Deploy Phase">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-kubernetes-namespaces-to-properly-isolate-your-kubernetes-resources" class="md-nav__link">
+    Use Kubernetes namespaces to properly isolate your Kubernetes resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Kubernetes namespaces to properly isolate your Kubernetes resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-the-namespace-for-a-request" class="md-nav__link">
+    Setting the namespace for a request
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-the-namespace-preference" class="md-nav__link">
+    Setting the namespace preference
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-policies-to-govern-image-provenance-using-the-imagepolicywebhook" class="md-nav__link">
+    Create policies to govern image provenance using the ImagePolicyWebhook
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implement-continuous-security-vulnerability-scanning" class="md-nav__link">
+    Implement Continuous Security Vulnerability Scanning
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regularly-apply-security-updates-to-your-environment" class="md-nav__link">
+    Regularly Apply Security Updates to Your Environment
+  </a>
+  
+    <nav class="md-nav" aria-label="Regularly Apply Security Updates to Your Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#note" class="md-nav__link">
+    NOTE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assess-the-privileges-used-by-containers" class="md-nav__link">
+    Assess the privileges used by containers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply-security-context-to-your-pods-and-containers" class="md-nav__link">
+    Apply Security Context to Your Pods and Containers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implement-service-mesh" class="md-nav__link">
+    Implement Service Mesh
+  </a>
+  
+    <nav class="md-nav" aria-label="Implement Service Mesh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#obeservability" class="md-nav__link">
+    Obeservability
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operational-control" class="md-nav__link">
+    Operational Control
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rbac" class="md-nav__link">
+    RBAC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    Disadvantages
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-open-policy-agent-opa-for-a-centralized-policy-management" class="md-nav__link">
+    Implementing Open Policy Agent (OPA) for a centralized policy management
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limiting-resource-usage-on-a-cluster" class="md-nav__link">
+    Limiting resource usage on a cluster
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters" class="md-nav__link">
+    Use Kubernetes network policies to control traffic between pods and clusters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#securing-data" class="md-nav__link">
+    Securing data
+  </a>
+  
+    <nav class="md-nav" aria-label="Securing data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#keeps-secrets-as-secrets" class="md-nav__link">
+    Keeps secrets as secrets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encrypt-secrets-at-rest" class="md-nav__link">
+    Encrypt secrets at rest
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-security-best-practices-runtime-phase" class="md-nav__link">
+    Kubernetes Security Best Practices: Runtime Phase
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes Security Best Practices: Runtime Phase">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-pod-security-policies-to-prevent-risky-containerspods-from-being-used" class="md-nav__link">
+    Use Pod Security Policies to prevent risky containers/Pods from being used
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-runtime-security" class="md-nav__link">
+    Container Runtime Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-sandboxing" class="md-nav__link">
+    Container Sandboxing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preventing-containers-from-loading-unwanted-kernel-modules" class="md-nav__link">
+    Preventing containers from loading unwanted kernel modules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-and-analyze-different-runtime-activity-in-pods-of-the-same-deployments" class="md-nav__link">
+    Compare and analyze different runtime activity in pods of the same deployments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-network-traffic-to-limit-unnecessary-or-insecure-communication" class="md-nav__link">
+    Monitor network traffic to limit unnecessary or insecure communication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-breached-scale-suspicious-pods-to-zero" class="md-nav__link">
+    If breached, scale suspicious pods to zero
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotate-infrastructure-credentials-frequently" class="md-nav__link">
+    Rotate infrastructure credentials frequently
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receiving-alerts-for-security-updates-and-reporting-vulnerabilities" class="md-nav__link">
+    Receiving alerts for security updates and reporting vulnerabilities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    Logging
+  </a>
+  
+    <nav class="md-nav" aria-label="Logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-audit-logging" class="md-nav__link">
+    Enable audit logging
+  </a>
+  
+    <nav class="md-nav" aria-label="Enable audit logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audit-logs" class="md-nav__link">
+    Audit logs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-audit-policies" class="md-nav__link">
+    Define Audit Policies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-logging" class="md-nav__link">
+    Understanding Logging
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-logging" class="md-nav__link">
+    Container logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node-logging" class="md-nav__link">
+    Node logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cluster-logging" class="md-nav__link">
+    Cluster logging
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    Events
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-thoughts" class="md-nav__link">
+    Final thoughts
+  </a>
+  
+    <nav class="md-nav" aria-label="Final thoughts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#embed-security-earlier-into-the-container-lifecycle" class="md-nav__link">
+    Embed security earlier into the container lifecycle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-kubernetes-native-security-controls-to-reduce-operational-risk" class="md-nav__link">
+    Use Kubernetes-native security controls to reduce operational risk
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leverage-the-context-that-kubernetes-provides-to-prioritize-remediation-efforts" class="md-nav__link">
+    Leverage the context that Kubernetes provides to prioritize remediation efforts
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      LDAP Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+      Logging
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+      Mass Assignment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+      Microservices based Security Arch Doc
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Microservices_security.html" class="md-nav__link">
+      Microservices security.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+      Multifactor Authentication
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+      Nodejs Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+      OS Command Injection Defense
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+      PHP Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+      Password Storage
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+      Pinning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+      Query Parameterization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+      REST Assessment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+      REST Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+      Ruby on Rails
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+      SAML Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      SQL Injection Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+      Securing Cascading Style Sheets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      Server Side Request Forgery Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+      Session Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+      TLS Cipher String
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+      Third Party Javascript Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+      Threat Modeling
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+      Transaction Authorization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+      Transport Layer Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+      Unvalidated Redirects and Forwards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+      User Privacy Protection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+      Virtual Patching
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+      Vulnerability Disclosure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+      Vulnerable Dependency Management
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+      Web Service Security
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      XML External Entity Prevention
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+      XML Security
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes" class="md-nav__link">
+    Kubernetes
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#control-plane-components" class="md-nav__link">
+    Control Plane Components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node-components" class="md-nav__link">
+    Node Components
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#securing-kubernetes-hosts" class="md-nav__link">
+    Securing Kubernetes hosts
+  </a>
+  
+    <nav class="md-nav" aria-label="Securing Kubernetes hosts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-version" class="md-nav__link">
+    Kubernetes Version
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#securing-kubernetes-components" class="md-nav__link">
+    Securing Kubernetes components
+  </a>
+  
+    <nav class="md-nav" aria-label="Securing Kubernetes components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#control-network-access-to-sensitive-ports" class="md-nav__link">
+    Control network access to sensitive ports
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limit-direct-access-to-kubernetes-nodes" class="md-nav__link">
+    Limit Direct Access to Kubernetes Nodes
+  </a>
+  
+    <nav class="md-nav" aria-label="Limit Direct Access to Kubernetes Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#controlling-access-to-the-kubernetes-api" class="md-nav__link">
+    Controlling access to the Kubernetes API
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-transport-layer-security" class="md-nav__link">
+    Use Transport Layer Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-authentication" class="md-nav__link">
+    API Authentication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-authorization-implement-role-based-access-control" class="md-nav__link">
+    API Authorization - Implement role-based access control
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restrict-access-to-etcd" class="md-nav__link">
+    Restrict access to etcd
+  </a>
+  
+    <nav class="md-nav" aria-label="Restrict access to etcd">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#caution" class="md-nav__link">
+    Caution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#controlling-access-to-the-kubelet" class="md-nav__link">
+    Controlling access to the Kubelet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#securing-kubernetes-dashboard" class="md-nav__link">
+    Securing Kubernetes Dashboard
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-security-best-practices-build-phase" class="md-nav__link">
+    Kubernetes Security Best Practices: Build Phase
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes Security Best Practices: Build Phase">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ensure-that-only-authorized-images-are-used-in-your-environment" class="md-nav__link">
+    Ensure That Only Authorized Images are used in Your Environment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-registry-and-the-use-of-an-image-scanner-to-identify-known-vulnerabilities" class="md-nav__link">
+    Container registry and the use of an image scanner to identify known vulnerabilities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-minimal-base-images-and-avoid-adding-unnecessary-components" class="md-nav__link">
+    Use minimal base images and avoid adding unnecessary components
+  </a>
+  
+    <nav class="md-nav" aria-label="Use minimal base images and avoid adding unnecessary components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distroless-images" class="md-nav__link">
+    Distroless images
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-latest-imagesensure-images-are-up-to-date" class="md-nav__link">
+    Use the latest images/ensure images are up to date
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-security-best-practices-deploy-phase" class="md-nav__link">
+    Kubernetes Security Best Practices: Deploy Phase
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes Security Best Practices: Deploy Phase">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-kubernetes-namespaces-to-properly-isolate-your-kubernetes-resources" class="md-nav__link">
+    Use Kubernetes namespaces to properly isolate your Kubernetes resources
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Kubernetes namespaces to properly isolate your Kubernetes resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-the-namespace-for-a-request" class="md-nav__link">
+    Setting the namespace for a request
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-the-namespace-preference" class="md-nav__link">
+    Setting the namespace preference
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-policies-to-govern-image-provenance-using-the-imagepolicywebhook" class="md-nav__link">
+    Create policies to govern image provenance using the ImagePolicyWebhook
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implement-continuous-security-vulnerability-scanning" class="md-nav__link">
+    Implement Continuous Security Vulnerability Scanning
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regularly-apply-security-updates-to-your-environment" class="md-nav__link">
+    Regularly Apply Security Updates to Your Environment
+  </a>
+  
+    <nav class="md-nav" aria-label="Regularly Apply Security Updates to Your Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#note" class="md-nav__link">
+    NOTE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assess-the-privileges-used-by-containers" class="md-nav__link">
+    Assess the privileges used by containers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply-security-context-to-your-pods-and-containers" class="md-nav__link">
+    Apply Security Context to Your Pods and Containers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implement-service-mesh" class="md-nav__link">
+    Implement Service Mesh
+  </a>
+  
+    <nav class="md-nav" aria-label="Implement Service Mesh">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#obeservability" class="md-nav__link">
+    Obeservability
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operational-control" class="md-nav__link">
+    Operational Control
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rbac" class="md-nav__link">
+    RBAC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    Disadvantages
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-open-policy-agent-opa-for-a-centralized-policy-management" class="md-nav__link">
+    Implementing Open Policy Agent (OPA) for a centralized policy management
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limiting-resource-usage-on-a-cluster" class="md-nav__link">
+    Limiting resource usage on a cluster
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters" class="md-nav__link">
+    Use Kubernetes network policies to control traffic between pods and clusters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#securing-data" class="md-nav__link">
+    Securing data
+  </a>
+  
+    <nav class="md-nav" aria-label="Securing data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#keeps-secrets-as-secrets" class="md-nav__link">
+    Keeps secrets as secrets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encrypt-secrets-at-rest" class="md-nav__link">
+    Encrypt secrets at rest
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes-security-best-practices-runtime-phase" class="md-nav__link">
+    Kubernetes Security Best Practices: Runtime Phase
+  </a>
+  
+    <nav class="md-nav" aria-label="Kubernetes Security Best Practices: Runtime Phase">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-pod-security-policies-to-prevent-risky-containerspods-from-being-used" class="md-nav__link">
+    Use Pod Security Policies to prevent risky containers/Pods from being used
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-runtime-security" class="md-nav__link">
+    Container Runtime Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-sandboxing" class="md-nav__link">
+    Container Sandboxing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preventing-containers-from-loading-unwanted-kernel-modules" class="md-nav__link">
+    Preventing containers from loading unwanted kernel modules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare-and-analyze-different-runtime-activity-in-pods-of-the-same-deployments" class="md-nav__link">
+    Compare and analyze different runtime activity in pods of the same deployments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-network-traffic-to-limit-unnecessary-or-insecure-communication" class="md-nav__link">
+    Monitor network traffic to limit unnecessary or insecure communication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-breached-scale-suspicious-pods-to-zero" class="md-nav__link">
+    If breached, scale suspicious pods to zero
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotate-infrastructure-credentials-frequently" class="md-nav__link">
+    Rotate infrastructure credentials frequently
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receiving-alerts-for-security-updates-and-reporting-vulnerabilities" class="md-nav__link">
+    Receiving alerts for security updates and reporting vulnerabilities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    Logging
+  </a>
+  
+    <nav class="md-nav" aria-label="Logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-audit-logging" class="md-nav__link">
+    Enable audit logging
+  </a>
+  
+    <nav class="md-nav" aria-label="Enable audit logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audit-logs" class="md-nav__link">
+    Audit logs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-audit-policies" class="md-nav__link">
+    Define Audit Policies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-logging" class="md-nav__link">
+    Understanding Logging
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Logging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-logging" class="md-nav__link">
+    Container logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node-logging" class="md-nav__link">
+    Node logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cluster-logging" class="md-nav__link">
+    Cluster logging
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    Events
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-thoughts" class="md-nav__link">
+    Final thoughts
+  </a>
+  
+    <nav class="md-nav" aria-label="Final thoughts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#embed-security-earlier-into-the-container-lifecycle" class="md-nav__link">
+    Embed security earlier into the container lifecycle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-kubernetes-native-security-controls-to-reduce-operational-risk" class="md-nav__link">
+    Use Kubernetes-native security controls to reduce operational risk
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leverage-the-context-that-kubernetes-provides-to-prioritize-remediation-efforts" class="md-nav__link">
+    Leverage the context that Kubernetes provides to prioritize remediation efforts
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="kubernetes-security-cheat-sheet">Kubernetes Security Cheat Sheet<a class="headerlink" href="#kubernetes-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h2>
+<p>Kubernetes is an open source container orchestration engine for automating deployment, scaling, and management of containerized applications. The open source project is hosted by the Cloud Native Computing Foundation (CNCF).</p>
+<p>When you deploy Kubernetes, you get a cluster. A Kubernetes cluster consists of a set of worker machines, called nodes that run containerized applications. The control plane manages the worker nodes and the Pods in the cluster.</p>
+<h3 id="control-plane-components">Control Plane Components<a class="headerlink" href="#control-plane-components" title="Permanent link">&para;</a></h3>
+<p>The control plane's components make global decisions about the cluster, as well as detecting and responding to cluster events. It consists of components such as kube-apiserver, etcd, kube-scheduler, kube-controller-manager and cloud-controller-manager</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kube-apiserver</td>
+<td>kube-apiserver exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.</td>
+</tr>
+<tr>
+<td>etcd</td>
+<td>etcd is a consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.</td>
+</tr>
+<tr>
+<td>kube-scheduler</td>
+<td>kube-scheduler watches for newly created Pods with no assigned node, and selects a node for them to run on.</td>
+</tr>
+<tr>
+<td>kube-controller-manager</td>
+<td>kube-controller-manager runs controller processes. Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process.</td>
+</tr>
+<tr>
+<td>cloud-controller-manager</td>
+<td>The cloud controller manager lets you link your cluster into your cloud provider's API, and separates out the components that interact with that cloud platform from components that just interact with your cluster.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="node-components">Node Components<a class="headerlink" href="#node-components" title="Permanent link">&para;</a></h3>
+<p>Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment. It consists of components such as kubelet, kube-proxy and container runtime.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kubelet</td>
+<td>kubelet is an agent that runs on each node in the cluster. It makes sure that containers are running in a Pod</td>
+</tr>
+<tr>
+<td>kube-proxy</td>
+<td>kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept</td>
+</tr>
+<tr>
+<td>Container runtime</td>
+<td>The container runtime is the software that is responsible for running containers.</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Kubernetes Architecture" src="../assets/Kubernetes_Architecture.png" /></p>
+<p>This cheatsheet provides a starting point for securing Kubernetes cluster. It is divided into the following categories:</p>
+<ul>
+<li>Securing Kubernetes hosts</li>
+<li>Securing Kubernetes components</li>
+<li>Kubernetes Security Best Practices: Build Phase</li>
+<li>Kubernetes Security Best Practices: Deploy Phase</li>
+<li>Kubernetes Security Best Practices: Runtime Phase</li>
+</ul>
+<h2 id="securing-kubernetes-hosts">Securing Kubernetes hosts<a class="headerlink" href="#securing-kubernetes-hosts" title="Permanent link">&para;</a></h2>
+<p>There are several options available to deploy Kubernetes: on bare metal, on-premise, and in the public cloud (custom Kubernetes build on virtual machines OR use a managed service). Kubernetes was designed to be highly portable and customers can easily switch between these installations, migrating their workloads.</p>
+<p>All of this potential customisation of Kubernetes means it can be designed to fit a large variety of scenarios; however, this is also its greatest weakness when it comes to security. Kubernetes is designed out of the box to be customizable and users must turn on certain functionality to secure their cluster. This means that the engineers responsible for deploying the Kubernetes platform need to know about all the potential attack vectors and vulnerabilities poor configuration can lead to.</p>
+<p>It is recommended to harden the underlying hosts by installing the latest version of operating system, hardening the operating system, implement necessary patch management and configuration management system, implementing essential firewall rules and undertake specific security measures depending on the datacenter environment.</p>
+<h3 id="kubernetes-version">Kubernetes Version<a class="headerlink" href="#kubernetes-version" title="Permanent link">&para;</a></h3>
+<p>It has become impossible to track all potential attack vectors. This fact is unfortunate as there is nothing more vital than to be aware and on top of potential threats. The best defense is to make sure that you are running the latest available version of Kubernetes.</p>
+<p>The Kubernetes project maintains release branches for the most recent three minor releases and it backports the applicable fixes, including security fixes, to those three release branches, depending on severity and feasibility. Patch releases are cut from those branches at a regular cadence, plus additional urgent releases, when required. Hence it is always recommended to upgrade the Kubernetes cluster to the latest available stable version. It is recommended to refer to the version skew policy for further details <a href="https://kubernetes.io/docs/setup/release/version-skew-policy/">https://kubernetes.io/docs/setup/release/version-skew-policy/</a>.</p>
+<p>There are several techniques such as rolling updates, and node pool migrations that allow you to complete an update with minimal disruption and downtime.</p>
+<h2 id="securing-kubernetes-components">Securing Kubernetes components<a class="headerlink" href="#securing-kubernetes-components" title="Permanent link">&para;</a></h2>
+<h3 id="control-network-access-to-sensitive-ports">Control network access to sensitive ports<a class="headerlink" href="#control-network-access-to-sensitive-ports" title="Permanent link">&para;</a></h3>
+<p>Kubernetes clusters usually listen on a range of well-defined and distinctive ports which makes it easier identify the clusters and attack them.
+Hence it is highly recommended to configure authentication and authorization on the cluster and cluster nodes.</p>
+<p>Here is an overview of the default ports used in Kubernetes. Make sure that your network blocks access to ports and consider limiting access to the Kubernetes API server except from trusted networks.</p>
+<p><strong>Master node(s):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Port Range</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP</td>
+<td>6443-</td>
+<td>Kubernetes API Server</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>2379-2380</td>
+<td>etcd server client API</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>10250</td>
+<td>Kubelet API</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>10251</td>
+<td>kube-scheduler</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>10252</td>
+<td>kube-controller-manager</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>10255</td>
+<td>Read-Only Kubelet API</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Worker nodes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Port Range</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP</td>
+<td>10250</td>
+<td>Kubelet API</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>10255</td>
+<td>Read-Only Kubelet API</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>30000-32767</td>
+<td>NodePort Services</td>
+</tr>
+</tbody>
+</table>
+<h2 id="limit-direct-access-to-kubernetes-nodes">Limit Direct Access to Kubernetes Nodes<a class="headerlink" href="#limit-direct-access-to-kubernetes-nodes" title="Permanent link">&para;</a></h2>
+<p>You should limit SSH access to Kubernetes nodes, reducing the risk for unauthorized access to host resource. Instead you should ask users to use "kubectl exec", which will provide direct access to the container environment without the ability to access the host.</p>
+<p>You can use Kubernetes Authorization Plugins to further control user access to resources. This allows defining fine-grained-access control rules for specific namespace, containers and operations.</p>
+<h3 id="controlling-access-to-the-kubernetes-api">Controlling access to the Kubernetes API<a class="headerlink" href="#controlling-access-to-the-kubernetes-api" title="Permanent link">&para;</a></h3>
+<p>The Kubernetes platform is controlled using API requests and as such is the first line of defense against attackers. Controlling who has access and what actions they are allowed to perform is the primary concern. For more information, refer to the documentation at <a href="https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/">https://kubernetes.io/docs/reference/access-authn-authz/controlling-access/</a>.</p>
+<h3 id="use-transport-layer-security">Use Transport Layer Security<a class="headerlink" href="#use-transport-layer-security" title="Permanent link">&para;</a></h3>
+<p>Communication in the cluster between services should be handled using TLS, encrypting all traffic by default. This, however, is often overlooked with the thought being that the cluster is secure and there is no need to provide encryption in transit within the cluster.</p>
+<p>Advances in network technology, such as the service mesh, have led to the creation of products like LinkerD and Istio which can enable TLS by default while providing extra telemetry information on transactions between services.</p>
+<p>Kubernetes expects that all API communication in the cluster is encrypted by default with TLS, and the majority of installation methods will allow the necessary certificates to be created and distributed to the cluster components. Note that some components and installation methods may enable local ports over HTTP and administrators should familiarize themselves with the settings of each component to identify potentially unsecured traffic.</p>
+<p>To learn more on usage of TLS in Kubernetes cluster, refer to the documentation at <a href="https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/#1-tls-everywhere">https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/#1-tls-everywhere</a>.</p>
+<h3 id="api-authentication">API Authentication<a class="headerlink" href="#api-authentication" title="Permanent link">&para;</a></h3>
+<p>Choose an authentication mechanism for the API servers to use that matches the common access patterns when you install a cluster. For instance, small single user clusters may wish to use a simple certificate or static Bearer token approach. Larger clusters may wish to integrate an existing OIDC or LDAP server that allow users to be subdivided into groups.</p>
+<p>All API clients must be authenticated, even those that are part of the infrastructure like nodes, proxies, the scheduler, and volume plugins. These clients are typically service accounts or use x509 client certificates, and they are created automatically at cluster startup or are setup as part of the cluster installation.</p>
+<p>For more information, consult Kubernetes authentication reference document at <a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication">https://kubernetes.io/docs/reference/access-authn-authz/authentication</a></p>
+<h3 id="api-authorization-implement-role-based-access-control">API Authorization - Implement role-based access control<a class="headerlink" href="#api-authorization-implement-role-based-access-control" title="Permanent link">&para;</a></h3>
+<p>In Kubernetes, you must be authenticated (logged in) before your request can be authorized (granted permission to access). Kubernetes expects attributes that are common to REST API requests. This means that Kubernetes authorization works with existing organization-wide or cloud-provider-wide access control systems which may handle other APIs besides the Kubernetes API.</p>
+<p>Kubernetes authorizes API requests using the API server. It evaluates all of the request attributes against all policies and allows or denies the request. All parts of an API request must be allowed by some policy in order to proceed. This means that permissions are denied by default.</p>
+<p>Role-based access control (RBAC) is a method of regulating access to computer or network resources based on the roles of individual users within your organization.</p>
+<p>Kubernetes ships an integrated Role-Based Access Control (RBAC) component that matches an incoming user or group to a set of permissions bundled into roles. These permissions combine verbs (get, create, delete) with resources (pods, services, nodes) and can be namespace or cluster scoped. A set of out of the box roles are provided that offer reasonable default separation of responsibility depending on what actions a client might want to perform. It is recommended that you use the Node and RBAC authorizers together, in combination with the NodeRestriction admission plugin.</p>
+<p>RBAC authorization uses the rbac.authorization.k8s.io API group to drive authorization decisions, allowing you to dynamically configure policies through the Kubernetes API.
+To enable RBAC, start the API server with the --authorization-mode flag set to a comma-separated list that includes RBAC; for example:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># kube-apiserver --authorization-mode=Example,RBAC --other-options --more-options</span>
+</code></pre></div>
+
+<p>For detailed examples of utilizing RBAC, refer to Kubernetes documentation at <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac">https://kubernetes.io/docs/reference/access-authn-authz/rbac</a></p>
+<h3 id="restrict-access-to-etcd">Restrict access to etcd<a class="headerlink" href="#restrict-access-to-etcd" title="Permanent link">&para;</a></h3>
+<p>etcd is a critical Kubernetes component which stores information on state and secrets, and it should be protected differently from the rest of your cluster. Write access to the API server's etcd is equivalent to gaining root on the entire cluster, and even read access can be used to escalate privileges fairly easily.</p>
+<p>The Kubernetes scheduler will search etcd for pod definitions that do not have a node. It then sends the pods it finds to an available kubelet for scheduling. Validation for submitted pods is performed by the API server before it writes them to etcd, so malicious users writing directly to etcd can bypass many security mechanisms - e.g. PodSecurityPolicies.</p>
+<p>Administrators should always use strong credentials from the API servers to their etcd server, such as mutual auth via TLS client certificates, and it is often recommended to isolate the etcd servers behind a firewall that only the API servers may access.</p>
+<h4 id="caution">Caution<a class="headerlink" href="#caution" title="Permanent link">&para;</a></h4>
+<p>Allowing other components within the cluster to access the master etcd instance with read or write access to the full keyspace is equivalent to granting cluster-admin access. Using separate etcd instances for non-master components or using etcd ACLs to restrict read and write access to a subset of the keyspace is strongly recommended.</p>
+<h3 id="controlling-access-to-the-kubelet">Controlling access to the Kubelet<a class="headerlink" href="#controlling-access-to-the-kubelet" title="Permanent link">&para;</a></h3>
+<p>Kubelets expose HTTPS endpoints which grant powerful control over the node and containers. By default Kubelets allow unauthenticated access to this API. Production clusters should enable Kubelet authentication and authorization.</p>
+<p>For more information, refer to Kubelet authentication/authorization documentation at <a href="https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-authentication-authorization">https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-authentication-authorization</a></p>
+<h3 id="securing-kubernetes-dashboard">Securing Kubernetes Dashboard<a class="headerlink" href="#securing-kubernetes-dashboard" title="Permanent link">&para;</a></h3>
+<p>The Kubernetes dashboard is a webapp for monitoring your cluster. It it is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard. (Reference: Tesla cloud resources are hacked to run cryptocurrency-mining malware - <a href="https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/">https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/</a>)</p>
+<p>To prevent attacks via the dashboard, you should follow some tips:</p>
+<ul>
+<li>Do not expose the dashboard to the public. There is no need to access such a powerful tool from outside your LAN</li>
+<li>Turn on RBAC, so you can limit the service account the dashboard uses</li>
+<li>Do not grant the service account of the dashboard high privileges</li>
+<li>Grant permissions per user, so each user only can see what he is supposed to see</li>
+<li>If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)</li>
+<li>Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.</li>
+</ul>
+<h2 id="kubernetes-security-best-practices-build-phase">Kubernetes Security Best Practices: Build Phase<a class="headerlink" href="#kubernetes-security-best-practices-build-phase" title="Permanent link">&para;</a></h2>
+<p>Securing containers and Kubernetes starts in the build phase with securing your container images. The two main things to do here are to build secure images and to scan those images for any known vulnerabilities.</p>
+<p>A Container image is an immutable, lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings [<a href="https://www.docker.com/resources/what-container">https://www.docker.com/resources/what-container</a>]. The image shares the kernel of the operating system present in its host machine.</p>
+<p>Container images must be built using approved and secure base image that is scanned and monitored at regular intervals to ensure only secure and authentic images can be used within the cluster. It is recommended to configure strong governance policies regarding how images are built and stored in trusted image registries.</p>
+<h3 id="ensure-that-only-authorized-images-are-used-in-your-environment">Ensure That Only Authorized Images are used in Your Environment<a class="headerlink" href="#ensure-that-only-authorized-images-are-used-in-your-environment" title="Permanent link">&para;</a></h3>
+<p>Without a process that ensures that only images adhering to the organization’s policy are allowed to run, the organization is open to risk of running vulnerable or even malicious containers. Downloading and running images from unknown sources is dangerous. It is equivalent to running software from an unknown vendor on a production server. Don’t do that.</p>
+<h3 id="container-registry-and-the-use-of-an-image-scanner-to-identify-known-vulnerabilities">Container registry and the use of an image scanner to identify known vulnerabilities<a class="headerlink" href="#container-registry-and-the-use-of-an-image-scanner-to-identify-known-vulnerabilities" title="Permanent link">&para;</a></h3>
+<p>Container registry is the central repository of container images. Based on the needs, we can utilize public repositories or have a private repository as the container registry. Use private registries to store your approved images - make sure you only push approved images to these registries. This alone reduces the number of potential images that enter your pipeline to a fraction of the hundreds of thousands of publicly available images.</p>
+<p>Build a CI pipeline that integrates security assessment (like vulnerability scanning), making it part of the build process. The CI pipeline should ensure that only vetted code (approved for production) is used for building the images. Once an image is built, it should be scanned for security vulnerabilities, and only if no issues are found then the image would be pushed to a private registry, from which deployment to production is done. A failure in the security assessment should create a failure in the pipeline, preventing images with bad security quality from being pushed to the image registry.</p>
+<p>There is work in progress being done in Kubernetes for image authorization plugins, which will allow preventing the shipping of unauthorized images. For more information, refer to the PR <a href="https://github.com/kubernetes/kubernetes/pull/27129">https://github.com/kubernetes/kubernetes/pull/27129</a>.</p>
+<h3 id="use-minimal-base-images-and-avoid-adding-unnecessary-components">Use minimal base images and avoid adding unnecessary components<a class="headerlink" href="#use-minimal-base-images-and-avoid-adding-unnecessary-components" title="Permanent link">&para;</a></h3>
+<p>Avoid using images with OS package managers or shells because they could contain unknown vulnerabilities. If you must include OS packages, remove the package manager at a later step. Consider using minimal images such as distroless images, as an example.</p>
+<h4 id="distroless-images">Distroless images<a class="headerlink" href="#distroless-images" title="Permanent link">&para;</a></h4>
+<p>Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google and other tech giants that have used containers in production for many years. It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.</p>
+<p>For more information on ditroless images, refer to <a href="https://github.com/GoogleContainerTools/distroless">https://github.com/GoogleContainerTools/distroless</a>.</p>
+<h3 id="use-the-latest-imagesensure-images-are-up-to-date">Use the latest images/ensure images are up to date<a class="headerlink" href="#use-the-latest-imagesensure-images-are-up-to-date" title="Permanent link">&para;</a></h3>
+<p>Ensure your images (and any third-party tools you include) are up to date and utilizing the latest versions of their components.</p>
+<h2 id="kubernetes-security-best-practices-deploy-phase">Kubernetes Security Best Practices: Deploy Phase<a class="headerlink" href="#kubernetes-security-best-practices-deploy-phase" title="Permanent link">&para;</a></h2>
+<p>Kubernetes infrastructure should be configured securely prior to workloads being deployed. From a security perspective, you first need visibility into what you’re deploying – and how. Then you can identify and respond to security policy violations. At a minimum, you need to know:</p>
+<ul>
+<li>What is being deployed - including information about the image being used, such as components or vulnerabilities, and the pods that will be deployed</li>
+<li>Where it is going to be deployed - which clusters, namespaces, and nodes</li>
+<li>How it is deployed - whether it runs privileged, what other deployments it can communicate with, the pod security context that is applied, if any</li>
+<li>What it can access - including secrets, volumes, and other infrastructure components such as the host or orchestrator API</li>
+<li>Is it compliant - whether it complies with your policies and security requirements</li>
+</ul>
+<h3 id="use-kubernetes-namespaces-to-properly-isolate-your-kubernetes-resources">Use Kubernetes namespaces to properly isolate your Kubernetes resources<a class="headerlink" href="#use-kubernetes-namespaces-to-properly-isolate-your-kubernetes-resources" title="Permanent link">&para;</a></h3>
+<p>Namespaces give you the ability to create logical partitions and enforce separation of your resources as well as limit the scope of user permissions.</p>
+<h4 id="setting-the-namespace-for-a-request">Setting the namespace for a request<a class="headerlink" href="#setting-the-namespace-for-a-request" title="Permanent link">&para;</a></h4>
+<p>To set the namespace for a current request, use the --namespace flag. Refer to the following examples:</p>
+<div class="codehilite"><pre><span></span><code>kubectl run nginx --image<span class="o">=</span>nginx --namespace<span class="o">=</span>&lt;insert-namespace-name-here&gt;
+kubectl get pods --namespace<span class="o">=</span>&lt;insert-namespace-name-here&gt;
+</code></pre></div>
+
+<h4 id="setting-the-namespace-preference">Setting the namespace preference<a class="headerlink" href="#setting-the-namespace-preference" title="Permanent link">&para;</a></h4>
+<p>You can permanently save the namespace for all subsequent kubectl commands in that context.</p>
+<div class="codehilite"><pre><span></span><code>kubectl config set-context --current --namespace<span class="o">=</span>&lt;insert-namespace-name-here&gt;
+</code></pre></div>
+
+<p>Validate it with the following command.</p>
+<div class="codehilite"><pre><span></span><code>kubectl config view --minify <span class="p">|</span> grep namespace:
+</code></pre></div>
+
+<p>Learn more about namespaces at <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces">https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</a></p>
+<h3 id="create-policies-to-govern-image-provenance-using-the-imagepolicywebhook">Create policies to govern image provenance using the ImagePolicyWebhook<a class="headerlink" href="#create-policies-to-govern-image-provenance-using-the-imagepolicywebhook" title="Permanent link">&para;</a></h3>
+<p>Prevent unapproved images from being used with the admission controller ImagePolicyWebhook to reject pods that use unapproved images including:</p>
+<ul>
+<li>Images that haven’t been scanned recently</li>
+<li>Images that use a base image that’s not whitelisted</li>
+<li>Images from insecure registries
+Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook">https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook</a></li>
+</ul>
+<h3 id="implement-continuous-security-vulnerability-scanning">Implement Continuous Security Vulnerability Scanning<a class="headerlink" href="#implement-continuous-security-vulnerability-scanning" title="Permanent link">&para;</a></h3>
+<p>New vulnerabilities are published every day and containers might include outdated packages with known vulnerabilities (CVEs). Hence it is recommended to implement an ongoing process, where images are continuously assessed, is crucial to insure a required security posture.</p>
+<h3 id="regularly-apply-security-updates-to-your-environment">Regularly Apply Security Updates to Your Environment<a class="headerlink" href="#regularly-apply-security-updates-to-your-environment" title="Permanent link">&para;</a></h3>
+<p>In case vulnerabilities are found in running containers, it is recommended to always update the source image and redeploy the containers.</p>
+<h4 id="note">NOTE<a class="headerlink" href="#note" title="Permanent link">&para;</a></h4>
+<p>Try to avoid direct updates to the running containers as this can break the image-container relationship.</p>
+<div class="codehilite"><pre><span></span><code>Example: apt-update  
+</code></pre></div>
+
+<p>Upgrading containers is extremely easy with the Kubernetes rolling updates feature - this allows gradually updating a running application by upgrading its images to the latest version.</p>
+<h3 id="assess-the-privileges-used-by-containers">Assess the privileges used by containers<a class="headerlink" href="#assess-the-privileges-used-by-containers" title="Permanent link">&para;</a></h3>
+<p>The set of capabilities, role bindings, and privileges given to containers can greatly impact your security risk. The goal here is to adhere to the principle of least privilege and provide the minimum privileges and capabilities that would allow the container to perform its intended function.</p>
+<p>Pod Security Policies are one way to control the security-related attributes of pods, including container privilege levels. These can allow an operator to specify the following:</p>
+<ul>
+<li>Do not run application processes as root.</li>
+<li>Do not allow privilege escalation.</li>
+<li>Use a read-only root filesystem.</li>
+<li>Use the default (masked) /proc filesystem mount</li>
+<li>Do not use the host network or process space - using "hostNetwork:true" will cause NetworkPolicies to be ignored since the Pod will use its host network.</li>
+<li>Drop unused and unnecessary Linux capabilities.</li>
+<li>Use SELinux options for more fine-grained process controls.</li>
+<li>Give each application its own Kubernetes Service Account.</li>
+<li>Do not mount the service account credentials in a container if it does not need to access the Kubernetes API.</li>
+</ul>
+<p>For more information on Pod security policies, refer to the documentation at <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">https://kubernetes.io/docs/concepts/policy/pod-security-policy/</a>.</p>
+<h3 id="apply-security-context-to-your-pods-and-containers">Apply Security Context to Your Pods and Containers<a class="headerlink" href="#apply-security-context-to-your-pods-and-containers" title="Permanent link">&para;</a></h3>
+<p>A security context is a property defined in the deployment yaml. It controls the security parameters that will be assigned to the pod/container/volume. These controls can eliminate entire classes of attacks that depend on privileged access. Read-only root file systems, for example, can prevent any attack that depends on installing software or writing to the file system.</p>
+<p>When designing your containers and pods, make sure that you configure the security context for your pods, containers and volumes to grant only the privileges needed for the resource to function. Some of the important parameters are as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Security Context Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SecurityContext-&gt;runAsNonRoot</td>
+<td>Indicates that containers should run as non-root user</td>
+</tr>
+<tr>
+<td>SecurityContext-&gt;Capabilities</td>
+<td>Controls the Linux capabilities assigned to the container.</td>
+</tr>
+<tr>
+<td>SecurityContext-&gt;readOnlyRootFilesystem</td>
+<td>Controls whether a container will be able to write into the root filesystem.</td>
+</tr>
+<tr>
+<td>PodSecurityContext-&gt;runAsNonRoot</td>
+<td>Prevents running a container with 'root' user as part of the pod</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example for pod definition with security context parameters:</p>
+<div class="codehilite"><pre><span></span><code>apiVersion: v1  
+kind: Pod  
+metadata:  
+  name: hello-world  
+spec:  
+  containers:  
+  <span class="c1"># specification of the pod’s containers  </span>
+  <span class="c1"># ...</span>
+  <span class="c1"># ...</span>
+  <span class="c1"># Security Context</span>
+  securityContext:  
+    readOnlyRootFilesystem: <span class="nb">true</span>  
+    runAsNonRoot: <span class="nb">true</span>
+</code></pre></div>
+
+<p>For more information on security context for Pods, refer to the documentation at <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context">https://kubernetes.io/docs/tasks/configure-pod-container/security-context</a></p>
+<h3 id="implement-service-mesh">Implement Service Mesh<a class="headerlink" href="#implement-service-mesh" title="Permanent link">&para;</a></h3>
+<p>A service mesh is an infrastructure layer for microservices applications that can help reduce the complexity of managing microservices and deployments by handling infrastructure service communication quickly, securely and reliably. Service meshes are great at solving operational challenges and issues when running containers and microservices because they provide a uniform way to secure, connect and monitor microservices. Service mesh provides the following advantages:</p>
+<h4 id="obeservability">Obeservability<a class="headerlink" href="#obeservability" title="Permanent link">&para;</a></h4>
+<p>Service Mesh provides tracing and telemetry metrics that make it easy to understand your system and quickly root cause any problems.</p>
+<h4 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h4>
+<p>A service mesh provides security features aimed at securing the services inside your network and quickly identifying any compromising traffic entering your cluster. A service mesh can help you more easily manage security through mTLS, ingress and egress control, and more.</p>
+<ul>
+<li>
+<p>mTLS and Why it Matters
+  Securing microservices is hard. There are a multitude of tools that address microservices security, but service mesh is the most elegant solution for addressing encryption of on-the-wire traffic within the network.
+  Service mesh provides defense with mutual TLS (mTLS) encryption of the traffic between your services. The mesh can automatically encrypt and decrypt requests and responses, removing that burden from the application developer. It can also improve performance by prioritizing the reuse of existing, persistent connections, reducing the need for the computationally expensive creation of new ones. With service mesh, you can secure traffic over the wire and also make strong identity-based authentication and authorizations for each microservice.
+  We see a lot of value in this for enterprise companies. With a good service mesh, you can see whether mTLS is enabled and working between each of your services and get immediate alerts if security status changes.</p>
+</li>
+<li>
+<p>Ingress &amp; Egress Control
+Service mesh adds a layer of security that allows you to monitor and address compromising traffic as it enters the mesh. Istio integrates with Kubernetes as an ingress controller and takes care of load balancing for ingress. This allows you to add a level of security at the perimeter with ingress rules. Egress control allows you to see and manage external services and control how your services interact with them.</p>
+</li>
+</ul>
+<h4 id="operational-control">Operational Control<a class="headerlink" href="#operational-control" title="Permanent link">&para;</a></h4>
+<p>A service mesh allows security and platform teams to set the right macro controls to enforce access controls, while allowing developers to make customizations they need to move quickly within these guardrails.</p>
+<h4 id="rbac">RBAC<a class="headerlink" href="#rbac" title="Permanent link">&para;</a></h4>
+<p>A strong Role Based Access Control (RBAC) system is arguably one of the most critical requirements in large engineering organizations, since even the most secure system can be easily circumvented by overprivileged users or employees. Restricting privileged users to least privileges necessary to perform job responsibilities, ensuring access to systems are set to “deny all” by default, and ensuring proper documentation detailing roles and responsibilities are in place is one of the most critical security concerns in the enterprise.</p>
+<h4 id="disadvantages">Disadvantages<a class="headerlink" href="#disadvantages" title="Permanent link">&para;</a></h4>
+<p>Along with the many advantages, Service mesh also brings in its set of challenges, few of them are listed below:</p>
+<ul>
+<li>Added Complexity: The introduction of proxies, sidecars and other components into an already sophisticated environment dramatically increases the complexity of development and operations.</li>
+<li>Required Expertise: Adding a service mesh such as Istio on top of an orchestrator such as Kubernetes often requires operators to become experts in both technologies.</li>
+<li>Slowness: Service meshes are an invasive and intricate technology that can add significant slowness to an architecture.</li>
+<li>Adoption of a Platform: The invasiveness of service meshes force both developers and operators to adapt to a highly opinionated platform and conform to its rules.</li>
+</ul>
+<h3 id="implementing-open-policy-agent-opa-for-a-centralized-policy-management">Implementing Open Policy Agent (OPA) for a centralized policy management<a class="headerlink" href="#implementing-open-policy-agent-opa-for-a-centralized-policy-management" title="Permanent link">&para;</a></h3>
+<p>OPA is a project that started in 2016 aimed at unifying policy enforcement across different technologies and systems. It can be used to enforce policies on their platforms (like Kubernetes clusters). When it comes to Kubernetes, RBAC and Pod security policies to impose fine-grained control over the cluster. But again, this will only apply to the cluster but not outside the cluster. That’s where Open Policy Agent (OPA) comes into play. OPA was introduced to create a unified method of enforcing security policy in the stack.</p>
+<p>OPA is a general-purpose, domain-agnostic policy enforcement tool. It can be integrated with APIs, the Linux SSH daemon, an object store like CEPH, etc. OPA designers purposefully avoided basing it on any other project. Accordingly, the policy query and decision do not follow a specific format. That is, you can use any valid JSON data as request attributes as long as it provides the required data. Similarly, the policy decision coming from OPA can also be any valid JSON data. You choose what gets input and what gets output. For example, you can opt to have OPA return a True or False JSON object, a number, a string, or even a complex data object. Currently, OPA is part of CNCF as an incubating project.</p>
+<p>Most common use cases of OPA:</p>
+<ul>
+<li>Application authorization</li>
+</ul>
+<p>OPA enables you to accelerate time to market by providing pre-cooked authorization technology so you don’t have to develop it from scratch. It uses a declarative policy language purpose built for writing and enforcing rules such as, “Alice can write to this repository,” or “Bob can update this account.” It comes with a rich suite of tooling to help developers integrate those policies into their applications and even allow the application’s end users to contribute policy for their tenants as well.</p>
+<p>If you have homegrown application authorization solutions in place, you may not want to rip them out to swap in OPA. At least not yet. But if you are going to be decomposing those monolithic apps and moving to microservices to scale and improve developer efficiency, you’re going to need a distributed authorization system and OPA is the answer.</p>
+<ul>
+<li>Kubernetes admission control</li>
+</ul>
+<p>Kubernetes has given developers tremendous control over the traditional silos of compute, networking and storage. Developers today can set up the network the way they want and set up storage the way they want. Administrators and security teams responsible for the well-being of a given container cluster need to make sure developers don’t shoot themselves (or their neighbors) in the foot.</p>
+<p>OPA can be used to build policies that require, for example, all container images to be from trusted sources, that prevent developers from running software as root, that make sure storage is always marked with the encrypt bit, that storage does not get deleted just because a pod gets restarted, that limits internet access, etc.</p>
+<p>OPA integrates directly into the Kubernetes API server, so it has complete authority to reject any resource—whether compute, networking, storage, etc.—that policy says doesn’t belong in a cluster. Moreover, you can expose those policies earlier in the development lifecycle (e.g. the CICD pipeline or even on developer laptops) so that developers can receive feedback as early as possible. You can even run policies out-of-band to monitor results so that administrators can ensure policy changes don’t inadvertently do more damage than good.</p>
+<ul>
+<li>Service mesh authorization</li>
+</ul>
+<p>And finally, many organizations are using OPA to regulate use of service mesh architectures. So, even if you’re not embedding OPA to implement application authorization logic (the top use case discussed above), you probably still want control over the APIs microservices. You can execute and achieve that by putting authorization policies into the service mesh. Or, you may be motivated by security, and implement policies in the service mesh to limit lateral movement within a microservice architecture. Another common practice is to build policies into the service mesh to ensure your compliance regulations are satisfied even when modification to source code is involved.</p>
+<h3 id="limiting-resource-usage-on-a-cluster">Limiting resource usage on a cluster<a class="headerlink" href="#limiting-resource-usage-on-a-cluster" title="Permanent link">&para;</a></h3>
+<p>Resource quota limits the number or capacity of resources granted to a namespace. This is most often used to limit the amount of CPU, memory, or persistent disk a namespace can allocate, but can also control how many pods, services, or volumes exist in each namespace.</p>
+<p>Limit ranges restrict the maximum or minimum size of some of the resources above, to prevent users from requesting unreasonably high or low values for commonly reserved resources like memory, or to provide default limits when none are specified</p>
+<p>An option of running resource-unbound containers puts your system in risk of DoS or “noisy neighbor” scenarios. To prevent and minimize those risks you should define resource quotas. By default, all resources in Kubernetes cluster are created with unbounded CPU and memory requests/limits. You can create resource quota policies, attached to Kubernetes namespace, in order to limit the CPU and memory a pod is allowed to consume.</p>
+<p>The following is an example for namespace resource quota definition that will limit number of pods in the namespace to 4, limiting their CPU requests between 1 and 2 and memory requests between 1GB to 2GB.</p>
+<p>compute-resources.yaml:</p>
+<div class="codehilite"><pre><span></span><code>apiVersion: v1  
+kind: ResourceQuota  
+metadata:  
+  name: compute-resources  
+spec:  
+  hard:  
+    pods: <span class="s2">&quot;4&quot;</span>  
+    requests.cpu: <span class="s2">&quot;1&quot;</span>  
+    requests.memory: 1Gi  
+    limits.cpu: <span class="s2">&quot;2&quot;</span>  
+    limits.memory: 2Gi
+</code></pre></div>
+
+<p>Assign a resource quota to namespace:</p>
+<div class="codehilite"><pre><span></span><code>  <span class="c1"># kubectl create -f ./compute-resources.yaml --namespace=myspace</span>
+</code></pre></div>
+
+<h3 id="use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters">Use Kubernetes network policies to control traffic between pods and clusters<a class="headerlink" href="#use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters" title="Permanent link">&para;</a></h3>
+<p>Running different applications on the same Kubernetes cluster creates a risk of one compromised application attacking a neighboring application. Network segmentation is important to ensure that containers can communicate only with those they are supposed to.</p>
+<p>By default, Kubernetes allows every pod to contact every other pod. Traffic to a pod from an external network endpoint outside the cluster is allowed if ingress from that endpoint is allowed to the pod. Traffic from a pod to an external network endpoint outside the cluster is allowed if egress is allowed from the pod to that endpoint.</p>
+<p>Network segmentation policies are a key security control that can prevent lateral movement across containers in the case that an attacker breaks in. One of the challenges in Kubernetes deployments is creating network segmentation between pods, services and containers. This is a challenge due to the “dynamic” nature of container network identities (IPs), along with the fact that containers can communicate both inside the same node or between nodes.</p>
+<p>Users of Google Cloud Platform can benefit from automatic firewall rules, preventing cross-cluster communication. A similar implementation can be deployed on-premises using network firewalls or SDN solutions. There is work being done in this area by the Kubernetes Network SIG, which will greatly improve the pod-to-pod communication policies. A new network policy API should address the need to create firewall rules around pods, limiting the network access that a containerized can have.</p>
+<p>The following is an example of a network policy that controls the network for “backend” pods, only allowing inbound network access from “frontend” pods:</p>
+<div class="codehilite"><pre><span></span><code>POST /apis/net.alpha.kubernetes.io/v1alpha1/namespaces/tenant-a/networkpolicys  
+<span class="o">{</span>  
+  <span class="s2">&quot;kind&quot;</span>: <span class="s2">&quot;NetworkPolicy&quot;</span>,
+  <span class="s2">&quot;metadata&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;pol1&quot;</span>
+  <span class="o">}</span>,
+  <span class="s2">&quot;spec&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;allowIncoming&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;from&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;pods&quot;</span>: <span class="o">{</span> <span class="s2">&quot;segment&quot;</span>: <span class="s2">&quot;frontend&quot;</span> <span class="o">}</span>
+      <span class="o">}]</span>,
+      <span class="s2">&quot;toPorts&quot;</span>: <span class="o">[{</span>
+        <span class="s2">&quot;port&quot;</span>: <span class="m">80</span>,
+        <span class="s2">&quot;protocol&quot;</span>: <span class="s2">&quot;TCP&quot;</span>
+      <span class="o">}]</span>
+    <span class="o">}</span>,
+    <span class="s2">&quot;podSelector&quot;</span>: <span class="o">{</span>
+      <span class="s2">&quot;segment&quot;</span>: <span class="s2">&quot;backend&quot;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>For more information on configuring network policies, refer to the Kubernetes documentation at <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies">https://kubernetes.io/docs/concepts/services-networking/network-policies</a>.</p>
+<h3 id="securing-data">Securing data<a class="headerlink" href="#securing-data" title="Permanent link">&para;</a></h3>
+<h4 id="keeps-secrets-as-secrets">Keeps secrets as secrets<a class="headerlink" href="#keeps-secrets-as-secrets" title="Permanent link">&para;</a></h4>
+<p>In Kubernetes, a Secret is a small object that contains sensitive data, like a password or token. It is necessary to access how sensitive data such as credentials and keys are stored and accessed. Even though a pod is not able to access the secrets of another pod, it is crucial to keep the secret separate from an image or pod. Otherwise, anyone with access to the image would have access to the secret as well. Complex applications that handle multiple processes and have public access are especially vulnerable in this regard.
+You must ensure that secrets are not being passed as environment variables but are instead mounted into read-only volumes in your containers, for example.</p>
+<h4 id="encrypt-secrets-at-rest">Encrypt secrets at rest<a class="headerlink" href="#encrypt-secrets-at-rest" title="Permanent link">&para;</a></h4>
+<p>The etcd database in general contains any information accessible via the Kubernetes API and may grant an attacker significant visibility into the state of your cluster.</p>
+<p>Always encrypt your backups using a well reviewed backup and encryption solution, and consider using full disk encryption where possible.</p>
+<p>Kubernetes supports encryption at rest, a feature introduced in 1.7, and beta since 1.13. This will encrypt Secret resources in etcd, preventing parties that gain access to your etcd backups from viewing the content of those secrets. While this feature is currently beta, it offers an additional level of defense when backups are not encrypted or an attacker gains read access to etcd.</p>
+<h2 id="kubernetes-security-best-practices-runtime-phase">Kubernetes Security Best Practices: Runtime Phase<a class="headerlink" href="#kubernetes-security-best-practices-runtime-phase" title="Permanent link">&para;</a></h2>
+<p>The runtime phase exposes containerized applications to a slew of new security challenges. Your goal here is to both gain visibility into your running environment and detect and respond to threats as they arise.</p>
+<p>Proactively securing your containers and Kubernetes deployments at the build and deploy phases can greatly reduce the likelihood of security incidents at runtime and the subsequent effort needed to respond to them.</p>
+<p>First, you must monitor the most security-relevant container activities, including:</p>
+<ul>
+<li>Process activity</li>
+<li>Network communications among containerized services</li>
+<li>Network communications between containerized services and external clients and servers</li>
+</ul>
+<p>Observing container behavior to detect anomalies is generally easier in containers than in virtual machines because of the declarative nature of containers and Kubernetes. These attributes allow easier introspection into what you have deployed and its expected activity.</p>
+<h3 id="use-pod-security-policies-to-prevent-risky-containerspods-from-being-used">Use Pod Security Policies to prevent risky containers/Pods from being used<a class="headerlink" href="#use-pod-security-policies-to-prevent-risky-containerspods-from-being-used" title="Permanent link">&para;</a></h3>
+<p>PodSecurityPolicy is a cluster-level resources available in Kubernetes (via kubectl) that is highly recommended. You must enable the PodSecurityPolicy admission controller to use it. Given the nature of admission controllers, you must authorize at least one policy - otherwise no pods will be allowed to be created in the cluster.</p>
+<p>Pod Security Policies address several critical security use cases, including:</p>
+<ul>
+<li>Preventing containers from running with privileged flag - this type of container will have most of the capabilities available to the underlying host. This flag also overwrites any rules you set using CAP DROP or CAP ADD.</li>
+<li>Preventing sharing of host PID/IPC namespace, networking, and ports - this step ensures proper isolation between Docker containers and the underlying host</li>
+<li>Limiting use of volume types - writable hostPath directory volumes, for example, allow containers to write to the filesystem in a manner that allows them to traverse the host filesystem outside the pathPrefix, so readOnly: true must be used</li>
+<li>Putting limits on host filesystem use</li>
+<li>Enforcing read only for root file system via the ReadOnlyRootFilesystem</li>
+<li>Preventing privilege escalation to root privileges</li>
+<li>Rejecting containers with root privileges</li>
+<li>Restricting Linux capabilities to bare minimum in adherence with least privilege principles</li>
+</ul>
+<p>For more information on Pod security policies, refer to the documentation at <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">https://kubernetes.io/docs/concepts/policy/pod-security-policy/</a>.</p>
+<h3 id="container-runtime-security">Container Runtime Security<a class="headerlink" href="#container-runtime-security" title="Permanent link">&para;</a></h3>
+<p>Hardening containers at runtime gives security teams the ability to detect and respond to threats and anomalies while the containers or workloads are in a running state. This is typically carried out by intercepting the low-level system calls and looking for events that may indicate compromise. Some examples of events that should trigger an alert would include:</p>
+<ul>
+<li>A shell is run inside a container</li>
+<li>A container mounts a sensitive path from the host such as /proc</li>
+<li>A sensitive file is unexpectedly read in a running container such as /etc/shadow</li>
+<li>An outbound network connection is established</li>
+<li>Open source tools such as Falco from Sysdig are available to help operators get up an running with container runtime security by providing a large number of out-of-the-box detections as well as the flexibility to create custom rules.</li>
+</ul>
+<h3 id="container-sandboxing">Container Sandboxing<a class="headerlink" href="#container-sandboxing" title="Permanent link">&para;</a></h3>
+<p>Container runtimes typically are permitted to make direct calls to the host kernel then the kernel interacts with hardware and devices to respond to the request. Cgroups and namespaces exist to give containers a certain amount of isolation but the still kernel presents a large attack surface area. Often times in multi-tenant and highly untrusted clusters an additional layer of sandboxing is required to ensure container breakout and kernel exploits are not present. Below we will explore a few OSS technologies that help further isolate running containers from the host kernel:</p>
+<ul>
+<li>Kata Containers: Kata Containers is OSS project that uses stripped-down VMs to keep the resource footprint minimal and maximize performance to ultimately isolate containers further.</li>
+<li>gVisor : gVisor is a more lightweight than a VM (even stripped down). gVisor is its own independent kernel written in Go to sit in the middle of a container and the host kernel. Strong sandbox. gVisor supports ~70% of the linux system calls from the container but ONLY users about 20 system calls to the host kernel.</li>
+<li>Firecracker: Firecracker super lightweight VM that runs in user space. Locked down by seccomp, cgroup and namespace policies so system calls are very limited. Firecracker is built with security in mind but may not support all Kubernetes or container runtime deployments.</li>
+</ul>
+<h3 id="preventing-containers-from-loading-unwanted-kernel-modules">Preventing containers from loading unwanted kernel modules<a class="headerlink" href="#preventing-containers-from-loading-unwanted-kernel-modules" title="Permanent link">&para;</a></h3>
+<p>The Linux kernel automatically loads kernel modules from disk if needed in certain circumstances, such as when a piece of hardware is attached or a filesystem is mounted. Of particular relevance to Kubernetes, even unprivileged processes can cause certain network-protocol-related kernel modules to be loaded, just by creating a socket of the appropriate type. This may allow an attacker to exploit a security hole in a kernel module that the administrator assumed was not in use.</p>
+<p>To prevent specific modules from being automatically loaded, you can uninstall them from the node, or add rules to block them. On most Linux distributions, you can do that by creating a file such as /etc/modprobe.d/kubernetes-blacklist.conf with contents like:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># DCCP is unlikely to be needed, has had multiple serious</span>
+<span class="c1"># vulnerabilities, and is not well-maintained.</span>
+blacklist dccp
+
+<span class="c1"># SCTP is not used in most Kubernetes clusters, and has also had</span>
+<span class="c1"># vulnerabilities in the past.</span>
+blacklist sctp
+</code></pre></div>
+
+<p>To block module loading more generically, you can use a Linux Security Module (such as SELinux) to completely deny the module_request permission to containers, preventing the kernel from loading modules for containers under any circumstances. (Pods would still be able to use modules that had been loaded manually, or modules that were loaded by the kernel on behalf of some more-privileged process.</p>
+<h3 id="compare-and-analyze-different-runtime-activity-in-pods-of-the-same-deployments">Compare and analyze different runtime activity in pods of the same deployments<a class="headerlink" href="#compare-and-analyze-different-runtime-activity-in-pods-of-the-same-deployments" title="Permanent link">&para;</a></h3>
+<p>Containerized applications are replicated for high availability, fault tolerance, or scale reasons. Replicas should behave nearly identically; replicas with significant deviations from the others warrant further investigation. Integrate your Kubernetes security tool with other external systems (email, PagerDuty, Slack, Google Cloud Security Command Center, SIEMs [security information and event management], etc.) and leverage deployment labels or annotations to alert the team responsible for a given application when a potential threat is detected. Commercial Kubernetes security vendors should support a wide array of integrations with external tools</p>
+<h3 id="monitor-network-traffic-to-limit-unnecessary-or-insecure-communication">Monitor network traffic to limit unnecessary or insecure communication<a class="headerlink" href="#monitor-network-traffic-to-limit-unnecessary-or-insecure-communication" title="Permanent link">&para;</a></h3>
+<p>Observe your active network traffic and compare that traffic to what is allowed based on your Kubernetes network policies. Containerized applications typically make extensive use of cluster networking, and observing active networking traffic is a good way to understand how applications interact with each other and identify unexpected communication.</p>
+<p>At the same time, comparing the active traffic with what’s allowed gives you valuable information about what isn’t happening but is allowed. With that information, you can further tighten your allowed network policies so that it removes superfluous connections and decreases your attack surface.</p>
+<p>Open source projects like <a href="https://github.com/kinvolk/inspektor-gadget">https://github.com/kinvolk/inspektor-gadget</a> may help with this, and commercial security solutions provide varying degrees of container network traffic analysis.</p>
+<h3 id="if-breached-scale-suspicious-pods-to-zero">If breached, scale suspicious pods to zero<a class="headerlink" href="#if-breached-scale-suspicious-pods-to-zero" title="Permanent link">&para;</a></h3>
+<p>Use Kubernetes native controls to contain a successful breach by automatically instructing Kubernetes to scale suspicious pods to zero or kill then restart instances of breached applications.</p>
+<h3 id="rotate-infrastructure-credentials-frequently">Rotate infrastructure credentials frequently<a class="headerlink" href="#rotate-infrastructure-credentials-frequently" title="Permanent link">&para;</a></h3>
+<p>The shorter the lifetime of a secret or credential the harder it is for an attacker to make use of that credential. Set short lifetimes on certificates and automate their rotation. Use an authentication provider that can control how long issued tokens are available and use short lifetimes where possible. If you use service account tokens in external integrations, plan to rotate those tokens frequently. For example, once the bootstrap phase is complete, a bootstrap token used for setting up nodes should be revoked or its authorization removed.</p>
+<h3 id="receiving-alerts-for-security-updates-and-reporting-vulnerabilities">Receiving alerts for security updates and reporting vulnerabilities<a class="headerlink" href="#receiving-alerts-for-security-updates-and-reporting-vulnerabilities" title="Permanent link">&para;</a></h3>
+<p>Join the kubernetes-announce group (&lt;<a href="https://kubernetes.io/docs/reference/issues-security/security/">https://kubernetes.io/docs/reference/issues-security/security/</a>) for emails about security announcements. See the security reporting page (<a href="https://kubernetes.io/docs/reference/issues-security/security">https://kubernetes.io/docs/reference/issues-security/security</a>) for more on how to report vulnerabilities.</p>
+<h3 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h3>
+<p>Kubernetes supplies cluster-based logging, allowing to log container activity into a central log hub. When a cluster is created, the standard output and standard error output of each container can be ingested using a Fluentd agent running on each node into either Google Stackdriver Logging or into Elasticsearch and viewed with Kibana.</p>
+<h4 id="enable-audit-logging">Enable audit logging<a class="headerlink" href="#enable-audit-logging" title="Permanent link">&para;</a></h4>
+<p>The audit logger is a beta feature that records actions taken by the API for later analysis in the event of a compromise. It is recommended to enable audit logging and archive the audit file on a secure server</p>
+<p>Ensure logs are monitoring for anomalous or unwanted API calls, especially any authorization failures (these log entries will have a status message “Forbidden”). Authorization failures could mean that an attacker is trying to abuse stolen credentials.</p>
+<p>Managed Kubernetes providers, including GKE, provide access to this data in their cloud console and may allow you to set up alerts on authorization failures.</p>
+<h5 id="audit-logs">Audit logs<a class="headerlink" href="#audit-logs" title="Permanent link">&para;</a></h5>
+<p>Audit logs can be useful for compliance as they should help you answer the questions of what happened, who did what and when. Kubernetes provides flexible auditing of kube-apiserver requests based on policies. These help you track all activities in chronological order.</p>
+<p>Here is an example of an audit log:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">{</span>
+  <span class="s2">&quot;kind&quot;</span>:<span class="s2">&quot;Event&quot;</span>,
+  <span class="s2">&quot;apiVersion&quot;</span>:<span class="s2">&quot;audit.k8s.io/v1beta1&quot;</span>,
+  <span class="s2">&quot;metadata&quot;</span>:<span class="o">{</span> <span class="s2">&quot;creationTimestamp&quot;</span>:<span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span> <span class="o">}</span>,
+  <span class="s2">&quot;level&quot;</span>:<span class="s2">&quot;Metadata&quot;</span>,
+  <span class="s2">&quot;timestamp&quot;</span>:<span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span>,
+  <span class="s2">&quot;auditID&quot;</span>:<span class="s2">&quot;23bc44ds-2452-242g-fsf2-4242fe3ggfes&quot;</span>,
+  <span class="s2">&quot;stage&quot;</span>:<span class="s2">&quot;RequestReceived&quot;</span>,
+  <span class="s2">&quot;requestURI&quot;</span>:<span class="s2">&quot;/api/v1/namespaces/default/persistentvolumeclaims&quot;</span>,
+  <span class="s2">&quot;verb&quot;</span>:<span class="s2">&quot;list&quot;</span>,
+  <span class="s2">&quot;user&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;username&quot;</span>:<span class="s2">&quot;user@example.org&quot;</span>,
+    <span class="s2">&quot;groups&quot;</span>:<span class="o">[</span> <span class="s2">&quot;system:authenticated&quot;</span> <span class="o">]</span>
+  <span class="o">}</span>,
+  <span class="s2">&quot;sourceIPs&quot;</span>:<span class="o">[</span> <span class="s2">&quot;172.12.56.1&quot;</span> <span class="o">]</span>,
+  <span class="s2">&quot;objectRef&quot;</span>: <span class="o">{</span>
+    <span class="s2">&quot;resource&quot;</span>:<span class="s2">&quot;persistentvolumeclaims&quot;</span>,
+    <span class="s2">&quot;namespace&quot;</span>:<span class="s2">&quot;default&quot;</span>,
+    <span class="s2">&quot;apiVersion&quot;</span>:<span class="s2">&quot;v1&quot;</span>
+  <span class="o">}</span>,
+  <span class="s2">&quot;requestReceivedTimestamp&quot;</span>:<span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span>,
+  <span class="s2">&quot;stageTimestamp&quot;</span>:<span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<h4 id="define-audit-policies">Define Audit Policies<a class="headerlink" href="#define-audit-policies" title="Permanent link">&para;</a></h4>
+<p>Audit policy defines rules about what events should be recorded and what data they should include. The audit policy object structure is defined in the audit.k8s.io API group. When an event is processed, it's compared against the list of rules in order. The first matching rule sets the "audit level" of the event.</p>
+<p>The known audit levels are as follows:</p>
+<ul>
+<li>None - don't log events that match this rule.</li>
+<li>Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body.</li>
+<li>Request - log event metadata and request body but not response body. This does not apply for non-resource requests.</li>
+<li>RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests.</li>
+</ul>
+<p>You can pass a file with the policy to kube-apiserver using the --audit-policy-file flag. If the flag is omitted, no events are logged. Note that the rules field must be provided in the audit policy file. A policy with no (0) rules is treated as illegal.</p>
+<h4 id="understanding-logging">Understanding Logging<a class="headerlink" href="#understanding-logging" title="Permanent link">&para;</a></h4>
+<p>One main challenge with logging Kubernetes is understanding what logs are generated and how to use them. Let’s start by examining the Kubernetes logging architecture from a birds eye view.</p>
+<h5 id="container-logging">Container logging<a class="headerlink" href="#container-logging" title="Permanent link">&para;</a></h5>
+<p>The first layer of logs that can be collected from a Kubernetes cluster are those being generated by your containerized applications.</p>
+<ul>
+<li>The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.</li>
+</ul>
+<p>Manifest is as follows.</p>
+<div class="codehilite"><pre><span></span><code><span class="err">```YAML</span>
+<span class="c">apiVersion: v1</span>
+<span class="c">kind: Pod</span>
+<span class="c">metadata:</span>
+<span class="c">name: example</span>
+<span class="c">spec:</span>
+<span class="c">containers:</span>
+<span class="err">- name: example</span>
+<span class="c">image: busybox</span>
+<span class="c">args: [/bin/sh, -c, &#39;while true; do echo $(date); sleep 1; done&#39;]</span>
+<span class="err">```</span>
+</code></pre></div>
+
+<p>To apply the manifest, run:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">```bash</span>
+<span class="err">kubectl apply -f example.yaml</span>
+<span class="err">```</span>
+</code></pre></div>
+
+<p>To take a look the logs for this container, run:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">```bash</span>
+<span class="err">kubectl log &lt;container-name&gt; command.</span>
+<span class="err">```</span>
+</code></pre></div>
+
+<ul>
+<li>For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.</li>
+</ul>
+<p>Pod Manifest is as follows:</p>
+<p><code>YAML
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: example
+  spec:
+    containers:
+    - name: example
+      image: busybox
+      args:
+      - /bin/sh
+      - -c
+      - &gt;
+        while true;
+        do
+          echo "$(date)\n" &gt;&gt; /var/log/example.log;
+          sleep 1;
+        done
+      volumeMounts:
+      - name: varlog
+        mountPath: /var/log
+    - name: sidecar
+      image: busybox
+      args: [/bin/sh, -c, 'tail -f /var/log/example.log']
+      volumeMounts:
+      - name: varlog
+        mountPath: /var/log
+    volumes:
+    - name: varlog
+      emptyDir: {}</code></p>
+<h5 id="node-logging">Node logging<a class="headerlink" href="#node-logging" title="Permanent link">&para;</a></h5>
+<p>When a container running on Kubernetes writes its logs to stdout or stderr streams, the container engine streams them to the logging driver configured in Kubernetes.</p>
+<p>In most cases, these logs will end up in the /var/log/containers directory on your host. Docker supports multiple logging drivers but unfortunately, driver configuration is not supported via the Kubernetes API.</p>
+<p>Once a container is terminated or restarted, kubelet stores logs on the node. To prevent these files from consuming all of the host’s storage, the Kubernetes node implements a log rotation mechanism. When a container is evicted from the node, all containers with corresponding log files are evicted.</p>
+<p>Depending on what operating system and additional services you’re running on your host machine, you might need to take a look at additional logs.
+For example, systemd logs can be retrieved using the following command:</p>
+<p><code>bash
+  journalctl -u</code></p>
+<h5 id="cluster-logging">Cluster logging<a class="headerlink" href="#cluster-logging" title="Permanent link">&para;</a></h5>
+<p>On the level of the Kubernetes cluster itself, there is a long list of cluster components that can be logged as well as additional data types that can be used (events, audit logs). Together, these different types of data can give you visibility into how Kubernetes is performing as a ystem.</p>
+<p>Some of these components run in a container, and some of them run on the operating system level (in most cases, a systemd service). The systemd services write to journald, and components running in containers write logs to the /var/log directory, unless the container engine has been configured to stream logs differently.</p>
+<h4 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h4>
+<p>Kubernetes events can indicate any Kubernetes resource state changes and errors, such as exceeded resource quota or pending pods, as well as any informational messages.
+Kubernetes events can indicate any Kubernetes resource state changes and errors, such as exceeded resource quota or pending pods, as well as any informational messages.</p>
+<p>The following command returns all events within a specific namespace:</p>
+<p>```bash
+  kubectl get events -n <namespace></p>
+<p>NAMESPACE LAST SEEN TYPE   REASON OBJECT MESSAGE
+  kube-system  8m22s  Normal   Scheduled            pod/metrics-server-66dbbb67db-lh865                                       Successfully assigned kube-system/metrics-server-66dbbb67db-lh865 to aks-agentpool-42213468-1
+  kube-system     8m14s               Normal    Pulling                   pod/metrics-server-66dbbb67db-lh865                                       Pulling image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
+  kube-system     7m58s               Normal    Pulled                    pod/metrics-server-66dbbb67db-lh865                                       Successfully pulled image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
+  kube-system     7m57s               Normal     Created                   pod/metrics-server-66dbbb67db-lh865                                       Created container metrics-server
+  kube-system     7m57s               Normal    Started                   pod/metrics-server-66dbbb67db-lh865                                       Started container metrics-server
+  kube-system     8m23s               Normal    SuccessfulCreate          replicaset/metrics-server-66dbbb67db             Created pod: metrics-server-66dbbb67db-lh865
+  ```</p>
+<p>The following command will show the latest events for this specific Kubernetes resource:</p>
+<div class="codehilite"><pre><span></span><code>  kubectl describe pod &lt;pod-name&gt;
+
+Events:
+  Type    Reason     Age   From                               Message
+  ----    ------     ----  ----                               -------
+  Normal  Scheduled  14m   default-scheduler                  Successfully assigned kube-system/coredns-7b54b5b97c-dpll7 to aks-agentpool-42213468-1
+  Normal  Pulled     13m   kubelet, aks-agentpool-42213468-1  Container image <span class="s2">&quot;aksrepos.azurecr.io/mirror/coredns:1.3.1&quot;</span> already present on machine
+  Normal  Created    13m   kubelet, aks-agentpool-42213468-1  Created container coredns
+  Normal  Started    13m   kubelet, aks-agentpool-42213468-1  Started container coredns
+</code></pre></div>
+
+<h2 id="final-thoughts">Final thoughts<a class="headerlink" href="#final-thoughts" title="Permanent link">&para;</a></h2>
+<h3 id="embed-security-earlier-into-the-container-lifecycle">Embed security earlier into the container lifecycle<a class="headerlink" href="#embed-security-earlier-into-the-container-lifecycle" title="Permanent link">&para;</a></h3>
+<p>You must integrate security earlier into the container lifecycle and ensure alignment and shared goals between security and DevOps teams. Security can (and should) be an enabler that allows your developers and DevOps teams to confidently build and deploy applications that are production-ready for scale, stability and security.</p>
+<h3 id="use-kubernetes-native-security-controls-to-reduce-operational-risk">Use Kubernetes-native security controls to reduce operational risk<a class="headerlink" href="#use-kubernetes-native-security-controls-to-reduce-operational-risk" title="Permanent link">&para;</a></h3>
+<p>Leverage the native controls built into Kubernetes whenever available in order to enforce security policies so that your security controls don’t collide with the orchestrator. Instead of using a third-party proxy or shim to enforce network segmentation, as an example, use Kubernetes network policies to ensure secure network communication.</p>
+<h3 id="leverage-the-context-that-kubernetes-provides-to-prioritize-remediation-efforts">Leverage the context that Kubernetes provides to prioritize remediation efforts<a class="headerlink" href="#leverage-the-context-that-kubernetes-provides-to-prioritize-remediation-efforts" title="Permanent link">&para;</a></h3>
+<p>In sprawling Kubernetes environments, manually triaging security incidents and policy violations is time consuming.</p>
+<p>For example, a deployment containing a vulnerability with severity score of 7 or greater should be moved up in remediation priority if that deployment contains privileged containers and is open to the Internet but moved down if it’s in a test environment and supporting a non-critical app.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<p>Master documentation - <a href="https://kubernetes.io">https://kubernetes.io</a></p>
+<ol>
+<li>Kubernetes Security Best Practices everyone must follow - <a href="https://www.cncf.io/blog/2019/01/14/9-kubernetes-security-best-practices-everyone-must-follow">https://www.cncf.io/blog/2019/01/14/9-kubernetes-security-best-practices-everyone-must-follow</a></li>
+<li>Securing a Cluster - <a href="https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment">https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment</a></li>
+<li>Security Best Practices for Kubernetes Deployment - <a href="https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster">https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster</a></li>
+<li>Kubernetes Security Best Practices - <a href="https://phoenixnap.com/kb/kubernetes-security-best-practices">https://phoenixnap.com/kb/kubernetes-security-best-practices</a></li>
+<li>Kubernetes Security 101: Risks and 29 Best Practices - <a href="https://www.stackrox.com/post/2020/05/kubernetes-security-101">https://www.stackrox.com/post/2020/05/kubernetes-security-101</a></li>
+<li>15 Kubernetes security best practice to secure your cluster - <a href="https://www.mobilise.cloud/15-kubernetes-security-best-practice-to-secure-your-cluster">https://www.mobilise.cloud/15-kubernetes-security-best-practice-to-secure-your-cluster</a></li>
+<li>The Ultimate Guide to Kubernetes Security - <a href="https://neuvector.com/container-security/kubernetes-security-guide">https://neuvector.com/container-security/kubernetes-security-guide</a></li>
+<li>A hacker's guide to Kubernetes security - <a href="https://techbeacon.com/enterprise-it/hackers-guide-kubernetes-security">https://techbeacon.com/enterprise-it/hackers-guide-kubernetes-security</a></li>
+<li>11 Ways (Not) to Get Hacked - <a href="https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked">https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked</a></li>
+<li>12 Kubernetes configuration best practices - <a href="https://www.stackrox.com/post/2019/09/12-kubernetes-configuration-best-practices/#6-securely-configure-the-kubernetes-api-server">https://www.stackrox.com/post/2019/09/12-kubernetes-configuration-best-practices/#6-securely-configure-the-kubernetes-api-server</a></li>
+<li>A Practical Guide to Kubernetes Logging - <a href="https://logz.io/blog/a-practical-guide-to-kubernetes-logging">https://logz.io/blog/a-practical-guide-to-kubernetes-logging</a></li>
+<li>Kubernetes Web UI (Dashboard) - <a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard">https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard</a></li>
+<li>Tesla cloud resources are hacked to run cryptocurrency-mining malware - <a href="https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware">https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware</a></li>
+<li>OPEN POLICY AGENT: CLOUD-NATIVE AUTHORIZATION - <a href="https://blog.styra.com/blog/open-policy-agent-authorization-for-the-cloud">https://blog.styra.com/blog/open-policy-agent-authorization-for-the-cloud</a></li>
+<li>Introducing Policy As Code: The Open Policy Agent (OPA) - <a href="https://www.magalix.com/blog/introducing-policy-as-code-the-open-policy-agent-opa">https://www.magalix.com/blog/introducing-policy-as-code-the-open-policy-agent-opa</a></li>
+<li>What service mesh provides - <a href="https://aspenmesh.io/what-service-mesh-provides">https://aspenmesh.io/what-service-mesh-provides</a></li>
+<li>Three Technical Benefits of Service Meshes and their Operational Limitations, Part 1 - <a href="https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1">https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1</a></li>
+</ol>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="Key_Management_Cheat_Sheet.html" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Key Management
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                LDAP Injection Prevention
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.08c56446.min.js"></script>
+      <script src="../assets/javascripts/bundle.6ced434e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
