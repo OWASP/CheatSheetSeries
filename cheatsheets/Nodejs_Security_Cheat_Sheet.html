@@ -18,7 +18,7 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html">
       
       <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.4">
     
     
       
@@ -26,10 +26,10 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.3b61ea93.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.15aa0b43.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.39b8e14a.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.75751829.min.css">
         
       
     
@@ -1893,7 +1893,7 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 <h4 id="do-not-block-the-event-loop">Do not block the event loop<a class="headerlink" href="#do-not-block-the-event-loop" title="Permanent link">&para;</a></h4>
 <p>Node.js is very different from common application platforms that use threads. Node.js has a single-thread event-driven architecture. By means of this architecture, throughput becomes high and programming model becomes simpler. Node.js is implemented around a non-blocking I/O event loop. With this event loop, there is no waiting on I/O or context switching. The event loop looks for events and dispatches them to handler functions. Because of this, when CPU intensive JavaScript operations are done, the event loop waits for them to finish. This is why such operations are called blocking. To overcome this problem, Node.js allows assigning callbacks to IO-blocked events. This way, the main application is not blocked and callbacks run asynchronously. Therefore, as a general principle, all blocking operations should be done asynchronously so that the event loop is not blocked.</p>
 <p>Even if you perform blocking operations asynchronously, it is still possible that your application may not serve as expected. This happens if there is a code outside the callback which relies on the code within the callback to run first. For example, consider the following code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
 <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// perform actions on file content</span>
 <span class="p">});</span>
@@ -1901,7 +1901,7 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 </code></pre></div>
 
 <p>In the above example, <code>unlinkSync</code> function may run before the callback, which will delete the file before the desired actions on the file content is done. Such race conditions can also impact the security of your application. An example would be a scenario where authentication is performed in callback and authenticated actions are run synchronously. In order to eliminate such race conditions, you can write all operations that rely on each other in a single non-blocking function. By doing so, you can guarantee that all operations are executed in the correct order. For example, above code example can be written in a non-blocking way as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
 <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// perform actions on file content</span>
   <span class="nx">fs</span><span class="p">.</span><span class="nx">unlink</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -2112,7 +2112,7 @@ For detailed information on input validation, please refer to <a href="https://c
 <ul>
 <li><strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">Content-Security-Policy</a>:</strong> Content Security Policy is developed to reduce the risk of attacks like <a href="https://owasp.org/www-community/attacks/xss/">Cross-Site Scripting (XSS)</a> and <a href="https://owasp.org/www-community/attacks/Clickjacking">Clickjacking</a>. Basically, it allows content from a whitelist you decide. It has several directives each of which prohibits loading specific type of a content. You can refer to <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">Content Security Policy Cheat Sheet</a> for detailed explanation of each directive and how to use it. You can implement these settings in your application as follows:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kr">const</span> <span class="nx">csp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;helmet-csp&#39;</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span> <span class="nx">csp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;helmet-csp&#39;</span><span class="p">)</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">csp</span><span class="p">({</span>
    <span class="nx">directives</span><span class="o">:</span> <span class="p">{</span>
        <span class="nx">defaultSrc</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;&#39;self&#39;&quot;</span><span class="p">],</span>  <span class="c1">// default value for all directives that are absent</span>
@@ -2272,8 +2272,8 @@ retire
       
     </div>
     
-      <script src="../assets/javascripts/vendor.08c56446.min.js"></script>
-      <script src="../assets/javascripts/bundle.6ced434e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.93c04032.min.js"></script>
+      <script src="../assets/javascripts/bundle.83e5331e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
