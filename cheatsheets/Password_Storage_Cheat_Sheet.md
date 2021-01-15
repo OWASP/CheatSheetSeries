@@ -9,7 +9,7 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 - **Use [Bcrypt](#modern-algorithms) unless you have a good reason not to.**
 - **Set a reasonable [work factor](#work-factors) for your system.**
 - **Use a [salt](#salting) (modern algorithms do this for you automatically).**
-- **Consider using a [pepper](#peppering) to provide an additional layer of security.**
+- **Consider using a [pepper](#peppering) to provide an additional defence in depth (though alone it provides no additional secure characteristics).**
 
 ## Background
 
@@ -72,24 +72,26 @@ Salting also provides protection against an attacker pre-computing hashes using 
 
 ### Peppering
 
-A [pepper](https://en.wikipedia.org/wiki/Pepper_%28cryptography%29) can be used in addition to salting to provide an additional layer of protection. It is similar to a salt but has two key differences:
+A [pepper](https://tools.ietf.org/id/draft-whited-kitten-password-storage-02.html#section-1.1-4.2) can be used in addition to salting to provide an additional layer of protection. It is similar to a salt but has four key differences:
 
-- The pepper is shared between all stored passwords, rather than being unique like a salt.
-- The pepper is **not stored in the database**, unlike the salts.
+- The pepper is **shared between all stored passwords**, rather than being *unique* like a salt. This makes a pepper predicable, and attempts to crack a password hash *probabilistic*. The static nature of a pepper also *weakens" hash collision resistance whereas the salt improves hash collision resistance by extending the length with unique characters that increase the entropy of input to the hashing function.
+- The pepper is **not stored in the database**, unlike many implementations of a password salt (but not always true for a salt).
+- The pepper is not a mechanism to make password cracking **too hard to be feasible** for an attacker, like many password storage protections (salting among these) aim to do.
+- A salt prevents attackers from compiling rainbow tables of known passwords, however a pepper does not offer this characteristic
 
 The purpose of the pepper is to prevent an attacker from being able to crack any of the hashes if they only have access to the database, for example if they have exploited a SQL injection vulnerability or obtained a backup of the database.
 
-The pepper should be at least 32 characters long and should be randomly generated. It should be stored in an application configuration file (protected with appropriate permissions) using the secure storage APIs provided by the operating system, or in a Hardware Security Module (HSM).
+The pepper should be *at-least* 32 characters long and should be randomly generated using a secure pseudo-random generator (CSPRNG). It should be stored securely in a "secrets vault" (not in an application configuration file regardless of file permissions which are susceptible to SSRF) using the secure access APIs, or for optimal secure storage store the pepper in a Hardware Security Module (HSM) if possible.
+Read about [Cryptographically Weak Pseudo-Random Number Generator](https://cwe.mitre.org/data/definitions/338.html) (PRNG)
 
-The pepper is traditionally used in a similar way to a salt by concatenating it with the password prior to hashing, using a construct such as `hash($pepper . $password)`.
+The pepper is often used in a similar way to a salt by concatenating it with the password prior to hashing, using a construct such as `hash($pepper . $password)`. While concatenating is considered appropriate for a salt, only prefixing is considered appropriate for a pepper.
+Never place a pepper as a suffix as this may lead to vulnerabilities such as issues related to truncation and length-extension attacks. Practically these threats allow the input password component to validate successfully because the unique password is never truncated, only the probabilistic pepper would be truncated.
 
-An alternative approach is to hash the passwords as usual and then encrypt the hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper. This avoids some of the issues with the traditional approach to peppering, and it allows for much easier rotation of the pepper if it is believed to be compromised.
+#### Alternatives
 
-#### Disadvantages
+An alternative pepper approach is to hash the passwords as usual (specifically one-way hashing) and then encrypt the hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper without effecting the password directly or the hash function in any way. This avoids known issues with the concatenation/prefix approach and it allows for password to remain valid when you apply key rotation (using established encryption key rotation procedures) if the key that acts as a pepper is believed to be compromised.
 
-The main issues with peppers is their long term maintenance. Changing the pepper in use will invalidate all of the existing passwords stored in the database, which means that it can't easily be changed in the event of the pepper being compromised.
-
-One solution to this is to store the ID of the pepper in the database alongside the associated password hashes. When the pepper needs to be updated, this ID can be updated for hashes using the new pepper. Although the application will need to store all of the peppers that are currently in use, this does provide a way to replace a compromised pepper.
+Another solution may be storing the secret pepper with an ID to easily retrieve it, and past known peppers. When you store a password hash, store only the ID of the pepper in the database alongside the associated password hashes. This allows rotation of the pepper without disclosing the secret pepper itself. When the pepper needs to be updated, this ID can be updated for hashes using the new pepper. The requires the application logic to additionally associate an ID to an external store with all the pepper secret values that are valid and currently in use, which may or may not be possible for all secret stores (HSM and secret vaults typically support a lookup ID).
 
 ### Work Factors
 
