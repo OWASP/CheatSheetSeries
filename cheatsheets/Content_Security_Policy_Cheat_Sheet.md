@@ -32,7 +32,7 @@ The following are headers for CSP.
 - `Content-Security-Policy-Report-Only` : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking ("fail open") and a report is sent to the URL designated by the `report-uri` (or newer `report-to`) directive. This is often used as a precursor to utilizing CSP in blocking mode ("fail closed")
 - `DO NOT` use X-Content-Security-Policy or X-WebKit-CSP. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.
 
-Browsers fully support the ability of a site to use both `Content-Security-Policy` and `Content-Security-Policy-Report-Only` together, without any issues. This pattern can be used for example to run a strict `Report-Only` policy (to get many violation reports, while having a looser enfored policy (to avoid breaking ligitimate site functionality).
+Browsers fully support the ability of a site to use both `Content-Security-Policy` and `Content-Security-Policy-Report-Only` together, without any issues. This pattern can be used for example to run a strict `Report-Only` policy (to get many violation reports), while having a looser enforced policy (to avoid breaking legitimate site functionality).
 
 ## CSP Directives
 
@@ -81,7 +81,7 @@ Document directives instruct the browser about the properties of the document to
 
 Navigation directives instruct the browser about the locations that the document can navigate to.
 
-- `navigate-to` restricts the URLs which a document can navigate to by any mean (not yet supported by modern browsers in Jan 2021)
+- `navigate-to` restricts the URLs which a document can navigate to by any mean (not yet supported by modern browsers in Jan 2021).
 - `form-action` restricts the URLs which the forms can submit to.
 - `frame-ancestors` restricts the URLs that can embed the requested resource inside of  `<frame>`, `<iframe>`, `<object>`, `<embed>`, or `<applet>` elements.
     - If this directive is specified in a `<meta>` tag, the directive is ignored.
