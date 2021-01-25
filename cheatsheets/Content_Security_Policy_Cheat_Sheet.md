@@ -193,7 +193,7 @@ object-src 'none'; base-uri 'none';
 
 ### Refactoring inline code
 
-When `default-src` or `script-src*` directives are active, CSP by default disables any unsigned JavaScript code placed inline in the HTML source, such as this:
+When `default-src` or `script-src*` directives are active, CSP by default disables any JavaScript code placed inline in the HTML source, such as this:
 
 ```javascript
 <script>
