@@ -135,7 +135,7 @@ Due to these issues, the preferred option should generally be to limit the maxim
 
 There are a number of modern hashing algorithms that have been specifically designed for securely storing passwords. This means that they should be slow (unlike algorithms such as MD5 and SHA-1 which were designed to be fast), and how slow they are can be configured by changing the [work factor](#work-factors).
 
-The main three algorithms that should be considered as listed below.
+The main three algorithms that should be considered are listed below:
 
 #### Argon2id
 
