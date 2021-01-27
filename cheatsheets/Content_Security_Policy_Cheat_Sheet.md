@@ -29,8 +29,10 @@ CSP can be delivered to the user agent in different techniques.
 The following are headers for CSP.
 
 - `Content-Security-Policy` : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+
-- `Content-Security-Policy-Report-Only` : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking ("fail open") and a report is sent to the URL designated by the `report-uri` directive. This is often used as a precursor to utilizing CSP in blocking mode ("fail closed")
+- `Content-Security-Policy-Report-Only` : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking ("fail open") and a report is sent to the URL designated by the `report-uri` (or newer `report-to`) directive. This is often used as a precursor to utilizing CSP in blocking mode ("fail closed")
 - `DO NOT` use X-Content-Security-Policy or X-WebKit-CSP. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.
+
+Browsers fully support the ability of a site to use both `Content-Security-Policy` and `Content-Security-Policy-Report-Only` together, without any issues. This pattern can be used for example to run a strict `Report-Only` policy (to get many violation reports), while having a looser enforced policy (to avoid breaking legitimate site functionality).
 
 ## CSP Directives
 
@@ -79,7 +81,7 @@ Document directives instruct the browser about the properties of the document to
 
 Navigation directives instruct the browser about the locations that the document can navigate to.
 
-- `navigate-to` restricts the URLs which a document can navigate to by any mean.
+- `navigate-to` restricts the URLs which a document can navigate to by any mean ([not yet supported](https://caniuse.com/?search=navigate-to) by modern browsers in Jan 2021).
 - `form-action` restricts the URLs which the forms can submit to.
 - `frame-ancestors` restricts the URLs that can embed the requested resource inside of  `<frame>`, `<iframe>`, `<object>`, `<embed>`, or `<applet>` elements.
     - If this directive is specified in a `<meta>` tag, the directive is ignored.
@@ -191,7 +193,7 @@ object-src 'none'; base-uri 'none';
 
 ### Refactoring inline code
 
-By default CSP disables any unsigned JavaScript code placed inline in the HTML source, such as this:
+When `default-src` or `script-src*` directives are active, CSP by default disables any JavaScript code placed inline in the HTML source, such as this:
 
 ```javascript
 <script>
@@ -240,6 +242,8 @@ document.getElementById("button1").addEventListener('click', doSomething);
 - [CSP Level 3 W3C](https://www.w3.org/TR/CSP3/)
 - [Content-Security-Policy](https://content-security-policy.com/)
 - [MDN CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
+- [CSP Wikipedia](https://en.wikipedia.org/wiki/Content_Security_Policy)
 - [CSP CheatSheet by Scott Helme](https://scotthelme.co.uk/csp-cheat-sheet/)
 - [Breaking Bad CSP](https://www.slideshare.net/LukasWeichselbaum/breaking-bad-csp)
 - [CSP A Successful Mess Between Hardening And Mitigation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation)
+- [CSP Scanner](https://cspscanner.com/)
