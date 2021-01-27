@@ -1493,9 +1493,10 @@
 <p>The following are headers for CSP.</p>
 <ul>
 <li><code>Content-Security-Policy</code> : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+</li>
-<li><code>Content-Security-Policy-Report-Only</code> : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking ("fail open") and a report is sent to the URL designated by the <code>report-uri</code> directive. This is often used as a precursor to utilizing CSP in blocking mode ("fail closed")</li>
+<li><code>Content-Security-Policy-Report-Only</code> : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking ("fail open") and a report is sent to the URL designated by the <code>report-uri</code> (or newer <code>report-to</code>) directive. This is often used as a precursor to utilizing CSP in blocking mode ("fail closed")</li>
 <li><code>DO NOT</code> use X-Content-Security-Policy or X-WebKit-CSP. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.</li>
 </ul>
+<p>Browsers fully support the ability of a site to use both <code>Content-Security-Policy</code> and <code>Content-Security-Policy-Report-Only</code> together, without any issues. This pattern can be used for example to run a strict <code>Report-Only</code> policy (to get many violation reports), while having a looser enforced policy (to avoid breaking legitimate site functionality).</p>
 <h2 id="csp-directives">CSP Directives<a class="headerlink" href="#csp-directives" title="Permanent link">&para;</a></h2>
 <p>Multiple types of directives exist that allow the developer to granularly control the flow of the policies.</p>
 <h3 id="fetch-directives">Fetch Directives<a class="headerlink" href="#fetch-directives" title="Permanent link">&para;</a></h3>
@@ -1547,7 +1548,7 @@
 <h3 id="navigation-directives">Navigation Directives<a class="headerlink" href="#navigation-directives" title="Permanent link">&para;</a></h3>
 <p>Navigation directives instruct the browser about the locations that the document can navigate to.</p>
 <ul>
-<li><code>navigate-to</code> restricts the URLs which a document can navigate to by any mean.</li>
+<li><code>navigate-to</code> restricts the URLs which a document can navigate to by any mean (<a href="https://caniuse.com/?search=navigate-to">not yet supported</a> by modern browsers in Jan 2021).</li>
 <li><code>form-action</code> restricts the URLs which the forms can submit to.</li>
 <li><code>frame-ancestors</code> restricts the URLs that can embed the requested resource inside of  <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;object&gt;</code>, <code>&lt;embed&gt;</code>, or <code>&lt;applet&gt;</code> elements.<ul>
 <li>If this directive is specified in a <code>&lt;meta&gt;</code> tag, the directive is ignored.</li>
@@ -1674,7 +1675,7 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
 </code></pre></div>
 
 <h3 id="refactoring-inline-code">Refactoring inline code<a class="headerlink" href="#refactoring-inline-code" title="Permanent link">&para;</a></h3>
-<p>By default CSP disables any unsigned JavaScript code placed inline in the HTML source, such as this:</p>
+<p>When <code>default-src</code> or <code>script-src*</code> directives are active, CSP by default disables any JavaScript code placed inline in the HTML source, such as this:</p>
 <div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
 <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="s2">&quot;314&quot;</span>
 <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
@@ -1709,9 +1710,11 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
 <li><a href="https://www.w3.org/TR/CSP3/">CSP Level 3 W3C</a></li>
 <li><a href="https://content-security-policy.com/">Content-Security-Policy</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">MDN CSP</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Content_Security_Policy">CSP Wikipedia</a></li>
 <li><a href="https://scotthelme.co.uk/csp-cheat-sheet/">CSP CheatSheet by Scott Helme</a></li>
 <li><a href="https://www.slideshare.net/LukasWeichselbaum/breaking-bad-csp">Breaking Bad CSP</a></li>
 <li><a href="https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation">CSP A Successful Mess Between Hardening And Mitigation</a></li>
+<li><a href="https://cspscanner.com/">CSP Scanner</a></li>
 </ul>
                 
                   
