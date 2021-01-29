@@ -130,7 +130,7 @@ Route::any('/profile', function (Request $request) {
 })->middleware('auth');
 ```
 
-The above profile route allows the logged in user to change his/her profile information. 
+The above profile route allows the logged in user to change his/her profile information.
 
 However, let's say there is an `is_admin` column in the users table. You probably do not want the user to be allowed to change the value of this column. However, the above code allows users to change any column values for his/her row in the users table. This is a mass assignment vulnerability.
 
@@ -246,7 +246,7 @@ Behind the scenes, the above code triggers the following query:
 use App\Models\User;
 
 $colname = $request->input('colname');
-User::where($colname, $request->input('id'))->where($colname, '<>', $id)->count(); 
+User::where($colname, $request->input('id'))->where($colname, '<>', $id)->count();
 ```
 
 Since the column name is dictated by user input, it is similar to column name SQL injection.
@@ -401,7 +401,7 @@ Laravel also provides the ability to exclude certain routes from CSRF protection
 
 ## Command Injection
 
-Command Injection vulnerabilities involve executing shell commands constructed with unescaped user input data. 
+Command Injection vulnerabilities involve executing shell commands constructed with unescaped user input data.
 
 For example, the following code performs a `whois` on a user provided domain name:
 
