@@ -130,9 +130,9 @@ Route::any('/profile', function (Request $request) {
 })->middleware('auth');
 ```
 
-The above profile route allows the logged in user to change his/her profile information.
+The above profile route allows the logged in user to change their profile information.
 
-However, let's say there is an `is_admin` column in the users table. You probably do not want the user to be allowed to change the value of this column. However, the above code allows users to change any column values for his/her row in the users table. This is a mass assignment vulnerability.
+However, let's say there is an `is_admin` column in the users table. You probably do not want the user to be allowed to change the value of this column. However, the above code allows users to change any column values for their row in the users table. This is a mass assignment vulnerability.
 
 Laravel has in-built features by default to protect against this vulnerability. Make sure of the following to stay secure:
 
@@ -253,7 +253,7 @@ Since the column name is dictated by user input, it is similar to column name SQ
 
 ## Cross Site Scripting (XSS)
 
-[XSS attacks](https://owasp.org/www-community/attacks/xss/) are injection attacks where malicious scripts (such as Javascript code snippets) are injected into trusted websites.
+[XSS attacks](https://owasp.org/www-community/attacks/xss/) are injection attacks where malicious scripts (such as JavaScript code snippets) are injected into trusted websites.
 
 Laravel's [Blade templating engine](https://laravel.com/docs/blade) has echo statements `{{ }}` that automatically escape variables using the `htmlspecialchars` PHP function to protect against XSS attacks.
 
@@ -279,7 +279,7 @@ Unrestricted file upload attacks entail attackers uploading malicious files to c
 
 ### Always Validate File Type and Size
 
-Always validate the file type (extension or mime type) and file size to avoid storage DOS attacks and remote code execution:
+Always validate the file type (extension or MIME type) and file size to avoid storage DOS attacks and remote code execution:
 
 ```php
 $request->validate([
@@ -395,7 +395,7 @@ Next, for all your `POST` request forms, you may use the `@csrf` blade directive
 </form>
 ```
 
-For Ajax requests, you can setup the [X-CSRF-Token header](https://laravel.com/docs/csrf#csrf-x-csrf-token).
+For AJAX requests, you can setup the [X-CSRF-Token header](https://laravel.com/docs/csrf#csrf-x-csrf-token).
 
 Laravel also provides the ability to exclude certain routes from CSRF protection using the `$except` variable in your CSRF middleware class. Typically, you would want to exclude only stateless routes (e.g. APIs or webhooks) from CSRF protection. If any other routes are excluded, these may result in CSRF vulnerabilities.
 
