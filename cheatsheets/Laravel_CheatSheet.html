@@ -1,0 +1,2011 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Laravel_CheatSheet.html">
+      
+      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.7">
+    
+    
+      
+        <title>Laravel CheatSheet.md - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.cb6bc1d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.39b8e14a.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#laravel-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              Laravel CheatSheet.md
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Glossary.html" class="md-nav__link">
+        Index Alphabetical
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexASVS.html" class="md-nav__link">
+        Index ASVS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        Index Proactive Controls
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+      
+      <label class="md-nav__link" for="nav-5">
+        Cheatsheets
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          Cheatsheets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        AJAX Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        Abuse Case
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        Access Control
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        Attack Surface Analysis
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        Authorization Testing Automation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Bean Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+        Choosing and Using Security Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+        Clickjacking Defense
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+        Content Security Policy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Credential Stuffing Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross-Site Request Forgery Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Cryptographic Storage
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        DOM based XSS Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        Database Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+        Denial of Service
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        Deserialization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+        Docker Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+        DotNet Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        Error Handling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        File Upload
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+        Forgot Password
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+        GraphQL
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTML5 Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention in Java
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Input Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Insecure Direct Object Reference Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+        JAAS
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+        JSON Web Token for Java
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+        Key Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+        Kubernetes Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        LDAP Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Laravel CheatSheet.md
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Laravel_CheatSheet.html" class="md-nav__link md-nav__link--active">
+        Laravel CheatSheet.md
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basics" class="md-nav__link">
+    The Basics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cookie-security-and-session-management" class="md-nav__link">
+    Cookie Security and Session Management
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    Authentication
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#guards-and-providers" class="md-nav__link">
+    Guards and Providers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#starter-kits" class="md-nav__link">
+    Starter Kits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-authentication-packages" class="md-nav__link">
+    API Authentication Packages
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mass-assignment" class="md-nav__link">
+    Mass Assignment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql-injection" class="md-nav__link">
+    SQL Injection
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL Injection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eloquent-orm-sql-injection-protection" class="md-nav__link">
+    Eloquent ORM SQL Injection Protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-query-sql-injection" class="md-nav__link">
+    Raw Query SQL Injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#column-name-sql-injection" class="md-nav__link">
+    Column Name SQL Injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-rule-sql-injection" class="md-nav__link">
+    Validation Rule SQL Injection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-site-scripting-xss" class="md-nav__link">
+    Cross Site Scripting (XSS)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrestricted-file-uploads" class="md-nav__link">
+    Unrestricted File Uploads
+  </a>
+  
+    <nav class="md-nav" aria-label="Unrestricted File Uploads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#always-validate-file-type-and-size" class="md-nav__link">
+    Always Validate File Type and Size
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-not-rely-on-user-input-to-dictate-filenames-or-path" class="md-nav__link">
+    Do Not Rely On User Input To Dictate Filenames or Path
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-processing-zip-or-xml-files-if-possible" class="md-nav__link">
+    Avoid Processing ZIP or XML Files If Possible
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-traversal" class="md-nav__link">
+    Path Traversal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-redirection" class="md-nav__link">
+    Open Redirection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-site-request-forgery-csrf" class="md-nav__link">
+    Cross Site Request Forgery (CSRF)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-injection" class="md-nav__link">
+    Command Injection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-injections" class="md-nav__link">
+    Other Injections
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-headers" class="md-nav__link">
+    Security Headers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    Tools
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+        Mass Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+        Microservices based Security Arch Doc
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_security.html" class="md-nav__link">
+        Microservices security.md
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Multifactor Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+        Nodejs Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+        OS Command Injection Defense
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+        PHP Configuration
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Password Storage
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+        Pinning
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+        Query Parameterization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+        REST Assessment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        REST Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+        Ruby on Rails
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+        SAML Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        SQL Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+        Securing Cascading Style Sheets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        Session Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+        TLS Cipher String
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+        Third Party Javascript Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+        Threat Modeling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Transaction Authorization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        Transport Layer Protection
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+        Unvalidated Redirects and Forwards
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+        User Privacy Protection
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+        Virtual Patching
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerability Disclosure
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerable Dependency Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+        Web Service Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        XML External Entity Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+        XML Security
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basics" class="md-nav__link">
+    The Basics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cookie-security-and-session-management" class="md-nav__link">
+    Cookie Security and Session Management
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    Authentication
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#guards-and-providers" class="md-nav__link">
+    Guards and Providers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#starter-kits" class="md-nav__link">
+    Starter Kits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-authentication-packages" class="md-nav__link">
+    API Authentication Packages
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mass-assignment" class="md-nav__link">
+    Mass Assignment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sql-injection" class="md-nav__link">
+    SQL Injection
+  </a>
+  
+    <nav class="md-nav" aria-label="SQL Injection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eloquent-orm-sql-injection-protection" class="md-nav__link">
+    Eloquent ORM SQL Injection Protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-query-sql-injection" class="md-nav__link">
+    Raw Query SQL Injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#column-name-sql-injection" class="md-nav__link">
+    Column Name SQL Injection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-rule-sql-injection" class="md-nav__link">
+    Validation Rule SQL Injection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-site-scripting-xss" class="md-nav__link">
+    Cross Site Scripting (XSS)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrestricted-file-uploads" class="md-nav__link">
+    Unrestricted File Uploads
+  </a>
+  
+    <nav class="md-nav" aria-label="Unrestricted File Uploads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#always-validate-file-type-and-size" class="md-nav__link">
+    Always Validate File Type and Size
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-not-rely-on-user-input-to-dictate-filenames-or-path" class="md-nav__link">
+    Do Not Rely On User Input To Dictate Filenames or Path
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-processing-zip-or-xml-files-if-possible" class="md-nav__link">
+    Avoid Processing ZIP or XML Files If Possible
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-traversal" class="md-nav__link">
+    Path Traversal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-redirection" class="md-nav__link">
+    Open Redirection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-site-request-forgery-csrf" class="md-nav__link">
+    Cross Site Request Forgery (CSRF)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-injection" class="md-nav__link">
+    Command Injection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-injections" class="md-nav__link">
+    Other Injections
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-headers" class="md-nav__link">
+    Security Headers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    Tools
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="laravel-cheat-sheet">Laravel Cheat Sheet<a class="headerlink" href="#laravel-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This <em>Cheatsheet</em> intends to provide security tips to developers building Laravel applications. It aims to cover all common vulnerabilities and how to ensure that your Laravel applications are secure.</p>
+<p>The Laravel Framework provides in-built security features and is meant to be secure by default. However, it also provides additional flexibility for complex use cases. This means that developers unfamiliar with the inner workings of Laravel may fall into the trap of using complex features in a way that is not secure. This guide is meant to educate developers to avoid common pitfalls and develop Laravel applications in a secure manner.</p>
+<p>You may also refer the <a href="https://www.laravel-enlightn.com/docs/security/">Enlightn Security Documentation</a>, which highlights common vulnerabilities and good practices on securing Laravel applications.</p>
+<h2 id="the-basics">The Basics<a class="headerlink" href="#the-basics" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Make sure your app is not in debug mode while in production. To turn off debug mode, set your <code>APP_DEBUG</code> environment variable to <code>false</code>:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="na">APP_DEBUG</span><span class="o">=</span><span class="s">false</span>
+</code></pre></div>
+
+<ol>
+<li>Make sure your application key has been generated. Laravel applications use the app key for symmetric encryption and SHA256 hashes such as cookie encryption, signed URLs, password reset tokens and session data encryption. To generate the app key, you may run the <code>key:generate</code> Artisan command:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>php artisan key:generate
+</code></pre></div>
+
+<ol>
+<li>
+<p>Make sure your PHP configuration is secure. You may refer the <a href="PHP_Configuration_Cheat_Sheet.html">PHP Configuration Cheat Sheet</a> for more information on secure PHP configuration settings.</p>
+</li>
+<li>
+<p>Set safe file and directory permissions on your Laravel application. In general, all Laravel directories should be setup with a max permission level of <code>775</code> and non-executable files with a max permission level of <code>664</code>. Executable files such as Artisan or deployment scripts should be provided with a max permission level of <code>775</code>.</p>
+</li>
+<li>
+<p>Make sure your application does not have vulnerable dependencies. You can check this using the <a href="https://github.com/enlightn/security-checker">Enlightn Security Checker</a>.</p>
+</li>
+</ol>
+<h2 id="cookie-security-and-session-management">Cookie Security and Session Management<a class="headerlink" href="#cookie-security-and-session-management" title="Permanent link">&para;</a></h2>
+<p>By default, Laravel is configured in a secure manner. However, if you change your cookie or session configurations, make sure of the following:</p>
+<ol>
+<li>Enable the cookie encryption middleware if you use the <code>cookie</code> session store or if you store any kind of data that should not be readable or tampered with by clients. In general, this should be enabled unless your application has a very specific use case that requires disabling this. To enable this middleware, simply add the <code>EncryptCookies</code> middleware to the <code>web</code> middleware group in your <code>App\Http\Kernel</code> class:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="x">/**</span>
+<span class="x"> * The application&#39;s route middleware groups.</span>
+<span class="x"> *</span>
+<span class="x"> * @var array</span>
+<span class="x"> */</span>
+<span class="x">protected $middlewareGroups = [</span>
+<span class="x">    &#39;web&#39; =&gt; [</span>
+<span class="x">        \App\Http\Middleware\EncryptCookies::class,</span>
+<span class="x">        ...</span>
+<span class="x">    ],</span>
+<span class="x">    ...</span>
+<span class="x">];</span>
+</code></pre></div>
+
+<ol>
+<li>Enable the <code>HttpOnly</code> attribute on your session cookies via your <code>config/session.php</code> file, so that your session cookies are inaccessible from Javascript:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="x">&#39;http_only&#39; =&gt; true,</span>
+</code></pre></div>
+
+<ol>
+<li>Unless you are using sub-domain route registrations in your Laravel application, it is recommended to set the cookie <code>domain</code> attribute to null so that only the same origin (excluding subdomains) can set the cookie. This can be configured in your <code>config/session.php</code> file:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="x">&#39;domain&#39; =&gt; null,</span>
+</code></pre></div>
+
+<ol>
+<li>Set your <code>SameSite</code> cookie attribute to <code>lax</code> or <code>strict</code> in your <code>config/session.php</code> file to restrict your cookies to a first-party or same-site context:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="x">&#39;same_site&#39; =&gt; &#39;lax&#39;,</span>
+</code></pre></div>
+
+<ol>
+<li>If your application is HTTPS only, it is recommended to set the <code>secure</code> configuration option in your <code>config/session.php</code> file to <code>true</code> to protect against man-in-the-middle attacks. If your application has a combination of HTTP and HTTPS, then it is recommended to set this value to <code>null</code> so that the secure attribute is set automatically when serving HTTPS requests:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="x">&#39;secure&#39; =&gt; null,</span>
+</code></pre></div>
+
+<ol>
+<li>Ensure that you have a low session idle timeout value. <a href="Session_Management_Cheat_Sheet.html">OWASP recommends</a> a 2-5 minutes idle timeout for high value applications and 15-30 minutes for low risk applications. This can be configured in your <code>config/session.php</code> file:</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="x">&#39;lifetime&#39; =&gt; 15,</span>
+</code></pre></div>
+
+<p>You may also refer the <a href="https://owasp.org/www-chapter-london/assets/slides/OWASPLondon20171130_Cookie_Security_Myths_Misconceptions_David_Johansson.pdf">Cookie Security Guide</a> to learn more about cookie security and the cookie attributes mentioned above.</p>
+<h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
+<h3 id="guards-and-providers">Guards and Providers<a class="headerlink" href="#guards-and-providers" title="Permanent link">&para;</a></h3>
+<p>At its core, Laravel's authentication facilities are made up of "guards" and "providers". Guards define how users are authenticated for each request. Providers define how users are retrieved from your persistent storage.</p>
+<p>Laravel ships with a <code>session</code> guard which maintains state using session storage and cookies, and a <code>token</code> guard for API tokens.</p>
+<p>For providers, Laravel ships with a <code>eloquent</code> provider for retrieving users using the Eloquent ORM and the <code>database</code> provider for retrieving users using the database query builder.</p>
+<p>Guards and providers can be configured in the <code>config/auth.php</code> file. Laravel offers the ability to build custom guards and providers as well.</p>
+<h3 id="starter-kits">Starter Kits<a class="headerlink" href="#starter-kits" title="Permanent link">&para;</a></h3>
+<p>Laravel offers a wide variety of first party application starter kits that include in-built authentication features:</p>
+<ol>
+<li><a href="https://laravel.com/docs/8.x/starter-kits#laravel-breeze">Laravel Breeze</a>: A simple, minimal implementation of all Laravel's authentication features including login, registration, password reset, email verification and password confirmation.</li>
+<li><a href="https://laravel.com/docs/fortify">Laravel Fortify</a>: A headless authentication backend that includes the above authentication features along with two-factor authentication.</li>
+<li><a href="https://jetstream.laravel.com/">Laravel Jetstream</a>: An application starter kit that provides a UI on top of Laravel Fortify's authentication features.</li>
+</ol>
+<p>It is recommended to use one of these starter kits to ensure robust and secure authentication for your Laravel applications.</p>
+<h3 id="api-authentication-packages">API Authentication Packages<a class="headerlink" href="#api-authentication-packages" title="Permanent link">&para;</a></h3>
+<p>Laravel also offers the following API authentication packages:</p>
+<ol>
+<li><a href="https://laravel.com/docs/passport">Passport</a>: An OAuth2 authentication provider.</li>
+<li><a href="https://laravel.com/docs/sanctum">Sanctum</a>: An API token authentication provider.</li>
+</ol>
+<p>Starter kits such as Fortify and Jetstream have in-built support for Sanctum.</p>
+<h2 id="mass-assignment">Mass Assignment<a class="headerlink" href="#mass-assignment" title="Permanent link">&para;</a></h2>
+<p><a href="Mass_Assignment_Cheat_Sheet.html">Mass assignment</a> is a common vulnerability in modern web applications that use an ORM like Laravel's Eloquent ORM.</p>
+<p>A mass assignment is a vulnerability where an ORM pattern is abused to modify data items that the user should not be normally allowed to modify.</p>
+<p>Consider the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">Route::any(&#39;/profile&#39;, function (Request $request) {</span>
+<span class="x">    $request-&gt;user()-&gt;forceFill($request-&gt;all())-&gt;save();</span>
+
+<span class="x">    $user = $request-&gt;user()-&gt;fresh();</span>
+
+<span class="x">    return response()-&gt;json(compact(&#39;user&#39;));</span>
+<span class="x">})-&gt;middleware(&#39;auth&#39;);</span>
+</code></pre></div>
+
+<p>The above profile route allows the logged in user to change their profile information.</p>
+<p>However, let's say there is an <code>is_admin</code> column in the users table. You probably do not want the user to be allowed to change the value of this column. However, the above code allows users to change any column values for their row in the users table. This is a mass assignment vulnerability.</p>
+<p>Laravel has in-built features by default to protect against this vulnerability. Make sure of the following to stay secure:</p>
+<ul>
+<li>Qualify the allowed parameters that you wish to update using <code>$request-&gt;only</code> or <code>$request-&gt;validated</code> rather than <code>$request-&gt;all</code>.</li>
+<li>Do not unguard models or set the <code>$guarded</code> variable to an empty array. By doing this, you are actually disabling Laravel's in-built mass assignment protection.</li>
+<li>Avoid using methods such as <code>forceFill</code> or <code>forceCreate</code> that bypass the protection mechanism. You may however use these methods if you are passing in a validated array of values.</li>
+</ul>
+<h2 id="sql-injection">SQL Injection<a class="headerlink" href="#sql-injection" title="Permanent link">&para;</a></h2>
+<p>SQL Injection attacks are unfortunately quite common in modern web applications and entail attackers providing malicious request input data to interfere with SQL queries. This guide covers SQL injection and how it can be prevented specifically for Laravel applications. You may also refer the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheatsheet</a> for more information that is not specific to Laravel.</p>
+<h3 id="eloquent-orm-sql-injection-protection">Eloquent ORM SQL Injection Protection<a class="headerlink" href="#eloquent-orm-sql-injection-protection" title="Permanent link">&para;</a></h3>
+<p>By default, Laravel's Eloquent ORM protects against SQL injection by parameterizing queries and using SQL bindings. For instance, consider the following query:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">use App\Models\User;</span>
+
+<span class="x">User::where(&#39;email&#39;, $email)-&gt;get();</span>
+</code></pre></div>
+
+<p>The code above fires the query below:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="o">`</span><span class="n">users</span><span class="o">`</span> <span class="k">where</span> <span class="o">`</span><span class="n">email</span><span class="o">`</span> <span class="o">=</span> <span class="o">?</span>
+</code></pre></div>
+
+<p>So, even if <code>$email</code> is untrusted user input data, you are protected from SQL injection attacks.</p>
+<h3 id="raw-query-sql-injection">Raw Query SQL Injection<a class="headerlink" href="#raw-query-sql-injection" title="Permanent link">&para;</a></h3>
+<p>Laravel also offers raw query expressions and raw queries to construct complex queries or database specific queries that aren't supported out of the box.</p>
+<p>While this is great for flexibility, you must be careful to always use SQL data bindings for such queries. Consider the following query:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">use Illuminate\Support\Facades\DB;</span>
+<span class="x">use App\Models\User;</span>
+
+<span class="x">User::whereRaw(&#39;email = &quot;&#39;.$request-&gt;input(&#39;email&#39;).&#39;&quot;&#39;)-&gt;get();</span>
+<span class="x">DB::table(&#39;users&#39;)-&gt;whereRaw(&#39;email = &quot;&#39;.$request-&gt;input(&#39;email&#39;).&#39;&quot;&#39;)-&gt;get();</span>
+</code></pre></div>
+
+<p>Both lines of code actually execute the same query, which is vulnerable to SQL injection as the query does not use SQL bindings for untrusted user input data.</p>
+<p>The code above fires the following query:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="o">`</span><span class="n">users</span><span class="o">`</span> <span class="k">where</span> <span class="o">`</span><span class="n">email</span><span class="o">`</span> <span class="o">=</span> <span class="ss">&quot;value of email query parameter&quot;</span>
+</code></pre></div>
+
+<p>Always remember to use SQL bindings for request data. We can fix the above code by making the following modification:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">use App\Models\User;</span>
+
+<span class="x">User::whereRaw(&#39;email = ?&#39;, [$request-&gt;input(&#39;email&#39;)])-&gt;get();</span>
+</code></pre></div>
+
+<p>We can even use named SQL bindings like so:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">use App\Models\User;</span>
+
+<span class="x">User::whereRaw(&#39;email = :email&#39;, [&#39;email&#39; =&gt; $request-&gt;input(&#39;email&#39;)])-&gt;get();</span>
+</code></pre></div>
+
+<h3 id="column-name-sql-injection">Column Name SQL Injection<a class="headerlink" href="#column-name-sql-injection" title="Permanent link">&para;</a></h3>
+<p>You must never allow user input data to dictate column names referenced by your queries.</p>
+<p>The following queries may be vulnerable to SQL injection:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">use App\Models\User;</span>
+
+<span class="x">User::where($request-&gt;input(&#39;colname&#39;), &#39;somedata&#39;)-&gt;get();</span>
+<span class="x">User::query()-&gt;orderBy($request-&gt;input(&#39;sortBy&#39;))-&gt;get();</span>
+</code></pre></div>
+
+<p>It is important to note that even though Laravel has some in-built features such as wrapping column names to protect against the above SQL injection vulnerabilities, some database engines (depending on versions and configurations) may still be vulnerable because binding column names is not supported by databases.</p>
+<p>At the very least, this may result in a mass assignment vulnerability instead of a SQL injection because you may have expected a certain set of column values, but since they are not validated here, the user is free to use other columns as well.</p>
+<p>Always validate user input for such situations like so:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">use App\Models\User;</span>
+
+<span class="x">$request-&gt;validate([&#39;sortBy&#39; =&gt; &#39;in:price,updated_at&#39;]);</span>
+<span class="x">User::query()-&gt;orderBy($request-&gt;validated()[&#39;sortBy&#39;])-&gt;get();</span>
+</code></pre></div>
+
+<h3 id="validation-rule-sql-injection">Validation Rule SQL Injection<a class="headerlink" href="#validation-rule-sql-injection" title="Permanent link">&para;</a></h3>
+<p>Certain validation rules have the option of providing database column names. Such rules are vulnerable to SQL injection in the same manner as column name SQL injection because they construct queries in a similar manner.</p>
+<p>For example, the following code may be vulnerable:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">use Illuminate\Validation\Rule;</span>
+
+<span class="x">$request-&gt;validate([</span>
+<span class="x">    &#39;id&#39; =&gt; Rule::unique(&#39;users&#39;)-&gt;ignore($id, $request-&gt;input(&#39;colname&#39;))</span>
+<span class="x">]);</span>
+</code></pre></div>
+
+<p>Behind the scenes, the above code triggers the following query:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">use App\Models\User;</span>
+
+<span class="x">$colname = $request-&gt;input(&#39;colname&#39;);</span>
+<span class="x">User::where($colname, $request-&gt;input(&#39;id&#39;))-&gt;where($colname, &#39;&lt;&gt;&#39;, $id)-&gt;count();</span>
+</code></pre></div>
+
+<p>Since the column name is dictated by user input, it is similar to column name SQL injection.</p>
+<h2 id="cross-site-scripting-xss">Cross Site Scripting (XSS)<a class="headerlink" href="#cross-site-scripting-xss" title="Permanent link">&para;</a></h2>
+<p><a href="https://owasp.org/www-community/attacks/xss/">XSS attacks</a> are injection attacks where malicious scripts (such as JavaScript code snippets) are injected into trusted websites.</p>
+<p>Laravel's <a href="https://laravel.com/docs/blade">Blade templating engine</a> has echo statements <code>{{ }}</code> that automatically escape variables using the <code>htmlspecialchars</code> PHP function to protect against XSS attacks.</p>
+<p>Laravel also offers displaying unescaped data using the unescaped syntax <code>{!! !!}</code>. This must not be used on any untrusted data, otherwise your application will be subject to an XSS attack.</p>
+<p>For instance, if you have something like this in any of your Blade templates, it would result in a vulnerability:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">{!! request()-&gt;input(&#39;somedata&#39;) !!}</span>
+</code></pre></div>
+
+<p>This, however, is safe to do:</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">{{</span> <span class="nv">request</span><span class="o">()-&gt;</span><span class="nv">input</span><span class="o">(</span><span class="s1">&#39;somedata&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+</code></pre></div>
+
+<p>For other information on XSS prevention that is not specific to Laravel, you may refer the <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheatsheet</a>.</p>
+<h2 id="unrestricted-file-uploads">Unrestricted File Uploads<a class="headerlink" href="#unrestricted-file-uploads" title="Permanent link">&para;</a></h2>
+<p>Unrestricted file upload attacks entail attackers uploading malicious files to compromise web applications. This section describes how to protect against such attacks while building Laravel applications. You may also refer the <a href="File_Upload_Cheat_Sheet.html">File Upload Cheatsheet</a> to learn more.</p>
+<h3 id="always-validate-file-type-and-size">Always Validate File Type and Size<a class="headerlink" href="#always-validate-file-type-and-size" title="Permanent link">&para;</a></h3>
+<p>Always validate the file type (extension or MIME type) and file size to avoid storage DOS attacks and remote code execution:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">$request-&gt;validate([</span>
+<span class="x">    &#39;photo&#39; =&gt; &#39;file|size:100|mimes:jpg,bmp,png&#39;</span>
+<span class="x">]);</span>
+</code></pre></div>
+
+<p>Storage DOS attacks exploit missing file size validations and upload massive files to cause a denial of service (DOS) by exhausting the disk space.</p>
+<p>Remote code execution attacks entail first, uploading malicious executable files (such as PHP files) and then, triggering their malicious code by visiting the file URL (if public).</p>
+<p>Both these attacks can be avoided by simple file validations as mentioned above.</p>
+<h3 id="do-not-rely-on-user-input-to-dictate-filenames-or-path">Do Not Rely On User Input To Dictate Filenames or Path<a class="headerlink" href="#do-not-rely-on-user-input-to-dictate-filenames-or-path" title="Permanent link">&para;</a></h3>
+<p>If your application allows user controlled data to construct the path of a file upload, this may result in overwriting a critical file or storing the file in a bad location.</p>
+<p>Consider the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">Route::post(&#39;/upload&#39;, function (Request $request) {</span>
+<span class="x">    $request-&gt;file(&#39;file&#39;)-&gt;storeAs(auth()-&gt;id(), $request-&gt;input(&#39;filename&#39;));</span>
+
+<span class="x">    return back();</span>
+<span class="x">});</span>
+</code></pre></div>
+
+<p>This route saves a file to a directory specific to a user ID. Here, we rely on the <code>filename</code> user input data and this may result in a vulnerability as the filename could be something like <code>../2/filename.pdf</code>. This will upload the file in user ID 2's directory instead of the directory pertaining to the current logged in user.</p>
+<p>To fix this, we should use the <code>basename</code> PHP function to strip out any directory information from the <code>filename</code> input data:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">Route::post(&#39;/upload&#39;, function (Request $request) {</span>
+<span class="x">    $request-&gt;file(&#39;file&#39;)-&gt;storeAs(auth()-&gt;id(), basename($request-&gt;input(&#39;filename&#39;)));</span>
+
+<span class="x">    return back();</span>
+<span class="x">});</span>
+</code></pre></div>
+
+<h3 id="avoid-processing-zip-or-xml-files-if-possible">Avoid Processing ZIP or XML Files If Possible<a class="headerlink" href="#avoid-processing-zip-or-xml-files-if-possible" title="Permanent link">&para;</a></h3>
+<p>XML files can expose your application to a wide variety of attacks such as XXE attacks, the billion laughs attack and others. If you process ZIP files, you may be exposed to zip bomb DOS attacks.</p>
+<p>Refer the <a href="XML_Security_Cheat_Sheet.html">XML Security Cheatsheet</a> and the <a href="File_Upload_Cheat_Sheet.html">File Upload Cheatsheet</a> to learn more.</p>
+<h2 id="path-traversal">Path Traversal<a class="headerlink" href="#path-traversal" title="Permanent link">&para;</a></h2>
+<p>A path traversal attack aims to access files by manipulating request input data with <code>../</code> sequences and variations or by using absolute file paths.</p>
+<p>If you allow users to download files by filename, you may be exposed to this vulnerability if input data is not stripped of directory information.</p>
+<p>Consider the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">Route::get(&#39;/download&#39;, function(Request $request) {</span>
+<span class="x">    return response()-&gt;download(storage_path(&#39;content/&#39;).$request-&gt;input(&#39;filename&#39;));</span>
+<span class="x">});</span>
+</code></pre></div>
+
+<p>Here, the filename is not stripped of directory information, so a malformed filename such as <code>../../.env</code> could expose your application credentials to potential attackers.</p>
+<p>Similar to unrestricted file uploads, you should use the <code>basename</code> PHP function to strip out directory information like so:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">Route::get(&#39;/download&#39;, function(Request $request) {</span>
+<span class="x">    return response()-&gt;download(storage_path(&#39;content/&#39;).basename($request-&gt;input(&#39;filename&#39;)));</span>
+<span class="x">});</span>
+</code></pre></div>
+
+<h2 id="open-redirection">Open Redirection<a class="headerlink" href="#open-redirection" title="Permanent link">&para;</a></h2>
+<p>Open Redirection attacks in themselves are not that dangerous but they enable phishing attacks.</p>
+<p>Consider the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">Route::get(&#39;/redirect&#39;, function (Request $request) {</span>
+<span class="x">   return redirect($request-&gt;input(&#39;url&#39;));</span>
+<span class="x">});</span>
+</code></pre></div>
+
+<p>This code redirects the user to any external URL provided by user input. This could enable attackers to create seemingly safe URLs like <code>https://example.com/redirect?url=http://evil.com</code>. For instance, attackers may use a URL of this type to spoof password reset emails and lead victims to expose their credentials on the attacker's website.</p>
+<h2 id="cross-site-request-forgery-csrf">Cross Site Request Forgery (CSRF)<a class="headerlink" href="#cross-site-request-forgery-csrf" title="Permanent link">&para;</a></h2>
+<p><a href="https://owasp.org/www-community/attacks/csrf">Cross-Site Request Forgery (CSRF)</a> is a type of attack that occurs when a malicious web site, email, blog, instant message, or program causes a user's web browser to perform an unwanted action on a trusted site when the user is authenticated.</p>
+<p>Laravel provides CSRF protection out-of-the-box with the <code>VerifyCSRFToken</code> middleware. Generally, if you have this middleware in the <code>web</code> middleware group of your <code>App\Http\Kernel</code> class, you should be well protected:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">/**</span>
+<span class="x"> * The application&#39;s route middleware groups.</span>
+<span class="x"> *</span>
+<span class="x"> * @var array</span>
+<span class="x"> */</span>
+<span class="x">protected $middlewareGroups = [</span>
+<span class="x">    &#39;web&#39; =&gt; [</span>
+<span class="x">        ...</span>
+<span class="x">         \App\Http\Middleware\VerifyCsrfToken::class,</span>
+<span class="x">         ...</span>
+<span class="x">    ],</span>
+<span class="x">];</span>
+</code></pre></div>
+
+<p>Next, for all your <code>POST</code> request forms, you may use the <code>@csrf</code> blade directive to generate the hidden CSRF input token fields:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/profile&quot;</span><span class="p">&gt;</span>
+    @csrf
+
+    <span class="c">&lt;!-- Equivalent to... --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;_token&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ csrf_token() }}&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<p>For AJAX requests, you can setup the <a href="https://laravel.com/docs/csrf#csrf-x-csrf-token">X-CSRF-Token header</a>.</p>
+<p>Laravel also provides the ability to exclude certain routes from CSRF protection using the <code>$except</code> variable in your CSRF middleware class. Typically, you would want to exclude only stateless routes (e.g. APIs or webhooks) from CSRF protection. If any other routes are excluded, these may result in CSRF vulnerabilities.</p>
+<h2 id="command-injection">Command Injection<a class="headerlink" href="#command-injection" title="Permanent link">&para;</a></h2>
+<p>Command Injection vulnerabilities involve executing shell commands constructed with unescaped user input data.</p>
+<p>For example, the following code performs a <code>whois</code> on a user provided domain name:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">public function verifyDomain(Request $request)</span>
+<span class="x">{</span>
+<span class="x">    exec(&#39;whois &#39;.$request-&gt;input(&#39;domain&#39;));</span>
+<span class="x">}</span>
+</code></pre></div>
+
+<p>The above code is vulnerable as the user data is not escaped properly. To do so, you may use the <code>escapeshellcmd</code> and/or <code>escapeshellarg</code> PHP functions.</p>
+<h2 id="other-injections">Other Injections<a class="headerlink" href="#other-injections" title="Permanent link">&para;</a></h2>
+<p>Object injection, eval code injection and extract variable hijacking attacks involve unserializing, evaluating or using the <code>extract</code> function on untrusted user input data.</p>
+<p>Some examples are:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">unserialize($request-&gt;input(&#39;data&#39;));</span>
+<span class="x">eval($request-&gt;input(&#39;data&#39;));</span>
+<span class="x">extract($request-&gt;all());</span>
+</code></pre></div>
+
+<p>In general, avoid passing any untrusted input data to these dangerous functions.</p>
+<h2 id="security-headers">Security Headers<a class="headerlink" href="#security-headers" title="Permanent link">&para;</a></h2>
+<p>You should consider adding the following security headers to your web server or Laravel application middleware:</p>
+<ul>
+<li>X-Frame-Options</li>
+<li>X-Content-Type-Options</li>
+<li>Strict-Transport-Security (for HTTPS only applications)</li>
+<li>Content-Security-Policy</li>
+</ul>
+<p>For more information, refer the <a href="https://owasp.org/www-project-secure-headers/">OWASP secure headers project</a>.</p>
+<h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h2>
+<p>You should consider using <a href="https://www.laravel-enlightn.com/">Enlightn</a>, a static and dynamic analysis tool for Laravel applications that has over 45 automated security checks to identify potential security issues. There is both an open source version and a commercial version of Enlightn available. Enlightn includes an extensive 45 page documentation on security vulnerabilities and a great way to learn more on Laravel security is to just review its <a href="https://www.laravel-enlightn.com/docs/security/">documentation</a>.</p>
+<p>You should also use the <a href="https://github.com/enlightn/security-checker">Enlightn Security Checker</a> or the <a href="https://github.com/fabpot/local-php-security-checker">Local PHP Security Checker</a>. Both of them are open source packages, licensed under the MIT and AGPL licenses respectively, that scan your PHP dependencies for known vulnerabilities using the <a href="https://github.com/FriendsOfPHP/security-advisories">Security Advisories Database</a>.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://laravel.com/docs/authentication">Laravel Documentation on Authentication</a></li>
+<li><a href="https://laravel.com/docs/authorization">Laravel Documentation on Authorization</a></li>
+<li><a href="https://laravel.com/docs/csrf">Laravel Documentation on CSRF</a></li>
+<li><a href="https://laravel.com/docs/validation">Laravel Documentation on Validation</a></li>
+<li><a href="https://www.laravel-enlightn.com/">Enlightn SAST and DAST Tool</a></li>
+<li><a href="https://www.laravel-enlightn.com/docs/security/">Laravel Enlightn Security Documentation</a></li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                LDAP Injection Prevention
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="Logging_Cheat_Sheet.html" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Logging
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2020 - CheatSheets Series Team
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.53cc9318.min.js"></script>
+      <script src="../assets/javascripts/bundle.e9c9f54f.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.9c0e82ba.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
