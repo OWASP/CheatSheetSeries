@@ -1589,19 +1589,19 @@
 <p>The Laravel Framework provides in-built security features and is meant to be secure by default. However, it also provides additional flexibility for complex use cases. This means that developers unfamiliar with the inner workings of Laravel may fall into the trap of using complex features in a way that is not secure. This guide is meant to educate developers to avoid common pitfalls and develop Laravel applications in a secure manner.</p>
 <p>You may also refer the <a href="https://www.laravel-enlightn.com/docs/security/">Enlightn Security Documentation</a>, which highlights common vulnerabilities and good practices on securing Laravel applications.</p>
 <h2 id="the-basics">The Basics<a class="headerlink" href="#the-basics" title="Permanent link">&para;</a></h2>
-<ol>
+<ul>
 <li>Make sure your app is not in debug mode while in production. To turn off debug mode, set your <code>APP_DEBUG</code> environment variable to <code>false</code>:</li>
-</ol>
+</ul>
 <div class="codehilite"><pre><span></span><code><span class="na">APP_DEBUG</span><span class="o">=</span><span class="s">false</span>
 </code></pre></div>
 
-<ol>
+<ul>
 <li>Make sure your application key has been generated. Laravel applications use the app key for symmetric encryption and SHA256 hashes such as cookie encryption, signed URLs, password reset tokens and session data encryption. To generate the app key, you may run the <code>key:generate</code> Artisan command:</li>
-</ol>
+</ul>
 <div class="codehilite"><pre><span></span><code>php artisan key:generate
 </code></pre></div>
 
-<ol>
+<ul>
 <li>
 <p>Make sure your PHP configuration is secure. You may refer the <a href="PHP_Configuration_Cheat_Sheet.html">PHP Configuration Cheat Sheet</a> for more information on secure PHP configuration settings.</p>
 </li>
@@ -1611,12 +1611,12 @@
 <li>
 <p>Make sure your application does not have vulnerable dependencies. You can check this using the <a href="https://github.com/enlightn/security-checker">Enlightn Security Checker</a>.</p>
 </li>
-</ol>
+</ul>
 <h2 id="cookie-security-and-session-management">Cookie Security and Session Management<a class="headerlink" href="#cookie-security-and-session-management" title="Permanent link">&para;</a></h2>
 <p>By default, Laravel is configured in a secure manner. However, if you change your cookie or session configurations, make sure of the following:</p>
-<ol>
+<ul>
 <li>Enable the cookie encryption middleware if you use the <code>cookie</code> session store or if you store any kind of data that should not be readable or tampered with by clients. In general, this should be enabled unless your application has a very specific use case that requires disabling this. To enable this middleware, simply add the <code>EncryptCookies</code> middleware to the <code>web</code> middleware group in your <code>App\Http\Kernel</code> class:</li>
-</ol>
+</ul>
 <div class="codehilite"><pre><span></span><code><span class="x">/**</span>
 <span class="x"> * The application&#39;s route middleware groups.</span>
 <span class="x"> *</span>
@@ -1631,33 +1631,33 @@
 <span class="x">];</span>
 </code></pre></div>
 
-<ol>
+<ul>
 <li>Enable the <code>HttpOnly</code> attribute on your session cookies via your <code>config/session.php</code> file, so that your session cookies are inaccessible from Javascript:</li>
-</ol>
+</ul>
 <div class="codehilite"><pre><span></span><code><span class="x">&#39;http_only&#39; =&gt; true,</span>
 </code></pre></div>
 
-<ol>
+<ul>
 <li>Unless you are using sub-domain route registrations in your Laravel application, it is recommended to set the cookie <code>domain</code> attribute to null so that only the same origin (excluding subdomains) can set the cookie. This can be configured in your <code>config/session.php</code> file:</li>
-</ol>
+</ul>
 <div class="codehilite"><pre><span></span><code><span class="x">&#39;domain&#39; =&gt; null,</span>
 </code></pre></div>
 
-<ol>
+<ul>
 <li>Set your <code>SameSite</code> cookie attribute to <code>lax</code> or <code>strict</code> in your <code>config/session.php</code> file to restrict your cookies to a first-party or same-site context:</li>
-</ol>
+</ul>
 <div class="codehilite"><pre><span></span><code><span class="x">&#39;same_site&#39; =&gt; &#39;lax&#39;,</span>
 </code></pre></div>
 
-<ol>
+<ul>
 <li>If your application is HTTPS only, it is recommended to set the <code>secure</code> configuration option in your <code>config/session.php</code> file to <code>true</code> to protect against man-in-the-middle attacks. If your application has a combination of HTTP and HTTPS, then it is recommended to set this value to <code>null</code> so that the secure attribute is set automatically when serving HTTPS requests:</li>
-</ol>
+</ul>
 <div class="codehilite"><pre><span></span><code><span class="x">&#39;secure&#39; =&gt; null,</span>
 </code></pre></div>
 
-<ol>
+<ul>
 <li>Ensure that you have a low session idle timeout value. <a href="Session_Management_Cheat_Sheet.html">OWASP recommends</a> a 2-5 minutes idle timeout for high value applications and 15-30 minutes for low risk applications. This can be configured in your <code>config/session.php</code> file:</li>
-</ol>
+</ul>
 <div class="codehilite"><pre><span></span><code><span class="x">&#39;lifetime&#39; =&gt; 15,</span>
 </code></pre></div>
 
