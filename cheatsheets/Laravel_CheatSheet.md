@@ -10,29 +10,29 @@ You may also refer the [Enlightn Security Documentation](https://www.laravel-enl
 
 ## The Basics
 
-1. Make sure your app is not in debug mode while in production. To turn off debug mode, set your `APP_DEBUG` environment variable to `false`:
+- Make sure your app is not in debug mode while in production. To turn off debug mode, set your `APP_DEBUG` environment variable to `false`:
 
 ```ini
 APP_DEBUG=false
 ```
 
-2. Make sure your application key has been generated. Laravel applications use the app key for symmetric encryption and SHA256 hashes such as cookie encryption, signed URLs, password reset tokens and session data encryption. To generate the app key, you may run the `key:generate` Artisan command:
+- Make sure your application key has been generated. Laravel applications use the app key for symmetric encryption and SHA256 hashes such as cookie encryption, signed URLs, password reset tokens and session data encryption. To generate the app key, you may run the `key:generate` Artisan command:
 
 ```bash
 php artisan key:generate
 ```
 
-3. Make sure your PHP configuration is secure. You may refer the [PHP Configuration Cheat Sheet](PHP_Configuration_Cheat_Sheet.md) for more information on secure PHP configuration settings.
+- Make sure your PHP configuration is secure. You may refer the [PHP Configuration Cheat Sheet](PHP_Configuration_Cheat_Sheet.md) for more information on secure PHP configuration settings.
 
-4. Set safe file and directory permissions on your Laravel application. In general, all Laravel directories should be setup with a max permission level of `775` and non-executable files with a max permission level of `664`. Executable files such as Artisan or deployment scripts should be provided with a max permission level of `775`.
+- Set safe file and directory permissions on your Laravel application. In general, all Laravel directories should be setup with a max permission level of `775` and non-executable files with a max permission level of `664`. Executable files such as Artisan or deployment scripts should be provided with a max permission level of `775`.
 
-5. Make sure your application does not have vulnerable dependencies. You can check this using the [Enlightn Security Checker](https://github.com/enlightn/security-checker).
+- Make sure your application does not have vulnerable dependencies. You can check this using the [Enlightn Security Checker](https://github.com/enlightn/security-checker).
 
 ## Cookie Security and Session Management
 
 By default, Laravel is configured in a secure manner. However, if you change your cookie or session configurations, make sure of the following:
 
-1. Enable the cookie encryption middleware if you use the `cookie` session store or if you store any kind of data that should not be readable or tampered with by clients. In general, this should be enabled unless your application has a very specific use case that requires disabling this. To enable this middleware, simply add the `EncryptCookies` middleware to the `web` middleware group in your `App\Http\Kernel` class:
+- Enable the cookie encryption middleware if you use the `cookie` session store or if you store any kind of data that should not be readable or tampered with by clients. In general, this should be enabled unless your application has a very specific use case that requires disabling this. To enable this middleware, simply add the `EncryptCookies` middleware to the `web` middleware group in your `App\Http\Kernel` class:
 
 ```php
 /**
@@ -49,31 +49,31 @@ protected $middlewareGroups = [
 ];
 ```
 
-2. Enable the `HttpOnly` attribute on your session cookies via your `config/session.php` file, so that your session cookies are inaccessible from Javascript:
+- Enable the `HttpOnly` attribute on your session cookies via your `config/session.php` file, so that your session cookies are inaccessible from Javascript:
 
 ```php
 'http_only' => true,
 ```
 
-3. Unless you are using sub-domain route registrations in your Laravel application, it is recommended to set the cookie `domain` attribute to null so that only the same origin (excluding subdomains) can set the cookie. This can be configured in your `config/session.php` file:
+- Unless you are using sub-domain route registrations in your Laravel application, it is recommended to set the cookie `domain` attribute to null so that only the same origin (excluding subdomains) can set the cookie. This can be configured in your `config/session.php` file:
 
 ```php
 'domain' => null,
 ```
 
-4. Set your `SameSite` cookie attribute to `lax` or `strict` in your `config/session.php` file to restrict your cookies to a first-party or same-site context:
+- Set your `SameSite` cookie attribute to `lax` or `strict` in your `config/session.php` file to restrict your cookies to a first-party or same-site context:
 
 ```php
 'same_site' => 'lax',
 ```
 
-5. If your application is HTTPS only, it is recommended to set the `secure` configuration option in your `config/session.php` file to `true` to protect against man-in-the-middle attacks. If your application has a combination of HTTP and HTTPS, then it is recommended to set this value to `null` so that the secure attribute is set automatically when serving HTTPS requests:
+- If your application is HTTPS only, it is recommended to set the `secure` configuration option in your `config/session.php` file to `true` to protect against man-in-the-middle attacks. If your application has a combination of HTTP and HTTPS, then it is recommended to set this value to `null` so that the secure attribute is set automatically when serving HTTPS requests:
 
 ```php
 'secure' => null,
 ```
 
-6. Ensure that you have a low session idle timeout value. [OWASP recommends](Session_Management_Cheat_Sheet.md) a 2-5 minutes idle timeout for high value applications and 15-30 minutes for low risk applications. This can be configured in your `config/session.php` file:
+- Ensure that you have a low session idle timeout value. [OWASP recommends](Session_Management_Cheat_Sheet.md) a 2-5 minutes idle timeout for high value applications and 15-30 minutes for low risk applications. This can be configured in your `config/session.php` file:
 
 ```php
 'lifetime' => 15,
