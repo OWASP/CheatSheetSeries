@@ -128,13 +128,35 @@ func1("input1")
 
 #### Set request size limits
 
-Buffering and parsing of request bodies can be resource intensive for the server. If there is no limit on the size of requests, attackers can send request with large request bodies so that they can exhaust server memory or fill disk space. However, fixing a request size limit for all requests may not be the correct behavior, since some requests like those for uploading a file to the server have more content to carry on the request body. Also, input with a JSON type is more dangerous than a multipart input, since parsing JSON is a blocking operation. Therefore, you should set request size limits for different content types. You can accomplish this very easily with express middlewares as follows:
+Buffering and parsing of request bodies can be resource intensive for the server. If there is no limit on the size of requests, attackers can send request with large request bodies so that they can exhaust server memory or fill disk space. You can limit the request body size for all requests using `raw-body`.
 
 ```JavaScript
-app.use(express.urlencoded({ limit: "1kb" }));
+var contentType = require('content-type')
+var express = require('express')
+var getRawBody = require('raw-body')
+
+var app = express()
+
+app.use(function (req, res, next) {
+  if (!['POST', 'PUT', 'DELETE'].includes(req.method)) next()
+
+  getRawBody(req, {
+    length: req.headers['content-length'],
+    limit: '1kb',
+    encoding: contentType.parse(req).parameters.charset
+  }, function (err, string) {
+    if (err) return next(err)
+    req.text = string
+    next()
+  })
+})
+```
+
+However, fixing a request size limit for all requests may not be the correct behavior, since some requests like those for uploading a file to the server have more content to carry on the request body. Also, input with a JSON type is more dangerous than a multipart input, since parsing JSON is a blocking operation. Therefore, you should set request size limits for different content types. You can accomplish this very easily with express middlewares as follows:
+
+```JavaScript
+app.use(express.urlencoded({ extended: true, limit: "1kb" }));
 app.use(express.json({ limit: "1kb" }));
-app.use(express.multipart({ limit:"10mb" }));
-app.use(express.limit("5kb")); // this will be valid for every other content type
 ```
 
 However, it should be noted that attackers can change content type of the request and bypass request size limits. Therefore, before processing the request, data contained in the request should be validated against the content type stated in the request headers. If content type validation for each request affects the performance severely, you can only validate specific content types or request larger than a predetermined size.
