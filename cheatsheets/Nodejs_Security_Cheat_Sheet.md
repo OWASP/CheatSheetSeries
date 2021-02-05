@@ -134,9 +134,9 @@ Buffering and parsing of request bodies can be resource intensive for the server
 var contentType = require('content-type')
 var express = require('express')
 var getRawBody = require('raw-body')
- 
+
 var app = express()
- 
+
 app.use(function (req, res, next) {
   if (!['POST', 'PUT', 'DELETE'].includes(req.method)) next()
 
