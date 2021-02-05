@@ -18,7 +18,7 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html">
       
       <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.7">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
     
     
       
@@ -1836,11 +1836,31 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 </code></pre></div>
 
 <h4 id="set-request-size-limits">Set request size limits<a class="headerlink" href="#set-request-size-limits" title="Permanent link">&para;</a></h4>
-<p>Buffering and parsing of request bodies can be resource intensive for the server. If there is no limit on the size of requests, attackers can send request with large request bodies so that they can exhaust server memory or fill disk space. However, fixing a request size limit for all requests may not be the correct behavior, since some requests like those for uploading a file to the server have more content to carry on the request body. Also, input with a JSON type is more dangerous than a multipart input, since parsing JSON is a blocking operation. Therefore, you should set request size limits for different content types. You can accomplish this very easily with express middlewares as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span> <span class="nx">limit</span><span class="o">:</span> <span class="s2">&quot;1kb&quot;</span> <span class="p">}));</span>
+<p>Buffering and parsing of request bodies can be resource intensive for the server. If there is no limit on the size of requests, attackers can send request with large request bodies so that they can exhaust server memory or fill disk space. You can limit the request body size for all requests using <code>raw-body</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">contentType</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">getRawBody</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;raw-body&#39;</span><span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">()</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">))</span> <span class="nx">next</span><span class="p">()</span>
+
+  <span class="nx">getRawBody</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">length</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;content-length&#39;</span><span class="p">],</span>
+    <span class="nx">limit</span><span class="o">:</span> <span class="s1">&#39;1kb&#39;</span><span class="p">,</span>
+    <span class="nx">encoding</span><span class="o">:</span> <span class="nx">contentType</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">).</span><span class="nx">parameters</span><span class="p">.</span><span class="nx">charset</span>
+  <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">return</span> <span class="nx">next</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">string</span>
+    <span class="nx">next</span><span class="p">()</span>
+  <span class="p">})</span>
+<span class="p">})</span>
+</code></pre></div>
+
+<p>However, fixing a request size limit for all requests may not be the correct behavior, since some requests like those for uploading a file to the server have more content to carry on the request body. Also, input with a JSON type is more dangerous than a multipart input, since parsing JSON is a blocking operation. Therefore, you should set request size limits for different content types. You can accomplish this very easily with express middlewares as follows:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span> <span class="nx">extended</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">limit</span><span class="o">:</span> <span class="s2">&quot;1kb&quot;</span> <span class="p">}));</span>
 <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span> <span class="nx">limit</span><span class="o">:</span> <span class="s2">&quot;1kb&quot;</span> <span class="p">}));</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">multipart</span><span class="p">({</span> <span class="nx">limit</span><span class="o">:</span><span class="s2">&quot;10mb&quot;</span> <span class="p">}));</span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">limit</span><span class="p">(</span><span class="s2">&quot;5kb&quot;</span><span class="p">));</span> <span class="c1">// this will be valid for every other content type</span>
 </code></pre></div>
 
 <p>However, it should be noted that attackers can change content type of the request and bypass request size limits. Therefore, before processing the request, data contained in the request should be validated against the content type stated in the request headers. If content type validation for each request affects the performance severely, you can only validate specific content types or request larger than a predetermined size.</p>
@@ -2226,8 +2246,8 @@ retire
       
     </div>
     
-      <script src="../assets/javascripts/vendor.53cc9318.min.js"></script>
-      <script src="../assets/javascripts/bundle.e9c9f54f.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
