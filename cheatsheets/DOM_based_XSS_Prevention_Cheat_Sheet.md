@@ -565,5 +565,6 @@ Vulnerable code:
 ```
 var x = location.hash.split("#")[1];
 document.write(x);
+
 ```
 Semgrep rule to find identify above dom xss [rule](https://semgrep.dev/s/we30).
