@@ -559,6 +559,7 @@ Some papers or guides advocate its use as an alternative to `innerHTML` to mitig
 The `innerText` feature was originally introduced by Internet Explorer, and was formally specified in the HTML standard in 2016 after being adopted by all major browser vendors.
 
 ### Detect DOM XSS using variant analysis
+
 **Vulnerable code:**
 
 ```
