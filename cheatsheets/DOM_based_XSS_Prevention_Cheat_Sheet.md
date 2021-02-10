@@ -562,7 +562,7 @@ The `innerText` feature was originally introduced by Internet Explorer, and was 
 
 Vulnerable code:
 
-```
+```html
 var x = location.hash.split("#")[1];
 document.write(x);
 
