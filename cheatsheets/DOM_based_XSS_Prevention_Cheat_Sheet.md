@@ -561,10 +561,11 @@ The `innerText` feature was originally introduced by Internet Explorer, and was 
 ### Detect DOM XSS using variant analysis
 
 Vulnerable code:
-
 ```html
+<script>
 var x = location.hash.split("#")[1];
 document.write(x);
-
+</script>
 ```
-Semgrep rule to find identify above dom xss [rule](https://semgrep.dev/s/we30).
+
+Semgrep rule to identify above dom xss [rule](https://semgrep.dev/s/we30).
