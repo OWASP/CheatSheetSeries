@@ -557,3 +557,16 @@ Some papers or guides advocate its use as an alternative to `innerHTML` to mitig
 ```
 
 The `innerText` feature was originally introduced by Internet Explorer, and was formally specified in the HTML standard in 2016 after being adopted by all major browser vendors.
+
+### Detect DOM XSS using variant analysis
+
+**Vulnerable code:**
+
+```
+<script>
+var x = location.hash.split("#")[1];
+document.write(x);
+</script>
+```
+
+Semgrep rule to identify above dom xss [link](https://semgrep.dev/s/we30).
