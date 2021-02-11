@@ -764,6 +764,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#detect-dom-xss-using-variant-analysis" class="md-nav__link">
+    Detect DOM XSS using variant analysis
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1711,6 +1718,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#detect-dom-xss-using-variant-analysis" class="md-nav__link">
+    Detect DOM XSS using variant analysis
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2129,6 +2143,15 @@ Click Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt
 </code></pre></div>
 
 <p>The <code>innerText</code> feature was originally introduced by Internet Explorer, and was formally specified in the HTML standard in 2016 after being adopted by all major browser vendors.</p>
+<h3 id="detect-dom-xss-using-variant-analysis">Detect DOM XSS using variant analysis<a class="headerlink" href="#detect-dom-xss-using-variant-analysis" title="Permanent link">&para;</a></h3>
+<p><strong>Vulnerable code:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;script&gt;</span>
+var x = location.hash.split(&quot;#&quot;)[1];
+document.write(x);
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div>
+
+<p>Semgrep rule to identify above dom xss <a href="https://semgrep.dev/s/we30">link</a>.</p>
                 
                   
                 
