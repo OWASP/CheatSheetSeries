@@ -1786,7 +1786,7 @@
 <p>Laravel's <a href="https://laravel.com/docs/blade">Blade templating engine</a> has echo statements <code>{{ }}</code> that automatically escape variables using the <code>htmlspecialchars</code> PHP function to protect against XSS attacks.</p>
 <p>Laravel also offers displaying unescaped data using the unescaped syntax <code>{!! !!}</code>. This must not be used on any untrusted data, otherwise your application will be subject to an XSS attack.</p>
 <p>For instance, if you have something like this in any of your Blade templates, it would result in a vulnerability:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">{!! request()-&gt;input(&#39;somedata&#39;) !!}</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="o">!!</span> <span class="n">request</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">input</span><span class="p">(</span><span class="s">&#39;somedata&#39;</span><span class="p">)</span> <span class="o">!!</span><span class="p">}</span>
 </code></pre></div>
 
 <p>This, however, is safe to do:</p>
