@@ -131,11 +131,11 @@ func1("input1")
 Buffering and parsing of request bodies can be resource intensive for the server. If there is no limit on the size of requests, attackers can send request with large request bodies so that they can exhaust server memory or fill disk space. You can limit the request body size for all requests using `raw-body`.
 
 ```JavaScript
-var contentType = require('content-type')
-var express = require('express')
-var getRawBody = require('raw-body')
+const contentType = require('content-type')
+const express = require('express')
+const getRawBody = require('raw-body')
 
-var app = express()
+const app = express()
 
 app.use(function (req, res, next) {
   if (!['POST', 'PUT', 'DELETE'].includes(req.method)) next()
@@ -203,7 +203,7 @@ In addition to input validation, you should escape all HTML and JavaScript conte
 Logging application activity is an encouraged good practice. It makes it easier to debug any errors encountered during application runtime. It is also useful for security concerns, since it can be used during incident response. Also, these logs can be used to feed Intrusion Detection/Prevention Systems (IDS/IPS). In Node.js, there are some modules like Winston or Bunyan to perform application activity logging. These modules enable streaming and querying logs. Also, they provide a way to handle uncaught exceptions. With the following code, you can log application activities in both console and a desired log file.
 
 ```JavaScript
-var logger = new (Winston.Logger) ({
+const logger = new (Winston.Logger) ({
     transports: [
         new (winston.transports.Console)(),
         new (winston.transports.File)({ filename: 'application.log' })
@@ -219,9 +219,9 @@ Also, you can provide different transports so that you can save errors to a sepa
 When your application server is under heavy network traffic, it may not be able to serve its users. This is essentially a type of [Denial of Service (DoS)](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html) attack. The [toobusy-js](https://www.npmjs.com/package/toobusy-js) module allows you to monitor the event loop. It keeps track of the response time, and when it goes beyond a certain threshold, this module can indicate your server is too busy. In that case, you can stop processing incoming requests and send them `503 Server Too Busy` message so that your application stay responsive. Example use of the [toobusy-js](https://www.npmjs.com/package/toobusy-js) module is shown here:
 
 ```JavaScript
-var toobusy = require('toobusy-js');
-var express = require('express');
-var app = express();
+const toobusy = require('toobusy-js');
+const express = require('express');
+const app = express();
 app.use(function(req, res, next) {
     if (toobusy()) {
         // log if you see necessary
@@ -238,7 +238,7 @@ app.use(function(req, res, next) {
 ) is a common threat to all web applications. Attackers can use brute-forcing as a password guessing attack to obtain account passwords. Therefore, application developers should take precautions against brute-force attacks especially in login pages.  Node.js has several modules available for this purpose. [Express-bouncer](https://libraries.io/npm/express-bouncer), [express-brute](https://libraries.io/npm/express-brute) and [rate-limiter](https://libraries.io/npm/rate-limiter) are just some examples. Based on your needs and requirements, you should choose one or more of these modules and use accordingly. [Express-bouncer](https://libraries.io/npm/express-bouncer) and [express-brute](https://libraries.io/npm/express-brute) modules work very similar and they both increase the delay with each failed request. They can both be arranged for a specific route. These modules can be used as follows:
 
 ```JavaScript
-var bouncer = require('express-bouncer');
+const bouncer = require('express-bouncer');
 bouncer.whitelist.push('127.0.0.1'); // whitelist an IP address
 // give a custom error message
 bouncer.blocked = function (req, res, next, remaining) {
@@ -254,10 +254,10 @@ app.post("/login", bouncer.block, function(req, res) {
 ```
 
 ```JavaScript
-var ExpressBrute = require('express-brute');
+const ExpressBrute = require('express-brute');
 
-var store = new ExpressBrute.MemoryStore(); // stores state locally, don't use this in production
-var bruteforce = new ExpressBrute(store);
+const store = new ExpressBrute.MemoryStore(); // stores state locally, don't use this in production
+const bruteforce = new ExpressBrute(store);
 
 app.post('/auth',
     bruteforce.prevent, // error 429 if we hit this route too often
@@ -270,16 +270,16 @@ app.post('/auth',
 Apart from [express-bouncer](https://libraries.io/npm/express-bouncer) and [express-brute](https://libraries.io/npm/express-brute), [rate-limiter](https://libraries.io/npm/rate-limiter) module also helps prevent brute-forcing attacks. It enables specifying how many requests a specific IP address can make during a specified time period.
 
 ```JavaScript
-var limiter = new RateLimiter();
+const limiter = new RateLimiter();
 limiter.addLimit('/login', 'GET', 5, 500); // login page can be requested 5 times at max within 500 seconds
 ```
 
 [CAPTCHA usage](https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html#captcha) is also another common mechanism used against brute-forcing. There are modules developed for Node.js CAPTCHAs. A common module used in Node.js applications is [svg-captcha](https://www.npmjs.com/package/svg-captcha). It can be used as follows:
 
 ```JavaScript
-var svgCaptcha = require('svg-captcha');
+const svgCaptcha = require('svg-captcha');
 app.get('/captcha', function (req, res) {
-    var captcha = svgCaptcha.create();
+    const captcha = svgCaptcha.create();
     req.session.captcha = captcha.text;
     res.type('svg');
     res.status(200).send(captcha.data);
@@ -293,7 +293,7 @@ Also, [account lockout](https://cheatsheetseries.owasp.org/cheatsheets/Authentic
 [Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf) aims to perform authorized actions on behalf of an authenticated user, while the user is unaware of this action. CSRF attacks are generally performed for state-changing requests like changing a password, adding users or placing orders. [Csurf](https://www.npmjs.com/package/csurf) is an express middleware that can be used to mitigate CSRF attacks. It can be used as follows:
 
 ```JavaScript
-var csrf = require('csurf');
+const csrf = require('csurf');
 csrfProtection = csrf({ cookie: true });
 app.get('/form', csrfProtection, function(req, res) {
     res.render('send', { csrfToken: req.csrfToken() })
@@ -320,7 +320,7 @@ A web application should not contain any page that is not used by users, as it m
 [HTTP Parameter Pollution(HPP)](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/04-Testing_for_HTTP_Parameter_Pollution.html) is an attack in which attackers send multiple HTTP parameters with the same name and this causes your application to interpret them in an unpredictable way. When multiple parameter values are sent, Express populates them in an array. In order to solve this issue, you can use [hpp](https://www.npmjs.com/package/hpp) module. When used, this module will ignore all values submitted for a parameter in `req.query` and/or `req.body` and just select the last parameter value submitted. You can use it as follows:
 
 ```JavaScript
-var hpp = require('hpp');
+const hpp = require('hpp');
 app.use(hpp());
 ```
 
@@ -343,7 +343,7 @@ exports.sanitizeUser = function(user) {
 Object properties include 3 hidden attributes: `writable` (if false, property value cannot be changed), `enumerable` (if false, property cannot be used in for loops) and `configurable` (if false, property cannot be deleted). When defining an object property through assignment, these three hidden attributes are set to true by default. These properties can be set as follows:
 
 ```JavaScript
-var o = {};
+const o = {};
 Object.defineProperty(o, "a", {
     writable: true,
     enumerable: true,
@@ -377,8 +377,8 @@ process.on("uncaughtException", function(err) {
 When using EventEmitter, errors can occur anywhere in the event chain. Normally, if an error occurs in an EventEmitter object, an error event which has an Error object as an argument is called. However, if there are no attached listeners to that error event, the Error object that is sent as an argument is thrown and becomes an uncaught exception. In short, if you do not handle errors within an EventEmitter object properly, these unhandled errors may crash your application. Therefore, you should always listen to error events when using EventEmitter objects.
 
 ```JavaScript
-var events = require('events');
-var myEventEmitter = function(){
+const events = require('events');
+const myEventEmitter = function(){
     events.EventEmitter.call(this);
 }
 require('util').inherits(myEventEmitter, events.EventEmitter);
@@ -386,7 +386,7 @@ myEventEmitter.prototype.someFunction = function(param1, param2) {
     //in case of an error
     this.emit('error', err);
 }
-var emitter = new myEventEmitter();
+const emitter = new myEventEmitter();
 emitter.on('error', function(err){
     //Perform necessary error handling here
 });
@@ -405,7 +405,7 @@ Errors in these callbacks can be propagated as many times as possible. Each call
 Generally, session information is sent using cookies in web applications. However, improper use of HTTP cookies can render an application to several session management vulnerabilities. There are some flags that can be set for each cookie to prevent these kinds of attacks. `httpOnly`, `Secure` and `SameSite` flags are very important for session cookies. `httpOnly` flag prevents the cookie from being accessed by client-side JavaScript. This is an effective counter-measure for XSS attacks. `Secure` flag lets the cookie to be sent only if the communication is over HTTPS. `SameSite` flag can prevent cookies from being sent in cross-site requests which helps protect against Cross-Site Request Forgery (CSRF) attacks. Apart from these, there are other flags like domain, path and expires. Setting these flags appropriately is encouraged, but they are mostly related to cookie scope not the cookie security. Sample usage of these flags is given in the following example:
 
 ```JavaScript
-var session = require('express-session');
+const session = require('express-session');
 app.use(session({
     secret: 'your-secret-key',
     key: 'cookieName',
@@ -474,7 +474,7 @@ app.use(helmet.ieNoOpen());
 - **[Expect-CT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT):** Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. Expect-CT header may enforce certificate transparency requirements. It can be implemented in your application as follows:
 
 ```JavaScript
-var expectCt = require('expect-ct');
+const expectCt = require('expect-ct');
 app.use(expectCt({ maxAge: 123 }));
 app.use(expectCt({ enforce: true, maxAge: 123 }));
 app.use(expectCt({ enforce: true, maxAge: 123, reportUri: 'http://example.com'}));
