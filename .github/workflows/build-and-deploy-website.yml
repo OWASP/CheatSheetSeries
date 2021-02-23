@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: 12.x
     - name: Setup Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2.2.1
       with:
         python-version: '3.x'
     - name: Install Python dependencies
