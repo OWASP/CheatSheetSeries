@@ -37,8 +37,8 @@ jobs:
       run: cd generated && zip -r ../bundle.zip site
     - name: Test bundle
       run: zip -T bundle.zip
-    - name: Upload bundle as artifcact
-      uses: actions/upload-artifact@v1
+    - name: Upload bundle as artifact
+      uses: actions/upload-artifact@v2.2.2
       with:
         name: Bundle
         path: bundle.zip
