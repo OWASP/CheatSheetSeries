@@ -14,13 +14,13 @@ jobs:
       WORKFLOW_GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
     steps:
     - name: Setup Action
-      uses: actions/checkout@v2
+      uses: actions/checkout@v1
     - name: Setup Node
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v1
       with:
         node-version: 12.x
     - name: Setup Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v1
       with:
         python-version: '3.x'
     - name: Install Python dependencies
@@ -37,8 +37,8 @@ jobs:
       run: cd generated && zip -r ../bundle.zip site
     - name: Test bundle
       run: zip -T bundle.zip
-    - name: Upload bundle as artifact
-      uses: actions/upload-artifact@v2
+    - name: Upload bundle as artifcact
+      uses: actions/upload-artifact@v1
       with:
         name: Bundle
         path: bundle.zip
@@ -50,7 +50,7 @@ jobs:
       CI: true
     steps:
     - name: Setup Action
-      uses: actions/checkout@v2
+      uses: actions/checkout@v1
     - name: Install dependencies
       run: sudo apt-get install -y unzip zip
     - name: Swith to offline website (gh-pages) branch
