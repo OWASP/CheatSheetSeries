@@ -12,13 +12,13 @@ jobs:
       CI: true
     steps:
     - name: Setup Action
-      uses: actions/checkout@v2
+      uses: actions/checkout@v1
     - name: Setup Node
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v1
       with:
         node-version: 12.x
     - name: SetUp python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v1
       with:
         python-version: '3.x'
     - name: Install python dependencies
