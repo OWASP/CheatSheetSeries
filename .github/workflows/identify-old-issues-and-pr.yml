@@ -12,7 +12,7 @@ jobs:
       CI: true
     steps:
     - name: Setup Action
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2.3.4
     - name: Setup Node
       uses: actions/setup-node@v2.1.5
       with:
