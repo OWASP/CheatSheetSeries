@@ -247,3 +247,4 @@ document.getElementById("button1").addEventListener('click', doSomething);
 - [Breaking Bad CSP](https://www.slideshare.net/LukasWeichselbaum/breaking-bad-csp)
 - [CSP A Successful Mess Between Hardening And Mitigation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation)
 - [CSP Scanner](https://cspscanner.com/)
+- [Content Security Policy on AppSec Monkey](https://www.appsecmonkey.com/blog/content-security-policy-header/)
