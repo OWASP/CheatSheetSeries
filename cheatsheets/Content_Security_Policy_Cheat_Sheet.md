@@ -32,7 +32,7 @@ By preventing the page from loading scripts from arbitrary servers, attacks like
 
 will not work.
 
-#### 3. Restricting Unsafe Javascript
+#### 3. Restricting Unsafe JavaScript
 
 By preventing the page from executing text-to-JavaScript functions like `eval`, the website will be safe from vulnerabilities like the this:
 
