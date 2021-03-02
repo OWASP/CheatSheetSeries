@@ -233,7 +233,7 @@ const nonce = uuid.v4();
 scriptSrc += ` 'nonce-${nonce}'`;
 ```
 
-You would then pass this nonce to your view (using nonces requires a non-static HTML) and render script tags that look something like this: 
+You would then pass this nonce to your view (using nonces requires a non-static HTML) and render script tags that look something like this:
 
 ```js
 <script nonce="<%= nonce %>">
