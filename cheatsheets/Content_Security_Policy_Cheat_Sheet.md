@@ -12,6 +12,7 @@ The increase in XSS (Cross-Site Scripting), clickjacking, and cross-site leak vu
 CSP defends against XSS attacks in the following ways: 
 
 #### 1. Restricting Inline Scripts
+
 By preventing the page from executing inline scripts, attacks like injecting 
 ```html
 <script>alert("XSS)</script>
@@ -19,6 +20,7 @@ By preventing the page from executing inline scripts, attacks like injecting
  will not work.
 
 #### 2. Restricting Remote Scripts
+
 By preventing the page from loading scripts from arbitrary servers, attacks like injecting 
 ```html
 <script src="https://evil.com/hacked.js"></script>
@@ -26,6 +28,7 @@ By preventing the page from loading scripts from arbitrary servers, attacks like
 will not work.
 
 #### 3. Restricting Unsafe Javascript
+
 By preventing the page from executing text-to-JavaScript functions like `eval`, the website will be safe from vulnerabilities like the this: 
 ```js
 // A Simple Calculator
@@ -36,6 +39,7 @@ console.log(`The sum is: ${sum}`);
 ```
 
 #### 4. Restricting Form submissions
+
 By restricting where HTML forms on your website can submit their data, injecting phishing forms won't work either.
 
 ```html
@@ -52,9 +56,11 @@ By restricting where HTML forms on your website can submit their data, injecting
 ```
 
 #### 5. Restricting Objects
+
 And by restricting the HTML [object](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/object) tag, it also won't be possible for an attacker to inject malicious flash/Java/other legacy executables on the page.
 
 ### Defense against framing attacks
+
 Attacks like clickjacking and some variants of browser side-channel attacks (xs-leaks) require a malicious website to load the target website in a frame.
 
 Historically the `X-Frame-Options` header has been used for this, but it has been obsoleted by the `frame-ancestors` CSP directive.
@@ -66,10 +72,12 @@ A strong CSP provides an effective second layer of protection against various ty
 Even on a fully static website, which does not accept any user input, a CSP can be used to enforce the use of [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity). This can help prevent malicious code from being loaded on the website if one of the third-party sites hosting JavaScript files (such as analytics scripts) is compromised.
 
 ## CSP is not a substitute for secure development
+
 CSP **should not** be relied upon as the only defensive mechanism against XSS. You must still follow good development practices such as the ones described in [Cross-Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), and then deploy CSP on top of that as a bonus security layer.
 
 
 ## Policy Delivery
+
 You can deliver a Content Security Policy to your website in three ways.
 
 ### 1. Content-Security-Policy Header
@@ -83,6 +91,7 @@ Using a header is the preferred way and supports the full CSP feature set. Send 
 
 
 ### 2. Content-Security-Policy-Report-Only Header
+
 Using the `Content-Security-Policy-Report-Only`, you can deliver a CSP that doesn't get enforced.
 
 ```text
@@ -94,6 +103,7 @@ Still, violation reports are printed to the console and delivered to a violation
 Browsers fully support the ability of a site to use both `Content-Security-Policy` and `Content-Security-Policy-Report-Only` together, without any issues. This pattern can be used for example to run a strict `Report-Only` policy (to get many violation reports), while having a looser enforced policy (to avoid breaking legitimate site functionality).
 
 ### 3. Content-Security-Policy Meta Tag
+
 Sometimes you cannot use the Content-Security-Policy header if you are, e.g., Deploying your HTML files in a CDN where the headers are out of your control.
 
 In this case, you can still use CSP by specifying a `http-equiv` meta tag in the HTML markup, like so: 
@@ -194,6 +204,7 @@ In order to ensure backward compatibility, use the 2 directives in conjunction. 
 To better understand how the directive sources work, check out the [source lists from w3c](https://w3c.github.io/webappsec-csp/#framework-directive-source-list).
 
 ### Hashes
+
 When inline scripts are required, the `script-src 'hash_algo-hash'` is one option for allowing only specific scripts to execute.
 
 ```text
@@ -207,9 +218,11 @@ To get the hash, look at Google Chrome developer tools for violations like this:
 You can also use this [hash generator](https://report-uri.com/home/hash). This is a great [example](https://csp.withgoogle.com/docs/faq.html#static-content) of using hashes.
 
 #### Note
+
 Using hashes is generally not a very good approach. If you change *anything* inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.
 
 ### Nonces
+
 Nonces are unique one-time-use random values that you generate for each HTTP response, and add to the Content-Security-Policy header, like so: 
 
 ```js
@@ -226,9 +239,11 @@ You would then pass this nonce to your view (using nonces requires a non-static 
 ```
 
 #### Warning
+
 **Don't** create a middleware that replaces all script tags with "script nonce=..." because attacker-injected scripts will then get the nonces as well. You need an actual HTML templating engine to use nonces.
 
 ### strict-dynamic
+
 The `strict-dynamic` directive can be used in combination with either, hashes or nonces.
 
 If the script block is creating additional DOM elements and executing JS inside of them, `strict-dynamic` tells the browser to trust those elements.
