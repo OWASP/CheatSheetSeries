@@ -18,7 +18,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html">
       
       <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.3">
     
     
       
@@ -26,7 +26,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a3f8f96a.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.1655a90d.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.7fa14f5b.min.css">
@@ -274,19 +274,18 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
       
-      <label class="md-nav__link" for="nav-5">
+      <label class="md-nav__link" for="__nav_5">
         Cheatsheets
         <span class="md-nav__icon md-icon"></span>
       </label>
       <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
-        <label class="md-nav__title" for="nav-5">
+        <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           Cheatsheets
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
           
             
   
@@ -1316,19 +1315,19 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
                 
                 <h1 id="authorization-testing-automation">Authorization Testing Automation<a class="headerlink" href="#authorization-testing-automation" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Authorizations definition and implementation is one of the important protection measure of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to go live, the most significant number of issues related to authorization came in the maintenance lifetime of the application.</p>
-<p>This situation is often explained by the fact that features are added/modified and no review of the authorizations was performed on the application before the publishing of the new release, for cost or time issue reason.</p>
+<p>Authorizations definition and implementation is one of the important protection measures of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to going live, the most significant number of issues related to authorization come in the maintenance lifetime of the application.</p>
+<p>This situation is often explained by the fact that features are added/modified and no review of the authorizations is performed on the application before the publishing of the new release, for cost or time issue reason.</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>In order to try to address this situation, it's can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations definition.</p>
-<p>An authorization is often composed by 2 elements (also named dimensions): The <strong>Feature</strong> and the <strong>Logical Role</strong> that can access it (sometime a third dimension named <strong>Data</strong> is added in order to define a access that include a filtering at business data level).</p>
-<p>The representation of the different combinations of these 2 dimensions is often named an <strong>Authorization matrix</strong> and is often formalized in an Microsoft Excel file.</p>
+<p>In order to try to address this situation, it can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations definition.</p>
+<p>An authorization is often composed by 2 elements (also named dimensions): The <strong>Feature</strong> and the <strong>Logical Role</strong> that can access it (sometime a third dimension named <strong>Data</strong> is added in order to define an access that includes a filtering at business data level).</p>
+<p>The representation of the different combinations of these 2 dimensions is often named an <strong>Authorization matrix</strong> and is often formalized in a spreadsheet.</p>
 <p>During a test of an authorization, a <strong>Logical Role</strong> is also called a <strong>Point Of View</strong>.</p>
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
-<p>This article describe a proposition of implementation in order to automate the tests of an <em>authorization matrix</em>.</p>
-<p>This article use the assumption that 2 dimensions are used to represents an authorization for the technical proposition described and take as example a application exposing REST services.</p>
+<p>This article describes a proposition of implementation in order to automate the tests of an <em>authorization matrix</em>.</p>
+<p>This article assumes that 2 dimensions are used to represent an authorization for the technical proposition described and takes an application exposing REST services as an example.</p>
 <p>The objective is to provide starting ideas/hints in order to create a tailored way of testing of the authorization matrix for the target application.</p>
 <h2 id="proposition">Proposition<a class="headerlink" href="#proposition" title="Permanent link">&para;</a></h2>
-<p>In order to achieve the full automation of the evaluation of the <em>authorization matrix</em>, the following actions has been performed:</p>
+<p>In order to achieve the full automation of the evaluation of the <em>authorization matrix</em>, the following actions have been performed:</p>
 <ol>
 <li>
 <p>Formalize the authorization matrix in a pivot format file allowing:</p>
@@ -1336,14 +1335,14 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <li>The processing by a program in a easy way.</li>
 <li>To be read and updated by a human for the follow-up of the authorization combinations.</li>
 <li>Hierarchy in the information in order to easily materialize the different combinations.</li>
-<li>The maximum possible of independence from the technology and design used to implements the application exposing the features.</li>
+<li>The maximum possible of independence from the technology and design used to implement the application exposing the features.</li>
 </ol>
 </li>
 <li>
 <p>Create a set of integration tests that fully use the authorization matrix pivot file as input source in order to evaluate the different combinations with:</p>
 <ol>
 <li>The minimum possible of maintenance when the authorization matrix pivot file is updated.</li>
-<li>A clear indication, in case of failed test, of the source authorization combination that do not respect the authorization matrix.</li>
+<li>A clear indication, in case of failed test, of the source authorization combination that does not respect the authorization matrix.</li>
 </ol>
 </li>
 </ol>
@@ -1351,25 +1350,25 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <p>The XML format has been used to formalize the authorization matrix.</p>
 <p>The XML structure contains 3 main sections:</p>
 <ul>
-<li>Node <strong>roles</strong>: This node describe the possible logical roles used in the system, is used to provide a list and the explanation of the different roles (authorization level).</li>
-<li>Node <strong>services</strong>: This node list and describe the available services exposed by the system and the associated logical role(s) that can call them.</li>
-<li>Node <strong>services-testing</strong>: This node provide a test payload for each service if the service use input data other than coming from URL or path.</li>
+<li>Node <strong>roles</strong>: This node describes the possible logical roles used in the system, is used to provide a list and the explanation of the different roles (authorization level).</li>
+<li>Node <strong>services</strong>: This node lists and describes the available services exposed by the system and the associated logical role(s) that can call them.</li>
+<li>Node <strong>services-testing</strong>: This node provides a test payload for each service if the service uses input data other than the one coming from URL or path.</li>
 </ul>
-<p>This is an example of the XML used to represents the authorization:</p>
+<p>This is an example of the XML used to represent the authorization:</p>
 <blockquote>
 <p>Placeholders (values between {}) are used to mark location where test value must be placed by the integration tests if needed</p>
 </blockquote>
 <div class="codehilite"><pre><span></span><code>  <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
   <span class="c">&lt;!--</span>
-<span class="c">      This file materialize the authorization matrix for the different</span>
+<span class="c">      This file materializes the authorization matrix for the different</span>
 <span class="c">      services exposed by the system.</span>
 
-<span class="c">      It will be used by the tests as a input sources for the different tests cases:</span>
-<span class="c">      1) Evaluate legitimate access and is correct implementation</span>
+<span class="c">      It will be used by the tests as a input source for the different tests cases:</span>
+<span class="c">      1) Evaluate legitimate access and its correct implementation</span>
 <span class="c">      2) Identify not legitimate access (authorization definition issue</span>
 <span class="c">      on service implementation)</span>
 
-<span class="c">      The &quot;name&quot; attribute is used for identify uniquely a SERVICE or a ROLE.</span>
+<span class="c">      The &quot;name&quot; attribute is used to uniquely identify a SERVICE or a ROLE.</span>
 <span class="c">  --&gt;</span>
   <span class="nt">&lt;authorization-matrix&gt;</span>
 
@@ -1380,9 +1379,9 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
           <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ANONYMOUS&quot;</span>
           <span class="na">description=</span><span class="s">&quot;Indicate that no authorization is needed&quot;</span><span class="nt">/&gt;</span>
           <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;BASIC&quot;</span>
-          <span class="na">description=</span><span class="s">&quot;Role affected to a standard user (lowest access right just above anonymous)&quot;</span><span class="nt">/&gt;</span>
+          <span class="na">description=</span><span class="s">&quot;Role affecting a standard user (lowest access right just above anonymous)&quot;</span><span class="nt">/&gt;</span>
           <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span>
-          <span class="na">description=</span><span class="s">&quot;Role affected to a administrator user (highest access right)&quot;</span><span class="nt">/&gt;</span>
+          <span class="na">description=</span><span class="s">&quot;Role affecting an administrator user (highest access right)&quot;</span><span class="nt">/&gt;</span>
       <span class="nt">&lt;/roles&gt;</span>
 
       <span class="c">&lt;!-- List and describe the available services exposed by the system and the associated</span>
@@ -1434,8 +1433,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 
 <h3 id="integration-tests">Integration tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h3>
 <p>Integration tests are implemented using a maximum of factorized code and one test case by <strong>Point Of View (POV)</strong> has been created in order to group the verifications by profile of access level (logical role) and facilitate the rendering/identification of the errors.</p>
-<p>Parsing, object mapping and access to the authorization matrix information has been implemented using XML marshalling/unmarshalling built-in features provided by the technology used to implements the tests (JAXB here) in order to limit the code to the one in charge of performing the tests.</p>
-<p>This the implementation of the integration tests case class:</p>
+<p>Parsing, object mapping and access to the authorization matrix information has been implemented using XML marshalling/unmarshalling built-in features provided by the technology used to implement the tests (JAXB here) in order to limit the code to the one in charge of performing the tests.</p>
+<p>This is the implementation of the integration tests case class:</p>
 <div class="codehilite"><pre><span></span><code>  <span class="kn">import</span> <span class="nn">org.owasp.pocauthztesting.enumeration.SecurityRole</span><span class="p">;</span>
   <span class="kn">import</span> <span class="nn">org.owasp.pocauthztesting.service.AuthService</span><span class="p">;</span>
   <span class="kn">import</span> <span class="nn">org.owasp.pocauthztesting.vo.AuthorizationMatrix</span><span class="p">;</span>
@@ -1676,7 +1675,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
   <span class="p">}</span>
 </code></pre></div>
 
-<p>In case of detection of a authorization issue(s) the output is the following:</p>
+<p>In case of detectiing an authorization issue(s) the output is the following:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">testAccessUsingAnonymousUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span>
 <span class="n">Time</span> <span class="n">elapsed</span><span class="p">:</span> <span class="mf">1.009</span> <span class="n">s</span>  <span class="err">###</span> <span class="n">FAILURE</span>
 <span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">AssertionError</span><span class="p">:</span>
@@ -1877,10 +1876,10 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.926459b3.min.js"></script>
+      <script src="../assets/javascripts/bundle.ca5457b8.min.js"></script>
       
     
   </body>
