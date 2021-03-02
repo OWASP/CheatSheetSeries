@@ -81,12 +81,12 @@ Even on a fully static website, which does not accept any user input, a CSP can 
 
 CSP **should not** be relied upon as the only defensive mechanism against XSS. You must still follow good development practices such as the ones described in [Cross-Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), and then deploy CSP on top of that as a bonus security layer.
 
-
 ## Policy Delivery
 
 You can deliver a Content Security Policy to your website in three ways.
 
 ### 1. Content-Security-Policy Header
+
 Send a Content-Security-Policy HTTP response header from your web server.
 
 ```text
@@ -94,7 +94,6 @@ Content-Security-Policy: ...
 ```
 
 Using a header is the preferred way and supports the full CSP feature set. Send it in all HTTP responses, not just the index page.
-
 
 ### 2. Content-Security-Policy-Report-Only Header
 
@@ -112,14 +111,13 @@ Browsers fully support the ability of a site to use both `Content-Security-Polic
 
 Sometimes you cannot use the Content-Security-Policy header if you are, e.g., Deploying your HTML files in a CDN where the headers are out of your control.
 
-In this case, you can still use CSP by specifying a `http-equiv` meta tag in the HTML markup, like so: 
+In this case, you can still use CSP by specifying a `http-equiv` meta tag in the HTML markup, like so:
 
 ```html
 <meta http-equiv="Content-Security-Policy" content="...">
 ```
 
 Almost everything is still supported, including full XSS defenses. However, you will not be able to use [framing protections](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors), [sandboxing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/sandbox), or a [CSP violation logging endpoint](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to).
-
 
 ### HTTP Headers
 
@@ -128,7 +126,6 @@ The following are headers for CSP.
 - `Content-Security-Policy` : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+
 - `Content-Security-Policy-Report-Only` : W3C Spec standard header. Supported by Firefox 23+, Chrome 25+ and Opera 19+, whereby the policy is non-blocking ("fail open") and a report is sent to the URL designated by the `report-uri` (or newer `report-to`) directive. This is often used as a precursor to utilizing CSP in blocking mode ("fail closed")
 - `DO NOT` use X-Content-Security-Policy or X-WebKit-CSP. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.
-
 
 ## CSP Directives
 
@@ -217,7 +214,7 @@ When inline scripts are required, the `script-src 'hash_algo-hash'` is one optio
 Content-Security-Policy: script-src 'sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWaFjzFNPg='
 ```
 
-To get the hash, look at Google Chrome developer tools for violations like this: 
+To get the hash, look at Google Chrome developer tools for violations like this:
 
 > ❌ Refused to execute inline script because it violates the following Content Security Policy directive: "..." Either the 'unsafe-inline' keyword, a hash (**'sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWaFjzFNPg='**), or a nonce...
 
@@ -229,7 +226,7 @@ Using hashes is generally not a very good approach. If you change *anything* ins
 
 ### Nonces
 
-Nonces are unique one-time-use random values that you generate for each HTTP response, and add to the Content-Security-Policy header, like so: 
+Nonces are unique one-time-use random values that you generate for each HTTP response, and add to the Content-Security-Policy header, like so:
 
 ```js
 const nonce = uuid.v4();
@@ -365,4 +362,3 @@ document.getElementById("button1").addEventListener('click', doSomething);
 - [CSP A Successful Mess Between Hardening And Mitigation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation)
 - [CSP Scanner](https://cspscanner.com/)
 - [Content Security Policy Guide on AppSec Monkey](https://www.appsecmonkey.com/blog/content-security-policy-header/)
-
