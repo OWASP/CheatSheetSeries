@@ -294,7 +294,7 @@ var x = "<%= Encode.forJavaScript(untrustedData) %>";
 
 ### GUIDELINE \#3 - Use document.createElement("..."), element.setAttribute("...","value"), element.appendChild(...) and similar to build dynamic interfaces
 
-`document.createElement("...")`, `element.setAttribute("...","value")`, `element.appendChild(...)` and similar are save ways to build dynamic interfaces.
+`document.createElement("...")`, `element.setAttribute("...","value")`, `element.appendChild(...)` and similar are safe ways to build dynamic interfaces.
 
 Please note, `element.setAttribute` is only safe for a limited number of attributes.
 
