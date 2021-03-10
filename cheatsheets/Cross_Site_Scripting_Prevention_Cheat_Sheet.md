@@ -31,7 +31,7 @@ tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or 
 
 Writing these encoders is not tremendously difficult, but there are quite a few hidden pitfalls. For example, you might be tempted to use some of the escaping shortcuts like `\"` in JavaScript. However, these values are dangerous and may be misinterpreted by the nested parsers in the browser. You might also forget to escape the escape character, which attackers can use to neutralize your attempts to be safe. OWASP recommends using a security-focused encoding library to make sure these rules are properly implemented.
 
-Microsoft provides an encoding library named the [Microsoft Anti-Cross Site Scripting Library](https://archive.codeplex.com/?p=wpl) for the .NET platform and ASP.NET Framework has built-in [ValidateRequest](https://msdn.microsoft.com/en-us/library/ms972969.aspx#securitybarriers_topic6) function that provides **limited** sanitization.
+Microsoft provides a [System.Web.Security.AntiXss.AntiXssEncoder Class](https://docs.microsoft.com/fr-fr/dotnet/api/system.web.security.antixss.antixssencoder) for .NET 4.5 to 4.8, and ASP.Net Core has [a few (limited) built-in features](https://docs.microsoft.com/en-us/aspnet/core/security/cross-site-scripting). ASP.NET 2.0 Framework has built-in [ValidateRequest](https://msdn.microsoft.com/en-us/library/ms972969.aspx#securitybarriers_topic6) function that provides **limited** sanitization.
 
 The [OWASP Java Encoder Project](https://owasp.org/www-project-java-encoder/) provides a high-performance encoding library for Java.
 
