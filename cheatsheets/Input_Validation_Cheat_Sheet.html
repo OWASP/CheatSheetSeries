@@ -696,8 +696,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#whitelisting-vs-blacklisting" class="md-nav__link">
-    Whitelisting vs blacklisting
+  <a href="#allowlist-vs-blocklist" class="md-nav__link">
+    Allowlist vs blocklist
   </a>
   
 </li>
@@ -722,8 +722,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#white-list-regular-expression-examples" class="md-nav__link">
-    White List Regular Expression Examples
+  <a href="#allow-list-regular-expression-examples" class="md-nav__link">
+    Allow List Regular Expression Examples
   </a>
   
 </li>
@@ -1380,8 +1380,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#whitelisting-vs-blacklisting" class="md-nav__link">
-    Whitelisting vs blacklisting
+  <a href="#allowlist-vs-blocklist" class="md-nav__link">
+    Allowlist vs blocklist
   </a>
   
 </li>
@@ -1406,8 +1406,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#white-list-regular-expression-examples" class="md-nav__link">
-    White List Regular Expression Examples
+  <a href="#allow-list-regular-expression-examples" class="md-nav__link">
+    Allow List Regular Expression Examples
   </a>
   
 </li>
@@ -1563,10 +1563,10 @@
 <li>Array of allowed values for small sets of string parameters (e.g. days of week).</li>
 <li>Regular expressions for any other structured data covering the whole input string <code>(^...$)</code> and <strong>not</strong> using "any character" wildcard (such as <code>.</code> or <code>\S</code>)</li>
 </ul>
-<h3 id="whitelisting-vs-blacklisting">Whitelisting vs blacklisting<a class="headerlink" href="#whitelisting-vs-blacklisting" title="Permanent link">&para;</a></h3>
+<h3 id="allowlist-vs-blocklist">Allowlist vs blocklist<a class="headerlink" href="#allowlist-vs-blocklist" title="Permanent link">&para;</a></h3>
 <p>It is a common mistake to use black list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe <code>'</code> character, the string <code>1=1</code>, or the <code>&lt;script&gt;</code> tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.</p>
 <p>Plus, such filters frequently prevent authorized input, like <code>O'Brian</code>, where the <code>'</code> character is fully legitimate. For more information on XSS filter evasion please see the <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">this wiki page</a>.</p>
-<p>White list validation is appropriate for all input fields provided by the user. White list validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.</p>
+<p>Allow list validation is appropriate for all input fields provided by the user. Allow list validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.</p>
 <p>If it's well structured data, like dates, social security numbers, zip codes, email addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.</p>
 <p>If the input field comes from a fixed set of options, like a drop down list or radio buttons, then the input needs to match exactly one of the values offered to the user in the first place.</p>
 <h3 id="validating-free-form-unicode-text">Validating free-form Unicode text<a class="headerlink" href="#validating-free-form-unicode-text" title="Permanent link">&para;</a></h3>
@@ -1591,7 +1591,7 @@
 <li>Define the allowed set of characters to be accepted.</li>
 <li>Define a minimum and maximum length for the data (e.g. <code>{1,25}</code> ).</li>
 </ul>
-<h2 id="white-list-regular-expression-examples">White List Regular Expression Examples<a class="headerlink" href="#white-list-regular-expression-examples" title="Permanent link">&para;</a></h2>
+<h2 id="allow-list-regular-expression-examples">Allow List Regular Expression Examples<a class="headerlink" href="#allow-list-regular-expression-examples" title="Permanent link">&para;</a></h2>
 <p>Validating a U.S. Zip Code (5 digits plus optional -4)</p>
 <div class="codehilite"><pre><span></span><code>^\d{5}(-\d{4})?$
 </code></pre></div>
@@ -1620,7 +1620,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 <span class="p">}</span>
 </code></pre></div>
 
-<p>Some white list validators have also been predefined in various open source packages that you can leverage. For example:</p>
+<p>Some Allow list validators have also been predefined in various open source packages that you can leverage. For example:</p>
 <ul>
 <li><a href="http://commons.apache.org/proper/commons-validator/">Apache Commons Validator</a></li>
 </ul>
