@@ -95,9 +95,9 @@ Most tools used for these types of attacks will make direct POST requests to the
 
 Please note that blocking visitors who have JavaScript disabled will reduce the accessibility of the website, especially to visitors who use screen readers. In certain jurisdictions this may be in breach of equalities legislation.
 
-### Identifying Leaked Password
+### Identifying Leaked Passwords
 
-When a user sets a new password on the application, as well as checking it against a list of known weak passwords, it can also be checked against passwords that have previously been breached. The most well known public service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host a copy the application yourself, or use the [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
+When a user sets a new password on the application, as well as checking it against a list of known weak passwords, it can also be checked against passwords that have previously been breached. The most well known public service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host a copy of the application yourself, or use the [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
 
 In order to protect the value of the source password being searched for, Pwned Passwords implements a [k-Anonymity model](https://en.wikipedia.org/wiki/K-anonymity) that allows a password to be searched for by partial hash. This allows the first 5 characters of a SHA-1 password hash to be passed to the API.
 
