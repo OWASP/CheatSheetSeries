@@ -1477,13 +1477,13 @@
 <p>Schema validation enforces constraints and syntax defined by the schema.</p>
 <p><strong>Rule</strong>: Web services must validate <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> payloads against their associated XML schema definition (<a href="https://www.w3schools.com/xml/schema_intro.asp">XSD</a>).</p>
 <p><strong>Rule</strong>: The <a href="https://www.w3schools.com/xml/schema_intro.asp">XSD</a> defined for a <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> web service should, at a minimum, define the maximum length and character set of every parameter allowed to pass into and out of the web service.</p>
-<p><strong>Rule</strong>: The <a href="https://www.w3schools.com/xml/schema_intro.asp">XSD</a> defined for a <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> web service should define strong (ideally white list) validation patterns for all fixed format parameters (e.g., zip codes, phone numbers, list values, etc.).</p>
+<p><strong>Rule</strong>: The <a href="https://www.w3schools.com/xml/schema_intro.asp">XSD</a> defined for a <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> web service should define strong (ideally allow-list) validation patterns for all fixed format parameters (e.g., zip codes, phone numbers, list values, etc.).</p>
 <h2 id="content-validation">Content Validation<a class="headerlink" href="#content-validation" title="Permanent link">&para;</a></h2>
 <p><strong>Rule</strong>: Like any web application, web services need to validate input before consuming it. Content validation for XML input should include:</p>
 <ul>
 <li>Validation against malformed XML entities.</li>
 <li>Validation against <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">XML Bomb attacks</a>.</li>
-<li>Validating inputs using a strong white list.</li>
+<li>Validating inputs using a strong allow list.</li>
 <li>Validating against <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing">external entity attacks</a>.</li>
 </ul>
 <h2 id="output-encoding">Output Encoding<a class="headerlink" href="#output-encoding" title="Permanent link">&para;</a></h2>

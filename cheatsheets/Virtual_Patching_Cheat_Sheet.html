@@ -1177,16 +1177,16 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#positive-security-whitelist-virtual-patches-recommended-solution" class="md-nav__link">
-    Positive Security (Whitelist) Virtual Patches (Recommended Solution)
+  <a href="#positive-security-allow-list-virtual-patches-recommended-solution" class="md-nav__link">
+    Positive Security (Allow List) Virtual Patches (Recommended Solution)
   </a>
   
-    <nav class="md-nav" aria-label="Positive Security (Whitelist) Virtual Patches (Recommended Solution)">
+    <nav class="md-nav" aria-label="Positive Security (Allow List) Virtual Patches (Recommended Solution)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-whitelist-modsecurity-virtual-patch" class="md-nav__link">
-    Example Whitelist ModSecurity Virtual Patch
+  <a href="#example-allow-list-modsecurity-virtual-patch" class="md-nav__link">
+    Example Allow List ModSecurity Virtual Patch
   </a>
   
 </li>
@@ -1197,16 +1197,16 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#negative-security-blacklist-virtual-patches" class="md-nav__link">
-    Negative Security (Blacklist) Virtual Patches
+  <a href="#negative-security-block-list-virtual-patches" class="md-nav__link">
+    Negative Security (Block List) Virtual Patches
   </a>
   
-    <nav class="md-nav" aria-label="Negative Security (Blacklist) Virtual Patches">
+    <nav class="md-nav" aria-label="Negative Security (Block List) Virtual Patches">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-blacklist-modsecurity-virtual-patch" class="md-nav__link">
-    Example Blacklist ModSecurity Virtual Patch
+  <a href="#example-block-list-modsecurity-virtual-patch" class="md-nav__link">
+    Example Block List ModSecurity Virtual Patch
   </a>
   
 </li>
@@ -1486,16 +1486,16 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#positive-security-whitelist-virtual-patches-recommended-solution" class="md-nav__link">
-    Positive Security (Whitelist) Virtual Patches (Recommended Solution)
+  <a href="#positive-security-allow-list-virtual-patches-recommended-solution" class="md-nav__link">
+    Positive Security (Allow List) Virtual Patches (Recommended Solution)
   </a>
   
-    <nav class="md-nav" aria-label="Positive Security (Whitelist) Virtual Patches (Recommended Solution)">
+    <nav class="md-nav" aria-label="Positive Security (Allow List) Virtual Patches (Recommended Solution)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-whitelist-modsecurity-virtual-patch" class="md-nav__link">
-    Example Whitelist ModSecurity Virtual Patch
+  <a href="#example-allow-list-modsecurity-virtual-patch" class="md-nav__link">
+    Example Allow List ModSecurity Virtual Patch
   </a>
   
 </li>
@@ -1506,16 +1506,16 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#negative-security-blacklist-virtual-patches" class="md-nav__link">
-    Negative Security (Blacklist) Virtual Patches
+  <a href="#negative-security-block-list-virtual-patches" class="md-nav__link">
+    Negative Security (Block List) Virtual Patches
   </a>
   
-    <nav class="md-nav" aria-label="Negative Security (Blacklist) Virtual Patches">
+    <nav class="md-nav" aria-label="Negative Security (Block List) Virtual Patches">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#example-blacklist-modsecurity-virtual-patch" class="md-nav__link">
-    Example Blacklist ModSecurity Virtual Patch
+  <a href="#example-block-list-modsecurity-virtual-patch" class="md-nav__link">
+    Example Block List ModSecurity Virtual Patch
   </a>
   
 </li>
@@ -1703,10 +1703,10 @@ reqID Parameter prone to SQL Injection.
 </ol>
 <p>Care should be taken to attempt to minimize either of these two rules. It may not be possible to adhere 100% to each of these goals but remember that virtual patching is about <strong>Risk Reduction</strong>. It should be understood by business owners that while you are gaining the advantage of shortening the Time-to-Fix metric, you may not be implementing a complete fix for the flaw.</p>
 <h3 id="manual-virtual-patch-creation">Manual Virtual Patch Creation<a class="headerlink" href="#manual-virtual-patch-creation" title="Permanent link">&para;</a></h3>
-<h4 id="positive-security-whitelist-virtual-patches-recommended-solution">Positive Security (Whitelist) Virtual Patches (<strong>Recommended Solution</strong>)<a class="headerlink" href="#positive-security-whitelist-virtual-patches-recommended-solution" title="Permanent link">&para;</a></h4>
-<p>Positive security model (whitelist) is a comprehensive security mechanism that provides an independent input validation envelope to an application. The model specifies the characteristics of valid input (character set, length, etc…) and denies anything that does not conform. By defining rules for every parameter in every page in the application the application is protected by an additional security envelop independent from its code.</p>
-<h5 id="example-whitelist-modsecurity-virtual-patch">Example Whitelist ModSecurity Virtual Patch<a class="headerlink" href="#example-whitelist-modsecurity-virtual-patch" title="Permanent link">&para;</a></h5>
-<p>In order to create a whitelist virtual patch, you must be able to verify what the normal, expected input values are. If you have implemented proper audit logging as part of the Preparation Phase, then you should be able to review audit logs to identify the format of expected input types. In this case, the <code>reqID</code> parameter is supposed to only hold integer characters so we can use this virtual patch:</p>
+<h4 id="positive-security-allow-list-virtual-patches-recommended-solution">Positive Security (Allow List) Virtual Patches (<strong>Recommended Solution</strong>)<a class="headerlink" href="#positive-security-allow-list-virtual-patches-recommended-solution" title="Permanent link">&para;</a></h4>
+<p>Positive security model (allow list) is a comprehensive security mechanism that provides an independent input validation envelope to an application. The model specifies the characteristics of valid input (character set, length, etc…) and denies anything that does not conform. By defining rules for every parameter in every page in the application the application is protected by an additional security envelop independent from its code.</p>
+<h5 id="example-allow-list-modsecurity-virtual-patch">Example Allow List ModSecurity Virtual Patch<a class="headerlink" href="#example-allow-list-modsecurity-virtual-patch" title="Permanent link">&para;</a></h5>
+<p>In order to create an allow-list virtual patch, you must be able to verify what the normal, expected input values are. If you have implemented proper audit logging as part of the Preparation Phase, then you should be able to review audit logs to identify the format of expected input types. In this case, the <code>reqID</code> parameter is supposed to only hold integer characters so we can use this virtual patch:</p>
 <div class="codehilite"><pre><span></span><code>##
 ## Verify we only receive 1 parameter called &quot;reqID&quot;
 ##
@@ -1725,9 +1725,9 @@ SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scri
 <li><strong>Note</strong> - You should make sure to assign rule IDs properly and track them in the bug tracking system.</li>
 <li><strong>Caution</strong>: There are numerous evasion vectors when creating virtual patches. Please consult the <a href="https://owasp.org/www-community/Virtual_Patching_Best_Practices">OWASP Best Practices: Virtual Patching document</a> for a more thorough discussion on countering evasion methods.</li>
 </ul>
-<h4 id="negative-security-blacklist-virtual-patches">Negative Security (Blacklist) Virtual Patches<a class="headerlink" href="#negative-security-blacklist-virtual-patches" title="Permanent link">&para;</a></h4>
-<p>A negative security model (blacklist) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.</p>
-<h5 id="example-blacklist-modsecurity-virtual-patch">Example Blacklist ModSecurity Virtual Patch<a class="headerlink" href="#example-blacklist-modsecurity-virtual-patch" title="Permanent link">&para;</a></h5>
+<h4 id="negative-security-block-list-virtual-patches">Negative Security (Block List) Virtual Patches<a class="headerlink" href="#negative-security-block-list-virtual-patches" title="Permanent link">&para;</a></h4>
+<p>A negative security model (block list) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.</p>
+<h5 id="example-block-list-modsecurity-virtual-patch">Example Block List ModSecurity Virtual Patch<a class="headerlink" href="#example-block-list-modsecurity-virtual-patch" title="Permanent link">&para;</a></h5>
 <p>Here is the example <a href="https://packetstormsecurity.com/files/119217/WordPress-Shopping-Cart-8.1.14-Shell-Upload-SQL-Injection.html">PoC code</a> that was supplied by the public advisory:</p>
 <div class="codehilite"><pre><span></span><code>http://localhost/wordpress/wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php?reqID=1&#39; or 1=&#39;1
 </code></pre></div>

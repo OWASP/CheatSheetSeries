@@ -1362,7 +1362,7 @@
 <p>This article is focused on providing clear and simple examples for the cipher string. They are based on different scenarios where you use the Transport Layer Security (TLS) protocol.</p>
 <h2 id="recommendations-for-a-cipher-string">Recommendations for a cipher string<a class="headerlink" href="#recommendations-for-a-cipher-string" title="Permanent link">&para;</a></h2>
 <h3 id="scenarios">Scenarios<a class="headerlink" href="#scenarios" title="Permanent link">&para;</a></h3>
-<p>The cipher strings are based on the recommendation to setup your policy to get a whitelist for your ciphers as described in the <em><a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)</a></em>. The latest and strongest ciphers as well as additional improvements are solely available with TLSv1.3, older protocols don't support them. Please find enclosed all supported protocols by the scenario.</p>
+<p>The cipher strings are based on the recommendation to setup your policy to get an allow list for your ciphers as described in the <em><a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet (Rule - Only Support Strong Cryptographic Ciphers)</a></em>. The latest and strongest ciphers as well as additional improvements are solely available with TLSv1.3, older protocols don't support them. Please find enclosed all supported protocols by the scenario.</p>
 <p>Finally we have compiled the oldest versions of different client agents that are still compatible with a cipher string. We provide this information according to the ciphers and protocols supported by browsers, libraries, bots on the basis of <em><a href="https://www.ssllabs.com/ssltest/clients.html">ssllabs's list of user agent capabilities</a></em> and tests on our own.</p>
 <p>We have checked this thoroughly, but please accept that all data is provided without any warranty of any kind. The list of the oldest supported clients assumes that the server supports all ciphers by the scenario (Please contact the authors if you find any errors or if you can provide additional data).</p>
 <p>The recommended cipher strings are based on different scenarios:</p>
@@ -1637,7 +1637,7 @@ SSLCipherSuite &#39;DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RS
 
 <p><strong>Remarks:</strong></p>
 <ul>
-<li>The cipher string is compiled as a whitelist of individual ciphers to get a better compatibility even with old versions of OpenSSL.</li>
+<li>The cipher string is compiled as an allow list of individual ciphers to get a better compatibility even with old versions of OpenSSL.</li>
 <li>Monitor the performance of your server, e.g. the TLS handshake with DHE hinders the CPU about 2.4 times more than ECDHE, cf. <em><a href="http://vincent.bernat.im/en/blog/2011-ssl-perfect-forward-secrecy.html#some-benchmarks">Vincent Bernat, 2011</a></em>, <em><a href="https://nikmav.blogspot.com/2011/12/price-to-pay-for-perfect-forward.html">nmav's Blog, 2011</a></em>.</li>
 <li>Verify your cipher string using your crypto library, e.g. openssl using cipher string 'B':</li>
 </ul>
