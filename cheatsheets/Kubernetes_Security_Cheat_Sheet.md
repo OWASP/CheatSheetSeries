@@ -238,7 +238,7 @@ Learn more about namespaces at <https://kubernetes.io/docs/concepts/overview/wor
 Prevent unapproved images from being used with the admission controller ImagePolicyWebhook to reject pods that use unapproved images including:
 
 - Images that haven’t been scanned recently
-- Images that use a base image that’s not whitelisted
+- Images that use a base image that’s not explicitly allowed
 - Images from insecure registries
 Learn more about webhook at <https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook>
 
