@@ -1894,7 +1894,7 @@
 <ul>
 <li>Use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlcommand.prepare?view=netframework-4.7.2">Parameterized SQL</a> commands for all data access, without exception.</li>
 <li>Do not use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlcommand">SqlCommand</a> with a string parameter made up of a <a href="https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca2100-review-sql-queries-for-security-vulnerabilities?view=vs-2017">concatenated SQL String</a>.</li>
-<li>List allowable values coming from the user. Use enums, <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32.tryparse#System_Int32_TryParse_System_String_System_Int32__">TryParse</a> or lookup values to assure that the data coming from the user is as expected.<ul>
+<li>Whitelist allowable values coming from the user. Use enums, <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32.tryparse#System_Int32_TryParse_System_String_System_Int32__">TryParse</a> or lookup values to assure that the data coming from the user is as expected.<ul>
 <li>Enums are still vulnerable to unexpected values because .NET only validates a successful cast to the underlying data type, integer by default. <a href="https://docs.microsoft.com/en-us/dotnet/api/system.enum.isdefined">Enum.IsDefined</a> can validate whether the input value is valid within the list of defined constants.</li>
 </ul>
 </li>
@@ -2066,7 +2066,7 @@
 <ul>
 <li>Do not disable <a href="http://www.asp.net/whitepapers/request-validation">validateRequest</a> in the <code>web.config</code> or the page setup. This value enables limited XSS protection in ASP.NET and should be left intact as it provides partial prevention of Cross Site Scripting. Complete request validation is recommended in addition to the built-in protections.</li>
 <li>The 4.5 version of the .NET Frameworks includes the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.web.security.antixss.antixssencoder?view=netframework-4.7.2">AntiXssEncoder</a> library, which has a comprehensive input encoding library for the prevention of XSS. Use it.</li>
-<li>List allowable values anytime user input is accepted.</li>
+<li>Whitelist allowable values anytime user input is accepted.</li>
 <li>Validate the URI format using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.uri.iswellformeduristring">Uri.IsWellFormedUriString</a>.</li>
 </ul>
 <h3 id="forms-authentication">Forms authentication<a class="headerlink" href="#forms-authentication" title="Permanent link">&para;</a></h3>
@@ -2121,7 +2121,7 @@
 <span class="n">process</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
 </code></pre></div>
 
-<p>DO: Use allow-list validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
+<p>DO: Use whitelist validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
 <p>e.g Validating user input using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8">IPAddress.TryParse Method</a></p>
 <div class="codehilite"><pre><span></span><code><span class="c1">//User input</span>
 <span class="kt">string</span> <span class="n">ipAddress</span> <span class="p">=</span> <span class="s">&quot;127.0.0.1&quot;</span><span class="p">;</span>
@@ -2452,7 +2452,7 @@ e.g Web.config</p>
 <p>If you are using the .NET Framework, you can find some code snippets <a href="https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks#anti-csrf-and-ajax">here</a>.</p>
 <p>More information can be found <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">here</a> for Cross-Site Request Forgery.</p>
 <h3 id="a7-cross-site-scripting-xss">A7 Cross-Site Scripting (XSS)<a class="headerlink" href="#a7-cross-site-scripting-xss" title="Permanent link">&para;</a></h3>
-<p>DO NOT: Trust any data the user sends you, prefer allow lists (always safe) over block lists</p>
+<p>DO NOT: Trust any data the user sends you, prefer white lists (always safe) over black lists</p>
 <p>You get encoding of all HTML content with MVC3, to properly encode all content whether HTML, javascript, CSS, LDAP etc use the Microsoft AntiXSS library:</p>
 <p><code>Install-Package AntiXSS</code></p>
 <p>Then set in config:</p>

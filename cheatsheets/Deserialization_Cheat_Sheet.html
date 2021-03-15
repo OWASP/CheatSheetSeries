@@ -1725,13 +1725,13 @@
 
 <p>More complete implementations of this approach have been proposed by various community members:</p>
 <ul>
-<li><a href="https://github.com/ikkisoft/SerialKiller">NibbleSec</a> - a library that allows creating lists of classes that are allowed to be deserialized</li>
+<li><a href="https://github.com/ikkisoft/SerialKiller">NibbleSec</a> - a library that allows whitelisting and blacklisting of classes that are allowed to be deserialized</li>
 <li><a href="https://www.ibm.com/developerworks/library/se-lookahead/">IBM</a> - the seminal protection, written years before the most devastating exploitation scenarios were envisioned.</li>
 <li><a href="https://commons.apache.org/proper/commons-io/javadocs/api-2.5/org/apache/commons/io/serialization/ValidatingObjectInputStream.html">Apache Commons IO classes</a></li>
 </ul>
 <h4 id="harden-all-javaioobjectinputstream-usage-with-an-agent">Harden All java.io.ObjectInputStream Usage with an Agent<a class="headerlink" href="#harden-all-javaioobjectinputstream-usage-with-an-agent" title="Permanent link">&para;</a></h4>
 <p>As mentioned above, the <code>java.io.ObjectInputStream</code> class is used to deserialize objects. It's possible to harden its behavior by subclassing it. However, if you don't own the code or can't wait for a patch, using an agent to weave in hardening to <code>java.io.ObjectInputStream</code> is the best solution.</p>
-<p>Globally changing <code>ObjectInputStream</code> is only safe for block-listing known malicious types, because it's not possible to know for all applications what the expected classes to be deserialized are. Fortunately, there are very few classes needed in the blocklist to be safe from all the known attack vectors, today.</p>
+<p>Globally changing <code>ObjectInputStream</code> is only safe for blacklisting known malicious types, because it's not possible to know for all applications what the expected classes to be deserialized are. Fortunately, there are very few classes needed in the blacklist to be safe from all the known attack vectors, today.</p>
 <p>It's inevitable that more "gadget" classes will be discovered that can be abused. However, there is an incredible amount of vulnerable software exposed today, in need of a fix. In some cases, "fixing" the vulnerability may involve re-architecting messaging systems and breaking backwards compatibility as developers move towards not accepting serialized objects.</p>
 <p>To enable these agents, simply add a new JVM parameter:</p>
 <div class="codehilite"><pre><span></span><code>-javaagent:name-of-agent.jar
@@ -1792,7 +1792,7 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<p>For <code>BinaryFormatter</code> and <code>JSON.Net</code> it is possible to create a safer form of allow-list control using a custom <code>SerializationBinder</code>.</p>
+<p>For <code>BinaryFormatter</code> and <code>JSON.Net</code> it is possible to create a safer form of white list control using a custom <code>SerializationBinder</code>.</p>
 <p>Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. <strong>A deserializer can only instantiate types that it knows about</strong>.</p>
 <p>Try to keep any code that might create potential gadgets separate from any code that has internet connectivity. As an example <code>System.Windows.Data.ObjectDataProvider</code> used in WPF applications is a known gadget that allows arbitrary method invocation. It would be risky to have this a reference to this assembly in a REST service project that deserializes untrusted data.</p>
 <h4 id="known-net-rce-gadgets">Known .NET RCE Gadgets<a class="headerlink" href="#known-net-rce-gadgets" title="Permanent link">&para;</a></h4>
