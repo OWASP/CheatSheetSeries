@@ -1484,7 +1484,7 @@
 <li><strong>Static resources hosting on a different domain</strong> will reduce the number of http requests on the web application. Images and JavaScript are typical files that are loaded from a different domain.  </li>
 </ul>
 <h3 id="rate-limiting">Rate limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h3>
-<p>Rate limiting is the process of controlling traffic rate from and to a server or component. It can be implemented on infrastructure as well as on an application level. Rate limiting can be based on (offending) IPs, on IP blacklists, on geolocation, etc.</p>
+<p>Rate limiting is the process of controlling traffic rate from and to a server or component. It can be implemented on infrastructure as well as on an application level. Rate limiting can be based on (offending) IPs, on IP block lists, on geolocation, etc.</p>
 <ul>
 <li><strong>Define a minimum ingress data rate limit</strong>, and drop all connections below that rate. Note that if the rate limit is set too low, this could impact clients. Inspect the logs to establish a baseline of genuine traffic rate. (Protection against slow HTTP attacks)</li>
 <li><strong>Define an absolute connection timeout</strong></li>
