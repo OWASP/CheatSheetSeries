@@ -62,7 +62,7 @@ Schema validation enforces constraints and syntax defined by the schema.
 
 **Rule**: The [XSD](https://www.w3schools.com/xml/schema_intro.asp) defined for a [SOAP](https://en.wikipedia.org/wiki/SOAP) web service should, at a minimum, define the maximum length and character set of every parameter allowed to pass into and out of the web service.
 
-**Rule**: The [XSD](https://www.w3schools.com/xml/schema_intro.asp) defined for a [SOAP](https://en.wikipedia.org/wiki/SOAP) web service should define strong (ideally white list) validation patterns for all fixed format parameters (e.g., zip codes, phone numbers, list values, etc.).
+**Rule**: The [XSD](https://www.w3schools.com/xml/schema_intro.asp) defined for a [SOAP](https://en.wikipedia.org/wiki/SOAP) web service should define strong (ideally allow-list) validation patterns for all fixed format parameters (e.g., zip codes, phone numbers, list values, etc.).
 
 ## Content Validation
 
@@ -70,7 +70,7 @@ Schema validation enforces constraints and syntax defined by the schema.
 
 - Validation against malformed XML entities.
 - Validation against [XML Bomb attacks](https://en.wikipedia.org/wiki/Billion_laughs_attack).
-- Validating inputs using a strong white list.
+- Validating inputs using a strong allow list.
 - Validating against [external entity attacks](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing).
 
 ## Output Encoding
