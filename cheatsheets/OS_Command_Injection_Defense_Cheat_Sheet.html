@@ -1512,10 +1512,10 @@
 <h4 id="layer-2">Layer 2<a class="headerlink" href="#layer-2" title="Permanent link">&para;</a></h4>
 <p><strong>Input validation:</strong> The values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:</p>
 <ul>
-<li>When it comes to the <strong>commands</strong> used, these must be validated against a whitelist of allowed commands.</li>
+<li>When it comes to the <strong>commands</strong> used, these must be validated against a list of allowed commands.</li>
 <li>In regards to the <strong>arguments</strong> used for these commands, they should be validated using the following options:<ul>
-<li><strong>Positive or whitelist input validation</strong>: Where are the arguments allowed explicitly defined.</li>
-<li><strong>White list Regular Expression</strong>: Where a whitelist of good, allowed characters and the maximum length of the string are defined. Ensure that metacharacters like ones specified in <code>Note A</code> and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers and does not contain metacharacters. The length is also being limited to 3-10 characters: <code>^[a-z0-9]{3,10}$</code></li>
+<li><strong>Positive or allow list input validation</strong>: Where are the arguments allowed explicitly defined.</li>
+<li><strong>Allow list Regular Expression</strong>: Where a list of good, allowed characters and the maximum length of the string are defined. Ensure that metacharacters like ones specified in <code>Note A</code> and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers and does not contain metacharacters. The length is also being limited to 3-10 characters: <code>^[a-z0-9]{3,10}$</code></li>
 </ul>
 </li>
 </ul>
