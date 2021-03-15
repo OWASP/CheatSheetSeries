@@ -84,8 +84,8 @@ In 2012, GitHub was hacked using mass assignment. A user was able to upload his 
 
 ### Solutions
 
-- Whitelist the bindable, non-sensitive fields.
-- Blacklist the non-bindable, sensitive fields.
+- Allow-list the bindable, non-sensitive fields.
+- Block-list the non-bindable, sensitive fields.
 - Use [Data Transfer Objects](https://martinfowler.com/eaaCatalog/dataTransferObject.html) (DTOs).
 
 ## General Solutions
@@ -108,7 +108,7 @@ public class UserRegistrationFormDTO {
 
 ### Spring MVC
 
-#### Whitelisting
+#### Allow-listing
 
 ```java
 @Controller
@@ -125,7 +125,7 @@ public class UserController
 
 Take a look [here](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setAllowedFields-java.lang.String...-) for the documentation.
 
-#### Blacklisting
+#### Block-listing
 
 ```java
 @Controller
@@ -144,7 +144,7 @@ Take a look [here](https://docs.spring.io/spring/docs/current/javadoc-api/org/sp
 
 ### NodeJS + Mongoose
 
-#### Whitelisting
+#### Allow-listing
 
 ```javascript
 var UserSchema = new mongoose.Schema({
@@ -166,7 +166,7 @@ var user = new User(_.pick(req.body, User.userCreateSafeFields));
 
 Take a look [here](http://underscorejs.org/#pick) for the documentation.
 
-#### Blacklisting
+#### Block-listing
 
 ```javascript
 var massAssign = require('mongoose-mass-assign');
@@ -210,7 +210,7 @@ Take a look [here](https://odetocode.com/Blogs/scott/archive/2012/03/11/complete
 
 ### PHP Laravel + Eloquent
 
-#### Whitelisting
+#### Allow-listing
 
 ```php
 <?php
@@ -232,7 +232,7 @@ class User extends Model
 
 Take a look [here](https://laravel.com/docs/5.2/eloquent#mass-assignment) for the documentation.
 
-#### Blacklisting
+#### Block-listing
 
 ```php
 <?php
