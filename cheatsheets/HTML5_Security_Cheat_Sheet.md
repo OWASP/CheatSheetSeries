@@ -24,7 +24,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 - Validate URLs passed to `XMLHttpRequest.open`. Current browsers allow these URLs to be cross domain; this behavior can lead to code injection by a remote attacker. Pay extra attention to absolute URLs.
 - Ensure that URLs responding with `Access-Control-Allow-Origin: *` do not include any sensitive content or information that might aid attacker in further attacks. Use the `Access-Control-Allow-Origin` header only on chosen URLs that need to be accessed cross-domain. Don't use the header for the whole domain.
-- Allow only selected, trusted domains in the `Access-Control-Allow-Origin` header. Prefer whitelisting domains over blacklisting or allowing any domain (do not use `*` wildcard nor blindly return the `Origin` header content without any checks).
+- Allow only selected, trusted domains in the `Access-Control-Allow-Origin` header. Prefer allowing specific domains over blocking or allowing any domain (do not use `*` wildcard nor blindly return the `Origin` header content without any checks).
 - Keep in mind that CORS does not prevent the requested data from going to an unauthenticated location. It's still important for the server to perform usual [CSRF](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) prevention.
 - While the RFC recommends a pre-flight request with the `OPTIONS` verb, current implementations might not perform this request, so it's important that "ordinary" (`GET` and `POST`) requests perform any access control necessary.
 - Discard requests received over plain HTTP with HTTPS origins to prevent mixed content bugs.
@@ -46,7 +46,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 - Validate URLs passed to the `EventSource` constructor, even though only same-origin URLs are allowed.
 - As mentioned before, process the messages (`event.data`) as data and never evaluate the content as HTML or script code.
-- Always check the origin attribute of the message (`event.origin`) to ensure the message is coming from a trusted domain. Use a whitelist approach.
+- Always check the origin attribute of the message (`event.origin`) to ensure the message is coming from a trusted domain. Use an allow-list approach.
 
 ## Storage APIs
 
@@ -182,7 +182,7 @@ During a websocket channel initiation, the browser sends the **Origin** HTTP req
 
 An example of an attack using this vector, named *Cross-Site WebSocket Hijacking (CSWSH)*, is described [here](https://www.christian-schneider.net/CrossSiteWebSocketHijacking.html).
 
-The code below defines a configuration that applies filtering based on a "whitelist" of origins. This ensures that only allowed origins can establish a full handshake:
+The code below defines a configuration that applies filtering based on an "allow list" of origins. This ensures that only allowed origins can establish a full handshake:
 
 ``` java
 import org.owasp.encoder.Encode;
@@ -730,13 +730,13 @@ Note that the same approach is used in the messages handling part of the POC. Al
 
 Authorization information is stored in the access token using the JWT *Claim* feature (in the POC the name of the claim is *access_level*). Authorization is validated when a request is received and before any other action using the user input information.
 
-The access token is passed with every message sent to the message endpoint and a blacklist is used in order to allow the user to request an explicit token invalidation.
+The access token is passed with every message sent to the message endpoint and a block list is used in order to allow the user to request an explicit token invalidation.
 
 Explicit token invalidation is interesting from a user's point of view because, often when tokens are used, the validity timeframe of the token is relatively long (it's common to see a valid timeframe superior to 1 hour) so it's important to allow a user to have a way to indicate to the system "OK, I have finished my exchange with you, so you can close our exchange session and cleanup associated links".
 
 It also helps the user to revoke itself of current access if a malicious concurrent access is detected using the same token (case of token stealing).
 
-**Token blacklist** - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore
+**Token block list** - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore
 
 ``` java
 import org.apache.commons.jcs.JCS;
@@ -751,15 +751,15 @@ import java.security.NoSuchAlgorithmException;
  * Utility class to manage the access token that have been declared as no
  * more usable (explicit user logout)
  */
-public class AccessTokenBlacklistUtils {
+public class AccessTokenBlocklistUtils {
     /**
      * Message content send by user that indicate that the access token that
-     * come along the message must be blacklisted for further usage
+     * come along the message must be block-listed for further usage
      */
     public static final String MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG = "INVALIDATE_TOKEN";
 
     /**
-     * Use cache to store blacklisted token hash in order to avoid memory exhaustion and be consistent
+     * Use cache to store block-listed token hash in order to avoid memory exhaustion and be consistent
      * because token are valid 30 minutes so the item live in cache 60 minutes
      */
     private static final CacheAccess<String, String> TOKEN_CACHE;
@@ -773,7 +773,7 @@ public class AccessTokenBlacklistUtils {
     }
 
     /**
-     * Add token into the blacklist
+     * Add token into the block list
      *
      * @param token Token for which the hash must be added
      * @throws NoSuchAlgorithmException If SHA256 is not available
@@ -788,13 +788,13 @@ public class AccessTokenBlacklistUtils {
     }
 
     /**
-     * Check if a token is present in the blacklist
+     * Check if a token is present in the block list
      *
      * @param token Token for which the presence of the hash must be verified
-     * @return TRUE if token is blacklisted
+     * @return TRUE if token is block-listed
      * @throws NoSuchAlgorithmException If SHA256 is not available
      */
-    public static boolean isBlacklisted(String token) throws NoSuchAlgorithmException {
+    public static boolean isBlocklisted(String token) throws NoSuchAlgorithmException {
         boolean exists = false;
         if (token != null && !token.trim().isEmpty()) {
             String hashHex = computeHash(token);
@@ -829,7 +829,7 @@ public class AccessTokenBlacklistUtils {
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.owasp.pocwebsocket.enumeration.AccessLevel;
-import org.owasp.pocwebsocket.util.AccessTokenBlacklistUtils;
+import org.owasp.pocwebsocket.util.AccessTokenBlocklistUtils;
 import org.owasp.pocwebsocket.util.AuthenticationUtils;
 import org.owasp.pocwebsocket.util.MessageUtils;
 import org.owasp.pocwebsocket.vo.MessageRequest;
@@ -874,9 +874,9 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
         try {
             /*Step 1: Verify the token*/
             String token = message.getToken();
-            //Verify if is it in the blacklist
-            if (AccessTokenBlacklistUtils.isBlacklisted(token)) {
-                throw new IllegalAccessException("Token is in the blacklist !");
+            //Verify if is it in the block list
+            if (AccessTokenBlocklistUtils.isBlocklisted(token)) {
+                throw new IllegalAccessException("Token is in the block list !");
             }
 
             //Verify the signature of the token
@@ -895,10 +895,10 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
             }
 
             //Add message to the list of message of the user if the message is a not a token invalidation
-            //order otherwise add the token to the blacklist
-            if (AccessTokenBlacklistUtils.MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG
+            //order otherwise add the token to the block list
+            if (AccessTokenBlocklistUtils.MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG
                 .equalsIgnoreCase(message.getContent().trim())) {
-                AccessTokenBlacklistUtils.addToken(message.getToken());
+                AccessTokenBlocklistUtils.addToken(message.getToken());
             } else {
                 MessageUtils.MESSAGES_DB.get(decodedToken.getSubject()).add(message.getContent());
             }
@@ -914,9 +914,9 @@ public class MessageHandler implements javax.websocket.MessageHandler.Whole<Mess
             }
 
             //Build the response object indicating that exchange succeed
-            if (AccessTokenBlacklistUtils.MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG
+            if (AccessTokenBlocklistUtils.MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG
                 .equalsIgnoreCase(message.getContent().trim())) {
-                response = new MessageResponse(true, messages, "Token added to the blacklist");
+                response = new MessageResponse(true, messages, "Token added to the block list");
             }else{
                 response = new MessageResponse(true, messages, "");
             }
