@@ -13,8 +13,8 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">
       
-      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.5">
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.77f3fd56.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.2c0c5eaf.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.7fa14f5b.min.css">
@@ -75,11 +75,9 @@
       
     </div>
     
-      
-
-<header class="md-header" data-md-component="header">
+      <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series">
+    <a href=".." title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
       
   <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
@@ -170,11 +168,9 @@
                     
 
 
-
-
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+    <a href=".." title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
       
   <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
@@ -972,8 +968,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#defense-option-3-whitelist-input-validation" class="md-nav__link">
-    Defense Option 3: Whitelist Input Validation
+  <a href="#defense-option-3-allow-list-input-validation" class="md-nav__link">
+    Defense Option 3: Allow-list Input Validation
   </a>
   
 </li>
@@ -1121,8 +1117,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#whitelist-input-validation" class="md-nav__link">
-    Whitelist Input Validation
+  <a href="#allow-list-input-validation" class="md-nav__link">
+    Allow-list Input Validation
   </a>
   
 </li>
@@ -1399,8 +1395,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#defense-option-3-whitelist-input-validation" class="md-nav__link">
-    Defense Option 3: Whitelist Input Validation
+  <a href="#defense-option-3-allow-list-input-validation" class="md-nav__link">
+    Defense Option 3: Allow-list Input Validation
   </a>
   
 </li>
@@ -1548,8 +1544,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#whitelist-input-validation" class="md-nav__link">
-    Whitelist Input Validation
+  <a href="#allow-list-input-validation" class="md-nav__link">
+    Allow-list Input Validation
   </a>
   
 </li>
@@ -1593,13 +1589,13 @@
 <ul>
 <li><strong>Option 1: Use of Prepared Statements (with Parameterized Queries)</strong></li>
 <li><strong>Option 2: Use of Stored Procedures</strong></li>
-<li><strong>Option 3: Whitelist Input Validation</strong></li>
+<li><strong>Option 3: Allow-list Input Validation</strong></li>
 <li><strong>Option 4: Escaping All User Supplied Input</strong></li>
 </ul>
 <p><strong>Additional Defenses:</strong></p>
 <ul>
 <li><strong>Also: Enforcing Least Privilege</strong></li>
-<li><strong>Also: Performing Whitelist Input Validation as a Secondary Defense</strong></li>
+<li><strong>Also: Performing Allow-list Input Validation as a Secondary Defense</strong></li>
 </ul>
 <p><strong>Unsafe Example:</strong></p>
 <p>SQL injection flaws typically look like this:</p>
@@ -1693,7 +1689,7 @@
  <span class="k">End</span> <span class="k">Try</span>
 </code></pre></div>
 
-<h3 id="defense-option-3-whitelist-input-validation">Defense Option 3: Whitelist Input Validation<a class="headerlink" href="#defense-option-3-whitelist-input-validation" title="Permanent link">&para;</a></h3>
+<h3 id="defense-option-3-allow-list-input-validation">Defense Option 3: Allow-list Input Validation<a class="headerlink" href="#defense-option-3-allow-list-input-validation" title="Permanent link">&para;</a></h3>
 <p>Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.</p>
 <p>But if user parameter values are used for targeting different table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full rewrite should be considered if time allows.</p>
 <p>Here is an example of table name validation.</p>
@@ -1717,7 +1713,7 @@ switch(PARAM):
 </code></pre></div>
 
 <p>Any time user input can be converted to a non-String, like a date, numeric, boolean, enumerated type, etc. before it is appended to a query, or used to select a value to append to the query, this ensures it is safe to do so.</p>
-<p>Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong whitelist input validation is described in the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
+<p>Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong input validation is described in the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
 <h3 id="defense-option-4-escaping-all-user-supplied-input">Defense Option 4: Escaping All User-Supplied Input<a class="headerlink" href="#defense-option-4-escaping-all-user-supplied-input" title="Permanent link">&para;</a></h3>
 <p>This technique should only be used as a last resort, when none of the above are feasible. Input validation is probably a better choice as this methodology is frail compared to other defenses and we cannot guarantee it will prevent all SQL Injection in all situations.</p>
 <p>This technique is to escape user input before putting it in a query. It is very database specific in its implementation. It's usually only recommended to retrofit legacy code when implementing input validation isn't cost effective. Applications built from scratch, or applications requiring low risk tolerance should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.</p>
@@ -1867,7 +1863,7 @@ less than 256  --&gt; \c where &#39;c&#39; is the original non-alphanumeric char
 <p>Beyond adopting one of the four primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:</p>
 <ul>
 <li><strong>Least Privilege</strong></li>
-<li><strong>Whitelist Input Validation</strong></li>
+<li><strong>Allow-list Input Validation</strong></li>
 </ul>
 <h3 id="least-privilege">Least Privilege<a class="headerlink" href="#least-privilege" title="Permanent link">&para;</a></h3>
 <p>To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Do not assign DBA or admin type access rights to your application accounts. We understand that this is easy, and everything just 'works' when you do it this way, but it is very dangerous.</p>
@@ -1883,7 +1879,7 @@ less than 256  --&gt; \c where &#39;c&#39; is the original non-alphanumeric char
 <h4 id="views">Views<a class="headerlink" href="#views" title="Permanent link">&para;</a></h4>
 <p>You can use SQL views to further increase the granularity of access by limiting the read access to specific fields of a table or joins of tables. It could potentially have additional benefits: for example, suppose that the system is required (perhaps due to some specific legal requirements) to store the passwords of the users, instead of salted-hashed passwords.</p>
 <p>The designer could use views to compensate for this limitation; revoke all access to the table (from all DB users except the owner/admin) and create a view that outputs the hash of the password field and not the field itself. Any SQL injection attack that succeeds in stealing DB information will be restricted to stealing the hash of the passwords (could even be a keyed hash), since no DB user for any of the web applications has access to the table itself.</p>
-<h3 id="whitelist-input-validation">Whitelist Input Validation<a class="headerlink" href="#whitelist-input-validation" title="Permanent link">&para;</a></h3>
+<h3 id="allow-list-input-validation">Allow-list Input Validation<a class="headerlink" href="#allow-list-input-validation" title="Permanent link">&para;</a></h3>
 <p>In addition to being a primary defense when nothing else is possible (e.g., when a bind variable isn't legal), input validation can also be a secondary defense used to detect unauthorized input before it is passed to the SQL query. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>. Proceed with caution here. Validated data is not necessarily safe to insert into SQL queries via string building.</p>
 <h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
 <p><strong>SQL Injection Attack Cheat Sheets</strong>:</p>
@@ -1987,7 +1983,7 @@ less than 256  --&gt; \c where &#39;c&#39; is the original non-alphanumeric char
     <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.5cf3e710.min.js"></script>
+      <script src="../assets/javascripts/bundle.a1c7c35e.min.js"></script>
       
     
   </body>

@@ -13,8 +13,8 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html">
       
-      <link rel="shortcut icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.5">
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.6">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.77f3fd56.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.2c0c5eaf.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.7fa14f5b.min.css">
@@ -75,11 +75,9 @@
       
     </div>
     
-      
-
-<header class="md-header" data-md-component="header">
+      <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series">
+    <a href=".." title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
       
   <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
@@ -170,11 +168,9 @@
                     
 
 
-
-
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="https://cheatsheetseries.owasp.org/" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series">
+    <a href=".." title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
       
   <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
 
@@ -1819,7 +1815,7 @@
 <li>It is also a good thing to use when the website is for an intranet of a company or organization.</li>
 </ul>
 <p>It is generally not a good idea to use this method for widely and publicly available websites that will have an average user. For example, it wouldn't be a good idea to implement this for a website like Facebook. While this technique can prevent the user from having to type a password (thus protecting against an average keylogger from stealing it), it is still considered a good idea to consider using both a password and TLS client authentication combined.</p>
-<p>Additionally, if the client is behind an enterprise proxy which performs SSL/TLS decryption, this will break certificate authentication unless the site is whitelisted on the proxy.</p>
+<p>Additionally, if the client is behind an enterprise proxy which performs SSL/TLS decryption, this will break certificate authentication unless the site is allowed on the proxy.</p>
 <p>For more information, see: <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security#Client-authenticated_TLS_handshake">Client-authenticated TLS handshake</a></p>
 <h3 id="authentication-and-error-messages">Authentication and Error Messages<a class="headerlink" href="#authentication-and-error-messages" title="Permanent link">&para;</a></h3>
 <p>Incorrectly implemented error messages in the case of authentication functionality can be used for the purposes of user ID and password enumeration. An application should respond (both HTTP and HTML) in a generic manner.</p>
@@ -2057,7 +2053,7 @@ ENDIF
     <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.5cf3e710.min.js"></script>
+      <script src="../assets/javascripts/bundle.a1c7c35e.min.js"></script>
       
     
   </body>
