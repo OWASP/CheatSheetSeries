@@ -19,11 +19,11 @@ In order to balance security and usability, multi-factor authentication can be c
 - A new browser/device or IP address.
 - An unusual country or location.
 - Specific countries that are considered untrusted.
-- An IP address that appears on known blacklists.
+- An IP address that appears on known block lists.
 - An IP address that has tried to login to multiple accounts.
 - A login attempt that appears to be scripted rather than manual.
 
-Additionally, for enterprise applications, known trusted IP ranges could be added to a whitelist so that MFA is not required when users connect from these ranges.
+Additionally, for enterprise applications, known trusted IP ranges could be added to an allow list so that MFA is not required when users connect from these ranges.
 
 ## Alternative Defenses
 
@@ -47,13 +47,13 @@ Requiring a user to solve a CAPTCHA for each login attempt can help to prevent a
 
 To improve usability, it may be desirable to only require the user solve a CAPTCHA when the login request is considered suspicious, using the same criteria discussed above.
 
-### IP Blacklisting
+### IP Block-listing
 
-Less sophisticated attacks will often use a relatively small number of IP addresses, which can be blacklisted after a number of failed login attempts. These failures should be tracked separately to the per-user failures, which are intended to protect against brute-force attacks. The blacklist should be temporary, in order to reduce the likelihood of permanently blocking legitimate users.
+Less sophisticated attacks will often use a relatively small number of IP addresses, which can be block-listed after a number of failed login attempts. These failures should be tracked separately to the per-user failures, which are intended to protect against brute-force attacks. The block list should be temporary, in order to reduce the likelihood of permanently blocking legitimate users.
 
-Additionally, there are publicly available blacklists of known bad IP addresses which are collected by websites such as [AbuseIPDB](https://www.abuseipdb.com) based on abuse reports from users.
+Additionally, there are publicly available block lists of known bad IP addresses which are collected by websites such as [AbuseIPDB](https://www.abuseipdb.com) based on abuse reports from users.
 
-Consider storing the last IP address which successfully logged in to each account, and if this IP address is added to a blacklist, then taking appropriate action such as locking the account and notifying the user, as it likely that their account has been compromised.
+Consider storing the last IP address which successfully logged in to each account, and if this IP address is added to a block list, then taking appropriate action such as locking the account and notifying the user, as it likely that their account has been compromised.
 
 ### Device Fingerprinting
 
