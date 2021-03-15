@@ -1473,7 +1473,7 @@
 <li><code>exp</code> or expiration time - is the current time before the end of the validity period of this token?</li>
 <li><code>nbf</code> or not before time - is the current time after the start of the validity period of this token?</li>
 </ul>
-<p>As JWTs contain details of the authenticated entity (user etc.) a disconnect can occur between the JWT and the current state of the users session, for example, if the session is terminated earlier than the expiration time due to an explicit logout or an idle timeout. When an explicit session termination event occurs, a digest or hash of any associated JWTs should be submitted to a block list on the API which will invalidate that JWT for any requests until the expiration of the token. See the <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html#token-explicit-revocation-by-the-user">JSON_Web_Token_for_Java_Cheat_Sheet</a> for further details.</p>
+<p>As JWTs contain details of the authenticated entity (user etc.) a disconnect can occur between the JWT and the current state of the users session, for example, if the session is terminated earlier than the expiration time due to an explicit logout or an idle timeout. When an explicit session termination event occurs, a digest or hash of any associated JWTs should be submitted to a blacklist on the API which will invalidate that JWT for any requests until the expiration of the token. See the <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html#token-explicit-revocation-by-the-user">JSON_Web_Token_for_Java_Cheat_Sheet</a> for further details.</p>
 <h2 id="api-keys">API Keys<a class="headerlink" href="#api-keys" title="Permanent link">&para;</a></h2>
 <p>Public REST services without access control run the risk of being farmed leading to excessive bills for bandwidth or compute cycles. API keys can be used to mitigate this risk. They are also often used by organisation to monetize APIs; instead of blocking high-frequency calls, clients are given access in accordance to a purchased access plan.</p>
 <p>API keys can reduce the impact of denial-of-service attacks. However, when they are issued to third-party clients, they are relatively easy to compromise.</p>
@@ -1485,8 +1485,8 @@
 </ul>
 <h2 id="restrict-http-methods">Restrict HTTP methods<a class="headerlink" href="#restrict-http-methods" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Apply an allow list of permitted HTTP Methods e.g. <code>GET</code>, <code>POST</code>, <code>PUT</code>.</li>
-<li>Reject all requests not matching the allow list with HTTP response code <code>405 Method not allowed</code>.</li>
+<li>Apply a whitelist of permitted HTTP Methods e.g. <code>GET</code>, <code>POST</code>, <code>PUT</code>.</li>
+<li>Reject all requests not matching the whitelist with HTTP response code <code>405 Method not allowed</code>.</li>
 <li>Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record</li>
 </ul>
 <p>In Java EE in particular, this can be difficult to implement properly. See <a href="../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf">Bypassing Web Authentication and Authorization with HTTP Verb Tampering</a> for an explanation of this common misconfiguration.</p>
