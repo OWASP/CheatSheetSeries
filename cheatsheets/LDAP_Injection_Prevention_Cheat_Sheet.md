@@ -88,13 +88,13 @@ Safe NET Example
 Beyond adopting one of the two primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:
 
 - **Least Privilege**
-- **White List Input Validation**
+- **Allow-List Input Validation**
 
 #### Least Privilege
 
 To minimize the potential damage of a successful LDAP injection attack, you should minimize the privileges assigned to the LDAP binding account in your environment.
 
-#### White List Input Validation
+#### Allow-List Input Validation
 
 Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
