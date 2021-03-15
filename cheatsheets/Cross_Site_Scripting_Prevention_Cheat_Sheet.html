@@ -1587,7 +1587,7 @@
 <p>For a cheatsheet on the attack vectors related to XSS, please refer to the <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">XSS Filter Evasion Cheat Sheet</a>. More background on browser security and the various browsers can be found in the <a href="https://code.google.com/archive/p/browsersec/">Browser Security Handbook</a>.</p>
 <p>Before reading this cheatsheet, it is important to have a fundamental understanding of <a href="https://owasp.org/www-community/Injection_Theory">Injection Theory</a>.</p>
 <h3 id="a-positive-xss-prevention-model">A Positive XSS Prevention Model<a class="headerlink" href="#a-positive-xss-prevention-model" title="Permanent link">&para;</a></h3>
-<p>This article treats an HTML page like a template, with slots where a developer is allowed to put untrusted data. These slots cover the vast majority of the common places where a developer might want to put untrusted data. Putting untrusted data in other places in the HTML is not allowed. This is a "whitelist" model, that denies everything that is not specifically allowed.</p>
+<p>This article treats an HTML page like a template, with slots where a developer is allowed to put untrusted data. These slots cover the vast majority of the common places where a developer might want to put untrusted data. Putting untrusted data in other places in the HTML is not allowed. This is an "allow list" model, that denies everything that is not specifically allowed.</p>
 <p>Given the way browsers parse HTML, each of the different types of slots has slightly different security rules. When you put untrusted data into these slots, you need to take certain steps to make sure that the data does not break out of that slot into a context that allows code execution. In a way, this approach treats an HTML document like a parameterized database query - the data is kept in specific places and is isolated from code contexts with encoding.</p>
 <p>This document sets out the most common types of slots and the rules for putting untrusted data into them safely. Based on the various specifications, known XSS vectors, and a great deal of manual testing with all the popular browsers, we have determined that the rules proposed here are safe.</p>
 <p>The slots are defined and a few examples of each are provided. Developers <strong>SHOULD NOT</strong> put data into any other slots without a very careful analysis to ensure that what they are doing is safe. Browser parsing is extremely tricky and many innocuous looking characters can be significant in the right context.</p>
@@ -1600,7 +1600,7 @@ tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or 
 <p>The <a href="https://owasp.org/www-project-java-encoder/">OWASP Java Encoder Project</a> provides a high-performance encoding library for Java.</p>
 <h2 id="xss-prevention-rules">XSS Prevention Rules<a class="headerlink" href="#xss-prevention-rules" title="Permanent link">&para;</a></h2>
 <p>The following rules are intended to prevent all XSS in your application. While these rules do not allow absolute freedom in putting untrusted data into an HTML document, they should cover the vast majority of common use cases. You do not have to allow <strong>all</strong> the rules in your organization. Many organizations may find that <strong>allowing only Rule #1 and Rule #2 are sufficient for their needs</strong>. Please add a note to the discussion page if there is an additional context that is often required and can be secured with encoding.</p>
-<p><strong>Do NOT</strong> simply encode/escape the list of example characters provided in the various rules. It is NOT sufficient to encode/escape only that list. Blacklist approaches are quite fragile. The whitelist rules here have been carefully designed to provide protection even against future vulnerabilities introduced by browser changes.</p>
+<p><strong>Do NOT</strong> simply encode/escape the list of example characters provided in the various rules. It is NOT sufficient to encode/escape only that list. Block list approaches are quite fragile. The allow list rules here have been carefully designed to provide protection even against future vulnerabilities introduced by browser changes.</p>
 <h3 id="rule-0-never-insert-untrusted-data-except-in-allowed-locations">RULE #0 - Never Insert Untrusted Data Except in Allowed Locations<a class="headerlink" href="#rule-0-never-insert-untrusted-data-except-in-allowed-locations" title="Permanent link">&para;</a></h3>
 <p>The first rule is to <strong>deny all</strong> - don't put untrusted data into your HTML document unless it is within one of the slots defined in Rule #1 through Rule #5. The reason for Rule #0 is that there are so many strange contexts within HTML that the list of encoding rules gets very complicated. We can't think of any good reason to put untrusted data in these contexts. This includes "nested contexts" like a URL inside a JavaScript -- the encoding rules for those locations are tricky and dangerous.</p>
 <p>If you insist on putting untrusted data into nested contexts, please do a lot of cross-browser testing and let us know what you find out.</p>
@@ -1787,7 +1787,7 @@ Content-Type: application/json; charset=utf-8 &lt;--good
 <h3 id="rule-6-sanitize-html-markup-with-a-library-designed-for-the-job">RULE #6 - Sanitize HTML Markup with a Library Designed for the Job<a class="headerlink" href="#rule-6-sanitize-html-markup-with-a-library-designed-for-the-job" title="Permanent link">&para;</a></h3>
 <p>If your application handles markup -- untrusted input that is supposed to contain HTML -- it can be very difficult to validate. Encoding is also difficult, since it would break all the tags that are supposed to be in the input. Therefore, you need a library that can parse and clean HTML formatted text. There are several available at OWASP that are simple to use:</p>
 <p><strong><a href="https://github.com/mganss/HtmlSanitizer">HtmlSanitizer</a></strong></p>
-<p>An open-source .Net library. The HTML is cleaned with a white list approach. All allowed tags and attributes can be configured. The library is unit tested with the OWASP <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">XSS Filter Evasion Cheat Sheet</a></p>
+<p>An open-source .Net library. The HTML is cleaned with an "allow list" approach. All allowed tags and attributes can be configured. The library is unit tested with the OWASP <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">XSS Filter Evasion Cheat Sheet</a></p>
 <div class="codehilite"><pre><span></span><code><span class="kt">var</span> <span class="n">sanitizer</span> <span class="p">=</span> <span class="k">new</span> <span class="n">HtmlSanitizer</span><span class="p">();</span>
 <span class="n">sanitizer</span><span class="p">.</span><span class="n">AllowedAttributes</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;class&quot;</span><span class="p">);</span>
 <span class="kt">var</span> <span class="n">sanitized</span> <span class="p">=</span> <span class="n">sanitizer</span><span class="p">.</span><span class="n">Sanitize</span><span class="p">(</span><span class="n">html</span><span class="p">);</span>
@@ -1820,7 +1820,7 @@ Content-Type: application/json; charset=utf-8 &lt;--good
 <h3 id="bonus-rule-1-use-httponly-cookie-flag">Bonus Rule #1: Use HTTPOnly cookie flag<a class="headerlink" href="#bonus-rule-1-use-httponly-cookie-flag" title="Permanent link">&para;</a></h3>
 <p>Preventing all XSS flaws in an application is hard, as you can see. To help mitigate the impact of an XSS flaw on your site, OWASP also recommends you set the HTTPOnly flag on your session cookie and any custom cookies you have that are not accessed by any JavaScript you wrote. This cookie flag is typically on by default in .NET apps, but in other languages you have to set it manually. For more details on the HTTPOnly cookie flag, including what it does, and how to use it, see the OWASP article on <a href="https://owasp.org/www-community/HttpOnly">HTTPOnly</a>.</p>
 <h3 id="bonus-rule-2-implement-content-security-policy">Bonus Rule #2: Implement Content Security Policy<a class="headerlink" href="#bonus-rule-2-implement-content-security-policy" title="Permanent link">&para;</a></h3>
-<p>There is another good complex solution to mitigate the impact of an XSS flaw called Content Security Policy. It's a browser side mechanism which allows you to create source whitelists for client side resources of your web application, e.g. JavaScript, CSS, images, etc. CSP via special HTTP header instructs the browser to only execute or render resources from those sources.</p>
+<p>There is another good complex solution to mitigate the impact of an XSS flaw called Content Security Policy. It's a browser side mechanism which allows you to create source allow lists for client side resources of your web application, e.g. JavaScript, CSS, images, etc. CSP via special HTTP header instructs the browser to only execute or render resources from those sources.</p>
 <p>For example this CSP:</p>
 <div class="codehilite"><pre><span></span><code>Content-Security-Policy: default-src: &#39;self&#39;; script-src: &#39;self&#39; static.domain.tld
 </code></pre></div>
@@ -1892,7 +1892,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 <td>String</td>
 <td>Safe HTML Attributes</td>
 <td><code>&lt;input type="text" name="fname" value="UNTRUSTED DATA "&gt;</code></td>
-<td>Aggressive HTML Entity Encoding (rule #2), Only place untrusted data into a whitelist of safe attributes (listed below), Strictly validate unsafe attributes such as background, ID and name.</td>
+<td>Aggressive HTML Entity Encoding (rule #2), Only place untrusted data into a list of safe attributes (listed below), Strictly validate unsafe attributes such as background, ID and name.</td>
 </tr>
 <tr>
 <td>String</td>
@@ -1904,7 +1904,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 <td>String</td>
 <td>Untrusted URL in a SRC or HREF attribute</td>
 <td><code>&lt;a href="UNTRUSTED URL "&gt;clickme&lt;/a&gt; &lt;iframe src="UNTRUSTED URL " /&gt;</code></td>
-<td>Canonicalize input, URL Validation, Safe URL verification, Whitelist http and HTTPS URLs only (Avoid the JavaScript Protocol to Open a new Window), Attribute encoder.</td>
+<td>Canonicalize input, URL Validation, Safe URL verification, Allow-list http and HTTPS URLs only (Avoid the JavaScript Protocol to Open a new Window), Attribute encoder.</td>
 </tr>
 <tr>
 <td>String</td>

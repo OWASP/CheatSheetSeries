@@ -2581,7 +2581,7 @@ kubectl get pods --namespace<span class="o">=</span>&lt;insert-namespace-name-he
 <p>Prevent unapproved images from being used with the admission controller ImagePolicyWebhook to reject pods that use unapproved images including:</p>
 <ul>
 <li>Images that haven’t been scanned recently</li>
-<li>Images that use a base image that’s not whitelisted</li>
+<li>Images that use a base image that’s not explicitly allowed</li>
 <li>Images from insecure registries
 Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook">https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook</a></li>
 </ul>

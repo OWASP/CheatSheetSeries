@@ -1865,7 +1865,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h2 id="general-advices-to-prevent-injection">General advices to prevent Injection<a class="headerlink" href="#general-advices-to-prevent-injection" title="Permanent link">&para;</a></h2>
 <p>The following point can be applied, in a general way, to prevent <em>Injection</em> issue:</p>
 <ol>
-<li>Apply <strong>Input Validation</strong> (using whitelist approach) combined with <strong>Output Sanitizing+Escaping</strong> on user input/output.</li>
+<li>Apply <strong>Input Validation</strong> (using "allow list" approach) combined with <strong>Output Sanitizing+Escaping</strong> on user input/output.</li>
 <li>If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.</li>
 </ol>
 <p>Additional advices are provided on this <a href="Input_Validation_Cheat_Sheet.html">cheatsheet</a>.</p>
@@ -2063,11 +2063,11 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h4 id="symptom_4">Symptom<a class="headerlink" href="#symptom_4" title="Permanent link">&para;</a></h4>
 <p>Injection of this type occur when the application use untrusted user input to build a HTTP response and sent it to browser.</p>
 <h4 id="how-to-prevent_4">How to prevent<a class="headerlink" href="#how-to-prevent_4" title="Permanent link">&para;</a></h4>
-<p>Either apply strict input validation (whitelist approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).</p>
+<p>Either apply strict input validation ("allow list" approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).</p>
 <h4 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code><span class="cm">/*</span>
 <span class="cm">INPUT WAY: Receive data from user</span>
-<span class="cm">Here it&#39;s recommended to use strict input validation using whitelist approach.</span>
+<span class="cm">Here it&#39;s recommended to use strict input validation using &quot;allow list&quot; approach.</span>
 <span class="cm">In fact, you ensure that only allowed characters are part of the input received.</span>
 <span class="cm">*/</span>
 

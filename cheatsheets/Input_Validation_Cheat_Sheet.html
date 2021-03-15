@@ -692,8 +692,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#allowlist-vs-blocklist" class="md-nav__link">
-    Allowlist vs blocklist
+  <a href="#allow-list-vs-block-list" class="md-nav__link">
+    Allow list vs block list
   </a>
   
 </li>
@@ -1376,8 +1376,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#allowlist-vs-blocklist" class="md-nav__link">
-    Allowlist vs blocklist
+  <a href="#allow-list-vs-block-list" class="md-nav__link">
+    Allow list vs block list
   </a>
   
 </li>
@@ -1559,20 +1559,20 @@
 <li>Array of allowed values for small sets of string parameters (e.g. days of week).</li>
 <li>Regular expressions for any other structured data covering the whole input string <code>(^...$)</code> and <strong>not</strong> using "any character" wildcard (such as <code>.</code> or <code>\S</code>)</li>
 </ul>
-<h3 id="allowlist-vs-blocklist">Allowlist vs blocklist<a class="headerlink" href="#allowlist-vs-blocklist" title="Permanent link">&para;</a></h3>
-<p>It is a common mistake to use black list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe <code>'</code> character, the string <code>1=1</code>, or the <code>&lt;script&gt;</code> tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.</p>
+<h3 id="allow-list-vs-block-list">Allow list vs block list<a class="headerlink" href="#allow-list-vs-block-list" title="Permanent link">&para;</a></h3>
+<p>It is a common mistake to use block list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe <code>'</code> character, the string <code>1=1</code>, or the <code>&lt;script&gt;</code> tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.</p>
 <p>Plus, such filters frequently prevent authorized input, like <code>O'Brian</code>, where the <code>'</code> character is fully legitimate. For more information on XSS filter evasion please see the <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">this wiki page</a>.</p>
 <p>Allow list validation is appropriate for all input fields provided by the user. Allow list validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.</p>
 <p>If it's well structured data, like dates, social security numbers, zip codes, email addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.</p>
 <p>If the input field comes from a fixed set of options, like a drop down list or radio buttons, then the input needs to match exactly one of the values offered to the user in the first place.</p>
 <h3 id="validating-free-form-unicode-text">Validating free-form Unicode text<a class="headerlink" href="#validating-free-form-unicode-text" title="Permanent link">&para;</a></h3>
-<p>Free-form text, especially with Unicode characters, is perceived as difficult to validate due to a relatively large space of characters that need to be whitelisted.</p>
+<p>Free-form text, especially with Unicode characters, is perceived as difficult to validate due to a relatively large space of characters that need to be allowed.</p>
 <p>It's also free-form text input that highlights the importance of proper context-aware output encoding and quite clearly demonstrates that input validation is <strong>not</strong> the primary safeguards against Cross-Site Scripting. If your users want to type apostrophe <code>'</code> or less-than sign <code>&lt;</code> in their comment field, they might have perfectly legitimate reason for that and the application's job is to properly handle it throughout the whole life cycle of the data.</p>
 <p>The primary means of input validation for free-form text input should be:</p>
 <ul>
 <li><strong>Normalization:</strong> Ensure canonical encoding is used across all the text and no invalid characters are present.</li>
-<li><strong>Character category whitelisting:</strong> Unicode allows whitelisting categories such as "decimal digits" or "letters" which not only covers the Latin alphabet but also various other scripts used globally (e.g. Arabic, Cyrillic, CJK ideographs etc).</li>
-<li><strong>Individual character whitelisting:</strong> If you allow letters and ideographs in names and also want to allow apostrophe <code>'</code> for Irish names, but don't want to allow the whole punctuation category.</li>
+<li><strong>Character category allow-listing:</strong> Unicode allows listing categories such as "decimal digits" or "letters" which not only covers the Latin alphabet but also various other scripts used globally (e.g. Arabic, Cyrillic, CJK ideographs etc).</li>
+<li><strong>Individual character allow-listing:</strong> If you allow letters and ideographs in names and also want to allow apostrophe <code>'</code> for Irish names, but don't want to allow the whole punctuation category.</li>
 </ul>
 <p>References:</p>
 <ul>
@@ -1649,7 +1649,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 <li>Ensure uploaded images are served with the correct content-type (e.g. image/jpeg, application/x-xpinstall)</li>
 </ul>
 <h3 id="beware-of-special-files">Beware of "special" files<a class="headerlink" href="#beware-of-special-files" title="Permanent link">&para;</a></h3>
-<p>The upload feature should be using a whitelist approach to only allow specific file types and extensions. However, it is important to be aware of the following file types that, if allowed, could result in security vulnerabilities:</p>
+<p>The upload feature should be using an allow-list approach to only allow specific file types and extensions. However, it is important to be aware of the following file types that, if allowed, could result in security vulnerabilities:</p>
 <ul>
 <li><strong>crossdomain.xml</strong> / <strong>clientaccesspolicy.xml:</strong> allows cross-domain data loading in Flash, Java and Silverlight. If permitted on sites with authentication this can permit cross-domain data theft and CSRF attacks. Note this can get pretty complicated depending on the specific plugin version in question, so its best to just prohibit files named "crossdomain.xml" or "clientaccesspolicy.xml".</li>
 <li><strong>.htaccess</strong> and <strong>.htpasswd:</strong> Provides server configuration options on a per-directory basis, and should not be permitted. See <a href="http://en.wikipedia.org/wiki/Htaccess">HTACCESS documentation</a>.</li>
@@ -1705,7 +1705,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 <p>In some cases, users may not want to give their real email address when registering on the application, and will instead provide a disposable email address. These are publicly available addresses that do not require the user to authenticate, and are typically used to reduce the amount of spam received by users' primary email addresses.</p>
 <p>Blocking disposable email addresses is almost impossible, as there are a large number of websites offering these services, with new domains being created every day. There are a number of publicly available lists and commercial lists of known disposable domains, but these will always be incomplete.</p>
 <p>If these lists are used to block the use of disposable email addresses then the user should be presented with a message explaining why they are blocked (although they are likely to simply search for another disposable provider rather than giving their legitimate address).</p>
-<p>If it is essential that disposable email addresses are blocked, then registrations should only be allowed from specifically whitelisted email providers. However, if this includes public providers such as Google or Yahoo, users can simply register their own disposable address with them.</p>
+<p>If it is essential that disposable email addresses are blocked, then registrations should only be allowed from specifically-allowed email providers. However, if this includes public providers such as Google or Yahoo, users can simply register their own disposable address with them.</p>
 <h4 id="sub-addressing">Sub-Addressing<a class="headerlink" href="#sub-addressing" title="Permanent link">&para;</a></h4>
 <p>Sub-addressing allows a user to specify a <em>tag</em> in the local part of the email address (before the <code>@</code> sign), which will be ignored by the mail server. For example, if that <code>example.org</code> domain supports sub-addressing, then the following email addresses are equivalent:</p>
 <ul>

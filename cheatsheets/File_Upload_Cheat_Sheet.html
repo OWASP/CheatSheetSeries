@@ -629,15 +629,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#whitelist-extensions" class="md-nav__link">
-    Whitelist Extensions
+  <a href="#list-allowed-extensions" class="md-nav__link">
+    List Allowed Extensions
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#blacklist-extensions" class="md-nav__link">
-    Blacklist Extensions
+  <a href="#block-extensions" class="md-nav__link">
+    Block Extensions
   </a>
   
 </li>
@@ -1356,15 +1356,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#whitelist-extensions" class="md-nav__link">
-    Whitelist Extensions
+  <a href="#list-allowed-extensions" class="md-nav__link">
+    List Allowed Extensions
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#blacklist-extensions" class="md-nav__link">
-    Blacklist Extensions
+  <a href="#block-extensions" class="md-nav__link">
+    Block Extensions
   </a>
   
 </li>
@@ -1460,7 +1460,7 @@
 <p>File upload is becoming a more and more essential part of any application, where the user is able to upload their photo, their CV, or a video showcasing a project they are working on. The application should be able to fend off bogus and malicious files in a way to keep the application and the users safe.</p>
 <p>In short, the following principles should be followed to reach a secure file upload implementation:</p>
 <ul>
-<li><strong>Whitelist allowed extensions. Only allow safe and critical extensions for business functionality</strong><ul>
+<li><strong>List allowed extensions. Only allow safe and critical extensions for business functionality</strong><ul>
 <li><strong>Ensure that <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Input_Validation_Cheat_Sheet.md#validating-free-form-unicode-text">input validation</a> is applied before validating the extensions.</strong></li>
 </ul>
 </li>
@@ -1505,20 +1505,20 @@
 <li>Generic bad regex that isn't properly tested and well reviewed. Refrain from building your own logic unless you have enough knowledge on this topic.</li>
 </ul>
 <p>Refer to the <a href="Input_Validation_Cheat_Sheet.html">Input Validation CS</a> to properly parse and process the extension.</p>
-<h4 id="whitelist-extensions">Whitelist Extensions<a class="headerlink" href="#whitelist-extensions" title="Permanent link">&para;</a></h4>
+<h4 id="list-allowed-extensions">List Allowed Extensions<a class="headerlink" href="#list-allowed-extensions" title="Permanent link">&para;</a></h4>
 <p>Ensure the usage of <em>business-critical</em> extensions only, without allowing any type of <em>non-required</em> extensions. For example if the system requires:</p>
 <ul>
 <li>image upload, allow one type that is agreed upon to fit the business requirement;</li>
 <li>cv upload, allow <code>docx</code> and <code>pdf</code> extensions.</li>
 </ul>
 <p>Based on the needs of the application, ensure the <strong>least harmful</strong> and the <strong>lowest risk</strong> file types to be used.</p>
-<h4 id="blacklist-extensions">Blacklist Extensions<a class="headerlink" href="#blacklist-extensions" title="Permanent link">&para;</a></h4>
-<p>Blacklisting extensions is a bad idea and is very dangerous. Don't do it unless you have no other choice!</p>
+<h4 id="block-extensions">Block Extensions<a class="headerlink" href="#block-extensions" title="Permanent link">&para;</a></h4>
+<p>Blocking specific extensions is a bad idea and is very dangerous. Don't do it unless you have no other choice!</p>
 <p>In order to perform this validation, specifying and identifying which patterns that could should be rejected are used in order to protect the service.</p>
 <h3 id="content-type-validation">Content-Type Validation<a class="headerlink" href="#content-type-validation" title="Permanent link">&para;</a></h3>
 <p><em>The Content-Type for uploaded files is provided by the user, and as such cannot be trusted, as it is trivial to spoof. Although it should not be relied upon for security, it provides a quick check to prevent users from unintentionally uploading files with the incorrect type.</em></p>
 <p>Other than defining the extension of the uploaded file, its MIME-type can be checked for a quick protection against simple file upload attacks.</p>
-<p>This can be done preferrably in a whitelist approach; otherwise, this can be done in a blacklist approach.</p>
+<p>This can be done preferrably in an allow list approach; otherwise, this can be done in a block list approach.</p>
 <h3 id="file-signature-validation">File Signature Validation<a class="headerlink" href="#file-signature-validation" title="Permanent link">&para;</a></h3>
 <p>In conjunction with <a href="#content-type-validation">content-type validation</a>, validating the file's signature can be checked and verified against the expected file that should be received.</p>
 <blockquote>
@@ -1530,7 +1530,7 @@
 <ul>
 <li>Implement a maximum length</li>
 <li>Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods<ul>
-<li>If this is not possible, blacklist dangerous characters that could endanger the framework and system that is storing and using the files.</li>
+<li>If this is not possible, block-list dangerous characters that could endanger the framework and system that is storing and using the files.</li>
 </ul>
 </li>
 </ul>

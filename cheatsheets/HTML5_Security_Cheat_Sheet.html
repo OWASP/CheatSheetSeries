@@ -1548,7 +1548,7 @@
 <ul>
 <li>Validate URLs passed to <code>XMLHttpRequest.open</code>. Current browsers allow these URLs to be cross domain; this behavior can lead to code injection by a remote attacker. Pay extra attention to absolute URLs.</li>
 <li>Ensure that URLs responding with <code>Access-Control-Allow-Origin: *</code> do not include any sensitive content or information that might aid attacker in further attacks. Use the <code>Access-Control-Allow-Origin</code> header only on chosen URLs that need to be accessed cross-domain. Don't use the header for the whole domain.</li>
-<li>Allow only selected, trusted domains in the <code>Access-Control-Allow-Origin</code> header. Prefer whitelisting domains over blacklisting or allowing any domain (do not use <code>*</code> wildcard nor blindly return the <code>Origin</code> header content without any checks).</li>
+<li>Allow only selected, trusted domains in the <code>Access-Control-Allow-Origin</code> header. Prefer allowing specific domains over blocking or allowing any domain (do not use <code>*</code> wildcard nor blindly return the <code>Origin</code> header content without any checks).</li>
 <li>Keep in mind that CORS does not prevent the requested data from going to an unauthenticated location. It's still important for the server to perform usual <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF</a> prevention.</li>
 <li>While the RFC recommends a pre-flight request with the <code>OPTIONS</code> verb, current implementations might not perform this request, so it's important that "ordinary" (<code>GET</code> and <code>POST</code>) requests perform any access control necessary.</li>
 <li>Discard requests received over plain HTTP with HTTPS origins to prevent mixed content bugs.</li>
@@ -1570,7 +1570,7 @@
 <ul>
 <li>Validate URLs passed to the <code>EventSource</code> constructor, even though only same-origin URLs are allowed.</li>
 <li>As mentioned before, process the messages (<code>event.data</code>) as data and never evaluate the content as HTML or script code.</li>
-<li>Always check the origin attribute of the message (<code>event.origin</code>) to ensure the message is coming from a trusted domain. Use a whitelist approach.</li>
+<li>Always check the origin attribute of the message (<code>event.origin</code>) to ensure the message is coming from a trusted domain. Use an allow-list approach.</li>
 </ul>
 <h2 id="storage-apis">Storage APIs<a class="headerlink" href="#storage-apis" title="Permanent link">&para;</a></h2>
 <h3 id="local-storage">Local Storage<a class="headerlink" href="#local-storage" title="Permanent link">&para;</a></h3>
@@ -1696,7 +1696,7 @@
 <h3 id="access-filtering">Access filtering<a class="headerlink" href="#access-filtering" title="Permanent link">&para;</a></h3>
 <p>During a websocket channel initiation, the browser sends the <strong>Origin</strong> HTTP request header that contains the source domain initiation for the request to handshake. Even if this header can be spoofed in a forged HTTP request (not browser based), it cannot be overridden or forced in a browser context. It then represents a good candidate to apply filtering according to an expected value.</p>
 <p>An example of an attack using this vector, named <em>Cross-Site WebSocket Hijacking (CSWSH)</em>, is described <a href="https://www.christian-schneider.net/CrossSiteWebSocketHijacking.html">here</a>.</p>
-<p>The code below defines a configuration that applies filtering based on a "whitelist" of origins. This ensures that only allowed origins can establish a full handshake:</p>
+<p>The code below defines a configuration that applies filtering based on an "allow list" of origins. This ensures that only allowed origins can establish a full handshake:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.owasp.encoder.Encode</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.slf4j.Logger</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
@@ -2223,10 +2223,10 @@
 <p>Note that the same approach is used in the messages handling part of the POC. All messages exchanged between the client and the server are systematically validated using the same way, using dedicated JSON schemas linked to messages dedicated Encoder/Decoder (serialization/deserialization).</p>
 <h3 id="authorization-and-access-token-explicit-invalidation">Authorization and access token explicit invalidation<a class="headerlink" href="#authorization-and-access-token-explicit-invalidation" title="Permanent link">&para;</a></h3>
 <p>Authorization information is stored in the access token using the JWT <em>Claim</em> feature (in the POC the name of the claim is <em>access_level</em>). Authorization is validated when a request is received and before any other action using the user input information.</p>
-<p>The access token is passed with every message sent to the message endpoint and a blacklist is used in order to allow the user to request an explicit token invalidation.</p>
+<p>The access token is passed with every message sent to the message endpoint and a block list is used in order to allow the user to request an explicit token invalidation.</p>
 <p>Explicit token invalidation is interesting from a user's point of view because, often when tokens are used, the validity timeframe of the token is relatively long (it's common to see a valid timeframe superior to 1 hour) so it's important to allow a user to have a way to indicate to the system "OK, I have finished my exchange with you, so you can close our exchange session and cleanup associated links".</p>
 <p>It also helps the user to revoke itself of current access if a malicious concurrent access is detected using the same token (case of token stealing).</p>
-<p><strong>Token blacklist</strong> - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore</p>
+<p><strong>Token block list</strong> - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.commons.jcs.JCS</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.commons.jcs.access.CacheAccess</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.commons.jcs.access.exception.CacheException</span><span class="p">;</span>
@@ -2239,15 +2239,15 @@
 <span class="cm"> * Utility class to manage the access token that have been declared as no</span>
 <span class="cm"> * more usable (explicit user logout)</span>
 <span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccessTokenBlacklistUtils</span> <span class="p">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccessTokenBlocklistUtils</span> <span class="p">{</span>
     <span class="cm">/**</span>
 <span class="cm">     * Message content send by user that indicate that the access token that</span>
-<span class="cm">     * come along the message must be blacklisted for further usage</span>
+<span class="cm">     * come along the message must be block-listed for further usage</span>
 <span class="cm">     */</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG</span> <span class="o">=</span> <span class="s">&quot;INVALIDATE_TOKEN&quot;</span><span class="p">;</span>
 
     <span class="cm">/**</span>
-<span class="cm">     * Use cache to store blacklisted token hash in order to avoid memory exhaustion and be consistent</span>
+<span class="cm">     * Use cache to store block-listed token hash in order to avoid memory exhaustion and be consistent</span>
 <span class="cm">     * because token are valid 30 minutes so the item live in cache 60 minutes</span>
 <span class="cm">     */</span>
     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">CacheAccess</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">TOKEN_CACHE</span><span class="p">;</span>
@@ -2261,7 +2261,7 @@
     <span class="p">}</span>
 
     <span class="cm">/**</span>
-<span class="cm">     * Add token into the blacklist</span>
+<span class="cm">     * Add token into the block list</span>
 <span class="cm">     *</span>
 <span class="cm">     * @param token Token for which the hash must be added</span>
 <span class="cm">     * @throws NoSuchAlgorithmException If SHA256 is not available</span>
@@ -2276,13 +2276,13 @@
     <span class="p">}</span>
 
     <span class="cm">/**</span>
-<span class="cm">     * Check if a token is present in the blacklist</span>
+<span class="cm">     * Check if a token is present in the block list</span>
 <span class="cm">     *</span>
 <span class="cm">     * @param token Token for which the presence of the hash must be verified</span>
-<span class="cm">     * @return TRUE if token is blacklisted</span>
+<span class="cm">     * @return TRUE if token is block-listed</span>
 <span class="cm">     * @throws NoSuchAlgorithmException If SHA256 is not available</span>
 <span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isBlacklisted</span><span class="p">(</span><span class="n">String</span> <span class="n">token</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">NoSuchAlgorithmException</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isBlocklisted</span><span class="p">(</span><span class="n">String</span> <span class="n">token</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">NoSuchAlgorithmException</span> <span class="p">{</span>
         <span class="kt">boolean</span> <span class="n">exists</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">token</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">token</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span> <span class="p">{</span>
             <span class="n">String</span> <span class="n">hashHex</span> <span class="o">=</span> <span class="n">computeHash</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
@@ -2315,7 +2315,7 @@
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.auth0.jwt.interfaces.Claim</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.auth0.jwt.interfaces.DecodedJWT</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.enumeration.AccessLevel</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.util.AccessTokenBlacklistUtils</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.util.AccessTokenBlocklistUtils</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.util.AuthenticationUtils</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.util.MessageUtils</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.vo.MessageRequest</span><span class="p">;</span>
@@ -2360,9 +2360,9 @@
         <span class="k">try</span> <span class="p">{</span>
             <span class="cm">/*Step 1: Verify the token*/</span>
             <span class="n">String</span> <span class="n">token</span> <span class="o">=</span> <span class="n">message</span><span class="p">.</span><span class="na">getToken</span><span class="p">();</span>
-            <span class="c1">//Verify if is it in the blacklist</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">AccessTokenBlacklistUtils</span><span class="p">.</span><span class="na">isBlacklisted</span><span class="p">(</span><span class="n">token</span><span class="p">))</span> <span class="p">{</span>
-                <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalAccessException</span><span class="p">(</span><span class="s">&quot;Token is in the blacklist !&quot;</span><span class="p">);</span>
+            <span class="c1">//Verify if is it in the block list</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">AccessTokenBlocklistUtils</span><span class="p">.</span><span class="na">isBlocklisted</span><span class="p">(</span><span class="n">token</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalAccessException</span><span class="p">(</span><span class="s">&quot;Token is in the block list !&quot;</span><span class="p">);</span>
             <span class="p">}</span>
 
             <span class="c1">//Verify the signature of the token</span>
@@ -2381,10 +2381,10 @@
             <span class="p">}</span>
 
             <span class="c1">//Add message to the list of message of the user if the message is a not a token invalidation</span>
-            <span class="c1">//order otherwise add the token to the blacklist</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">AccessTokenBlacklistUtils</span><span class="p">.</span><span class="na">MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG</span>
+            <span class="c1">//order otherwise add the token to the block list</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">AccessTokenBlocklistUtils</span><span class="p">.</span><span class="na">MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG</span>
                 <span class="p">.</span><span class="na">equalsIgnoreCase</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getContent</span><span class="p">().</span><span class="na">trim</span><span class="p">()))</span> <span class="p">{</span>
-                <span class="n">AccessTokenBlacklistUtils</span><span class="p">.</span><span class="na">addToken</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getToken</span><span class="p">());</span>
+                <span class="n">AccessTokenBlocklistUtils</span><span class="p">.</span><span class="na">addToken</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getToken</span><span class="p">());</span>
             <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
                 <span class="n">MessageUtils</span><span class="p">.</span><span class="na">MESSAGES_DB</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">decodedToken</span><span class="p">.</span><span class="na">getSubject</span><span class="p">()).</span><span class="na">add</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getContent</span><span class="p">());</span>
             <span class="p">}</span>
@@ -2400,9 +2400,9 @@
             <span class="p">}</span>
 
             <span class="c1">//Build the response object indicating that exchange succeed</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">AccessTokenBlacklistUtils</span><span class="p">.</span><span class="na">MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">AccessTokenBlocklistUtils</span><span class="p">.</span><span class="na">MESSAGE_ACCESS_TOKEN_INVALIDATION_FLAG</span>
                 <span class="p">.</span><span class="na">equalsIgnoreCase</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="na">getContent</span><span class="p">().</span><span class="na">trim</span><span class="p">()))</span> <span class="p">{</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MessageResponse</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="n">messages</span><span class="p">,</span> <span class="s">&quot;Token added to the blacklist&quot;</span><span class="p">);</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MessageResponse</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="n">messages</span><span class="p">,</span> <span class="s">&quot;Token added to the block list&quot;</span><span class="p">);</span>
             <span class="p">}</span><span class="k">else</span><span class="p">{</span>
                 <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MessageResponse</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="n">messages</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
             <span class="p">}</span>

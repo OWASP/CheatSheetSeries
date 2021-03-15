@@ -837,8 +837,8 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#blacklist-storage" class="md-nav__link">
-    Blacklist Storage
+  <a href="#block-list-storage" class="md-nav__link">
+    Block List Storage
   </a>
   
 </li>
@@ -1592,8 +1592,8 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#blacklist-storage" class="md-nav__link">
-    Blacklist Storage
+  <a href="#block-list-storage" class="md-nav__link">
+    Block List Storage
   </a>
   
 </li>
@@ -1913,18 +1913,18 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <h4 id="symptom_2">Symptom<a class="headerlink" href="#symptom_2" title="Permanent link">&para;</a></h4>
 <p>This problem is inherent to JWT because a token only becomes invalid when it expires. The user has no built-in feature to explicitly revoke the validity of a token. This means that if it is stolen, a user cannot revoke the token itself thereby blocking the attacker.</p>
 <h4 id="how-to-prevent_2">How to Prevent<a class="headerlink" href="#how-to-prevent_2" title="Permanent link">&para;</a></h4>
-<p>A way to protect against this is to implement a token blacklist that will be used to mimic the "logout" feature that exists with traditional session management system.</p>
-<p>The blacklist will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.</p>
-<p>When the user wants to "logout" then it call a dedicated service that will add the provided user token to the blacklist resulting in an immediate invalidation of the token for further usage in the application.</p>
+<p>A way to protect against this is to implement a token block list that will be used to mimic the "logout" feature that exists with traditional session management system.</p>
+<p>The block list will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.</p>
+<p>When the user wants to "logout" then it call a dedicated service that will add the provided user token to the block list resulting in an immediate invalidation of the token for further usage in the application.</p>
 <h4 id="implementation-example_2">Implementation Example<a class="headerlink" href="#implementation-example_2" title="Permanent link">&para;</a></h4>
-<h5 id="blacklist-storage">Blacklist Storage<a class="headerlink" href="#blacklist-storage" title="Permanent link">&para;</a></h5>
-<p>A database table with the following structure will be used as the central blacklist storage.</p>
+<h5 id="block-list-storage">Block List Storage<a class="headerlink" href="#block-list-storage" title="Permanent link">&para;</a></h5>
+<p>A database table with the following structure will be used as the central block list storage.</p>
 <div class="codehilite"><pre><span></span><code><span class="k">create</span> <span class="k">table</span> <span class="k">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">revoked_token</span><span class="p">(</span><span class="n">jwt_token_digest</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
 <span class="n">revocation_date</span> <span class="k">timestamp</span> <span class="k">default</span> <span class="n">now</span><span class="p">());</span>
 </code></pre></div>
 
 <h5 id="token-revocation-management">Token Revocation Management<a class="headerlink" href="#token-revocation-management" title="Permanent link">&para;</a></h5>
-<p>Code in charge of adding a token to the blacklist and checking if a token is revoked.</p>
+<p>Code in charge of adding a token to the block list and checking if a token is revoked.</p>
 <div class="codehilite"><pre><span></span><code><span class="cm">/**</span>
 <span class="cm">* Handle the revocation of the token (logout).</span>
 <span class="cm">* Use a DB in order to allow multiple instances to check for revoked token</span>

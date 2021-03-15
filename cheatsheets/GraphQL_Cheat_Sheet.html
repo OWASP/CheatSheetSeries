@@ -1671,12 +1671,12 @@
 <p>Adding strict input validation can help prevent against injection and DoS. The main design for GraphQL is that the user supplies one or more identifiers and the backend has a number of data fetchers making HTTP, DB, or other calls using the given identifiers. This means that user input will be included in HTTP requests, DB queries, or other requests/calls which provides opportunity for injection that could lead to various injection attacks or DoS.</p>
 <p>See the OWASP Cheat Sheets on <a href="Input_Validation_Cheat_Sheet.html">Input Validation</a> and general <a href="Injection_Prevention_Cheat_Sheet.html">injection prevention</a> for full details to best perform input validation and prevent injection.</p>
 <h4 id="general-practices">General Practices<a class="headerlink" href="#general-practices" title="Permanent link">&para;</a></h4>
-<p>Validate all incoming data to only allow valid values (i.e. whitelist).</p>
+<p>Validate all incoming data to only allow valid values (i.e. allow list).</p>
 <ul>
 <li>Use specific GraphQL <a href="https://graphql.org/learn/schema/#type-language">data types</a> such as <a href="https://graphql.org/learn/schema/#scalar-types">scalars</a> or <a href="https://graphql.org/learn/schema/#enumeration-types">enums</a>. Write custom GraphQL <a href="https://graphql.org/learn/validation/">validators</a> for more complex validations. <a href="https://itnext.io/custom-scalars-in-graphql-9c26f43133f3">Custom scalars</a> may also come in handy.</li>
 <li>Define <a href="https://graphql.org/learn/schema/#input-types">schemas for mutations input</a>.</li>
-<li><a href="Input_Validation_Cheat_Sheet.html#whitelisting-vs-blacklisting">Whitelist allowed characters</a> - don't use a blacklist<ul>
-<li>The stricter the whitelist the better. A lot of times a good starting point is only allowing alphanumeric, non-unicode characters because it will disallow many attacks.</li>
+<li><a href="Input_Validation_Cheat_Sheet.html#allow-list-vs-block-list">List allowed characters</a> - don't use a block list<ul>
+<li>The stricter the list of allowed characters the better. A lot of times a good starting point is only allowing alphanumeric, non-unicode characters because it will disallow many attacks.</li>
 </ul>
 </li>
 <li>To properly handle unicode input, use a <a href="Input_Validation_Cheat_Sheet.html#validating-free-form-unicode-text">single internal character encoding</a></li>

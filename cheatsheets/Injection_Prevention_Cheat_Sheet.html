@@ -774,8 +774,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#defense-option-3-white-list-input-validation" class="md-nav__link">
-    Defense Option 3: White List Input Validation
+  <a href="#defense-option-3-allow-list-input-validation" class="md-nav__link">
+    Defense Option 3: Allow-List Input Validation
   </a>
   
 </li>
@@ -1709,8 +1709,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#defense-option-3-white-list-input-validation" class="md-nav__link">
-    Defense Option 3: White List Input Validation
+  <a href="#defense-option-3-allow-list-input-validation" class="md-nav__link">
+    Defense Option 3: Allow-List Input Validation
   </a>
   
 </li>
@@ -2044,7 +2044,7 @@
 <p>The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application.</p>
 <p>Both of these techniques have the same effectiveness in preventing SQL injection so your organization should choose which approach makes the most sense for you. Stored procedures are not always safe from SQL injection. However, certain standard stored procedure programming constructs have the same effect as the use of parameterized queries when implemented safely* which is the norm for most stored procedure languages.</p>
 <p><em>Note:</em> 'Implemented safely' means the stored procedure does not include any unsafe dynamic SQL generation.</p>
-<h6 id="defense-option-3-white-list-input-validation">Defense Option 3: White List Input Validation<a class="headerlink" href="#defense-option-3-white-list-input-validation" title="Permanent link">&para;</a></h6>
+<h6 id="defense-option-3-allow-list-input-validation">Defense Option 3: Allow-List Input Validation<a class="headerlink" href="#defense-option-3-allow-list-input-validation" title="Permanent link">&para;</a></h6>
 <p>Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.</p>
 <p>But if user parameter values are used to make different for table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full rewrite should be considered if time allows.</p>
 <h6 id="defense-option-4-escaping-all-user-supplied-input">Defense Option 4: Escaping All User-Supplied Input<a class="headerlink" href="#defense-option-4-escaping-all-user-supplied-input" title="Permanent link">&para;</a></h6>
@@ -2162,10 +2162,10 @@
 <ol>
 <li><strong>Parameterization</strong> - If available, use structured mechanisms that automatically enforce the separation between data and command. These mechanisms can help to provide the relevant quoting, encoding.</li>
 <li><strong>Input validation</strong> - the values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:<ul>
-<li>When it comes to the <strong>commands</strong> used, these must be validated against a whitelist of allowed commands.</li>
+<li>When it comes to the <strong>commands</strong> used, these must be validated against a list of allowed commands.</li>
 <li>In regards to the <strong>arguments</strong> used for these commands, they should be validated using the following options:<ul>
-<li>Positive or "whitelist" input validation - where are the arguments allowed explicitly defined</li>
-<li>White list Regular Expression - where is explicitly defined a whitelist of good characters allowed and the maximum length of the string. Ensure that metacharacters like <code>&amp; | ; $ &gt; &lt; \</code> \ !` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:</li>
+<li>Positive or "allow list" input validation - where are the arguments allowed explicitly defined</li>
+<li>Allow-list Regular Expression - where is explicitly defined a list of good characters allowed and the maximum length of the string. Ensure that metacharacters like <code>&amp; | ; $ &gt; &lt; \</code> \ !` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:</li>
 </ul>
 </li>
 </ul>
@@ -2190,7 +2190,7 @@
 <p>Web applications often communicate with network daemons (like SMTP, IMAP, FTP) where user input becomes part of the communication stream. Here it is possible to inject command sequences to abuse an established session.</p>
 <h2 id="injection-prevention-rules">Injection Prevention Rules<a class="headerlink" href="#injection-prevention-rules" title="Permanent link">&para;</a></h2>
 <h3 id="rule-1-perform-proper-input-validation">Rule #1 (Perform proper input validation)<a class="headerlink" href="#rule-1-perform-proper-input-validation" title="Permanent link">&para;</a></h3>
-<p>Perform proper input validation. Positive or "whitelist" input validation with appropriate canonicalization is also recommended, but <strong>is not a complete defense</strong> as many applications require special characters in their input.</p>
+<p>Perform proper input validation. Positive or "allow list" input validation with appropriate canonicalization is also recommended, but <strong>is not a complete defense</strong> as many applications require special characters in their input.</p>
 <h3 id="rule-2-use-a-safe-api">Rule #2 (Use a safe API)<a class="headerlink" href="#rule-2-use-a-safe-api" title="Permanent link">&para;</a></h3>
 <p>The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface. Be careful of APIs, such as stored procedures, that are parameterized, but can still introduce injection under the hood.</p>
 <h3 id="rule-3-contextually-escape-user-data">Rule #3 (Contextually escape user data)<a class="headerlink" href="#rule-3-contextually-escape-user-data" title="Permanent link">&para;</a></h3>
