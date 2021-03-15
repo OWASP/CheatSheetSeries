@@ -147,7 +147,7 @@ public class LookAheadObjectInputStream extends ObjectInputStream {
 
 More complete implementations of this approach have been proposed by various community members:
 
-- [NibbleSec](https://github.com/ikkisoft/SerialKiller) - a library that allows whitelisting and blacklisting of classes that are allowed to be deserialized
+- [NibbleSec](https://github.com/ikkisoft/SerialKiller) - a library that allows creating lists of classes that are allowed to be deserialized
 - [IBM](https://www.ibm.com/developerworks/library/se-lookahead/) - the seminal protection, written years before the most devastating exploitation scenarios were envisioned.
 - [Apache Commons IO classes](https://commons.apache.org/proper/commons-io/javadocs/api-2.5/org/apache/commons/io/serialization/ValidatingObjectInputStream.html)
 
@@ -155,7 +155,7 @@ More complete implementations of this approach have been proposed by various com
 
 As mentioned above, the `java.io.ObjectInputStream` class is used to deserialize objects. It's possible to harden its behavior by subclassing it. However, if you don't own the code or can't wait for a patch, using an agent to weave in hardening to `java.io.ObjectInputStream` is the best solution.
 
-Globally changing `ObjectInputStream` is only safe for blacklisting known malicious types, because it's not possible to know for all applications what the expected classes to be deserialized are. Fortunately, there are very few classes needed in the blacklist to be safe from all the known attack vectors, today.
+Globally changing `ObjectInputStream` is only safe for block-listing known malicious types, because it's not possible to know for all applications what the expected classes to be deserialized are. Fortunately, there are very few classes needed in the blocklist to be safe from all the known attack vectors, today.
 
 It's inevitable that more "gadget" classes will be discovered that can be abused. However, there is an incredible amount of vulnerable software exposed today, in need of a fix. In some cases, "fixing" the vulnerability may involve re-architecting messaging systems and breaking backwards compatibility as developers move towards not accepting serialized objects.
 
@@ -240,7 +240,7 @@ if (suspectObject is SomeDangerousObjectType)
 }
 ```
 
-For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of white list control using a custom `SerializationBinder`.
+For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of allow-list control using a custom `SerializationBinder`.
 
 Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. **A deserializer can only instantiate types that it knows about**.
 
