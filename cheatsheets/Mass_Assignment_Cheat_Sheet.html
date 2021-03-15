@@ -849,15 +849,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#whitelisting" class="md-nav__link">
-    Whitelisting
+  <a href="#allow-listing" class="md-nav__link">
+    Allow-listing
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#blacklisting" class="md-nav__link">
-    Blacklisting
+  <a href="#block-listing" class="md-nav__link">
+    Block-listing
   </a>
   
 </li>
@@ -876,15 +876,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#whitelisting_1" class="md-nav__link">
-    Whitelisting
+  <a href="#allow-listing_1" class="md-nav__link">
+    Allow-listing
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#blacklisting_1" class="md-nav__link">
-    Blacklisting
+  <a href="#block-listing_1" class="md-nav__link">
+    Block-listing
   </a>
   
 </li>
@@ -924,15 +924,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#whitelisting_2" class="md-nav__link">
-    Whitelisting
+  <a href="#allow-listing_2" class="md-nav__link">
+    Allow-listing
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#blacklisting_2" class="md-nav__link">
-    Blacklisting
+  <a href="#block-listing_2" class="md-nav__link">
+    Block-listing
   </a>
   
 </li>
@@ -1473,15 +1473,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#whitelisting" class="md-nav__link">
-    Whitelisting
+  <a href="#allow-listing" class="md-nav__link">
+    Allow-listing
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#blacklisting" class="md-nav__link">
-    Blacklisting
+  <a href="#block-listing" class="md-nav__link">
+    Block-listing
   </a>
   
 </li>
@@ -1500,15 +1500,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#whitelisting_1" class="md-nav__link">
-    Whitelisting
+  <a href="#allow-listing_1" class="md-nav__link">
+    Allow-listing
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#blacklisting_1" class="md-nav__link">
-    Blacklisting
+  <a href="#block-listing_1" class="md-nav__link">
+    Block-listing
   </a>
   
 </li>
@@ -1548,15 +1548,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#whitelisting_2" class="md-nav__link">
-    Whitelisting
+  <a href="#allow-listing_2" class="md-nav__link">
+    Allow-listing
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#blacklisting_2" class="md-nav__link">
-    Blacklisting
+  <a href="#block-listing_2" class="md-nav__link">
+    Block-listing
   </a>
   
 </li>
@@ -1698,8 +1698,8 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 <p>In 2012, GitHub was hacked using mass assignment. A user was able to upload his public key to any organization and thus make any subsequent changes in their repositories. <a href="https://blog.github.com/2012-03-04-public-key-security-vulnerability-and-mitigation/">GitHub's Blog Post</a>.</p>
 <h3 id="solutions">Solutions<a class="headerlink" href="#solutions" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Whitelist the bindable, non-sensitive fields.</li>
-<li>Blacklist the non-bindable, sensitive fields.</li>
+<li>Allow-list the bindable, non-sensitive fields.</li>
+<li>Block-list the non-bindable, sensitive fields.</li>
 <li>Use <a href="https://martinfowler.com/eaaCatalog/dataTransferObject.html">Data Transfer Objects</a> (DTOs).</li>
 </ul>
 <h2 id="general-solutions">General Solutions<a class="headerlink" href="#general-solutions" title="Permanent link">&para;</a></h2>
@@ -1717,7 +1717,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 
 <h2 id="language-framework-specific-solutions">Language &amp; Framework specific solutions<a class="headerlink" href="#language-framework-specific-solutions" title="Permanent link">&para;</a></h2>
 <h3 id="spring-mvc">Spring MVC<a class="headerlink" href="#spring-mvc" title="Permanent link">&para;</a></h3>
-<h4 id="whitelisting">Whitelisting<a class="headerlink" href="#whitelisting" title="Permanent link">&para;</a></h4>
+<h4 id="allow-listing">Allow-listing<a class="headerlink" href="#allow-listing" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code><span class="nd">@Controller</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserController</span>
 <span class="p">{</span>
@@ -1731,7 +1731,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 </code></pre></div>
 
 <p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setAllowedFields-java.lang.String...-">here</a> for the documentation.</p>
-<h4 id="blacklisting">Blacklisting<a class="headerlink" href="#blacklisting" title="Permanent link">&para;</a></h4>
+<h4 id="block-listing">Block-listing<a class="headerlink" href="#block-listing" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code><span class="nd">@Controller</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserController</span>
 <span class="p">{</span>
@@ -1746,7 +1746,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 
 <p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setDisallowedFields-java.lang.String...-">here</a> for the documentation.</p>
 <h3 id="nodejs-mongoose">NodeJS + Mongoose<a class="headerlink" href="#nodejs-mongoose" title="Permanent link">&para;</a></h3>
-<h4 id="whitelisting_1">Whitelisting<a class="headerlink" href="#whitelisting_1" title="Permanent link">&para;</a></h4>
+<h4 id="allow-listing_1">Allow-listing<a class="headerlink" href="#allow-listing_1" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">UserSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
     <span class="nx">userid</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
     <span class="nx">password</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
@@ -1765,7 +1765,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 </code></pre></div>
 
 <p>Take a look <a href="http://underscorejs.org/#pick">here</a> for the documentation.</p>
-<h4 id="blacklisting_1">Blacklisting<a class="headerlink" href="#blacklisting_1" title="Permanent link">&para;</a></h4>
+<h4 id="block-listing_1">Block-listing<a class="headerlink" href="#block-listing_1" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">massAssign</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose-mass-assign&#39;</span><span class="p">);</span>
 
 <span class="kd">var</span> <span class="nx">UserSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
@@ -1799,7 +1799,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 <h3 id="asp-net">ASP NET<a class="headerlink" href="#asp-net" title="Permanent link">&para;</a></h3>
 <p>Take a look <a href="https://odetocode.com/Blogs/scott/archive/2012/03/11/complete-guide-to-mass-assignment-in-asp-net-mvc.aspx">here</a> for the documentation.</p>
 <h3 id="php-laravel-eloquent">PHP Laravel + Eloquent<a class="headerlink" href="#php-laravel-eloquent" title="Permanent link">&para;</a></h3>
-<h4 id="whitelisting_2">Whitelisting<a class="headerlink" href="#whitelisting_2" title="Permanent link">&para;</a></h4>
+<h4 id="allow-listing_2">Allow-listing<a class="headerlink" href="#allow-listing_2" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code><span class="cp">&lt;?php</span>
 
 <span class="k">namespace</span> <span class="nx">App</span><span class="p">;</span>
@@ -1818,7 +1818,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 </code></pre></div>
 
 <p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment">here</a> for the documentation.</p>
-<h4 id="blacklisting_2">Blacklisting<a class="headerlink" href="#blacklisting_2" title="Permanent link">&para;</a></h4>
+<h4 id="block-listing_2">Block-listing<a class="headerlink" href="#block-listing_2" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code><span class="cp">&lt;?php</span>
 
 <span class="k">namespace</span> <span class="nx">App</span><span class="p">;</span>
