@@ -40,7 +40,7 @@ However, the following recommendations are generally appropriate for most applic
 
 - Provide the option for users to enable MFA on their accounts using [TOTP](#software-totp-tokens).
 - Require MFA for administrative or other high privileged users.
-- Consider whitelisting corporate IP ranges so that MFA is not required from them.
+- Consider allowing corporate IP ranges so that MFA is not required from them.
 - Allow the user to remember the use of MFA in their browser, so they are not prompted every time they login.
 - Implement a secure process to allow users to reset their MFA.
 
@@ -65,7 +65,7 @@ Having to frequently login with MFA creates an additional burden for users, and 
     - This can either be permanent, or for a period of a few days.
     - This needs to be done with more than just a cookie, which could be stolen by an attacker.
         - For example, a cookie matched to the previous IP address the cookie was issued for.
-- Whitelisting corporate IP ranges (or, more strictly, using location as a second factor).
+- Allow corporate IP ranges (or, more strictly, using location as a second factor).
     - This doesn't protect against malicious insiders, or a user's workstation being compromised.
 - Only requiring MFA for sensitive actions, not for the initial login.
     - This will depend heavily on the functionality in the application.
@@ -312,7 +312,7 @@ When talking about location, access to the application that the user is authenti
 
 ### Source IP Ranges
 
-The source IP address the user is connecting from can be used as a factor, typically in a white-list based approach. This could either be based on a static white-list (such as corporate office ranges) or a dynamic white-list (such as previous IP addresses the user has authenticated from).
+The source IP address the user is connecting from can be used as a factor, typically in an allow-list based approach. This could either be based on a static list (such as corporate office ranges) or a dynamic list (such as previous IP addresses the user has authenticated from).
 
 #### Pros
 
