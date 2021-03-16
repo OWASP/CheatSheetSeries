@@ -144,7 +144,7 @@ The minimum work factor for bcrypt should be 12.
 
 [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver) and has FIPS-140 validated implementations. So, it should be the preferred algorithm when these are required. Additionally, it is supported out of the box in the .NET framework, so is commonly used in ASP.NET applications.
 
-PBKDF2 can be used with HMACs based on a number of different hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.
+PBKDF2 requires that you select an internal hashing algorithm. You can choose HMACs or a variety of other hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.
 
 The work factor for PBKDF2 is implemented through the iteration count, which should be at least 10,000 (although values of up to 100,000 may be appropriate in higher security environments).
 
