@@ -1524,35 +1524,35 @@
 <p>The microservice architecture is being increasingly used for designing and implementing application systems in both cloud-based and on-premise infrastructures, high-scale applications and services. There are many security challenges need to be addressed in the application design and implementation phases. The fundamental security requirements that have to be addressed during design phase are authentication and authorization. Therefore, it is vital for applications security architects to understand and properly use existing architecture patterns to implement authentication and authorization in microservices-based systems. The goal of this cheat sheet is to identify such patterns and to do recommendations for applications security architect on possible way to use it.</p>
 <h2 id="table-of-contents">Table of contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="#Edge-level-authorization">Edge-level authorization</a></li>
-<li><a href="#Service-level-authorization">Service-level authorization</a><ul>
-<li><a href="#Service-level-authorization:-existing-patterns">Service-level authorization: existing patterns</a><ul>
-<li><a href="#Decentralized-pattern">Decentralized pattern</a></li>
-<li><a href="#Centralized-pattern-with-single-policy-decision-point">Centralized pattern with single policy decision point</a></li>
-<li><a href="#Centralized-pattern-with-embedded-policy-decision-point">Centralized pattern with embedded policy decision point</a></li>
+<li><a href="#edge-level-authorization">Edge-level authorization</a></li>
+<li><a href="#service-level-authorization">Service-level authorization</a><ul>
+<li><a href="#service-level-authorization:-existing-patterns">Service-level authorization: existing patterns</a><ul>
+<li><a href="#decentralized-pattern">Decentralized pattern</a></li>
+<li><a href="#centralized-pattern-with-single-policy-decision-point">Centralized pattern with single policy decision point</a></li>
+<li><a href="#centralized-pattern-with-embedded-policy-decision-point">Centralized pattern with embedded policy decision point</a></li>
 </ul>
 </li>
-<li><a href="#Recommendation-on-how-to-implement-authorization">Recommendation on how to implement authorization</a></li>
+<li><a href="#recommendation-on-how-to-implement-authorization">Recommendation on how to implement authorization</a></li>
 </ul>
 </li>
-<li><a href="#External-entity-identity-propagation">External entity identity propagation</a><ul>
-<li><a href="#Identity-propagation:-existing-patterns">Identity propagation: existing patterns</a><ul>
-<li><a href="#Send-the-external-entity-identity-as-a-clear-or-self-signed-data-structures">Send the external entity identity as a clear or self-signed data structures</a></li>
-<li><a href="#Using-a-data-structures-signed-by-a-trusted-issuer">Using a data structures signed by a trusted issuer</a></li>
+<li><a href="#external-entity-identity-propagation">External entity identity propagation</a><ul>
+<li><a href="#identity-propagation:-existing-patterns">Identity propagation: existing patterns</a><ul>
+<li><a href="#send-the-external-entity-identity-as-a-clear-or-self-signed-data-structures">Send the external entity identity as a clear or self-signed data structures</a></li>
+<li><a href="#using-a-data-structures-signed-by-a-trusted-issuer">Using a data structures signed by a trusted issuer</a></li>
 </ul>
 </li>
-<li><a href="#Recommendation-on-how-to-implement-identity-propogation">Recommendation on how to implement identity propogation</a></li>
+<li><a href="#recommendation-on-how-to-implement-identity-propogation">Recommendation on how to implement identity propogation</a></li>
 </ul>
 </li>
-<li><a href="#Service-to-service-authentication">Service-to-service authentication</a><ul>
-<li><a href="#Service-to-service-authentication:-existing-patterns">Service-to-service authentication: existing patterns</a><ul>
-<li><a href="#Mutual-transport-layer-security">Mutual transport layer security</a></li>
-<li><a href="#Token-based">Token based</a></li>
+<li><a href="#service-to-service-authentication">Service-to-service authentication</a><ul>
+<li><a href="#service-to-service-authentication:-existing-patterns">Service-to-service authentication: existing patterns</a><ul>
+<li><a href="#mutual-transport-layer-security">Mutual transport layer security</a></li>
+<li><a href="#token-based">Token based</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#References">References</a></li>
+<li><a href="#references">References</a></li>
 </ul>
 <h2 id="edge-level-authorization">Edge-level authorization<a class="headerlink" href="#edge-level-authorization" title="Permanent link">&para;</a></h2>
 <p>In simple scenario, authorization can happen only at the edge level (API gateway). The API gateway can be leveraged to centralize enforcement of authorization for all downstream microservices, eliminating the need to provide authentication and access control for each of the individual services. In such case, <a href="https://doi.org/10.6028/NIST.SP.800-204">NIST recommends</a> to implement mitigating controls such as mutual authentication to prevent direct, anonymous connections to the internal services (API gateway bypass). It should be noted that authorization at the edge layer has a <a href="https://www.youtube.com/watch?v=UnXjwCWgBKU">following limitations</a>:</p>
