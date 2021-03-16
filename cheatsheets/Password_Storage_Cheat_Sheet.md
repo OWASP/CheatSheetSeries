@@ -70,14 +70,11 @@ A [pepper](https://tools.ietf.org/id/draft-whited-kitten-password-storage-02.htm
 - The pepper is **shared between all stored passwords**, rather than being *unique* like a salt. This makes a pepper predicable, and attempts to crack a password hash *probabilistic*. The static nature of a pepper also *weakens" hash collision resistance whereas the salt improves hash collision resistance by extending the length with unique characters that increase the entropy of input to the hashing function.
 - The pepper is **not stored in the database**, unlike many implementations of a password salt (but not always true for a salt).
 - The pepper is not a mechanism to make password cracking **too hard to be feasible** for an attacker, like many password storage protections (salting among these) aim to do.
-- A salt prevents attackers from compiling rainbow tables of known passwords, however a pepper does not offer this characteristic
 
 The purpose of the pepper is to prevent an attacker from being able to crack any of the hashes if they only have access to the database, for example if they have exploited a SQL injection vulnerability or obtained a backup of the database.
 
-The pepper should be *at-least* 32 characters long and should be randomly generated using a secure pseudo-random generator (CSPRNG). It should be stored securely in a "secrets vault" (not in an application configuration file regardless of file permissions which are susceptible to SSRF) using the secure access APIs, or for optimal secure storage store the pepper in a Hardware Security Module (HSM) if possible.
-Read about [Cryptographically Weak Pseudo-Random Number Generator](https://cwe.mitre.org/data/definitions/338.html) (PRNG)
+The pepper should be *at-least* 32 characters long and should be randomly generated using a secure pseudo-random generator (CSPRNG). It should be stored securely in "secrets management" solution.
 
-The pepper is often used in a similar way to a salt by concatenating it with the password prior to hashing, using a construct such as `hash($pepper . $password)`. While concatenating is considered appropriate for a salt, only prefixing is considered appropriate for a pepper.
 Never place a pepper as a suffix as this may lead to vulnerabilities such as issues related to truncation and length-extension attacks. Practically these threats allow the input password component to validate successfully because the unique password is never truncated, only the probabilistic pepper would be truncated.
 
 #### Alternatives
