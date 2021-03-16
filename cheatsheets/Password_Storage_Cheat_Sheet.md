@@ -97,26 +97,6 @@ One key advantage of having a work factor is that it can be increased over time 
 
 The most common approach to upgrading the work factor is to wait until the user next authenticates, and then to re-hash their password with the new work factor. This means that different hashes will have different work factors, and may result in hashes never being upgraded if the user doesn't log back in to the application. Depending on the application, it may be appropriate to remove the older password hashes and require users to reset their passwords next time they need to login, in order to avoid storing older and less secure hashes.
 
-### Maximum Password Lengths
-
-Some hashing algorithms such as bcrypt have a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues and not revealing that the application uses bcrypt.
-
-Additionally, due to how computationally expensive modern hashing functions are, if a user can supply very long passwords then there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013.
-
-In order to protect against both of these issues, a maximum password length should be enforced. This should be 64 characters for bcrypt (due to limitations in the algorithm and implementations), and between 64 and 128 characters for other algorithms.
-
-Although implementing a maximum password length does reduce the possible keyspace for passwords, a limit of 64 characters still leaves a key space of at least `2^420`, which is completely infeasible for an attacker to break. As such, it does not represent a meaningful reduction in security.
-
-#### Pre-Hashing Passwords
-
-An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-384, and then to hash the resultant hash with a more secure algorithm such as bcrypt (i.e, `bcrypt(sha384($password))`). While this approach solves the problem of arbitrary length user inputs to slower hashing algorithms, it also introduces some vulnerabilities that could allow attackers to crack hashes more easily.
-
-If an attacker is able to obtain password hashes from two different compromised sites, one of which is storing passwords with `bcrypt(sha384($password))` and the other of which is storing them as plain `sha384($password)`, and attacker can use uncracked SHA-384 hashes from the second site as candidate passwords to try and crack the hashes from the first (more secure) site. If passwords are re-used between the two sites, this can effectively allow the attacker to strip off the bcrypt layer, and then to focus their efforts on cracking the much easier SHA-384 hashes.
-
-When using pre-hashing ensure that the output for the first hashing algorithm is safely encoded as hexadecimal or base64, as some hashing algorithms such as bcrypt can behave in undesirable ways if the [input contains null bytes](https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html).
-
-Due to these issues, the preferred option should generally be to limit the maximum password length. Pre-hashing of passwords should only be performed where there is a specific requirement to do so, and appropriate steps have been taking to mitigate the issues discussed above.
-
 ## Password Hashing Algorithms
 
 There are a number of modern hashing algorithms that have been specifically designed for securely storing passwords. This means that they should be slow (unlike algorithms such as MD5 and SHA-1 which were designed to be fast), and how slow they are can be configured by changing the [work factor](#work-factors).
@@ -136,6 +116,22 @@ However, if you're not in a position to properly tune Argon2, then a simpler alg
 [bcrypt](https://en.wikipedia.org/wiki/bcrypt) is the most widely supported of the algorithms and should be the default choice unless there are specific requirements for PBKDF2, or appropriate knowledge to tune Argon2.
 
 The minimum work factor for bcrypt should be 12.
+
+#### Input Limits
+
+bcrypt has a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues and not revealing that the application uses bcrypt.
+
+Additionally, due to how computationally expensive modern hashing functions are, if a user can supply very long passwords then there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013.
+
+In order to protect against both of these issues, a maximum password length of 64 characters should be enforced when using bcrypt.
+
+##### Pre-Hashing Passwords
+
+An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-384, and then to hash the resultant hash with a more secure algorithm such as bcrypt (i.e, `bcrypt(sha384($password))`). 
+
+When using pre-hashing, ensure that the output for the first hashing algorithm is safely encoded as hexadecimal or base64, as some hashing algorithms such as bcrypt can behave in undesirable ways if the [input contains null bytes](https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html).
+
+Also, it is critical *not* to store the sha384 hash in any way and to only store the bcrypt output value.
 
 ### PBKDF2
 
