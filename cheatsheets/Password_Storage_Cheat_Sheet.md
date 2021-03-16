@@ -6,9 +6,11 @@ As the majority of users will re-use passwords between different applications, i
 
 This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
-- **Use [bcrypt](#modern-algorithms) unless you have a good reason not to.**
-- **Set a reasonable [work factor](#work-factors) for your system.**
+- **Use [bcrypt](#bcrypt) with work factor 12 or more with a password limit of 64 characters.**
+- **Consider the use of [Argon2id](#argon2id) with configuration settings inline with [IETF specifications](https://tools.ietf.org/html/draft-ietf-kitten-password-storage-03#section-5.1).**
+- **Use [PBKDF2](#pbkdf2) with a work factor of 10,000 or more and set with HMAC-SHA-256 as an internal hash function for systems requiring FIPS-140 compliance.**
 - **Consider using a [pepper](#peppering) to provide an additional defence in depth (though alone it provides no additional secure characteristics).**
+
 
 ## Background
 
@@ -61,7 +63,7 @@ A salt is a unique, randomly generated string that is added to each password as 
 
 Salting also provides protection against an attacker pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is not possible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.
 
-[Modern hashing algorithms](#modern-algorithms) such as Argon2, bcrypt and PBKDF2 automatically salt the passwords, so no additional steps are required when using them.
+[Modern hashing algorithms](#password-hashing-algorithms) such as Argon2, bcrypt and PBKDF2 automatically salt the passwords, so no additional steps are required when using them.
 
 ### Peppering
 
