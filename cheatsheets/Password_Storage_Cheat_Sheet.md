@@ -134,7 +134,7 @@ The main three algorithms that should be considered are listed below:
 
 Rather than a simple work factor like other algorithms, Argon2 has three different parameters that can be configured, meaning that it's more complicated to correctly tune for the environment. The specification from 2015 contains [guidance on choosing appropriate parameters](https://password-hashing.net/argon2-specs.pdf). There is also a 2021 [IETF draft](https://tools.ietf.org/html/draft-ietf-kitten-password-storage-03#section-5.1) on tuning Argon2 and other password storage algorithms.
 
-However, if you're not in a position to properly tune Argon2, then a simpler algorithm such as [bcrypt](#bcrypt) may be a better choice. Ther
+However, if you're not in a position to properly tune Argon2, then a simpler algorithm such as [bcrypt](#bcrypt) may be a better choice.
 
 ### bcrypt
 
