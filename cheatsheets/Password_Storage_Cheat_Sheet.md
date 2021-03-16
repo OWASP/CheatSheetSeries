@@ -8,7 +8,6 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 
 - **Use [bcrypt](#modern-algorithms) unless you have a good reason not to.**
 - **Set a reasonable [work factor](#work-factors) for your system.**
-- **Use a [salt](#salting) (modern algorithms do this for you automatically).**
 - **Consider using a [pepper](#peppering) to provide an additional defence in depth (though alone it provides no additional secure characteristics).**
 
 ## Background
@@ -60,15 +59,7 @@ A salt is a unique, randomly generated string that is added to each password as 
 
 Salting also provides protection against an attacker pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is not possible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.
 
-[Modern hashing algorithms](#modern-algorithms) such as Argon2 or bcrypt automatically salt the passwords, so no additional steps are required when using them. However, if you are using a [legacy password hashing algorithm](#legacy-algorithms) then salting needs to be implemented manually. The basic steps to perform this are:
-
-- Generate a salt using a [cryptographically secure function](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
-    - The salt should be at least 16 characters long.
-    - Encode the salt into a safe character set such as hexadecimal or Base64.
-- Combine the salt with the password.
-    - This can be done using simple concatenation, or a construct such as a HMAC.
-- Hash the combined password and salt.
-- Store the salt and the password hash.
+[Modern hashing algorithms](#modern-algorithms) such as Argon2, bcrypt and PBKDF2 automatically salt the passwords, so no additional steps are required when using them.
 
 ### Peppering
 
