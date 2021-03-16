@@ -143,6 +143,12 @@ The main three algorithms that should be considered are listed below:
 
 Rather than a simple work factor like other algorithms, Argon2 has three different parameters that can be configured, meaning that it's more complicated to correctly tune for the environment. The specification contains [guidance on choosing appropriate parameters](https://password-hashing.net/argon2-specs.pdf), however, if you're not in a position to properly tune it, then a simpler algorithm such as [Bcrypt](#bcrypt) may be a better choice.
 
+#### Bcrypt
+
+[Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is the most widely supported of the algorithms and should be the default choice unless there are specific requirements for PBKDF2, or appropriate knowledge to tune Argon2.
+
+The minimum work factor for Bcrypt should be 12.
+
 #### PBKDF2
 
 [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver) and has FIPS-140 validated implementations. So, it should be the preferred algorithm when these are required. Additionally, it is supported out of the box in the .NET framework, so is commonly used in ASP.NET applications.
@@ -150,12 +156,6 @@ Rather than a simple work factor like other algorithms, Argon2 has three differe
 PBKDF2 can be used with HMACs based on a number of different hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.
 
 The work factor for PBKDF2 is implemented through the iteration count, which should be at least 10,000 (although values of up to 100,000 may be appropriate in higher security environments).
-
-#### Bcrypt
-
-[Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) is the most widely supported of the algorithms and should be the default choice unless there are specific requirements for PBKDF2, or appropriate knowledge to tune Argon2.
-
-The default work factor for Bcrypt is 10, and this should generally be raised to 12 unless operating on older or lower-powered systems.
 
 ### Upgrading Legacy Hashes
 
