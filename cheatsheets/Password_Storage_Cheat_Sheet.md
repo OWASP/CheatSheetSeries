@@ -47,7 +47,9 @@ The cracking process is not guaranteed to be successful, and the success rate wi
 
 - The strength of the password.
 - The speed of the algorithm (or work factor for modern algorithms).
-- The number of passwords being targeted (assuming they have unique salts).
+- The memory required for the algorithm.
+- The number of concurrent threads of computation allowed by the algorithm.
+- The number of passwords being targeted.
 
 Strong passwords stored with modern hashing algorithms should be effectively impossible for an attacker to crack.
 
