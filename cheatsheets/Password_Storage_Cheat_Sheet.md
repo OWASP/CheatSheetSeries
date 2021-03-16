@@ -100,8 +100,6 @@ One key advantage of having a work factor is that it can be increased over time 
 
 The most common approach to upgrading the work factor is to wait until the user next authenticates, and then to re-hash their password with the new work factor. This means that different hashes will have different work factors, and may result in hashes never being upgraded if the user doesn't log back in to the application. Depending on the application, it may be appropriate to remove the older password hashes and require users to reset their passwords next time they need to login, in order to avoid storing older and less secure hashes.
 
-In some cases, it may be possible to increase the work factor of the hashes without the original password, although this is not supported by common hashing algorithms such as bcrypt and PBKDF2.
-
 ### Maximum Password Lengths
 
 Some hashing algorithms such as bcrypt have a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues and not revealing that the application uses bcrypt.
