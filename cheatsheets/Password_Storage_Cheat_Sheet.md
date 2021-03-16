@@ -122,13 +122,11 @@ Due to these issues, the preferred option should generally be to limit the maxim
 
 ## Password Hashing Algorithms
 
-### Modern Algorithms
-
 There are a number of modern hashing algorithms that have been specifically designed for securely storing passwords. This means that they should be slow (unlike algorithms such as MD5 and SHA-1 which were designed to be fast), and how slow they are can be configured by changing the [work factor](#work-factors).
 
 The main three algorithms that should be considered are listed below:
 
-#### Argon2id
+### Argon2id
 
 [Argon2](https://en.wikipedia.org/wiki/Argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net). There are three different versions of the algorithm, and the Argon2**id** variant should be used where available, as it provides a balanced approach to resisting both side channel and GPU-based attacks.
 
@@ -136,13 +134,13 @@ Rather than a simple work factor like other algorithms, Argon2 has three differe
 
 However, if you're not in a position to properly tune Argon2, then a simpler algorithm such as [bcrypt](#bcrypt) may be a better choice. Ther
 
-#### bcrypt
+### bcrypt
 
 [bcrypt](https://en.wikipedia.org/wiki/bcrypt) is the most widely supported of the algorithms and should be the default choice unless there are specific requirements for PBKDF2, or appropriate knowledge to tune Argon2.
 
 The minimum work factor for bcrypt should be 12.
 
-#### PBKDF2
+### PBKDF2
 
 [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver) and has FIPS-140 validated implementations. So, it should be the preferred algorithm when these are required. Additionally, it is supported out of the box in the .NET framework, so is commonly used in ASP.NET applications.
 
@@ -150,7 +148,7 @@ PBKDF2 can be used with HMACs based on a number of different hashing algorithms.
 
 The work factor for PBKDF2 is implemented through the iteration count, which should be at least 10,000 (although values of up to 100,000 may be appropriate in higher security environments).
 
-### Upgrading Legacy Hashes
+## Upgrading Legacy Hashes
 
 For older applications that were built using less secure hashing algorithms such as MD5 or SHA-1, these hashes should be upgraded to more modern and secure ones. When the user next enters their password (usually by authenticating on the application), it should be re-hashed using the new algorithm. It would also be good practice to expire the users' current password and require them to enter a new one, so that any older (less secure) hashes of their password are no longer useful to an attacker.
 
