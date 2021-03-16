@@ -96,7 +96,7 @@ There is no golden rule for the ideal work factor - it will depend on the perfor
 
 #### Upgrading the Work Factor
 
-One key advantage of having a work factor is that it can be increased over time as hardware becomes more powerful and cheaper. Taking Moore's Law (i.e, that computational power at a given price point doubles every eighteen months) as a rough approximation, this means that the work factor should be increased by 1 every eighteen months.
+One key advantage of having a work factor is that it can be increased over time as hardware becomes more powerful and cheaper.
 
 The most common approach to upgrading the work factor is to wait until the user next authenticates, and then to re-hash their password with the new work factor. This means that different hashes will have different work factors, and may result in hashes never being upgraded if the user doesn't log back in to the application. Depending on the application, it may be appropriate to remove the older password hashes and require users to reset their passwords next time they need to login, in order to avoid storing older and less secure hashes.
 
