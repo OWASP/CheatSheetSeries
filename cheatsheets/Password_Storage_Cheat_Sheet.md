@@ -157,17 +157,6 @@ The work factor for PBKDF2 is implemented through the iteration count, which sho
 
 The default work factor for Bcrypt is 10, and this should generally be raised to 12 unless operating on older or lower-powered systems.
 
-### Legacy Algorithms
-
-In some circumstances it is not possible to use [modern hashing algorithms](#modern-algorithms), usually due to the use of legacy language or environments. Where possible, third party libraries should be used to provide these algorithms. However, if the only algorithms available are legacy ones such as MD5 and SHA-1, then there are a number of steps that can be taken to improve the security of stored passwords.
-
-- Use the strongest algorithm available (SHA-512 > SHA-256 > SHA-1 > MD5).
-- Use a [pepper](#peppering).
-- Use a unique [salt](#salting) for each password, generated using a [cryptographically secure random number generator](Cryptographic_Storage_Cheat_Sheet.md#secure-random-number-generation).
-- Use a very large number of iterations of the algorithm (at least 10,000, and possibly significantly more depending on the speed of the hardware).
-
-It should be emphasised that these steps **are not as good as using a modern hashing algorithm**, and that this approach should only be taken where no other options are available.
-
 ### Upgrading Legacy Hashes
 
 For older applications that were built using less secure hashing algorithms such as MD5 or SHA-1, these hashes should be upgraded to more modern and secure ones. When the user next enters their password (usually by authenticating on the application), it should be re-hashed using the new algorithm. It would also be good practice to expire the users' current password and require them to enter a new one, so that any older (less secure) hashes of their password are no longer useful to an attacker.
