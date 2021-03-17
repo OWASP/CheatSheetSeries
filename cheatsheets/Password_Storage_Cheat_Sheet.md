@@ -2,7 +2,7 @@
 
 ## Introduction
 
-As the majority of users will re-use passwords between different applications, it is important to store passwords in a way that prevents them from being obtained by an attacker, even if the application or database is compromised. As with most areas of cryptography, there are many different factors that need to be considered, but fortunately, the majority of modern languages and frameworks provide built-in functionality to help store passwords, which handles much of the complexity.
+It is important to store passwords in a way that prevents them from being obtained by an attacker even if the application or database is compromised. The majority of modern languages and frameworks provide built-in functionality to help store passwords safely.
 
 This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
@@ -15,44 +15,33 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 
 ### Hashing vs Encryption
 
-Hashing and encryption are two terms that are often confused or used incorrectly. The key difference between them is that hashing is a **one way** function (i.e, it is not possible to "decrypt" a hash and obtain the original value), whereas encryption is a two-way function.
+Hashing and encryption both provide ways to keep sensitive data safe. However, in almost all circumstances, **passwords should be hashed NOT encrypted.**
 
-In almost all circumstances, passwords should be hashed rather than encrypted, as this makes it difficult or impossible for an attacker to obtain the original passwords from the hashes.
+**Hashing is a one-way function** (i.e, it is not possible to "decrypt" a hash and obtain the original plaintext value). Hashing is appropriate for password storage because even if an attacker obtains the hashed password, they can't enter it into the password field of your application and log in as the victim.
 
-Encryption should only be used in edge cases where it is necessary to be able to obtain the original password. Some examples of where this might be necessary are:
+**Encryption is a two-way function**, meaning that the original plaintext can be retrieved. Encryption is appropriate for storing data such as a user's address since this data is displayed in plaintext on the user's profile. Hashing their address would result in a garbled mess.
 
-- If the application needs to use the password to authenticate against an external legacy system that doesn't support SSO.
-- If it is necessary to retrieve individual characters from the password.
+In the context of password storage, encryption should only be used in edge cases where it is necessary to obtain the original plaintext password. This might be necessary if the application needs to use the password to authenticate with another system that doesn't support a modern way to programmatically grant access, such as OpenID Connect (OIDC). Where possible, an alternative architecture should be used to avoid the need to store passwords in an encrypted form.
 
-The ability to decrypt passwords represents a serious security risk, so it should be fully risk assessed. Where possible, an alternative architecture should be used to avoid the need to store passwords in an encrypted form.
-
-This Cheat Sheet is focused on password hashing - for further guidance on encrypting passwords see the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md).
+For further guidance on encryption see the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md).
 
 ### How Attackers Crack Password Hashes
 
-Although it is not possible to "decrypt" password hashes to obtain the original passwords, in some circumstances it is possible to "crack" the hashes. The basic steps are:
+Although it is not possible to "decrypt" password hashes to obtain the original passwords, in some circumstances it is possible to "crack" the hashes.
 
-- Select a likely candidate (such as "password").
-- Calculate the hash of the input.
-- Compare it to the target hash.
+The basic steps are:
 
-This process is then repeated for a large number of potential candidate passwords until a match is found. There are a large number of different methods that can be used to select candidate passwords, including:
+- Select a password you think the victim has chosen (e.g.`password1!`)
+- Calculate the hash
+- Compare the hash you calculated to the hash of the victim. If they match, you have correctly "cracked" the hash and now know the plaintext value of their password.
 
-- Brute force (trying every possible candidate).
+This process is repeated for a large number of potential candidate passwords. There are different methods that can be used to select candidate passwords, including:
+
+- Lists of passwords obtained from other compromised sites
+- Brute force (trying every possible candidate)
 - Dictionaries or wordlists of common passwords
-- Lists of passwords obtained from other compromised sites.
-- More sophisticated algorithms such as [Markov chains](https://github.com/magnumripper/JohnTheRipper/blob/bleeding-jumbo/doc/MARKOV) or [PRINCE](https://github.com/hashcat/princeprocessor)
-- Patterns or masks (such as "1 capital letter, 6 lowercase letters, 1 number").
 
-The cracking process is not guaranteed to be successful, and the success rate will depend on a number of factors:
-
-- The strength of the password.
-- The speed of the algorithm (or work factor for modern algorithms).
-- The memory required for the algorithm.
-- The number of concurrent threads of computation allowed by the algorithm.
-- The number of passwords being targeted.
-
-Strong passwords stored with modern hashing algorithms should be effectively impossible for an attacker to crack.
+**Strong passwords stored with modern hashing algorithms should be effectively impossible for an attacker to crack.**  It is your responsibility as an application owner to select a modern hashing algorithm.
 
 ## Password Storage Concepts
 
