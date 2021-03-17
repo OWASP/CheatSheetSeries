@@ -6,9 +6,9 @@ As the majority of users will re-use passwords between different applications, i
 
 This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
-- **Use [bcrypt](#bcrypt) with work factor 12 or more with a password limit of 64 characters.**
+- **Use [bcrypt](#bcrypt) with work factor 12 or more and with a password limit of 64 characters.**
 - **Consider the use of [Argon2id](#argon2id) with configuration settings inline with [IETF specifications](https://tools.ietf.org/html/draft-ietf-kitten-password-storage-03#section-5.1).**
-- **Use [PBKDF2](#pbkdf2) with a work factor of 10,000 or more and set with HMAC-SHA-256 as an internal hash function for systems requiring FIPS-140 compliance.**
+- **Use [PBKDF2](#pbkdf2) with a work factor of 10,000 or more and set with an interal hash function of HMAC-SHA-256 for systems requiring FIPS-140 compliance.**
 - **Consider using a [pepper](#peppering) to provide an additional defence in depth (though alone it provides no additional secure characteristics).**
 
 
@@ -55,7 +55,7 @@ The cracking process is not guaranteed to be successful, and the success rate wi
 
 Strong passwords stored with modern hashing algorithms should be effectively impossible for an attacker to crack.
 
-## Hashing Concepts
+## Password Storage Concepts
 
 ### Salting
 
@@ -133,7 +133,7 @@ An alternative approach is to pre-hash the user-supplied password with a fast al
 
 When using pre-hashing, ensure that the output for the first hashing algorithm is safely encoded as hexadecimal or base64, as some hashing algorithms such as bcrypt can behave in undesirable ways if the [input contains null bytes](https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html).
 
-Also, it is critical *not* to store the sha384 hash in any way and to only store the bcrypt output value.
+Also, it is critical to not store the sha384 hash in any way and to only store the bcrypt output value.
 
 ### PBKDF2
 
