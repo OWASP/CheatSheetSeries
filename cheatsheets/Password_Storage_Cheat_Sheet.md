@@ -8,7 +8,7 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 
 - **Use [bcrypt](#bcrypt) with work factor 12 or more and with a password limit of 64 characters.**
 - **Consider the use of [Argon2id](#argon2id) with configuration settings inline with [IETF specifications](https://tools.ietf.org/html/draft-ietf-kitten-password-storage-03#section-5.1).**
-- **Use [PBKDF2](#pbkdf2) with a work factor of 10,000 or more and set with an interal hash function of HMAC-SHA-256 for systems requiring FIPS-140 compliance.**
+- **Use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an interal hash function of HMAC-SHA-256 for systems requiring FIPS-140 compliance.**
 - **Consider using a [pepper](#peppering) to provide an additional defence in depth (though alone it provides no additional secure characteristics).**
 
 ## Background
@@ -129,7 +129,11 @@ Also, it is critical to not store the sha384 hash in any way and to only store t
 
 PBKDF2 requires that you select an internal hashing algorithm. You can choose HMACs or a variety of other hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.
 
-The work factor for PBKDF2 is implemented through the iteration count, which should be at least 10,000 (although values of up to 100,000 may be appropriate in higher security environments).
+The work factor for PBKDF2 is implemented through an iteration count, which should set differently based on the internal hashing algorithm used.
+
+* PBKDF2-HMAC-SHA1: 720,000 iterations
+* PBKDF2-HMAC-SHA256: 310,000 iterations
+* PBKDF2-HMAC-SHA512: 120,000 iterations
 
 ## Upgrading Legacy Hashes
 
