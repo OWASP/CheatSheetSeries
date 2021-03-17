@@ -25,7 +25,7 @@ For further guidance on encryption see the [Cryptographic Storage Cheat Sheet](C
 
 ### How Attackers Crack Password Hashes
 
-Although it is not possible to "decrypt" password hashes to obtain the original passwords, in some circumstances it is possible to "crack" the hashes. 
+Although it is not possible to "decrypt" password hashes to obtain the original passwords, in some circumstances it is possible to "crack" the hashes.
 
 The basic steps are:
 
@@ -39,7 +39,7 @@ This process is repeated for a large number of potential candidate passwords. Th
 - Brute force (trying every possible candidate)
 - Dictionaries or wordlists of common passwords
 
-**Strong passwords stored with modern hashing algorithms should be effectively impossible for an attacker to crack.**  It is your responsibility as an application owner to select a modern hashing algorithm. 
+**Strong passwords stored with modern hashing algorithms should be effectively impossible for an attacker to crack.**  It is your responsibility as an application owner to select a modern hashing algorithm.
 
 ## Password Storage Concepts
 
