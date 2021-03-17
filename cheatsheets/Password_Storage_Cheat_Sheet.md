@@ -128,7 +128,7 @@ In order to protect against both of these issues, a maximum password length of 6
 
 #### Pre-Hashing Passwords
 
-An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-384, and then to hash the resultant hash with bcrypt (i.e, `bcrypt(sha384($password))`). 
+An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-384, and then to hash the resultant hash with bcrypt (i.e, `bcrypt(sha384($password))`).
 
 When using pre-hashing, ensure that the output for the pre-hashing algorithm is safely encoded as hexadecimal or base64, as bcrypt can behave in undesirable ways if the [input contains null bytes](https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html).
 
