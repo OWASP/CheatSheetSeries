@@ -17,7 +17,9 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 
 Hashing and encryption both provide ways to keep sensitive data safe. However, in almost all circumstances, **passwords should be hashed NOT encrypted.**
 
-The key difference between hashing and encryption is that **hashing is a one-way function** (i.e, it is not possible to "decrypt" a hash and obtain the original plaintext value). **Encryption is a two-way function**, meaning that the original plaintext can be retrieved. Encryption is appropriate for storing data such as a user's address since this data is displayed in plaintext on the user's profile. Hashing their address would result in a garbled mess.
+**Hashing is a one-way function** (i.e, it is not possible to "decrypt" a hash and obtain the original plaintext value). Hashing is appropriate for password storage because even if an attacker obtains the hashed password, they can't enter it into the password field of your application and log in as the victim.
+
+**Encryption is a two-way function**, meaning that the original plaintext can be retrieved. Encryption is appropriate for storing data such as a user's address since this data is displayed in plaintext on the user's profile. Hashing their address would result in a garbled mess.
 
 In the context of password storage, encryption should only be used in edge cases where it is necessary to obtain the original plaintext password. This might be necessary if the application needs to use the password to authenticate with another system that doesn't support a modern way to programmatically grant access, such as OpenID Connect (OIDC). Where possible, an alternative architecture should be used to avoid the need to store passwords in an encrypted form.
 
