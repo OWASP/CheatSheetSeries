@@ -131,9 +131,9 @@ PBKDF2 requires that you select an internal hashing algorithm. You can choose HM
 
 The work factor for PBKDF2 is implemented through an iteration count, which should set differently based on the internal hashing algorithm used.
 
-* PBKDF2-HMAC-SHA1: 720,000 iterations
-* PBKDF2-HMAC-SHA256: 310,000 iterations
-* PBKDF2-HMAC-SHA512: 120,000 iterations
+- PBKDF2-HMAC-SHA1: 720,000 iterations
+- PBKDF2-HMAC-SHA256: 310,000 iterations
+- PBKDF2-HMAC-SHA512: 120,000 iterations
 
 ## Upgrading Legacy Hashes
 
