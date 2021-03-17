@@ -11,7 +11,6 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 - **Use [PBKDF2](#pbkdf2) with a work factor of 10,000 or more and set with an interal hash function of HMAC-SHA-256 for systems requiring FIPS-140 compliance.**
 - **Consider using a [pepper](#peppering) to provide an additional defence in depth (though alone it provides no additional secure characteristics).**
 
-
 ## Background
 
 ### Hashing vs Encryption
@@ -119,7 +118,7 @@ However, if you're not in a position to properly tune Argon2, then a simpler alg
 
 The minimum work factor for bcrypt should be 12.
 
-### Input Limits
+#### Input Limits
 
 bcrypt has a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues and not revealing that the application uses bcrypt.
 
@@ -127,11 +126,11 @@ Additionally, due to how computationally expensive modern hashing functions are,
 
 In order to protect against both of these issues, a maximum password length of 64 characters should be enforced when using bcrypt.
 
-##### Pre-Hashing Passwords
+#### Pre-Hashing Passwords
 
-An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-384, and then to hash the resultant hash with a more secure algorithm such as bcrypt (i.e, `bcrypt(sha384($password))`). 
+An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-384, and then to hash the resultant hash with bcrypt (i.e, `bcrypt(sha384($password))`). 
 
-When using pre-hashing, ensure that the output for the first hashing algorithm is safely encoded as hexadecimal or base64, as some hashing algorithms such as bcrypt can behave in undesirable ways if the [input contains null bytes](https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html).
+When using pre-hashing, ensure that the output for the pre-hashing algorithm is safely encoded as hexadecimal or base64, as bcrypt can behave in undesirable ways if the [input contains null bytes](https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html).
 
 Also, it is critical to not store the sha384 hash in any way and to only store the bcrypt output value.
 
