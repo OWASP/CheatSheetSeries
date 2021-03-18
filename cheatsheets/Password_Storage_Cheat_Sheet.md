@@ -111,7 +111,7 @@ The minimum work factor for bcrypt should be 12.
 
 bcrypt has a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues and not revealing that the application uses bcrypt.
 
-In order to protect against both of these issues, a maximum password length of 64 characters should be enforced when using bcrypt.
+In order to protect against this issue, a maximum password length of 64 characters should be enforced when using bcrypt.
 
 #### Pre-Hashing Passwords
 
