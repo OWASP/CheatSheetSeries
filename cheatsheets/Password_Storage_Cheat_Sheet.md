@@ -8,7 +8,7 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 
 - **Use [bcrypt](#bcrypt) with work factor 12 or more and with a password limit of 64 characters.**
 - **Consider the use of [Argon2id](#argon2id) with configuration settings inline with [IETF specifications](https://tools.ietf.org/html/draft-ietf-kitten-password-storage-03#section-5.1).**
-- **Use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an interal hash function of HMAC-SHA-256 for systems requiring FIPS-140 compliance.**
+- **Use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an internal hash function of HMAC-SHA-256 for systems requiring FIPS-140 compliance.**
 - **Consider using a [pepper](#peppering) to provide an additional defence in depth (though alone it provides no additional secure characteristics).**
 
 ## Background
@@ -111,8 +111,6 @@ The minimum work factor for bcrypt should be 12.
 
 bcrypt has a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues and not revealing that the application uses bcrypt.
 
-Additionally, due to how computationally expensive modern hashing functions are, if a user can supply very long passwords then there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013.
-
 In order to protect against both of these issues, a maximum password length of 64 characters should be enforced when using bcrypt.
 
 #### Pre-Hashing Passwords
@@ -134,6 +132,8 @@ The work factor for PBKDF2 is implemented through an iteration count, which shou
 - PBKDF2-HMAC-SHA1: 720,000 iterations
 - PBKDF2-HMAC-SHA256: 310,000 iterations
 - PBKDF2-HMAC-SHA512: 120,000 iterations
+
+When PBKDF2 is used with HMAC, and the password is longer than the block size of the hash function (64 bytes for SHA-256), then the password will be automatically pre-hashed. For example, the password "This is a password longer than 512 bits which is the block size of SHA-256" is converted to the hash value (in hex) fa91498c139805af73f7ba275cca071e78d78675027000c99a9925e2ec92eedd. A good implementation of PBKDF2 will perform this step once before the expensive iterated hashing phase, but some implementations perform the conversion on each iteration. This can make hashing long passwords significantly more expensive than hashing short passwords. If a user can supply very long passwords then there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013. Manual [pre-hashing](#pre-hashing-passwords) can reduce this risk.
 
 ## Upgrading Legacy Hashes
 
