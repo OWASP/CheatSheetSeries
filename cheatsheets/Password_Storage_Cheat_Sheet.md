@@ -2,32 +2,32 @@
 
 ## Introduction
 
-It is important to store passwords in a way that prevents them from being obtained by an attacker even if the application or database is compromised. The majority of modern languages and frameworks provide built-in functionality to help store passwords safely.
+It is essential to store passwords in a way that prevents them from being obtained by an attacker even if the application or database is compromised. The majority of modern languages and frameworks provide built-in functionality to help store passwords safely.
 
 This cheat sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
-- **Use [Argon2id](#argon2id) with a minimum comfiguration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
+- **Use [Argon2id](#argon2id) with a minimum configuration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
 - **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 12 or more and with a password limit of 64 characters.**
 - **If FIPS-140 compliance is required, use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an internal hash function of HMAC-SHA-256.**
-- **Consider using a [pepper](#peppering) to provide an additional defence in depth (though alone it provides no additional secure characteristics).**
+- **Consider using a [pepper](#peppering) to provide additional defense in depth (though alone, it provides no additional secure characteristics).**
 
 ## Background
 
 ### Hashing vs Encryption
 
-Hashing and encryption both provide ways to keep sensitive data safe. However, in almost all circumstances, **passwords should be hashed NOT encrypted.**
+Hashing and encryption both provide ways to keep sensitive data safe. However, in almost all circumstances, **passwords should be hashed, NOT encrypted.**
 
-**Hashing is a one-way function** (i.e, it is not possible to "decrypt" a hash and obtain the original plaintext value). Hashing is appropriate for password storage because even if an attacker obtains the hashed password, they can't enter it into the password field of your application and log in as the victim.
+**Hashing is a one-way function** (i.e., it is impossible to "decrypt" a hash and obtain the original plaintext value). Hashing is appropriate for password storage. Even if an attacker obtains the hashed password, they cannot enter it into an application's password field and log in as the victim.
 
 **Encryption is a two-way function**, meaning that the original plaintext can be retrieved. Encryption is appropriate for storing data such as a user's address since this data is displayed in plaintext on the user's profile. Hashing their address would result in a garbled mess.
 
-In the context of password storage, encryption should only be used in edge cases where it is necessary to obtain the original plaintext password. This might be necessary if the application needs to use the password to authenticate with another system that doesn't support a modern way to programmatically grant access, such as OpenID Connect (OIDC). Where possible, an alternative architecture should be used to avoid the need to store passwords in an encrypted form.
+In the context of password storage, encryption should only be used in edge cases where it is necessary to obtain the original plaintext password. This might be necessary if the application needs to use the password to authenticate with another system that does not support a modern way to programmatically grant access, such as OpenID Connect (OIDC). Where possible, an alternative architecture should be used to avoid the need to store passwords in an encrypted form.
 
-For further guidance on encryption see the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md).
+For further guidance on encryption, see the [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md).
 
 ### How Attackers Crack Password Hashes
 
-Although it is not possible to "decrypt" password hashes to obtain the original passwords, in some circumstances it is possible to "crack" the hashes.
+Although it is not possible to "decrypt" password hashes to obtain the original passwords, it is possible to "crack" the hashes in some circumstances.
 
 The basic steps are:
 
@@ -35,7 +35,7 @@ The basic steps are:
 - Calculate the hash
 - Compare the hash you calculated to the hash of the victim. If they match, you have correctly "cracked" the hash and now know the plaintext value of their password.
 
-This process is repeated for a large number of potential candidate passwords. There are different methods that can be used to select candidate passwords, including:
+This process is repeated for a large number of potential candidate passwords. Different methods can be used to select candidate passwords, including:
 
 - Lists of passwords obtained from other compromised sites
 - Brute force (trying every possible candidate)
@@ -47,9 +47,9 @@ This process is repeated for a large number of potential candidate passwords. Th
 
 ### Salting
 
-A salt is a unique, randomly generated string that is added to each password as part of the hashing process. As the salt is unique for every user, an attacker has to crack hashes one at a time using the respective salt, rather than being able to calculate a hash once and compare it against every stored hash. This makes cracking large numbers of hashes significantly harder, as the time required grows in direct proportion to the number of hashes.
+A salt is a unique, randomly generated string that is added to each password as part of the hashing process. As the salt is unique for every user, an attacker has to crack hashes one at a time using the respective salt rather than calculating a hash once and comparing it against every stored hash. This makes cracking large numbers of hashes significantly harder, as the time required grows in direct proportion to the number of hashes.
 
-Salting also provides protection against an attacker pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is not possible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.
+Salting also protects against an attacker pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is impossible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.
 
 [Modern hashing algorithms](#password-hashing-algorithms) such as Argon2id, bcrypt and PBKDF2 automatically salt the passwords, so no additional steps are required when using them.
 
@@ -57,7 +57,7 @@ Salting also provides protection against an attacker pre-computing hashes using 
 
 A [pepper](https://tools.ietf.org/html/draft-whited-kitten-password-storage-04#section-4.2) can be used in addition to salting to provide an additional layer of protection. It is similar to a salt but has four key differences:
 
-- The pepper is **shared between all stored passwords**, rather than being *unique* like a salt. This makes a pepper predicable, and attempts to crack a password hash *probabilistic*. The static nature of a pepper also *weakens" hash collision resistance whereas the salt improves hash collision resistance by extending the length with unique characters that increase the entropy of input to the hashing function.
+- The pepper is **shared between all stored passwords**, rather than being *unique* like a salt. This makes a pepper predictable and attempts to crack a password hash *probabilistic*. The static nature of a pepper also *weakens* hash collision resistance. In contrast, the salt improves hash collision resistance by extending the length with unique characters that increase the entropy of input to the hashing function.
 - The pepper is **not stored in the database**, unlike many implementations of a password salt (but not always true for a salt).
 - The pepper is not a mechanism to make password cracking **too hard to be feasible** for an attacker, like many password storage protections (salting among these) aim to do.
 
@@ -106,7 +106,7 @@ Rather than a simple work factor like other algorithms, Argon2id has three diffe
 
 ### bcrypt
 
-The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function is a widely supported algorithm and should be second choice if Argon2id is not available or there are specific requirements for PBKDF2.
+The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function is a widely supported algorithm and should be the second choice for password storage if Argon2id is not available or there are specific requirements for PBKDF2.
 
 The minimum work factor for bcrypt should be 12.
 
