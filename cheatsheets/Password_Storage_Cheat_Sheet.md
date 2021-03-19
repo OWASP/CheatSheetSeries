@@ -106,11 +106,7 @@ bcrypt has a maximum length input length of 72 characters [for most implementati
 
 #### Pre-Hashing Passwords
 
-An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-384, and then to hash the resulting hash with bcrypt (i.e., `bcrypt(sha384($password))`).
-
-When using pre-hashing, ensure that the pre-hashing algorithm's output is safely encoded as hexadecimal or base64, as bcrypt can behave in undesirable ways if the [input contains null bytes](https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html).
-
-It is also critical to not store the sha384 hash in any way and only store the bcrypt output value.
+An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-384, and then to hash the resulting hash with bcrypt (i.e., `bcrypt(sha384($password))`). This is a dangerous (but common) practice that **should be avoided** due to [password shucking](https://www.youtube.com/watch?v=OQD3qDYMyYQ).
 
 ### PBKDF2
 
@@ -124,7 +120,7 @@ The work factor for PBKDF2 is implemented through an iteration count, which shou
 - PBKDF2-HMAC-SHA256: 310,000 iterations
 - PBKDF2-HMAC-SHA512: 120,000 iterations
 
-When PBKDF2 is used with an HMAC, and the password is longer than the hash function's block size (64 bytes for SHA-256), the password will be automatically pre-hashed. For example, the password "This is a password longer than 512 bits which is the block size of SHA-256" is converted to the hash value (in hex) fa91498c139805af73f7ba275cca071e78d78675027000c99a9925e2ec92eedd. A good implementation of PBKDF2 will perform this step before the expensive iterated hashing phase, but some implementations perform the conversion on each iteration. This can make hashing long passwords significantly more expensive than hashing short passwords. If a user can supply very long passwords, there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013. Manual [pre-hashing](#pre-hashing-passwords) can reduce this risk.
+When PBKDF2 is used with an HMAC, and the password is longer than the hash function's block size (64 bytes for SHA-256), the password will be automatically pre-hashed. For example, the password "This is a password longer than 512 bits which is the block size of SHA-256" is converted to the hash value (in hex) fa91498c139805af73f7ba275cca071e78d78675027000c99a9925e2ec92eedd. A good implementation of PBKDF2 will perform this step before the expensive iterated hashing phase, but some implementations perform the conversion on each iteration. This can make hashing long passwords significantly more expensive than hashing short passwords. If a user can supply very long passwords, there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013. Manual [pre-hashing](#pre-hashing-passwords) can reduce this risk but requires adding a [salt](#salting) to the pre-hash step.
 
 ## Upgrading Legacy Hashes
 
