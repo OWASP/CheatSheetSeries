@@ -106,7 +106,7 @@ Rather than a simple work factor like other algorithms, Argon2id has three diffe
 
 ### bcrypt
 
-[bcrypt](https://en.wikipedia.org/wiki/bcrypt) is a widely supported algorithm and should be second choice if Argon2id is not available or there are specific requirements for PBKDF2.
+The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function is a widely supported algorithm and should be second choice if Argon2id is not available or there are specific requirements for PBKDF2.
 
 The minimum work factor for bcrypt should be 12.
 
