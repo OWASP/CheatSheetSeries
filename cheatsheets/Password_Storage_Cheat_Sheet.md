@@ -4,7 +4,7 @@
 
 It is important to store passwords in a way that prevents them from being obtained by an attacker even if the application or database is compromised. The majority of modern languages and frameworks provide built-in functionality to help store passwords safely.
 
-This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
+This cheat sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
 - **Use [Argon2id](#argon2id) with a minimum comfiguration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
 - **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 12 or more and with a password limit of 64 characters.**
@@ -91,6 +91,8 @@ The most common approach to upgrading the work factor is to wait until the user 
 
 There are a number of modern hashing algorithms that have been specifically designed for securely storing passwords. This means that they should be slow (unlike algorithms such as MD5 and SHA-1 which were designed to be fast), and how slow they are can be configured by changing the [work factor](#work-factors).
 
+Websites should not hide which password hashing algorithm they use. If you utilize a modern password hashing algorithm with safe configuration parameters, it should be safe to state in public which password hashing algorithms is in use and be listed [here](https://pulse.michalspacek.cz/passwords/storages).
+
 The main three algorithms that should be considered are listed below:
 
 ### Argon2id
@@ -110,7 +112,7 @@ The minimum work factor for bcrypt should be 12.
 
 #### Input Limits
 
-bcrypt has a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues and not revealing that the application uses bcrypt.
+bcrypt has a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues.
 
 In order to protect against this issue, a maximum password length of 64 characters should be enforced when using bcrypt.
 
