@@ -55,7 +55,7 @@ Salting also provides protection against an attacker pre-computing hashes using 
 
 ### Peppering
 
-A [pepper](https://tools.ietf.org/html/draft-ietf-kitten-password-storage-03#section-4.2) can be used in addition to salting to provide an additional layer of protection. It is similar to a salt but has four key differences:
+A [pepper](https://tools.ietf.org/html/draft-whited-kitten-password-storage-04#section-4.2) can be used in addition to salting to provide an additional layer of protection. It is similar to a salt but has four key differences:
 
 - The pepper is **shared between all stored passwords**, rather than being *unique* like a salt. This makes a pepper predicable, and attempts to crack a password hash *probabilistic*. The static nature of a pepper also *weakens" hash collision resistance whereas the salt improves hash collision resistance by extending the length with unique characters that increase the entropy of input to the hashing function.
 - The pepper is **not stored in the database**, unlike many implementations of a password salt (but not always true for a salt).
@@ -91,7 +91,7 @@ The most common approach to upgrading the work factor is to wait until the user 
 
 There are a number of modern hashing algorithms that have been specifically designed for securely storing passwords. This means that they should be slow (unlike algorithms such as MD5 and SHA-1 which were designed to be fast), and how slow they are can be configured by changing the [work factor](#work-factors).
 
-Websites should not hide which password hashing algorithm they use. If you utilize a modern password hashing algorithm with safe configuration parameters, it should be safe to state in public which password hashing algorithms is in use and be listed [here](https://pulse.michalspacek.cz/passwords/storages).
+Websites should not hide which password hashing algorithm they use. If you utilize a modern password hashing algorithm with proper configuration parameters, it should be safe to state in public which password hashing algorithms is in use and be listed [here](https://pulse.michalspacek.cz/passwords/storages).
 
 The main three algorithms that should be considered are listed below:
 
