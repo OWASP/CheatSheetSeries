@@ -55,7 +55,7 @@ Salting also protects against an attacker pre-computing hashes using rainbow tab
 
 ### Peppering
 
-A [pepper](https://tools.ietf.org/html/draft-whited-kitten-password-storage-04#section-4.2) can be used in addition to salting to provide an additional layer of protection. It is similar to a salt but has four key differences:
+A [pepper](https://www.ietf.org/archive/id/draft-ietf-kitten-password-storage-04.html#section-4.2) can be used in addition to salting to provide an additional layer of protection. It is similar to a salt but has four key differences:
 
 - The pepper is **shared between all stored passwords**, rather than being *unique* like a salt. This makes a pepper predictable and attempts to crack a password hash *probabilistic*. The static nature of a pepper also *weakens* hash collision resistance. In contrast, the salt improves hash collision resistance by extending the length with unique characters that increase the entropy of input to the hashing function.
 - Unlike many implementations of a password salt, the pepper is **not stored in the database**.
