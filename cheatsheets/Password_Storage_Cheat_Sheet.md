@@ -6,8 +6,8 @@ It is important to store passwords in a way that prevents them from being obtain
 
 This Cheat Sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
-- **Use [bcrypt](#bcrypt) with work factor 12 or more and with a password limit of 64 characters.**
-- **Consider the use of [Argon2id](#argon2id) with configuration settings inline with [IETF specifications](https://tools.ietf.org/html/draft-ietf-kitten-password-storage-03#section-5.1).**
+- **Use [Argon2id](#argon2id) with a minimum comfiguration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
+- **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 12 or more and with a password limit of 64 characters.**
 - **Use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an internal hash function of HMAC-SHA-256 for systems requiring FIPS-140 compliance.**
 - **Consider using a [pepper](#peppering) to provide an additional defence in depth (though alone it provides no additional secure characteristics).**
 
@@ -51,7 +51,7 @@ A salt is a unique, randomly generated string that is added to each password as 
 
 Salting also provides protection against an attacker pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is not possible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.
 
-[Modern hashing algorithms](#password-hashing-algorithms) such as Argon2, bcrypt and PBKDF2 automatically salt the passwords, so no additional steps are required when using them.
+[Modern hashing algorithms](#password-hashing-algorithms) such as Argon2id, bcrypt and PBKDF2 automatically salt the passwords, so no additional steps are required when using them.
 
 ### Peppering
 
@@ -95,15 +95,16 @@ The main three algorithms that should be considered are listed below:
 
 ### Argon2id
 
-[Argon2](https://en.wikipedia.org/wiki/Argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net). There are three different versions of the algorithm, and the Argon2**id** variant should be used where available, as it provides a balanced approach to resisting both side channel and GPU-based attacks.
+[Argon2](https://en.wikipedia.org/wiki/Argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net). There are three different versions of the algorithm, and the Argon2id variant should be used, as it provides a balanced approach to resisting both side channel and GPU-based attacks.
 
-Rather than a simple work factor like other algorithms, Argon2 has three different parameters that can be configured, meaning that it's more complicated to correctly tune for the environment. The specification from 2015 contains [guidance on choosing appropriate parameters](https://password-hashing.net/argon2-specs.pdf). There is also a 2021 [IETF draft](https://tools.ietf.org/html/draft-ietf-kitten-password-storage-03#section-5.1) on tuning Argon2 and other password storage algorithms.
+Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured. Argon2id should use one of the following configuration settings as a base miniimum which includes the degree of parallelism (p), the minimum memory size (m), and the minimum number of iterations (t).
 
-However, if you're not in a position to properly tune Argon2, then a simpler algorithm such as [bcrypt](#bcrypt) may be a better choice.
+- m=37 MiB, t=1, p=1
+- m=15 MiB, t=2, p=1
 
 ### bcrypt
 
-[bcrypt](https://en.wikipedia.org/wiki/bcrypt) is the most widely supported of the algorithms and should be the default choice unless there are specific requirements for PBKDF2, or appropriate knowledge to tune Argon2.
+[bcrypt](https://en.wikipedia.org/wiki/bcrypt) is a widely supported algorithm and should be second choice if Argon2id is not available or there are specific requirements for PBKDF2.
 
 The minimum work factor for bcrypt should be 12.
 
