@@ -112,23 +112,21 @@ The minimum work factor for bcrypt should be 12.
 
 #### Input Limits
 
-bcrypt has a maximum length for the input, which is 72 characters for most implementations (there are some [reports](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length) that other implementations have lower maximum lengths, but none have been identified at the time of writing). Where bcrypt is used, a maximum length of 64 characters should be enforced on the input, as this provides a sufficiently high limit, while still allowing for string termination issues.
-
-In order to protect against this issue, a maximum password length of 64 characters should be enforced when using bcrypt.
+bcrypt has a maximum length for the input of 72 characters [for most implementations](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length). To protect against this issue, a maximum password length of 64 characters should be enforced when using bcrypt.
 
 #### Pre-Hashing Passwords
 
-An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-384, and then to hash the resultant hash with bcrypt (i.e, `bcrypt(sha384($password))`).
+An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-384, and then to hash the resulting hash with bcrypt (i.e., `bcrypt(sha384($password))`).
 
-When using pre-hashing, ensure that the output for the pre-hashing algorithm is safely encoded as hexadecimal or base64, as bcrypt can behave in undesirable ways if the [input contains null bytes](https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html).
+When using pre-hashing, ensure that the pre-hashing algorithm's output is safely encoded as hexadecimal or base64, as bcrypt can behave in undesirable ways if the [input contains null bytes](https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html).
 
-Also, it is critical to not store the sha384 hash in any way and to only store the bcrypt output value.
+It is also critical to not store the sha384 hash in any way and only store the bcrypt output value.
 
 ### PBKDF2
 
-[PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver) and has FIPS-140 validated implementations. So, it should be the preferred algorithm when these are required. Additionally, it is supported out of the box in the .NET framework, so is commonly used in ASP.NET applications.
+[PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver) and has FIPS-140 validated implementations. So, it should be the preferred algorithm when these are required.
 
-PBKDF2 requires that you select an internal hashing algorithm. You can choose HMACs or a variety of other hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.
+PBKDF2 requires that you select an internal hashing algorithm such as an HMAC or a variety of other hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.
 
 The work factor for PBKDF2 is implemented through an iteration count, which should set differently based on the internal hashing algorithm used.
 
@@ -136,7 +134,7 @@ The work factor for PBKDF2 is implemented through an iteration count, which shou
 - PBKDF2-HMAC-SHA256: 310,000 iterations
 - PBKDF2-HMAC-SHA512: 120,000 iterations
 
-When PBKDF2 is used with HMAC, and the password is longer than the block size of the hash function (64 bytes for SHA-256), then the password will be automatically pre-hashed. For example, the password "This is a password longer than 512 bits which is the block size of SHA-256" is converted to the hash value (in hex) fa91498c139805af73f7ba275cca071e78d78675027000c99a9925e2ec92eedd. A good implementation of PBKDF2 will perform this step once before the expensive iterated hashing phase, but some implementations perform the conversion on each iteration. This can make hashing long passwords significantly more expensive than hashing short passwords. If a user can supply very long passwords then there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013. Manual [pre-hashing](#pre-hashing-passwords) can reduce this risk.
+When PBKDF2 is used with an HMAC, and the password is longer than the hash function's block size (64 bytes for SHA-256), the password will be automatically pre-hashed. For example, the password "This is a password longer than 512 bits which is the block size of SHA-256" is converted to the hash value (in hex) fa91498c139805af73f7ba275cca071e78d78675027000c99a9925e2ec92eedd. A good implementation of PBKDF2 will perform this step before the expensive iterated hashing phase, but some implementations perform the conversion on each iteration. This can make hashing long passwords significantly more expensive than hashing short passwords. If a user can supply very long passwords, there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013. Manual [pre-hashing](#pre-hashing-passwords) can reduce this risk.
 
 ## Upgrading Legacy Hashes
 
