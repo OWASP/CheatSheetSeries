@@ -24,7 +24,7 @@ Data should be properly encoded before used in this manner to prevent injection 
 
 #### Don't rely on client logic for security
 
-Least ye have forgotten the user controls the client side logic. I can use a number of browser plugging to set breakpoints, skip code, change values, etc. Never rely on client logic.
+Least ye have forgotten the user controls the client side logic. I can use a number of browser plugins to set breakpoints, skip code, change values, etc. Never rely on client logic.
 
 #### Don't rely on client business logic
 
