@@ -8,7 +8,7 @@ This cheat sheet provides guidance on the various areas that need to be consider
 
 - **Use [Argon2id](#argon2id) with a minimum comfiguration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
 - **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 12 or more and with a password limit of 64 characters.**
-- **Use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an internal hash function of HMAC-SHA-256 for systems requiring FIPS-140 compliance.**
+- **If FIPS-140 compliance is required, use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an internal hash function of HMAC-SHA-256.**
 - **Consider using a [pepper](#peppering) to provide an additional defence in depth (though alone it provides no additional secure characteristics).**
 
 ## Background
