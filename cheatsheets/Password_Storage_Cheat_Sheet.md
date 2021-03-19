@@ -55,23 +55,13 @@ Salting also protects against an attacker pre-computing hashes using rainbow tab
 
 ### Peppering
 
-A [pepper](https://www.ietf.org/archive/id/draft-ietf-kitten-password-storage-04.html#section-4.2) can be used in addition to salting to provide an additional layer of protection. It is similar to a salt but has four key differences:
+A [pepper](https://www.ietf.org/archive/id/draft-ietf-kitten-password-storage-04.html#section-4.2) can be used in addition to salting to provide an additional layer of protection. 
 
-- The pepper is **shared between all stored passwords**, rather than being *unique* like a salt. This makes a pepper predictable and attempts to crack a password hash *probabilistic*. The static nature of a pepper also *weakens* hash collision resistance. In contrast, the salt improves hash collision resistance by extending the length with unique characters that increase the entropy of input to the hashing function.
+- The pepper is **shared between all stored passwords**, rather than being *unique* like a salt. 
 - Unlike many implementations of a password salt, the pepper is **not stored in the database**.
-- The pepper is not a mechanism to make password cracking **too hard to be feasible** for an attacker, like many password storage protections (salting among these) aim to do.
+- The purpose of the pepper is to prevent an attacker from being able to crack any of the hashes if they only have access to the database, for example, if they have exploited a SQL injection vulnerability or obtained a backup of the database.
 
-The purpose of the pepper is to prevent an attacker from being able to crack any of the hashes if they only have access to the database, for example, if they have exploited a SQL injection vulnerability or obtained a backup of the database.
-
-The pepper should be *at least 32* characters long and should be randomly generated using a secure pseudo-random generator (CSPRNG). It should be stored securely in a "secrets management" solution.
-
-Never place a pepper as a suffix as this may lead to vulnerabilities such as issues related to truncation and length-extension attacks. These threats allow the input password component to validate successfully because the unique password is never truncated; only the probabilistic pepper would be truncated.
-
-#### Alternatives
-
-An alternative pepper approach is to hash the passwords as usual (specifically one-way hashing) and then encrypt the hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper without affecting the password directly or the hash function in any way. This avoids known issues with the concatenation/prefix approach, and it allows for password to remain valid when you apply key rotation (using established encryption key rotation procedures) if the key that acts as a pepper is believed to be compromised.
-
-Another solution may be storing the secret pepper with an ID to easily retrieve it and past known peppers. When you store a password hash, store only the ID of the pepper in the database alongside the associated password hashes. This allows rotation of the pepper without disclosing the secret pepper itself. When the pepper needs to be updated, this ID can be updated for hashes using the new pepper. The requires the application logic to additionally associate an ID to an external store with all the pepper secret values that are valid and currently in use, which may or may not be possible for all secret stores (HSM and secret vaults typically support a lookup ID).
+One of several peppering strategies is to hash the passwords as usual (specifically using a password hashing algorithm) and then encrypt the hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper. Symmetrical encryption peppering strategies do not affect the password hashing function in any way. 
 
 ### Work Factors
 
