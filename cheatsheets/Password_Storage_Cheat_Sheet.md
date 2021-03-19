@@ -51,33 +51,33 @@ A salt is a unique, randomly generated string that is added to each password as 
 
 Salting also protects against an attacker pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is impossible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.
 
-[Modern hashing algorithms](#password-hashing-algorithms) such as Argon2id, bcrypt and PBKDF2 automatically salt the passwords, so no additional steps are required when using them.
+[Modern hashing algorithms](#password-hashing-algorithms) such as Argon2id, bcrypt, and PBKDF2 automatically salt the passwords, so no additional steps are required when using them.
 
 ### Peppering
 
 A [pepper](https://tools.ietf.org/html/draft-whited-kitten-password-storage-04#section-4.2) can be used in addition to salting to provide an additional layer of protection. It is similar to a salt but has four key differences:
 
 - The pepper is **shared between all stored passwords**, rather than being *unique* like a salt. This makes a pepper predictable and attempts to crack a password hash *probabilistic*. The static nature of a pepper also *weakens* hash collision resistance. In contrast, the salt improves hash collision resistance by extending the length with unique characters that increase the entropy of input to the hashing function.
-- The pepper is **not stored in the database**, unlike many implementations of a password salt (but not always true for a salt).
+- Unlike many implementations of a password salt, the pepper is **not stored in the database**.
 - The pepper is not a mechanism to make password cracking **too hard to be feasible** for an attacker, like many password storage protections (salting among these) aim to do.
 
-The purpose of the pepper is to prevent an attacker from being able to crack any of the hashes if they only have access to the database, for example if they have exploited a SQL injection vulnerability or obtained a backup of the database.
+The purpose of the pepper is to prevent an attacker from being able to crack any of the hashes if they only have access to the database, for example, if they have exploited a SQL injection vulnerability or obtained a backup of the database.
 
-The pepper should be *at-least* 32 characters long and should be randomly generated using a secure pseudo-random generator (CSPRNG). It should be stored securely in "secrets management" solution.
+The pepper should be *at least 32* characters long and should be randomly generated using a secure pseudo-random generator (CSPRNG). It should be stored securely in a "secrets management" solution.
 
-Never place a pepper as a suffix as this may lead to vulnerabilities such as issues related to truncation and length-extension attacks. Practically these threats allow the input password component to validate successfully because the unique password is never truncated, only the probabilistic pepper would be truncated.
+Never place a pepper as a suffix as this may lead to vulnerabilities such as issues related to truncation and length-extension attacks. These threats allow the input password component to validate successfully because the unique password is never truncated; only the probabilistic pepper would be truncated.
 
 #### Alternatives
 
-An alternative pepper approach is to hash the passwords as usual (specifically one-way hashing) and then encrypt the hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper without effecting the password directly or the hash function in any way. This avoids known issues with the concatenation/prefix approach and it allows for password to remain valid when you apply key rotation (using established encryption key rotation procedures) if the key that acts as a pepper is believed to be compromised.
+An alternative pepper approach is to hash the passwords as usual (specifically one-way hashing) and then encrypt the hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper without affecting the password directly or the hash function in any way. This avoids known issues with the concatenation/prefix approach, and it allows for password to remain valid when you apply key rotation (using established encryption key rotation procedures) if the key that acts as a pepper is believed to be compromised.
 
-Another solution may be storing the secret pepper with an ID to easily retrieve it, and past known peppers. When you store a password hash, store only the ID of the pepper in the database alongside the associated password hashes. This allows rotation of the pepper without disclosing the secret pepper itself. When the pepper needs to be updated, this ID can be updated for hashes using the new pepper. The requires the application logic to additionally associate an ID to an external store with all the pepper secret values that are valid and currently in use, which may or may not be possible for all secret stores (HSM and secret vaults typically support a lookup ID).
+Another solution may be storing the secret pepper with an ID to easily retrieve it and past known peppers. When you store a password hash, store only the ID of the pepper in the database alongside the associated password hashes. This allows rotation of the pepper without disclosing the secret pepper itself. When the pepper needs to be updated, this ID can be updated for hashes using the new pepper. The requires the application logic to additionally associate an ID to an external store with all the pepper secret values that are valid and currently in use, which may or may not be possible for all secret stores (HSM and secret vaults typically support a lookup ID).
 
 ### Work Factors
 
-The work factor is essentially the number of iterations of the hashing algorithm that are performed for each password (usually it's actually `2^work` iterations). The purpose of the work factor is to make calculating the hash more computationally expensive, which in turn reduces the speed at which an attacker can attempt to crack the password hash. The work factor is typically stored in the hash output.
+The work factor is essentially the number of iterations of the hashing algorithm that are performed for each password (usually, it's actually `2^work` iterations). The purpose of the work factor is to make calculating the hash more computationally expensive, which in turn reduces the speed at which an attacker can attempt to crack the password hash. The work factor is typically stored in the hash output.
 
-When choosing a work factor, a balance needs to be struck between security and performance. Higher work factors will make the hashes more difficult for an attacker to crack, but will also make the process of verifying a login attempt slower. If the work factor is too high, this may degrade the performance of the application, and could also be used by an attacker to carry out a denial of service attack by making a large number of login attempts to exhaust the server's CPU.
+When choosing a work factor, a balance needs to be struck between security and performance. Higher work factors will make the hashes more difficult for an attacker to crack but will also make the process of verifying a login attempt slower. If the work factor is too high, this may degrade the performance of the application and could also be used by an attacker to carry out a denial of service attack by making a large number of login attempts to exhaust the server's CPU.
 
 There is no golden rule for the ideal work factor - it will depend on the performance of the server and the number of users on the application. Determining the optimal work factor will require experimentation on the specific server(s) used by the application. As a general rule, calculating a hash should take less than one second.
 
@@ -85,19 +85,19 @@ There is no golden rule for the ideal work factor - it will depend on the perfor
 
 One key advantage of having a work factor is that it can be increased over time as hardware becomes more powerful and cheaper.
 
-The most common approach to upgrading the work factor is to wait until the user next authenticates, and then to re-hash their password with the new work factor. This means that different hashes will have different work factors, and may result in hashes never being upgraded if the user doesn't log back in to the application. Depending on the application, it may be appropriate to remove the older password hashes and require users to reset their passwords next time they need to login, in order to avoid storing older and less secure hashes.
+The most common approach to upgrading the work factor is to wait until the user next authenticates and then to re-hash their password with the new work factor. This means that different hashes will have different work factors and may result in hashes never being upgraded if the user doesn't log back into the application. Depending on the application, it may be appropriate to remove the older password hashes and require users to reset their passwords next time they need to login in order to avoid storing older and less secure hashes.
 
 ## Password Hashing Algorithms
 
-There are a number of modern hashing algorithms that have been specifically designed for securely storing passwords. This means that they should be slow (unlike algorithms such as MD5 and SHA-1 which were designed to be fast), and how slow they are can be configured by changing the [work factor](#work-factors).
+There are a number of modern hashing algorithms that have been specifically designed for securely storing passwords. This means that they should be slow (unlike algorithms such as MD5 and SHA-1, which were designed to be fast), and how slow they are can be configured by changing the [work factor](#work-factors).
 
-Websites should not hide which password hashing algorithm they use. If you utilize a modern password hashing algorithm with proper configuration parameters, it should be safe to state in public which password hashing algorithms is in use and be listed [here](https://pulse.michalspacek.cz/passwords/storages).
+Websites should not hide which password hashing algorithm they use. If you utilize a modern password hashing algorithm with proper configuration parameters, it should be safe to state in public which password hashing algorithms are in use and be listed [here](https://pulse.michalspacek.cz/passwords/storages).
 
 The main three algorithms that should be considered are listed below:
 
 ### Argon2id
 
-[Argon2](https://en.wikipedia.org/wiki/Argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net). There are three different versions of the algorithm, and the Argon2id variant should be used, as it provides a balanced approach to resisting both side channel and GPU-based attacks.
+[Argon2](https://en.wikipedia.org/wiki/Argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net). There are three different versions of the algorithm, and the Argon2id variant should be used, as it provides a balanced approach to resisting both side-channel and GPU-based attacks.
 
 Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured. Argon2id should use one of the following configuration settings as a base minimum which includes the minimum memory size (m), the minimum number of iterations (t) and the degree of parallelism (p).
 
