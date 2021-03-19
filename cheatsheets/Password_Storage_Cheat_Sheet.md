@@ -99,7 +99,7 @@ The main three algorithms that should be considered are listed below:
 
 [Argon2](https://en.wikipedia.org/wiki/Argon2) is the winner of the 2015 [Password Hashing Competition](https://password-hashing.net). There are three different versions of the algorithm, and the Argon2id variant should be used, as it provides a balanced approach to resisting both side channel and GPU-based attacks.
 
-Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured. Argon2id should use one of the following configuration settings as a base miniimum which includes the degree of parallelism (p), the minimum memory size (m), and the minimum number of iterations (t).
+Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured. Argon2id should use one of the following configuration settings as a base minimum which includes the degree of parallelism (p), the minimum memory size (m), and the minimum number of iterations (t).
 
 - m=37 MiB, t=1, p=1
 - m=15 MiB, t=2, p=1
