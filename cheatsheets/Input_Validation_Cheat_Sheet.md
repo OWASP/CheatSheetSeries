@@ -65,7 +65,7 @@ References:
 
 Developing regular expressions can be complicated, and is well beyond the scope of this cheat sheet.
 
-There are lots of resources on the internet about how to write regular expressions, including this [site](https://www.regular-expressions.info/) and the [OWASP Validation Regex Repository](https://owasp.org/www-community/OWASP_Validation_Regex_Repository). 
+There are lots of resources on the internet about how to write regular expressions, including this [site](https://www.regular-expressions.info/) and the [OWASP Validation Regex Repository](https://owasp.org/www-community/OWASP_Validation_Regex_Repository).
 
 When designing regular expression, be aware of (RegEx Denial of Service (ReDoS) attacks)[https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS]. These attacks cause a program using a poorly designed Regular Expression to operate very slowly and utilize CPU resources for a very long time.
 
