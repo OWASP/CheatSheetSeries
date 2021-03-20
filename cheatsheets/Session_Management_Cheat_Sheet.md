@@ -211,12 +211,6 @@ The standards do not require `sessionStorage` data to be encrypted-at-rest, mean
 
 WHATWG suggests the use of `sessionStorage` for data that is relevant for one-instance of a workflow, such as details for a ticket booking, but where multiple workflows could be performed in other tabs concurrently. The window/tab bound nature will keep the data from leaking between workflows in separate tabs.
 
-### Security Risks
-
-In general, secure or sensitive data should not be stored persistently in browser data stores as this may permit information leakage on shared systems. Because the Web Storage mechanisms are APIs, this also permits access from injected scripts, making it less secure than cookies with the `httponly` flag applied.
-While a case could be made for storing workflow specific data in `sessionStorage` for use by that specific tab/window across reloads, the Web Storage APIs should be treated as insecure storage. Because of this, if a business solution requires the use of the `localStorage` or `sessionStorage` to store sensitive data, such a solution should encipher data and apply replay protections.
-Due to the potential to access Web Storage APIs via an XSS attack, session identifiers should be stored using non-persistent cookies, with the appropriate flags to protect from [insecure access](Transport_Layer_Protection_Cheat_Sheet.md) (`Secure`), [XSS](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) (`HttpOnly`) and [CSRF](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) issues (`SameSite`).
-
 ### References
 
 - [Web Storage APIs](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API)
