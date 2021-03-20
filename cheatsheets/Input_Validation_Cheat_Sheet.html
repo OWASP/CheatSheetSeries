@@ -1580,7 +1580,8 @@
 </ul>
 <h3 id="regular-expressions">Regular expressions<a class="headerlink" href="#regular-expressions" title="Permanent link">&para;</a></h3>
 <p>Developing regular expressions can be complicated, and is well beyond the scope of this cheat sheet.</p>
-<p>There are lots of resources on the internet about how to write regular expressions, including this <a href="https://www.regular-expressions.info/">site</a> and the <a href="https://owasp.org/www-community/OWASP_Validation_Regex_Repository">OWASP Validation Regex Repository</a>.</p>
+<p>There are lots of resources on the internet about how to write regular expressions, including this <a href="https://www.regular-expressions.info/">site</a> and the <a href="https://owasp.org/www-community/OWASP_Validation_Regex_Repository">OWASP Validation Regex Repository</a>. </p>
+<p>When designing regular expression, be aware of (RegEx Denial of Service (ReDoS) attacks)[https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS]. These attacks cause a program using a poorly designed Regular Expression to operate very slowly and utilize CPU resources for a very long time.</p>
 <p>In summary, input validation should:</p>
 <ul>
 <li>Be applied to all input data, at minimum.</li>
