@@ -1828,12 +1828,7 @@
 <p>Fetch directives tell the browser the locations to trust and load resources from.</p>
 <p>Most fetch directives have a certain <a href="https://www.w3.org/TR/CSP3/#directive-fallback-list">fallback list specified in w3</a>. This list allows for granular control of the source of scripts, images, files, etc.</p>
 <ul>
-<li><code>child-src</code> allows the developer to control nested browsing contexts and worker execution contexts.<ul>
-<li>According to <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#Fetch_directives">MDN</a>, the below 2 directives should be used to regulate nested browsing context and workers as <code>child-src</code> will be deprecated in the coming versions.</li>
-<li><code>frame-src</code> specifies the URLs which can be loaded into nested browsing contexts (<em>e.g.</em> <code>&lt;iframe&gt;</code>).</li>
-<li><code>worker-src</code> specifies the URLs which can be loaded as worker, sharedworker, or serviceworker. Fallback's on <code>script-src</code> too.</li>
-</ul>
-</li>
+<li><code>child-src</code> allows the developer to control nested browsing contexts and worker execution contexts.</li>
 <li><code>connect-src</code> provides control over fetch requests, XHR, eventsource, beacon and websockets connections.</li>
 <li><code>font-src</code> specifies which URLs to load fonts from.</li>
 <li><code>img-src</code> specifies the URLs that images can be loaded from.</li>
