@@ -57,11 +57,11 @@ Salting also protects against an attacker pre-computing hashes using rainbow tab
 
 A [pepper](https://www.ietf.org/archive/id/draft-ietf-kitten-password-storage-04.html#section-4.2) can be used in addition to salting to provide an additional layer of protection.
 
-- The pepper is **shared between all stored passwords**, rather than being *unique* like a salt.
-- Unlike many implementations of a password salt, the pepper is **not stored in the database**.
+- The pepper is **shared between stored passwords**, rather than being *unique* like a salt. A pepper rotation strategy should be considered
+- Unlike many implementations of a password salt, the pepper **should not be stored in the database**. Pepper should be managed as a secret itself, keeping its access as much segregated as possible from the legitimate access to the database or the different attack chains (backups, SQLi, OS access, OS privileged access, ...). Use vaults or HSMs for storage where possible and threat-model runtime use of the pepper
 - The purpose of the pepper is to prevent an attacker from being able to crack any of the hashes if they only have access to the database, for example, if they have exploited a SQL injection vulnerability or obtained a backup of the database.
 
-One of several peppering strategies is to hash the passwords as usual (specifically using a password hashing algorithm) and then encrypt the hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper. Symmetrical encryption peppering strategies do not affect the password hashing function in any way.
+One of several peppering strategies is to hash the passwords as usual (specifically using a password hashing algorithm) and then HMAC or encrypt the hashes with a symmetrical encryption key before storing them in the database, with the key acting as the pepper. These peppering strategies do not affect the password hashing function in any way.
 
 ### Work Factors
 
