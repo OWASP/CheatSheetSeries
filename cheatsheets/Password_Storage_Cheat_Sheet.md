@@ -7,7 +7,7 @@ It is essential to store passwords in a way that prevents them from being obtain
 This cheat sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
 - **Use [Argon2id](#argon2id) with a minimum configuration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
-- **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 12 or more and with a password limit of 64 characters.**
+- **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 10 or more and with a password limit of 64 characters.**
 - **If FIPS-140 compliance is required, use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an internal hash function of HMAC-SHA-256.**
 - **Consider using a [pepper](#peppering) to provide additional defense in depth (though alone, it provides no additional secure characteristics).**
 
@@ -98,7 +98,7 @@ Rather than a simple work factor like other algorithms, Argon2id has three diffe
 
 The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function should be the second choice for password storage if Argon2id is not available or PBKDF2 is required to achieve FIPS-140 compliance.
 
-The minimum work factor for bcrypt should be 12.
+The minimum work factor for bcrypt should be 10.
 
 #### Input Limits
 
