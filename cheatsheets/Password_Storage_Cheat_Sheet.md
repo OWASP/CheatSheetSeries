@@ -8,6 +8,7 @@ This cheat sheet provides guidance on the various areas that need to be consider
 
 - **Use [Argon2id](#argon2id) with a minimum configuration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
 - **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 10 or more and with a password limit of 64 characters.**
+** For legacy systems using [scrypt](#scrypt), use a minimum CPU/memory cost parameter of (2^16), a mimimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
 - **If FIPS-140 compliance is required, use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an internal hash function of HMAC-SHA-256.**
 - **Consider using a [pepper](#peppering) to provide additional defense in depth (though alone, it provides no additional secure characteristics).**
 
@@ -100,6 +101,18 @@ Consider raising these settings to the following (or more) if performance consid
 
 - m=37 MiB, t=11, p=1
 - m=15 MiB, t=26, p=1
+
+### scrypt
+
+[scrypt](http://www.tarsnap.com/scrypt/scrypt.pdf) is a password-based key derivation function created by [Colin Percival](https://twitter.com/cperciva). While new systems should consider [Argon2id](#argon2id) for password hashing, scrypt should be configured properly when used in legacy systems.
+
+Like [Argon2id](#argon2id), scrypt has three different parameters that can be configured. scrypt should use one of the following configuration settings as a base minimum which includes the minimum CPU/memory cost parameter (N), the blocksize (r) and the degree of parallelism (p).
+
+- N=2^16 (64 MiB), r=8 (1024 bytes), p=1
+- N=2^15 (32 MiB), r=8 (1024 bytes), p=2
+- N=2^14 (16 MiB), r=8 (1024 bytes), p=4
+- N=2^13 (8 MiB), r=8 (1024 bytes), p=8
+- N=2^12 (4 MiB), r=8 (1024 bytes), p=15
 
 ### bcrypt
 
