@@ -8,7 +8,7 @@ This cheat sheet provides guidance on the various areas that need to be consider
 
 - **Use [Argon2id](#argon2id) with a minimum configuration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
 - **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 10 or more and with a password limit of 64 characters.**
-** For legacy systems using [scrypt](#scrypt), use a minimum CPU/memory cost parameter of (2^16), a mimimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
+**For legacy systems using [scrypt](#scrypt), use a minimum CPU/memory cost parameter of (2^16), a mimimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
 - **If FIPS-140 compliance is required, use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an internal hash function of HMAC-SHA-256.**
 - **Consider using a [pepper](#peppering) to provide additional defense in depth (though alone, it provides no additional secure characteristics).**
 
