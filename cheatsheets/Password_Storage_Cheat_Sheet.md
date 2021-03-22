@@ -94,11 +94,16 @@ Rather than a simple work factor like other algorithms, Argon2id has three diffe
 - m=37 MiB, t=1, p=1
 - m=15 MiB, t=2, p=1
 
+Consider raising these settings to the following (or more) if performance considerations do not have a negative impact your system.
+
+- m=37 MiB, t=11, p=1
+- m=15 MiB, t=26, p=1
+
 ### bcrypt
 
 The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function should be the second choice for password storage if Argon2id is not available or PBKDF2 is required to achieve FIPS-140 compliance.
 
-The minimum work factor for bcrypt should be 10. Consider raising the work factor to 12 or more if performance considerations do not negatively impact your system.
+The minimum work factor for bcrypt should be 10. Consider raising the work factor to 12 (or more) if performance considerations do not have a negative impact on your system.
 
 #### Input Limits
 
@@ -119,6 +124,12 @@ The work factor for PBKDF2 is implemented through an iteration count, which shou
 - PBKDF2-HMAC-SHA1: 720,000 iterations
 - PBKDF2-HMAC-SHA256: 310,000 iterations
 - PBKDF2-HMAC-SHA512: 120,000 iterations
+
+Consider raising these settings to the following (or more) if performance considerations do not have a negative impact your system.
+
+- PBKDF2-HMAC-SHA1: 110,000,000 iterations
+- PBKDF2-HMAC-SHA256: 48,000,000 iterations
+- PBKDF2-HMAC-SHA512: 19,000,000 iterations
 
 When PBKDF2 is used with an HMAC, and the password is longer than the hash function's block size (64 bytes for SHA-256), the password will be automatically pre-hashed. For example, the password "This is a password longer than 512 bits which is the block size of SHA-256" is converted to the hash value (in hex) fa91498c139805af73f7ba275cca071e78d78675027000c99a9925e2ec92eedd. A good implementation of PBKDF2 will perform this step before the expensive iterated hashing phase, but some implementations perform the conversion on each iteration. This can make hashing long passwords significantly more expensive than hashing short passwords. If a user can supply very long passwords, there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013. Manual [pre-hashing](#pre-hashing-passwords) can reduce this risk but requires adding a [salt](#salting) to the pre-hash step.
 
