@@ -427,8 +427,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 </li>
       
         <li class="md-nav__item">
-  <a href="#rendering-of-the-authorization-matrix-for-audit-review" class="md-nav__link">
-    Rendering of the authorization matrix for audit / review
+  <a href="#rendering-of-the-authorization-matrix-for-an-audit-review" class="md-nav__link">
+    Rendering of the authorization matrix for an audit / review
   </a>
   
 </li>
@@ -1283,8 +1283,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 </li>
       
         <li class="md-nav__item">
-  <a href="#rendering-of-the-authorization-matrix-for-audit-review" class="md-nav__link">
-    Rendering of the authorization matrix for audit / review
+  <a href="#rendering-of-the-authorization-matrix-for-an-audit-review" class="md-nav__link">
+    Rendering of the authorization matrix for an audit / review
   </a>
   
 </li>
@@ -1314,8 +1314,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <p>Authorizations definition and implementation is one of the important protection measures of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to going live, the most significant number of issues related to authorization come in the maintenance lifetime of the application.</p>
 <p>This situation is often explained by the fact that features are added/modified and no review of the authorizations is performed on the application before the publishing of the new release, for cost or time issue reason.</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>In order to try to address this situation, it can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations definition.</p>
-<p>An authorization is often composed by 2 elements (also named dimensions): The <strong>Feature</strong> and the <strong>Logical Role</strong> that can access it (sometime a third dimension named <strong>Data</strong> is added in order to define an access that includes a filtering at business data level).</p>
+<p>In order to try to address this situation, it can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations' definition.</p>
+<p>An authorization is often composed by 2 elements (also named dimensions): The <strong>Feature</strong>, and the <strong>Logical Role</strong> that can access it (sometime a third dimension named <strong>Data</strong> is added in order to define access that includes a filtering at business data level).</p>
 <p>The representation of the different combinations of these 2 dimensions is often named an <strong>Authorization matrix</strong> and is often formalized in a spreadsheet.</p>
 <p>During a test of an authorization, a <strong>Logical Role</strong> is also called a <strong>Point Of View</strong>.</p>
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
@@ -1328,7 +1328,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <li>
 <p>Formalize the authorization matrix in a pivot format file allowing:</p>
 <ol>
-<li>The processing by a program in a easy way.</li>
+<li>The processing by a program easily.</li>
 <li>To be read and updated by a human for the follow-up of the authorization combinations.</li>
 <li>Hierarchy in the information in order to easily materialize the different combinations.</li>
 <li>The maximum possible of independence from the technology and design used to implement the application exposing the features.</li>
@@ -1346,8 +1346,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <p>The XML format has been used to formalize the authorization matrix.</p>
 <p>The XML structure contains 3 main sections:</p>
 <ul>
-<li>Node <strong>roles</strong>: This node describes the possible logical roles used in the system, is used to provide a list and the explanation of the different roles (authorization level).</li>
-<li>Node <strong>services</strong>: This node lists and describes the available services exposed by the system and the associated logical role(s) that can call them.</li>
+<li>Node <strong>roles</strong>: This node describes the possible logical roles used in the system, is used to provide a list, and the explanation of the different roles (authorization level).</li>
+<li>Node <strong>services</strong>: This node lists and describes the available services exposed by the system, and the associated logical role(s) that can call them.</li>
 <li>Node <strong>services-testing</strong>: This node provides a test payload for each service if the service uses input data other than the one coming from URL or path.</li>
 </ul>
 <p>This is an example of the XML used to represent the authorization:</p>
@@ -1671,7 +1671,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
   <span class="p">}</span>
 </code></pre></div>
 
-<p>In case of detectiing an authorization issue(s) the output is the following:</p>
+<p>In case of detecting an authorization issue(s) the output is the following:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">testAccessUsingAnonymousUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span>
 <span class="n">Time</span> <span class="n">elapsed</span><span class="p">:</span> <span class="mf">1.009</span> <span class="n">s</span>  <span class="err">###</span> <span class="n">FAILURE</span>
 <span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">AssertionError</span><span class="p">:</span>
@@ -1690,8 +1690,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
     <span class="n">a</span> <span class="n">response</span> <span class="n">code</span> <span class="mi">200</span> <span class="n">that</span> <span class="n">is</span> <span class="n">not</span> <span class="n">the</span> <span class="n">expected</span> <span class="nf">one</span> <span class="p">(</span><span class="mi">403</span> <span class="n">expected</span><span class="p">).</span>
 </code></pre></div>
 
-<h2 id="rendering-of-the-authorization-matrix-for-audit-review">Rendering of the authorization matrix for audit / review<a class="headerlink" href="#rendering-of-the-authorization-matrix-for-audit-review" title="Permanent link">&para;</a></h2>
-<p>Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.</p>
+<h2 id="rendering-of-the-authorization-matrix-for-an-audit-review">Rendering of the authorization matrix for an audit / review<a class="headerlink" href="#rendering-of-the-authorization-matrix-for-an-audit-review" title="Permanent link">&para;</a></h2>
+<p>Even if the authorization matrix is stored in a human-readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.</p>
 <p>The Following XSL stylesheet can be used:</p>
 <div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="k">&lt;xsl:stylesheet</span> <span class="na">xmlns:xsl=</span><span class="s">&quot;http://www.w3.org/1999/XSL/Transform&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>

@@ -1873,7 +1873,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <p><em>Examples in this section will be provided in Java technology (see Maven project associated) but advices are applicable to others technologies like .Net / PHP / Ruby / Python...</em></p>
 <h3 id="sql">SQL<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h3>
 <h4 id="symptom">Symptom<a class="headerlink" href="#symptom" title="Permanent link">&para;</a></h4>
-<p>Injection of this type occur when the application use untrusted user input to build a SQL query using a String and execute it.</p>
+<p>Injection of this type occur when the application uses untrusted user input to build an SQL query using a String and execute it.</p>
 <h4 id="how-to-prevent">How to prevent<a class="headerlink" href="#how-to-prevent" title="Permanent link">&para;</a></h4>
 <p>Use <em>Query Parameterization</em> in order to prevent injection.</p>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
@@ -1938,7 +1938,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 </ul>
 <h3 id="jpa">JPA<a class="headerlink" href="#jpa" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_1">Symptom<a class="headerlink" href="#symptom_1" title="Permanent link">&para;</a></h4>
-<p>Injection of this type occur when the application use untrusted user input to build a JPA query using a String and execute it. It's quite similar to SQL injection but here the altered language is not SQL but JPA QL.</p>
+<p>Injection of this type occur when the application uses untrusted user input to build a JPA query using a String and execute it. It's quite similar to SQL injection but here the altered language is not SQL but JPA QL.</p>
 <h4 id="how-to-prevent_1">How to prevent<a class="headerlink" href="#how-to-prevent_1" title="Permanent link">&para;</a></h4>
 <p>Use Java Persistence Query Language <strong>Query Parameterization</strong> in order to prevent injection.</p>
 <h4 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h4>
@@ -1973,7 +1973,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 </ul>
 <h3 id="operating-system">Operating System<a class="headerlink" href="#operating-system" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_2">Symptom<a class="headerlink" href="#symptom_2" title="Permanent link">&para;</a></h4>
-<p>Injection of this type occur when the application use untrusted user input to build a Operating System command using a String and execute it.</p>
+<p>Injection of this type occur when the application uses untrusted user input to build an Operating System command using a String and execute it.</p>
 <h4 id="how-to-prevent_2">How to prevent<a class="headerlink" href="#how-to-prevent_2" title="Permanent link">&para;</a></h4>
 <p>Use technology stack <strong>API</strong> in order to prevent injection.</p>
 <h4 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">&para;</a></h4>
@@ -1990,7 +1990,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 </ul>
 <h3 id="xml-xpath-injection">XML: XPath Injection<a class="headerlink" href="#xml-xpath-injection" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_3">Symptom<a class="headerlink" href="#symptom_3" title="Permanent link">&para;</a></h4>
-<p>Injection of this type occur when the application use untrusted user input to build a XPath query using a String and execute it.</p>
+<p>Injection of this type occur when the application uses untrusted user input to build a XPath query using a String and execute it.</p>
 <h4 id="how-to-prevent_3">How to prevent<a class="headerlink" href="#how-to-prevent_3" title="Permanent link">&para;</a></h4>
 <p>Use <strong>XPath Variable Resolver</strong> in order to prevent injection.</p>
 <h4 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">&para;</a></h4>
@@ -2061,7 +2061,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 </ul>
 <h3 id="htmljavascriptcss">HTML/JavaScript/CSS<a class="headerlink" href="#htmljavascriptcss" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_4">Symptom<a class="headerlink" href="#symptom_4" title="Permanent link">&para;</a></h4>
-<p>Injection of this type occur when the application use untrusted user input to build a HTTP response and sent it to browser.</p>
+<p>Injection of this type occur when the application uses untrusted user input to build an HTTP response and sent it to browser.</p>
 <h4 id="how-to-prevent_4">How to prevent<a class="headerlink" href="#how-to-prevent_4" title="Permanent link">&para;</a></h4>
 <p>Either apply strict input validation ("allow list" approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).</p>
 <h4 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">&para;</a></h4>
@@ -2118,9 +2118,9 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <p>A dedicated <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">cheatsheet</a> has been created.</p>
 <h3 id="nosql">NoSQL<a class="headerlink" href="#nosql" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_5">Symptom<a class="headerlink" href="#symptom_5" title="Permanent link">&para;</a></h4>
-<p>Injection of this type occur when the application use untrusted user input to build a NoSQL API call expression.</p>
+<p>Injection of this type occur when the application uses untrusted user input to build a NoSQL API call expression.</p>
 <h4 id="how-to-prevent_5">How to prevent<a class="headerlink" href="#how-to-prevent_5" title="Permanent link">&para;</a></h4>
-<p>As there many NoSQL database system and each one use a API for call, it's important to ensure that user input received and used to build the API call expression do not contains any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It's also important to not use string concatenation to build API call expression but use the API to create the expression.</p>
+<p>As there many NoSQL database system and each one use an API for call, it's important to ensure that user input received and used to build the API call expression does not contain any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It's also important to not use string concatenation to build API call expression but use the API to create the expression.</p>
 <h4 id="example-mongodb">Example - MongoDB<a class="headerlink" href="#example-mongodb" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><code> <span class="cm">/* Here use MongoDB as target NoSQL DB */</span>
 <span class="n">String</span> <span class="n">userInput</span> <span class="o">=</span> <span class="s">&quot;Brooklyn&quot;</span><span class="p">;</span>
