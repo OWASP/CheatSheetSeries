@@ -8,9 +8,9 @@ This situation is often explained by the fact that features are added/modified a
 
 ## Context
 
-In order to try to address this situation, it can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations definition.
+In order to try to address this situation, it can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations' definition.
 
-An authorization is often composed by 2 elements (also named dimensions): The **Feature** and the **Logical Role** that can access it (sometime a third dimension named **Data** is added in order to define an access that includes a filtering at business data level).
+An authorization is often composed by 2 elements (also named dimensions): The **Feature**, and the **Logical Role** that can access it (sometime a third dimension named **Data** is added in order to define access that includes a filtering at business data level).
 
 The representation of the different combinations of these 2 dimensions is often named an **Authorization matrix** and is often formalized in a spreadsheet.
 
@@ -29,7 +29,7 @@ The objective is to provide starting ideas/hints in order to create a tailored w
 In order to achieve the full automation of the evaluation of the *authorization matrix*, the following actions have been performed:
 
 1. Formalize the authorization matrix in a pivot format file allowing:
-    1. The processing by a program in a easy way.
+    1. The processing by a program easily.
     2. To be read and updated by a human for the follow-up of the authorization combinations.
     3. Hierarchy in the information in order to easily materialize the different combinations.
     4. The maximum possible of independence from the technology and design used to implement the application exposing the features.
@@ -44,8 +44,8 @@ The XML format has been used to formalize the authorization matrix.
 
 The XML structure contains 3 main sections:
 
-- Node **roles**: This node describes the possible logical roles used in the system, is used to provide a list and the explanation of the different roles (authorization level).
-- Node **services**: This node lists and describes the available services exposed by the system and the associated logical role(s) that can call them.
+- Node **roles**: This node describes the possible logical roles used in the system, is used to provide a list, and the explanation of the different roles (authorization level).
+- Node **services**: This node lists and describes the available services exposed by the system, and the associated logical role(s) that can call them.
 - Node **services-testing**: This node provides a test payload for each service if the service uses input data other than the one coming from URL or path.
 
 This is an example of the XML used to represent the authorization:
@@ -375,7 +375,7 @@ This is the implementation of the integration tests case class:
   }
 ```
 
-In case of detectiing an authorization issue(s) the output is the following:
+In case of detecting an authorization issue(s) the output is the following:
 
 ```java
 testAccessUsingAnonymousUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)
@@ -396,9 +396,9 @@ Access issues detected using the BASIC USER point of view:
     a response code 200 that is not the expected one (403 expected).
 ```
 
-## Rendering of the authorization matrix for audit / review
+## Rendering of the authorization matrix for an audit / review
 
-Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.
+Even if the authorization matrix is stored in a human-readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.
 
 The Following XSL stylesheet can be used:
 
