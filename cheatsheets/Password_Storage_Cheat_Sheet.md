@@ -98,6 +98,8 @@ Rather than a simple work factor like other algorithms, Argon2id has three diffe
 - m=37 MiB, t=1, p=1
 - m=15 MiB, t=2, p=1
 
+Both these configuration settings are equivalent. The only difference is a trade off between CPU and RAM usage.
+
 ### scrypt
 
 [scrypt](http://www.tarsnap.com/scrypt/scrypt.pdf) is a password-based key derivation function created by [Colin Percival](https://twitter.com/cperciva). While new systems should consider [Argon2id](#argon2id) for password hashing, scrypt should be configured properly when used in legacy systems.
