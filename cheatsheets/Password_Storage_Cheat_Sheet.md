@@ -98,7 +98,7 @@ Rather than a simple work factor like other algorithms, Argon2id has three diffe
 - m=37 MiB, t=1, p=1
 - m=15 MiB, t=2, p=1
 
-Both these configuration settings are equivalent. The only difference is a trade off between CPU and RAM usage.
+Both of these configuration settings are equivalent in the defense they provide. The only difference is a trade off between CPU and RAM usage.
 
 ### scrypt
 
@@ -111,6 +111,8 @@ Like [Argon2id](#argon2id), scrypt has three different parameters that can be co
 - N=2^14 (16 MiB), r=8 (1024 bytes), p=4
 - N=2^13 (8 MiB), r=8 (1024 bytes), p=8
 - N=2^12 (4 MiB), r=8 (1024 bytes), p=15
+
+These configuration settings are equivalent in the defense they provide. The only difference is a trade off between CPU and RAM usage.
 
 ### bcrypt
 
@@ -137,6 +139,8 @@ The work factor for PBKDF2 is implemented through an iteration count, which shou
 - PBKDF2-HMAC-SHA1: 720,000 iterations
 - PBKDF2-HMAC-SHA256: 310,000 iterations
 - PBKDF2-HMAC-SHA512: 120,000 iterations
+
+These configuration settings are equivalent in the defense they provide.
 
 When PBKDF2 is used with an HMAC, and the password is longer than the hash function's block size (64 bytes for SHA-256), the password will be automatically pre-hashed. For example, the password "This is a password longer than 512 bits which is the block size of SHA-256" is converted to the hash value (in hex) fa91498c139805af73f7ba275cca071e78d78675027000c99a9925e2ec92eedd. A good implementation of PBKDF2 will perform this step before the expensive iterated hashing phase, but some implementations perform the conversion on each iteration. This can make hashing long passwords significantly more expensive than hashing short passwords. If a user can supply very long passwords, there is a potential denial of service vulnerability, such as the one published in [Django](https://www.djangoproject.com/weblog/2013/sep/15/security/) in 2013. Manual [pre-hashing](#pre-hashing-passwords) can reduce this risk but requires adding a [salt](#salting) to the pre-hash step.
 
