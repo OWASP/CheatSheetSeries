@@ -4,13 +4,13 @@
 
 It is essential to store passwords in a way that prevents them from being obtained by an attacker even if the application or database is compromised. The majority of modern languages and frameworks provide built-in functionality to help store passwords safely.
 
-After an attacker retrieved stored password hashes, an attacker is always able to brute force hashes offline. As a defender, it is only possible to slow down offline attacks by selecting hash algorithms that are as resource intense as possible.
+After an attacker has aquired stored password hashes, they are always able to brute force hashes offline. As a defender, it is only possible to slow down offline attacks by selecting hash algorithms that are as resource intensive as possible.
 
 This cheat sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
 - **Use [Argon2id](#argon2id) with a minimum configuration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
 - **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 10 or more and with a password limit of 64 characters.**
-- **For legacy systems using [scrypt](#scrypt), use a minimum CPU/memory cost parameter of (2^16), a mimimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
+- **For legacy systems using [scrypt](#scrypt), use a minimum CPU/memory cost parameter of (2^16), a minimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
 - **If FIPS-140 compliance is required, use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an internal hash function of HMAC-SHA-256.**
 - **Consider using a [pepper](#peppering) to provide additional defense in depth (though alone, it provides no additional secure characteristics).**
 
@@ -20,7 +20,7 @@ This cheat sheet provides guidance on the various areas that need to be consider
 
 Hashing and encryption both provide ways to keep sensitive data safe. However, in almost all circumstances, **passwords should be hashed, NOT encrypted.**
 
-**Hashing is a one-way function** (i.e., it is impossible to "decrypt" a hash and obtain the original plaintext value). Hashing is appropriate for password storage. Even if an attacker obtains the hashed password, they cannot enter it into an application's password field and log in as the victim.
+**Hashing is a one-way function** (i.e., it is impossible to "decrypt" a hash and obtain the original plaintext value). Hashing is appropriate for password validation. Even if an attacker obtains the hashed password, they cannot enter it into an application's password field and log in as the victim.
 
 **Encryption is a two-way function**, meaning that the original plaintext can be retrieved. Encryption is appropriate for storing data such as a user's address since this data is displayed in plaintext on the user's profile. Hashing their address would result in a garbled mess.
 
@@ -44,7 +44,9 @@ This process is repeated for a large number of potential candidate passwords. Di
 - Brute force (trying every possible candidate)
 - Dictionaries or wordlists of common passwords
 
-**Strong passwords stored with modern hashing algorithms should be effectively impossible for an attacker to crack.**  It is your responsibility as an application owner to select a modern hashing algorithm.
+While the number of permutations can be enormous with high speed hardware (such as GPUs) and cloud services with many servers for rent, the cost to an attacker is relatively small to do successful password cracking especially when best practices for hashing are not followed.
+
+**Strong passwords stored with modern hashing algorithms and using hashing best practices should be effectively impossible for an attacker to crack.**  It is your responsibility as an application owner to select a modern hashing algorithm.
 
 ## Password Storage Concepts
 
@@ -69,7 +71,7 @@ One of several peppering strategies is to hash the passwords as usual (using a p
 
 ### Work Factors
 
-The work factor is essentially the number of iterations of the hashing algorithm that are performed for each password (usually, it's actually `2^work` iterations). The purpose of the work factor is to make calculating the hash more computationally expensive, which in turn reduces the speed at which an attacker can attempt to crack the password hash. The work factor is typically stored in the hash output.
+The work factor is essentially the number of iterations of the hashing algorithm that are performed for each password (usually, it's actually `2^work` iterations). The purpose of the work factor is to make calculating the hash more computationally expensive, which in turn reduces the speed and/or increases the cost for which an attacker can attempt to crack the password hash. The work factor is typically stored in the hash output.
 
 When choosing a work factor, a balance needs to be struck between security and performance. Higher work factors will make the hashes more difficult for an attacker to crack but will also make the process of verifying a login attempt slower. If the work factor is too high, this may degrade the performance of the application and could also be used by an attacker to carry out a denial of service attack by making a large number of login attempts to exhaust the server's CPU.
 
