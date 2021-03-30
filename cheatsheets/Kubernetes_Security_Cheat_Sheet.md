@@ -104,9 +104,13 @@ To learn more on usage of TLS in Kubernetes cluster, refer to the documentation 
 
 ### API Authentication
 
-Choose an authentication mechanism for the API servers to use that matches the common access patterns when you install a cluster. For instance, small single user clusters may wish to use a simple certificate or static Bearer token approach. Larger clusters may wish to integrate an existing OIDC or LDAP server that allow users to be subdivided into groups.
+Kubernetes provides a number of in-built mechanisms for API server authentication, however these are likely only suitable for non-production or small clusters.
 
-All API clients must be authenticated, even those that are part of the infrastructure like nodes, proxies, the scheduler, and volume plugins. These clients are typically service accounts or use x509 client certificates, and they are created automatically at cluster startup or are setup as part of the cluster installation.
+- [Static Token File](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#static-token-file) authentication makes use of clear text tokens stored in a CSV file on API server node(s). Modifying credentials in this file requires an API server re-start to be effective.
+- [X509 Client Certs](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#x509-client-certs) are available as well however these are unsuitable for production use, as Kubernetes does [not support certificate revocation](https://github.com/kubernetes/kubernetes/issues/18982) meaning that user credentials cannot be modified or revoked without rotating the root certificate authority key an re-issuing all cluster certificates.
+- [Service Accounts Tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#service-account-tokens) are also available for authentication. Their primary intended use is to allow workloads running in the cluster to authenticate to the API server, however they can also be used for user authentication.
+
+The recommended approach for larger or production clusters, is to use an external authentication method. Managed Kubernetes distributions such as GKE, EKS and AKS support authentication using credentials from their respective IAM providers. For on-premises clusters, an external OIDC provider such as [Keycloak](https://www.keycloak.org/) or [Dex](https://dexidp.io/) can be used alongside an LDAP directory, such as Active Directory.
 
 For more information, consult Kubernetes authentication reference document at <https://kubernetes.io/docs/reference/access-authn-authz/authentication>
 
