@@ -110,7 +110,13 @@ Kubernetes provides a number of in-built mechanisms for API server authenticatio
 - [X509 Client Certs](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#x509-client-certs) are available as well however these are unsuitable for production use, as Kubernetes does [not support certificate revocation](https://github.com/kubernetes/kubernetes/issues/18982) meaning that user credentials cannot be modified or revoked without rotating the root certificate authority key an re-issuing all cluster certificates.
 - [Service Accounts Tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#service-account-tokens) are also available for authentication. Their primary intended use is to allow workloads running in the cluster to authenticate to the API server, however they can also be used for user authentication.
 
-The recommended approach for larger or production clusters, is to use an external authentication method. Managed Kubernetes distributions such as GKE, EKS and AKS support authentication using credentials from their respective IAM providers. For on-premises clusters, an external OIDC provider such as [Keycloak](https://www.keycloak.org/) or [Dex](https://dexidp.io/) can be used alongside an LDAP directory, such as Active Directory.
+The recommended approach for larger or production clusters, is to use an external authentication method:
+
+- [OpenID Connect](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens) (OIDC) lets you externalize authentication, use short lived tokens, and leverage centralized groups for authorization.
+- Managed Kubernetes distributions such as GKE, EKS and AKS support authentication using credentials from their respective IAM providers.
+- [Kubernetes Impersonation](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#user-impersonation) can be used with both managed cloud clusters and on-prem clusters to externalize authentication without having to have access to the API server configuration parameters.
+
+In addition to choosing the appropriate authentication system, API access should be considered privileged and use Multi-Factor Authentication (MFA) for all user access.
 
 For more information, consult Kubernetes authentication reference document at <https://kubernetes.io/docs/reference/access-authn-authz/authentication>
 
@@ -153,16 +159,17 @@ For more information, refer to Kubelet authentication/authorization documentatio
 
 ### Securing Kubernetes Dashboard
 
-The Kubernetes dashboard is a webapp for monitoring your cluster. It it is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard. (Reference: Tesla cloud resources are hacked to run cryptocurrency-mining malware - <https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/>)
+The Kubernetes dashboard is a webapp for managing your cluster. It it is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard. (Reference: Tesla cloud resources are hacked to run cryptocurrency-mining malware - <https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/>)
 
 To prevent attacks via the dashboard, you should follow some tips:
 
-- Do not expose the dashboard to the public. There is no need to access such a powerful tool from outside your LAN
+- Do not expose the dashboard without additional authentication to the public. There is no need to access such a powerful tool from outside your LAN
 - Turn on RBAC, so you can limit the service account the dashboard uses
 - Do not grant the service account of the dashboard high privileges
 - Grant permissions per user, so each user only can see what he is supposed to see
 - If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)
 - Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.
+- Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled.  This can be done with either embeded OIDC `id_tokens` or using Kubernetes Impersonation.  This allows you to use the dashboard with the user's credentials instead of using a privileged `ServiceAccount`.  This method can be used on both on-prem and managed cloud clusters.
 
 ## Kubernetes Security Best Practices: Build Phase
 
