@@ -410,41 +410,40 @@ function escapeHTML(str) {
 
 Chris Schmidt has put together another implementation of a JavaScript encoder [here](http://yet-another-dev.blogspot.com/2011/02/client-side-contextual-encoding-for.html).
 
-### GUIDELINE \#6 - Limit the usage of untrusted data to only right side operations
+### GUIDELINE \#6 - Use untrusted data on only the right side of an expression
 
-Not only is it good design to limit the usage of untrusted data to right side operations, but also be aware of data which may be passed to the application which look like code (eg. `location`, `eval()`).
-
-If you want to change different object attributes based on user input then use a level of indirection.
-Instead of:
+Use untrusted data on only the right side of an expression, especially data that looks like code and may be passed to the application (e.g., `location` and `eval()`).
 
 ```javascript
-window[userData] = "moreUserData";
+window[userDataOnLeftSide] = "userDataOnRightSide";
 ```
 
-Do the following instead:
-
-```javascript
-if (userData === "location") {
-   window.location = "static/path/or/properly/url/encoded/value";
-}
-```
+Using untrusted user data on the left side of the expression allows an attacker to subvert internal and external attributes of the window object, whereas using user input on the right side of the expression doesn't allow direct manipulation.
 
 ### GUIDELINE \#7 - When URL encoding in DOM be aware of character set issues
 
 When URL encoding in DOM be aware of character set issues as the character set in JavaScript DOM is not clearly defined (Mike Samuel).
 
-### GUIDELINE \#8 - Limit access to properties objects when using object\[x\] accessors
+### GUIDELINE \#8 - Limit access to object properties when using object\[x\] accessors
 
-Limit access to properties objects when using `object[x]` accessors (Mike Samuel). In other words use a level of indirection between untrusted input and specified object properties.
+Limit access to object properties when using `object[x]` accessors (Mike Samuel). In other words, add a level of indirection between untrusted input and specified object properties.
 
-Here is an example of the problem when using map types:
+Here is an example of the problem using map types:
 
 ```javascript
 var myMapType = {};
 myMapType[<%=untrustedData%>] = "moreUntrustedData";
 ```
 
-Although the developer writing the code above was trying to add additional keyed elements to the `myMapType` object. This could be used by an attacker to subvert internal and external attributes of the `myMapType` object.
+The developer writing the code above was trying to add additional keyed elements to the `myMapType` object. However, this could be used by an attacker to subvert internal and external attributes of the `myMapType` object.
+
+A better approach would be to use the following:
+
+```javascript
+if (untrustedData === 'location') {
+  myMapType.location = "moreUntrustedData";
+}
+```
 
 ### GUIDELINE \#9 - Run your JavaScript in a ECMAScript 5 canopy or sandbox
 
