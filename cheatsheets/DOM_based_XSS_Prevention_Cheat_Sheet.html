@@ -687,8 +687,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#guideline-6-limit-the-usage-of-untrusted-data-to-only-right-side-operations" class="md-nav__link">
-    GUIDELINE #6 - Limit the usage of untrusted data to only right side operations
+  <a href="#guideline-6-use-untrusted-data-on-only-the-right-side-of-an-expression" class="md-nav__link">
+    GUIDELINE #6 - Use untrusted data on only the right side of an expression
   </a>
   
 </li>
@@ -701,8 +701,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#guideline-8-limit-access-to-properties-objects-when-using-objectx-accessors" class="md-nav__link">
-    GUIDELINE #8 - Limit access to properties objects when using object[x] accessors
+  <a href="#guideline-8-limit-access-to-object-properties-when-using-objectx-accessors" class="md-nav__link">
+    GUIDELINE #8 - Limit access to object properties when using object[x] accessors
   </a>
   
 </li>
@@ -1641,8 +1641,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#guideline-6-limit-the-usage-of-untrusted-data-to-only-right-side-operations" class="md-nav__link">
-    GUIDELINE #6 - Limit the usage of untrusted data to only right side operations
+  <a href="#guideline-6-use-untrusted-data-on-only-the-right-side-of-an-expression" class="md-nav__link">
+    GUIDELINE #6 - Use untrusted data on only the right side of an expression
   </a>
   
 </li>
@@ -1655,8 +1655,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#guideline-8-limit-access-to-properties-objects-when-using-objectx-accessors" class="md-nav__link">
-    GUIDELINE #8 - Limit access to properties objects when using object[x] accessors
+  <a href="#guideline-8-limit-access-to-object-properties-when-using-objectx-accessors" class="md-nav__link">
+    GUIDELINE #8 - Limit access to object properties when using object[x] accessors
   </a>
   
 </li>
@@ -2038,29 +2038,28 @@ Another option provided by Gaz (Gareth) was to use a specific code construct to 
 </code></pre></div>
 
 <p>Chris Schmidt has put together another implementation of a JavaScript encoder <a href="http://yet-another-dev.blogspot.com/2011/02/client-side-contextual-encoding-for.html">here</a>.</p>
-<h3 id="guideline-6-limit-the-usage-of-untrusted-data-to-only-right-side-operations">GUIDELINE #6 - Limit the usage of untrusted data to only right side operations<a class="headerlink" href="#guideline-6-limit-the-usage-of-untrusted-data-to-only-right-side-operations" title="Permanent link">&para;</a></h3>
-<p>Not only is it good design to limit the usage of untrusted data to right side operations, but also be aware of data which may be passed to the application which look like code (eg. <code>location</code>, <code>eval()</code>).</p>
-<p>If you want to change different object attributes based on user input then use a level of indirection.
-Instead of:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">window</span><span class="p">[</span><span class="nx">userData</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;moreUserData&quot;</span><span class="p">;</span>
+<h3 id="guideline-6-use-untrusted-data-on-only-the-right-side-of-an-expression">GUIDELINE #6 - Use untrusted data on only the right side of an expression<a class="headerlink" href="#guideline-6-use-untrusted-data-on-only-the-right-side-of-an-expression" title="Permanent link">&para;</a></h3>
+<p>Use untrusted data on only the right side of an expression, especially data that looks like code and may be passed to the application (e.g., <code>location</code> and <code>eval()</code>).</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">window</span><span class="p">[</span><span class="nx">userDataOnLeftSide</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;userDataOnRightSide&quot;</span><span class="p">;</span>
 </code></pre></div>
 
-<p>Do the following instead:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="p">(</span><span class="nx">userData</span> <span class="o">===</span> <span class="s2">&quot;location&quot;</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nb">window</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="s2">&quot;static/path/or/properly/url/encoded/value&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
+<p>Using untrusted user data on the left side of the expression allows an attacker to subvert internal and external attributes of the window object, whereas using user input on the right side of the expression doesn't allow direct manipulation.</p>
 <h3 id="guideline-7-when-url-encoding-in-dom-be-aware-of-character-set-issues">GUIDELINE #7 - When URL encoding in DOM be aware of character set issues<a class="headerlink" href="#guideline-7-when-url-encoding-in-dom-be-aware-of-character-set-issues" title="Permanent link">&para;</a></h3>
 <p>When URL encoding in DOM be aware of character set issues as the character set in JavaScript DOM is not clearly defined (Mike Samuel).</p>
-<h3 id="guideline-8-limit-access-to-properties-objects-when-using-objectx-accessors">GUIDELINE #8 - Limit access to properties objects when using object[x] accessors<a class="headerlink" href="#guideline-8-limit-access-to-properties-objects-when-using-objectx-accessors" title="Permanent link">&para;</a></h3>
-<p>Limit access to properties objects when using <code>object[x]</code> accessors (Mike Samuel). In other words use a level of indirection between untrusted input and specified object properties.</p>
-<p>Here is an example of the problem when using map types:</p>
+<h3 id="guideline-8-limit-access-to-object-properties-when-using-objectx-accessors">GUIDELINE #8 - Limit access to object properties when using object[x] accessors<a class="headerlink" href="#guideline-8-limit-access-to-object-properties-when-using-objectx-accessors" title="Permanent link">&para;</a></h3>
+<p>Limit access to object properties when using <code>object[x]</code> accessors (Mike Samuel). In other words, add a level of indirection between untrusted input and specified object properties.</p>
+<p>Here is an example of the problem using map types:</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">var</span> <span class="nx">myMapType</span> <span class="o">=</span> <span class="p">{};</span>
 <span class="nx">myMapType</span><span class="p">[</span><span class="o">&lt;%=</span><span class="nx">untrustedData</span><span class="o">%&gt;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;moreUntrustedData&quot;</span><span class="p">;</span>
 </code></pre></div>
 
-<p>Although the developer writing the code above was trying to add additional keyed elements to the <code>myMapType</code> object. This could be used by an attacker to subvert internal and external attributes of the <code>myMapType</code> object.</p>
+<p>The developer writing the code above was trying to add additional keyed elements to the <code>myMapType</code> object. However, this could be used by an attacker to subvert internal and external attributes of the <code>myMapType</code> object.</p>
+<p>A better approach would be to use the following:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="p">(</span><span class="nx">untrustedData</span> <span class="o">===</span> <span class="s1">&#39;location&#39;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">myMapType</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="s2">&quot;moreUntrustedData&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h3 id="guideline-9-run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox">GUIDELINE #9 - Run your JavaScript in a ECMAScript 5 canopy or sandbox<a class="headerlink" href="#guideline-9-run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox" title="Permanent link">&para;</a></h3>
 <p>Run your JavaScript in a ECMAScript 5 <a href="https://github.com/jcoglan/canopy">canopy</a> or sandbox to make it harder for your JavaScript API to be compromised (Gareth Heyes and John Stevens).</p>
 <h3 id="guideline-10-dont-eval-json-to-convert-it-to-native-javascript-objects">GUIDELINE #10 - Don't eval() JSON to convert it to native JavaScript objects<a class="headerlink" href="#guideline-10-dont-eval-json-to-convert-it-to-native-javascript-objects" title="Permanent link">&para;</a></h3>
