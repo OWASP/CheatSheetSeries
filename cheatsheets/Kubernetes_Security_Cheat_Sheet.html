@@ -901,6 +901,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#scratch-image" class="md-nav__link">
+    Scratch image
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1925,6 +1932,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#scratch-image" class="md-nav__link">
+    Scratch image
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2557,9 +2571,13 @@ To enable RBAC, start the API server with the --authorization-mode flag set to a
 <p>There is work in progress being done in Kubernetes for image authorization plugins, which will allow preventing the shipping of unauthorized images. For more information, refer to the PR <a href="https://github.com/kubernetes/kubernetes/pull/27129">https://github.com/kubernetes/kubernetes/pull/27129</a>.</p>
 <h3 id="use-minimal-base-images-and-avoid-adding-unnecessary-components">Use minimal base images and avoid adding unnecessary components<a class="headerlink" href="#use-minimal-base-images-and-avoid-adding-unnecessary-components" title="Permanent link">&para;</a></h3>
 <p>Avoid using images with OS package managers or shells because they could contain unknown vulnerabilities. If you must include OS packages, remove the package manager at a later step. Consider using minimal images such as distroless images, as an example.</p>
-<h4 id="distroless-images">Distroless images<a class="headerlink" href="#distroless-images" title="Permanent link">&para;</a></h4>
 <p>Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google and other tech giants that have used containers in production for many years. It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.</p>
+<h4 id="distroless-images">Distroless images<a class="headerlink" href="#distroless-images" title="Permanent link">&para;</a></h4>
+<p>Distroless images contains less packages compared to other images, and does not includes shell, which reduce the attack surface.</p>
 <p>For more information on ditroless images, refer to <a href="https://github.com/GoogleContainerTools/distroless">https://github.com/GoogleContainerTools/distroless</a>.</p>
+<h4 id="scratch-image">Scratch image<a class="headerlink" href="#scratch-image" title="Permanent link">&para;</a></h4>
+<p>An empty image, ideal for statically compiled languages like Go. Because the image is empty - the attack surface it truely minimal - only your code!</p>
+<p>For more information, refer to <a href="https://hub.docker.com/_/scratch">https://hub.docker.com/_/scratch</a></p>
 <h3 id="use-the-latest-imagesensure-images-are-up-to-date">Use the latest images/ensure images are up to date<a class="headerlink" href="#use-the-latest-imagesensure-images-are-up-to-date" title="Permanent link">&para;</a></h3>
 <p>Ensure your images (and any third-party tools you include) are up to date and utilizing the latest versions of their components.</p>
 <h2 id="kubernetes-security-best-practices-deploy-phase">Kubernetes Security Best Practices: Deploy Phase<a class="headerlink" href="#kubernetes-security-best-practices-deploy-phase" title="Permanent link">&para;</a></h2>
