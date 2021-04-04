@@ -195,11 +195,19 @@ There is work in progress being done in Kubernetes for image authorization plugi
 
 Avoid using images with OS package managers or shells because they could contain unknown vulnerabilities. If you must include OS packages, remove the package manager at a later step. Consider using minimal images such as distroless images, as an example.
 
-#### Distroless images
-
 Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google and other tech giants that have used containers in production for many years. It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.
 
+#### Distroless images
+
+Distroless images contains less packages compared to other images, and does not includes shell, which reduce the attack surface.
+
 For more information on ditroless images, refer to <https://github.com/GoogleContainerTools/distroless>.
+
+#### Scratch image
+
+An empty image, ideal for statically compiled languages like Go. Because the image is empty - the attack surface it truely minimal - only your code!
+
+For more information, refer to <https://hub.docker.com/_/scratch>
 
 ### Use the latest images/ensure images are up to date
 
