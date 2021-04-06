@@ -52,7 +52,9 @@ Many good security questions are not applicable to all users, so the best approa
 
 The following list provides some examples of good questions:
 
-- What are the last four digits of your national insurance or social security number?
+- What is the name of a college you applied to but didn’t attend?
+- What was the name of the first school you remember attending? 
+- Where was the destination of your most memorable school field trip?  
 - What was your maths teacher's surname in your 8th year of school?
 - What was the name of your first stuffed toy?
 - What was your driving instructor's first name?
