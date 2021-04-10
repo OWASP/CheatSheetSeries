@@ -2,6 +2,8 @@
 
 ## Introduction
 
+*WARNING: Security questions are no longer recognized as an acceptable authentication factor by NIST SP 800-63 and should be used with caution.*
+
 Security questions are used by many websites to allow a user to regain access to their account if they have forgotten their password, or have lost their secondary authentication factors when multifactor authentication (MFA) is required. However, they are often a significantly weaker form of authentication than passwords, and there have been a number of high profile cases where they have allowed attackers to compromise users' accounts.
 
 Security questions **should not be relied upon as a sole mechanism to authenticate a user**. However, they can provide a useful additional layer of security when [MFA](Multifactor_Authentication_Cheat_Sheet.md) is not available.
