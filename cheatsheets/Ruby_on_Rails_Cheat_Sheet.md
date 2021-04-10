@@ -52,6 +52,9 @@ By default, protection against XSS comes as the default behavior. When string da
 <%= raw @product.name %>
 
 # Wrong! Do not do this!
+<%== @product.name %>
+
+# Wrong! Do not do this!
 <%= @product.name.html_safe %>
 
 # Wrong! Do not do this!
