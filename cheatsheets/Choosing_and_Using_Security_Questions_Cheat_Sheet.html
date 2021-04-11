@@ -1523,10 +1523,8 @@
                 
                 <h1 id="choosing-and-using-security-questions-cheat-sheet">Choosing and Using Security Questions Cheat Sheet<a class="headerlink" href="#choosing-and-using-security-questions-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p><em>WARNING: Security questions are no longer recognized as an acceptable authentication factor by NIST SP 800-63 and should be used with caution.</em></p>
-<p>Security questions are used by many websites to allow a user to regain access to their account if they have forgotten their password, or have lost their secondary authentication factors when multifactor authentication (MFA) is required. However, they are often a significantly weaker form of authentication than passwords, and there have been a number of high profile cases where they have allowed attackers to compromise users' accounts.</p>
-<p>Security questions <strong>should not be relied upon as a sole mechanism to authenticate a user</strong>. However, they can provide a useful additional layer of security when <a href="Multifactor_Authentication_Cheat_Sheet.html">MFA</a> is not available.</p>
-<p>This cheat sheet provides guidance on both how to choose strong security questions, and how to use them securely within an application.</p>
+<p><strong>WARNING: Security questions are no longer recognized as an acceptable authentication factor per NIST SP 800-63. Account recovery is just an alternate way to authenticate so it should be no weaker than regular authentication. See SP 800-63B sec 5.1.1.2 paragraph 4: <em>Verifiers SHALL NOT prompt subscribers to use specific types of information (e.g., “What was the name of your first pet?”) when choosing memorized secrets</em>.</strong></p>
+<p>While there are no acceptable uses of security questions in secure software, this cheat sheet provides guidance on how to choose strong security questions for legacy purposes.</p>
 <h2 id="choosing-security-questions">Choosing Security Questions<a class="headerlink" href="#choosing-security-questions" title="Permanent link">&para;</a></h2>
 <h3 id="desired-characteristics">Desired Characteristics<a class="headerlink" href="#desired-characteristics" title="Permanent link">&para;</a></h3>
 <p>Any security questions presented to users to reset forgotten passwords must meet the following characteristics:</p>
