@@ -17,7 +17,7 @@ CSP defends against XSS attacks in the following ways:
 By preventing the page from executing inline scripts, attacks like injecting
 
 ```html
-<script>alert("XSS)</script>
+<script>document.body.innerHTML='defaced'</script>
 ```
 
  will not work.
