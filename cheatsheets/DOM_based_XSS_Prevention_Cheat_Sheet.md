@@ -98,7 +98,7 @@ For example, the general rule is to HTML Attribute encode untrusted data (data f
  form1.appendChild(x);
 ```
 
-The problem is that if companyName had the value "Johnson & Johnson". What would be displayed in the input text field would be "Johnson & Johnson". The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.
+The problem is that if companyName had the value "Johnson & Johnson". What would be displayed in the input text field would be "Johnson &#x26;amp; Johnson". The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.
 
 ### SAFE and FUNCTIONALLY CORRECT example
 
