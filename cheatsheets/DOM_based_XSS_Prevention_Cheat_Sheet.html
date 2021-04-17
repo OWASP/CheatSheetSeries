@@ -1812,7 +1812,7 @@
  <span class="nx">form1</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
 </code></pre></div>
 
-<p>The problem is that if companyName had the value "Johnson &amp; Johnson". What would be displayed in the input text field would be "Johnson &amp; Johnson". The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.</p>
+<p>The problem is that if companyName had the value "Johnson &amp; Johnson". What would be displayed in the input text field would be "Johnson &#x26;amp; Johnson". The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.</p>
 <h3 id="safe-and-functionally-correct-example">SAFE and FUNCTIONALLY CORRECT example<a class="headerlink" href="#safe-and-functionally-correct-example" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code> <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">);</span>
  <span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;company_name&quot;</span><span class="p">);</span>
