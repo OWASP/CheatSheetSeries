@@ -301,7 +301,7 @@ Admittedly, this is more of a generic web application concern than Dockerfile re
 
 ## 7) Find and fix security vulnerabilities in your Node.js docker image
 
-TODO - Need vendor neutral suggestions here
+See (https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Docker_Security_Cheat_Sheet.md#rule-9---use-static-analysis-tools)[https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Docker_Security_Cheat_Sheet.md#rule-9---use-static-analysis-tools]
 
 ## 8) Use multi-stage builds
 
