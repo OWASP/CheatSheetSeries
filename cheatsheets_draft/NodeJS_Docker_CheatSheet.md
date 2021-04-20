@@ -1,6 +1,6 @@
 # Node.js Docker Cheatsheet
 
-The following article provides production-grade guidelines for building optimized and secure Node.js Docker images. You’ll find it helpful regardless of the Node.js application you aim to build. This article will be helpful for you if:
+The following cheatsheet provides production-grade guidelines for building optimized and secure Node.js Docker images. You’ll find it helpful regardless of the Node.js application you aim to build. This article will be helpful for you if:
 
 *   your aim is to build a frontend application using server-side rendering (SSR) Node.js capabilities for React.
 *   you’re looking for advice on how to properly build a Node.js Docker image for your microservices, running Fastify, NestJS or other application frameworks.
@@ -89,13 +89,13 @@ Let’s fix it by updating the Dockerfile, providing the full base image tag for
     RUN npm install
     CMD "npm" "start"
 
-## #2 Install only production dependencies in the Node.js Docker image
+## 2) Install only production dependencies in the Node.js Docker image
 
 The following Dockerfile directive installs all dependencies in the container, including `devDependencies`, which aren’t needed for a functional application to work. It adds an unneeded security risk from packages used as development dependencies, as well as inflating the image size unnecessarily.
 
 **RUN npm install**
 
-If you followed my previous guide on [10 npm security best practices](https://snyk.io/blog/ten-npm-security-best-practices/) then you know that you want to enforce deterministic builds with `npm ci`. This prevents surprises in a continuous integration (CI) flow because it halts if any deviations from the lockfile are made.
+Enforce deterministic builds with `npm ci`. This prevents surprises in a continuous integration (CI) flow because it halts if any deviations from the lockfile are made.
 
 In the case of building a Docker image for production we want to ensure that we only install production dependencies in a deterministic way, and this brings us to the following recommendation for the best practice for installing npm dependencies in a container image:
 
@@ -109,8 +109,7 @@ The updated Dockerfile contents in this stage are as follows:
     RUN npm ci --only=production
     CMD "npm" "start"
 
-3\. Optimize Node.js tooling for production
--------------------------------------------
+## 3) Optimize Node.js tooling for production
 
 When you build your Node.js Docker image for production, you want to ensure that all frameworks and libraries are using the optimal settings for performance and security.
 
@@ -130,7 +129,6 @@ As an example, the [Express documentation](https://expressjs.com/en/advanced/bes
 
 The performance impact of the `NODE_ENV` variable could be very significant.
 
-The kind folks at Dynatrace have put together a blog post which details the [drastic effects of omitting NODE\_ENV in your Express applications](https://www.dynatrace.com/news/blog/the-drastic-effects-of-omitting-node-env-in-your-express-js-applications/).
 
 Many of the other libraries that you are relying on may also expect this variable to be set, so we should set this in our Dockerfile.
 
@@ -143,12 +141,11 @@ The updated Dockerfile should now read as follows with the `NODE_ENV` environmen
     RUN npm ci --only=production
     CMD "npm" "start"
 
-4\. Don’t run containers as root
---------------------------------
+## 4) Don’t run containers as root
 
 The principle of least privilege is a long-time security control from the early days of Unix and we should always follow this when we’re running our containerized Node.js web applications.
 
-The threat assessment is pretty straight-forward—if an attacker is able to compromise the web application in a way that allows for [command injection](https://snyk.io/blog/command-injection/) or [directory path traversal](https://snyk.io/blog/snyking-in-directory-traversal-vulnerability-exploit-in-the-st-package/), then these will be invoked with the user who owns the application process. If that process happens to be root then they can do virtually everything within the container, including [attempting a container escape](https://snyk.io/blog/a-serious-security-flaw-in-runc-can-result-in-root-privilege-escalation-in-docker-and-kubernetes/) or [privilege escalation](https://snyk.io/blog/kernel-privilege-escalation/). Why would we want to risk it? You’re right, we don’t.
+The threat assessment is pretty straight-forward—if an attacker is able to compromise the web application in a way that allows for [command injection](https://owasp.org/www-community/attacks/Command_Injection) or [directory path traversal](https://owasp.org/www-community/attacks/Path_Traversal), then these will be invoked with the user who owns the application process. If that process happens to be root then they can do virtually everything within the container, including [attempting a container escape or [privilege escalation](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/03-Testing_for_Privilege_Escalation). Why would we want to risk it? You’re right, we don’t.
 
 Repeat after me: **“friends don’t let friends run containers as root!”**
 
@@ -169,8 +166,7 @@ The complete and proper way of dropping privileges is as follows, also showing o
     USER node
     CMD "npm" "start"
 
-5\. Properly handle events to safely terminate a Node.js Docker web application
--------------------------------------------------------------------------------
+## 5) Properly handle events to safely terminate a Node.js Docker web application
 
 One of the most common mistakes I see with blogs and articles about containerizing Node.js applications when running in Docker containers is the way that they invoke the process. All of the following and their variants are bad patterns you should avoid:
 
@@ -225,7 +221,7 @@ To [quote the Node.js Docker working group recommendation](https://github.com/no
 
 The way to go about it then is to use a tool that will act like an init process, in that it is invoked with PID 1, then spawns our Node.js application as another process whilst ensuring that all signals are proxied to that Node.js process. If possible, we’d like a small as possible tooling footprint for doing so to not risk having security vulnerabilities added to our container image.
 
-One such tool that we use at Snyk is [dumb-init](https://engineeringblog.yelp.com/2016/01/dumb-init-an-init-for-docker.html) because it is statically linked and has a small footprint. Here’s how we’ll set it up:
+One such tool is [dumb-init](https://engineeringblog.yelp.com/2016/01/dumb-init-an-init-for-docker.html) which is statically linked and has a small footprint. Here’s how we’ll set it up:
 
     RUN apk add dumb-init
     CMD ["dumb-init", "node", "server.js"]
@@ -245,10 +241,7 @@ Good to know: `docker kill` and `docker stop` commands only send signals to the 
 
 **Secure your containerized Node.js web applications**
 
-[Sign up for free](https://app.snyk.io/login?cta=sign-up&loc=body&page=10-best-practices-to-containerize-node-js-web-applications-with-docker)
-
-6\. Graceful tear down for your Node.js web applications
---------------------------------------------------------
+## 6) Graceful tear down for your Node.js web applications
 
 If we’re already discussing process signals that terminate applications, let’s make sure we’re shutting them down properly and gracefully without disrupting users.
 
@@ -306,99 +299,11 @@ Let’s add our event handler:
 
 Admittedly, this is more of a generic web application concern than Dockerfile related, but is even more important in orchestrated environments.
 
-7\. Find and fix security vulnerabilities in your Node.js docker image
-----------------------------------------------------------------------
+## 7) Find and fix security vulnerabilities in your Node.js docker image
 
-Remember how we discussed the importance of small Docker base images for our Node.js applications? Let’s put this test into practice.
+TODO - Need vendor neutral suggestions here
 
-I’m going to use the [Snyk CLI](https://support.snyk.io/hc/en-us/articles/360003812458-Getting-started-with-the-CLI) to test our Docker image. You can sign up for a free Snyk account [here](https://app.snyk.io/login).
-
-    $ npm install -g snyk
-    $ snyk auth
-    $ snyk container test node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a --file=Dockerfile
-
-The first command installs the Snyk CLI, followed by a quick sign-in flow from the command line to fetch an API key, and then we can test the container for any security issues. Here is the result:
-
-    Organization:      snyk-demo-567
-    Package manager:   apk
-    Target file:       Dockerfile
-    Project name:      docker-image|node
-    Docker image: node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
-    Platform:          linux/amd64
-    Base image:        node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
-    ✓ Tested 16 dependencies for known issues, no vulnerable paths found.
-
-Snyk detected 16 operating system dependencies, including our Node.js runtime executable, and did not find any vulnerable versions.
-
-This is great, but what would happen if we had used the [`FROM node`](Organization:      snyk-demo-567Package manager:   apkTarget file:       DockerfileProject name:      docker-image|nodeDocker image: node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390aPlatform:          linux/amd64Base image:        node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a✓ Tested 16 dependencies for known issues, no vulnerable paths found.) base image directive?  
-Even better, let’s assume you used a more specific Node.js docker base image, such as this:
-
-**FROM node:14.2.0-slim**
-
-This looks like a better position to be in—we’re being very specific for a Node.js version as well as using the `slim` type of image, which means a smaller dependencies footprint in the Docker image. Let’s test that with Snyk:
-
-    …
-    
-    ✗ High severity vulnerability found in node
-      Description: Memory Corruption
-      Info: https://snyk.io/vuln/SNYK-UPSTREAM-NODE-570870
-      Introduced through: node@14.2.0
-      From: node@14.2.0
-      Introduced by your base image (node:14.2.0-slim)
-      Fixed in: 14.4.0
-    
-    ✗ High severity vulnerability found in node
-      Description: Denial of Service (DoS)
-      Info: https://snyk.io/vuln/SNYK-UPSTREAM-NODE-674659
-      Introduced through: node@14.2.0
-      From: node@14.2.0
-      Introduced by your base image (node:14.2.0-slim)
-      Fixed in: 14.11.0
-    
-    
-    Organization:      snyk-demo-567
-    Package manager:   deb
-    Target file:       Dockerfile
-    Project name:      docker-image|node
-    Docker image:      node:14.2.0-slim
-    Platform:          linux/amd64
-    Base image:        node:14.2.0-slim
-    
-    Tested 78 dependencies for known issues, found 82 issues.
-    
-    Base Image        Vulnerabilities  Severity
-    node:14.2.0-slim  82               23 high, 11 medium, 48 low
-    
-    Recommendations for base image upgrade:
-    
-    Minor upgrades
-    Base Image         Vulnerabilities  Severity
-    node:14.15.1-slim  71               17 high, 7 medium, 47 low
-    
-    Major upgrades
-    Base Image        Vulnerabilities  Severity
-    node:15.4.0-slim  71               17 high, 7 medium, 47 low
-    
-    Alternative image types
-    Base Image                 Vulnerabilities  Severity
-    node:14.15.1-buster-slim   55               12 high, 4 medium, 39 low
-    node:14.15.3-stretch-slim  71               17 high, 7 medium, 47 low
-    
-
-While it seems that a specific Node.js runtime version such as `FROM node:14.2.0-slim` is good enough, Snyk is able to find security vulnerabilities from 2 primary sources:
-
-1.  The Node.js runtime itself—did you notice the two leading security vulnerabilities in the report above? These are publicly known security issues in the Node.js runtime. The immediate fix to these would be to upgrade to a newer Node.js version, which Snyk tells you about and also tells you which version fixed it—14.11.0, as you can see in the output.
-2.  Tooling and libraries installed in this debian base image, such as glibc, bzip2, gcc, perl, bash, tar, libcrypt and others. While these vulnerable versions in the container may not pose immediate threat, why have them if we’re not using them?
-
-The best part of this Snyk CLI report? Snyk also recommends other base images to switch to, so you don’t have to figure this out yourself. Finding alternative images could be very time consuming, so Snyk saves you that trouble.
-
-My recommendation at this stage is as follows:
-
-1.  If you are managing your Docker images in a registry, such as Docker Hub or Artifactory, you can easily [import them into Snyk](https://support.snyk.io/hc/en-us/articles/360003916058-Configure-integration-for-Docker-Hub) so that the platform finds these vulnerabilities for you. This will also give you recommendation advice in the Snyk UI as well as monitoring your Docker images on an ongoing basis for newly discovered security vulnerabilities.
-2.  Use the Snyk CLI in your CI automation. The CLI is very flexible and that’s exactly why we created it—so you can apply it to any custom workflows you have. We also have [Snyk for GitHub Actions](https://snyk.io/blog/see-snyk-and-github-in-action-at-github-universe/), if you fancy those 🙂
-
-8\. Use multi-stage builds
---------------------------
+## 8) Use multi-stage builds
 
 Multi-stage builds are a great way to move from a simple, yet potentially erroneous Dockerfile, into separated steps of building a Docker image, so we can avoid leaking sensitive information. Not only that, but we can also use a bigger Docker base image to install our dependencies, compile any native npm packages if needed, and then copy all these artifacts into a small production base image, like our alpine example.
 
@@ -505,8 +410,7 @@ In the second stage, there’s a special notation for the `COPY` directive that 
 
 Also, now, do you see that `NPM_TOKEN` passed as build argument to the `build` intermediary Docker image? It’s not visible anymore in the `docker history nodejs-tutorial` command output because it doesn’t exist in our production docker image.
 
-9\. Keeping unnecessary files out of your Node.js Docker images
----------------------------------------------------------------
+## 9) Keeping unnecessary files out of your Node.js Docker images
 
 You have a `.gitignore` file to avoid polluting the git repository with unnecessary files, and potentially sensitive files too, right? The same applies to Docker images.
 
@@ -550,8 +454,7 @@ The take-away here for a `.dockerignore` file is:
 *   Saves you from secrets exposure such as credentials in the contents of `.env` or `aws.json` files making their way into the Node.js Docker image.
 *   It helps speed up Docker builds because it ignores files that would have otherwise caused a cache invalidation. For example, if a log file was modified, or a local environment configuration file, all would’ve caused the Docker image cache to invalidate at that layer of copying over the local directory.
 
-10\. Mounting secrets into the Docker build image
--------------------------------------------------
+## 10) Mounting secrets into the Docker build image
 
 One thing to note about the `.dockerignore` file is that it is an all or nothing approach and can’t be turned on or off per build stages in a Docker multi-stage build.
 
@@ -604,17 +507,3 @@ And finally, the command that builds the Node.js Docker image:
 **Note:** Secrets are a new feature in Docker and if you’re using an older version, you might need to enable it Buildkit as follows:
 
     $ DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234 --secret id=npmrc,src=.npmrc
-
-Summary
--------
-
-You made it all the way to create an optimized Node.js Docker base image. Great job! 
-
-That last step wraps up this entire guide on containerizing Node.js Docker web applications, taking into consideration performance and security related optimizations to ensure we’re building production-grade Node.js Docker images!
-
-Follow-up resources that I highly encourage you to review:
-
-*   [10 Docker image security best practices](https://snyk.io/blog/10-docker-image-security-best-practices/)
-*   [Docker for Java Developers: 5 things you need to know not to fail your security](https://snyk.io/blog/docker-for-java-developers/)
-
-Once you build secure and performant Docker base images for your Node.js applications – find and fix your container vulnerabilities with a free Snyk account.
