@@ -5,28 +5,6 @@ The following cheatsheet provides production-grade guidelines for building optim
 *   your aim is to build a frontend application using server-side rendering (SSR) Node.js capabilities for React.
 *   you’re looking for advice on how to properly build a Node.js Docker image for your microservices, running Fastify, NestJS or other application frameworks.
 
-A simple Node.js Docker image build
-------------------------------------
-
-Most blog articles start and finish along the lines of the following basic Dockerfile instructions for building Node.js Docker images:
-
-    FROM node
-    WORKDIR /usr/src/app
-    COPY . /usr/src/app
-    RUN npm install
-    CMD "npm" "start"
-
-Copy that to a file named `Dockerfile`, then build and run it.
-
-    $ docker build . -t nodejs-tutorial
-    $ docker run -p 3000:3000 nodejs-tutorial
-
-It’s simple, and it works.
-
-The only problem? It is full of mistakes and bad practices for building Node.js Docker images. Avoid the above by all means.
-
-Let’s begin improving this Dockerfile so we can build optimized Node.js web applications with Docker.
-
 ## 1) Use explicit and deterministic Docker base image tags
 
 It may seem to be an obvious choice to build your image based on the `node` Docker image, but what are you actually pulling in when you build the image? Docker images are always referenced by tags, and when you don’t specify a tag the default, `:latest` tag is used.
