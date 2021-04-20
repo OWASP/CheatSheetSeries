@@ -67,16 +67,16 @@ To make dynamic updates to HTML in the DOM safe, we recommend:
  2. JavaScript encoding all untrusted input, as shown in these examples:
 
 ```javascript
- element.innerHTML = "<%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%>";
- element.outerHTML = "<%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%>";
+ element.innerHTML = "<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>";
+ element.outerHTML = "<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>";
 ```
 
 ```javascript
- document.write("<%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%>");
- document.writeln("<%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%>");
+ document.write("<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>");
+ document.writeln("<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>");
 ```
 
-**Note:** The `Encoder.encodeForHTML()` and `Encoder.encodeForJS()` are just notional encoders. Various options for actual encoders are listed later in this document.
+**Note:** The `ESAPI.encoder().encodeForHTML()` and `ESAPI.encoder().encodeForJS()` are just notional encoders. Various options for actual encoders are listed later in this document.
 
 ## RULE \#2 - JavaScript Escape Before Inserting Untrusted Data into HTML Attribute Subcontext within the Execution Context
 
@@ -92,8 +92,8 @@ For example, the general rule is to HTML Attribute encode untrusted data (data f
  var x = document.createElement("input");
  x.setAttribute("name", "company_name");
  // In the following line of code, companyName represents untrusted user input
- // The Encoder.encodeForHTMLAttr() is unnecessary and causes double-encoding
- x.setAttribute("value", '<%=Encoder.encodeForJS(Encoder.encodeForHTMLAttr(companyName))%>');
+ // The ESAPI.encoder().encodeForHTMLAttribute() is unnecessary and causes double-encoding
+ x.setAttribute("value", '<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTMLAttribute(companyName))%>');
  var form1 = document.forms[0];
  form1.appendChild(x);
 ```
@@ -105,7 +105,7 @@ The problem is that if companyName had the value "Johnson & Johnson". What would
 ```javascript
  var x = document.createElement("input");
  x.setAttribute("name", "company_name");
- x.setAttribute("value", '<%=Encoder.encodeForJS(companyName)%>');
+ x.setAttribute("value", '<%=ESAPI.encoder().encodeForJS(companyName)%>');
  var form1 = document.forms[0];
  form1.appendChild(x);
 ```
@@ -227,7 +227,7 @@ Normally executing JavaScript from a CSS context required either passing `javasc
 From my experience, calling the `expression()` function from an execution context (JavaScript) has been disabled. In order to mitigate against the CSS `url()` method, ensure that you are URL encoding the data passed to the CSS `url()` method.
 
 ```javascript
-document.body.style.backgroundImage = "url(<%=Encoder.encodeForJS(Encoder.encodeForURL(companyName))%>)";
+document.body.style.backgroundImage = "url(<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForURL(companyName))%>)";
 ```
 
 ## RULE \#5 - URL Escape then JavaScript Escape Before Inserting Untrusted Data into URL Attribute Subcontext within the Execution Context
@@ -236,7 +236,7 @@ The logic which parses URLs in both execution and rendering contexts looks to be
 
 ```javascript
 var x = document.createElement("a");
-x.setAttribute("href", '<%=Encoder.encodeForJS(Encoder.encodeForURL(userRelativePath))%>');
+x.setAttribute("href", '<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForURL(userRelativePath))%>');
 var y = document.createTextElement("Click Me To Test");
 x.appendChild(y);
 document.body.appendChild(x);
@@ -331,7 +331,7 @@ The example that follows illustrates using closures to avoid double JavaScript e
  setTimeout((function(param) { return function() {
           customFunction(param);
         }
- })("<%=Encoder.encodeForJS(untrustedData)%>"), y);
+ })("<%=ESAPI.encoder().encodeForJS(untrustedData)%>"), y);
 ```
 
 The other alternative is using N-levels of encoding.
@@ -368,18 +368,18 @@ If **A** is double JavaScript encoded then the following **if** check will retur
 
 This brings up an interesting design point. Ideally, the correct way to apply encoding and avoid the problem stated above is to server-side encode for the output context where data is introduced into the application.
 
-Then client-side encode (using a JavaScript encoding library such as [ESAPI4JS](https://owasp.org/www-project-enterprise-security-api/)) for the individual subcontext (DOM methods) which untrusted data is passed to. [ESAPI4JS](https://owasp.org/www-project-enterprise-security-api/) and [jQuery Encoder](https://github.com/chrisisbeef/jquery-encoder/blob/master/src/jquery.jquery-encoder.js) are two client side encoding libraries developed by Chris Schmidt.
+Then client-side encode (using a JavaScript encoding library such as [node-esapi](https://github.com/ESAPI/node-esapi/)) for the individual subcontext (DOM methods) which untrusted data is passed to. 
 
 Here are some examples of how they are used:
 
 ```javascript
 //server-side encoding
-var input = "<%=Encoder.encodeForJS(untrustedData)%>";
+var input = "<%=ESAPI.encoder().encodeForJS(untrustedData)%>";
 ```
 
 ```javascript
 //HTML encoding is happening in JavaScript
-document.writeln(ESAPI4JS.encodeForHTML(input));
+document.writeln(ESAPI.encoder().encodeForHTML(input));
 ```
 
 One option is utilize ECMAScript 5 immutable properties in the JavaScript library.
@@ -407,9 +407,6 @@ function escapeHTML(str) {
      return out;
 }
 ```
-
-Chris Schmidt has put together another implementation of a JavaScript encoder [here](http://yet-another-dev.blogspot.com/2011/02/client-side-contextual-encoding-for.html).
-
 ### GUIDELINE \#6 - Use untrusted data on only the right side of an expression
 
 Use untrusted data on only the right side of an expression, especially data that looks like code and may be passed to the application (e.g., `location` and `eval()`).
@@ -474,7 +471,7 @@ In the above example, untrusted data started in the rendering URL context (`href
 Because the data was introduced in JavaScript code and passed to a URL subcontext the appropriate server-side encoding would be the following:
 
 ```html
-<a href="javascript:myFunction('<%=Encoder.encodeForJS(Encoder.encodeForURL(untrustedData)) %>', 'test');">
+<a href="javascript:myFunction('<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForURL(untrustedData)) %>', 'test');">
 Click Me</a>
  ...
 ```
@@ -483,11 +480,11 @@ Or if you were using ECMAScript 5 with an immutable JavaScript client-side encod
 
 ```html
 <!-- server side URL encoding has been removed.  Now only JavaScript encoding on server side. -->
-<a href="javascript:myFunction('<%=Encoder.encodeForJS(untrustedData)%>', 'test');">Click Me</a>
+<a href="javascript:myFunction('<%=ESAPI.encoder().encodeForJS(untrustedData)%>', 'test');">Click Me</a>
  ...
 <script>
 Function myFunction (url,name) {
-    var encodedURL = ESAPI4JS.encodeForURL(url);  //URL encoding using client-side scripts
+    var encodedURL = ESAPI.encoder().encodeForURL(url);  //URL encoding using client-side scripts
     window.location = encodedURL;
 }
 </script>
@@ -531,7 +528,7 @@ Let's look at the sample page and script:
 
 ```html
 <form name="myForm" ...>
-  <input type="text" name="lName" value="<%=Encoder.encodeForHTML(last_name)%>">
+  <input type="text" name="lName" value="<%=ESAPI.encoder().encodeForHTML(last_name)%>">
  ...
 </form>
 <script>
