@@ -5,20 +5,10 @@ The following article provides production-grade guidelines for building optimize
 *   your aim is to build a frontend application using server-side rendering (SSR) Node.js capabilities for React.
 *   you’re looking for advice on how to properly build a Node.js Docker image for your microservices, running Fastify, NestJS or other application frameworks.
 
-Why did I write this guide on containerizing Node.js Docker web applications?
-
-It might feel like yet another article on how to build Docker images for Node.js applications but many examples we’ve seen in blogs are very simplistic and solely aim to guide you on the basics of having a Node.js Docker image running an application, without thoughtful consideration of security and best practices for building Node.js Docker images.
-
-We are going to learn how to containerize Node.js web applications step by step, starting with a simple and working Dockerfile, understanding the pitfalls and insecurities with every Dockerfile directive, and then fixing it. [Download the cheatsheet here](https://snyk.io/wp-content/uploads/10-best-practices-to-containerize-Node.js-web-applications-with-Docker.pdf).
-
-[![10 best practices to containerize Node.js web applications with Docker](https://res.cloudinary.com/snyk/images/f_auto,q_auto/w_1240,h_873,c_scale/v1/wordpress-sync/cheatsheet/cheatsheet-1240x873.jpg)](https://snyk.io/wp-content/uploads/10-best-practices-to-containerize-Node.js-web-applications-with-Docker.pdf)
-
-[Sign up for free](https://app.snyk.io/login?cta=sign-up&loc=body&page=10-best-practices-to-containerize-node-js-web-applications-with-docker)
-
 A simple Node.js Docker image build
------------------------------------
+------------------------------------
 
-Most blog articles we’ve seen start and finish along the lines of the following basic Dockerfile instructions for building Node.js Docker images:
+Most blog articles start and finish along the lines of the following basic Dockerfile instructions for building Node.js Docker images:
 
     FROM node
     WORKDIR /usr/src/app
@@ -37,10 +27,7 @@ The only problem? It is full of mistakes and bad practices for building Node.js 
 
 Let’s begin improving this Dockerfile so we can build optimized Node.js web applications with Docker.
 
-You can follow along this tutorial by cloning [this repository](https://github.com/snyk-labs/nodejs-docker-best-practices).
-
-1\. Use explicit and deterministic Docker base image tags
----------------------------------------------------------
+## 1) Use explicit and deterministic Docker base image tags
 
 It may seem to be an obvious choice to build your image based on the `node` Docker image, but what are you actually pulling in when you build the image? Docker images are always referenced by tags, and when you don’t specify a tag the default, `:latest` tag is used.
 
@@ -54,8 +41,6 @@ The shortcomings of building based on the default `node` image are as follows:
 2.  The node Docker image is based on a full-fledged operating system, full of libraries and tools that you may or may not need to run your Node.js web application. This has two downsides. Firstly a bigger image means a bigger download size which, besides increasing the storage requirement, means more time to download and re-build the image. Secondly, it means you’re potentially introducing security vulnerabilities, that may exist in all of these libraries and tools, into the image.
 
 In fact, the `node` Docker image is quite big and includes hundreds of security vulnerabilities of different types and severities. If you’re using it, then by default your starting point is going to be a baseline of 642 security vulnerabilities, and hundreds of megabytes of image data that is downloaded on every pull and build.
-
-![](https://lh5.googleusercontent.com/U5_cpBzpEdm0CnuM_peEs-sNdmQ4e6YvvJfQdfhpUJ-oZR6qf1q9Fto77x4OvJkkX-JRyWEvkATqkJcpxUEGC9wnkJe62sa9lBptXt8eLTC1R5oRX4FVKmIr6Si-WUr9afW37YdB)
 
 The recommendations for building better Docker images are:
 
@@ -104,8 +89,7 @@ Let’s fix it by updating the Dockerfile, providing the full base image tag for
     RUN npm install
     CMD "npm" "start"
 
-2\. Install only production dependencies in the Node.js Docker image
---------------------------------------------------------------------
+## #2 Install only production dependencies in the Node.js Docker image
 
 The following Dockerfile directive installs all dependencies in the container, including `devDependencies`, which aren’t needed for a functional application to work. It adds an unneeded security risk from packages used as development dependencies, as well as inflating the image size unnecessarily.
 
