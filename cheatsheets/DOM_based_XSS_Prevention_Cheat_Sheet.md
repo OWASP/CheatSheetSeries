@@ -368,7 +368,7 @@ If **A** is double JavaScript encoded then the following **if** check will retur
 
 This brings up an interesting design point. Ideally, the correct way to apply encoding and avoid the problem stated above is to server-side encode for the output context where data is introduced into the application.
 
-Then client-side encode (using a JavaScript encoding library such as [node-esapi](https://github.com/ESAPI/node-esapi/)) for the individual subcontext (DOM methods) which untrusted data is passed to. 
+Then client-side encode (using a JavaScript encoding library such as [node-esapi](https://github.com/ESAPI/node-esapi/)) for the individual subcontext (DOM methods) which untrusted data is passed to.
 
 Here are some examples of how they are used:
 
@@ -407,6 +407,7 @@ function escapeHTML(str) {
      return out;
 }
 ```
+
 ### GUIDELINE \#6 - Use untrusted data on only the right side of an expression
 
 Use untrusted data on only the right side of an expression, especially data that looks like code and may be passed to the application (e.g., `location` and `eval()`).
