@@ -67,16 +67,16 @@ To make dynamic updates to HTML in the DOM safe, we recommend:
  2. JavaScript encoding all untrusted input, as shown in these examples:
 
 ```javascript
+ var ESAPI = require('node-esapi');
  element.innerHTML = "<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>";
  element.outerHTML = "<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>";
 ```
 
 ```javascript
+ var ESAPI = require('node-esapi');
  document.write("<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>");
  document.writeln("<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>");
 ```
-
-**Note:** The `ESAPI.encoder().encodeForHTML()` and `ESAPI.encoder().encodeForJS()` are just notional encoders. Various options for actual encoders are listed later in this document.
 
 ## RULE \#2 - JavaScript Escape Before Inserting Untrusted Data into HTML Attribute Subcontext within the Execution Context
 
@@ -89,6 +89,7 @@ For example, the general rule is to HTML Attribute encode untrusted data (data f
 ### SAFE but BROKEN example
 
 ```javascript
+ var ESAPI = require('node-esapi');
  var x = document.createElement("input");
  x.setAttribute("name", "company_name");
  // In the following line of code, companyName represents untrusted user input
@@ -103,6 +104,7 @@ The problem is that if companyName had the value "Johnson & Johnson". What would
 ### SAFE and FUNCTIONALLY CORRECT example
 
 ```javascript
+ var ESAPI = require('node-esapi');
  var x = document.createElement("input");
  x.setAttribute("name", "company_name");
  x.setAttribute("value", '<%=ESAPI.encoder().encodeForJS(companyName)%>');
@@ -227,6 +229,7 @@ Normally executing JavaScript from a CSS context required either passing `javasc
 From my experience, calling the `expression()` function from an execution context (JavaScript) has been disabled. In order to mitigate against the CSS `url()` method, ensure that you are URL encoding the data passed to the CSS `url()` method.
 
 ```javascript
+var ESAPI = require('node-esapi');
 document.body.style.backgroundImage = "url(<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForURL(companyName))%>)";
 ```
 
@@ -235,6 +238,8 @@ document.body.style.backgroundImage = "url(<%=ESAPI.encoder().encodeForJS(ESAPI.
 The logic which parses URLs in both execution and rendering contexts looks to be the same. Therefore there is little change in the encoding rules for URL attributes in an execution (DOM) context.
 
 ```javascript
+var ESAPI = require('node-esapi');
+var ESAPI = require('node-esapi');
 var x = document.createElement("a");
 x.setAttribute("href", '<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForURL(userRelativePath))%>');
 var y = document.createTextElement("Click Me To Test");
@@ -328,6 +333,7 @@ Ensure to follow step 3 above to make sure that the untrusted data is not sent t
 The example that follows illustrates using closures to avoid double JavaScript encoding.
 
 ```javascript
+ var ESAPI = require('node-esapi');
  setTimeout((function(param) { return function() {
           customFunction(param);
         }
@@ -374,11 +380,13 @@ Here are some examples of how they are used:
 
 ```javascript
 //server-side encoding
+var ESAPI = require('node-esapi');
 var input = "<%=ESAPI.encoder().encodeForJS(untrustedData)%>";
 ```
 
 ```javascript
 //HTML encoding is happening in JavaScript
+var ESAPI = require('node-esapi');
 document.writeln(ESAPI.encoder().encodeForHTML(input));
 ```
 
