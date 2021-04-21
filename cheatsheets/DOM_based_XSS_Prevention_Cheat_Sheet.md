@@ -239,7 +239,6 @@ The logic which parses URLs in both execution and rendering contexts looks to be
 
 ```javascript
 var ESAPI = require('node-esapi');
-var ESAPI = require('node-esapi');
 var x = document.createElement("a");
 x.setAttribute("href", '<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForURL(userRelativePath))%>');
 var y = document.createTextElement("Click Me To Test");
