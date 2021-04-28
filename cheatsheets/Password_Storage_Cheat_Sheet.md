@@ -124,7 +124,7 @@ The minimum work factor for bcrypt should be 10.
 
 #### Input Limits
 
-bcrypt has a maximum input length of 72 characters [for most implementations](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length). To protect against this issue, a maximum password length of 64 characters should be enforced when using bcrypt.
+bcrypt has a maximum input length of 72 characters [for most implementations](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length). To protect against this issue, a maximum password length of 64 characters should be enforced when using bcrypt so that a salt has a minimum input length of 8 characters.
 
 #### Pre-Hashing Passwords
 
