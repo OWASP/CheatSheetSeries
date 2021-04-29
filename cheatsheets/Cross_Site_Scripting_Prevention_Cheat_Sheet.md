@@ -111,31 +111,21 @@ Encode the following characters with HTML entity encoding to prevent switching i
 
 ### RULE \#2 - Attribute Encode Before Inserting Untrusted Data into HTML Common Attributes
 
-Rule \#2 is for putting untrusted data into typical attribute values like `width`, `name`, `value`, etc. This should not be used for complex attributes like `href`, `src`, `style`, or any of the event handlers like onmouseover. It is extremely important that event handler attributes should follow Rule \#3 for HTML JavaScript Data Values.
+Rule \#2 is for putting untrusted data into HTML attribute values like `width`, `name`, `value`, etc.
 
-Inside **UNquoted** attribute:
-
-```html
-<div attr=...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...>content
-```
-
-Inside single quoted attribute:
-
-```html
-<div attr='...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...'>content
-```
-
-Inside double quoted attribute :
+For example:
 
 ```html
 <div attr="...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...">content
 ```
 
-Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the "&amp;#xHH;" format (or a named entity if available) to prevent switching out of the attribute.
-
-The reason this rule is so broad is that developers frequently leave attributes unquoted. Properly quoted attributes can only be escaped with the corresponding quote.
-
-Unquoted attributes can be broken out of with many characters, including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`.
+1. Always quote dynamic attributes with `"` or `'`. Quoted attributes can only be broken out of with the corresponding quote, while unquoted attributes can be broken out of with many characters, including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`.
+2. Encode the corresponding quote: `"` and `'` should be encoded to `&#x22` and `&#x27` respectively.
+3. Some attributes can be used for attack event with encoding and should not be dynamic, or with extra care
+    - `href` can be used to inject JavaScript with `javascript` pseudo protocol (e.g. `href="javascript:attack()`)
+    - all event handlers (`onclick`, `onerror`, `onmouseover`, ...) can be used to inject JavaScript
+    - `src` can also be used to inject external scripts depending on the context (e.g. in a script tag)
+    - `style` can be exploited, see rule 4.
 
 ### RULE \#3 - JavaScript Encode Before Inserting Untrusted Data into JavaScript Data Values
 
