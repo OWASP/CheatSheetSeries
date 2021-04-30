@@ -204,7 +204,7 @@ WARN
 
 ---
 
-### authz_token_delete[:appid]
+### authn_token_delete[:appid]
 
 **Description**
 When a token is deleted it should be recorded
@@ -217,7 +217,7 @@ When a token is deleted it should be recorded
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "authz_token_delete:foobarapi",
+    "event": "authn_token_delete:foobarapi",
     "level": "WARN",
     "description": "The token for foobarapi has been deleted",
     ...
