@@ -70,6 +70,14 @@ In order to better understand security event logging a good high-level understan
 }
 ```
 
+## The Vocabulary
+
+What follows are the various event types that should be captured. For each event type there is a prefix like "authn" and additional data that should be included for that event.
+
+Portions of the full logging format are included for example, but a complete event log should follow the format above.
+
+---
+
 ## Authentication [AUTHN]
 
 ---
