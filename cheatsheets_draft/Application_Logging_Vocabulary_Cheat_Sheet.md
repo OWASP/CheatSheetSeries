@@ -80,8 +80,6 @@ Portions of the full logging format are included for example, but a complete eve
 
 ## Authentication [AUTHN]
 
----
-
 ### authn_login_success[:userid]
 
 **Description**
@@ -409,8 +407,6 @@ All activity by privileged users such as admin should be recorded.
 
 ## Excessive Use [EXCESS]
 
----
-
 ### excess_rate_limit_exceeded[userid,max]
 
 **Description**
@@ -434,8 +430,6 @@ Expected service limit ceilings should be established and alerted when exceeded,
 ---
 
 ## File Upload [UPLOAD]
-
----
 
 ### upload_complete[userid,filename,type]
 
@@ -527,8 +521,6 @@ When a file is deleted for normal reasons it should be recorded.
 
 ## Input Validation [INPUT]
 
----
-
 ### input_validation_fail[:field,userid]
 
 **Description**
@@ -553,8 +545,6 @@ WARN
 ---
 
 ## Malicious Behavior [MALICIOUS
-
----
 
 ### malicious_excess_404:[userid|IP,useragent]
 
@@ -835,8 +825,6 @@ WARN
 
 ## Session Management [SESSION]
 
----
-
 ### session_created:[userid]
 
 **Description**
@@ -930,8 +918,6 @@ WARN
 ---
 
 ## System Events [SYS]
-
----
 
 ### sys_startup:[userid]
 
@@ -1072,8 +1058,6 @@ WARN
 ---
 
 ## User Management [USER]
-
----
 
 ### user_created:[userid,newuserid,attributes[one,two,three]]
 
