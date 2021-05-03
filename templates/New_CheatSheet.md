@@ -1,56 +1,26 @@
-# Mandatory markdown format rules
+# Mandatory Markdown Format Rules
 
-```
-!!! REMOVE THIS SECTION BEFORE TO SUBMIT YOUR CS VIA PULL REQUEST !!!
-```
+**!!! REMOVE THIS SECTION BEFORE TO SUBMIT YOUR CHEAT SHEET VIA PULL REQUEST !!!**
 
 * Use this [editor and validation policy](https://github.com/OWASP/CheatSheetSeries#editor--validation-policy).
 * Use these [format rules](https://github.com/OWASP/CheatSheetSeries#conversion-rules).
 
-# Introduction
+# `Topic` Cheat Sheet
 
-```
-Provide high level information about the topic in order to introduce 
-it to people that do not know it.
+**Replace `Topic` with the topic you're tackling, such as `Authentication` and remove this line**
 
-You can add pointer to external sources if needed but 
-at least give an overview allowing a reader to continue on the CS.
+## Introduction
 
-You can also add schema or diagram in any part of the CS but 
-be sure to respect the copyright of the source file.
-```
+Provide high level information about the topic in order to introduce it to people that do not know it.
 
-# Context
+You can add pointer to external sources if needed but at least give an overview allowing a reader to continue on the CS.
 
-```
-Describe the security issues that are bring or commonly meet 
-when someone must work on this topic.
-```
+You can also add schema or diagram in any part of the CS but be sure to respect the copyright of the source file.
 
-# Objective
+## Main Sections
 
-```
-Describe the objective of the CS.
-What the CS will bring to the reader.
-```
+The main sections will vary based on the content of the cheat sheet. Generally there should be no more than half a dozen level 2 sections in the cheat sheet, with subsections created for these as required.
 
-# Proposition
+## References
 
-```
-1. Describe how to address the security issues in a 
-possible technology agnostic approach.
-
-2. Using your POC, describe your solution proposal 
-in the more teaching possible way.
-```
-
-# Sources of the prototype
-
-```
-Add pointer to the public GitHub repository on 
-which the source code of POC is hosted.
-```
-
-# Authors and Primary Editors
-
-Firstname Lastname - email@email.com
+Any useful references to other useful resources that aren't linked inline elsewhere in the cheat sheet.

@@ -1,22 +1,10 @@
-# Table of contents
+# Proactive Controls Index
 
-- [Objective](#objective)
-- [1. Define Security Requirements](#1-define-security-requirements)
-- [2. Leverage Security Frameworks and Libraries](#2-leverage-security-frameworks-and-libraries)
-- [3. Secure Database Access](#3-secure-database-access)
-- [4. Encode and Escape Data](#4-encode-and-escape-data)
-- [5. Validate All Inputs](#5-validate-all-inputs)
-- [6. Implement Digital Identity](#6-implement-digital-identity)
-- [7. Enforce Access Controls](#7-enforce-access-controls)
-- [8. Protect Data Everywhere](#8-protect-data-everywhere)
-- [9. Implement Security Logging and Monitoring](#9-implement-security-logging-and-monitoring)
-- [10. Handle All Errors and Exceptions](#10-handle-all-errors-and-exceptions)
+## Objective
 
-# Objective
+This cheatsheet will help users of the [OWASP Proactive Controls](https://owasp.org/www-project-proactive-controls/) identify which cheatsheets map to each proactive controls item. This mapping is based the [OWASP Proactive Controls](https://owasp.org/www-project-proactive-controls/) version 3.0 (2018).
 
-This cheatsheet will help users of the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) identify which cheatsheets map to each proactive controls item. This mapping is based the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) version 3.0 (2018).
-
-# 1. Define Security Requirements
+## 1. Define Security Requirements
 
 [Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
 
@@ -24,11 +12,7 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://www.ow
 
 [Threat Modeling Cheat Sheet](cheatsheets/Threat_Modeling_Cheat_Sheet.md)
 
-# 2. Leverage Security Frameworks and Libraries
-
-[C-Based Toolchain Hardening](cheatsheets/C-Based_Toolchain_Hardening.md)
-
-[C-Based Toolchain Hardening Cheat Sheet](cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md)
+## 2. Leverage Security Frameworks and Libraries
 
 [Clickjacking Defense Cheat Sheet](cheatsheets/Clickjacking_Defense_Cheat_Sheet.md)
 
@@ -36,13 +20,13 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://www.ow
 
 [PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
 
-[Ruby on Rails Cheatsheet (Tools)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#tools)
+[Ruby on Rails Cheatsheet (Tools)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#tools)
 
-[Ruby on Rails Cheatsheet (XSS)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#cross-site-scripting-xss)
+[Ruby on Rails Cheatsheet (XSS)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#cross-site-scripting-xss)
 
 [Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md)
 
-# 3. Secure Database Access
+## 3. Secure Database Access
 
 [DotNet Security Cheat Sheet (Data Access)](cheatsheets/DotNet_Security_Cheat_Sheet.md#data-access)
 
@@ -50,11 +34,11 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://www.ow
 
 [Query Parameterization Cheat Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md)
 
-[Ruby on Rails Cheatsheet (SQL Injection)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#sql-injection)
+[Ruby on Rails Cheatsheet (SQL Injection)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#sql-injection)
 
 [SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
 
-# 4. Encode and Escape Data
+## 4. Encode and Escape Data
 
 [AJAX Security Cheat Sheet (Client Side)](cheatsheets/AJAX_Security_Cheat_Sheet.md#client-side-javascript)
 
@@ -64,11 +48,11 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://www.ow
 
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
 
-[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md)
+[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md)
 
 [LDAP Injection Prevention Cheat Sheet](cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md)
 
-# 5. Validate All Inputs
+## 5. Validate All Inputs
 
 [Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md)
 
@@ -84,25 +68,27 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://www.ow
 
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
 
-[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.md)
+[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md)
 
 [Mass Assignment Cheat Sheet](cheatsheets/Mass_Assignment_Cheat_Sheet.md)
 
 [OS Command Injection Defense Cheat Sheet](cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md)
 
-[Protect FileUpload Against Malicious File](cheatsheets/Protect_FileUpload_Against_Malicious_File.md)
+[File Upload Cheat Sheet](cheatsheets/File_Upload_Cheat_Sheet.md)
 
 [REST Security Cheat Sheet (Input Validation)](cheatsheets/REST_Security_Cheat_Sheet.md#input-validation)
 
-[Ruby on Rails Cheatsheet (Command Injection)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#command-injection)
+[Ruby on Rails Cheatsheet (Command Injection)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#command-injection)
 
-[Ruby on Rails Cheatsheet (Mass Assignment and Strong Parameters)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#mass-assignment-and-strong-parameters)
+[Ruby on Rails Cheatsheet (Mass Assignment and Strong Parameters)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#mass-assignment-and-strong-parameters)
 
 [Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
 
 [XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
 
-# 6. Implement Digital Identity
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+## 6. Implement Digital Identity
 
 [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
 
@@ -116,25 +102,25 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://www.ow
 
 [JAAS Cheat Sheet](cheatsheets/JAAS_Cheat_Sheet.md)
 
-[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md)
+[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md)
 
 [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
 
 [REST Security Cheat Sheet (JWT)](cheatsheets/REST_Security_Cheat_Sheet.md#jwt)
 
-[Ruby on Rails Cheatsheet (Sessions)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#sessions)
+[Ruby on Rails Cheatsheet (Sessions)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#sessions)
 
-[Ruby on Rails Cheatsheet (Authentication)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#authentication)
+[Ruby on Rails Cheatsheet (Authentication)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#authentication)
 
 [SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md)
 
 [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
 
-# 7. Enforce Access Controls
+## 7. Enforce Access Controls
 
 [Access Control Cheat Sheet](cheatsheets/Access_Control_Cheat_Sheet.md)
 
-[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation.md)
+[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md)
 
 [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
 
@@ -146,15 +132,15 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://www.ow
 
 [REST Security Cheat Sheet (Access Control)](cheatsheets/REST_Security_Cheat_Sheet.md#access-control)
 
-[Ruby on Rails Cheatsheet (Insecure Direct Object Reference or Forceful Browsing)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#insecure-direct-object-reference-or-forceful-browsing)
+[Ruby on Rails Cheatsheet (Insecure Direct Object Reference or Forceful Browsing)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#insecure-direct-object-reference-or-forceful-browsing)
 
-[Ruby on Rails Cheatsheet (CSRF)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#csrf-cross-site-request-forgery)
+[Ruby on Rails Cheatsheet (CSRF)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#csrf-cross-site-request-forgery)
 
 [Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
 
 [Transaction Authorization Cheat Sheet](cheatsheets/Transaction_Authorization_Cheat_Sheet.md)
 
-# 8. Protect Data Everywhere
+## 8. Protect Data Everywhere
 
 [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
 
@@ -174,17 +160,17 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://www.ow
 
 [REST Security Cheat Sheet (HTTPS)](cheatsheets/REST_Security_Cheat_Sheet.md#https)
 
-[Ruby on Rails Cheatsheet (Encryption)](cheatsheets/Ruby_on_Rails_Cheatsheet.md#encryption)
+[Ruby on Rails Cheatsheet (Encryption)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#encryption)
 
 [User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md)
 
-# 9. Implement Security Logging and Monitoring
+## 9. Implement Security Logging and Monitoring
 
 [REST Security Cheat Sheet (Audit Logs)](cheatsheets/REST_Security_Cheat_Sheet.md#audit-logs)
 
 [Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
 
-# 10. Handle All Errors and Exceptions
+## 10. Handle All Errors and Exceptions
 
 [REST Security Cheat Sheet (Error Handling)](cheatsheets/REST_Security_Cheat_Sheet.md#error-handling)
 

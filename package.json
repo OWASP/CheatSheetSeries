@@ -1,0 +1,30 @@
+{
+  "name": "cheatsheetseries",
+  "version": "1.0.1",
+  "description": "OWASP CSS Project",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "markdownlint-cli": "^0.26.0",
+    "textlint": "^11.6.3",
+    "textlint-filter-rule-comments": "^1.2.2",
+    "textlint-filter-rule-whitelist": "^2.0.0",
+    "textlint-rule-terminology": "^2.1.4"
+  },
+  "scripts": {
+    "test": "npm run lint-markdown && npm run lint-terminology",
+    "lint-terminology": "textlint ./cheatsheets/",
+    "lint-markdown": "markdownlint ./cheatsheets/ --ignore node_modules",
+    "link-check": "find  cheatsheets -name \\*.md -exec markdown-link-check -c markdown-link-check-config.json 1> log 2> err {} \\; && if [ -e err ] && grep -q  \"ERROR:\" err ; then exit 113  ; else echo -e \"All good\"; fi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWASP/CheatSheetSeries.git"
+  },
+  "author": "OWASP",
+  "license": "CC-BY-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues"
+  },
+  "homepage": "https://github.com/OWASP/CheatSheetSeries#readme"
+}

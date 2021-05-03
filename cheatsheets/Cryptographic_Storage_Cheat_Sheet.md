@@ -1,235 +1,183 @@
-# Introduction
+# Cryptographic Storage Cheat Sheet
+
+## Introduction
 
 This article provides a simple model to follow when implementing solutions to protect data at rest.
 
-# Architectural Decision
+Passwords should not be stored using reversible encryption - secure password hashing algorithms should be used instead. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) contains further guidance on storing passwords.
 
-An architectural decision must be made to determine the appropriate method to protect data at rest. There are such wide varieties of products, methods and mechanisms for cryptographic storage. This cheat sheet will only focus on low-level guidelines for developers and architects who are implementing cryptographic solutions. We will not address specific vendor solutions, nor will we address the design of cryptographic algorithms.
+## Architectural Design
 
-The general practices and required minimum key length depending on the scenario listed below.
+The first step in designing any application is to consider the overall architecture of the system, as this will have a huge impact on the technical implementation.
 
-- Key exchange: `Diffie–Hellman key exchange with minimum 2048 bits`
-- Message Integrity: `HMAC-SHA2`
-- Message Hash: `SHA2 256 bits`
-- Asymmetric encryption: `RSA 2048 bits`
-- Symmetric encryption: `AES 128 bits`
-- Password Hashing: `Argon2, PBKDF2, Scrypt, Bcrypt`
+This process should begin with considering the [threat model](Threat_Modeling_Cheat_Sheet.md) of the application (i.e, who you trying to protect that data against).
 
-# Providing Cryptographic Functionality
+The use of dedicated secret or key management systems can provide an additional layer of security protection, as well as making the management of secrets significantly easier - however it comes at the cost of additional complexity and administrative overhead - so may not be feasible for all applications. Note that many cloud environments provide these services, so these should be taken advantage of where possible.
 
-## Secure Cryptographic Storage Design
+### Where to Perform Encryption
 
-- All protocols and algorithms for authentication and secure communication should be well vetted by the cryptographic community.
-- Ensure certificates are properly validated against the hostnames/users ie whom they are meant for.
-- Avoid using wildcard certificates unless there is a business need for it
-- Maintain a cryptographic standard to ensure that the developer community knows about the approved ciphersuits for network security protocols, algorithms, permitted use, cryptoperiods and Key Management
+Encryption can be performed on a number of levels in the application stack, such as:
 
-### Rule - Only store sensitive data that you need
+- At the application level.
+- At the database level (e.g, [SQL Server TDE](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/transparent-data-encryption?view=sql-server-ver15))
+- At the filesystem level (e.g, BitLocker or LUKS)
+- At the hardware level (e.g, encrypted RAID cards or SSDs)
 
-Many eCommerce businesses utilize third party payment providers to store credit card information for recurring billing. This offloads the burden of keeping credit card numbers safe.
+Which layer(s) are most appropriate will depend on the threat model. For example, hardware level encryption is effective at protecting against the physical theft of the server, but will provide no protection if an attacker is able to compromise the server remotely.
 
-### Rule - Use strong approved Authenticated Encryption
+### Minimise the Storage of Sensitive Information
 
-E.g. [CCM](http://en.wikipedia.org/wiki/CCM_mode) or [GCM](http://en.wikipedia.org/wiki/GCM_mode) are approved [Authenticated Encryption](http://en.wikipedia.org/wiki/Authenticated_encryption) modes based on [AES](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) algorithm.
+The best way to protect sensitive information is to not store it in the first place. Although this applies to all kinds of information, it is most often applicable to credit card details, as they are highly desirable for attackers, and PCI DSS has such stringent requirements for how they must be stored. Wherever possible, the storage of sensitive information should be avoided.
 
-#### Rule - Use strong approved cryptographic algorithms
+## Algorithms
 
-Do not implement an existing cryptographic algorithm on your own, no matter how easy it appears. Instead, use widely accepted algorithms and widely accepted implementations.
+For symmetric encryption **AES** with a key that's at least **128 bits** (ideally **256 bits**) and a secure [mode](#cipher-modes) should be used as the preferred algorithm.
 
-Only use approved public algorithms such as AES, RSA public key cryptography, and SHA-256 or better for hashing. Do not use weak algorithms, such as MD5 or SHA1. Avoid hashing for password storage, instead use Argon2, PBKDF2, bcrypt or scrypt. Note that the classification of a "strong" cryptographic algorithm can change over time. See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) or ISO TR 14742 “Recommendations on Cryptographic Algorithms and their use” or [Algorithms, key size and parameters report – 2014](http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-size-and-parameters-report-2014/at_download/fullReport) from European Union Agency for Network and Information Security. E.g. [AES](http://en.wikipedia.org/wiki/Advanced_Encryption_Standard) 128, [RSA](http://en.wikipedia.org/wiki/RSA_(cryptosystem)) 3072, [SHA](http://en.wikipedia.org/wiki/Secure_Hash_Algorithm) 256.
+For asymmetric encryption, use elliptical curve cryptography (ECC) with a secure curve such as **Curve25519** as a preferred algorithm. If ECC is not available and  **RSA** must be used, then ensure that the key is at least **2048 bits**.
 
-Ensure that the implementation has (at minimum) had some cryptography experts involved in its creation. If possible, use an implementation that is FIPS 140-2 certified.
+Many other symmetric and asymmetric algorithms are available which have their own pros and cons, and they may be better or worse than AES or Curve25519 in specific use cases. When considering these, a number of factors should be taken into account, including:
 
-See [NIST approved algorithms](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) Table 2 “Comparable strengths” for the strength (“security bits”) of different algorithms and key lengths, and how they compare to each other.
+- Key size.
+- Known attacks and weaknesses of the algorithm.
+- Maturity of the algorithm.
+- Approval by third parties such as [NIST's algorithmic validation program](https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program).
+- Performance (both for encryption and decryption).
+- Quality of the libraries available.
+- Portability of the algorithm (i.e, how widely supported is it).
 
-- In general, where different algorithms are used, they should have comparable strengths e.g. if an AES-128 key is to be encrypted, an AES-128 key or greater, or RSA-3072 or greater could be used to encrypt it.
-- In general, hash lengths are twice as long as the security bits offered by the symmetric/asymmetric algorithm  e.g. SHA-224 for 3TDEA (112 security bits) (due to the [Birthday Attack](http://en.wikipedia.org/wiki/Birthday_attack))
+In some cases there may be regulatory requirements that limit the algorithms that can be used, such as [FIPS 140-2](https://csrc.nist.gov/csrc/media/publications/fips/140/2/final/documents/fips1402annexa.pdf) or [PCI DSS](https://www.pcisecuritystandards.org/pci_security/glossary#Strong%20Cryptography).
 
-If a password is being used to protect keys then the [password strength](http://en.wikipedia.org/wiki/Password_strength) should be sufficient for the strength of the keys it is protecting.
+### Custom Algorithms
 
-When 3DES is used, ensure `K1 != K2 != K3`, and the minimum key length must be `192 bits` .
+Don't do this.
 
-#### Rule - Use approved cryptographic modes
+### Cipher Modes
 
-In general, you should not use AES, DES or other symmetric cipher primitives directly. [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html) should be used instead.
+There are various [modes](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation) that can be used to allow block ciphers (such as AES) to encrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.
 
-**Note:** Do not use [ECB mode](http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Electronic_codebook_.28ECB.29) for encrypting lots of data (the other modes are better because they chain the blocks of data together to improve the data security).
+Where available, authenticated modes should always be used. These provide guarantees of the integrity and authenticity of the data, as well as confidentiality. The most commonly used authenticated modes are **[GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode)** and **[CCM](https://en.wikipedia.org/wiki/CCM_mode)**, which should be used as a first preference.
 
-#### Rule - Use strong random numbers
+If GCM or CCM are not available, then [CTR](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_%28CTR%29) mode or [CBC](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_%28CBC%29) mode should be used. As these do not provide any guarantees about the authenticity of the data, separate authentication should be implemented, such as using the [Encrypt-then-MAC](https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_%28EtM%29) technique. Care needs to be taken when using this method with [variable length messages](https://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages)
 
-Ensure that all random numbers, especially those used for cryptographic parameters (keys, IV’s, MAC tags), random file names, random GUIDs, and random strings are generated in a cryptographically strong fashion.
+If random access to the encrypted data is required then [XTS](https://en.wikipedia.org/wiki/Disk_encryption_theory#XTS) mode should be used. This is typically used for disk encryption, so it unlikely to be used by a web application.
 
-Ensure that random algorithms are seeded with sufficient entropy.
+[ECB](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB) should not be used outside of very specific circumstances.
 
-Tools like [NIST RNG Test tool](http://csrc.nist.gov/groups/ST/toolkit/rng/documentation_software.html) (as used in PCI PTS Derived Test Requirements) can be used to comprehensively assess the quality of a Random Number Generator by reading e.g. 128MB of data from the RNG source and then assessing its randomness properties with the tool.
+### Secure Random Number Generation
 
-The following libraries are considered **weak** random numbers generators and should not be used.
+Random numbers (or strings) are needed for various security critical functionality, such as generating encryption keys, IVs, session IDs, CSRF tokens or password reset tokens. As such, it is important that these are generated securely, and that it is not possible for an attacker to guess and predict them.
 
-- C library: `random()`, `rand()` instead use [getrandom(2)](http://man7.org/linux/man-pages/man2/getrandom.2.html) instead
-- Java library: `java.util.Random()` instead use `java.security.SecureRandom` instead
+It is generally not possible for computers to generate truly random numbers (without special hardware), so most systems and languages provide two different types of randomness.
 
-For secure random number generation, refer to NIST SP 800-90A. CTR-DRBG、HASH-DRBG、HMAC-DRBG are recommended. Refer to NIST SP800-22 A Statistical Test Suite for Random and Pseudorandom Number Generators for Cryptographic Applications, and the testing toolkit.
+Pseudo-Random Number Generators (PRNG) provide low-quality randomness that are much faster, and can be used for non-security related functionality (such as ordering results on a page, or randomising UI elements). However, they **must not** be used for anything security critical, as it is often possible for attackers to guess or predict the output.
 
-References:
-- http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-22r1a.pdf
+Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness (more strictly, a greater amount of entropy), making them safe to use for security-sensitive functionality. However, they are slower and more CPU intensive, can end up blocking in some circumstances when large amounts of random data are requested. As such, if large amounts of non-security related randomness are needed, they may not be appropriate.
 
-#### Rule - Use Authenticated Encryption of data
+The table below shows the recommended algorithms for each language, as well as insecure functions that should not be used.
 
-Use ([AE](http://en.wikipedia.org/wiki/Authenticated_encryption)) modes under a uniform API. Recommended modes include [CCM](http://en.wikipedia.org/wiki/CCM_mode), and [GCM](http://en.wikipedia.org/wiki/Galois/Counter_Mode) as these, and only these as of November 2014, are specified in [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html), ISO IEC 19772 (2009) "Information technology — Security techniques — Authenticated encryption", and [IEEE P1619 Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices](http://en.wikipedia.org/wiki/IEEE_P1619):
+| Language | Unsafe Functions | Cryptographically Secure Functions |
+|----------|------------------|------------------------------------|
+| C        | `random()`, `rand()` | [getrandom(2)](http://man7.org/linux/man-pages/man2/getrandom.2.html) |
+| Java     | `java.util.Random()` | [java.security.SecureRandom](https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html) |
+| PHP      | `rand()`, `mt_rand()`, `array_rand()`, `uniqid()` | [random_bytes()](https://www.php.net/manual/en/function.random-bytes.php), [random_int()](https://www.php.net/manual/en/function.random-int.php) in PHP 7 or [openssl_random_pseudo_bytes()](https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php) in PHP 5 |
+| .NET/C#  | `Random()` | [RNGCryptoServiceProvider](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rngcryptoserviceprovider?view=netframework-4.8) |
+| Objective-C | `arc4random()` (Uses RC4 Cipher) | [SecRandomCopyBytes](https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc) |
+| Python   | `random()` | [secrets()](https://docs.python.org/3/library/secrets.html#module-secrets) |
+| Ruby     | `Random` | [SecureRandom](https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html) |
+| Go       | `rand` using `math/rand` package | [crypto.rand](https://golang.org/pkg/crypto/rand/) package |
+| Rust     | `rand::prng::XorShiftRng` | [rand::prng::chacha::ChaChaRng](https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html) and the rest of the Rust library [CSPRNGs.](https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs) |
 
-- [Authenticated Encryption](http://en.wikipedia.org/wiki/Authenticated_encryption) gives [confidentiality](http://en.wikipedia.org/wiki/Confidentiality), [integrity](http://en.wikipedia.org/wiki/Data_integrity), and [authenticity](http://en.wikipedia.org/wiki/Authentication) (CIA); encryption alone just gives confidentiality. Encryption must always be combined with message integrity and authenticity protection. Otherwise the ciphertext may be vulnerable to manipulation causing changes to the underlying plaintext data, especially if it's being passed over untrusted channels (e.g. in an URL or cookie).
-- These modes require only one key. In general, the tag sizes and the IV sizes should be set to maximum values.
+#### UUIDs and GUIDs
 
-If these recommended [AE](http://en.wikipedia.org/wiki/Authenticated_encryption) modes are not available:
+Universally unique identifiers (UUIDs or GUIDs) are sometimes used as a quick way to generate random strings. Although they can provide a reasonable source of randomness, this will depend on the [type or version](https://en.wikipedia.org/wiki/Universally_unique_identifier#Versions) of the UUID that is created.
 
-- Combine encryption in [cipher-block chaining (CBC) mode](http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation#Cipher-block_chaining_.28CBC.29) with post-encryption message authentication code, such as [HMAC](http://en.wikipedia.org/wiki/HMAC) or [CMAC](http://en.wikipedia.org/wiki/CMAC) i.e. Encrypt-then-MAC.
-    - Note that Integrity and Authenticity are preferable to Integrity alone i.e. a MAC such as HMAC-SHA256 or HMAC-SHA512 is a better choice than SHA-256 or SHA-512.
-- Use 2 independent keys for these 2 independent operations.
-- Do not use ECB mode. CDC is preferred.
-- Do not use [CBC MAC for variable length data](http://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages)
-- The [CAVP program](http://csrc.nist.gov/groups/STM/cavp/index.html) is a good default place to go for validation of cryptographic algorithms when one does not have AES or one of the authenticated encryption modes that provide confidentiality and authenticity (i.e., data origin authentication) such as CCM, EAX, CMAC, etc. For Java, if you are using SunJCE that will be the case. The cipher modes supported in JDK 1.5 and later are CBC, CFB, CFBx, CTR, CTS, ECB, OFB, OFBx, PCBC. None of these cipher modes are authenticated encryption modes. (That's why it is added explicitly.) If you are using an alternate JCE provider such as Bouncy Castle, RSA JSafe, IAIK, etc., then these authenticated encryption modes should be used.
+Specifically, version 1 UUIDs are comprised of a high precision timestamp and the MAC address of the system that generated them, so are **not random** (although they may be hard to guess, given the timestamp is to the nearest 100ns). Type 4 UUIDs are randomly generated, although whether this is done using a CSPRNG will depend on the implementation. Unless this is known to be secure in the specific language or framework, the randomness of UUIDs should not be relied upon.
 
-**Note:** 
-- [Disk encryption](http://en.wikipedia.org/wiki/Disk_encryption_theory) is a special case of [data at rest](http://en.wikipedia.org/wiki/Data_at_Rest) e.g. Encrypted File System on a Hard Disk Drive. 
-- [XTS-AES mode](http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf) is optimized for Disk encryption and is one of the [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html); it provides confidentiality and some protection against data manipulation (but not as strong as the [AE](http://en.wikipedia.org/wiki/Authenticated_encryption) [NIST approved modes](http://csrc.nist.gov/groups/ST/toolkit/BCM/current_modes.html)). It is also specified in [IEEE P1619 Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices](http://en.wikipedia.org/wiki/IEEE_P1619)
+### Defence in Depth
 
-### Rule - Store a one-way and salted value of passwords
+Applications should be designed to still be secure even if cryptographic controls fail. Any information that is stored in an encrypted form should also be protected by additional layers of security. Application should also not rely on the security of encrypted URL parameters, and should enforce strong access control to prevent unauthorised access to information.
 
-Use Argon2, PBKDF2, bcrypt or scrypt for password storage. For more information on password storage, please see the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md).
+## Key Management
 
-### Rule - Ensure that the cryptographic protection remains secure even if access controls fail
+### Processes
 
-This rule supports the principle of defense in depth. Access controls (usernames, passwords, privileges, etc.) are one layer of protection. Storage encryption should add an additional layer of protection that will continue protecting the data even if an attacker subverts the database access control layer.
+Formal processes should be implemented (and tested) to cover all aspects of key management, including:
 
-### Rule - Ensure that any secret key is protected from unauthorized access
+- Generating and storing new keys.
+- Distributing keys to the required parties.
+- Deploying keys to application servers.
+- Rotating and decommissioning old keys
 
-#### Rule - Define a key lifecycle
+### Key Generation
 
-The key lifecycle details the various states that a key will move through during its life. The lifecycle will specify when a key should no longer be used for encryption, when a key should no longer be used for decryption (these are not necessarily coincident), whether data must be rekeyed when a new key is introduced, and when a key should be removed from use all together.
+Keys should be randomly generated using a cryptographically secure function, such as those discussed in the [Secure Random Number Generation](#secure-random-number-generation) section. Keys **should not** be based on common words or phrases, or on "random" characters generated by mashing the keyboard.
 
-#### Rule - Store unencrypted keys away from the encrypted data
+Where multiple keys are used (such as data separate data-encrypting and key-encrypting keys), they should be fully independent from each other.
 
-If the keys are stored with the data then any compromise of the data will easily compromise the keys as well. Unencrypted keys should never reside on the same machine or cluster as the data.
+### Key Lifetimes and Rotation
 
-#### Rule - Use independent keys when multiple keys are required
+Encryption keys should be changed (or rotated) based on a number of different criteria:
 
-Ensure that key material is independent. That is, do not choose a second key which is easily related to the first (or any preceeding) keys.
+- If the previous key is known (or suspected) to have been compromised.
+    - This could also be caused by a someone who had access to the key leaving the organisation.
+- After a specified period of time has elapsed (known as the cryptoperiod).
+    - There are many factors that could affect what an appropriate cryptoperiod is, including the size of the key, the sensitivity of the data, and the threat model of the system. See section 5.3 of [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf) for further guidance.
+- After the key has been used to encrypt a specific amount of data.
+    - This would typically be `2^35` bytes (~34GB) for 64-bit keys and `2^68` bytes (~295 exabytes) for 128 bit keys.
+- If there is a significant change to the security provided by the algorithm (such as a new attack being announced).
 
-#### Rule - Protect keys in a key vault
+Once one of these criteria have been met, a new key should be generated and used for encrypting any new data. There are two main approaches for how existing data that was encrypted with the old key(s) should be handled:
 
-Keys should remain in a protected key vault at all times. In particular, ensure that there is a gap between the threat vectors that have direct access to the data and the threat vectors that have direct access to the keys. 
+1. Decrypting it and re-encrypting it with the new key.
+2. Marking each item with the ID of the key that was used to encrypt it, and storing multiple keys to allow the old data to be decrypted.
 
-This implies that keys should not be stored on the application or web server (assuming that application attackers are part of the relevant threat model).
+The first option should generally be preferred, as it greatly simplifies both the application code and key management processes; however, it may not always be feasible. Note that old keys should generally be stored for a certain period after they have been retired, in case old backups of copies of the data need to be decrypted.
 
-#### Rule - Document concrete procedures for managing keys through the lifecycle
+It is important that the code and processes required to rotate a key are in place **before** they are required, so that keys can be quickly rotated in the event of a compromise. Additionally, processes should also be implemented to allow the encryption algorithm or library to be changed, in case a new vulnerability is found in the algorithm or implementation.
 
-These procedures must be written down and the key custodians must be adequately trained.
+## Key Storage
 
-#### Rule - Build support for changing algorithms and keys when needed
+Securely storing cryptographic keys is one of the hardest problems to solve, as the application always needs to have some level of access to the keys in order to decrypt the data. While it may not be possible to fully protect the keys from an attacker who has fully compromised the application, a number of steps can be taken to make it harder for them to obtain the keys.
 
-If keys are compromised or an external authority expires them, key changes will be needed. Application polices or emergency needs will force application administrators to rotate keys and potentially rekey data at some point. 
+Where available, the secure storage mechanisms provided by the operating system, framework or cloud service provider should be used. These include:
 
-It's best to be prepared to rapidly handle this need when necessary. Including a key version and encryption algorithm version with the encrypted data is a useful, proactive feature. 
+- A physical Hardware Security Module (HSM).
+- A virtual HSM.
+- Key vaults such as [Amazon KMS](https://aws.amazon.com/kms/) or [Azure Key Vault](https://azure.microsoft.com/en-gb/services/key-vault/).
+- Secure storage APIs provided by the [ProtectedData](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?redirectedfrom=MSDN&view=netframework-4.8) class in the .NET framework.
 
-For instance, including a simple prefix string, such as "`{1,1}...`", prior to the encrypted data could indicate algorithm version 1, key version 1. This allows for an "online" change to the encryption algorithm and key without re-encrypting all existing data all at once.
+There are many advantages to using these types of secure storage over simply putting keys in configuration files. The specifics of these will vary depending on the solution used, but they include:
 
-#### Rule - Document concrete procedures to handle a key compromise
+- Central management of keys, especially in containerised environments.
+- Easy key rotation and replacement.
+- Secure key generation.
+- Simplifying compliance with regulatory standards such as FIPS 140 or PCI DSS.
+- Making it harder for an attacker to export or steal keys.
 
-Ensure operations staff have the information they need, readily available, when rotation of encryption keys must be performed. Rotating keys should not require changes to source code or other risky deployment measures, since doing this in the middle of an incident will already place a great deal of stress on these staff.
+In some cases none of these will be available, such as in a shared hosting environment, meaning that it is not possible to obtain a high degree of protection for any encryption keys. However, the following basic rules can still be followed:
 
-#### Rule - Limit quantity of data encrypted with one key
+- Do not hard-code keys into the application source code.
+- Do not check keys into version control systems.
+- Protect the configuration files containing the keys with restrictive permissions.
+- Avoid storing keys in environment variables, as these can be accidentally exposed through functions such as [phpinfo()](https://www.php.net/manual/en/function.phpinfo.php) or through the `/proc/self/environ` file.
 
-If the amount of data encrypted grows beyond a **certain threshold**, a new key should be used. This **certain threshold** varies depending on the encryption algorithm used, but is typically 2³⁵ bytes (around 34 gigabytes) for 64 bit block ciphers (DES, 3DES, Blowfish, RC5, ...) and 2⁶⁸ bytes (around 295,147,905 terabytes) for 128 bit block ciphers (AES, TwoFish, Serpent). If encrypting with a modern cipher, this threshold is unlikely to be reached, but it should be considered when evaluating algorithms and rotation procedures.
+### Separation of Keys and Data
 
-### Rule - Follow applicable regulations on use of cryptography
+Where possible, encryption keys should be stored in a separate location from encrypted data. For example, if the data is stored in a database, the keys should be stored in the filesystem. This means that if an attacker only has access to one of these (for example through directory traversal or SQL injection), they cannot access both the keys and the data.
 
-#### Rule - Under PCI DSS requirement 3, you must protect cardholder data
+Depending on the architecture of the environment, it may be possible to store the keys and data on separate systems, which would provide a greater degree of isolation.
 
-The [Payment Card Industry (PCI) Data Security Standard (DSS)](https://www.pcisecuritystandards.org/document_library?category=pcidss&document=pci_dss) was developed to encourage and enhance cardholder data security and facilitate the broad adoption of consistent data security measures globally. The standard was introduced in 2005 and replaced individual compliance standards from Visa, Mastercard, Amex, JCB and Diners.
+### Encrypting Stored Keys
 
-PCI DSS requirement 3 covers secure storage of credit card data. This requirement covers several aspects of secure storage including the data you must never store but we are covering Cryptographic Storage which is covered in requirements 3.4, 3.5 and 3.6 as you can see below:
+Where possible, encryption keys should themselves be stored in an encrypted form. At least two separate keys are required for this:
 
-##### 3.4 Render PAN (Primary Account Number), at minimum, unreadable anywhere it is stored
+- The Data Encryption Key (DEK) is used to encrypt the data.
+- The Key Encryption Key (KEK) is used to encrypt the DEK.
 
-Compliance with requirement 3.4 can be met by implementing any of the four types of secure storage described in the standard which includes encrypting and hashing data. These two approaches will often be the most popular choices from the list of options. The standard doesn't refer to any specific algorithms but it mandates the use of **Strong Cryptography**. The glossary document from the PCI council defines **Strong Cryptography** as:
+For this to be effective, the KEK must be stored separately from the DEK. The encrypted DEK can be stored with the data, but will only be usable if an attacker is able to also obtain the KEK, which is stored on another system.
 
-*Cryptography based on industry-tested and accepted algorithms, along with strong key lengths and proper key-management practices. Cryptography is a method to protect data and includes both encryption (which is reversible) and hashing (which is not reversible, or “one way”). SHA-1 is an example of an industry-tested and accepted hashing algorithm. Examples of industry-tested and accepted standards and algorithms for encryption include AES (128 bits and higher), TDES (minimum double-length keys), RSA (1024 bits and higher), ECC (160 bits and higher), and ElGamal (1024 bits and higher).*
+The KEK should also be at least as strong as the DEK. The [envelope encryption](https://cloud.google.com/kms/docs/envelope-encryption) guidance from Google contains further details on how to manage DEKs and KEKs.
 
-If you have implemented the second rule in this cheat sheet you will have implemented a strong cryptographic algorithm which is compliant with or stronger than the requirements of PCI DSS requirement 3.4. You need to ensure that you identify all locations that card data could be stored including logs and apply the appropriate level of protection. This could range from encrypting the data to replacing the card number in logs.
+In simpler application architectures (such as shared hosting environments) where the KEK and DEK cannot be stored separately, there is limited value to this approach, as an attacker is likely to be able to obtain both of the keys at the same time. However, it can provide an additional barrier to unskilled attackers.
 
-This requirement can also be met by implementing disk encryption rather than file or column level encryption. The requirements for **Strong Cryptography** are the same for disk encryption and backup media. The card data should never be stored in the clear and by following the guidance in this cheat sheet you will be able to securely store your data in a manner which is compliant with PCI DSS requirement 3.4
-
-##### 3.5 Protect any keys used to secure cardholder data against disclosure and misuse
-
-As the requirement name above indicates, we are required to securely store the encryption keys themselves. This will mean implementing strong access control, auditing and logging for your keys. The keys must be stored in a location which is both secure and "away" from the encrypted data. This means key data shouldn't be stored on web servers, database servers etc
-
-Access to the keys must be restricted to the smallest amount of users possible. This group of users will ideally be users who are highly trusted and trained to perform Key Custodian duties. There will obviously be a requirement for system/service accounts to access the key data to perform encryption/decryption of data.
-
-The keys themselves shouldn't be stored in the clear but encrypted with a KEK (Key Encrypting Key). The KEK must not be stored in the same location as the encryption keys it is encrypting.
-
-##### 3.6 Fully document and implement all key-management processes and procedures for cryptographic keys used for encryption of cardholder data
-
-Requirement 3.6 mandates that key management processes within a PCI compliant company cover 8 specific key lifecycle steps:
-
-###### 3.6.1 Generation of strong cryptographic keys
-
-As we have previously described in this cheat sheet we need to use algorithms which offer high levels of data security. We must also generate strong keys so that the security of the data isn't undermined by weak cryptographic keys. A strong key is generated by using a key length which is sufficient for your data security requirements and compliant with the PCI DSS. The key size alone isn't a measure of the strength of a key. The data used to generate the key must be sufficiently random ("sufficient" often being determined by your data security requirements) and the entropy of the key data itself must be high.
-
-###### 3.6.2 Secure cryptographic key distribution
-
-The method used to distribute keys must be secure to prevent the theft of keys in transit. The use of a protocol such as Diffie Hellman can help secure the distribution of keys, the use of secure transport such as TLS and SSHv2 can also secure the keys in transit. Older protocols like SSLv3 should not be used.
-
-###### 3.6.3 Secure cryptographic key storage
-
-The secure storage of encryption keys including KEK's has been touched on in our description of requirement 3.5 (see above).
-
-###### 3.6.4 Periodic cryptographic key changes
-
-The PCI DSS standard mandates that keys used for encryption must be rotated at least annually. The key rotation process must remove an old key from the encryption/decryption process and replace it with a new key. All new data entering the system must encrypted with the new key. While it is recommended that existing data be rekeyed with the new key, as per the Rekey data at least every one to three years rule above, it is not clear that the PCI DSS requires this.
-
-###### 3.6.5 Retirement or replacement of keys as deemed necessary when the integrity of the key has been weakened or keys are suspected of being compromised
-
-The key management processes must cater for archived, retired or compromised keys. The process of securely storing and replacing these keys will more than likely be covered by your processes for requirements 3.6.2, 3.6.3 and 3.6.4
-
-###### 3.6.6 Split knowledge and establishment of dual control of cryptographic keys
-
-The requirement for split knowledge and/or dual control for key management prevents an individual user performing key management tasks such as key rotation or deletion. The system should require two individual users to perform an action (i.e. entering a value from their own OTP) which creates to separate values which are concatenated to create the final key data.
-
-###### 3.6.7 Prevention of unauthorized substitution of cryptographic keys
-
-The system put in place to comply with requirement 3.6.6 can go a long way to preventing unauthorised substitution of key data. In addition to the dual control process you should implement strong access control, auditing and logging for key data so that unauthorised access attempts are prevented and logged.
-
-###### 3.6.8 Requirement for cryptographic key custodians to sign a form stating that they understand and accept their key-custodian responsibilities
-
-To perform the strong key management functions we have seen in requirement 3.6 we must have highly trusted and trained key custodians who understand how to perform key management duties. The key custodians must also sign a form stating they understand the responsibilities that come with this role.
-
-# Related documentation & tools
-
-## Documentation
-
-- [Testing for SSL-TLS](https://www.owasp.org/index.php/Testing_for_SSL-TLS_(OWASP-CM-001))
-- [Guide to Cryptography](https://www.owasp.org/index.php/Guide_to_Cryptography)
-- [Application Security Verification Standard (ASVS) – Communication Security Verification Requirements (V10)](http://www.owasp.org/index.php/ASVS)
-- [SSLLabs wiki](https://github.com/ssllabs/research/wiki)
-- [Mozilla TLS wiki](https://wiki.mozilla.org/Security/Server_Side_TLS)
-- [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)
-- [BetterCrypto - Config Snippets](https://bettercrypto.org/)
-
-## Tools
-
-- [TestSSL](https://testssl.sh/)
-- [Cryptosense](https://cryptosense.com/discovery/)
-
-# Authors and Primary Editors
-
-Kevin Kenan - kevin@k2dd.com
-
-David Rook - david.a.rook@gmail.com
-
-Kevin Wall - kevin.w.wall@gmail.com
-
-Jim Manico - jim@owasp.org
-
-Fred Donovan - fred.donovan@owasp.org
-
-Tony Hsu - hsiang_chih@yahoo.com
+A key derivation function (KDF) could be used to generate a KEK from user-supplied input (such a passphrase), which would then be used to encrypt a randomly generated DEK. This allows the KEK to be easily changed (when the user changes their passphrase), without needing to re-encrypt the data (as the DEK remains the same).
