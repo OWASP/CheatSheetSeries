@@ -1055,8 +1055,8 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#run-security-linters-periodically" class="md-nav__link">
-    Run security linters periodically
+  <a href="#run-security-linters" class="md-nav__link">
+    Run security linters
   </a>
   
 </li>
@@ -1674,8 +1674,8 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#run-security-linters-periodically" class="md-nav__link">
-    Run security linters periodically
+  <a href="#run-security-linters" class="md-nav__link">
+    Run security linters
   </a>
   
 </li>
@@ -1745,24 +1745,16 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 <p>Another advantage of Promises is the way Promises handle errors. If an error occurs in a Promise class, it skips over the <code>.then</code> functions and invokes the first <code>.catch</code> function it finds. This way Promises provide a higher assurance of capturing and handling errors. As a principle, you can make all your asynchronous code (apart from emitters) return promises. It should be noted that Promise calls can also become a pyramid. In order to completely stay away from "Callback Hell", flat Promise chains should be used. If the module you are using does not support Promises, you can convert base object to a Promise by using <code>Promise.promisifyAll()</code> function.</p>
 <p>The following code snippet is an example of "Callback Hell":</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">function</span> <span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">// operations</span>
-   <span class="p">},</span> <span class="mf">500</span><span class="p">);</span>
+  <span class="c1">// operations that takes a bit of time and then calls the callback</span>
 <span class="p">}</span>
 <span class="kd">function</span> <span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">// operations</span>
-   <span class="p">},</span> <span class="mf">100</span><span class="p">);</span>
+  <span class="c1">// operations that takes a bit of time and then calls the callback</span>
 <span class="p">}</span>
 <span class="kd">function</span> <span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">// operations</span>
-   <span class="p">},</span> <span class="mf">900</span><span class="p">);</span>
+  <span class="c1">// operations that takes a bit of time and then calls the callback</span>
 <span class="p">}</span>
 <span class="kd">function</span> <span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">// operations</span>
-   <span class="p">},</span> <span class="mf">3000</span><span class="p">);</span>
+  <span class="c1">// operations that takes a bit of time and then calls the callback</span>
 <span class="p">}</span>
 
 <span class="nx">func1</span><span class="p">(</span><span class="s2">&quot;input1&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result1</span><span class="p">){</span>
@@ -1800,25 +1792,17 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 </code></pre></div>
 
 <p>The above code can be securely written as follows using a flat Promise chain:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span> <span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">// operations</span>
-   <span class="p">},</span> <span class="mf">500</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><code><span class="kd">function</span> <span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// operations that takes a bit of time and then resolves the promise</span>
 <span class="p">}</span>
-<span class="kd">function</span> <span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">// operations</span>
-   <span class="p">},</span> <span class="mf">100</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// operations that takes a bit of time and then resolves the promise</span>
 <span class="p">}</span>
-<span class="kd">function</span> <span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">// operations</span>
-   <span class="p">},</span> <span class="mf">900</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// operations that takes a bit of time and then resolves the promise</span>
 <span class="p">}</span>
-<span class="kd">function</span> <span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="c1">// operations</span>
-   <span class="p">},</span> <span class="mf">3000</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// operations that takes a bit of time and then resolves the promise</span>
 <span class="p">}</span>
 
 <span class="nx">func1</span><span class="p">(</span><span class="s2">&quot;input1&quot;</span><span class="p">)</span>
@@ -1834,6 +1818,32 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
       <span class="c1">// error operations</span>
    <span class="p">});</span>
+</code></pre></div>
+
+<p>And using async/await:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">function</span> <span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
+
+<span class="p">(</span><span class="k">async</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">res1</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">func1</span><span class="p">(</span><span class="s2">&quot;input1&quot;</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">res2</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">func2</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">res3</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">func3</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">res4</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">func4</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// error operations</span>
+  <span class="p">}</span>
+<span class="p">})();</span>
 </code></pre></div>
 
 <h4 id="set-request-size-limits">Set request size limits<a class="headerlink" href="#set-request-size-limits" title="Permanent link">&para;</a></h4>
@@ -2146,9 +2156,13 @@ For detailed information on input validation, please refer to <a href="https://c
 
 <h3 id="platform-security">Platform Security<a class="headerlink" href="#platform-security" title="Permanent link">&para;</a></h3>
 <h4 id="keep-your-packages-up-to-date">Keep your packages up-to-date<a class="headerlink" href="#keep-your-packages-up-to-date" title="Permanent link">&para;</a></h4>
-<p>Security of your application depends directly on how secure the third-party packages you use in your application are. Therefore, it is important to keep your packages up-to-date. It should be noted that <a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities">Using Components with Known Vulnerabilities</a> is still in the OWASP Top 10. You can use <a href="https://jeremylong.github.io/DependencyCheck/analyzers/nodejs.html">OWASP Dependency-Check</a> to see if any of the packages used in the project has a known vulnerability. Also you can use <a href="https://github.com/retirejs/retire.js/">Retire.js</a> to check JavaScript libraries with known vulnerabilities. In order to use it, you can run the following commands in the source code folder of your application:</p>
-<div class="codehilite"><pre><span></span><code>npm install -g retire
-retire
+<p>Security of your application depends directly on how secure the third-party packages you use in your application are. Therefore, it is important to keep your packages up-to-date. It should be noted that <a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities">Using Components with Known Vulnerabilities</a> is still in the OWASP Top 10. You can use <a href="https://jeremylong.github.io/DependencyCheck/analyzers/nodejs.html">OWASP Dependency-Check</a> to see if any of the packages used in the project has a known vulnerability. Also you can use <a href="https://github.com/retirejs/retire.js/">Retire.js</a> to check JavaScript libraries with known vulnerabilities. </p>
+<p>Starting with version 6, <code>npm</code> introduced <code>audit</code>, which will warn about vulnerable packages:</p>
+<div class="codehilite"><pre><span></span><code>npm audit
+</code></pre></div>
+
+<p><code>npm</code> also introduced a simple way to upgrade the affected packages:</p>
+<div class="codehilite"><pre><span></span><code>npm audit fix
 </code></pre></div>
 
 <p>There are several other tools you can use to check your dependencies. A more comprehensive list can be found in <a href="https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html#tools">Vulnerable Dependency Management CS</a>.</p>
@@ -2159,8 +2173,8 @@ retire
 <h4 id="stay-away-from-evil-regexes">Stay away from evil regexes<a class="headerlink" href="#stay-away-from-evil-regexes" title="Permanent link">&para;</a></h4>
 <p>The Regular expression Denial of Service (ReDoS) is a Denial of Service attack, that exploits the fact that most Regular Expression implementations may reach extreme situations that cause them to work very slowly (exponentially related to input size). An attacker can then cause a program using a Regular Expression to enter these extreme situations and then hang for a very long time.</p>
 <p><a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">The Regular Expression Denial of Service (ReDoS)</a> is a type of Denial of Service attack that uses regular expressions. Some Regular Expression (Regex) implementations cause extreme situations that makes the application very slow. Attackers can use such regex implementations to cause application to get into these extreme situations and hang for a long time.  Such regexes are called evil if application can be stuck on crafted input.  Generally, these regexes are exploited by grouping with repetition and alternation with overlapping. For example, the following regular expression <code>^(([a-z])+.)+[A-Z]([a-z])+$</code> can be used to specify Java class names. However, a very long string (aaaa...aaaaAaaaaa...aaaa) can also match with this regular expression. There are some tools to check if a regex has a potential for causing denial of service. One example is <a href="https://github.com/davisjam/vuln-regex-detector">vuln-regex-detector</a>.</p>
-<h4 id="run-security-linters-periodically">Run security linters periodically<a class="headerlink" href="#run-security-linters-periodically" title="Permanent link">&para;</a></h4>
-<p>When developing code, keeping all security tips in mind can be really difficult. Also keeping all team members obey these rules is nearly impossible. This is why there are Static Analysis Security Testing (SAST) tools. These tools do not execute your code, but they simply look for patterns that can contain security risks. As JavaScript is a dynamic and loosely-typed language, linting tools are really essential in the software development life cycle. These tools should be run periodically and the findings should be audited. Another advantage of these tools is the feature that you can add custom rules for patterns that you may see dangerous. <a href="https://eslint.org/">ESLint</a> and <a href="http://jshint.com/">JSHint</a> are commonly used SAST tools for JavaScript linting.</p>
+<h4 id="run-security-linters">Run security linters<a class="headerlink" href="#run-security-linters" title="Permanent link">&para;</a></h4>
+<p>When developing code, keeping all security tips in mind can be really difficult. Also keeping all team members obey these rules is nearly impossible. This is why there are Static Analysis Security Testing (SAST) tools. These tools do not execute your code, but they simply look for patterns that can contain security risks. As JavaScript is a dynamic and loosely-typed language, linting tools are really essential in the software development life cycle. The linting rules should be reviewed periodically and the findings should be audited. Another advantage of these tools is the feature that you can add custom rules for patterns that you may see dangerous. <a href="https://eslint.org/">ESLint</a> and <a href="http://jshint.com/">JSHint</a> are commonly used SAST tools for JavaScript linting.</p>
 <h4 id="use-strict-mode">Use strict mode<a class="headerlink" href="#use-strict-mode" title="Permanent link">&para;</a></h4>
 <p>JavaScript has a number of unsafe and dangerous legacy features that should not be used. In order to remove these features, ES5 included a strict mode for developers. With this mode, errors that were silent previously are thrown. It also helps JavaScript engines perform optimizations. With strict mode, previously accepted bad syntax causes real errors. Because of these improvements, you should always use strict mode in your application. In order to enable strict mode, you just need to write <code>"use strict";</code> on top of your code.</p>
 <p>The following code will generate a <code>ReferenceError: Can't find variable: y</code> on the console, which will not be displayed unless strict mode is used:</p>
