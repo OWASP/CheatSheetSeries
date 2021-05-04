@@ -24,7 +24,7 @@ In short, the following principles should be followed to defend against CSRF:
 
 ## Token Based Mitigation
 
-The [synchronizer token pattern](#synchronizer-token-pattern) is one of the most popular and recommended methods to mitigate CSRF. 
+The [synchronizer token pattern](#synchronizer-token-pattern) is one of the most popular and recommended methods to mitigate CSRF.
 
 ### Use Built-In Or Existing CSRF Implementations for CSRF Protection
 
