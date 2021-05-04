@@ -206,6 +206,23 @@ In the above code, call to unlink the file and other file operations are within 
 Input validation is a crucial part of application security. Input validation failures can result in many different types of application attacks. These include SQL Injection, Cross-Site Scripting, Command Injection, Local/Remote File Inclusion, Denial of Service, Directory Traversal, LDAP Injection and many other injection attacks. In order to avoid these attacks, input to your application should be sanitized first. The best input validation technique is to use a list of accepted inputs. However, if this is not possible, input should be first checked against expected input scheme and dangerous inputs should be escaped. In order to ease input validation in Node.js applications, there are some modules like [validator](https://www.npmjs.com/package/validator) and [mongo-express-sanitize](https://www.npmjs.com/package/mongo-express-sanitize).
 For detailed information on input validation, please refer to [Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html).
 
+JavaScript is a dynamic language and depending on how the framework parses a URL, the data seen by the application code can take on many different forms. Here are some examples after parsing a query string in express.js:
+
+| URL | Content of request.query.foo in code |
+| --- | --- |
+| `?foo=bar` | `'bar'` (string) |
+| `?foo=bar&foo=baz` | `['bar', 'baz']` (array of string) |
+| `?foo[]=bar` | `['bar']` (array of string) |
+| `?foo[]=bar&foo[]=baz` | `['bar', 'baz']` (array of string) |
+| `?foo[bar]=baz` | `{ bar : 'baz' }` (object with a key) |
+| `?foo[]=bar` | `['bar']` (array of string) |
+| `?foo[]baz=bar` | `['bar']` (array of string - postfix is lost) |
+| `?foo[][baz]=bar` | `[ { baz: 'bar' } ]` (array of object) |
+| `?foo[bar][baz]=bar` | `{ foo: { bar: { baz: 'bar' } } }` (object tree) |
+| `?foo[10]=bar&foo[9]=baz` | `[ 'baz', 'bar' ]` (array of string - notice order) |
+| `?foo[toString]=bar` | `{}` (object where calling `toString()` will fail) |
+
+
 #### Perform output escaping
 
 In addition to input validation, you should escape all HTML and JavaScript content shown to users via application in order to prevent cross-site scripting (XSS) attacks. You can use [escape-html](https://github.com/component/escape-html) or [node-esapi](https://github.com/ESAPI/node-esapi) libraries to perform output escaping.
