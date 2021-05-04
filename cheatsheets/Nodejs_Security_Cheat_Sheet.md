@@ -111,6 +111,7 @@ func1("input1")
 ```
 
 And using async/await:
+
 ```JavaScript
 function func1(name) {
   // operations that takes a bit of time and then resolves the promise
@@ -136,7 +137,6 @@ function func4(name) {
   }
 })();
 ```
-
 
 #### Set request size limits
 
@@ -530,7 +530,9 @@ Starting with version 6, `npm` introduced `audit`, which will warn about vulnera
 ```bash
 npm audit
 ```
+
 `npm` also introduced a simple way to upgrade the affected packages:
+
 ```bash
 npm audit fix
 ```
