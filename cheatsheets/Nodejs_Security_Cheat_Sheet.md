@@ -222,7 +222,6 @@ JavaScript is a dynamic language and depending on how the framework parses a URL
 | `?foo[10]=bar&foo[9]=baz` | `[ 'baz', 'bar' ]` (array of string - notice order) |
 | `?foo[toString]=bar` | `{}` (object where calling `toString()` will fail) |
 
-
 #### Perform output escaping
 
 In addition to input validation, you should escape all HTML and JavaScript content shown to users via application in order to prevent cross-site scripting (XSS) attacks. You can use [escape-html](https://github.com/component/escape-html) or [node-esapi](https://github.com/ESAPI/node-esapi) libraries to perform output escaping.
