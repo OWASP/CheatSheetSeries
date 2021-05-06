@@ -490,15 +490,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#encryption-based-token-pattern" class="md-nav__link">
-    Encryption based Token Pattern
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hmac-based-token-pattern" class="md-nav__link">
-    HMAC Based Token Pattern
+  <a href="#double-submit-cookie" class="md-nav__link">
+    Double Submit Cookie
   </a>
   
 </li>
@@ -564,19 +557,6 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#double-submit-cookie" class="md-nav__link">
-    Double Submit Cookie
-  </a>
-  
-    <nav class="md-nav" aria-label="Double Submit Cookie">
-      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#cookie-with-__host-prefix" class="md-nav__link">
@@ -1445,15 +1425,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#encryption-based-token-pattern" class="md-nav__link">
-    Encryption based Token Pattern
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hmac-based-token-pattern" class="md-nav__link">
-    HMAC Based Token Pattern
+  <a href="#double-submit-cookie" class="md-nav__link">
+    Double Submit Cookie
   </a>
   
 </li>
@@ -1519,19 +1492,6 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#double-submit-cookie" class="md-nav__link">
-    Double Submit Cookie
-  </a>
-  
-    <nav class="md-nav" aria-label="Double Submit Cookie">
-      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#cookie-with-__host-prefix" class="md-nav__link">
@@ -1682,33 +1642,28 @@
 <li><strong>If framework does not have built-in CSRF protection add <a href="#token-based-mitigation">CSRF tokens</a> to all state changing requests (requests that cause actions on the site) and validate them on backend</strong></li>
 </ul>
 </li>
-<li><strong>Always use <a href="#samesite-cookie-attribute">SameSite Cookie Attribute</a> for session cookies</strong></li>
+<li>**For stateful software use the <a href="#synchronizer-token-pattern">synchronizer token pattern</a>.</li>
+<li><strong>For stateless software use <a href="#double-submit-cookie">double submit cookies</a></strong></li>
 <li><strong>Implement at least one mitigation from <a href="#defense-in-depth-techniques">Defense in Depth Mitigations</a> section</strong><ul>
-<li><strong><a href="#use-of-custom-request-headers">Use custom request headers</a></strong></li>
-<li><strong><a href="#verifying-origin-with-standard-headers">Verify the origin with standard headers</a></strong></li>
-<li><strong><a href="#double-submit-cookie">Use double submit cookies</a></strong></li>
+<li><strong>Consider <a href="#samesite-cookie-attribute">SameSite Cookie Attribute</a> for session cookies</strong></li>
+<li><strong>Consider implementing <a href="#user-interaction-based-csrf-defense">user interaction based protection</a> for highly sensitive operations</strong></li>
+<li><strong>Consider the <a href="#use-of-custom-request-headers">use of custom request headers</a></strong></li>
+<li><strong>Consider <a href="#verifying-origin-with-standard-headers">verifying the origin with standard headers</a></strong></li>
 </ul>
 </li>
-<li><strong>Consider implementing <a href="#user-interaction-based-csrf-defense">user interaction based protection</a> for highly sensitive operations</strong></li>
 <li><strong>Remember that any Cross-Site Scripting (XSS) can be used to defeat all CSRF mitigation techniques!</strong><ul>
 <li><strong>See the OWASP <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheat Sheet</a> for detailed guidance on how to prevent XSS flaws.</strong></li>
 </ul>
 </li>
 <li><strong>Do not use GET requests for state changing operations.</strong><ul>
-<li><strong>If for any reason you do it, you have to also protect those resources against CSRF</strong></li>
+<li><strong>If for any reason you do it, protect those resources against CSRF</strong></li>
 </ul>
 </li>
 </ul>
 <h2 id="token-based-mitigation">Token Based Mitigation<a class="headerlink" href="#token-based-mitigation" title="Permanent link">&para;</a></h2>
-<p>This defense is one of the most popular and recommended methods to mitigate CSRF. It can be achieved either with state (<a href="#synchronizer-token-pattern">synchronizer token pattern</a>) or stateless (<a href="#encryption-based-token-pattern">encrypted</a> or <a href="#hmac-based-token-pattern">hashed</a> based token pattern).</p>
+<p>The <a href="#synchronizer-token-pattern">synchronizer token pattern</a> is one of the most popular and recommended methods to mitigate CSRF.</p>
 <h3 id="use-built-in-or-existing-csrf-implementations-for-csrf-protection">Use Built-In Or Existing CSRF Implementations for CSRF Protection<a class="headerlink" href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection" title="Permanent link">&para;</a></h3>
 <p>Synchronizer token defenses have been built into many frameworks. It is strongly recommended to research if the framework you are using has an option to achieve CSRF protection by default before trying to build your custom token generating system. For example, .NET has <a href="https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1">built-in protection</a> that adds a token to CSRF vulnerable resources. You are responsible for proper configuration (such as key management and token management) before using these built-in CSRF protections that generate tokens to guard CSRF vulnerable resources.</p>
-<p>External components that add CSRF defenses to existing applications are also recommended. Examples:</p>
-<ul>
-<li>For Java: OWASP <a href="https://owasp.org/www-project-csrfguard/">CSRF Guard</a> or <a href="https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html">Spring Security</a></li>
-<li>For PHP and Apache: <a href="https://owasp.org/www-project-csrfprotector/">CSRFProtector Project</a></li>
-<li>For AngularJS: <a href="https://docs.angularjs.org/api/ng/service/$http#cross-site-request-forgery-xsrf-protection">Cross-Site Request Forgery (XSRF) Protection</a></li>
-</ul>
 <h3 id="synchronizer-token-pattern">Synchronizer Token Pattern<a class="headerlink" href="#synchronizer-token-pattern" title="Permanent link">&para;</a></h3>
 <p>CSRF tokens should be generated on the server-side. They can be generated once per user session or for each request. Per-request tokens are more secure than per-session tokens as the time range for an attacker to exploit the stolen tokens is minimal. However, this may result in usability concerns. For example, the "Back" button browser capability is often hindered as the previous page may contain a token that is no longer valid. Interaction with this previous page will result in a CSRF false positive security event at the server. In per-session token implementation after initial generation of token, the value is stored in the session and is used for each subsequent request until the session expires.</p>
 <p>When a request is issued by the client, the server-side component must verify the existence and validity of the token in the request compared to the token found in the user session. If the token was not found within the request, or the value provided does not match the value within the user session, then the request should be aborted, session of the user terminated and the event logged as a potential CSRF attack in progress.</p>
@@ -1729,33 +1684,11 @@
 </code></pre></div>
 
 <p>Inserting the CSRF token in the custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because it <a href="#use-of-custom-request-headers">uses custom request headers</a>.</p>
-<h3 id="encryption-based-token-pattern">Encryption based Token Pattern<a class="headerlink" href="#encryption-based-token-pattern" title="Permanent link">&para;</a></h3>
-<p>The Encrypted Token Pattern leverages an encryption, rather than comparison method of Token-validation. It is most suitable for applications that do not want to maintain any state at server side.</p>
-<p>The server generates a token comprised of the user's session ID and a timestamp (to prevent replay attacks) using a unique key available only on the server (AES256-with GCM mode/GCM-SIV is recommended. Usage of ECB mode is strictly not recommended. If you would like to use any other block cipher mode of operation, refer <a href="Cryptographic_Storage_Cheat_Sheet.html">here</a> and <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">here</a> for more information). This token is returned to the client and embedded in a hidden field for forms, in the request-header/parameter for AJAX requests. On receipt of this request, the server reads and decrypts the token value with the same key used to create the token.</p>
-<p>If the value cannot be decrypted then this suggests an intrusion attempt (which should be blocked and logged for debugging or incident response purposes). Once decrypted, the users session ID and timestamp contained within the token are validated. The session ID is compared against the currently logged in user, and the timestamp is compared against the current time to verify that its not beyond the defined token expiry time. If session ID matches and the timestamp is under the defined token expiry time, request is allowed.</p>
-<p>The <a href="Key_Management_Cheat_Sheet.html#key-management-lifecycle-best-practices">Key Management Cheat Sheet</a> contains best practices about managing encryption keys.</p>
-<h3 id="hmac-based-token-pattern">HMAC Based Token Pattern<a class="headerlink" href="#hmac-based-token-pattern" title="Permanent link">&para;</a></h3>
-<p>HMAC Based Token Pattern mitigation is also achieved without maintaining any state at the server. <a href="https://en.wikipedia.org/wiki/HMAC">HMAC</a> based CSRF protection works similar to encryption based CSRF protection with a couple of minor differences</p>
-<ol>
-<li>It uses a strong HMAC function (SHA-256 or better is recommended) instead of an encryption function to generate the token.</li>
-<li>The token consists of a HMAC and timestamp.</li>
-</ol>
-<p>Below are the steps for the proper implementation of the HMAC based CSRF protection:</p>
-<ol>
-<li>
-<p><strong>Generate the token</strong>
-    Using key K, generate <code>HMAC(session ID + timestamp</code>) and append the same timestamp value to it which results in your CSRF token.</p>
-</li>
-<li>
-<p><strong>Include the token (<em>i.e.</em> <code>HMAC+timestamp</code>)</strong>
-    Include token in a hidden field for forms and in the request-header field/request body parameter for AJAX requests.</p>
-</li>
-<li>
-<p><strong>Validating the token</strong>
-    When the request is received at the server, re-generate the token with same key K (parameters are the session ID from the request and timestamp in the received token). If the HMAC in the received token and the one generated in this step match, verify if timestamp received is less than defined token expiry time. If both of them are success, then request is treated as legitimate and can be allowed. If not, block the request and log the attack for incident response purposes.</p>
-</li>
-</ol>
-<p>The <a href="Key_Management_Cheat_Sheet.html#key-management-lifecycle-best-practices">Key Management Cheat Sheet</a> contains best practices about managing the HMAC key.</p>
+<h3 id="double-submit-cookie">Double Submit Cookie<a class="headerlink" href="#double-submit-cookie" title="Permanent link">&para;</a></h3>
+<p>If maintaining the state for CSRF token at server side is problematic, an alternative defense is to use the double submit cookie technique. This technique is easy to implement and is stateless. In this technique, we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (cryptographically strong) pseudorandom value and set it as a cookie on the user's machine separate from the session identifier. The site then requires that every transaction request include this pseudorandom value as a hidden form value (or other request parameter/header). If both of them match at server side, the server accepts it as legitimate request and if they don't, it would reject the request.</p>
+<p>Because subdomains can write cookies to the parent domains and because cookies can be set for the domain over plain HTTP connections this technique works as long as you are sure that your subdomains are fully secured and only accept HTTPS connections.</p>
+<p>To enhance the security of this solution include the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for AJAX calls. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.</p>
+<p>A simpler alternative to an encrypted cookie is to HMAC the token with a secret key known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a HMAC is used, an attacker won't be able to recreate the cookie value from the plain token without knowledge of the server secrets.</p>
 <h2 id="defense-in-depth-techniques">Defense In Depth Techniques<a class="headerlink" href="#defense-in-depth-techniques" title="Permanent link">&para;</a></h2>
 <h3 id="samesite-cookie-attribute">SameSite Cookie Attribute<a class="headerlink" href="#samesite-cookie-attribute" title="Permanent link">&para;</a></h3>
 <p>SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) which aims to mitigate CSRF attacks. It is defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7">RFC6265bis</a>. This attribute helps the browser decide whether to send cookies along with cross-site requests. Possible values for this attribute are <code>Lax</code>, <code>Strict</code>, or <code>None</code>.</p>
@@ -1806,11 +1739,6 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 <li>Referer header is no exception. There are multiple use cases where referrer header is omitted as well (<a href="https://stackoverflow.com/questions/6880659/in-what-cases-will-http-referer-be-empty">1</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer">2</a>, <a href="https://en.wikipedia.org/wiki/HTTP_referer#Referer_hiding">3</a>, <a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf">4</a> and <a href="https://www.google.com/search?q=referrer+header+sent+null+value+site:stackoverflow.com">5</a>). Load balancers, proxies and embedded network devices are also well known to strip the referrer header due to privacy reasons in logging them.</li>
 </ul>
 <p>Usually, a minor percentage of traffic does fall under above categories (<a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html">1-2%</a>) and no enterprise would want to lose this traffic. One of the popular technique used across the Internet to make this technique more usable is to accept the request if the Origin/referrer matches your configured list of domains "OR" a null value (Examples <a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html">here</a>. The null value is to cover the edge cases mentioned above where these headers are not sent). Please note that, attackers can exploit this but people prefer to use this technique as a defense in depth measure because of the minor effort involved in deploying it.</p>
-<h3 id="double-submit-cookie">Double Submit Cookie<a class="headerlink" href="#double-submit-cookie" title="Permanent link">&para;</a></h3>
-<p>If maintaining the state for CSRF token at server side is problematic, an alternative defense is to use the double submit cookie technique. This technique is easy to implement and is stateless. In this technique, we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (cryptographically strong) pseudorandom value and set it as a cookie on the user's machine separate from the session identifier. The site then requires that every transaction request include this pseudorandom value as a hidden form value (or other request parameter/header). If both of them match at server side, the server accepts it as legitimate request and if they don't, it would reject the request.</p>
-<p>Because subdomains can write cookies to the parent domains and because cookies can be set for the domain over plain HTTP connections this technique works as long as you are sure that your subdomains are fully secured and only accept HTTPS connections.</p>
-<p>To enhance the security of this solution include the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for AJAX calls. This works because a sub domain has no way to over-write an properly crafted encrypted cookie without the necessary information such as encryption key.</p>
-<p>A simpler alternative to an encrypted cookie is to HMAC the token with a secret key known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a HMAC is used, an attacker won't be able to recreate the cookie value from the plain token without knowledge of the server secrets.</p>
 <h4 id="cookie-with-__host-prefix">Cookie with __Host- prefix<a class="headerlink" href="#cookie-with-__host-prefix" title="Permanent link">&para;</a></h4>
 <p>Another solution for this problem is use of <code>Cookie Prefixes</code> for cookie with CSRF token. If cookie has <code>__Host-</code> prefix e.g. <code>Set-Cookie: __Host-token=RANDOM; path=/; Secure</code> then the cookie:</p>
 <ul>
@@ -1951,6 +1879,9 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 <li><a href="https://infosec.mozilla.org/guidelines/web_security#csrf-prevention">Mozilla Web Security Cheat Sheet</a></li>
 <li><a href="https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/">Common CSRF Prevention Misconceptions</a></li>
 <li><a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf">Robust Defenses for Cross-Site Request Forgery</a></li>
+<li>For Java: OWASP <a href="https://owasp.org/www-project-csrfguard/">CSRF Guard</a> or <a href="https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html">Spring Security</a></li>
+<li>For PHP and Apache: <a href="https://owasp.org/www-project-csrfprotector/">CSRFProtector Project</a></li>
+<li>For AngularJS: <a href="https://docs.angularjs.org/api/ng/service/$http#cross-site-request-forgery-xsrf-protection">Cross-Site Request Forgery (XSRF) Protection</a></li>
 </ul>
                 
                   
