@@ -13,14 +13,14 @@ In short, the following principles should be followed to defend against CSRF:
 - **For stateful software use the [synchronizer token pattern](#synchronizer-token-pattern).
 - **For stateless software use [double submit cookies](#double-submit-cookie)**
 - **Implement at least one mitigation from [Defense in Depth Mitigations](#defense-in-depth-techniques) section**
-    - **Always use [SameSite Cookie Attribute](#samesite-cookie-attribute) for session cookies**
+    - **Consider [SameSite Cookie Attribute](#samesite-cookie-attribute) for session cookies**
     - **Consider implementing [user interaction based protection](#user-interaction-based-csrf-defense) for highly sensitive operations**
-    - **[Use custom request headers](#use-of-custom-request-headers)**
-    - **[Verify the origin with standard headers](#verifying-origin-with-standard-headers)**
+    - **Consider the [use of custom request headers](#use-of-custom-request-headers)**
+    - **Consider [verifying the origin with standard headers](#verifying-origin-with-standard-headers)**
 - **Remember that any Cross-Site Scripting (XSS) can be used to defeat all CSRF mitigation techniques!**
     - **See the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.**
 - **Do not use GET requests for state changing operations.**
-    - **If for any reason you do it, you have to also protect those resources against CSRF**
+    - **If for any reason you do it, protect those resources against CSRF**
 
 ## Token Based Mitigation
 
