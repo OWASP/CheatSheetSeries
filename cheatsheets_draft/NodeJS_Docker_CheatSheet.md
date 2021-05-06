@@ -1,6 +1,6 @@
 # Node.js Docker Cheatsheet
 
-The following cheatsheet provides production-grade guidelines for building optimized and secure Node.js Docker images. You’ll find it helpful regardless of the Node.js application you aim to build. This article will be helpful for you if:
+The following cheatsheet provides production-grade guidelines for building optimized and [secure Node.js Docker](https://snyk.io/blog/10-best-practices-to-containerize-nodejs-web-applications-with-docker/). You’ll find it helpful regardless of the Node.js application you aim to build. This article will be helpful for you if:
 
 *   your aim is to build a frontend application using server-side rendering (SSR) Node.js capabilities for React.
 *   you’re looking for advice on how to properly build a Node.js Docker image for your microservices, running Fastify, NestJS or other application frameworks.
