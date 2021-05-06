@@ -1875,6 +1875,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 <li><a href="https://scotthelme.co.uk/security-headers-updates/#removing-the-x-xss-protection-header">SecurityHeaders.com no longer scans for the header</a></li>
 </ul>
 <h2 id="xss-prevention-rules-summary">XSS Prevention Rules Summary<a class="headerlink" href="#xss-prevention-rules-summary" title="Permanent link">&para;</a></h2>
+<p>The following snippets of HTML demonstrate how to safely render untrusted data in a variety of different contexts.</p>
 <table>
 <thead>
 <tr>
@@ -1935,7 +1936,6 @@ If you <strong>really</strong> have to use them remember that now all the data m
 </tr>
 </tbody>
 </table>
-<p>The following snippets of HTML demonstrate how to safely render untrusted data in a variety of different contexts.</p>
 <p><strong>Safe HTML Attributes include:</strong> <code>align</code>, <code>alink</code>, <code>alt</code>, <code>bgcolor</code>, <code>border</code>, <code>cellpadding</code>, <code>cellspacing</code>, <code>class</code>, <code>color</code>, <code>cols</code>, <code>colspan</code>, <code>coords</code>, <code>dir</code>, <code>face</code>, <code>height</code>, <code>hspace</code>, <code>ismap</code>, <code>lang</code>, <code>marginheight</code>, <code>marginwidth</code>, <code>multiple</code>, <code>nohref</code>, <code>noresize</code>, <code>noshade</code>, <code>nowrap</code>, <code>ref</code>, <code>rel</code>, <code>rev</code>, <code>rows</code>, <code>rowspan</code>, <code>scrolling</code>, <code>shape</code>, <code>span</code>, <code>summary</code>, <code>tabindex</code>, <code>title</code>, <code>usemap</code>, <code>valign</code>, <code>value</code>, <code>vlink</code>, <code>vspace</code>, <code>width</code>.</p>
 <h2 id="output-encoding-rules-summary">Output Encoding Rules Summary<a class="headerlink" href="#output-encoding-rules-summary" title="Permanent link">&para;</a></h2>
 <p>The purpose of output encoding (as it relates to Cross Site Scripting) is to convert untrusted input into a safe form where the input is displayed as <strong>data</strong> to the user without executing as <strong>code</strong> in the browser. The following charts details a list of critical output encoding methods needed to stop Cross Site Scripting.</p>
