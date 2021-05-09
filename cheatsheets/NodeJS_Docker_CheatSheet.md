@@ -11,7 +11,7 @@ It may seem to be an obvious choice to build your image based on the `node` Dock
 
 So, in fact, by specifying the following in your Dockerfile, you always build the latest version of the Docker image that has been built by the **Node.js Docker working group**:
 
-#### FROM node
+### FROM node
 
 The shortcomings of building based on the default `node` image are as follows:
 
@@ -27,7 +27,7 @@ The recommendations for building better Docker images are:
 
 Based on this, let’s ensure that we use the Long Term Support (LTS) version of Node.js, and the minimal `alpine` image type to have the smallest size and software footprint on the image:
 
-#### FROM node:lts-alpine
+### FROM node:lts-alpine
 
 Nonetheless, this base image directive will still pull new builds of that tag. We can find the `SHA256` hash for it in the [Docker Hub for this Node.js tag](https://hub.docker.com/layers/node/library/node/lts-alpine/images/sha256-51e341881c2b77e52778921c685e711a186a71b8c6f62ff2edfc6b6950225a2f?context=explore), or by running the following command once we pulled this image locally, and locate the `Digest` field in the output:
 
@@ -91,7 +91,7 @@ When you build your Node.js Docker image for production, you want to ensure that
 
 This brings us to add the following Dockerfile directive:
 
-**ENV NODE\_ENV production**
+**`ENV NODE\_ENV production`**
 
 At first glance, this looks redundant, since we already specified only production dependencies in the `npm install` phase—so why is this necessary?
 
@@ -160,7 +160,7 @@ The following concerns are key in order to understanding the context for properl
 
 Equipped with that knowledge, let’s begin investigating the ways of invoking the process for a container, starting off with the example from the Dockerfile we’re building:
 
-**CMD "npm" "start"**
+**`CMD "npm" "start"`**
 
 The caveat here is two fold. Firstly, we’re indirectly running the node application by directly invoking the npm client. Who’s to say that the npm CLI forwards all events to the node runtime? It actually doesn’t, and we can easily test that.
 
@@ -173,7 +173,7 @@ Make sure that in your Node.js application you set an event handler for the `SIG
 
 Then run the container, and once it’s up specifically send it the `SIGHUP` signal using the `docker` CLI and the special `--signal` command line flag:
 
-**$ docker kill --signal=SIGHUP elastic\_archimedes**
+**`$ docker kill --signal=SIGHUP elastic\_archimedes`**
 
 Nothing happened, right? That’s because the npm client doesn’t forward any signals to the node process that it spawned.
 
@@ -184,7 +184,7 @@ The other caveat has to do with the different ways in which way you can specify 
 
 Based on that knowledge, we want to improve our Dockerfile process execution directive as follows:
 
-**CMD \["node", "server.js"\]**
+**`CMD \["node", "server.js"\]`**
 
 We are now invoking the node process directly, ensuring that it receives all of the signals sent to it, without it being wrapped in a shell interpreter.
 
@@ -324,7 +324,7 @@ Luckily, Docker supports a way to pass arguments into the build process:
 
 And then we build it as follows:
 
-**$ docker build . -t nodejs-tutorial --build-arg NPM\_TOKEN=1234**
+**`$ docker build . -t nodejs-tutorial --build-arg NPM\_TOKEN=1234`**
 
 I know you were thinking that we’re all done at this point but, sorry to disappoint 🙂
 
@@ -332,7 +332,7 @@ That’s how it is with security—sometimes the obvious things are yet just ano
 
 What’s the problem now, you ponder? Build arguments passed like that to Docker are kept in the history log. Let’s see with our own eyes. Run this command:
 
-**$ docker history nodejs-tutorial**
+**`$ docker history nodejs-tutorial`**
 
 which prints the following:
 
