@@ -1,0 +1,1892 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_CheatSheet.html">
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>NodeJS Docker CheatSheet.md - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nodejs-docker-cheatsheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              NodeJS Docker CheatSheet.md
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Glossary.html" class="md-nav__link">
+        Index Alphabetical
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexASVS.html" class="md-nav__link">
+        Index ASVS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        Index Proactive Controls
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      <label class="md-nav__link" for="__nav_5">
+        Cheatsheets
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cheatsheets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        AJAX Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        Abuse Case
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        Access Control
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        Attack Surface Analysis
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        Authorization Testing Automation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Bean Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+        Choosing and Using Security Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+        Clickjacking Defense
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+        Content Security Policy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Credential Stuffing Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross-Site Request Forgery Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Cryptographic Storage
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        DOM based XSS Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        Database Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+        Denial of Service
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        Deserialization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+        Docker Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+        DotNet Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        Error Handling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        File Upload
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+        Forgot Password
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+        GraphQL
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTML5 Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention in Java
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Input Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Insecure Direct Object Reference Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+        JAAS
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+        JSON Web Token for Java
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+        Key Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+        Kubernetes Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        LDAP Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Laravel_CheatSheet.html" class="md-nav__link">
+        Laravel CheatSheet.md
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+        Mass Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+        Microservices based Security Arch Doc
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_security.html" class="md-nav__link">
+        Microservices security.md
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Multifactor Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          NodeJS Docker CheatSheet.md
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="NodeJS_Docker_CheatSheet.html" class="md-nav__link md-nav__link--active">
+        NodeJS Docker CheatSheet.md
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-use-explicit-and-deterministic-docker-base-image-tags" class="md-nav__link">
+    1) Use explicit and deterministic Docker base image tags
+  </a>
+  
+    <nav class="md-nav" aria-label="1) Use explicit and deterministic Docker base image tags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-node" class="md-nav__link">
+    FROM node
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-nodelts-alpine" class="md-nav__link">
+    FROM node:lts-alpine
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-install-only-production-dependencies-in-the-nodejs-docker-image" class="md-nav__link">
+    2) Install only production dependencies in the Node.js Docker image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-optimize-nodejs-tooling-for-production" class="md-nav__link">
+    3) Optimize Node.js tooling for production
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-dont-run-containers-as-root" class="md-nav__link">
+    4) Don’t run containers as root
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-properly-handle-events-to-safely-terminate-a-nodejs-docker-web-application" class="md-nav__link">
+    5) Properly handle events to safely terminate a Node.js Docker web application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-graceful-tear-down-for-your-nodejs-web-applications" class="md-nav__link">
+    6) Graceful tear down for your Node.js web applications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-find-and-fix-security-vulnerabilities-in-your-nodejs-docker-image" class="md-nav__link">
+    7) Find and fix security vulnerabilities in your Node.js docker image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-use-multi-stage-builds" class="md-nav__link">
+    8) Use multi-stage builds
+  </a>
+  
+    <nav class="md-nav" aria-label="8) Use multi-stage builds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prevent-sensitive-information-leak" class="md-nav__link">
+    Prevent sensitive information leak
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#introducing-multi-stage-builds-for-nodejs-docker-images" class="md-nav__link">
+    Introducing multi-stage builds for Node.js Docker images
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-keeping-unnecessary-files-out-of-your-nodejs-docker-images" class="md-nav__link">
+    9) Keeping unnecessary files out of your Node.js Docker images
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-mounting-secrets-into-the-docker-build-image" class="md-nav__link">
+    10) Mounting secrets into the Docker build image
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+        Nodejs Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+        OS Command Injection Defense
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+        PHP Configuration
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Password Storage
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+        Pinning
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+        Query Parameterization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+        REST Assessment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        REST Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+        Ruby on Rails
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+        SAML Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        SQL Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+        Securing Cascading Style Sheets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        Session Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+        TLS Cipher String
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+        Third Party Javascript Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+        Threat Modeling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Transaction Authorization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        Transport Layer Protection
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+        Unvalidated Redirects and Forwards
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+        User Privacy Protection
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+        Virtual Patching
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerability Disclosure
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerable Dependency Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+        Web Service Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        XML External Entity Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+        XML Security
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-use-explicit-and-deterministic-docker-base-image-tags" class="md-nav__link">
+    1) Use explicit and deterministic Docker base image tags
+  </a>
+  
+    <nav class="md-nav" aria-label="1) Use explicit and deterministic Docker base image tags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-node" class="md-nav__link">
+    FROM node
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-nodelts-alpine" class="md-nav__link">
+    FROM node:lts-alpine
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-install-only-production-dependencies-in-the-nodejs-docker-image" class="md-nav__link">
+    2) Install only production dependencies in the Node.js Docker image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-optimize-nodejs-tooling-for-production" class="md-nav__link">
+    3) Optimize Node.js tooling for production
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-dont-run-containers-as-root" class="md-nav__link">
+    4) Don’t run containers as root
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-properly-handle-events-to-safely-terminate-a-nodejs-docker-web-application" class="md-nav__link">
+    5) Properly handle events to safely terminate a Node.js Docker web application
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-graceful-tear-down-for-your-nodejs-web-applications" class="md-nav__link">
+    6) Graceful tear down for your Node.js web applications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-find-and-fix-security-vulnerabilities-in-your-nodejs-docker-image" class="md-nav__link">
+    7) Find and fix security vulnerabilities in your Node.js docker image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-use-multi-stage-builds" class="md-nav__link">
+    8) Use multi-stage builds
+  </a>
+  
+    <nav class="md-nav" aria-label="8) Use multi-stage builds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prevent-sensitive-information-leak" class="md-nav__link">
+    Prevent sensitive information leak
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#introducing-multi-stage-builds-for-nodejs-docker-images" class="md-nav__link">
+    Introducing multi-stage builds for Node.js Docker images
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-keeping-unnecessary-files-out-of-your-nodejs-docker-images" class="md-nav__link">
+    9) Keeping unnecessary files out of your Node.js Docker images
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-mounting-secrets-into-the-docker-build-image" class="md-nav__link">
+    10) Mounting secrets into the Docker build image
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="nodejs-docker-cheatsheet">Node.js Docker Cheatsheet<a class="headerlink" href="#nodejs-docker-cheatsheet" title="Permanent link">&para;</a></h1>
+<p>The following cheatsheet provides production-grade guidelines for building optimized and <a href="https://snyk.io/blog/10-best-practices-to-containerize-nodejs-web-applications-with-docker/">secure Node.js Docker</a>. You’ll find it helpful regardless of the Node.js application you aim to build. This article will be helpful for you if:</p>
+<ul>
+<li>your aim is to build a frontend application using server-side rendering (SSR) Node.js capabilities for React.</li>
+<li>you’re looking for advice on how to properly build a Node.js Docker image for your microservices, running Fastify, NestJS or other application frameworks.</li>
+</ul>
+<h2 id="1-use-explicit-and-deterministic-docker-base-image-tags">1) Use explicit and deterministic Docker base image tags<a class="headerlink" href="#1-use-explicit-and-deterministic-docker-base-image-tags" title="Permanent link">&para;</a></h2>
+<p>It may seem to be an obvious choice to build your image based on the <code>node</code> Docker image, but what are you actually pulling in when you build the image? Docker images are always referenced by tags, and when you don’t specify a tag the default, <code>:latest</code> tag is used.</p>
+<p>So, in fact, by specifying the following in your Dockerfile, you always build the latest version of the Docker image that has been built by the <strong>Node.js Docker working group</strong>:</p>
+<h3 id="from-node">FROM node<a class="headerlink" href="#from-node" title="Permanent link">&para;</a></h3>
+<p>The shortcomings of building based on the default <code>node</code> image are as follows:</p>
+<ol>
+<li>Docker image builds are inconsistent. Just like we’re using <code>lockfiles</code> to get a deterministic <code>npm install</code> behavior every time we install npm packages, we’d also like to get deterministic docker image builds. If we build the image from node—which effectively means the <code>node:latest</code> tag—then every build will pull a newly built Docker image of <code>node</code>. We don’t want to introduce this sort of non-deterministic behavior.</li>
+<li>The node Docker image is based on a full-fledged operating system, full of libraries and tools that you may or may not need to run your Node.js web application. This has two downsides. Firstly a bigger image means a bigger download size which, besides increasing the storage requirement, means more time to download and re-build the image. Secondly, it means you’re potentially introducing security vulnerabilities, that may exist in all of these libraries and tools, into the image.</li>
+</ol>
+<p>In fact, the <code>node</code> Docker image is quite big and includes hundreds of security vulnerabilities of different types and severities. If you’re using it, then by default your starting point is going to be a baseline of 642 security vulnerabilities, and hundreds of megabytes of image data that is downloaded on every pull and build.</p>
+<p>The recommendations for building better Docker images are:</p>
+<ol>
+<li>Use small Docker images—this will translate to a smaller software footprint on the Docker image reducing the potential vulnerability vectors, and a smaller size, which will speed up the image build process</li>
+<li>Use the Docker image digest, which is the static SHA256 hash of the image. This ensures that you are getting deterministic Docker image builds from the base image.</li>
+</ol>
+<p>Based on this, let’s ensure that we use the Long Term Support (LTS) version of Node.js, and the minimal <code>alpine</code> image type to have the smallest size and software footprint on the image:</p>
+<h3 id="from-nodelts-alpine">FROM node:lts-alpine<a class="headerlink" href="#from-nodelts-alpine" title="Permanent link">&para;</a></h3>
+<p>Nonetheless, this base image directive will still pull new builds of that tag. We can find the <code>SHA256</code> hash for it in the <a href="https://hub.docker.com/layers/node/library/node/lts-alpine/images/sha256-51e341881c2b77e52778921c685e711a186a71b8c6f62ff2edfc6b6950225a2f?context=explore">Docker Hub for this Node.js tag</a>, or by running the following command once we pulled this image locally, and locate the <code>Digest</code> field in the output:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">$</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span>
+<span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="p">:</span> <span class="n">Pulling</span> <span class="n">from</span> <span class="n">library</span><span class="o">/</span><span class="n">node</span>
+<span class="mi">0</span><span class="n">a6724ff3fcd</span><span class="p">:</span> <span class="n">Already</span> <span class="n">exists</span>
+<span class="mi">9383</span><span class="n">f33fa9f3</span><span class="p">:</span> <span class="n">Already</span> <span class="n">exists</span>
+<span class="n">b6ae88d676fe</span><span class="p">:</span> <span class="n">Already</span> <span class="n">exists</span>
+<span class="mf">565e01</span><span class="n">e00588</span><span class="p">:</span> <span class="n">Already</span> <span class="n">exists</span>
+<span class="n">Digest</span><span class="p">:</span> <span class="n">sha256</span><span class="p">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span>
+<span class="n">Status</span><span class="p">:</span> <span class="n">Downloaded</span> <span class="n">newer</span> <span class="n">image</span> <span class="k">for</span> <span class="n">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span>
+<span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">library</span><span class="o">/</span><span class="n">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span>
+</code></pre></div>
+
+<p>Another way to find the <code>SHA256</code> hash is by running the following command:</p>
+<div class="codehilite"><pre><span></span><code>$ docker images --digests
+REPOSITORY                     TAG              DIGEST                                                                    IMAGE ID       CREATED             SIZE
+node                           lts-alpine       sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a   51d926a5599d   <span class="m">2</span> weeks ago         116MB
+</code></pre></div>
+
+<p>Now we can update the Dockerfile for this Node.js Docker image as follows:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">node</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span><span class="w"></span>
+<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+</code></pre></div>
+
+<p>However, the Dockerfile above, only specifies the Node.js Docker image name without an image tag which creates ambiguity for which exact image tag is being used—it’s not readable, hard to maintain and doesn’t create a good developer experience.</p>
+<p>Let’s fix it by updating the Dockerfile, providing the full base image tag for the Node.js version that corresponds to that <code>SHA256</code> hash:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span><span class="w"></span>
+<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="2-install-only-production-dependencies-in-the-nodejs-docker-image">2) Install only production dependencies in the Node.js Docker image<a class="headerlink" href="#2-install-only-production-dependencies-in-the-nodejs-docker-image" title="Permanent link">&para;</a></h2>
+<p>The following Dockerfile directive installs all dependencies in the container, including <code>devDependencies</code>, which aren’t needed for a functional application to work. It adds an unneeded security risk from packages used as development dependencies, as well as inflating the image size unnecessarily.</p>
+<p><strong><code>RUN npm install</code></strong></p>
+<p>Enforce deterministic builds with <code>npm ci</code>. This prevents surprises in a continuous integration (CI) flow because it halts if any deviations from the lockfile are made.</p>
+<p>In the case of building a Docker image for production we want to ensure that we only install production dependencies in a deterministic way, and this brings us to the following recommendation for the best practice for installing npm dependencies in a container image:</p>
+<p><strong><code>RUN npm ci --only=production</code></strong></p>
+<p>The updated Dockerfile contents in this stage are as follows:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
+<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="3-optimize-nodejs-tooling-for-production">3) Optimize Node.js tooling for production<a class="headerlink" href="#3-optimize-nodejs-tooling-for-production" title="Permanent link">&para;</a></h2>
+<p>When you build your Node.js Docker image for production, you want to ensure that all frameworks and libraries are using the optimal settings for performance and security.</p>
+<p>This brings us to add the following Dockerfile directive:</p>
+<p><strong><code>ENV NODE\_ENV production</code></strong></p>
+<p>At first glance, this looks redundant, since we already specified only production dependencies in the <code>npm install</code> phase—so why is this necessary?</p>
+<p>Developers mostly associate the <code>NODE_ENV=production</code> environment variable setting with the installation of production-related dependencies, however, this setting also has other effects which we need to be aware of.</p>
+<p>Some frameworks and libraries may only turn on the optimized configuration that is suited to production if that <code>NODE_ENV</code> environment variable is set to <code>production</code>. Putting aside our opinion on whether this is a good or bad practice for frameworks to take, it is important to know this.</p>
+<p>As an example, the <a href="https://expressjs.com/en/advanced/best-practice-performance.html#set-node_env-to-production">Express documentation</a> outlines the importance of setting this environment variable for enabling performance and security related optimizations:</p>
+<p><img alt="Express documentation screenshot" src="https://lh3.googleusercontent.com/idNDKUUyML-rRpnNYmOo4eNBimq-u343401spkAdKWWKjNt0c_xux2Aw1W2r64qWGEcvxfQRkosPcO339g5DzQk0snm1nr6MupSPNB_zAtGgLsr3lp1L-tia4KgHwvOXMW1jT0J-" /></p>
+<p>The performance impact of the <code>NODE_ENV</code> variable could be very significant.</p>
+<p>Many of the other libraries that you are relying on may also expect this variable to be set, so we should set this in our Dockerfile.</p>
+<p>The updated Dockerfile should now read as follows with the <code>NODE_ENV</code> environment variable setting baked in:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
+<span class="n">ENV</span><span class="w"> </span><span class="n">NODE_ENV</span><span class="w"> </span><span class="n">production</span><span class="w"></span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
+<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="4-dont-run-containers-as-root">4) Don’t run containers as root<a class="headerlink" href="#4-dont-run-containers-as-root" title="Permanent link">&para;</a></h2>
+<p>The principle of least privilege is a long-time security control from the early days of Unix and we should always follow this when we’re running our containerized Node.js web applications.</p>
+<p>The threat assessment is pretty straight-forward—if an attacker is able to compromise the web application in a way that allows for <a href="https://owasp.org/www-community/attacks/Command_Injection">command injection</a> or <a href="https://owasp.org/www-community/attacks/Path_Traversal">directory path traversal</a>, then these will be invoked with the user who owns the application process. If that process happens to be root then they can do virtually everything within the container, including [attempting a container escape or <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/03-Testing_for_Privilege_Escalation">privilege escalation</a>. Why would we want to risk it? You’re right, we don’t.</p>
+<p>Repeat after me: <strong>“friends don’t let friends run containers as root!”</strong></p>
+<p>The official <code>node</code> Docker image, as well as its variants like <code>alpine</code>, include a least-privileged user of the same name: <code>node</code>. However, it’s not enough to just run the process as <code>node</code>. For example, the following might not be ideal for an application to function well:</p>
+<div class="codehilite"><pre><span></span><code>USER node
+CMD &quot;npm&quot; &quot;start&quot;
+</code></pre></div>
+
+<p>The reason for that is the <code>USER</code> Dockerfile directive only ensures that the process is owned by the <code>node</code> user. What about all the files we copied earlier with the <code>COPY</code> instruction? They are owned by root. That’s how Docker works by default.</p>
+<p>The complete and proper way of dropping privileges is as follows, also showing our up to date Dockerfile practices up to this point:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
+<span class="n">ENV</span><span class="w"> </span><span class="n">NODE_ENV</span><span class="w"> </span><span class="n">production</span><span class="w"></span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="nl">node</span><span class="p">:</span><span class="n">node</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
+<span class="k">USER</span><span class="w"> </span><span class="n">node</span><span class="w"></span>
+<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="5-properly-handle-events-to-safely-terminate-a-nodejs-docker-web-application">5) Properly handle events to safely terminate a Node.js Docker web application<a class="headerlink" href="#5-properly-handle-events-to-safely-terminate-a-nodejs-docker-web-application" title="Permanent link">&para;</a></h2>
+<p>One of the most common mistakes I see with blogs and articles about containerizing Node.js applications when running in Docker containers is the way that they invoke the process. All of the following and their variants are bad patterns you should avoid:</p>
+<ul>
+<li><code>CMD “npm” “start”</code></li>
+<li><code>CMD [“yarn”, “start”]</code></li>
+<li><code>CMD “node” “server.js”</code></li>
+<li><code>CMD “start-app.sh”</code></li>
+</ul>
+<p>Let’s dig in! I’ll walk you through the differences between them and why they’re all patterns to avoid.</p>
+<p>The following concerns are key in order to understanding the context for properly running and terminating Node.js Docker applications:</p>
+<ol>
+<li>An orchestration engine, such as Docker Swarm, Kubernetes, or even just Docker engine itself, needs a way to send signals to the process in the container. Mostly, these are signals to terminate an application, such as <code>SIGTERM</code> and <code>SIGKILL</code>.</li>
+<li>The process may run indirectly, and if that happens then it’s not always guaranteed that it will receive these signals.</li>
+<li>The Linux kernel treats processes that run as process ID 1 (PID) differently than any other process ID.</li>
+</ol>
+<p>Equipped with that knowledge, let’s begin investigating the ways of invoking the process for a container, starting off with the example from the Dockerfile we’re building:</p>
+<p><strong><code>CMD "npm" "start"</code></strong></p>
+<p>The caveat here is two fold. Firstly, we’re indirectly running the node application by directly invoking the npm client. Who’s to say that the npm CLI forwards all events to the node runtime? It actually doesn’t, and we can easily test that.</p>
+<p>Make sure that in your Node.js application you set an event handler for the <code>SIGHUP</code> signal which logs to the console every time you’re sending an event. A simple code example should look as follows:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">function</span> <span class="nf">handle</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="p">{</span>
+   <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="err">`</span><span class="o">*^!</span><span class="mi">@4</span><span class="o">=&gt;</span> <span class="n">Received</span> <span class="nl">event</span><span class="p">:</span> <span class="n">$</span><span class="p">{</span><span class="n">signal</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">process</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="err">&#39;</span><span class="n">SIGHUP</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Then run the container, and once it’s up specifically send it the <code>SIGHUP</code> signal using the <code>docker</code> CLI and the special <code>--signal</code> command-line flag:</p>
+<p><strong><code>$ docker kill --signal=SIGHUP elastic\_archimedes</code></strong></p>
+<p>Nothing happened, right? That’s because the npm client doesn’t forward any signals to the node process that it spawned.</p>
+<p>The other caveat has to do with the different ways in which way you can specify the <code>CMD</code> directive in the Dockerfile. There are two ways, and they are not the same:</p>
+<ol>
+<li>the shellform notation, in which the container spawns a shell interpreter that wraps the process. In such cases, the shell may not properly forward signals to your process.</li>
+<li>the execform notation, which directly spawns a process without wrapping it in a shell. It is specified using the JSON array notation, such as: <code>CMD [“npm”, “start”]</code>. Any signals sent to the container are directly sent to the process.</li>
+</ol>
+<p>Based on that knowledge, we want to improve our Dockerfile process execution directive as follows:</p>
+<p><strong><code>CMD \["node", "server.js"\]</code></strong></p>
+<p>We are now invoking the node process directly, ensuring that it receives all of the signals sent to it, without it being wrapped in a shell interpreter.</p>
+<p>However, this introduces another pitfall.</p>
+<p>When processes run as PID 1 they effectively take on some of the responsibilities of an init system, which is typically responsible for initializing an operating system and processes. The kernel treats PID 1 in a different way than it treats other process identifiers. This special treatment from the kernel means that the handling of a <code>SIGTERM</code> signal to a running process won’t invoke a default fallback behavior of killing the process if the process doesn’t already set a handler for it.</p>
+<p>To <a href="https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md#handling-kernel-signals">quote the Node.js Docker working group recommendation</a> on this:  “Node.js was not designed to run as PID 1 which leads to unexpected behaviour when running inside of Docker. For example, a Node.js process running as PID 1 will not respond to SIGINT (CTRL-C) and similar signals”.</p>
+<p>The way to go about it then is to use a tool that will act like an init process, in that it is invoked with PID 1, then spawns our Node.js application as another process whilst ensuring that all signals are proxied to that Node.js process. If possible, we’d like a small as possible tooling footprint for doing so to not risk having security vulnerabilities added to our container image.</p>
+<p>One such tool is <a href="https://engineeringblog.yelp.com/2016/01/dumb-init-an-init-for-docker.html">dumb-init</a> which is statically linked and has a small footprint. Here’s how we’ll set it up:</p>
+<div class="codehilite"><pre><span></span><code>RUN apk add dumb-init
+CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
+</code></pre></div>
+
+<p>This brings us to the following up to date Dockerfile. You’ll notice that we placed the <code>dumb-init</code> package install right after the image declaration, so we can take advantage of Docker’s caching of layers:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">apk</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">dumb</span><span class="o">-</span><span class="n">init</span><span class="w"></span>
+<span class="n">ENV</span><span class="w"> </span><span class="n">NODE_ENV</span><span class="w"> </span><span class="n">production</span><span class="w"></span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="nl">node</span><span class="p">:</span><span class="n">node</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
+<span class="k">USER</span><span class="w"> </span><span class="n">node</span><span class="w"></span>
+<span class="n">CMD</span><span class="w"> </span><span class="o">[</span><span class="n">&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+<p>Good to know: <code>docker kill</code> and <code>docker stop</code> commands only send signals to the container process with PID 1. If you’re running a shell script that runs your Node.js application, then take note that a shell instance—such as <code>/bin/sh</code>, for example—doesn’t forward signals to child processes, which means your app will never get a <code>SIGTERM</code>.</p>
+<h2 id="6-graceful-tear-down-for-your-nodejs-web-applications">6) Graceful tear down for your Node.js web applications<a class="headerlink" href="#6-graceful-tear-down-for-your-nodejs-web-applications" title="Permanent link">&para;</a></h2>
+<p>If we’re already discussing process signals that terminate applications, let’s make sure we’re shutting them down properly and gracefully without disrupting users.</p>
+<p>When a Node.js application receives an interrupt signal, also known as <code>SIGINT</code>, or <code>CTRL+C</code>, it will cause an abrupt process kill, unless any event handlers were set of course to handle it in a different behavior. This means that connected clients to a web application will be immediately disconnected. Now, imagine hundreds of Node.js web containers orchestrated by Kubernetes, going up and down as needs arise to scale or manage errors. Not the greatest user experience.</p>
+<p>You can easily simulate this problem. Here’s a stock Fastify web application example, with an inherent delayed response of 60 seconds for an endpoint:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">fastify</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="err">&#39;</span><span class="o">/</span><span class="n">delayed</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">async</span> <span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">reply</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+ <span class="k">const</span> <span class="n">SECONDS_DELAY</span> <span class="o">=</span> <span class="mi">60000</span>
+ <span class="n">await</span> <span class="n">new</span> <span class="n">Promise</span><span class="p">(</span><span class="n">resolve</span> <span class="o">=&gt;</span> <span class="p">{</span>
+     <span class="n">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="n">resolve</span><span class="p">(),</span> <span class="n">SECONDS_DELAY</span><span class="p">)</span>
+ <span class="p">})</span>
+ <span class="k">return</span> <span class="p">{</span> <span class="nl">hello</span><span class="p">:</span> <span class="err">&#39;</span><span class="n">delayed</span> <span class="n">world</span><span class="err">&#39;</span> <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="k">const</span> <span class="n">start</span> <span class="o">=</span> <span class="n">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+ <span class="n">try</span> <span class="p">{</span>
+   <span class="n">await</span> <span class="n">fastify</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">PORT</span><span class="p">,</span> <span class="n">HOST</span><span class="p">)</span>
+   <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="err">`</span><span class="o">*^!</span><span class="mi">@4</span><span class="o">=&gt;</span> <span class="n">Process</span> <span class="kt">id</span><span class="o">:</span> <span class="n">$</span><span class="p">{</span><span class="n">process</span><span class="p">.</span><span class="n">pid</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+ <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+   <span class="n">fastify</span><span class="p">.</span><span class="n">log</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+   <span class="n">process</span><span class="p">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">start</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Run this application and once it’s running send a simple HTTP request to this endpoint:</p>
+<p><code>$ time curl https://localhost:3000/delayed</code></p>
+<p>Hit <code>CTRL+C</code> in the running Node.js console window and you’ll see that the curl request exited abruptly. This simulates the same experience your users would receive when containers tear down.</p>
+<p>To provide a better experience, we can do the following:</p>
+<ol>
+<li>Set an event handler for the various termination signals like <code>SIGINT</code> and <code>SIGTERM</code>.</li>
+<li>The handler waits for clean up operations like database connections, ongoing HTTP requests and others.</li>
+<li>The handler then terminates the Node.js process.</li>
+</ol>
+<p>Specifically with Fastify, we can have our handler call on <a href="https://www.fastify.io/docs/latest/Server/">fastify.close()</a> which returns a promise that we will await, and Fastify will also take care to respond to every new connection with the HTTP status code 503 to signal that the application is unavailable.</p>
+<p>Let’s add our event handler:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">async</span> <span class="n">function</span> <span class="n">closeGracefully</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="p">{</span>
+   <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="err">`</span><span class="o">*^!</span><span class="mi">@4</span><span class="o">=&gt;</span> <span class="n">Received</span> <span class="n">signal</span> <span class="n">to</span> <span class="nl">terminate</span><span class="p">:</span> <span class="n">$</span><span class="p">{</span><span class="n">signal</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+
+   <span class="n">await</span> <span class="n">fastify</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+   <span class="c1">// await db.close() if we have a db connection in this app</span>
+   <span class="c1">// await other things we should cleanup nicely</span>
+   <span class="n">process</span><span class="p">.</span><span class="n">exit</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="n">process</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="err">&#39;</span><span class="n">SIGINT</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">closeGracefully</span><span class="p">)</span>
+<span class="n">process</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="err">&#39;</span><span class="n">SIGTERM</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">closeGracefully</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Admittedly, this is more of a generic web application concern than Dockerfile related, but is even more important in orchestrated environments.</p>
+<h2 id="7-find-and-fix-security-vulnerabilities-in-your-nodejs-docker-image">7) Find and fix security vulnerabilities in your Node.js docker image<a class="headerlink" href="#7-find-and-fix-security-vulnerabilities-in-your-nodejs-docker-image" title="Permanent link">&para;</a></h2>
+<p>See <a href="https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-9-use-static-analysis-tools">Docker Security Cheat Sheet - Use static analysis tools</a></p>
+<h2 id="8-use-multi-stage-builds">8) Use multi-stage builds<a class="headerlink" href="#8-use-multi-stage-builds" title="Permanent link">&para;</a></h2>
+<p>Multi-stage builds are a great way to move from a simple, yet potentially erroneous Dockerfile, into separated steps of building a Docker image, so we can avoid leaking sensitive information. Not only that, but we can also use a bigger Docker base image to install our dependencies, compile any native npm packages if needed, and then copy all these artifacts into a small production base image, like our alpine example.</p>
+<h3 id="prevent-sensitive-information-leak">Prevent sensitive information leak<a class="headerlink" href="#prevent-sensitive-information-leak" title="Permanent link">&para;</a></h3>
+<p>The use-case here to avoid sensitive information leakage is more common than you think.</p>
+<p>If you’re building Docker images for work, there’s a high chance that you also maintain private npm packages. If that’s the case, then you probably needed to find some way to make that secret <code>NPM_TOKEN</code> available to the npm install.</p>
+<p>Here’s an example for what I’m talking about:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">apk</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">dumb</span><span class="o">-</span><span class="n">init</span><span class="w"></span>
+<span class="n">ENV</span><span class="w"> </span><span class="n">NODE_ENV</span><span class="w"> </span><span class="n">production</span><span class="w"></span>
+<span class="n">ENV</span><span class="w"> </span><span class="n">NPM_TOKEN</span><span class="w"> </span><span class="mi">1234</span><span class="w"></span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="nl">node</span><span class="p">:</span><span class="n">node</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
+<span class="n">#RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">echo</span><span class="w"> </span><span class="ss">&quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">npmrc</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="err">\</span><span class="w"></span>
+<span class="w">   </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
+<span class="k">USER</span><span class="w"> </span><span class="n">node</span><span class="w"></span>
+<span class="n">CMD</span><span class="w"> </span><span class="o">[</span><span class="n">&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+<p>Doing this, however, leaves the <code>.npmrc</code> file with the secret npm token inside the Docker image. You could attempt to improve it by deleting it afterwards, like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">RUN</span> <span class="n">echo</span> <span class="s">&quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot;</span> <span class="o">&gt;</span> <span class="p">.</span><span class="n">npmrc</span> <span class="o">&amp;&amp;</span> \
+   <span class="n">npm</span> <span class="n">ci</span> <span class="o">--</span><span class="n">only</span><span class="o">=</span><span class="n">production</span>
+<span class="n">RUN</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">.</span><span class="n">npmrc</span>
+</code></pre></div>
+
+<p>However, now the <code>.npmrc</code> file is available in a different layer of the Docker image. If this Docker image is public, or someone is able to access it somehow, then your token is compromised. A better improvement would be as follows:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">RUN</span> <span class="n">echo</span> <span class="s">&quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot;</span> <span class="o">&gt;</span> <span class="p">.</span><span class="n">npmrc</span> <span class="o">&amp;&amp;</span> \
+   <span class="n">npm</span> <span class="n">ci</span> <span class="o">--</span><span class="n">only</span><span class="o">=</span><span class="n">production</span><span class="p">;</span> \
+   <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">.</span><span class="n">npmrc</span>
+</code></pre></div>
+
+<p>The problem now is that the Dockerfile itself needs to be treated as a secret asset, because it contains the secret npm token inside it.</p>
+<p>Luckily, Docker supports a way to pass arguments into the build process:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">ARG</span> <span class="n">NPM_TOKEN</span>
+<span class="n">RUN</span> <span class="n">echo</span> <span class="s">&quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot;</span> <span class="o">&gt;</span> <span class="p">.</span><span class="n">npmrc</span> <span class="o">&amp;&amp;</span> \
+   <span class="n">npm</span> <span class="n">ci</span> <span class="o">--</span><span class="n">only</span><span class="o">=</span><span class="n">production</span><span class="p">;</span> \
+   <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">.</span><span class="n">npmrc</span>
+</code></pre></div>
+
+<p>And then we build it as follows:</p>
+<p><strong><code>$ docker build . -t nodejs-tutorial --build-arg NPM\_TOKEN=1234</code></strong></p>
+<p>I know you were thinking that we’re all done at this point but, sorry to disappoint 🙂</p>
+<p>That’s how it is with security—sometimes the obvious things are yet just another pitfall.</p>
+<p>What’s the problem now, you ponder? Build arguments passed like that to Docker are kept in the history log. Let’s see with our own eyes. Run this command:</p>
+<p><strong><code>$ docker history nodejs-tutorial</code></strong></p>
+<p>which prints the following:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">IMAGE</span>          <span class="n">CREATED</span>              <span class="n">CREATED</span> <span class="n">BY</span>                                      <span class="n">SIZE</span>      <span class="n">COMMENT</span>
+<span class="n">b4c2c78acaba</span>   <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">CMD</span> <span class="p">[</span><span class="s">&quot;dumb-init&quot;</span> <span class="s">&quot;node&quot;</span> <span class="s">&quot;server.js&quot;</span><span class="p">]</span>            <span class="mh">0</span><span class="n">B</span>        <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
+<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">USER</span> <span class="n">node</span>                                       <span class="mh">0</span><span class="n">B</span>        <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
+<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">RUN</span> <span class="o">|</span><span class="mh">1</span> <span class="n">NPM_TOKEN</span><span class="o">=</span><span class="mh">1234</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="n">echo</span> <span class="s">&quot;//reg…   5.71MB    buildkit.dockerfile.v0</span>
+<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">ARG</span> <span class="n">NPM_TOKEN</span>                                   <span class="mh">0</span><span class="n">B</span>        <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
+<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">COPY</span> <span class="p">.</span> <span class="p">.</span> <span class="p">#</span> <span class="n">buildkit</span>                             <span class="mf">15.3</span><span class="n">kB</span>    <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
+<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">WORKDIR</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>                            <span class="mh">0</span><span class="n">B</span>        <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
+<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">ENV</span> <span class="n">NODE_ENV</span><span class="o">=</span><span class="n">production</span>                         <span class="mh">0</span><span class="n">B</span>        <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
+<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">RUN</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="n">apk</span> <span class="n">add</span> <span class="n">dumb</span><span class="o">-</span><span class="n">init</span> <span class="p">#</span> <span class="n">buildkit</span>     <span class="mf">1.65</span><span class="n">MB</span>    <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
+</code></pre></div>
+
+<p>Did you spot the secret npm token there? That’s what I mean.</p>
+<p>There’s a great way to manage secrets for the container image, but this is the time to introduce multi-stage builds as a mitigation for this issue, as well as showing how we can build minimal images.</p>
+<h3 id="introducing-multi-stage-builds-for-nodejs-docker-images">Introducing multi-stage builds for Node.js Docker images<a class="headerlink" href="#introducing-multi-stage-builds-for-nodejs-docker-images" title="Permanent link">&para;</a></h3>
+<p>Just like that principle in software development of Separation of Concerns, we’ll apply the same ideas in order to build our Node.js Docker images. We’ll have one image that we use to build everything that we need for the Node.js application to run, which in a Node.js world, means installing npm packages, and compiling native npm modules if necessary. That will be our first stage.</p>
+<p>The second Docker image, representing the second stage of the Docker build, will be the production Docker image. This second and last stage is the image that we actually optimize for and publish to a registry, if we have one. That first image that we’ll refer to as the <code>build</code> image, gets discarded and is left as a dangling image in the Docker host that built it, until it gets cleaned.</p>
+<p>Here is the update to our Dockerfile that represents our progress so far, but separated into two stages:</p>
+<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="o">--------------&gt;</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="nc">image</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">latest</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">build</span><span class="w"></span>
+<span class="n">ARG</span><span class="w"> </span><span class="n">NPM_TOKEN</span><span class="w"></span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="n">package</span><span class="o">*</span><span class="p">.</span><span class="n">json</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">echo</span><span class="w"> </span><span class="ss">&quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">npmrc</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="err">\</span><span class="w"></span>
+<span class="w">   </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="err">\</span><span class="w"></span>
+<span class="w">   </span><span class="n">rm</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="p">.</span><span class="n">npmrc</span><span class="w"></span>
+
+<span class="err">#</span><span class="w"> </span><span class="o">--------------&gt;</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="nc">image</span><span class="w"></span>
+<span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">apk</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">dumb</span><span class="o">-</span><span class="n">init</span><span class="w"></span>
+<span class="n">ENV</span><span class="w"> </span><span class="n">NODE_ENV</span><span class="w"> </span><span class="n">production</span><span class="w"></span>
+<span class="k">USER</span><span class="w"> </span><span class="n">node</span><span class="w"></span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="nl">node</span><span class="p">:</span><span class="n">node</span><span class="w"> </span><span class="o">--</span><span class="k">from</span><span class="o">=</span><span class="n">build</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="nl">node</span><span class="p">:</span><span class="n">node</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">CMD</span><span class="w"> </span><span class="o">[</span><span class="n">&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;</span><span class="o">]</span><span class="w"></span>
+</code></pre></div>
+
+<p>As you can see, I chose a bigger image for the <code>build</code> stage because I might need tooling like <code>gcc</code> (the GNU Compiler Collection) to compile native npm packages, or for other needs.</p>
+<p>In the second stage, there’s a special notation for the <code>COPY</code> directive that copies the <code>node_modules/</code> folder from the build Docker image into this new production base image.</p>
+<p>Also, now, do you see that <code>NPM_TOKEN</code> passed as build argument to the <code>build</code> intermediary Docker image? It’s not visible anymore in the <code>docker history nodejs-tutorial</code> command output because it doesn’t exist in our production docker image.</p>
+<h2 id="9-keeping-unnecessary-files-out-of-your-nodejs-docker-images">9) Keeping unnecessary files out of your Node.js Docker images<a class="headerlink" href="#9-keeping-unnecessary-files-out-of-your-nodejs-docker-images" title="Permanent link">&para;</a></h2>
+<p>You have a <code>.gitignore</code> file to avoid polluting the git repository with unnecessary files, and potentially sensitive files too, right? The same applies to Docker images.</p>
+<p>Docker has a <code>.dockerignore</code> which will ensure it skips sending any glob pattern matches inside it to the Docker daemon. Here is a list of files to give you an idea of what you might be putting into your Docker image that we’d ideally want to avoid:</p>
+<div class="codehilite"><pre><span></span><code><span class="na">.dockerignore</span>
+<span class="nf">node_modules</span>
+<span class="nf">npm-debug.log</span>
+<span class="nf">Dockerfile</span>
+<span class="na">.git</span>
+<span class="na">.gitignore</span>
+</code></pre></div>
+
+<p>As you can see, the <code>node_modules/</code> is actually quite important to skip because if we hadn’t ignored it, then the simplistic Dockerfile version that we started with would have caused the local <code>node_modules/</code> folder to be copied over to the container as-is.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">node</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span><span class="w"></span>
+<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+</code></pre></div>
+
+<p>In fact, it’s even more important to have a <code>.dockerignore</code> file when you are practicing multi-stage Docker builds. To refresh your memory on how the 2nd stage Docker build looks like:</p>
+<div class="codehilite"><pre><span></span><code><span class="cp"># --------------&gt; The production image</span>
+<span class="n">FROM</span> <span class="n">node</span><span class="o">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span>
+<span class="n">RUN</span> <span class="n">apk</span> <span class="n">add</span> <span class="n">dumb</span><span class="o">-</span><span class="n">init</span>
+<span class="n">ENV</span> <span class="n">NODE_ENV</span> <span class="n">production</span>
+<span class="n">USER</span> <span class="n">node</span>
+<span class="n">WORKDIR</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>
+<span class="n">COPY</span> <span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="n">node</span><span class="o">:</span><span class="n">node</span> <span class="o">--</span><span class="n">from</span><span class="o">=</span><span class="kr">build</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span>
+<span class="n">COPY</span> <span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="n">node</span><span class="o">:</span><span class="n">node</span> <span class="p">.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>
+<span class="n">CMD</span> <span class="p">[</span><span class="s">&quot;dumb-init&quot;</span><span class="p">,</span> <span class="s">&quot;node&quot;</span><span class="p">,</span> <span class="s">&quot;server.js&quot;</span><span class="p">]</span>
+</code></pre></div>
+
+<p>The importance of having a <code>.dockerignore</code> is that when we do a <code>COPY . /usr/src/app</code> from the 2nd Dockerfile stage, we’re also copying over any local node_modules/ to the Docker image. That’s a big no-no as we may be copying over modified source code inside <code>node_modules/</code>.</p>
+<p>On top of that, since we’re using the wildcard <code>COPY .</code> we may also be copying into the Docker image sensitive files that include credentials or local configuration.</p>
+<p>The take-away here for a <code>.dockerignore</code> file is:</p>
+<ul>
+<li>Skip potentially modified copies of <code>node_modules/</code> in the Docker image.</li>
+<li>Saves you from secrets exposure such as credentials in the contents of <code>.env</code> or <code>aws.json</code> files making their way into the Node.js Docker image.</li>
+<li>It helps speed up Docker builds because it ignores files that would have otherwise caused a cache invalidation. For example, if a log file was modified, or a local environment configuration file, all would’ve caused the Docker image cache to invalidate at that layer of copying over the local directory.</li>
+</ul>
+<h2 id="10-mounting-secrets-into-the-docker-build-image">10) Mounting secrets into the Docker build image<a class="headerlink" href="#10-mounting-secrets-into-the-docker-build-image" title="Permanent link">&para;</a></h2>
+<p>One thing to note about the <code>.dockerignore</code> file is that it is an all or nothing approach and can’t be turned on or off per build stages in a Docker multi-stage build.</p>
+<p>Why is it important? Ideally, we would want to use the <code>.npmrc</code> file in the build stage, as we may need it because it includes a secret npm token to access private npm packages. Perhaps it also needs a specific proxy or registry configuration to pull packages from.</p>
+<p>This means that it makes sense to have the <code>.npmrc</code> file available to the <code>build</code> stage—however, we don’t need it at all in the second stage for the production image, nor do we want it there as it may include sensitive information, like the secret npm token.</p>
+<p>One way to mitigate this <code>.dockerignore</code> caveat is to mount a local file system that will be available for the build stage, but there’s a better way.</p>
+<p>Docker supports a relatively new capability referred to as Docker secrets, and is a natural fit for the case we need with <code>.npmrc</code>. Here is how it works:</p>
+<ul>
+<li>When we run the <code>docker build</code> command we will specify command-line arguments that define a new secret ID and reference a file as the source of the secret.</li>
+<li>In the Dockerfile, we will add flags to the <code>RUN</code> directive to install the production npm, which mounts the file referred by the secret ID into the target location—the local directory <code>.npmrc</code> file which is where we want it available.</li>
+<li>The <code>.npmrc</code> file is mounted as a secret and is never copied into the Docker image.</li>
+<li>Lastly, let’s not forget to add the <code>.npmrc</code> file to the contents of the <code>.dockerignore</code> file so it doesn’t make it into the image at all, for either the build nor production images.</li>
+</ul>
+<p>Let’s see how all of it works together. First the updated <code>.dockerignore</code> file:</p>
+<div class="codehilite"><pre><span></span><code><span class="na">.dockerignore</span>
+<span class="nf">node_modules</span>
+<span class="nf">npm-debug.log</span>
+<span class="nf">Dockerfile</span>
+<span class="na">.git</span>
+<span class="na">.gitignore</span>
+<span class="na">.npmrc</span>
+</code></pre></div>
+
+<p>Then, the complete Dockerfile, with the updated RUN directive to install npm packages while specifying the <code>.npmrc</code> mount point:</p>
+<div class="codehilite"><pre><span></span><code><span class="cp"># --------------&gt; The build image</span>
+<span class="n">FROM</span> <span class="n">node</span><span class="o">:</span><span class="n">latest</span> <span class="kr">AS</span> <span class="kr">build</span>
+<span class="n">WORKDIR</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>
+<span class="n">COPY</span> <span class="n">package</span><span class="o">*</span><span class="p">.</span><span class="n">json</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span>
+<span class="n">RUN</span> <span class="o">--</span><span class="n">mount</span><span class="o">=</span><span class="kr">type</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="mo">0644</span><span class="p">,</span><span class="n">id</span><span class="o">=</span><span class="n">npmrc</span><span class="p">,</span><span class="n">target</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="p">.</span><span class="n">npmrc</span> <span class="n">npm</span> <span class="n">ci</span> <span class="o">--</span><span class="kr">only</span><span class="o">=</span><span class="n">production</span>
+
+<span class="cp"># --------------&gt; The production image</span>
+<span class="n">FROM</span> <span class="n">node</span><span class="o">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span>
+<span class="n">RUN</span> <span class="n">apk</span> <span class="n">add</span> <span class="n">dumb</span><span class="o">-</span><span class="n">init</span>
+<span class="n">ENV</span> <span class="n">NODE_ENV</span> <span class="n">production</span>
+<span class="n">USER</span> <span class="n">node</span>
+<span class="n">WORKDIR</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>
+<span class="n">COPY</span> <span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="n">node</span><span class="o">:</span><span class="n">node</span> <span class="o">--</span><span class="n">from</span><span class="o">=</span><span class="kr">build</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span>
+<span class="n">COPY</span> <span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="n">node</span><span class="o">:</span><span class="n">node</span> <span class="p">.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>
+<span class="n">CMD</span> <span class="p">[</span><span class="s">&quot;dumb-init&quot;</span><span class="p">,</span> <span class="s">&quot;node&quot;</span><span class="p">,</span> <span class="s">&quot;server.js&quot;</span><span class="p">]</span>
+</code></pre></div>
+
+<p>And finally, the command that builds the Node.js Docker image:</p>
+<div class="codehilite"><pre><span></span><code>docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
+</code></pre></div>
+
+<p><strong>Note:</strong> Secrets are a new feature in Docker and if you’re using an older version, you might need to enable it Buildkit as follows:</p>
+<div class="codehilite"><pre><span></span><code>DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234 --secret id=npmrc,src=.npmrc
+</code></pre></div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Multifactor Authentication
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="Nodejs_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Nodejs Security
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2021 - CheatSheets Series Team - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+    
+  </body>
+</html>
