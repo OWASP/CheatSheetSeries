@@ -171,7 +171,7 @@ Make sure that in your Node.js application you set an event handler for the `SIG
     }
     process.on('SIGHUP', handle)
 
-Then run the container, and once it’s up specifically send it the `SIGHUP` signal using the `docker` CLI and the special `--signal` command line flag:
+Then run the container, and once it’s up specifically send it the `SIGHUP` signal using the `docker` CLI and the special `--signal` command-line flag:
 
 **`$ docker kill --signal=SIGHUP elastic\_archimedes`**
 
@@ -416,7 +416,7 @@ In fact, it’s even more important to have a `.dockerignore` file when you are 
 
 The importance of having a `.dockerignore` is that when we do a `COPY . /usr/src/app` from the 2nd Dockerfile stage, we’re also copying over any local node\_modules/ to the Docker image. That’s a big no-no as we may be copying over modified source code inside `node_modules/`.
 
-On top of that, since we’re using the wild-card `COPY .` we may also be copying into the Docker image sensitive files that include credentials or local configuration.
+On top of that, since we’re using the wildcard `COPY .` we may also be copying into the Docker image sensitive files that include credentials or local configuration.
 
 The take-away here for a `.dockerignore` file is:
 
@@ -436,7 +436,7 @@ One way to mitigate this `.dockerignore` caveat is to mount a local file system 
 
 Docker supports a relatively new capability referred to as Docker secrets, and is a natural fit for the case we need with `.npmrc`. Here is how it works:
 
-- When we run the `docker build` command we will specify command line arguments that define a new secret ID and reference a file as the source of the secret.
+- When we run the `docker build` command we will specify command-line arguments that define a new secret ID and reference a file as the source of the secret.
 - In the Dockerfile, we will add flags to the `RUN` directive to install the production npm, which mounts the file referred by the secret ID into the target location—the local directory `.npmrc` file which is where we want it available.
 - The `.npmrc` file is mounted as a secret and is never copied into the Docker image.
 - Lastly, let’s not forget to add the `.npmrc` file to the contents of the `.dockerignore` file so it doesn’t make it into the image at all, for either the build nor production images.
