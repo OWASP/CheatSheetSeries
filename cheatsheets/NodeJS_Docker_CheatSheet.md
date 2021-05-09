@@ -214,8 +214,6 @@ This brings us to the following up to date Dockerfile. You’ll notice that we p
 
 Good to know: `docker kill` and `docker stop` commands only send signals to the container process with PID 1. If you’re running a shell script that runs your Node.js application, then take note that a shell instance—such as `/bin/sh`, for example—doesn’t forward signals to child processes, which means your app will never get a `SIGTERM`.
 
-**Secure your containerized Node.js web applications**
-
 ## 6) Graceful tear down for your Node.js web applications
 
 If we’re already discussing process signals that terminate applications, let’s make sure we’re shutting them down properly and gracefully without disrupting users.
