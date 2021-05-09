@@ -2,8 +2,8 @@
 
 The following cheatsheet provides production-grade guidelines for building optimized and [secure Node.js Docker](https://snyk.io/blog/10-best-practices-to-containerize-nodejs-web-applications-with-docker/). You’ll find it helpful regardless of the Node.js application you aim to build. This article will be helpful for you if:
 
-*   your aim is to build a frontend application using server-side rendering (SSR) Node.js capabilities for React.
-*   you’re looking for advice on how to properly build a Node.js Docker image for your microservices, running Fastify, NestJS or other application frameworks.
+- your aim is to build a frontend application using server-side rendering (SSR) Node.js capabilities for React.
+- you’re looking for advice on how to properly build a Node.js Docker image for your microservices, running Fastify, NestJS or other application frameworks.
 
 ## 1) Use explicit and deterministic Docker base image tags
 
@@ -15,15 +15,15 @@ So, in fact, by specifying the following in your Dockerfile, you always build th
 
 The shortcomings of building based on the default `node` image are as follows:
 
-1.  Docker image builds are inconsistent. Just like we’re using `lockfiles` to get a deterministic `npm install` behavior every time we install npm packages, we’d also like to get deterministic docker image builds. If we build the image from node—which effectively means the `node:latest` tag—then every build will pull a newly built Docker image of `node`. We don’t want to introduce this sort of non-deterministic behavior.
-2.  The node Docker image is based on a full-fledged operating system, full of libraries and tools that you may or may not need to run your Node.js web application. This has two downsides. Firstly a bigger image means a bigger download size which, besides increasing the storage requirement, means more time to download and re-build the image. Secondly, it means you’re potentially introducing security vulnerabilities, that may exist in all of these libraries and tools, into the image.
+1. Docker image builds are inconsistent. Just like we’re using `lockfiles` to get a deterministic `npm install` behavior every time we install npm packages, we’d also like to get deterministic docker image builds. If we build the image from node—which effectively means the `node:latest` tag—then every build will pull a newly built Docker image of `node`. We don’t want to introduce this sort of non-deterministic behavior.
+2. The node Docker image is based on a full-fledged operating system, full of libraries and tools that you may or may not need to run your Node.js web application. This has two downsides. Firstly a bigger image means a bigger download size which, besides increasing the storage requirement, means more time to download and re-build the image. Secondly, it means you’re potentially introducing security vulnerabilities, that may exist in all of these libraries and tools, into the image.
 
 In fact, the `node` Docker image is quite big and includes hundreds of security vulnerabilities of different types and severities. If you’re using it, then by default your starting point is going to be a baseline of 642 security vulnerabilities, and hundreds of megabytes of image data that is downloaded on every pull and build.
 
 The recommendations for building better Docker images are:
 
-1.  Use small Docker images—this will translate to a smaller software footprint on the Docker image reducing the potential vulnerability vectors, and a smaller size, which will speed up the image build process
-2.  Use the Docker image digest, which is the static SHA256 hash of the image. This ensures that you are getting deterministic Docker image builds from the base image.
+1. Use small Docker images—this will translate to a smaller software footprint on the Docker image reducing the potential vulnerability vectors, and a smaller size, which will speed up the image build process
+2. Use the Docker image digest, which is the static SHA256 hash of the image. This ensures that you are getting deterministic Docker image builds from the base image.
 
 Based on this, let’s ensure that we use the Long Term Support (LTS) version of Node.js, and the minimal `alpine` image type to have the smallest size and software footprint on the image:
 
@@ -107,7 +107,6 @@ As an example, the [Express documentation](https://expressjs.com/en/advanced/bes
 
 The performance impact of the `NODE_ENV` variable could be very significant.
 
-
 Many of the other libraries that you are relying on may also expect this variable to be set, so we should set this in our Dockerfile.
 
 The updated Dockerfile should now read as follows with the `NODE_ENV` environment variable setting baked in:
@@ -148,18 +147,18 @@ The complete and proper way of dropping privileges is as follows, also showing o
 
 One of the most common mistakes I see with blogs and articles about containerizing Node.js applications when running in Docker containers is the way that they invoke the process. All of the following and their variants are bad patterns you should avoid:
 
-*   `CMD “npm” “start”`
-*   `CMD [“yarn”, “start”]`
-*   `CMD “node” “server.js”`
-*   `CMD “start-app.sh”`
+- `CMD “npm” “start”`
+- `CMD [“yarn”, “start”]`
+- `CMD “node” “server.js”`
+- `CMD “start-app.sh”`
 
 Let’s dig in! I’ll walk you through the differences between them and why they’re all patterns to avoid.
 
 The following concerns are key in order to understanding the context for properly running and terminating Node.js Docker applications:
 
-1.  An orchestration engine, such as Docker Swarm, Kubernetes, or even just Docker engine itself, needs a way to send signals to the process in the container. Mostly, these are signals to terminate an application, such as `SIGTERM` and `SIGKILL`.
-2.  The process may run indirectly, and if that happens then it’s not always guaranteed that it will receive these signals.
-3.  The Linux kernel treats processes that run as process ID 1 (PID) differently than any other process ID.
+1. An orchestration engine, such as Docker Swarm, Kubernetes, or even just Docker engine itself, needs a way to send signals to the process in the container. Mostly, these are signals to terminate an application, such as `SIGTERM` and `SIGKILL`.
+2. The process may run indirectly, and if that happens then it’s not always guaranteed that it will receive these signals.
+3. The Linux kernel treats processes that run as process ID 1 (PID) differently than any other process ID.
 
 Equipped with that knowledge, let’s begin investigating the ways of invoking the process for a container, starting off with the example from the Dockerfile we’re building:
 
@@ -182,8 +181,8 @@ Nothing happened, right? That’s because the npm client doesn’t forward any s
 
 The other caveat has to do with the different ways in which way you can specify the `CMD` directive in the Dockerfile. There are two ways, and they are not the same:
 
-1.  the shellform notation, in which the container spawns a shell interpreter that wraps the process. In such cases, the shell may not properly forward signals to your process.
-2.  the execform notation, which directly spawns a process without wrapping it in a shell. It is specified using the JSON array notation, such as: `CMD [“npm”, “start”]`. Any signals sent to the container are directly sent to the process.
+1. the shellform notation, in which the container spawns a shell interpreter that wraps the process. In such cases, the shell may not properly forward signals to your process.
+2. the execform notation, which directly spawns a process without wrapping it in a shell. It is specified using the JSON array notation, such as: `CMD [“npm”, “start”]`. Any signals sent to the container are directly sent to the process.
 
 Based on that knowledge, we want to improve our Dockerfile process execution directive as follows:
 
@@ -256,9 +255,9 @@ Hit `CTRL+C` in the running Node.js console window and you’ll see that the cur
 
 To provide a better experience, we can do the following:
 
-1.  Set an event handler for the various termination signals like `SIGINT` and `SIGTERM`.
-2.  The handler waits for clean up operations like database connections, ongoing HTTP requests and others.
-3.  The handler then terminates the Node.js process.
+1. Set an event handler for the various termination signals like `SIGINT` and `SIGTERM`.
+2. The handler waits for clean up operations like database connections, ongoing HTTP requests and others.
+3. The handler then terminates the Node.js process.
 
 Specifically with Fastify, we can have our handler call on [fastify.close()](https://www.fastify.io/docs/latest/Server/) which returns a promise that we will await, and Fastify will also take care to respond to every new connection with the HTTP status code 503 to signal that the application is unavailable.
 
@@ -428,9 +427,9 @@ On top of that, since we’re using the wild-card `COPY .` we may also be copyin
 
 The take-away here for a `.dockerignore` file is:
 
-*   Skip potentially modified copies of `node_modules/` in the Docker image.
-*   Saves you from secrets exposure such as credentials in the contents of `.env` or `aws.json` files making their way into the Node.js Docker image.
-*   It helps speed up Docker builds because it ignores files that would have otherwise caused a cache invalidation. For example, if a log file was modified, or a local environment configuration file, all would’ve caused the Docker image cache to invalidate at that layer of copying over the local directory.
+- Skip potentially modified copies of `node_modules/` in the Docker image.
+- Saves you from secrets exposure such as credentials in the contents of `.env` or `aws.json` files making their way into the Node.js Docker image.
+- It helps speed up Docker builds because it ignores files that would have otherwise caused a cache invalidation. For example, if a log file was modified, or a local environment configuration file, all would’ve caused the Docker image cache to invalidate at that layer of copying over the local directory.
 
 ## 10) Mounting secrets into the Docker build image
 
@@ -444,10 +443,10 @@ One way to mitigate this `.dockerignore` caveat is to mount a local file system 
 
 Docker supports a relatively new capability referred to as Docker secrets, and is a natural fit for the case we need with `.npmrc`. Here is how it works:
 
-*   When we run the `docker build` command we will specify command line arguments that define a new secret ID and reference a file as the source of the secret.
-*   In the Dockerfile, we will add flags to the `RUN` directive to install the production npm, which mounts the file referred by the secret ID into the target location—the local directory `.npmrc` file which is where we want it available.
-*   The `.npmrc` file is mounted as a secret and is never copied into the Docker image.
-*   Lastly, let’s not forget to add the `.npmrc` file to the contents of the `.dockerignore` file so it doesn’t make it into the image at all, for either the build nor production images.
+- When we run the `docker build` command we will specify command line arguments that define a new secret ID and reference a file as the source of the secret.
+- In the Dockerfile, we will add flags to the `RUN` directive to install the production npm, which mounts the file referred by the secret ID into the target location—the local directory `.npmrc` file which is where we want it available.
+- The `.npmrc` file is mounted as a secret and is never copied into the Docker image.
+- Lastly, let’s not forget to add the `.npmrc` file to the contents of the `.dockerignore` file so it doesn’t make it into the image at all, for either the build nor production images.
 
 Let’s see how all of it works together. First the updated `.dockerignore` file:
 
