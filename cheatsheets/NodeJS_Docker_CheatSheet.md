@@ -11,7 +11,7 @@ It may seem to be an obvious choice to build your image based on the `node` Dock
 
 So, in fact, by specifying the following in your Dockerfile, you always build the latest version of the Docker image that has been built by the **Node.js Docker working group**:
 
-**FROM node**
+#### FROM node
 
 The shortcomings of building based on the default `node` image are as follows:
 
@@ -27,7 +27,7 @@ The recommendations for building better Docker images are:
 
 Based on this, let’s ensure that we use the Long Term Support (LTS) version of Node.js, and the minimal `alpine` image type to have the smallest size and software footprint on the image:
 
-**FROM node:lts-alpine**
+#### FROM node:lts-alpine
 
 Nonetheless, this base image directive will still pull new builds of that tag. We can find the `SHA256` hash for it in the [Docker Hub for this Node.js tag](https://hub.docker.com/layers/node/library/node/lts-alpine/images/sha256-51e341881c2b77e52778921c685e711a186a71b8c6f62ff2edfc6b6950225a2f?context=explore), or by running the following command once we pulled this image locally, and locate the `Digest` field in the output:
 
@@ -46,7 +46,7 @@ Another way to find the `SHA256` hash is by running the following command:
     $ docker images --digests
     REPOSITORY                     TAG              DIGEST                                                                    IMAGE ID       CREATED             SIZE
     node                           lts-alpine       sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a   51d926a5599d   2 weeks ago         116MB
-    
+
 Now we can update the Dockerfile for this Node.js Docker image as follows:
 
     FROM node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
@@ -69,13 +69,13 @@ Let’s fix it by updating the Dockerfile, providing the full base image tag for
 
 The following Dockerfile directive installs all dependencies in the container, including `devDependencies`, which aren’t needed for a functional application to work. It adds an unneeded security risk from packages used as development dependencies, as well as inflating the image size unnecessarily.
 
-**RUN npm install**
+**`RUN npm install`**
 
 Enforce deterministic builds with `npm ci`. This prevents surprises in a continuous integration (CI) flow because it halts if any deviations from the lockfile are made.
 
 In the case of building a Docker image for production we want to ensure that we only install production dependencies in a deterministic way, and this brings us to the following recommendation for the best practice for installing npm dependencies in a container image:
 
-**RUN npm ci --only=production**
+**`RUN npm ci --only=production`**
 
 The updated Dockerfile contents in this stage are as follows:
 
@@ -101,7 +101,7 @@ Some frameworks and libraries may only turn on the optimized configuration that 
 
 As an example, the [Express documentation](https://expressjs.com/en/advanced/best-practice-performance.html#set-node_env-to-production) outlines the importance of setting this environment variable for enabling performance and security related optimizations:
 
-![](https://lh3.googleusercontent.com/idNDKUUyML-rRpnNYmOo4eNBimq-u343401spkAdKWWKjNt0c_xux2Aw1W2r64qWGEcvxfQRkosPcO339g5DzQk0snm1nr6MupSPNB_zAtGgLsr3lp1L-tia4KgHwvOXMW1jT0J-)
+![Express documentation screenshot](https://lh3.googleusercontent.com/idNDKUUyML-rRpnNYmOo4eNBimq-u343401spkAdKWWKjNt0c_xux2Aw1W2r64qWGEcvxfQRkosPcO339g5DzQk0snm1nr6MupSPNB_zAtGgLsr3lp1L-tia4KgHwvOXMW1jT0J-)
 
 The performance impact of the `NODE_ENV` variable could be very significant.
 
@@ -246,7 +246,7 @@ You can easily simulate this problem. Here’s a stock Fastify web application e
 
 Run this application and once it’s running send a simple HTTP request to this endpoint:
 
-**$ time curl https://localhost:3000/delayed**
+`$ time curl https://localhost:3000/delayed`
 
 Hit `CTRL+C` in the running Node.js console window and you’ll see that the curl request exited abruptly. This simulates the same experience your users would receive when containers tear down.
 
@@ -275,7 +275,7 @@ Admittedly, this is more of a generic web application concern than Dockerfile re
 
 ## 7) Find and fix security vulnerabilities in your Node.js docker image
 
-See https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-9-use-static-analysis-tools
+See [Docker Security Cheat Sheet - Use static analysis tools](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-9-use-static-analysis-tools)
 
 ## 8) Use multi-stage builds
 
@@ -352,7 +352,7 @@ There’s a great way to manage secrets for the container image, but this is the
 
 ### Introducing multi-stage builds for Node.js Docker images
 
-Just like that principle in software development of Separation of Concerns, we’ll apply the same ideas in order to build our Node.js Docker images. We’ll have one image that we use to build everything that we need for the Node.js application to run, which in a Node.js world, means installing npm packages, and compiling native npm modules if necessary. That will be our first stage. 
+Just like that principle in software development of Separation of Concerns, we’ll apply the same ideas in order to build our Node.js Docker images. We’ll have one image that we use to build everything that we need for the Node.js application to run, which in a Node.js world, means installing npm packages, and compiling native npm modules if necessary. That will be our first stage.
 
 The second Docker image, representing the second stage of the Docker build, will be the production Docker image. This second and last stage is the image that we actually optimize for and publish to a registry, if we have one. That first image that we’ll refer to as the `build` image, gets discarded and is left as a dangling image in the Docker host that built it, until it gets cleaned.
 
@@ -473,8 +473,8 @@ Then, the complete Dockerfile, with the updated RUN directive to install npm pac
 
 And finally, the command that builds the Node.js Docker image:
 
-    $ docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
+    docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
 
 **Note:** Secrets are a new feature in Docker and if you’re using an older version, you might need to enable it Buildkit as follows:
 
-    $ DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234 --secret id=npmrc,src=.npmrc
+    DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234 --secret id=npmrc,src=.npmrc
