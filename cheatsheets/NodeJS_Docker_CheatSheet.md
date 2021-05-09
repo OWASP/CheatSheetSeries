@@ -40,7 +40,6 @@ Nonetheless, this base image directive will still pull new builds of that tag. W
     Digest: sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
     Status: Downloaded newer image for node:lts-alpine
     docker.io/library/node:lts-alpine
-    
 
 Another way to find the `SHA256` hash is by running the following command:
 
@@ -48,7 +47,6 @@ Another way to find the `SHA256` hash is by running the following command:
     REPOSITORY                     TAG              DIGEST                                                                    IMAGE ID       CREATED             SIZE
     node                           lts-alpine       sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a   51d926a5599d   2 weeks ago         116MB
     
-
 Now we can update the Dockerfile for this Node.js Docker image as follows:
 
     FROM node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
@@ -203,7 +201,7 @@ One such tool is [dumb-init](https://engineeringblog.yelp.com/2016/01/dumb-init-
     RUN apk add dumb-init
     CMD ["dumb-init", "node", "server.js"]
 
-This brings us to the following up to date Dockerfile. You’ll notice that we placed the `dumb-init` package install right after the image declaration, so we can take advantage of Docker’s caching of layers: 
+This brings us to the following up to date Dockerfile. You’ll notice that we placed the `dumb-init` package install right after the image declaration, so we can take advantage of Docker’s caching of layers:
 
     FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
     RUN apk add dumb-init
@@ -245,7 +243,6 @@ You can easily simulate this problem. Here’s a stock Fastify web application e
     }
      
     start()
-    
 
 Run this application and once it’s running send a simple HTTP request to this endpoint:
 
@@ -348,7 +345,6 @@ which prints the following:
     <missing>      About a minute ago   WORKDIR /usr/src/app                            0B        buildkit.dockerfile.v0
     <missing>      About a minute ago   ENV NODE_ENV=production                         0B        buildkit.dockerfile.v0
     <missing>      About a minute ago   RUN /bin/sh -c apk add dumb-init # buildkit     1.65MB    buildkit.dockerfile.v0
-    
 
 Did you spot the secret npm token there? That’s what I mean.
 
@@ -419,7 +415,6 @@ In fact, it’s even more important to have a `.dockerignore` file when you are 
     COPY --chown=node:node --from=build /usr/src/app/node_modules /usr/src/app/node_modules
     COPY --chown=node:node . /usr/src/app
     CMD ["dumb-init", "node", "server.js"]
-    
 
 The importance of having a `.dockerignore` is that when we do a `COPY . /usr/src/app` from the 2nd Dockerfile stage, we’re also copying over any local node\_modules/ to the Docker image. That’s a big no-no as we may be copying over modified source code inside `node_modules/`.
 
@@ -475,7 +470,6 @@ Then, the complete Dockerfile, with the updated RUN directive to install npm pac
     COPY --chown=node:node --from=build /usr/src/app/node_modules /usr/src/app/node_modules
     COPY --chown=node:node . /usr/src/app
     CMD ["dumb-init", "node", "server.js"]
-    
 
 And finally, the command that builds the Node.js Docker image:
 
