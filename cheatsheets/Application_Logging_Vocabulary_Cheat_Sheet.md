@@ -180,7 +180,7 @@ When the feature exists to lock an account after x retries or other condition, t
 **Level:**
 WARN
 
-**Reasons**
+**Reasons:**
 
 - maxretries: The maximum number of retries was reached
 - suspicious: Suspicious activity was observed on the account
