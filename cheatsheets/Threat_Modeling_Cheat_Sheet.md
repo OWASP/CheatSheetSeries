@@ -310,10 +310,15 @@ After applying the mitigation and measuring the new risk value, the user of this
 
 ### Periodically retest risk
 
-TODO
+Application threat modeling is an ongoing process, in addition to the changes that might be happened to the application that may require re-evaluating the expected threats, it is also important to do periodic retest for the identified risks and the implemented risk treatments.
 
 ## Appendix
 
-TODO: *Sample Design for Implementation View in 4+1 Model*
+References for the “4+1” View Model of Software Architecture:
+Kruchten, Philippe. Architectural Blueprints — The “4+1” View Model of Software Architecture. IEEE Software 12 (6), pp. 42-50.
+Mikko Kontio, Architectural manifesto: Designing software architectures, Part 5
+Hui LM, Leung CW, Fan CK and Wong TN, "Modelling agent-based systems with UML". Proceedings of the Fifth Asia Pacific Industrial Engineering and Management Systems Conference.
 
-TODO: *Sample Design for Implementation View in 4+1 Model*
+
+Author: Mohamed Alfateh.
+
