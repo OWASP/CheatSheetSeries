@@ -285,7 +285,7 @@ For the designers or the architects: they should assign the risk mitigation to t
 
 ### Agree on risk mitigation with risk owners and stakeholders
 
-TODO
+After identifying the risk owners, it is important to review the mitigation controls for each of the identified risks. Some controls might be inapplicable, you should propose other mitigation controls or discuss with the risk owners the possible compensation controls. 
 
 ### Build your risk treatment strategy
 
