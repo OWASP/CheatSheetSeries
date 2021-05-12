@@ -10,7 +10,7 @@ In short, the following principles should be followed to defend against CSRF:
 
 - **Check if your framework has [built-in CSRF protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
     - **If framework does not have built-in CSRF protection add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on backend**
-- **For stateful software use the [synchronizer token pattern](#synchronizer-token-pattern).
+- **For stateful software use the [synchronizer token pattern](#synchronizer-token-pattern)**
 - **For stateless software use [double submit cookies](#double-submit-cookie)**
 - **Implement at least one mitigation from [Defense in Depth Mitigations](#defense-in-depth-techniques) section**
     - **Consider [SameSite Cookie Attribute](#samesite-cookie-attribute) for session cookies**
