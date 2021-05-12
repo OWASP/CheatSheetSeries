@@ -1,0 +1,3204 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html">
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>Application Logging Vocabulary - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#application-logging-vocabulary-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Application Logging Vocabulary
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Glossary.html" class="md-nav__link">
+        Index Alphabetical
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexASVS.html" class="md-nav__link">
+        Index ASVS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        Index Proactive Controls
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      <label class="md-nav__link" for="__nav_5">
+        Cheatsheets
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cheatsheets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        AJAX Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        Abuse Case
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        Access Control
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Application Logging Vocabulary
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Application_Logging_Vocabulary_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        Application Logging Vocabulary
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assumptions" class="md-nav__link">
+    Assumptions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identifying-events" class="md-nav__link">
+    Identifying Events
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#format" class="md-nav__link">
+    Format
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-vocabulary" class="md-nav__link">
+    The Vocabulary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-authn" class="md-nav__link">
+    Authentication [AUTHN]
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication [AUTHN]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authn_login_successuserid" class="md-nav__link">
+    authn_login_success[:userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_login_successafterfailuseridretries" class="md-nav__link">
+    authn_login_successafterfail[:userid,retries]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_login_failuserid" class="md-nav__link">
+    authn_login_fail[:userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_login_fail_maxuseridmaxlimitint" class="md-nav__link">
+    authn_login_fail_max[:userid,maxlimit(int)]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_login_lockuseridreason" class="md-nav__link">
+    authn_login_lock[:userid,reason]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_token_deleteappid" class="md-nav__link">
+    authn_token_delete[:appid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_password_changeuserid" class="md-nav__link">
+    authn_password_change[:userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_impossible_traveluseridregion1region2" class="md-nav__link">
+    authn_impossible_travel[:userid,region1,region2]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_token_createduserid-entitlements" class="md-nav__link">
+    authn_token_created[:userid, entitlement(s)]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_token_revokeduseridtokenid" class="md-nav__link">
+    authn_token_revoked[:userid,tokenid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_token_reuseuseridtokenid" class="md-nav__link">
+    authn_token_reuse[:userid,tokenid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authorization-authz" class="md-nav__link">
+    Authorization [AUTHZ]
+  </a>
+  
+    <nav class="md-nav" aria-label="Authorization [AUTHZ]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authz_failuseridresource" class="md-nav__link">
+    authz_fail[:userid,resource]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authz_changeuseridfromto" class="md-nav__link">
+    authz_change[:userid,from,to]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authz_adminuseridevent" class="md-nav__link">
+    authz_admin[:userid,event]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#excessive-use-excess" class="md-nav__link">
+    Excessive Use [EXCESS]
+  </a>
+  
+    <nav class="md-nav" aria-label="Excessive Use [EXCESS]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#excess_rate_limit_exceededuseridmax" class="md-nav__link">
+    excess_rate_limit_exceeded[userid,max]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-upload-upload" class="md-nav__link">
+    File Upload [UPLOAD]
+  </a>
+  
+    <nav class="md-nav" aria-label="File Upload [UPLOAD]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload_completeuseridfilenametype" class="md-nav__link">
+    upload_complete[userid,filename,type]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload_storedfilenamefromto" class="md-nav__link">
+    upload_stored[filename,from,to]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload_validationfilenamevirusscanimagemagickfailedincompletepassed" class="md-nav__link">
+    upload_validation[filename,(virusscan|imagemagick|...):(FAILED|incomplete|passed)]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload_deleteuseridfileid" class="md-nav__link">
+    upload_delete[userid,fileid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-validation-input" class="md-nav__link">
+    Input Validation [INPUT]
+  </a>
+  
+    <nav class="md-nav" aria-label="Input Validation [INPUT]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input_validation_failfielduserid" class="md-nav__link">
+    input_validation_fail[:field,userid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#malicious-behavior-malicious" class="md-nav__link">
+    Malicious Behavior [MALICIOUS
+  </a>
+  
+    <nav class="md-nav" aria-label="Malicious Behavior [MALICIOUS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#malicious_excess_404useridipuseragent" class="md-nav__link">
+    malicious_excess_404:[userid|IP,useragent]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_extraneoususeridipinputnameuseragent" class="md-nav__link">
+    malicious_extraneous:[userid|IP,inputname,useragent]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_attack_tooluseridiptoolnameuseragent" class="md-nav__link">
+    malicious_attack_tool:[userid|IP,toolname,useragent]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_corsuseridipuseragentreferer" class="md-nav__link">
+    malicious_cors:[userid|IP,useragent,referer]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_direct_referenceuseridip-useragent" class="md-nav__link">
+    malicious_direct_reference:[userid|IP, useragent]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privilege-changes-privilege" class="md-nav__link">
+    Privilege Changes [PRIVILEGE]
+  </a>
+  
+    <nav class="md-nav" aria-label="Privilege Changes [PRIVILEGE]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#privilege_permissions_changeduseridfileobjectfromleveltolevel" class="md-nav__link">
+    privilege_permissions_changed:[userid,file|object,fromlevel,tolevel]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sensitive-data-changes-data" class="md-nav__link">
+    Sensitive Data Changes [DATA]
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensitive Data Changes [DATA]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensitive_createuseridfileobject" class="md-nav__link">
+    sensitive_create:[userid,file|object]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensitive_readuseridfileobject" class="md-nav__link">
+    sensitive_read:[userid,file|object]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensitive_updateuseridfileobject" class="md-nav__link">
+    sensitive_update:[userid,file|object]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensitive_deleteuseridfileobject" class="md-nav__link">
+    sensitive_delete:[userid,file|object]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sequence-errors-sequence" class="md-nav__link">
+    Sequence Errors [SEQUENCE]
+  </a>
+  
+    <nav class="md-nav" aria-label="Sequence Errors [SEQUENCE]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sequence_failuserid" class="md-nav__link">
+    sequence_fail:[userid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#session-management-session" class="md-nav__link">
+    Session Management [SESSION]
+  </a>
+  
+    <nav class="md-nav" aria-label="Session Management [SESSION]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session_createduserid" class="md-nav__link">
+    session_created:[userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session_reneweduserid" class="md-nav__link">
+    session_renewed:[userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session_expireduseridreason" class="md-nav__link">
+    session_expired:[userid,reason]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session_use_after_expireuserid" class="md-nav__link">
+    session_use_after_expire:[userid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-events-sys" class="md-nav__link">
+    System Events [SYS]
+  </a>
+  
+    <nav class="md-nav" aria-label="System Events [SYS]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sys_startupuserid" class="md-nav__link">
+    sys_startup:[userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sys_shutdownuserid" class="md-nav__link">
+    sys_shutdown:[userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sys_restartuserid" class="md-nav__link">
+    sys_restart:[userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sys_crashreason" class="md-nav__link">
+    sys_crash[:reason]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sys_monitor_disableduseridmonitor" class="md-nav__link">
+    sys_monitor_disabled:[userid,monitor]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sys_monitor_enableduseridmonitor" class="md-nav__link">
+    sys_monitor_enabled:[userid,monitor]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-management-user" class="md-nav__link">
+    User Management [USER]
+  </a>
+  
+    <nav class="md-nav" aria-label="User Management [USER]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user_createduseridnewuseridattributesonetwothree" class="md-nav__link">
+    user_created:[userid,newuserid,attributes[one,two,three]]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user_updateduseridonuseridattributesonetwothree" class="md-nav__link">
+    user_updated:[userid,onuserid,attributes[one,two,three]]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user_archiveduseridonuserid" class="md-nav__link">
+    user_archived:[userid,onuserid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user_deleteduseridonuserid" class="md-nav__link">
+    user_deleted:[userid,onuserid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exclusions" class="md-nav__link">
+    Exclusions
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        Attack Surface Analysis
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        Authorization Testing Automation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Bean Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+        Choosing and Using Security Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+        Clickjacking Defense
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+        Content Security Policy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Credential Stuffing Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross-Site Request Forgery Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Cryptographic Storage
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        DOM based XSS Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        Database Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+        Denial of Service
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        Deserialization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+        Docker Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+        DotNet Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        Error Handling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        File Upload
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+        Forgot Password
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+        GraphQL
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTML5 Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention in Java
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Input Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Insecure Direct Object Reference Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+        JAAS
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+        JSON Web Token for Java
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+        Key Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+        Kubernetes Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        LDAP Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Laravel_CheatSheet.html" class="md-nav__link">
+        Laravel CheatSheet.md
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+        Mass Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+        Microservices based Security Arch Doc
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_security.html" class="md-nav__link">
+        Microservices security.md
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Multifactor Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NodeJS_Docker_CheatSheet.html" class="md-nav__link">
+        NodeJS Docker CheatSheet.md
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+        Nodejs Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+        OS Command Injection Defense
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+        PHP Configuration
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Password Storage
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+        Pinning
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+        Query Parameterization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+        REST Assessment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        REST Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+        Ruby on Rails
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+        SAML Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        SQL Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+        Securing Cascading Style Sheets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        Session Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+        TLS Cipher String
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+        Third Party Javascript Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+        Threat Modeling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Transaction Authorization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        Transport Layer Protection
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+        Unvalidated Redirects and Forwards
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+        User Privacy Protection
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+        Virtual Patching
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerability Disclosure
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerable Dependency Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+        Web Service Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        XML External Entity Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+        XML Security
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assumptions" class="md-nav__link">
+    Assumptions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identifying-events" class="md-nav__link">
+    Identifying Events
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#format" class="md-nav__link">
+    Format
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-vocabulary" class="md-nav__link">
+    The Vocabulary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-authn" class="md-nav__link">
+    Authentication [AUTHN]
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication [AUTHN]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authn_login_successuserid" class="md-nav__link">
+    authn_login_success[:userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_login_successafterfailuseridretries" class="md-nav__link">
+    authn_login_successafterfail[:userid,retries]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_login_failuserid" class="md-nav__link">
+    authn_login_fail[:userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_login_fail_maxuseridmaxlimitint" class="md-nav__link">
+    authn_login_fail_max[:userid,maxlimit(int)]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_login_lockuseridreason" class="md-nav__link">
+    authn_login_lock[:userid,reason]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_token_deleteappid" class="md-nav__link">
+    authn_token_delete[:appid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_password_changeuserid" class="md-nav__link">
+    authn_password_change[:userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_impossible_traveluseridregion1region2" class="md-nav__link">
+    authn_impossible_travel[:userid,region1,region2]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_token_createduserid-entitlements" class="md-nav__link">
+    authn_token_created[:userid, entitlement(s)]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_token_revokeduseridtokenid" class="md-nav__link">
+    authn_token_revoked[:userid,tokenid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authn_token_reuseuseridtokenid" class="md-nav__link">
+    authn_token_reuse[:userid,tokenid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authorization-authz" class="md-nav__link">
+    Authorization [AUTHZ]
+  </a>
+  
+    <nav class="md-nav" aria-label="Authorization [AUTHZ]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authz_failuseridresource" class="md-nav__link">
+    authz_fail[:userid,resource]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authz_changeuseridfromto" class="md-nav__link">
+    authz_change[:userid,from,to]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authz_adminuseridevent" class="md-nav__link">
+    authz_admin[:userid,event]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#excessive-use-excess" class="md-nav__link">
+    Excessive Use [EXCESS]
+  </a>
+  
+    <nav class="md-nav" aria-label="Excessive Use [EXCESS]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#excess_rate_limit_exceededuseridmax" class="md-nav__link">
+    excess_rate_limit_exceeded[userid,max]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-upload-upload" class="md-nav__link">
+    File Upload [UPLOAD]
+  </a>
+  
+    <nav class="md-nav" aria-label="File Upload [UPLOAD]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upload_completeuseridfilenametype" class="md-nav__link">
+    upload_complete[userid,filename,type]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload_storedfilenamefromto" class="md-nav__link">
+    upload_stored[filename,from,to]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload_validationfilenamevirusscanimagemagickfailedincompletepassed" class="md-nav__link">
+    upload_validation[filename,(virusscan|imagemagick|...):(FAILED|incomplete|passed)]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload_deleteuseridfileid" class="md-nav__link">
+    upload_delete[userid,fileid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-validation-input" class="md-nav__link">
+    Input Validation [INPUT]
+  </a>
+  
+    <nav class="md-nav" aria-label="Input Validation [INPUT]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input_validation_failfielduserid" class="md-nav__link">
+    input_validation_fail[:field,userid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#malicious-behavior-malicious" class="md-nav__link">
+    Malicious Behavior [MALICIOUS
+  </a>
+  
+    <nav class="md-nav" aria-label="Malicious Behavior [MALICIOUS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#malicious_excess_404useridipuseragent" class="md-nav__link">
+    malicious_excess_404:[userid|IP,useragent]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_extraneoususeridipinputnameuseragent" class="md-nav__link">
+    malicious_extraneous:[userid|IP,inputname,useragent]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_attack_tooluseridiptoolnameuseragent" class="md-nav__link">
+    malicious_attack_tool:[userid|IP,toolname,useragent]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_corsuseridipuseragentreferer" class="md-nav__link">
+    malicious_cors:[userid|IP,useragent,referer]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_direct_referenceuseridip-useragent" class="md-nav__link">
+    malicious_direct_reference:[userid|IP, useragent]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privilege-changes-privilege" class="md-nav__link">
+    Privilege Changes [PRIVILEGE]
+  </a>
+  
+    <nav class="md-nav" aria-label="Privilege Changes [PRIVILEGE]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#privilege_permissions_changeduseridfileobjectfromleveltolevel" class="md-nav__link">
+    privilege_permissions_changed:[userid,file|object,fromlevel,tolevel]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sensitive-data-changes-data" class="md-nav__link">
+    Sensitive Data Changes [DATA]
+  </a>
+  
+    <nav class="md-nav" aria-label="Sensitive Data Changes [DATA]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensitive_createuseridfileobject" class="md-nav__link">
+    sensitive_create:[userid,file|object]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensitive_readuseridfileobject" class="md-nav__link">
+    sensitive_read:[userid,file|object]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensitive_updateuseridfileobject" class="md-nav__link">
+    sensitive_update:[userid,file|object]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensitive_deleteuseridfileobject" class="md-nav__link">
+    sensitive_delete:[userid,file|object]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sequence-errors-sequence" class="md-nav__link">
+    Sequence Errors [SEQUENCE]
+  </a>
+  
+    <nav class="md-nav" aria-label="Sequence Errors [SEQUENCE]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sequence_failuserid" class="md-nav__link">
+    sequence_fail:[userid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#session-management-session" class="md-nav__link">
+    Session Management [SESSION]
+  </a>
+  
+    <nav class="md-nav" aria-label="Session Management [SESSION]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#session_createduserid" class="md-nav__link">
+    session_created:[userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session_reneweduserid" class="md-nav__link">
+    session_renewed:[userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session_expireduseridreason" class="md-nav__link">
+    session_expired:[userid,reason]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session_use_after_expireuserid" class="md-nav__link">
+    session_use_after_expire:[userid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-events-sys" class="md-nav__link">
+    System Events [SYS]
+  </a>
+  
+    <nav class="md-nav" aria-label="System Events [SYS]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sys_startupuserid" class="md-nav__link">
+    sys_startup:[userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sys_shutdownuserid" class="md-nav__link">
+    sys_shutdown:[userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sys_restartuserid" class="md-nav__link">
+    sys_restart:[userid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sys_crashreason" class="md-nav__link">
+    sys_crash[:reason]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sys_monitor_disableduseridmonitor" class="md-nav__link">
+    sys_monitor_disabled:[userid,monitor]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sys_monitor_enableduseridmonitor" class="md-nav__link">
+    sys_monitor_enabled:[userid,monitor]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-management-user" class="md-nav__link">
+    User Management [USER]
+  </a>
+  
+    <nav class="md-nav" aria-label="User Management [USER]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user_createduseridnewuseridattributesonetwothree" class="md-nav__link">
+    user_created:[userid,newuserid,attributes[one,two,three]]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user_updateduseridonuseridattributesonetwothree" class="md-nav__link">
+    user_updated:[userid,onuserid,attributes[one,two,three]]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user_archiveduseridonuserid" class="md-nav__link">
+    user_archived:[userid,onuserid]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user_deleteduseridonuserid" class="md-nav__link">
+    user_deleted:[userid,onuserid]
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exclusions" class="md-nav__link">
+    Exclusions
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="application-logging-vocabulary-cheat-sheet">Application Logging Vocabulary Cheat Sheet<a class="headerlink" href="#application-logging-vocabulary-cheat-sheet" title="Permanent link">&para;</a></h1>
+<p>This document proposes a standard vocabulary for logging security events. The intent is to simplify monitoring and alerting such that, assuming developers trap errors and log them using this vocabulary, monitoring and alerting would be improved by simply keying on these terms.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>Each year IBM Security comissions the Ponemon Institute to survey companies around the world for information related to security breaches, mitigation, and the associated costs; the result is called the Cost of a Data Breach Report.</p>
+<p>In addition to the millions of dollars lost due to breaches the report finds that the <strong>mean time to identify</strong> a breach continues to hover around <strong>200 days</strong>. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.</p>
+<p><img alt="IBM Cost of Data Breach Report 2020" src="../assets/cost-of-breach-2020.png" /></p>
+<blockquote>
+<p>IBM Cost of a Data Breach Study 2020, Fig.34, pg.52,  [https://www.ibm.com/security/data-breach]</p>
+</blockquote>
+<p>This logging standard would seek to define specific keywords which, when applied consistently across software, would allow groups to simply monitor for these events terms across all applications and respond quickly in the event of attack.</p>
+<h2 id="assumptions">Assumptions<a class="headerlink" href="#assumptions" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Observability/SRE groups must support the use of this standard and encourage developers to use it</li>
+<li>Incident Response must either ingest this data OR provide a means by which other monitoring teams can send a notification of alert, preferably programmatically.</li>
+<li>Architects must support, adopt, and contribute to this standard</li>
+<li>Developers must embrace this standard and begin to implement (requires knowledge and intent to understand potential attacks and trap those errors in code).</li>
+</ul>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<p>As a reminder, the goal of logging is to be able to alert on specific security events. Of course, the first step to logging these events is good error handling, if you're not trapping the events, you don't have an event to log.</p>
+<h3 id="identifying-events">Identifying Events<a class="headerlink" href="#identifying-events" title="Permanent link">&para;</a></h3>
+<p>In order to better understand security event logging a good high-level understanding of threat modeling would be helpful, even if it's a simple approach of:</p>
+<ol>
+<li>
+<p><strong>What could go wrong?</strong></p>
+</li>
+<li>
+<p>Orders: could someone order on behalf of another?</p>
+</li>
+<li>Authentication: could I log in as someone else?</li>
+<li>
+<p>Authorization: could I see someone else' account?</p>
+</li>
+<li>
+<p><strong>What would happen if it did?</strong></p>
+</li>
+<li>
+<p>Orders: I've placed an order on behalf of another... to an abandoned warehouse in New Jersey. Oops.</p>
+</li>
+<li>Then I bragged about it on 4Chan.</li>
+<li>
+<p>Then I told the New York Times about it.</p>
+</li>
+<li>
+<p><strong>Who might intend to do this?</strong></p>
+</li>
+<li>
+<p>Intentional attacks by hackers.</p>
+</li>
+<li>An employee "testing" how things work.</li>
+<li>An API coded incorrectly doing things the author did not intend.</li>
+</ol>
+<h2 id="format">Format<a class="headerlink" href="#format" title="Permanent link">&para;</a></h2>
+<p><em>NOTE: All dates should be logged in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format </em><em>WITH</em><em> UTC offset to ensure maximum portability</em></p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="s">&quot;datetime&quot;</span><span class="o">:</span> <span class="s">&quot;2021-01-01T01:01:01-0700&quot;</span><span class="p">,</span>
+    <span class="s">&quot;appid&quot;</span><span class="o">:</span> <span class="s">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
+    <span class="s">&quot;event&quot;</span><span class="o">:</span> <span class="s">&quot;AUTHN_login_success:joebob1&quot;</span><span class="p">,</span>
+    <span class="s">&quot;level&quot;</span><span class="o">:</span> <span class="s">&quot;INFO&quot;</span><span class="p">,</span>
+    <span class="s">&quot;description&quot;</span><span class="o">:</span> <span class="s">&quot;User joebob1 login successfully&quot;</span><span class="p">,</span>
+    <span class="s">&quot;useragent&quot;</span><span class="o">:</span> <span class="s">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36&quot;</span><span class="p">,</span>
+    <span class="s">&quot;source_ip&quot;</span><span class="o">:</span> <span class="s">&quot;165.225.50.94&quot;</span><span class="p">,</span>
+    <span class="s">&quot;host_ip&quot;</span><span class="o">:</span> <span class="s">&quot;10.12.7.9&quot;</span><span class="p">,</span>
+    <span class="s">&quot;hostname&quot;</span><span class="o">:</span> <span class="s">&quot;portalauth.foobar.com&quot;</span><span class="p">,</span>
+    <span class="s">&quot;protocol&quot;</span><span class="o">:</span> <span class="s">&quot;https&quot;</span><span class="p">,</span>
+    <span class="s">&quot;port&quot;</span><span class="o">:</span> <span class="s">&quot;440&quot;</span><span class="p">,</span>
+    <span class="s">&quot;request_uri&quot;</span><span class="o">:</span> <span class="s">&quot;/api/v2/auth/&quot;</span><span class="p">,</span>
+    <span class="s">&quot;request_method&quot;</span><span class="o">:</span> <span class="s">&quot;POST&quot;</span><span class="p">,</span>
+    <span class="s">&quot;region&quot;</span><span class="o">:</span> <span class="s">&quot;AWS-US-WEST-2&quot;</span><span class="p">,</span>
+    <span class="s">&quot;geo&quot;</span><span class="o">:</span> <span class="s">&quot;USA&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="the-vocabulary">The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permanent link">&para;</a></h2>
+<p>What follows are the various event types that should be captured. For each event type there is a prefix like "authn" and additional data that should be included for that event.</p>
+<p>Portions of the full logging format are included for example, but a complete event log should follow the format above.</p>
+<hr />
+<h2 id="authentication-authn">Authentication [AUTHN]<a class="headerlink" href="#authentication-authn" title="Permanent link">&para;</a></h2>
+<h3 id="authn_login_successuserid">authn_login_success[:userid]<a class="headerlink" href="#authn_login_successuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+All login events should be recorded including success.</p>
+<p><strong>Level:</strong>
+INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authn_login_success:joebob1&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;User joebob1 login successfully&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authn_login_successafterfailuseridretries">authn_login_successafterfail[:userid,retries]<a class="headerlink" href="#authn_login_successafterfailuseridretries" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+The user successfully logged in after previously failing.</p>
+<p><strong>Level:</strong>
+INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authn_login_success:joebob1,2&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;User joebob1 login successfully&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authn_login_failuserid">authn_login_fail[:userid]<a class="headerlink" href="#authn_login_failuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+All login events should be recorded including failure.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authn_login_fail:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 login failed&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authn_login_fail_maxuseridmaxlimitint">authn_login_fail_max[:userid,maxlimit(int)]<a class="headerlink" href="#authn_login_fail_maxuseridmaxlimitint" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+All login events should be recorded including failure.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authn_login_fail_max:joebob1,3&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 reached the login fail limit of 3&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authn_login_lockuseridreason">authn_login_lock[:userid,reason]<a class="headerlink" href="#authn_login_lockuseridreason" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When the feature exists to lock an account after x retries or other condition, the lock should be logged with relevant data.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Reasons:</strong></p>
+<ul>
+<li>maxretries: The maximum number of retries was reached</li>
+<li>suspicious: Suspicious activity was observed on the account</li>
+<li>customer: The customer requested their account be locked</li>
+<li>other: Other</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authn_login_lock:joebob1,maxretries&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 login locked because maxretries exceeded&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authn_token_deleteappid">authn_token_delete[:appid]<a class="headerlink" href="#authn_token_deleteappid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a token is deleted it should be recorded</p>
+<p><strong>Level:</strong>: WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    <span class="s2">&quot;</span><span class="s">datetime</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">2019-01-01 00:00:00,000</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">appid</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">foobar.netportal_auth</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">event</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">authn_token_delete:foobarapi</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">level</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">WARN</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">description</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">The token for foobarapi has been deleted</span><span class="s2">&quot;</span>,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authn_password_changeuserid">authn_password_change[:userid]<a class="headerlink" href="#authn_password_changeuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+Every password change should be logged, including the userid that it was for.</p>
+<p><strong>Level:</strong>
+INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authn_password_change:joebob1&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;User joebob1 has successfully changed their password&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authn_impossible_traveluseridregion1region2">authn_impossible_travel[:userid,region1,region2]<a class="headerlink" href="#authn_impossible_traveluseridregion1region2" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a user is logged in from one city and suddenly appears in another, too far away to have traveled in a reasonable timeframe, this often indicates a potential account takeover.</p>
+<p><strong>Level:</strong>: CRITICAL</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authn_impossible_travel:joebob1,US-OR,CN-SH&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
+    &quot;description&quot;: &quot;User joebob1 has accessed the application in two distant cities at the same time&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authn_token_createduserid-entitlements">authn_token_created[:userid, entitlement(s)]<a class="headerlink" href="#authn_token_createduserid-entitlements" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a token is created for service access it should be recorded</p>
+<p><strong>Level:</strong>: INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    <span class="s2">&quot;</span><span class="s">datetime</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">2019-01-01 00:00:00,000</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">appid</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">aws.foobar.com</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">event</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">authn_token_created:app.foobarapi.prod,create,read,update</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">level</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">INFO</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">description</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">A token has been created for app.foobarapi.prod with create,read,update</span><span class="s2">&quot;</span>,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authn_token_revokeduseridtokenid">authn_token_revoked[:userid,tokenid]<a class="headerlink" href="#authn_token_revokeduseridtokenid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+A token has been revoked for the given account.</p>
+<p><strong>Level:</strong>: INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    <span class="s2">&quot;</span><span class="s">datetime</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">2019-01-01 00:00:00,000</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">appid</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">aws.foobar.com</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">event</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">authn_token_revoked:app.foobarapi.prod,xyz-abc-123-gfk</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">level</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">INFO</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">description</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">Token ID: xyz-abc-123-gfk was revoked for user app.foobarapi.prod</span><span class="s2">&quot;</span>,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authn_token_reuseuseridtokenid">authn_token_reuse[:userid,tokenid]<a class="headerlink" href="#authn_token_reuseuseridtokenid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+A previously revoked token was attempted to be reused.</p>
+<p><strong>Level:</strong>: CRITICAL</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;aws.foobar.com&quot;,
+    &quot;event&quot;: &quot;authn_token_reuse:app.foobarapi.prod,xyz-abc-123-gfk&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
+    &quot;description&quot;: &quot;User app.foobarapi.prod attempted to use token ID: xyz-abc-123-gfk which was previously revoked&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h2 id="authorization-authz">Authorization [AUTHZ]<a class="headerlink" href="#authorization-authz" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="authz_failuseridresource">authz_fail[:userid,resource]<a class="headerlink" href="#authz_failuseridresource" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+An attempt was made to access a resource which was unauthorized</p>
+<p><strong>Level:</strong>: CRITICAL</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authz_fail:joebob1,resource&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
+    &quot;description&quot;: &quot;User joebob1 attempted to access a resource without entitlement&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authz_changeuseridfromto">authz_change[:userid,from,to]<a class="headerlink" href="#authz_changeuseridfromto" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+The user or entity entitlements was changed</p>
+<p><strong>Level:</strong>: WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authz_change:joebob1,user,admin&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 access was changed from user to admin&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="authz_adminuseridevent">authz_admin[:userid,event]<a class="headerlink" href="#authz_adminuseridevent" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+All activity by privileged users such as admin should be recorded.</p>
+<p><strong>Level:</strong>: WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authz_admin:joebob1,user_privilege_change&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;Administrtator joebob1 has updated privileges of user foobarapi from user to admin&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h2 id="excessive-use-excess">Excessive Use [EXCESS]<a class="headerlink" href="#excessive-use-excess" title="Permanent link">&para;</a></h2>
+<h3 id="excess_rate_limit_exceededuseridmax">excess_rate_limit_exceeded[userid,max]<a class="headerlink" href="#excess_rate_limit_exceededuseridmax" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+Expected service limit ceilings should be established and alerted when exceeded, even if simply for managing costs and scaling.</p>
+<p><strong>Level:</strong>: WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;excess_rate_limit_exceeded:app.foobarapi.prod,100000&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User app.foobarapi.prod has exceeded max:100000 requests&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h2 id="file-upload-upload">File Upload [UPLOAD]<a class="headerlink" href="#file-upload-upload" title="Permanent link">&para;</a></h2>
+<h3 id="upload_completeuseridfilenametype">upload_complete[userid,filename,type]<a class="headerlink" href="#upload_completeuseridfilenametype" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+On successful file upload the first step in the validation process is that the upload has completed.</p>
+<p><strong>Level:</strong>: INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>    <span class="p">{</span>
+    <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;appid&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;upload_complete:joebob1,user_generated_content.png,PNG&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;User joebob1 has uploaded user_generated_content.png&quot;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h3 id="upload_storedfilenamefromto">upload_stored[filename,from,to]<a class="headerlink" href="#upload_storedfilenamefromto" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+One step in good file upload validation is to move/rename the file and when providing the content back to end users, never reference the original filename in the download. This is true both when storing in a filesystem as well as in block storage.</p>
+<p><strong>Level:</strong>: INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;appid&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;upload_stored:user_generated_content.png,kjsdhkrjhwijhsiuhdf000010202002&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;File user_generated_content.png was stored in the database with key abcdefghijk101010101&quot;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h3 id="upload_validationfilenamevirusscanimagemagickfailedincompletepassed">upload_validation[filename,(virusscan|imagemagick|...):(FAILED|incomplete|passed)]<a class="headerlink" href="#upload_validationfilenamevirusscanimagemagickfailedincompletepassed" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+All file uploads should have some validation performed, both for correctness (is in fact of file type x), and for safety (does not contain a virus).</p>
+<p><strong>Level:</strong>: INFO|CRITICAL</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;appid&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;upload_validation:filename,virusscan:FAILED&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;CRITICAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;File user_generated_content.png FAILED virus scan and was purged&quot;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h3 id="upload_deleteuseridfileid">upload_delete[userid,fileid]<a class="headerlink" href="#upload_deleteuseridfileid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a file is deleted for normal reasons it should be recorded.</p>
+<p><strong>Level:</strong>: INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;appid&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;upload_delete:joebob1,&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;User joebob1 has marked file abcdefghijk101010101 for deletion.&quot;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="input-validation-input">Input Validation [INPUT]<a class="headerlink" href="#input-validation-input" title="Permanent link">&para;</a></h2>
+<h3 id="input_validation_failfielduserid">input_validation_fail[:field,userid]<a class="headerlink" href="#input_validation_failfielduserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When input validation fails on the server-side it must either be because a) sufficient validation was not provided on the client, or b) client-side validation was bypassed. In either case it's an opportunity for attack and should be mitigated quickly.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;input_validation_fail:date_of_birth,joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 submitted data that failed validation.&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h2 id="malicious-behavior-malicious">Malicious Behavior [MALICIOUS<a class="headerlink" href="#malicious-behavior-malicious" title="Permanent link">&para;</a></h2>
+<h3 id="malicious_excess_404useridipuseragent">malicious_excess_404:[userid|IP,useragent]<a class="headerlink" href="#malicious_excess_404useridipuseragent" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a user makes numerous requests for files that don't exist it often is an indicator of attempts to "force-browse" for files that could exist and is often behavior indicating malicious intent.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;datetime&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;appid&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;event&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;malicious_excess404:123.456.789.101,M@l1c10us-Hax0rB0t0-v1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;level&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;WARN&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;description&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;A user at 123.456.789.101 has generated a large number of 404 requests.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</code></pre></div>
+
+<hr />
+<h3 id="malicious_extraneoususeridipinputnameuseragent">malicious_extraneous:[userid|IP,inputname,useragent]<a class="headerlink" href="#malicious_extraneoususeridipinputnameuseragent" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a user submits data to a backend handler that was not expected it can indicate probing for input validation errors. If your backend service receives data it does not handle or have an input for this is an indication of likely malicious abuse.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;datetime&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;appid&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;event&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;malicious_extraneous:dr@evil.com,creditcardnum,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;level&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;WARN&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;description&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;User dr@evil.com included field creditcardnum in the request which is not handled by this service.&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</code></pre></div>
+
+<hr />
+<h3 id="malicious_attack_tooluseridiptoolnameuseragent">malicious_attack_tool:[userid|IP,toolname,useragent]<a class="headerlink" href="#malicious_attack_tooluseridiptoolnameuseragent" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When obvious attack tools are identified either by signature or by user agent they should be logged.</p>
+<p><strong>TODO:</strong> A future version of this standard should link to known attack tools, signatures and user-agent strings. For instance, the tool "Nikto" leaves behind its user agent by default with a string like <strong><em>"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"</em></strong></p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;appid&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;malicious_attack_tool:127.0.0.1,nikto,Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;WARN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Attack traffic indicating use of Nikto coming from 127.0.0.1&quot;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h3 id="malicious_corsuseridipuseragentreferer">malicious_cors:[userid|IP,useragent,referer]<a class="headerlink" href="#malicious_corsuseridipuseragentreferer" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When attempts are made from unauthorized origins they should of course be blocked, but also logged whenever possible. Even if we block an illegal cross-origin request the fact that the request is being made could be an indication of attack.</p>
+<p><em>NOTE: Did you know that the word "referer" is mispelled in the original HTTP specification? The correct spelling should be "referrer" but the original typo persists to this day and is used here intentionally.</em></p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="err">&quot;datetime&quot;:</span> <span class="err">&quot;2019-01-01</span> <span class="err">00:00:00,000&quot;,</span>
+    <span class="err">&quot;appid&quot;:</span> <span class="err">&quot;foobar.netportal_auth&quot;,</span>
+    <span class="err">&quot;event&quot;:</span> <span class="err">&quot;</span><span class="n">malicious_cors</span><span class="p">:</span><span class="mf">127.0.0.1</span><span class="p">,</span><span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">X11</span><span class="p">;</span> <span class="err">Linux</span> <span class="err">x86_64</span><span class="p">;</span> <span class="n">rv</span><span class="p">:</span><span class="mf">10.0</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">10.0</span><span class="p">,</span><span class="n">attack</span><span class="o">.</span><span class="n">evil</span><span class="o">.</span><span class="n">com</span><span class="s2">&quot;,</span>
+<span class="s2">    &quot;</span><span class="kc">level</span><span class="s2">&quot;: &quot;</span><span class="n">WARN</span><span class="s2">&quot;,</span>
+<span class="s2">    &quot;</span><span class="n">description</span><span class="s2">&quot;: &quot;</span><span class="n">An</span> <span class="n">illegal</span> <span class="kc">cross</span><span class="o">-</span><span class="n">origin</span> <span class="n">request</span> <span class="n">from</span> <span class="mf">127.0.0.1</span> <span class="n">was</span> <span class="n">refered</span> <span class="n">from</span> <span class="n">attack</span><span class="o">.</span><span class="n">evil</span><span class="o">.</span><span class="n">com</span><span class="err">&quot;</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h3 id="malicious_direct_referenceuseridip-useragent">malicious_direct_reference:[userid|IP, useragent]<a class="headerlink" href="#malicious_direct_referenceuseridip-useragent" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+A common attack against authentication and authorization is to directly access an object without credentials or appropriate access authority. Failing to prevent this flaw used to be one of the OWASP Top Ten called <strong>Insecure Direct Object Reference</strong>. Assuming you've correctly prevented this attack, logging the attempt is valuable to identify malicious users.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="err">&quot;datetime&quot;:</span> <span class="err">&quot;2019-01-01</span> <span class="err">00:00:00,000&quot;,</span>
+    <span class="err">&quot;appid&quot;:</span> <span class="err">&quot;foobar.netportal_auth&quot;,</span>
+    <span class="err">&quot;event&quot;:</span> <span class="err">&quot;</span><span class="n">malicious_direct</span><span class="p">:</span><span class="n">joebob1</span><span class="p">,</span> <span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">X11</span><span class="p">;</span> <span class="err">Linux</span> <span class="err">x86_64</span><span class="p">;</span> <span class="n">rv</span><span class="p">:</span><span class="mf">10.0</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">10.0</span><span class="s2">&quot;,</span>
+<span class="s2">    &quot;</span><span class="kc">level</span><span class="s2">&quot;: &quot;</span><span class="n">WARN</span><span class="s2">&quot;,</span>
+<span class="s2">    &quot;</span><span class="n">description</span><span class="s2">&quot;: &quot;</span><span class="n">User</span> <span class="n">joebob1</span> <span class="n">attempted</span> <span class="kc">to</span> <span class="n">access</span> <span class="n">an</span> <span class="n">object</span> <span class="kc">to</span> <span class="n">which</span> <span class="n">they</span> <span class="n">are</span> <span class="n">not</span> <span class="n">authorized</span><span class="err">&quot;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="privilege-changes-privilege">Privilege Changes [PRIVILEGE]<a class="headerlink" href="#privilege-changes-privilege" title="Permanent link">&para;</a></h2>
+<p>This section focuses on object privilege changes such as read/write/execute permissions or objects in a database having authorization meta-information changed.</p>
+<p>Changes to user/account are covered in the User Management section.</p>
+<hr />
+<h3 id="privilege_permissions_changeduseridfileobjectfromleveltolevel">privilege_permissions_changed:[userid,file|object,fromlevel,tolevel]<a class="headerlink" href="#privilege_permissions_changeduseridfileobjectfromleveltolevel" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+Tracking changes to objects to which there are access control restrictions can uncover attempt to escalate privilege on those files by unauthorized users.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;malicious_direct:joebob1, /users/admin/some/important/path,0511,0777&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 changed permissions on /users/admin/some/important/path&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h2 id="sensitive-data-changes-data">Sensitive Data Changes [DATA]<a class="headerlink" href="#sensitive-data-changes-data" title="Permanent link">&para;</a></h2>
+<p>It's not necessary to log or alert on changes to all files, but in the case of highly sensitive files or data it is important that we monitor and alert on changes.</p>
+<hr />
+<h3 id="sensitive_createuseridfileobject">sensitive_create:[userid,file|object]<a class="headerlink" href="#sensitive_createuseridfileobject" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a new piece of data is created and marked as sensitive or placed into a directory/table/repository where sensitive data is stored, that creation should be logged and reviewed periodically.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;sensitive_create:joebob1, /users/admin/some/important/path&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 created a new file in /users/admin/some/important/path&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="sensitive_readuseridfileobject">sensitive_read:[userid,file|object]<a class="headerlink" href="#sensitive_readuseridfileobject" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should be have access logged and reviewed periodically.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;sensitive_read:joebob1, /users/admin/some/important/path&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 read file /users/admin/some/important/path&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="sensitive_updateuseridfileobject">sensitive_update:[userid,file|object]<a class="headerlink" href="#sensitive_updateuseridfileobject" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should be have updates to the data logged and reviewed periodically.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;sensitive_update:joebob1, /users/admin/some/important/path&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 modified file /users/admin/some/important/path&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="sensitive_deleteuseridfileobject">sensitive_delete:[userid,file|object]<a class="headerlink" href="#sensitive_deleteuseridfileobject" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should have deletions of the data logged and reviewed periodically. The file should not be immediately deleted but marked for deletion and an archive of  file should be maintained according to legal/privacy requirements.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    <span class="s2">&quot;</span><span class="s">datetime</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">2019-01-01 00:00:00,000</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">appid</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">foobar.netportal_auth</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">event</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">sensitive_delete:joebob1, /users/admin/some/important/path</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">level</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">WARN</span><span class="s2">&quot;</span>,
+    <span class="s2">&quot;</span><span class="s">description</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">User joebob1 marked file /users/admin/some/important/path for deletion</span><span class="s2">&quot;</span>,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h2 id="sequence-errors-sequence">Sequence Errors [SEQUENCE]<a class="headerlink" href="#sequence-errors-sequence" title="Permanent link">&para;</a></h2>
+<p>Also called a <strong><em>business logic attack</em></strong>, if a specific path is expected through a system and an attempt is made to skip or change the order of that path it could indicate malicious intent.</p>
+<hr />
+<h3 id="sequence_failuserid">sequence_fail:[userid]<a class="headerlink" href="#sequence_failuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+Tracking changes to objects to which there are access control restrictions can uncover attempt to escalate privilege on those files by unauthorized users.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;malicious_direct:joebob1, /users/admin/some/important/path,0511,0777&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 changed permissions on /users/admin/some/important/path&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h2 id="session-management-session">Session Management [SESSION]<a class="headerlink" href="#session-management-session" title="Permanent link">&para;</a></h2>
+<h3 id="session_createduserid">session_created:[userid]<a class="headerlink" href="#session_createduserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a new authenticated session is created that session may be logged and activity monitored.</p>
+<p><strong>Level:</strong>
+INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>    {
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;session_created:joebob1&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;User joebob1 has started a new session&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="session_reneweduserid">session_renewed:[userid]<a class="headerlink" href="#session_reneweduserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a user is warned of session to be expired/revoked and chooses to extend their session that activity should be logged. Also, if the system in question contains highly confidential data then extending a session may require additional verification.</p>
+<p><strong>Level:</strong>
+INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;session_renewed:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 was warned of expiring session and extended.&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="session_expireduseridreason">session_expired:[userid,reason]<a class="headerlink" href="#session_expireduseridreason" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a session expires, especially in the case of an authenticated session or with sensitive data, then that session expiry may be logged and clarifying data included. The reason code may be any such as: logout, timeout, revoked, etc. Sessions should never be deleted but rather expired in the case of revocation requirement.</p>
+<p><strong>Level:</strong>
+INFO</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;session_expired:joebob1,revoked&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 session expired due to administrator revocation.&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="session_use_after_expireuserid">session_use_after_expire:[userid]<a class="headerlink" href="#session_use_after_expireuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+In the case a user attempts to access systems with an expire session it may be helpful to log, especially if combined with subsequent login failure. This could identify a case where a malicious user is attempting a session hijack or directly accessing another persons machine/browser.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;session_use_after_expire:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 attempted access after session expired.&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h2 id="system-events-sys">System Events [SYS]<a class="headerlink" href="#system-events-sys" title="Permanent link">&para;</a></h2>
+<h3 id="sys_startupuserid">sys_startup:[userid]<a class="headerlink" href="#sys_startupuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a system is first started it can be valuable to log the startup, even if the system is serverless or a container, especially if possible to log the user that initiated the system.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;sys_startup:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 spawned a new instance&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="sys_shutdownuserid">sys_shutdown:[userid]<a class="headerlink" href="#sys_shutdownuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a system is shutdown it can be valuable to log the event, even if the system is serverless or a container, especially if possible to log the user that initiated the system.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;sys_shutdown:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 stopped this instance&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="sys_restartuserid">sys_restart:[userid]<a class="headerlink" href="#sys_restartuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a system is restarted it can be valuable to log the event, even if the system is serverless or a container, especially if possible to log the user that initiated the system.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;sys_restart:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 initiated a restart&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="sys_crashreason">sys_crash[:reason]<a class="headerlink" href="#sys_crashreason" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+If possible to catch an unstable condition resulting in the crash of a system, logging that event could be helpful, especially if the event is triggered by an attack.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;sys_crash:outofmemory,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;The system crashed due to Out of Memory error.&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="sys_monitor_disableduseridmonitor">sys_monitor_disabled:[userid,monitor]<a class="headerlink" href="#sys_monitor_disableduseridmonitor" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+If your systems contain agents responsible for file integrity, resources, logging, virus, etc. it is especially valuable to know if they are halted and by whom.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;sys_monitor_disabled:joebob1,crowdstrike&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 has disable CrowdStrike&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="sys_monitor_enableduseridmonitor">sys_monitor_enabled:[userid,monitor]<a class="headerlink" href="#sys_monitor_enableduseridmonitor" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+If your systems contain agents responsible for file integrity, resources, logging, virus, etc. it is especially valuable to know if they are started again after being stopped, and by whom.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;sys_monitor_enabled:joebob1,crowdstrike&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 has enabled CrowdStrike&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h2 id="user-management-user">User Management [USER]<a class="headerlink" href="#user-management-user" title="Permanent link">&para;</a></h2>
+<h3 id="user_createduseridnewuseridattributesonetwothree">user_created:[userid,newuserid,attributes[one,two,three]]<a class="headerlink" href="#user_createduseridnewuseridattributesonetwothree" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When creating new users, logging the specifics of the user creation event is helpful, especially if new users can be created with administration privileges.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;user_created:joebob1,user1,admin:create,update,delete&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 created user1 with admin:create,update,delete privilege attributes&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="user_updateduseridonuseridattributesonetwothree">user_updated:[userid,onuserid,attributes[one,two,three]]<a class="headerlink" href="#user_updateduseridonuseridattributesonetwothree" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When updating users, logging the specifics of the user update event is helpful, especially if users can be updated with administration privileges.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;user_updated:joebob1,user1,admin:create,update,delete&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 updated user1 with attributes admin:create,update,delete privilege attributes&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="user_archiveduseridonuserid">user_archived:[userid,onuserid]<a class="headerlink" href="#user_archiveduseridonuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+It is always best to archive users rather than deleting, except where required. When archiving users, logging the specifics of the user archive event is helpful. A malicious user could use this feature to deny service to legitimate users.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;user_archived:joebob1,user1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 archived user1&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h3 id="user_deleteduseridonuserid">user_deleted:[userid,onuserid]<a class="headerlink" href="#user_deleteduseridonuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+It is always best to archive users rather than deleting, except where required. When deleting users, logging the specifics of the user delete event is helpful. A malicious user could use this feature to deny service to legitimate users.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;user_deleted:joebob1,user1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 has deleted user1&quot;,
+    ...
+}
+</code></pre></div>
+
+<hr />
+<h2 id="exclusions">Exclusions<a class="headerlink" href="#exclusions" title="Permanent link">&para;</a></h2>
+<p>As important as what you DO log is what you DON'T log. Private or secret information, source code, keys, certs, etc. should never be logged.</p>
+<p>For comprehensive overview of items that should be excluded from logging, please see the <a href="Logging_Cheat_Sheet.html#data-to-exclude">OWASP Logging Cheat Sheet</a>.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="Access_Control_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Access Control
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Attack Surface Analysis
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2021 - CheatSheets Series Team - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+    
+  </body>
+</html>
