@@ -33,24 +33,16 @@ The following code snippet is an example of "Callback Hell":
 
 ```JavaScript
 function func1(name, callback) {
-   setTimeout(function() {
-      // operations
-   }, 500);
+  // operations that takes a bit of time and then calls the callback
 }
 function func2(name, callback) {
-   setTimeout(function() {
-      // operations
-   }, 100);
+  // operations that takes a bit of time and then calls the callback
 }
 function func3(name, callback) {
-   setTimeout(function() {
-      // operations
-   }, 900);
+  // operations that takes a bit of time and then calls the callback
 }
 function func4(name, callback) {
-   setTimeout(function() {
-      // operations
-   }, 3000);
+  // operations that takes a bit of time and then calls the callback
 }
 
 func1("input1", function(err, result1){
@@ -90,25 +82,17 @@ func1("input1", function(err, result1){
 The above code can be securely written as follows using a flat Promise chain:
 
 ```JavaScript
-function func1(name, callback) {
-   setTimeout(function() {
-      // operations
-   }, 500);
+function func1(name) {
+  // operations that takes a bit of time and then resolves the promise
 }
-function func2(name, callback) {
-   setTimeout(function() {
-      // operations
-   }, 100);
+function func2(name) {
+  // operations that takes a bit of time and then resolves the promise
 }
-function func3(name, callback) {
-   setTimeout(function() {
-      // operations
-   }, 900);
+function func3(name) {
+  // operations that takes a bit of time and then resolves the promise
 }
-function func4(name, callback) {
-   setTimeout(function() {
-      // operations
-   }, 3000);
+function func4(name) {
+  // operations that takes a bit of time and then resolves the promise
 }
 
 func1("input1")
@@ -124,6 +108,34 @@ func1("input1")
    .catch(function (error) {
       // error operations
    });
+```
+
+And using async/await:
+
+```JavaScript
+function func1(name) {
+  // operations that takes a bit of time and then resolves the promise
+}
+function func2(name) {
+  // operations that takes a bit of time and then resolves the promise
+}
+function func3(name) {
+  // operations that takes a bit of time and then resolves the promise
+}
+function func4(name) {
+  // operations that takes a bit of time and then resolves the promise
+}
+
+(async() => {
+  try {
+    let res1 = await func1("input1");
+    let res2 = await func2("input2");
+    let res3 = await func3("input2");
+    let res4 = await func4("input2");
+  } catch(err) {
+    // error operations
+  }
+})();
 ```
 
 #### Set request size limits
@@ -193,6 +205,22 @@ In the above code, call to unlink the file and other file operations are within 
 
 Input validation is a crucial part of application security. Input validation failures can result in many different types of application attacks. These include SQL Injection, Cross-Site Scripting, Command Injection, Local/Remote File Inclusion, Denial of Service, Directory Traversal, LDAP Injection and many other injection attacks. In order to avoid these attacks, input to your application should be sanitized first. The best input validation technique is to use a list of accepted inputs. However, if this is not possible, input should be first checked against expected input scheme and dangerous inputs should be escaped. In order to ease input validation in Node.js applications, there are some modules like [validator](https://www.npmjs.com/package/validator) and [mongo-express-sanitize](https://www.npmjs.com/package/mongo-express-sanitize).
 For detailed information on input validation, please refer to [Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html).
+
+JavaScript is a dynamic language and depending on how the framework parses a URL, the data seen by the application code can take on many different forms. Here are some examples after parsing a query string in express.js:
+
+| URL | Content of request.query.foo in code |
+| --- | --- |
+| `?foo=bar` | `'bar'` (string) |
+| `?foo=bar&foo=baz` | `['bar', 'baz']` (array of string) |
+| `?foo[]=bar` | `['bar']` (array of string) |
+| `?foo[]=bar&foo[]=baz` | `['bar', 'baz']` (array of string) |
+| `?foo[bar]=baz` | `{ bar : 'baz' }` (object with a key) |
+| `?foo[]=bar` | `['bar']` (array of string) |
+| `?foo[]baz=bar` | `['bar']` (array of string - postfix is lost) |
+| `?foo[][baz]=bar` | `[ { baz: 'bar' } ]` (array of object) |
+| `?foo[bar][baz]=bar` | `{ foo: { bar: { baz: 'bar' } } }` (object tree) |
+| `?foo[10]=bar&foo[9]=baz` | `[ 'baz', 'bar' ]` (array of string - notice order) |
+| `?foo[toString]=bar` | `{}` (object where calling `toString()` will fail) |
 
 #### Perform output escaping
 
@@ -511,11 +539,18 @@ app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0' }));
 
 #### Keep your packages up-to-date
 
-Security of your application depends directly on how secure the third-party packages you use in your application are. Therefore, it is important to keep your packages up-to-date. It should be noted that [Using Components with Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities) is still in the OWASP Top 10. You can use [OWASP Dependency-Check](https://jeremylong.github.io/DependencyCheck/analyzers/nodejs.html) to see if any of the packages used in the project has a known vulnerability. Also you can use [Retire.js](https://github.com/retirejs/retire.js/) to check JavaScript libraries with known vulnerabilities. In order to use it, you can run the following commands in the source code folder of your application:
+Security of your application depends directly on how secure the third-party packages you use in your application are. Therefore, it is important to keep your packages up-to-date. It should be noted that [Using Components with Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities) is still in the OWASP Top 10. You can use [OWASP Dependency-Check](https://jeremylong.github.io/DependencyCheck/analyzers/nodejs.html) to see if any of the packages used in the project has a known vulnerability. Also you can use [Retire.js](https://github.com/retirejs/retire.js/) to check JavaScript libraries with known vulnerabilities.
+
+Starting with version 6, `npm` introduced `audit`, which will warn about vulnerable packages:
 
 ```bash
-npm install -g retire
-retire
+npm audit
+```
+
+`npm` also introduced a simple way to upgrade the affected packages:
+
+```bash
+npm audit fix
 ```
 
 There are several other tools you can use to check your dependencies. A more comprehensive list can be found in [Vulnerable Dependency Management CS](https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html#tools).
@@ -534,9 +569,9 @@ The Regular expression Denial of Service (ReDoS) is a Denial of Service attack, 
 
 [The Regular Expression Denial of Service (ReDoS)](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS) is a type of Denial of Service attack that uses regular expressions. Some Regular Expression (Regex) implementations cause extreme situations that makes the application very slow. Attackers can use such regex implementations to cause application to get into these extreme situations and hang for a long time.  Such regexes are called evil if application can be stuck on crafted input.  Generally, these regexes are exploited by grouping with repetition and alternation with overlapping. For example, the following regular expression `^(([a-z])+.)+[A-Z]([a-z])+$` can be used to specify Java class names. However, a very long string (aaaa...aaaaAaaaaa...aaaa) can also match with this regular expression. There are some tools to check if a regex has a potential for causing denial of service. One example is [vuln-regex-detector](https://github.com/davisjam/vuln-regex-detector).
 
-#### Run security linters periodically
+#### Run security linters
 
-When developing code, keeping all security tips in mind can be really difficult. Also keeping all team members obey these rules is nearly impossible. This is why there are Static Analysis Security Testing (SAST) tools. These tools do not execute your code, but they simply look for patterns that can contain security risks. As JavaScript is a dynamic and loosely-typed language, linting tools are really essential in the software development life cycle. These tools should be run periodically and the findings should be audited. Another advantage of these tools is the feature that you can add custom rules for patterns that you may see dangerous. [ESLint](https://eslint.org/) and [JSHint](http://jshint.com/) are commonly used SAST tools for JavaScript linting.
+When developing code, keeping all security tips in mind can be really difficult. Also keeping all team members obey these rules is nearly impossible. This is why there are Static Analysis Security Testing (SAST) tools. These tools do not execute your code, but they simply look for patterns that can contain security risks. As JavaScript is a dynamic and loosely-typed language, linting tools are really essential in the software development life cycle. The linting rules should be reviewed periodically and the findings should be audited. Another advantage of these tools is the feature that you can add custom rules for patterns that you may see dangerous. [ESLint](https://eslint.org/) and [JSHint](http://jshint.com/) are commonly used SAST tools for JavaScript linting.
 
 #### Use strict mode
 

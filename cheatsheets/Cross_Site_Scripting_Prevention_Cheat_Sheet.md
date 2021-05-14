@@ -111,31 +111,21 @@ Encode the following characters with HTML entity encoding to prevent switching i
 
 ### RULE \#2 - Attribute Encode Before Inserting Untrusted Data into HTML Common Attributes
 
-Rule \#2 is for putting untrusted data into typical attribute values like `width`, `name`, `value`, etc. This should not be used for complex attributes like `href`, `src`, `style`, or any of the event handlers like onmouseover. It is extremely important that event handler attributes should follow Rule \#3 for HTML JavaScript Data Values.
+Rule \#2 is for putting untrusted data into HTML attribute values like `width`, `name`, `value`, etc.
 
-Inside **UNquoted** attribute:
-
-```html
-<div attr=...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...>content
-```
-
-Inside single quoted attribute:
-
-```html
-<div attr='...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...'>content
-```
-
-Inside double quoted attribute :
+For example:
 
 ```html
 <div attr="...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...">content
 ```
 
-Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the "&amp;#xHH;" format (or a named entity if available) to prevent switching out of the attribute.
-
-The reason this rule is so broad is that developers frequently leave attributes unquoted. Properly quoted attributes can only be escaped with the corresponding quote.
-
-Unquoted attributes can be broken out of with many characters, including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`.
+1. Always quote dynamic attributes with `"` or `'`. Quoted attributes can only be broken out of with the corresponding quote, while unquoted attributes can be broken out of with many characters, including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`.
+2. Encode the corresponding quote: `"` and `'` should be encoded to `&#x22` and `&#x27` respectively.
+3. Some attributes can be used for attack event with encoding and should not be dynamic, or with extra care
+    - `href` can be used to inject JavaScript with `javascript` pseudo protocol (e.g. `href="javascript:attack()`)
+    - all event handlers (`onclick`, `onerror`, `onmouseover`, ...) can be used to inject JavaScript
+    - `src` can also be used to inject external scripts depending on the context (e.g. in a script tag)
+    - `style` can be exploited, see rule 4.
 
 ### RULE \#3 - JavaScript Encode Before Inserting Untrusted Data into JavaScript Data Values
 
@@ -406,6 +396,8 @@ The `X-XSS-Protection` header has been deprecated by modern browsers and its use
 
 ## XSS Prevention Rules Summary
 
+The following snippets of HTML demonstrate how to safely render untrusted data in a variety of different contexts.
+
 | Data Type | Context                                  | Code Sample                                                                                                        | Defense                                                                                                                                                                                        |
 |-----------|------------------------------------------|--------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | String    | HTML Body                                |  `<span>UNTRUSTED DATA </span>`                                                                          | HTML Entity Encoding (rule \#1).                                                                                                                                                               |
@@ -416,8 +408,6 @@ The `X-XSS-Protection` header has been deprecated by modern browsers and its use
 | String    | JavaScript Variable                      | `<script>var currentValue='UNTRUSTED DATA ';</script> <script>someFunction('UNTRUSTED DATA ');</script>` | Ensure JavaScript variables are quoted, JavaScript Hex Encoding, JavaScript Unicode Encoding, Avoid backslash encoding (`\"` or `\'` or `\\`).                                                 |
 | HTML      | HTML Body                                | `<div>UNTRUSTED HTML</div>`                                                                             | HTML Validation (JSoup, AntiSamy, HTML Sanitizer...).                                                                                                                                          |
 | String    | DOM XSS                                  | `<script>document.write("UNTRUSTED INPUT: " + document.location.hash );<script/>`                        | [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)                                                                                                                |
-
-The following snippets of HTML demonstrate how to safely render untrusted data in a variety of different contexts.
 
 **Safe HTML Attributes include:** `align`, `alink`, `alt`, `bgcolor`, `border`, `cellpadding`, `cellspacing`, `class`, `color`, `cols`, `colspan`, `coords`, `dir`, `face`, `height`, `hspace`, `ismap`, `lang`, `marginheight`, `marginwidth`, `multiple`, `nohref`, `noresize`, `noshade`, `nowrap`, `ref`, `rel`, `rev`, `rows`, `rowspan`, `scrolling`, `shape`, `span`, `summary`, `tabindex`, `title`, `usemap`, `valign`, `value`, `vlink`, `vspace`, `width`.
 
