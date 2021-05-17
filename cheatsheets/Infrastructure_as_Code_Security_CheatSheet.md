@@ -49,4 +49,3 @@ CI/CD pipeline and Consolidated reporting - enabling the security checks to be m
 - Securing Infrastructure as code: <https://www.opcito.com/blogs/securing-infrastructure-as-code>
 - Infrastructure as code security: <https://dzone.com/articles/infrastructure-as-code-security>
 - Shifting cloud security left with infrastructure as code: <https://securityboulevard.com/2020/04/shifting-cloud-security-left-with-infrastructure-as-code/>
-
