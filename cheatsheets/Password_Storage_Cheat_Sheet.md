@@ -9,7 +9,7 @@ After an attacker has aquired stored password hashes, they are always able to br
 This cheat sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
 - **Use [Argon2id](#argon2id) with a minimum configuration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
-- **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 10 or more and with a password limit of 64 characters.**
+- **If [Argon2id](#argon2id) is not available, use [bcrypt](#bcrypt) with a work factor of 10 or more and with a password limit of 72 bytes.**
 - **For legacy systems using [scrypt](#scrypt), use a minimum CPU/memory cost parameter of (2^16), a minimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
 - **If FIPS-140 compliance is required, use [PBKDF2](#pbkdf2) with a work factor of 310,000 or more and set with an internal hash function of HMAC-SHA-256.**
 - **Consider using a [pepper](#peppering) to provide additional defense in depth (though alone, it provides no additional secure characteristics).**
@@ -124,7 +124,7 @@ The minimum work factor for bcrypt should be 10.
 
 #### Input Limits
 
-bcrypt has a maximum length input length of 72 characters [for most implementations](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length). To protect against this issue, a maximum password length of 64 characters should be enforced when using bcrypt.
+bcrypt has a maximum length input length of 72 bytes [for most implementations](https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length). To protect against this issue, a maximum password length of 72 bytes (or less if the implementation in use has smaller limits) should be enforced when using bcrypt.
 
 #### Pre-Hashing Passwords
 
