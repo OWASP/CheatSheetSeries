@@ -150,7 +150,10 @@ const getRawBody = require('raw-body')
 const app = express()
 
 app.use(function (req, res, next) {
-  if (!['POST', 'PUT', 'DELETE'].includes(req.method)) next()
+  if (!['POST', 'PUT', 'DELETE'].includes(req.method)) {
+    next()
+    return
+  }
 
   getRawBody(req, {
     length: req.headers['content-length'],
