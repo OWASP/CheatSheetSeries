@@ -225,7 +225,7 @@ Certificates are supported by all major web browsers, and once installed require
 
 - Using digital certificates requires backend PKI system.
 - Installing certificates can be difficult for users, particularly in a highly restricted environment.
-- Enterprise proxy servers which perform SSL decryption will prevent he use of certificates.
+- Enterprise proxy servers which perform SSL decryption will prevent the use of certificates.
 - The certificates are stored on the user's workstation, and as such can be stolen if their system is compromised.
 
 ### Smartcards
