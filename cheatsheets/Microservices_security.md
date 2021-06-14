@@ -132,31 +132,32 @@ In most cases, token-based authentication works over TLS that provides confident
 
 ## Logging
 
-Logging service in microservice-based systems is aim to meet principle of accountability and traceability and help to detect security anomalies in operations via log analysis. Therefore, it is vital for applications security architects to understand and properly use existing architecture patterns to implement audit logging in microservices-based systems for security operations. A high-level architecture design is shown on the picture below and based on the following principles:
+Logging services in microservice-based systems aim to meet the principle of accountability and traceability and help detect security anomalies in operations via log analysis. Therefore, it is vital for application security architects to understand and adequately use existing architecture patterns to implement audit logging in microservices-based systems for security operations. A high-level architecture design is shown in the picture below and based on the following principles:
 
-- microservice writes a log messages to local file using standard output (via stdout, stderr);
-- logging agent periodically pulls log messages and sends (publish) it to message broker (e.g., NATS, Apache Kafka);
-- central logging service subscribes on messages in message broker, receives and process it.
+- microservice writes a log message to a local file using standard output (via stdout, stderr)
+- logging agent periodically pulls log messages and sends (publish) them to the message broker (e.g., NATS, Apache Kafka);
+- central logging service subscribes to messages in the message broker, receives and processes them.
 
 ![Logging pattern](../assets/ms_logging_pattern.png)
 
 High-level recommendations to logging subsystem architecture with its rationales are listed below.
 
-1. Microservice shall not send log message directly to central logging subsystem using network communication. Microservice shall write its log message to a local log file:
-    - this allows to mitigate threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice: in case of logging service outage microservice will still write log messages to the local file (without data loss), after logging service recovery logs will be available to shipping;
-2. There shall be a dedicated component (logging agent) decoupled from microservice. Logging agent shall collect log data on microservice side (read local log file) and send it to central logging subsystem. Due to possible network latency issues logging agent shall be deployed on the same host (virtual or physical machine) with microservice:
-    - this allows to mitigate threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice - in case of logging agent failure microservice still writes information to the log file, logging agent after recovery will read file and send information to message broker;
-3. Due to possible DoS-attack on central logging subsystem logging agent shall not uses synchronous request/response pattern to send log messages. There shall be message broker to implement asynchronous connection between logging agent and central logging service:
-    - this allows to mitigate threat of data loss due to logging service failure in case of its flooding by legitimate microservice - in case of logging service outage microservice will still write log messages to the local file (without data loss), after logging service recovery logs will be available to shipping;
-4. Logging agent and message broker shall use mutual authentication (e.g. based on TLS) to encrypt all transmitted data (log messages) and authenticate themselves:
-    - this allows to mitigate threat: microservice spoofing, logging/transport system spoofing, network traffic injection, sniffing network traffic
-5. Message broker shall enforce access control policy in order to mitigate unauthorized access and enforce the principle of least privileges:
-    - this allows to mitigate threat of microservice elevation of privileges
-6. Logging agent shall filter/sanitize output log messages in order to sensitive data (e.g., PII, passwords, API keys) will never send to the central logging subsystem (data minimization principle). For comprehensive overview of items that should be excluded from logging, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#data-to-exclude).
-7. Microservices shall generate and pass through microservice call chain a correlation ID which uniquely identify every call chain and help grouping log messages to investigate them. Logging agent shall include correlation ID in every log message.
+1. Microservice shall not send log messages directly to the central logging subsystem using network communication. Microservice shall write its log message to a local log file:
+- this allows to mitigate the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice: in case of logging service outage, microservice will still write log messages to the local file (without data loss), after logging service recovery logs will be available to shipping;
+2. There shall be a dedicated component (logging agent) decoupled from the microservice. The logging agent shall collect log data on the microservice  (read local log file) and send it to the central logging subsystem. Due to possible network latency issues, the logging agent shall be deployed on the same host (virtual or physical machine) with the microservice:
+- this allows mitigating the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice
+- in case of logging agent failure, microservice still writes information to the log file, logging agent after recovery will read the file and send information to message broker;
+3. A possible DoS attack on the central logging subsystem logging agent shall not use an asynchronous request/response pattern to send log messages. There shall be a message broker to implement the asynchronous connection between the logging agent and central logging service:
+- this allows to mitigate the threat of data loss due to logging service failure in case of its flooding by legitimate microservice - in case of logging service outage, microservice will still write log messages to the local file (without data loss) after logging service recovery logs will be available to shipping;
+4. Logging agent and message broker shall use mutual authentication (e.g., based on TLS) to encrypt all transmitted data (log messages) and authenticate themselves:
+- this allows mitigating threat: microservice spoofing, logging/transport system spoofing, network traffic injection, sniffing network traffic
+5. Message broker shall enforce access control policy to mitigate unauthorized access and implement the principle of least privileges:
+- this allows mitigating the threat of microservice elevation of privileges
+6. Logging agent shall filter/sanitize output log messages to sensitive data (e.g., PII, passwords, API keys) will never send to the central logging subsystem (data minimization principle). For a comprehensive overview of items that should be excluded from logging, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#data-to-exclude).
+7. Microservices shall generate a correlation ID that uniquely identifies every call chain and helps group log messages to investigate them. The logging agent shall include a correlation ID in every log message.
 8. Logging agent shall periodically provide health and status data to indicate its availability or non-availability.
 9. Logging agent shall publish log messages in structured logs format (e.g., JSON, CSV).
-10. Logging agent shall append log messages with context data, e.g., platform context (hostname, container name), runtime context (class name, file name).
+10. Logging agent shall append log messages with context data, e.g., platform context (hostname, container name), runtime context (class name, filename).
 
 For comprehensive overview of events that should be logged and possible data format, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#which-events-to-log) and [Application Logging Vocabulary Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.md)
 
