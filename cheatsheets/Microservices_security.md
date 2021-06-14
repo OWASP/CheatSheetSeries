@@ -143,16 +143,17 @@ Logging services in microservice-based systems aim to meet the principle of acco
 High-level recommendations to logging subsystem architecture with its rationales are listed below.
 
 1. Microservice shall not send log messages directly to the central logging subsystem using network communication. Microservice shall write its log message to a local log file:
-- this allows to mitigate the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice: in case of logging service outage, microservice will still write log messages to the local file (without data loss), after logging service recovery logs will be available to shipping;
+    - this allows to mitigate the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice: in case of logging service outage, microservice will still write log messages to the local file (without data loss), after logging service recovery logs will be available to shipping;
 2. There shall be a dedicated component (logging agent) decoupled from the microservice. The logging agent shall collect log data on the microservice  (read local log file) and send it to the central logging subsystem. Due to possible network latency issues, the logging agent shall be deployed on the same host (virtual or physical machine) with the microservice:
-- this allows mitigating the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice
-- in case of logging agent failure, microservice still writes information to the log file, logging agent after recovery will read the file and send information to message broker;
+    - this allows mitigating the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice
+    - in case of logging agent failure, microservice still writes information to the log file, logging agent after recovery will read the file and send information to message broker;
 3. A possible DoS attack on the central logging subsystem logging agent shall not use an asynchronous request/response pattern to send log messages. There shall be a message broker to implement the asynchronous connection between the logging agent and central logging service:
-- this allows to mitigate the threat of data loss due to logging service failure in case of its flooding by legitimate microservice - in case of logging service outage, microservice will still write log messages to the local file (without data loss) after logging service recovery logs will be available to shipping;
+    - this allows to mitigate the threat of data loss due to logging service failure in case of its flooding by legitimate microservice
+    - in case of logging service outage, microservice will still write log messages to the local file (without data loss) after logging service recovery logs will be available to shipping;
 4. Logging agent and message broker shall use mutual authentication (e.g., based on TLS) to encrypt all transmitted data (log messages) and authenticate themselves:
-- this allows mitigating threat: microservice spoofing, logging/transport system spoofing, network traffic injection, sniffing network traffic
+    - this allows mitigating threat: microservice spoofing, logging/transport system spoofing, network traffic injection, sniffing network traffic
 5. Message broker shall enforce access control policy to mitigate unauthorized access and implement the principle of least privileges:
-- this allows mitigating the threat of microservice elevation of privileges
+    - this allows mitigating the threat of microservice elevation of privileges
 6. Logging agent shall filter/sanitize output log messages to sensitive data (e.g., PII, passwords, API keys) will never send to the central logging subsystem (data minimization principle). For a comprehensive overview of items that should be excluded from logging, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#data-to-exclude).
 7. Microservices shall generate a correlation ID that uniquely identifies every call chain and helps group log messages to investigate them. The logging agent shall include a correlation ID in every log message.
 8. Logging agent shall periodically provide health and status data to indicate its availability or non-availability.
