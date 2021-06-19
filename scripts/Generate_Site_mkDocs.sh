@@ -6,7 +6,6 @@
 
 GENERATED_SITE=site
 WORK=../generated
-date=$(date '+%Y-%m-%d')
 
 echo "Generate a offline portable website with all the cheat sheets..."
 
@@ -52,7 +51,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     sed -i '' "1i\\
         Title: Index Proactive Controls\\
         " $WORK/cheatsheets/IndexProactiveControls.md
-
 else
     sed -i "1iTitle: Introduction\n" $WORK/cheatsheets/index.md
     sed -i 's/Index.md/Glossary.md/g' $WORK/cheatsheets/Glossary.md
@@ -61,9 +59,8 @@ else
     sed -i "1iTitle: Index Proactive Controls\n" $WORK/cheatsheets/IndexProactiveControls.md
 fi
 
-
 echo "Step 4/7: Inserting markdown metadata."
-for fullfile in $WORK/cheatsheets/cheatsheets/*.md
+for fullfile in "$WORK"/cheatsheets/cheatsheets/*.md
 do
     filename=$(basename -- "$fullfile")
     filename="${filename%_Cheat_Sheet.*}"
@@ -73,19 +70,17 @@ do
         # Mac OSX
         sed -i '' "1i\\
             Title: ${filename//[_]/ }\\
-            " $fullfile
+            " "$fullfile"
     else
-        sed -i "1iTitle: ${filename//[_]/ }\n" $fullfile
+        sed -i "1iTitle: ${filename//[_]/ }\n" "$fullfile"
     fi
 done
 
 echo "Step 5/7: Generate the site."
 
-cd $WORK
-python -m mkdocs build
+cd $WORK || exit
 
-if [[ $? != 0 ]]
-then
+if ! python -m mkdocs build; then
     echo "Error detected during the generation of the site, generation failed!"
     exit 1
 fi
@@ -131,8 +126,6 @@ else
     sed -i "1i---\nredirect_from: \"/cheatsheets/Ruby_on_Rails_Cheatsheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html
     sed -i "1i---\nredirect_from: \"/cheatsheets/Nodejs_security_cheat_sheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Nodejs_Security_Cheat_Sheet.html
 fi
-
-
 
 echo "Step 7/7 Cleanup."
 rm -rf cheatsheets
