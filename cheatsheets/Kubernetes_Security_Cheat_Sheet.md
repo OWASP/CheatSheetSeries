@@ -134,7 +134,7 @@ RBAC authorization uses the rbac.authorization.k8s.io API group to drive authori
 To enable RBAC, start the API server with the --authorization-mode flag set to a comma-separated list that includes RBAC; for example:
 
 ```bash
-# kube-apiserver --authorization-mode=Example,RBAC --other-options --more-options
+kube-apiserver --authorization-mode=Example,RBAC --other-options --more-options
 ```
 
 For detailed examples of utilizing RBAC, refer to Kubernetes documentation at <https://kubernetes.io/docs/reference/access-authn-authz/rbac>
@@ -273,7 +273,7 @@ In case vulnerabilities are found in running containers, it is recommended to al
 
 Try to avoid direct updates to the running containers as this can break the image-container relationship.
 
-```bash
+```
 Example: apt-update  
 ```
 
@@ -312,7 +312,7 @@ When designing your containers and pods, make sure that you configure the securi
 
 Here is an example for pod definition with security context parameters:
 
-```bash
+```yaml
 apiVersion: v1  
 kind: Pod  
 metadata:  
@@ -405,7 +405,7 @@ The following is an example for namespace resource quota definition that will li
 
 compute-resources.yaml:
 
-```bash
+```yaml
 apiVersion: v1  
 kind: ResourceQuota  
 metadata:  
@@ -422,7 +422,7 @@ spec:
 Assign a resource quota to namespace:
 
 ```bash
-  # kubectl create -f ./compute-resources.yaml --namespace=myspace
+kubectl create -f ./compute-resources.yaml --namespace=myspace
 ```
 
 ### Use Kubernetes network policies to control traffic between pods and clusters
@@ -437,7 +437,7 @@ Users of Google Cloud Platform can benefit from automatic firewall rules, preven
 
 The following is an example of a network policy that controls the network for “backend” pods, only allowing inbound network access from “frontend” pods:
 
-```bash
+```json
 POST /apis/net.alpha.kubernetes.io/v1alpha1/namespaces/tenant-a/networkpolicys  
 {  
   "kind": "NetworkPolicy",
@@ -533,7 +533,7 @@ The Linux kernel automatically loads kernel modules from disk if needed in certa
 
 To prevent specific modules from being automatically loaded, you can uninstall them from the node, or add rules to block them. On most Linux distributions, you can do that by creating a file such as /etc/modprobe.d/kubernetes-blacklist.conf with contents like:
 
-```bash
+```
 # DCCP is unlikely to be needed, has had multiple serious
 # vulnerabilities, and is not well-maintained.
 blacklist dccp
@@ -587,7 +587,7 @@ Audit logs can be useful for compliance as they should help you answer the quest
 
 Here is an example of an audit log:
 
-```bash
+```json
 {
   "kind":"Event",
   "apiVersion":"audit.k8s.io/v1beta1",
@@ -638,65 +638,65 @@ The first layer of logs that can be collected from a Kubernetes cluster are thos
   
   Manifest is as follows.
 
-    ```YAML
-    apiVersion: v1
-    kind: Pod
-    metadata:
-    name: example
-    spec:
-    containers:
-    - name: example
-    image: busybox
-    args: [/bin/sh, -c, 'while true; do echo $(date); sleep 1; done']
-    ```
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+name: example
+spec:
+containers:
+  - name: example
+image: busybox
+args: [/bin/sh, -c, 'while true; do echo $(date); sleep 1; done']
+```
   
   To apply the manifest, run:
 
-    ```bash
-    kubectl apply -f example.yaml
-    ```
+```bash
+kubectl apply -f example.yaml
+```
 
   To take a look the logs for this container, run:
 
-    ```bash
-    kubectl log <container-name> command.
-    ```
+```bash
+kubectl log <container-name> command.
+```
 
 - For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.
   
   Pod Manifest is as follows:
 
-  ```YAML
-  apiVersion: v1
-  kind: Pod
-  metadata:
-    name: example
-  spec:
-    containers:
-    - name: example
-      image: busybox
-      args:
-      - /bin/sh
-      - -c
-      - >
-        while true;
-        do
-          echo "$(date)\n" >> /var/log/example.log;
-          sleep 1;
-        done
-      volumeMounts:
-      - name: varlog
-        mountPath: /var/log
-    - name: sidecar
-      image: busybox
-      args: [/bin/sh, -c, 'tail -f /var/log/example.log']
-      volumeMounts:
-      - name: varlog
-        mountPath: /var/log
-    volumes:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example
+spec:
+  containers:
+  - name: example
+    image: busybox
+    args:
+    - /bin/sh
+    - -c
+    - >
+      while true;
+      do
+        echo "$(date)\n" >> /var/log/example.log;
+        sleep 1;
+      done
+    volumeMounts:
     - name: varlog
-      emptyDir: {}
-  ```
+      mountPath: /var/log
+  - name: sidecar
+    image: busybox
+    args: [/bin/sh, -c, 'tail -f /var/log/example.log']
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+  volumes:
+  - name: varlog
+    emptyDir: {}
+```
 
 ##### Node logging
 
@@ -709,9 +709,9 @@ Once a container is terminated or restarted, kubelet stores logs on the node. To
 Depending on what operating system and additional services you’re running on your host machine, you might need to take a look at additional logs.
 For example, systemd logs can be retrieved using the following command:
 
-  ```bash
-  journalctl -u
-  ```
+```bash
+journalctl -u
+```
 
 ##### Cluster logging
 
@@ -726,22 +726,22 @@ Kubernetes events can indicate any Kubernetes resource state changes and errors,
 
 The following command returns all events within a specific namespace:
 
-  ```bash
-  kubectl get events -n <namespace>
+```
+kubectl get events -n <namespace>
 
-  NAMESPACE LAST SEEN TYPE   REASON OBJECT MESSAGE
-  kube-system  8m22s  Normal   Scheduled            pod/metrics-server-66dbbb67db-lh865                                       Successfully assigned kube-system/metrics-server-66dbbb67db-lh865 to aks-agentpool-42213468-1
-  kube-system     8m14s               Normal    Pulling                   pod/metrics-server-66dbbb67db-lh865                                       Pulling image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
-  kube-system     7m58s               Normal    Pulled                    pod/metrics-server-66dbbb67db-lh865                                       Successfully pulled image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
-  kube-system     7m57s               Normal     Created                   pod/metrics-server-66dbbb67db-lh865                                       Created container metrics-server
-  kube-system     7m57s               Normal    Started                   pod/metrics-server-66dbbb67db-lh865                                       Started container metrics-server
-  kube-system     8m23s               Normal    SuccessfulCreate          replicaset/metrics-server-66dbbb67db             Created pod: metrics-server-66dbbb67db-lh865
-  ```
+NAMESPACE LAST SEEN TYPE   REASON OBJECT MESSAGE
+kube-system  8m22s  Normal   Scheduled            pod/metrics-server-66dbbb67db-lh865                                       Successfully assigned kube-system/metrics-server-66dbbb67db-lh865 to aks-agentpool-42213468-1
+kube-system     8m14s               Normal    Pulling                   pod/metrics-server-66dbbb67db-lh865                                       Pulling image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
+kube-system     7m58s               Normal    Pulled                    pod/metrics-server-66dbbb67db-lh865                                       Successfully pulled image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
+kube-system     7m57s               Normal     Created                   pod/metrics-server-66dbbb67db-lh865                                       Created container metrics-server
+kube-system     7m57s               Normal    Started                   pod/metrics-server-66dbbb67db-lh865                                       Started container metrics-server
+kube-system     8m23s               Normal    SuccessfulCreate          replicaset/metrics-server-66dbbb67db             Created pod: metrics-server-66dbbb67db-lh865
+```
 
 The following command will show the latest events for this specific Kubernetes resource:
 
-```bash
-  kubectl describe pod <pod-name>
+```
+kubectl describe pod <pod-name>
 
 Events:
   Type    Reason     Age   From                               Message
