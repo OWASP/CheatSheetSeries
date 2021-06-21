@@ -2594,7 +2594,7 @@ Hence it is highly recommended to configure authentication and authorization on 
 <p>Kubernetes ships an integrated Role-Based Access Control (RBAC) component that matches an incoming user or group to a set of permissions bundled into roles. These permissions combine verbs (get, create, delete) with resources (pods, services, nodes) and can be namespace or cluster scoped. A set of out of the box roles are provided that offer reasonable default separation of responsibility depending on what actions a client might want to perform. It is recommended that you use the Node and RBAC authorizers together, in combination with the NodeRestriction admission plugin.</p>
 <p>RBAC authorization uses the rbac.authorization.k8s.io API group to drive authorization decisions, allowing you to dynamically configure policies through the Kubernetes API.
 To enable RBAC, start the API server with the --authorization-mode flag set to a comma-separated list that includes RBAC; for example:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># kube-apiserver --authorization-mode=Example,RBAC --other-options --more-options</span>
+<div class="codehilite"><pre><span></span><code>kube-apiserver --authorization-mode<span class="o">=</span>Example,RBAC --other-options --more-options
 </code></pre></div>
 
 <p>For detailed examples of utilizing RBAC, refer to Kubernetes documentation at <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac">https://kubernetes.io/docs/reference/access-authn-authz/rbac</a></p>
@@ -2681,7 +2681,7 @@ Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access
 <p>In case vulnerabilities are found in running containers, it is recommended to always update the source image and redeploy the containers.</p>
 <h4 id="note">NOTE<a class="headerlink" href="#note" title="Permanent link">&para;</a></h4>
 <p>Try to avoid direct updates to the running containers as this can break the image-container relationship.</p>
-<div class="codehilite"><pre><span></span><code>Example: apt-update  
+<div class="codehilite"><pre><span></span><code><span class="n">Example</span><span class="o">:</span> <span class="n">apt</span><span class="o">-</span><span class="n">update</span>  
 </code></pre></div>
 
 <p>Upgrading containers is extremely easy with the Kubernetes rolling updates feature - this allows gradually updating a running application by upgrading its images to the latest version.</p>
@@ -2730,19 +2730,19 @@ Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access
 </tbody>
 </table>
 <p>Here is an example for pod definition with security context parameters:</p>
-<div class="codehilite"><pre><span></span><code>apiVersion: v1  
-kind: Pod  
-metadata:  
-  name: hello-world  
-spec:  
-  containers:  
+<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>  
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>  
+<span class="nt">metadata</span><span class="p">:</span>  
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">hello-world</span>  
+<span class="nt">spec</span><span class="p">:</span>  
+  <span class="nt">containers</span><span class="p">:</span>  
   <span class="c1"># specification of the pod’s containers  </span>
   <span class="c1"># ...</span>
   <span class="c1"># ...</span>
   <span class="c1"># Security Context</span>
-  securityContext:  
-    readOnlyRootFilesystem: <span class="nb">true</span>  
-    runAsNonRoot: <span class="nb">true</span>
+  <span class="nt">securityContext</span><span class="p">:</span>  
+    <span class="nt">readOnlyRootFilesystem</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>  
+    <span class="nt">runAsNonRoot</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 
 <p>For more information on security context for Pods, refer to the documentation at <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context">https://kubernetes.io/docs/tasks/configure-pod-container/security-context</a></p>
@@ -2801,21 +2801,21 @@ Service mesh adds a layer of security that allows you to monitor and address com
 <p>An option of running resource-unbound containers puts your system in risk of DoS or “noisy neighbor” scenarios. To prevent and minimize those risks you should define resource quotas. By default, all resources in Kubernetes cluster are created with unbounded CPU and memory requests/limits. You can create resource quota policies, attached to Kubernetes namespace, in order to limit the CPU and memory a pod is allowed to consume.</p>
 <p>The following is an example for namespace resource quota definition that will limit number of pods in the namespace to 4, limiting their CPU requests between 1 and 2 and memory requests between 1GB to 2GB.</p>
 <p>compute-resources.yaml:</p>
-<div class="codehilite"><pre><span></span><code>apiVersion: v1  
-kind: ResourceQuota  
-metadata:  
-  name: compute-resources  
-spec:  
-  hard:  
-    pods: <span class="s2">&quot;4&quot;</span>  
-    requests.cpu: <span class="s2">&quot;1&quot;</span>  
-    requests.memory: 1Gi  
-    limits.cpu: <span class="s2">&quot;2&quot;</span>  
-    limits.memory: 2Gi
+<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>  
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ResourceQuota</span>  
+<span class="nt">metadata</span><span class="p">:</span>  
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">compute-resources</span>  
+<span class="nt">spec</span><span class="p">:</span>  
+  <span class="nt">hard</span><span class="p">:</span>  
+    <span class="nt">pods</span><span class="p">:</span> <span class="s">&quot;4&quot;</span>  
+    <span class="nt">requests.cpu</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>  
+    <span class="nt">requests.memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1Gi</span>  
+    <span class="nt">limits.cpu</span><span class="p">:</span> <span class="s">&quot;2&quot;</span>  
+    <span class="nt">limits.memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2Gi</span>
 </code></pre></div>
 
 <p>Assign a resource quota to namespace:</p>
-<div class="codehilite"><pre><span></span><code>  <span class="c1"># kubectl create -f ./compute-resources.yaml --namespace=myspace</span>
+<div class="codehilite"><pre><span></span><code>kubectl create -f ./compute-resources.yaml --namespace<span class="o">=</span>myspace
 </code></pre></div>
 
 <h3 id="use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters">Use Kubernetes network policies to control traffic between pods and clusters<a class="headerlink" href="#use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters" title="Permanent link">&para;</a></h3>
@@ -2824,27 +2824,27 @@ spec:
 <p>Network segmentation policies are a key security control that can prevent lateral movement across containers in the case that an attacker breaks in. One of the challenges in Kubernetes deployments is creating network segmentation between pods, services and containers. This is a challenge due to the “dynamic” nature of container network identities (IPs), along with the fact that containers can communicate both inside the same node or between nodes.</p>
 <p>Users of Google Cloud Platform can benefit from automatic firewall rules, preventing cross-cluster communication. A similar implementation can be deployed on-premises using network firewalls or SDN solutions. There is work being done in this area by the Kubernetes Network SIG, which will greatly improve the pod-to-pod communication policies. A new network policy API should address the need to create firewall rules around pods, limiting the network access that a containerized can have.</p>
 <p>The following is an example of a network policy that controls the network for “backend” pods, only allowing inbound network access from “frontend” pods:</p>
-<div class="codehilite"><pre><span></span><code>POST /apis/net.alpha.kubernetes.io/v1alpha1/namespaces/tenant-a/networkpolicys  
-<span class="o">{</span>  
-  <span class="s2">&quot;kind&quot;</span>: <span class="s2">&quot;NetworkPolicy&quot;</span>,
-  <span class="s2">&quot;metadata&quot;</span>: <span class="o">{</span>
-    <span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;pol1&quot;</span>
-  <span class="o">}</span>,
-  <span class="s2">&quot;spec&quot;</span>: <span class="o">{</span>
-    <span class="s2">&quot;allowIncoming&quot;</span>: <span class="o">{</span>
-      <span class="s2">&quot;from&quot;</span>: <span class="o">[{</span>
-        <span class="s2">&quot;pods&quot;</span>: <span class="o">{</span> <span class="s2">&quot;segment&quot;</span>: <span class="s2">&quot;frontend&quot;</span> <span class="o">}</span>
-      <span class="o">}]</span>,
-      <span class="s2">&quot;toPorts&quot;</span>: <span class="o">[{</span>
-        <span class="s2">&quot;port&quot;</span>: <span class="m">80</span>,
-        <span class="s2">&quot;protocol&quot;</span>: <span class="s2">&quot;TCP&quot;</span>
-      <span class="o">}]</span>
-    <span class="o">}</span>,
-    <span class="s2">&quot;podSelector&quot;</span>: <span class="o">{</span>
-      <span class="s2">&quot;segment&quot;</span>: <span class="s2">&quot;backend&quot;</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">}</span>
+<div class="codehilite"><pre><span></span><code><span class="err">POST</span> <span class="err">/apis/</span><span class="kc">net</span><span class="err">.alpha.kuber</span><span class="kc">netes</span><span class="err">.io/v</span><span class="mi">1</span><span class="err">alpha</span><span class="mi">1</span><span class="err">/</span><span class="kc">na</span><span class="err">mespaces/</span><span class="kc">tenant</span><span class="mi">-</span><span class="err">a/</span><span class="kc">net</span><span class="err">workpolicys</span>  
+<span class="p">{</span>  
+  <span class="nt">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;NetworkPolicy&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;pol1&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;spec&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;allowIncoming&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;from&quot;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="nt">&quot;pods&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;segment&quot;</span><span class="p">:</span> <span class="s2">&quot;frontend&quot;</span> <span class="p">}</span>
+      <span class="p">}],</span>
+      <span class="nt">&quot;toPorts&quot;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;TCP&quot;</span>
+      <span class="p">}]</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;podSelector&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;segment&quot;</span><span class="p">:</span> <span class="s2">&quot;backend&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>For more information on configuring network policies, refer to the Kubernetes documentation at <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies">https://kubernetes.io/docs/concepts/services-networking/network-policies</a>.</p>
@@ -2899,12 +2899,12 @@ You must ensure that secrets are not being passed as environment variables but a
 <h3 id="preventing-containers-from-loading-unwanted-kernel-modules">Preventing containers from loading unwanted kernel modules<a class="headerlink" href="#preventing-containers-from-loading-unwanted-kernel-modules" title="Permanent link">&para;</a></h3>
 <p>The Linux kernel automatically loads kernel modules from disk if needed in certain circumstances, such as when a piece of hardware is attached or a filesystem is mounted. Of particular relevance to Kubernetes, even unprivileged processes can cause certain network-protocol-related kernel modules to be loaded, just by creating a socket of the appropriate type. This may allow an attacker to exploit a security hole in a kernel module that the administrator assumed was not in use.</p>
 <p>To prevent specific modules from being automatically loaded, you can uninstall them from the node, or add rules to block them. On most Linux distributions, you can do that by creating a file such as /etc/modprobe.d/kubernetes-blacklist.conf with contents like:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># DCCP is unlikely to be needed, has had multiple serious</span>
-<span class="c1"># vulnerabilities, and is not well-maintained.</span>
+<div class="codehilite"><pre><span></span><code># DCCP is unlikely to be needed, has had multiple serious
+# vulnerabilities, and is not well-maintained.
 blacklist dccp
 
-<span class="c1"># SCTP is not used in most Kubernetes clusters, and has also had</span>
-<span class="c1"># vulnerabilities in the past.</span>
+# SCTP is not used in most Kubernetes clusters, and has also had
+# vulnerabilities in the past.
 blacklist sctp
 </code></pre></div>
 
@@ -2930,29 +2930,29 @@ blacklist sctp
 <h5 id="audit-logs">Audit logs<a class="headerlink" href="#audit-logs" title="Permanent link">&para;</a></h5>
 <p>Audit logs can be useful for compliance as they should help you answer the questions of what happened, who did what and when. Kubernetes provides flexible auditing of kube-apiserver requests based on policies. These help you track all activities in chronological order.</p>
 <p>Here is an example of an audit log:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">{</span>
-  <span class="s2">&quot;kind&quot;</span>:<span class="s2">&quot;Event&quot;</span>,
-  <span class="s2">&quot;apiVersion&quot;</span>:<span class="s2">&quot;audit.k8s.io/v1beta1&quot;</span>,
-  <span class="s2">&quot;metadata&quot;</span>:<span class="o">{</span> <span class="s2">&quot;creationTimestamp&quot;</span>:<span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span> <span class="o">}</span>,
-  <span class="s2">&quot;level&quot;</span>:<span class="s2">&quot;Metadata&quot;</span>,
-  <span class="s2">&quot;timestamp&quot;</span>:<span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span>,
-  <span class="s2">&quot;auditID&quot;</span>:<span class="s2">&quot;23bc44ds-2452-242g-fsf2-4242fe3ggfes&quot;</span>,
-  <span class="s2">&quot;stage&quot;</span>:<span class="s2">&quot;RequestReceived&quot;</span>,
-  <span class="s2">&quot;requestURI&quot;</span>:<span class="s2">&quot;/api/v1/namespaces/default/persistentvolumeclaims&quot;</span>,
-  <span class="s2">&quot;verb&quot;</span>:<span class="s2">&quot;list&quot;</span>,
-  <span class="s2">&quot;user&quot;</span>: <span class="o">{</span>
-    <span class="s2">&quot;username&quot;</span>:<span class="s2">&quot;user@example.org&quot;</span>,
-    <span class="s2">&quot;groups&quot;</span>:<span class="o">[</span> <span class="s2">&quot;system:authenticated&quot;</span> <span class="o">]</span>
-  <span class="o">}</span>,
-  <span class="s2">&quot;sourceIPs&quot;</span>:<span class="o">[</span> <span class="s2">&quot;172.12.56.1&quot;</span> <span class="o">]</span>,
-  <span class="s2">&quot;objectRef&quot;</span>: <span class="o">{</span>
-    <span class="s2">&quot;resource&quot;</span>:<span class="s2">&quot;persistentvolumeclaims&quot;</span>,
-    <span class="s2">&quot;namespace&quot;</span>:<span class="s2">&quot;default&quot;</span>,
-    <span class="s2">&quot;apiVersion&quot;</span>:<span class="s2">&quot;v1&quot;</span>
-  <span class="o">}</span>,
-  <span class="s2">&quot;requestReceivedTimestamp&quot;</span>:<span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span>,
-  <span class="s2">&quot;stageTimestamp&quot;</span>:<span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span>
-<span class="o">}</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+  <span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="s2">&quot;Event&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="s2">&quot;audit.k8s.io/v1beta1&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;metadata&quot;</span><span class="p">:{</span> <span class="nt">&quot;creationTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span> <span class="p">},</span>
+  <span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="s2">&quot;Metadata&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;auditID&quot;</span><span class="p">:</span><span class="s2">&quot;23bc44ds-2452-242g-fsf2-4242fe3ggfes&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;stage&quot;</span><span class="p">:</span><span class="s2">&quot;RequestReceived&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;requestURI&quot;</span><span class="p">:</span><span class="s2">&quot;/api/v1/namespaces/default/persistentvolumeclaims&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;verb&quot;</span><span class="p">:</span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;user@example.org&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;groups&quot;</span><span class="p">:[</span> <span class="s2">&quot;system:authenticated&quot;</span> <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;sourceIPs&quot;</span><span class="p">:[</span> <span class="s2">&quot;172.12.56.1&quot;</span> <span class="p">],</span>
+  <span class="nt">&quot;objectRef&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;resource&quot;</span><span class="p">:</span><span class="s2">&quot;persistentvolumeclaims&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;namespace&quot;</span><span class="p">:</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="s2">&quot;v1&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;requestReceivedTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;stageTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <h4 id="define-audit-policies">Define Audit Policies<a class="headerlink" href="#define-audit-policies" title="Permanent link">&para;</a></h4>
@@ -2973,73 +2973,69 @@ blacklist sctp
 <li>The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.</li>
 </ul>
 <p>Manifest is as follows.</p>
-<div class="codehilite"><pre><span></span><code><span class="err">```</span><span class="nt">YAML</span>
-<span class="nt">apiVersion</span><span class="o">:</span> <span class="nt">v1</span>
-<span class="nt">kind</span><span class="o">:</span> <span class="nt">Pod</span>
-<span class="nt">metadata</span><span class="o">:</span>
-<span class="nt">name</span><span class="o">:</span> <span class="nt">example</span>
-<span class="nt">spec</span><span class="o">:</span>
-<span class="nt">containers</span><span class="o">:</span>
-<span class="nt">-</span> <span class="nt">name</span><span class="o">:</span> <span class="nt">example</span>
-<span class="nt">image</span><span class="o">:</span> <span class="nt">busybox</span>
-<span class="nt">args</span><span class="o">:</span> <span class="cp">[</span><span class="p">/</span><span class="nx">bin</span><span class="p">/</span><span class="nx">sh</span><span class="p">,</span> <span class="na">-c</span><span class="p">,</span> <span class="s1">&#39;while true; do echo $(date); sleep 1; done&#39;</span><span class="cp">]</span>
-<span class="err">```</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="nt">containers</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">busybox</span>
+<span class="nt">args</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span> <span class="nv">-c</span><span class="p p-Indicator">,</span> <span class="s">&#39;while</span><span class="nv"> </span><span class="s">true;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">echo</span><span class="nv"> </span><span class="s">$(date);</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">1;</span><span class="nv"> </span><span class="s">done&#39;</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 
 <p>To apply the manifest, run:</p>
-<div class="codehilite"><pre><span></span><code>```bash
-kubectl apply -f example.yaml
-```
+<div class="codehilite"><pre><span></span><code>kubectl apply -f example.yaml
 </code></pre></div>
 
 <p>To take a look the logs for this container, run:</p>
-<div class="codehilite"><pre><span></span><code>```bash
-kubectl log &lt;container-name&gt; command.
-```
+<div class="codehilite"><pre><span></span><code>kubectl log &lt;container-name&gt; command.
 </code></pre></div>
 
 <ul>
 <li>For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.</li>
 </ul>
 <p>Pod Manifest is as follows:</p>
-<p><code>YAML
-  apiVersion: v1
-  kind: Pod
-  metadata:
-    name: example
-  spec:
-    containers:
-    - name: example
-      image: busybox
-      args:
-      - /bin/sh
-      - -c
-      - &gt;
-        while true;
-        do
-          echo "$(date)\n" &gt;&gt; /var/log/example.log;
-          sleep 1;
-        done
-      volumeMounts:
-      - name: varlog
-        mountPath: /var/log
-    - name: sidecar
-      image: busybox
-      args: [/bin/sh, -c, 'tail -f /var/log/example.log']
-      volumeMounts:
-      - name: varlog
-        mountPath: /var/log
-    volumes:
-    - name: varlog
-      emptyDir: {}</code></p>
+<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">containers</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">busybox</span>
+    <span class="nt">args</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/bin/sh</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">-c</span>
+    <span class="p p-Indicator">-</span> <span class="p p-Indicator">&gt;</span>
+      <span class="no">while true;</span>
+      <span class="no">do</span>
+        <span class="no">echo &quot;$(date)\n&quot; &gt;&gt; /var/log/example.log;</span>
+        <span class="no">sleep 1;</span>
+      <span class="no">done</span>
+    <span class="nt">volumeMounts</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">varlog</span>
+      <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/log</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sidecar</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">busybox</span>
+    <span class="nt">args</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span> <span class="nv">-c</span><span class="p p-Indicator">,</span> <span class="s">&#39;tail</span><span class="nv"> </span><span class="s">-f</span><span class="nv"> </span><span class="s">/var/log/example.log&#39;</span><span class="p p-Indicator">]</span>
+    <span class="nt">volumeMounts</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">varlog</span>
+      <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/log</span>
+  <span class="nt">volumes</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">varlog</span>
+    <span class="nt">emptyDir</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
+</code></pre></div>
+
 <h5 id="node-logging">Node logging<a class="headerlink" href="#node-logging" title="Permanent link">&para;</a></h5>
 <p>When a container running on Kubernetes writes its logs to stdout or stderr streams, the container engine streams them to the logging driver configured in Kubernetes.</p>
 <p>In most cases, these logs will end up in the /var/log/containers directory on your host. Docker supports multiple logging drivers but unfortunately, driver configuration is not supported via the Kubernetes API.</p>
 <p>Once a container is terminated or restarted, kubelet stores logs on the node. To prevent these files from consuming all of the host’s storage, the Kubernetes node implements a log rotation mechanism. When a container is evicted from the node, all containers with corresponding log files are evicted.</p>
 <p>Depending on what operating system and additional services you’re running on your host machine, you might need to take a look at additional logs.
 For example, systemd logs can be retrieved using the following command:</p>
-<p><code>bash
-  journalctl -u</code></p>
+<div class="codehilite"><pre><span></span><code>journalctl -u
+</code></pre></div>
+
 <h5 id="cluster-logging">Cluster logging<a class="headerlink" href="#cluster-logging" title="Permanent link">&para;</a></h5>
 <p>On the level of the Kubernetes cluster itself, there is a long list of cluster components that can be logged as well as additional data types that can be used (events, audit logs). Together, these different types of data can give you visibility into how Kubernetes is performing as a ystem.</p>
 <p>Some of these components run in a container, and some of them run on the operating system level (in most cases, a systemd service). The systemd services write to journald, and components running in containers write logs to the /var/log directory, unless the container engine has been configured to stream logs differently.</p>
@@ -3047,26 +3043,27 @@ For example, systemd logs can be retrieved using the following command:</p>
 <p>Kubernetes events can indicate any Kubernetes resource state changes and errors, such as exceeded resource quota or pending pods, as well as any informational messages.
 Kubernetes events can indicate any Kubernetes resource state changes and errors, such as exceeded resource quota or pending pods, as well as any informational messages.</p>
 <p>The following command returns all events within a specific namespace:</p>
-<p>```bash
-  kubectl get events -n <namespace></p>
-<p>NAMESPACE LAST SEEN TYPE   REASON OBJECT MESSAGE
-  kube-system  8m22s  Normal   Scheduled            pod/metrics-server-66dbbb67db-lh865                                       Successfully assigned kube-system/metrics-server-66dbbb67db-lh865 to aks-agentpool-42213468-1
-  kube-system     8m14s               Normal    Pulling                   pod/metrics-server-66dbbb67db-lh865                                       Pulling image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
-  kube-system     7m58s               Normal    Pulled                    pod/metrics-server-66dbbb67db-lh865                                       Successfully pulled image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
-  kube-system     7m57s               Normal     Created                   pod/metrics-server-66dbbb67db-lh865                                       Created container metrics-server
-  kube-system     7m57s               Normal    Started                   pod/metrics-server-66dbbb67db-lh865                                       Started container metrics-server
-  kube-system     8m23s               Normal    SuccessfulCreate          replicaset/metrics-server-66dbbb67db             Created pod: metrics-server-66dbbb67db-lh865
-  ```</p>
-<p>The following command will show the latest events for this specific Kubernetes resource:</p>
-<div class="codehilite"><pre><span></span><code>  kubectl describe pod &lt;pod-name&gt;
+<div class="codehilite"><pre><span></span><code><span class="n">kubectl</span> <span class="n">get</span> <span class="n">events</span> <span class="o">-</span><span class="n">n</span> <span class="o">&lt;</span><span class="n">namespace</span><span class="o">&gt;</span>
 
-Events:
-  Type    Reason     Age   From                               Message
-  ----    ------     ----  ----                               -------
-  Normal  Scheduled  14m   default-scheduler                  Successfully assigned kube-system/coredns-7b54b5b97c-dpll7 to aks-agentpool-42213468-1
-  Normal  Pulled     13m   kubelet, aks-agentpool-42213468-1  Container image <span class="s2">&quot;aksrepos.azurecr.io/mirror/coredns:1.3.1&quot;</span> already present on machine
-  Normal  Created    13m   kubelet, aks-agentpool-42213468-1  Created container coredns
-  Normal  Started    13m   kubelet, aks-agentpool-42213468-1  Started container coredns
+<span class="n">NAMESPACE</span> <span class="n">LAST</span> <span class="n">SEEN</span> <span class="n">TYPE</span>   <span class="n">REASON</span> <span class="n">OBJECT</span> <span class="n">MESSAGE</span>
+<span class="n">kube</span><span class="o">-</span><span class="n">system</span>  <span class="mh">8</span><span class="n">m22s</span>  <span class="n">Normal</span>   <span class="n">Scheduled</span>            <span class="n">pod</span><span class="o">/</span><span class="n">metrics</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mh">66</span><span class="n">dbbb67db</span><span class="o">-</span><span class="n">lh865</span>                                       <span class="n">Successfully</span> <span class="n">assigned</span> <span class="n">kube</span><span class="o">-</span><span class="n">system</span><span class="o">/</span><span class="n">metrics</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mh">66</span><span class="n">dbbb67db</span><span class="o">-</span><span class="n">lh865</span> <span class="n">to</span> <span class="n">aks</span><span class="o">-</span><span class="n">agentpool</span><span class="o">-</span><span class="mh">42213468</span><span class="o">-</span><span class="mh">1</span>
+<span class="n">kube</span><span class="o">-</span><span class="n">system</span>     <span class="mh">8</span><span class="n">m14s</span>               <span class="n">Normal</span>    <span class="n">Pulling</span>                   <span class="n">pod</span><span class="o">/</span><span class="n">metrics</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mh">66</span><span class="n">dbbb67db</span><span class="o">-</span><span class="n">lh865</span>                                       <span class="n">Pulling</span> <span class="n">image</span> <span class="s">&quot;aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1&quot;</span>
+<span class="n">kube</span><span class="o">-</span><span class="n">system</span>     <span class="mh">7</span><span class="n">m58s</span>               <span class="n">Normal</span>    <span class="n">Pulled</span>                    <span class="n">pod</span><span class="o">/</span><span class="n">metrics</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mh">66</span><span class="n">dbbb67db</span><span class="o">-</span><span class="n">lh865</span>                                       <span class="n">Successfully</span> <span class="n">pulled</span> <span class="n">image</span> <span class="s">&quot;aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1&quot;</span>
+<span class="n">kube</span><span class="o">-</span><span class="n">system</span>     <span class="mh">7</span><span class="n">m57s</span>               <span class="n">Normal</span>     <span class="n">Created</span>                   <span class="n">pod</span><span class="o">/</span><span class="n">metrics</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mh">66</span><span class="n">dbbb67db</span><span class="o">-</span><span class="n">lh865</span>                                       <span class="n">Created</span> <span class="n">container</span> <span class="n">metrics</span><span class="o">-</span><span class="n">server</span>
+<span class="n">kube</span><span class="o">-</span><span class="n">system</span>     <span class="mh">7</span><span class="n">m57s</span>               <span class="n">Normal</span>    <span class="n">Started</span>                   <span class="n">pod</span><span class="o">/</span><span class="n">metrics</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mh">66</span><span class="n">dbbb67db</span><span class="o">-</span><span class="n">lh865</span>                                       <span class="n">Started</span> <span class="n">container</span> <span class="n">metrics</span><span class="o">-</span><span class="n">server</span>
+<span class="n">kube</span><span class="o">-</span><span class="n">system</span>     <span class="mh">8</span><span class="n">m23s</span>               <span class="n">Normal</span>    <span class="n">SuccessfulCreate</span>          <span class="n">replicaset</span><span class="o">/</span><span class="n">metrics</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mh">66</span><span class="n">dbbb67db</span>             <span class="n">Created</span> <span class="nl">pod:</span> <span class="n">metrics</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mh">66</span><span class="n">dbbb67db</span><span class="o">-</span><span class="n">lh865</span>
+</code></pre></div>
+
+<p>The following command will show the latest events for this specific Kubernetes resource:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">kubectl</span> <span class="n">describe</span> <span class="n">pod</span> <span class="o">&lt;</span><span class="n">pod</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+
+<span class="nl">Events:</span>
+  <span class="n">Type</span>    <span class="n">Reason</span>     <span class="n">Age</span>   <span class="n">From</span>                               <span class="n">Message</span>
+  <span class="o">----</span>    <span class="o">------</span>     <span class="o">----</span>  <span class="o">----</span>                               <span class="o">-------</span>
+  <span class="n">Normal</span>  <span class="n">Scheduled</span>  <span class="mh">14</span><span class="n">m</span>   <span class="k">default</span><span class="o">-</span><span class="n">scheduler</span>                  <span class="n">Successfully</span> <span class="n">assigned</span> <span class="n">kube</span><span class="o">-</span><span class="n">system</span><span class="o">/</span><span class="n">coredns</span><span class="o">-</span><span class="mh">7</span><span class="n">b54b5b97c</span><span class="o">-</span><span class="n">dpll7</span> <span class="n">to</span> <span class="n">aks</span><span class="o">-</span><span class="n">agentpool</span><span class="o">-</span><span class="mh">42213468</span><span class="o">-</span><span class="mh">1</span>
+  <span class="n">Normal</span>  <span class="n">Pulled</span>     <span class="mh">13</span><span class="n">m</span>   <span class="n">kubelet</span><span class="p">,</span> <span class="n">aks</span><span class="o">-</span><span class="n">agentpool</span><span class="o">-</span><span class="mh">42213468</span><span class="o">-</span><span class="mh">1</span>  <span class="n">Container</span> <span class="n">image</span> <span class="s">&quot;aksrepos.azurecr.io/mirror/coredns:1.3.1&quot;</span> <span class="n">already</span> <span class="n">present</span> <span class="n">on</span> <span class="n">machine</span>
+  <span class="n">Normal</span>  <span class="n">Created</span>    <span class="mh">13</span><span class="n">m</span>   <span class="n">kubelet</span><span class="p">,</span> <span class="n">aks</span><span class="o">-</span><span class="n">agentpool</span><span class="o">-</span><span class="mh">42213468</span><span class="o">-</span><span class="mh">1</span>  <span class="n">Created</span> <span class="n">container</span> <span class="n">coredns</span>
+  <span class="n">Normal</span>  <span class="n">Started</span>    <span class="mh">13</span><span class="n">m</span>   <span class="n">kubelet</span><span class="p">,</span> <span class="n">aks</span><span class="o">-</span><span class="n">agentpool</span><span class="o">-</span><span class="mh">42213468</span><span class="o">-</span><span class="mh">1</span>  <span class="n">Started</span> <span class="n">container</span> <span class="n">coredns</span>
 </code></pre></div>
 
 <h2 id="final-thoughts">Final thoughts<a class="headerlink" href="#final-thoughts" title="Permanent link">&para;</a></h2>
