@@ -1,6 +1,6 @@
 # Project information
 site_name: OWASP Cheat Sheet Series
-site_url: https://cheatsheetseries.owasp.org/ 
+site_url: https://cheatsheetseries.owasp.org/
 site_description: Website with the collection of all the cheat sheets of the project.
 # Repository
 repo_name: OWASP/CheatSheetSeries
@@ -17,11 +17,11 @@ google_analytics:
   - auto
 use_directory_urls: false
 plugins:
-    - search:
-#        prebuild_index: true
-        lang:
-            - en
-#For read the docs       
+  - search:
+    #        prebuild_index: true
+      lang:
+        - en
+#For read the docs
 # theme:
 #     name: readthedocs
 #     custom_dir: custom_theme/
@@ -36,14 +36,16 @@ plugins:
 
 #For material
 theme:
-   name: material
-   custom_dir: custom_theme/
-   favicon: assets/WebSite_Favicon.png
-   logo: 'assets/OWASP_Logo_Transp.png'
+  name: material
+  custom_dir: custom_theme/
+  favicon: assets/WebSite_Favicon.png
+  logo: "assets/OWASP_Logo_Transp.png"
 markdown_extensions:
-   - codehilite
-   - pymdownx.emoji:
-       emoji_index: !!python/name:pymdownx.emoji.twemoji
-       emoji_generator: !!python/name:pymdownx.emoji.to_svg
-   - toc:
-       permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences # Required by Pygments
+  - pymdownx.inlinehilite
+  - pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - toc:
+      permalink: true
