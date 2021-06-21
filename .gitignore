@@ -11,3 +11,4 @@ generated/
 news.xml
 package-lock.json
 yarn.lock
+venv
