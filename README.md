@@ -45,7 +45,7 @@ The OWASP Cheat Sheet Series website can be built and tested locally by issuing 
 
 ```sh
 make install-python-requirements
-make generate-site  # Requires an Internet connection
+make generate-site
 make serve  # Binds port 8000
 ```
 
