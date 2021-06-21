@@ -1628,39 +1628,39 @@
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
 <p>SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples:</p>
 <ul>
-<li>Image on external server (<em>e.g.</em> user enters image URL of their avatar for the application to download and use).</li>
-<li>Custom <a href="https://en.wikipedia.org/wiki/Webhook">WebHook</a> (user have to specify WebHook handlers or Callback URLs).</li>
-<li>Internal requests to interact with another service to serve a certain functionality. Most of the times, user data is sent along to be processed, and if badly handled, can perform certain injection attacks.</li>
+<li>Image on an external server (<em>e.g.</em> user enters image URL of their avatar for the application to download and use).</li>
+<li>Custom <a href="https://en.wikipedia.org/wiki/Webhook">WebHook</a> (users have to specify Webhook handlers or Callback URLs).</li>
+<li>Internal requests to interact with another service to serve a specific functionality. Most of the times, user data is sent along to be processed, and if poorly handled, can perform specific injection attacks.</li>
 </ul>
 <h2 id="overview-of-a-ssrf-common-flow">Overview of a SSRF common flow<a class="headerlink" href="#overview-of-a-ssrf-common-flow" title="Permanent link">&para;</a></h2>
 <p><img alt="SSRF Common Flow" src="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Common_Flow.png" /></p>
 <p><em>Notes:</em></p>
 <ul>
-<li>SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (<em>e.g.</em> FTP, SMB, SMTP, etc.) and schemes (<em>e.g.</em> <code>file://</code>, <code>phar://</code>, <code>gopher://</code>, <code>data://</code>, <code>dict://</code>, etc.). The protocol/scheme usage is highly dependent on the application's requirements.</li>
+<li>SSRF is not limited to the HTTP protocol. Generally, the first request is HTTP, but in cases where the application itself performs the second request, it could use different protocols (<em>e.g.</em> FTP, SMB, SMTP, etc.) and schemes (<em>e.g.</em> <code>file://</code>, <code>phar://</code>, <code>gopher://</code>, <code>data://</code>, <code>dict://</code>, etc.).</li>
 <li>If the application is vulnerable to <a href="https://portswigger.net/web-security/xxe">XML eXternal Entity (XXE) injection</a> then it can be exploited to perform a <a href="https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks">SSRF attack</a>, take a look at the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a> to learn how to prevent the exposure to XXE.</li>
 </ul>
 <h2 id="cases">Cases<a class="headerlink" href="#cases" title="Permanent link">&para;</a></h2>
 <p>Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:</p>
 <ul>
 <li>Application can send request only to <strong>identified and trusted applications</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting">allow listing</a> approach is available.</li>
-<li>Application can send requests to <strong>ANY external IP address or domain name</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting">allow listing</a> approach is not available.</li>
+<li>Application can send requests to <strong>ANY external IP address or domain name</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting">allow listing</a> approach is unavailable.</li>
 </ul>
 <p>Because these two cases are very different, this cheat sheet will describe defences against them separately.</p>
 <h3 id="case-1-application-can-send-request-only-to-identified-and-trusted-applications">Case 1 - Application can send request only to identified and trusted applications<a class="headerlink" href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" title="Permanent link">&para;</a></h3>
-<p>Sometimes, an application need to perform request to another application, often located on another network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.</p>
+<p>Sometimes, an application needs to perform a request to another application, often located on another network, to perform a specific task. Depending on the business case, user input is required for the functionality to work.</p>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
 <blockquote>
-<p>Take the example of a web application that receives and uses personal information from a user, such as their firstname/lastname/birthdate to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands in order to process that data.
-Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system.
+<p>Take the example of a web application that receives and uses personal information from a user, such as their first name, last name, birth date etc. to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands to process that data.
+Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving user information is vulnerable to SSRF, the user can leverage it to access the HR system.
 The user leverages the web application as a proxy to the HR system.</p>
 </blockquote>
-<p>The allow list approach is a viable option in this case since the internal application called by the <em>VulnerableApplication</em> is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.</p>
+<p>The allow list approach is a viable option since the internal application called by the <em>VulnerableApplication</em> is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.</p>
 <h4 id="available-protections">Available protections<a class="headerlink" href="#available-protections" title="Permanent link">&para;</a></h4>
-<p>Several protective measures are possible at the <strong>Application</strong> and <strong>Network</strong> layers. In order to apply the <strong>defense in depth</strong> principle, both layers will be hardened against such attacks.</p>
+<p>Several protective measures are possible at the <strong>Application</strong> and <strong>Network</strong> layers. To apply the <strong>defense in depth</strong> principle, both layers will be hardened against such attacks.</p>
 <h5 id="application-layer">Application layer<a class="headerlink" href="#application-layer" title="Permanent link">&para;</a></h5>
 <p>The first level of protection that comes to mind is <a href="Input_Validation_Cheat_Sheet.html">Input validation</a>.</p>
 <p>Based on that point, the following question comes to mind: <em>How to perform this input validation?</em></p>
-<p>As <a href="https://twitter.com/orange_8361">Orange Tsai</a> shows in his <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a>, depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the <a href="Input_Validation_Cheat_Sheet.html#allow-list-vs-block-list">allow list approach</a> when input validation is used because, most of the time, the format of the information expected from the user is globally know.</p>
+<p>As <a href="https://twitter.com/orange_8361">Orange Tsai</a> shows in his <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a>, depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the <a href="Input_Validation_Cheat_Sheet.html#allow-list-vs-block-list">allow list approach</a> when input validation is used because, most of the time, the format of the information expected from the user is globally known.</p>
 <p>The request sent to the internal application will be based on the following information:</p>
 <ul>
 <li>String containing business data.</li>
@@ -1670,7 +1670,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 </ul>
 <p><strong>Note:</strong> Disable the support for the following of the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">redirection</a> in your web client in order to prevent the bypass of the input validation described in the section <code>Exploitation tricks &gt; Bypassing restrictions &gt; Input validation &gt; Unsafe redirect</code> of this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>.</p>
 <h6 id="string">String<a class="headerlink" href="#string" title="Permanent link">&para;</a></h6>
-<p>In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected.</p>
+<p>In the context of SSRF, validations can be added to ensure that the input string respects the business/technical format expected.</p>
 <p>A <a href="https://www.regular-expressions.info/">regex</a> can be used to ensure that data received is valid from a security point of view if the input data have a simple format (<em>e.g.</em> token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the <code>string</code> object because regex for complex formats are difficult to maintain and are highly error-prone.</p>
 <p>User input is assumed to be non-network related and consists of the user's personal information.</p>
 <p>Example:</p>
@@ -1688,7 +1688,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li>Ensure that the data provided is a valid IP V4 or V6 address.</li>
 <li>Ensure that the IP address provided belongs to one of the IP addresses of the identified and trusted applications.</li>
 </ol>
-<p>The first layer of validation can be applied using libraries that ensure the security of the IP address format, based on the technology used (library option is proposed here in order to delegate the managing of the IP address format and leverage battle tested validation function):</p>
+<p>The first layer of validation can be applied using libraries that ensure the security of the IP address format, based on the technology used (library option is proposed here to delegate the managing of the IP address format and leverage battle-tested validation function):</p>
 <blockquote>
 <p>Verification of the proposed libraries has been performed regarding the exposure to bypasses (Hex, Octal, Dword, URL and Mixed encoding) described in this <a href="https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b">article</a>.</p>
 </blockquote>
@@ -1718,15 +1718,15 @@ The user leverages the web application as a proxy to the HR system.</p>
 <blockquote>
 <p><strong>Use the output value of the method/library as the IP address to compare against the allow list.</strong></p>
 </blockquote>
-<p>After ensuring the validity of the incoming IP address, the second layer of validation is applied. An allow list is created after determining all the IP addresses (v4 and v6 in order to avoid bypasses) of the identified and trusted applications. The valid IP is cross checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).</p>
+<p>After ensuring the validity of the incoming IP address, the second layer of validation is applied. An allow list is created after determining all the IP addresses (v4 and v6 to avoid bypasses) of the identified and trusted applications. The valid IP is cross-checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).</p>
 <h6 id="domain-name">Domain name<a class="headerlink" href="#domain-name" title="Permanent link">&para;</a></h6>
-<p>In the attempt of validating domain names, it is apparent to do a DNS resolution in order to verify the existence of the domain. In general, it is not a bad idea, yet it opens up the application to attacks depending on the configuration used regarding the DNS servers used for the domain name resolution:</p>
+<p>In the attempt of validate domain names, it is apparent to do a DNS resolution to verify the existence of the domain. In general, it is not a bad idea, yet it opens up the application to attacks depending on the configuration used regarding the DNS servers used for the domain name resolution:</p>
 <ul>
 <li>It can disclose information to external DNS resolvers.</li>
 <li>It can be used by an attacker to bind a legit domain name to an internal IP address. See the section <code>Exploitation tricks &gt; Bypassing restrictions &gt; Input validation &gt; DNS pinning</code> of this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>.</li>
-<li>It can be used, by an attacker, to deliver a malicious payload to the internal DNS resolvers as well as to the API (SDK or third-party) used by the application to handle the DNS communication and then, potentially, trigger a vulnerability in one of these components.</li>
+<li>An attacker can use it to deliver a malicious payload to the internal DNS resolvers and the API (SDK or third-party) used by the application to handle the DNS communication and then, potentially, trigger a vulnerability in one of these components.</li>
 </ul>
-<p>In the context of SSRF, there are 2 validations to perform:</p>
+<p>In the context of SSRF, there are two validations to perform:</p>
 <ol>
 <li>Ensure that the data provided is a valid domain name.</li>
 <li>Ensure that the domain name provided belongs to one of the domain names of the identified and trusted applications (the allow listing comes to action here).</li>
@@ -1854,7 +1854,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>The Firewall component, as a specific device or using the one provided within the operating system, will be used here to define the legitimate flows.</p>
 <p>In the schema below, a Firewall component is leveraged to limit the application's access, and in turn, limit the impact of an application vulnerable to SSRF:</p>
 <p><img alt="Case 1 for Network layer protection about flows that we want to prevent" src="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.png" /></p>
-<p><a href="https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation">Network segregation</a> (see this set of <a href="https://www.cyber.gov.au/publications/network-segmentation-and-segregation">implementation advices</a>) can also be leveraged and <strong>is highly recommended in order to block illegitimate calls directly at network level itself</strong>.</p>
+<p><a href="https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation">Network segregation</a> (see this set of <a href="https://www.cyber.gov.au/publications/network-segmentation-and-segregation">implementation advice</a>) can also be leveraged and <strong>is highly recommended in order to block illegitimate calls directly at network level itself</strong>.</p>
 <h3 id="case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name">Case 2 - Application can send requests to ANY external IP address or domain name<a class="headerlink" href="#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name" title="Permanent link">&para;</a></h3>
 <p>This case happens when a user can control a URL to an <strong>External</strong> resource and the application makes a request to this URL (e.g. in case of <a href="https://en.wikipedia.org/wiki/Webhook">WebHooks</a>). Allow lists cannot be used here because the list of IPs/domains is often unknown upfront and is dynamically changing.</p>
 <p>In this scenario, <em>External</em> refers to any IP that doesn't belong to the internal network, and should be reached by going over the public internet.</p>
