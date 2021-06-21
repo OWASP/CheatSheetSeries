@@ -10,9 +10,9 @@ This cheat sheet will focus on the defensive point of view and will not explain 
 
 SSRF is an attack vector that abuses an application to interact with the internal/external network or the machine itself. One of the enablers for this vector is the mishandling of URLs, as showcased in the following examples:
 
-- Image on external server (*e.g.* user enters image URL of their avatar for the application to download and use).
-- Custom [WebHook](https://en.wikipedia.org/wiki/Webhook) (user have to specify WebHook handlers or Callback URLs).
-- Internal requests to interact with another service to serve a certain functionality. Most of the times, user data is sent along to be processed, and if badly handled, can perform certain injection attacks.
+- Image on an external server (*e.g.* user enters image URL of their avatar for the application to download and use).
+- Custom [WebHook](https://en.wikipedia.org/wiki/Webhook) (users have to specify Webhook handlers or Callback URLs).
+- Internal requests to interact with another service to serve a specific functionality. Most of the times, user data is sent along to be processed, and if poorly handled, can perform specific injection attacks.
 
 ## Overview of a SSRF common flow
 
@@ -20,7 +20,7 @@ SSRF is an attack vector that abuses an application to interact with the interna
 
 *Notes:*
 
-- SSRF is not limited to the HTTP protocol, despite the fact that in general the first request leverages it, yet the second request is performed by the application itself, and thus it could be using different protocols (*e.g.* FTP, SMB, SMTP, etc.) and schemes (*e.g.* `file://`, `phar://`, `gopher://`, `data://`, `dict://`, etc.). The protocol/scheme usage is highly dependent on the application's requirements.
+- SSRF is not limited to the HTTP protocol. Generally, the first request is HTTP, but in cases where the application itself performs the second request, it could use different protocols (*e.g.* FTP, SMB, SMTP, etc.) and schemes (*e.g.* `file://`, `phar://`, `gopher://`, `data://`, `dict://`, etc.).
 - If the application is vulnerable to [XML eXternal Entity (XXE) injection](https://portswigger.net/web-security/xxe) then it can be exploited to perform a [SSRF attack](https://portswigger.net/web-security/xxe#exploiting-xxe-to-perform-ssrf-attacks), take a look at the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md) to learn how to prevent the exposure to XXE.
 
 ## Cases
@@ -28,25 +28,25 @@ SSRF is an attack vector that abuses an application to interact with the interna
 Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:
 
 - Application can send request only to **identified and trusted applications**: Case when [allow listing](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
-- Application can send requests to **ANY external IP address or domain name**: Case when [allow listing](https://en.wikipedia.org/wiki/Whitelisting) approach is not available.
+- Application can send requests to **ANY external IP address or domain name**: Case when [allow listing](https://en.wikipedia.org/wiki/Whitelisting) approach is unavailable.
 
 Because these two cases are very different, this cheat sheet will describe defences against them separately.
 
 ### Case 1 - Application can send request only to identified and trusted applications
 
-Sometimes, an application need to perform request to another application, often located on another network, to perform a specific task. Depending of the business case, it can happen that information from the user are needed to perform the action.
+Sometimes, an application needs to perform a request to another application, often located on another network, to perform a specific task. Depending on the business case, user input is required for the functionality to work.
 
 #### Example
 
- > Take the example of a web application that receives and uses personal information from a user, such as their firstname/lastname/birthdate to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands in order to process that data.
- > Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving the user information is vulnerable to SSRF then the user can leverage it to access the HR system.
+ > Take the example of a web application that receives and uses personal information from a user, such as their first name, last name, birth date etc. to create a profile in an internal HR system. By design, that web application will have to communicate using a protocol that the HR system understands to process that data.
+ > Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving user information is vulnerable to SSRF, the user can leverage it to access the HR system.
  > The user leverages the web application as a proxy to the HR system.
 
-The allow list approach is a viable option in this case since the internal application called by the *VulnerableApplication* is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.
+The allow list approach is a viable option since the internal application called by the *VulnerableApplication* is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.
 
 #### Available protections
 
-Several protective measures are possible at the **Application** and **Network** layers. In order to apply the **defense in depth** principle, both layers will be hardened against such attacks.
+Several protective measures are possible at the **Application** and **Network** layers. To apply the **defense in depth** principle, both layers will be hardened against such attacks.
 
 ##### Application layer
 
@@ -54,7 +54,7 @@ The first level of protection that comes to mind is [Input validation](Input_Val
 
 Based on that point, the following question comes to mind: *How to perform this input validation?*
 
-As [Orange Tsai](https://twitter.com/orange_8361) shows in his [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf), depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the [allow list approach](Input_Validation_Cheat_Sheet.md#allow-list-vs-block-list) when input validation is used because, most of the time, the format of the information expected from the user is globally know.
+As [Orange Tsai](https://twitter.com/orange_8361) shows in his [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf), depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the [allow list approach](Input_Validation_Cheat_Sheet.md#allow-list-vs-block-list) when input validation is used because, most of the time, the format of the information expected from the user is globally known.
 
 The request sent to the internal application will be based on the following information:
 
@@ -67,7 +67,7 @@ The request sent to the internal application will be based on the following info
 
 ###### String
 
-In the context of SSRF, checks can be put in place to ensure that the string respects the business/technical format expected.
+In the context of SSRF, validations can be added to ensure that the input string respects the business/technical format expected.
 
 A [regex](https://www.regular-expressions.info/) can be used to ensure that data received is valid from a security point of view if the input data have a simple format (*e.g.* token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the `string` object because regex for complex formats are difficult to maintain and are highly error-prone.
 
@@ -91,7 +91,7 @@ In the context of SSRF, there are 2 possible validations to perform:
 1. Ensure that the data provided is a valid IP V4 or V6 address.
 2. Ensure that the IP address provided belongs to one of the IP addresses of the identified and trusted applications.
 
-The first layer of validation can be applied using libraries that ensure the security of the IP address format, based on the technology used (library option is proposed here in order to delegate the managing of the IP address format and leverage battle tested validation function):
+The first layer of validation can be applied using libraries that ensure the security of the IP address format, based on the technology used (library option is proposed here to delegate the managing of the IP address format and leverage battle-tested validation function):
 
 > Verification of the proposed libraries has been performed regarding the exposure to bypasses (Hex, Octal, Dword, URL and Mixed encoding) described in this [article](https://medium.com/@vickieli/bypassing-ssrf-protection-e111ae70727b).
 
@@ -109,17 +109,17 @@ The first layer of validation can be applied using libraries that ensure the sec
 
 > **Use the output value of the method/library as the IP address to compare against the allow list.**
 
-After ensuring the validity of the incoming IP address, the second layer of validation is applied. An allow list is created after determining all the IP addresses (v4 and v6 in order to avoid bypasses) of the identified and trusted applications. The valid IP is cross checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).
+After ensuring the validity of the incoming IP address, the second layer of validation is applied. An allow list is created after determining all the IP addresses (v4 and v6 to avoid bypasses) of the identified and trusted applications. The valid IP is cross-checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).
 
 ###### Domain name
 
-In the attempt of validating domain names, it is apparent to do a DNS resolution in order to verify the existence of the domain. In general, it is not a bad idea, yet it opens up the application to attacks depending on the configuration used regarding the DNS servers used for the domain name resolution:
+In the attempt of validate domain names, it is apparent to do a DNS resolution to verify the existence of the domain. In general, it is not a bad idea, yet it opens up the application to attacks depending on the configuration used regarding the DNS servers used for the domain name resolution:
 
 - It can disclose information to external DNS resolvers.
 - It can be used by an attacker to bind a legit domain name to an internal IP address. See the section `Exploitation tricks > Bypassing restrictions > Input validation > DNS pinning` of this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf).
-- It can be used, by an attacker, to deliver a malicious payload to the internal DNS resolvers as well as to the API (SDK or third-party) used by the application to handle the DNS communication and then, potentially, trigger a vulnerability in one of these components.
+- An attacker can use it to deliver a malicious payload to the internal DNS resolvers and the API (SDK or third-party) used by the application to handle the DNS communication and then, potentially, trigger a vulnerability in one of these components.
 
-In the context of SSRF, there are 2 validations to perform:
+In the context of SSRF, there are two validations to perform:
 
 1. Ensure that the data provided is a valid domain name.
 2. Ensure that the domain name provided belongs to one of the domain names of the identified and trusted applications (the allow listing comes to action here).
@@ -257,7 +257,7 @@ In the schema below, a Firewall component is leveraged to limit the application'
 
 ![Case 1 for Network layer protection about flows that we want to prevent](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Case1_NetworkLayer_PreventFlow.png)
 
-[Network segregation](https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation) (see this set of [implementation advices](https://www.cyber.gov.au/publications/network-segmentation-and-segregation)) can also be leveraged and **is highly recommended in order to block illegitimate calls directly at network level itself**.
+[Network segregation](https://www.mwrinfosecurity.com/our-thinking/making-the-case-for-network-segregation) (see this set of [implementation advice](https://www.cyber.gov.au/publications/network-segmentation-and-segregation)) can also be leveraged and **is highly recommended in order to block illegitimate calls directly at network level itself**.
 
 ### Case 2 - Application can send requests to ANY external IP address or domain name
 
