@@ -302,6 +302,7 @@ The are a number of common types of biometrics that are used, including:
 - Require manual enrolment of the user's physical attributes.
 - Custom (sometimes expensive) hardware is often required to read biometrics.
 - Modern browsers do not have native support, so custom client-side software is required.
+- Privacy concerns: Sensitive physical information must be stored about users.
 - If compromised, biometric data can be difficult to change.
 
 ## Location
