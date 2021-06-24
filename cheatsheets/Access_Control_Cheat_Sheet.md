@@ -49,7 +49,7 @@ The areas of caution while using RBAC are:
 
 In Attribute-Based Access Control (ABAC), access decisions are based on attributes of the subject of the request compared to the permissions held by the identity of the requester.
 
-Attributes come in various forms and are easiest summarized to be the metadata of data, rather than data itself. If you stored a user email the _attribute_ may be a reference to the database table in a relation database, or a primary key associated to the data that maps to the primary key of the identity in a key/value store or in disparate data stores, or another example is the index of a document store that holds the data.
+Attributes come in various forms and are easiest summarized to be the metadata of data, rather than data itself. If you stored a user email the _attribute_ may be a reference to the database table in a relation database, or a primary key associated to the data that maps to the primary key of the identity in a key-value store or in disparate data stores, or another example is the index of a document store that holds the data.
 
 There are more modern datastores that provide the ability to 'label', 'tag', and define actual metadata or headers returned with data served by a RESTful API, these are all great examples of attributes.
 
