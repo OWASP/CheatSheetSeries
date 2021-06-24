@@ -12,6 +12,7 @@ It can be summarized as:
 > The requested **action** is **permitted** at this **time** for this **identity**
 
 Where:
+
 - **Identity** is _assured_ when the requester is challenged at the time they make the request, which means they have just fulfilled a challenge/response mechanism to verify they are who they claim, in terms of identity. If the challenge occurred before the request there is no assurance, acknowledging there may be a trusted session, but without assurance through via _challenge_ there can only be an unverified identity making this request
 - **Action** The purpose for an authorization mechanism, a requester is attempting to perform an action that is sensitive, requires elevated privileges, or has some other implication like user privacy or _material_ impacts to the business.
 - **Permitted** means the identity has been checked for permission to perform the action, using Access Controls.
@@ -60,7 +61,7 @@ The areas of caution while using RBAC are:
 
 In Attribute-Based Access Control (ABAC), access decisions are based on attributes of the subject of the request compared to the permissions held by the identity of the requester.
 
-Attributes come in various forms and are easiest summarized to be the metadata of data, rather than data itself. If you stored a user email the _attribute_ may be a reference to the database table in a relation database, or a primary key associated to the data that maps to the primary key of the identity in a key/value store or in disparate data stores, or another example is the index of a document store that holds the data. 
+Attributes come in various forms and are easiest summarized to be the metadata of data, rather than data itself. If you stored a user email the _attribute_ may be a reference to the database table in a relation database, or a primary key associated to the data that maps to the primary key of the identity in a key/value store or in disparate data stores, or another example is the index of a document store that holds the data.
 
 There are more modern datastores that provide the ability to 'label', 'tag', and define actual metadata or headers returned with data served by a RESTful API, these are all great examples of attributes.
 
@@ -154,4 +155,3 @@ The key concept in Permission Based Access Control is the abstraction of applica
 The *has* relationship between the user and permission may be satisfied by creating a direct relationship between the user and permission (called a *grant*), or an indirect one. In the indirect model, the permission *grant* is to an intermediate entity such as *user group*. A user is considered a member of a *user group* if and only if the user *inherits* permissions from the *user group*. The indirect model makes it easier to manage the permissions for a large number of users since changing the permissions assigned to the user group affects all members of the user group.
 
 In some Permission Based Access Control systems that provide fine-grained domain object-level access control, permissions may be grouped into *classes*. In this model, it is assumed that each domain object in the system can be associated with a *class* which determines the permissions applicable to the respective domain object. In such a system a "DOCUMENT" class may be defined with the permissions "READ", "WRITE" and DELETE"; a "SERVER" class may be defined with the permissions "START", "STOP", and "REBOOT".
-
