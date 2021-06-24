@@ -39,16 +39,21 @@ A key concern when using passwords for authentication is password strength. A "s
 
 - [ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements)
 - [Passwords Evolved: Authentication Guidance for the Modern Era](https://www.troyhunt.com/passwords-evolved-authentication-guidance-for-the-modern-era/)
+- [Avoid Password Transmission](Avoid_Password_Transmission_Cheat_Sheet.md)
 
-### Implement Secure Password Recovery Mechanism
+### Implement Secure Password ~~Recovery~~ Changing Mechanism
 
 It is common for an application to have a mechanism that provides a means for a user to gain access to their account in the event they forget their password. Please see [Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md) for details on this feature.
 
 ### Store Passwords in a Secure Fashion
 
+See: [Avoid Password Transmission](Avoid_Password_Transmission_Cheat_Sheet.md)
+
 It is critical for an application to store a password using the right cryptographic technique. Please see [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) for details on this feature.
 
 ### Compare Password Hashes Using Safe Functions
+
+See: [Avoid Password Transmission](Avoid_Password_Transmission_Cheat_Sheet.md)
 
 Where possible, the user-supplied password should be compared to the stored password hash using a secure password comparison function provided by the language or framework, such as the [password_verify()](https://www.php.net/manual/en/function.password-verify.php) function in PHP. Where this is not possible, ensure that the comparison function:
 
@@ -56,8 +61,9 @@ Where possible, the user-supplied password should be compared to the stored pass
 - Explicitly sets the type of both variable, to protect against type confusion attacks such as [Magic Hashes](https://www.whitehatsec.com/blog/magic-hashes/) in PHP.
 - Returns in constant time, to protect against timing attacks.
 
-### Transmit Passwords Only Over TLS or Other Strong Transport
+### Transmit ~~Passwords~~ 'HMAC of a password' Only Over TLS or Other Strong Transport
 
+See: [Avoid Password Transmission](Avoid_Password_Transmission_Cheat_Sheet.md)
 See: [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)
 
 The login page and all subsequent authenticated pages must be exclusively accessed over TLS or other strong transport. The initial login page referred to as the "login landing page", must be served over TLS or other strong transport. Failure to utilize TLS or other strong transport for the login landing page allows an attacker to modify the login form action, causing the user's credentials to be posted to an arbitrary location. Failure to utilize TLS or other strong transport for authenticated pages after login enables an attacker to view the unencrypted session ID and compromise the user's authenticated session.
