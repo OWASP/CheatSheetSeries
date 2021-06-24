@@ -4,9 +4,20 @@
 
 This article is focused on providing clear, simple, actionable guidance for providing access control security in your applications. The objective is to guide developers, reviewers, designers, architects on designing, creating, and maintaining access controls in web applications.
 
-### What is Access Control / Authorization
+### What is Authorization?
 
 Authorization is the process where requests to access a particular resource should be granted or denied. It should be noted that authorization is not equivalent to authentication - as these terms and their definitions are frequently confused. Authentication is providing and validating identity. The authorization includes the execution rules that determine which functionality and data the user (or Principal) may access, ensuring the proper allocation of access rights after authentication is successful.
+
+It can be summarized as:
+> The requested **action** is **permitted** at this **time** for this **identity**
+
+Where:
+- **Identity** is _assured_ when the requester is challenged at the time they make the request, which means they have just fulfilled a challenge/response mechanism to verify they are who they claim, in terms of identity. If the challenge occurred before the request there is no assurance, acknowledging there may be a trusted session, but without assurance through via _challenge_ there can only be an unverified identity making this request
+- **Action** The purpose for an authorization mechanism, a requester is attempting to perform an action that is sensitive, requires elevated privileges, or has some other implication like user privacy or _material_ impacts to the business.
+- **Permitted** means the identity has been checked for permission to perform the action, using Access Controls.
+- **Time** is extremely meaningful for the security characteristics of Authorization because it is the responsibility of the server to verify that the request is being processed _now_ and that is when the request was made. If it was made earlier being replayed now, or has been time skewed to a future time, the server should reject the request as it is not relevant to the current Authorization context.
+
+## What is Access Control?
 
 Web applications need access controls to allow users (with varying privileges) to use the application. They also need administrators to manage the application’s access control rules and the granting of permissions or entitlements to users and other entities. Various access control design methodologies are available. To choose the most appropriate one, a risk assessment needs to be performed to identify threats and vulnerabilities specific to your application, so that the proper access control methodology is appropriate for your application.
 
