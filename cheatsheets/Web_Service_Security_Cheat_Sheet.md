@@ -20,9 +20,9 @@ Transport confidentiality protects against eavesdropping and man-in-the-middle a
 
 User authentication verifies the identity of the user or the system trying to connect to the service. Such authentication is usually a function of the container of the web service.
 
-**Rule**: If used, Basic Authentication must be conducted over [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security), but Basic Authentication is not recommended.
+**Rule**: If used, Basic Authentication must be conducted over [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security), but Basic Authentication is not recommended because it discloses secrets in plan text (base64 encoded) in HTTP Headers.
 
-**Rule**: Client Certificate Authentication using [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) is a strong form of authentication that is recommended.
+**Rule**: Client Certificate Authentication using [Mutual-TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) is a common form of authentication that is recommended where appropriate. See: [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
 
 ## Transport Encoding
 
@@ -50,7 +50,7 @@ Data elements meant to be kept confidential must be encrypted using a strong enc
 
 Web services need to authorize web service clients the same way web applications authorize users. A web service needs to make sure a web service client is authorized to perform a certain action (coarse-grained) on the requested data (fine-grained).
 
-**Rule**: A web service should authorize its clients whether they have access to the method in question. Following authentication, the web service should check the privileges of the requesting entity whether they have access to the requested resource. This should be done on every request.
+**Rule**: A web service should authorize its clients whether they have access to the method in question. Following an authentication challenge, the web service should check the privileges of the requesting entity whether they have access to the requested resource. This should be done on every request, and a challenge-response Authorization mechanism added to sensitive resources like password changes, primary contact details such as email, physical address, payment or delivery instructions.
 
 **Rule**: Ensure access to administration and management functions within the Web Service Application is limited to web service administrators. Ideally, any administrative capabilities would be in an application that is completely separate from the web services being managed by these capabilities, thus completely separating normal users from these sensitive functions.
 
