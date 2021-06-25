@@ -167,18 +167,12 @@ Safe use of redirects and forwards can be done in a number of ways:
     - Be careful that this doesn't introduce an enumeration vulnerability where a user could cycle through IDs to find all possible redirect targets
 - If user input can’t be avoided, ensure that the supplied **value** is valid, appropriate for the application, and is **authorized** for the user.
 - Sanitize input by creating a list of trusted URLs (lists of hosts or a regex).
-    - This should be based on a white-list approach, rather than a blacklist.
+    - This should be based on an allow-list approach, rather than a block list.
 - Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.
 
 ### Validating URLs
 
-When attempting to validate and sanitise user-input to determine whether the URL is safe, wherever possible you should use a built-in library or function to parse the URLs, such as `parse_url()` in PHP, rather than rolling your own parser using regex. Additionally, make sure that you take the following into account:
-
-- Input starting with a `/` to redirect to local pages is **not safe**. `//example.org` is a valid URL.
-- Input starting with the desired domain name is **not safe**. `https://example.org.attacker.com` is valid.
-- Only allow HTTP(S) protocols. All other protocols, including JavaScript URIs such as `javascript:alert(1)` should be blocked
-- Data URIs such as `data:text/html,<script>alert(document.domain)</script>` should be blocked
-- URIs containing CRLF characters can lead to header injection or response splitting attacks, and should be blocked.
+Validating and sanitising user-input to determine whether the URL is safe is not a trivial task. Detailed instructions how to implement URL validation is described [in Server Side Request Forgery Prevention Cheat Sheet](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer)
 
 ## References
 

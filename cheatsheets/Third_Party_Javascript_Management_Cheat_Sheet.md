@@ -196,7 +196,7 @@ Letting the marketing folks decide where to get the data they want can result in
 Both of these tools be used by sites to sandbox/clean DOM data.
 
 - [DOMPurify](https://github.com/cure53/DOMPurify) is a fast, tolerant XSS sanitizer for HTML, MathML and SVG. DOMPurify works with a secure default, but offers a lot of configurability and hooks.
-- [MentalJS](https://github.com/hackvertor/MentalJS) is a JavaScript parser and sandbox. It whitelists JavaScript code by adding a "$" suffix to variables and accessors.
+- [MentalJS](https://github.com/hackvertor/MentalJS) is a JavaScript parser and sandbox. It allow-lists JavaScript code by adding a "$" suffix to variables and accessors.
 
 ### Subresource Integrity
 

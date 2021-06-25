@@ -104,9 +104,19 @@ To learn more on usage of TLS in Kubernetes cluster, refer to the documentation 
 
 ### API Authentication
 
-Choose an authentication mechanism for the API servers to use that matches the common access patterns when you install a cluster. For instance, small single user clusters may wish to use a simple certificate or static Bearer token approach. Larger clusters may wish to integrate an existing OIDC or LDAP server that allow users to be subdivided into groups.
+Kubernetes provides a number of in-built mechanisms for API server authentication, however these are likely only suitable for non-production or small clusters.
 
-All API clients must be authenticated, even those that are part of the infrastructure like nodes, proxies, the scheduler, and volume plugins. These clients are typically service accounts or use x509 client certificates, and they are created automatically at cluster startup or are setup as part of the cluster installation.
+- [Static Token File](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#static-token-file) authentication makes use of clear text tokens stored in a CSV file on API server node(s). Modifying credentials in this file requires an API server re-start to be effective.
+- [X509 Client Certs](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#x509-client-certs) are available as well however these are unsuitable for production use, as Kubernetes does [not support certificate revocation](https://github.com/kubernetes/kubernetes/issues/18982) meaning that user credentials cannot be modified or revoked without rotating the root certificate authority key an re-issuing all cluster certificates.
+- [Service Accounts Tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#service-account-tokens) are also available for authentication. Their primary intended use is to allow workloads running in the cluster to authenticate to the API server, however they can also be used for user authentication.
+
+The recommended approach for larger or production clusters, is to use an external authentication method:
+
+- [OpenID Connect](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens) (OIDC) lets you externalize authentication, use short lived tokens, and leverage centralized groups for authorization.
+- Managed Kubernetes distributions such as GKE, EKS and AKS support authentication using credentials from their respective IAM providers.
+- [Kubernetes Impersonation](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#user-impersonation) can be used with both managed cloud clusters and on-prem clusters to externalize authentication without having to have access to the API server configuration parameters.
+
+In addition to choosing the appropriate authentication system, API access should be considered privileged and use Multi-Factor Authentication (MFA) for all user access.
 
 For more information, consult Kubernetes authentication reference document at <https://kubernetes.io/docs/reference/access-authn-authz/authentication>
 
@@ -124,7 +134,7 @@ RBAC authorization uses the rbac.authorization.k8s.io API group to drive authori
 To enable RBAC, start the API server with the --authorization-mode flag set to a comma-separated list that includes RBAC; for example:
 
 ```bash
-# kube-apiserver --authorization-mode=Example,RBAC --other-options --more-options
+kube-apiserver --authorization-mode=Example,RBAC --other-options --more-options
 ```
 
 For detailed examples of utilizing RBAC, refer to Kubernetes documentation at <https://kubernetes.io/docs/reference/access-authn-authz/rbac>
@@ -149,16 +159,17 @@ For more information, refer to Kubelet authentication/authorization documentatio
 
 ### Securing Kubernetes Dashboard
 
-The Kubernetes dashboard is a webapp for monitoring your cluster. It it is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard. (Reference: Tesla cloud resources are hacked to run cryptocurrency-mining malware - <https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/>)
+The Kubernetes dashboard is a webapp for managing your cluster. It it is not a part of the Kubernetes cluster itself, it has to be installed by the owners of the cluster. Thus, there are a lot of tutorials on how to do this. Unfortunately, most of them create a service account with very high privileges. This caused Tesla and some others to be hacked via such a poorly configured K8s dashboard. (Reference: Tesla cloud resources are hacked to run cryptocurrency-mining malware - <https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/>)
 
 To prevent attacks via the dashboard, you should follow some tips:
 
-- Do not expose the dashboard to the public. There is no need to access such a powerful tool from outside your LAN
+- Do not expose the dashboard without additional authentication to the public. There is no need to access such a powerful tool from outside your LAN
 - Turn on RBAC, so you can limit the service account the dashboard uses
 - Do not grant the service account of the dashboard high privileges
 - Grant permissions per user, so each user only can see what he is supposed to see
 - If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)
 - Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.
+- Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled.  This can be done with either embeded OIDC `id_tokens` or using Kubernetes Impersonation.  This allows you to use the dashboard with the user's credentials instead of using a privileged `ServiceAccount`.  This method can be used on both on-prem and managed cloud clusters.
 
 ## Kubernetes Security Best Practices: Build Phase
 
@@ -184,11 +195,19 @@ There is work in progress being done in Kubernetes for image authorization plugi
 
 Avoid using images with OS package managers or shells because they could contain unknown vulnerabilities. If you must include OS packages, remove the package manager at a later step. Consider using minimal images such as distroless images, as an example.
 
-#### Distroless images
-
 Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google and other tech giants that have used containers in production for many years. It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.
 
+#### Distroless images
+
+Distroless images contains less packages compared to other images, and does not includes shell, which reduce the attack surface.
+
 For more information on ditroless images, refer to <https://github.com/GoogleContainerTools/distroless>.
+
+#### Scratch image
+
+An empty image, ideal for statically compiled languages like Go. Because the image is empty - the attack surface it truely minimal - only your code!
+
+For more information, refer to <https://hub.docker.com/_/scratch>
 
 ### Use the latest images/ensure images are up to date
 
@@ -238,7 +257,7 @@ Learn more about namespaces at <https://kubernetes.io/docs/concepts/overview/wor
 Prevent unapproved images from being used with the admission controller ImagePolicyWebhook to reject pods that use unapproved images including:
 
 - Images that haven’t been scanned recently
-- Images that use a base image that’s not whitelisted
+- Images that use a base image that’s not explicitly allowed
 - Images from insecure registries
 Learn more about webhook at <https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook>
 
@@ -254,7 +273,7 @@ In case vulnerabilities are found in running containers, it is recommended to al
 
 Try to avoid direct updates to the running containers as this can break the image-container relationship.
 
-```bash
+```
 Example: apt-update  
 ```
 
@@ -293,7 +312,7 @@ When designing your containers and pods, make sure that you configure the securi
 
 Here is an example for pod definition with security context parameters:
 
-```bash
+```yaml
 apiVersion: v1  
 kind: Pod  
 metadata:  
@@ -386,7 +405,7 @@ The following is an example for namespace resource quota definition that will li
 
 compute-resources.yaml:
 
-```bash
+```yaml
 apiVersion: v1  
 kind: ResourceQuota  
 metadata:  
@@ -403,7 +422,7 @@ spec:
 Assign a resource quota to namespace:
 
 ```bash
-  # kubectl create -f ./compute-resources.yaml --namespace=myspace
+kubectl create -f ./compute-resources.yaml --namespace=myspace
 ```
 
 ### Use Kubernetes network policies to control traffic between pods and clusters
@@ -418,7 +437,7 @@ Users of Google Cloud Platform can benefit from automatic firewall rules, preven
 
 The following is an example of a network policy that controls the network for “backend” pods, only allowing inbound network access from “frontend” pods:
 
-```bash
+```json
 POST /apis/net.alpha.kubernetes.io/v1alpha1/namespaces/tenant-a/networkpolicys  
 {  
   "kind": "NetworkPolicy",
@@ -514,7 +533,7 @@ The Linux kernel automatically loads kernel modules from disk if needed in certa
 
 To prevent specific modules from being automatically loaded, you can uninstall them from the node, or add rules to block them. On most Linux distributions, you can do that by creating a file such as /etc/modprobe.d/kubernetes-blacklist.conf with contents like:
 
-```bash
+```
 # DCCP is unlikely to be needed, has had multiple serious
 # vulnerabilities, and is not well-maintained.
 blacklist dccp
@@ -568,7 +587,7 @@ Audit logs can be useful for compliance as they should help you answer the quest
 
 Here is an example of an audit log:
 
-```bash
+```json
 {
   "kind":"Event",
   "apiVersion":"audit.k8s.io/v1beta1",
@@ -619,65 +638,65 @@ The first layer of logs that can be collected from a Kubernetes cluster are thos
   
   Manifest is as follows.
 
-    ```YAML
-    apiVersion: v1
-    kind: Pod
-    metadata:
-    name: example
-    spec:
-    containers:
-    - name: example
-    image: busybox
-    args: [/bin/sh, -c, 'while true; do echo $(date); sleep 1; done']
-    ```
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+name: example
+spec:
+containers:
+  - name: example
+image: busybox
+args: [/bin/sh, -c, 'while true; do echo $(date); sleep 1; done']
+```
   
   To apply the manifest, run:
 
-    ```bash
-    kubectl apply -f example.yaml
-    ```
+```bash
+kubectl apply -f example.yaml
+```
 
   To take a look the logs for this container, run:
 
-    ```bash
-    kubectl log <container-name> command.
-    ```
+```bash
+kubectl log <container-name> command.
+```
 
 - For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.
   
   Pod Manifest is as follows:
 
-  ```YAML
-  apiVersion: v1
-  kind: Pod
-  metadata:
-    name: example
-  spec:
-    containers:
-    - name: example
-      image: busybox
-      args:
-      - /bin/sh
-      - -c
-      - >
-        while true;
-        do
-          echo "$(date)\n" >> /var/log/example.log;
-          sleep 1;
-        done
-      volumeMounts:
-      - name: varlog
-        mountPath: /var/log
-    - name: sidecar
-      image: busybox
-      args: [/bin/sh, -c, 'tail -f /var/log/example.log']
-      volumeMounts:
-      - name: varlog
-        mountPath: /var/log
-    volumes:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example
+spec:
+  containers:
+  - name: example
+    image: busybox
+    args:
+    - /bin/sh
+    - -c
+    - >
+      while true;
+      do
+        echo "$(date)\n" >> /var/log/example.log;
+        sleep 1;
+      done
+    volumeMounts:
     - name: varlog
-      emptyDir: {}
-  ```
+      mountPath: /var/log
+  - name: sidecar
+    image: busybox
+    args: [/bin/sh, -c, 'tail -f /var/log/example.log']
+    volumeMounts:
+    - name: varlog
+      mountPath: /var/log
+  volumes:
+  - name: varlog
+    emptyDir: {}
+```
 
 ##### Node logging
 
@@ -690,9 +709,9 @@ Once a container is terminated or restarted, kubelet stores logs on the node. To
 Depending on what operating system and additional services you’re running on your host machine, you might need to take a look at additional logs.
 For example, systemd logs can be retrieved using the following command:
 
-  ```bash
-  journalctl -u
-  ```
+```bash
+journalctl -u
+```
 
 ##### Cluster logging
 
@@ -707,22 +726,22 @@ Kubernetes events can indicate any Kubernetes resource state changes and errors,
 
 The following command returns all events within a specific namespace:
 
-  ```bash
-  kubectl get events -n <namespace>
+```
+kubectl get events -n <namespace>
 
-  NAMESPACE LAST SEEN TYPE   REASON OBJECT MESSAGE
-  kube-system  8m22s  Normal   Scheduled            pod/metrics-server-66dbbb67db-lh865                                       Successfully assigned kube-system/metrics-server-66dbbb67db-lh865 to aks-agentpool-42213468-1
-  kube-system     8m14s               Normal    Pulling                   pod/metrics-server-66dbbb67db-lh865                                       Pulling image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
-  kube-system     7m58s               Normal    Pulled                    pod/metrics-server-66dbbb67db-lh865                                       Successfully pulled image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
-  kube-system     7m57s               Normal     Created                   pod/metrics-server-66dbbb67db-lh865                                       Created container metrics-server
-  kube-system     7m57s               Normal    Started                   pod/metrics-server-66dbbb67db-lh865                                       Started container metrics-server
-  kube-system     8m23s               Normal    SuccessfulCreate          replicaset/metrics-server-66dbbb67db             Created pod: metrics-server-66dbbb67db-lh865
-  ```
+NAMESPACE LAST SEEN TYPE   REASON OBJECT MESSAGE
+kube-system  8m22s  Normal   Scheduled            pod/metrics-server-66dbbb67db-lh865                                       Successfully assigned kube-system/metrics-server-66dbbb67db-lh865 to aks-agentpool-42213468-1
+kube-system     8m14s               Normal    Pulling                   pod/metrics-server-66dbbb67db-lh865                                       Pulling image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
+kube-system     7m58s               Normal    Pulled                    pod/metrics-server-66dbbb67db-lh865                                       Successfully pulled image "aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1"
+kube-system     7m57s               Normal     Created                   pod/metrics-server-66dbbb67db-lh865                                       Created container metrics-server
+kube-system     7m57s               Normal    Started                   pod/metrics-server-66dbbb67db-lh865                                       Started container metrics-server
+kube-system     8m23s               Normal    SuccessfulCreate          replicaset/metrics-server-66dbbb67db             Created pod: metrics-server-66dbbb67db-lh865
+```
 
 The following command will show the latest events for this specific Kubernetes resource:
 
-```bash
-  kubectl describe pod <pod-name>
+```
+kubectl describe pod <pod-name>
 
 Events:
   Type    Reason     Age   From                               Message

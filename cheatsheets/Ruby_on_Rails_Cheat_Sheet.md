@@ -20,7 +20,7 @@ exec("os command here")
 open("\| os command here")
 ```
 
-While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, a whitelist of possible values should be used and any input should be validated as thoroughly as possible.
+While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, an allow-list of possible values should be used and any input should be validated as thoroughly as possible.
 
 The guides from [Rails](https://guides.rubyonrails.org/security.html#command-line-injection) and [OWASP](https://owasp.org/www-community/attacks/Command_Injection) contain further information on command injection.
 
@@ -52,6 +52,9 @@ By default, protection against XSS comes as the default behavior. When string da
 <%= raw @product.name %>
 
 # Wrong! Do not do this!
+<%== @product.name %>
+
+# Wrong! Do not do this!
 <%= @product.name.html_safe %>
 
 # Wrong! Do not do this!
@@ -71,7 +74,7 @@ The method `html_safe` of String is somewhat confusingly named. It means that we
 
 If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: Markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious.
 
-If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the `#sanitize` method that let's you whitelist allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.
+If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the `#sanitize` method that lets you list allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.
 
 An often overlooked XSS attack vector for older versions of rails is the `href` value of a link:
 
@@ -260,7 +263,7 @@ Example:
 
 `http://www.example.com/redirect?url=http://badhacker.com`
 
-The most basic, but restrictive protection is to use the `:only_path` option. Setting this to true will essentially strip out any host information. However, the `:only_path` option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or whitelist, this is one approach that can work:
+The most basic, but restrictive protection is to use the `:only_path` option. Setting this to true will essentially strip out any host information. However, the `:only_path` option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or allow list, this is one approach that can work:
 
 ``` ruby
 begin
@@ -284,7 +287,7 @@ host = URI.parse("#{params[:url]}").host
 validation_routine(host) if host
 def validation_routine(host)
   # Validation routine where we use  \A and \z as anchors *not* ^ and $
-  # you could also check the host value against a whitelist
+  # you could also check the host value against an allow list
 end
 ```
 
@@ -338,13 +341,13 @@ Occasionally, a need arises to share resources with another domain. For example,
 
 When using a nonstandard HTTP construct, such as an atypical Content-Type header, for example, the following applies:
 
-The receiving site should whitelist only those domains allowed to make such requests as well as set the `Access-Control-Allow-Origin` header in both the response to the `OPTIONS` request and `POST` request. This is because the OPTIONS request is sent first, in order to determine if the remote or receiving site allows the requesting domain. Next, a second request, a `POST` request, is sent. Once again, the header must be set in order for the transaction to be shown as successful.
+The receiving site should list only those domains allowed to make such requests as well as set the `Access-Control-Allow-Origin` header in both the response to the `OPTIONS` request and `POST` request. This is because the OPTIONS request is sent first, in order to determine if the remote or receiving site allows the requesting domain. Next, a second request, a `POST` request, is sent. Once again, the header must be set in order for the transaction to be shown as successful.
 
 When standard HTTP constructs are used:
 
 *The request is sent and the browser, upon receiving a response, inspects the response headers in order to determine if the response can and should be processed.*
 
-Whitelist in Rails:
+Allow list in Rails:
 
 **Gemfile:**
 

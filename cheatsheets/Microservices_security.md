@@ -4,26 +4,6 @@
 
 The microservice architecture is being increasingly used for designing and implementing application systems in both cloud-based and on-premise infrastructures, high-scale applications and services. There are many security challenges need to be addressed in the application design and implementation phases. The fundamental security requirements that have to be addressed during design phase are authentication and authorization. Therefore, it is vital for applications security architects to understand and properly use existing architecture patterns to implement authentication and authorization in microservices-based systems. The goal of this cheat sheet is to identify such patterns and to do recommendations for applications security architect on possible way to use it.
 
-## Table of contents
-
-- [Edge-level authorization](#Edge-level-authorization)
-- [Service-level authorization](#Service-level-authorization)
-    - [Service-level authorization: existing patterns](#Service-level-authorization:-existing-patterns)
-        - [Decentralized pattern](#Decentralized-pattern)
-        - [Centralized pattern with single policy decision point](#Centralized-pattern-with-single-policy-decision-point)
-        - [Centralized pattern with embedded policy decision point](#Centralized-pattern-with-embedded-policy-decision-point)
-    - [Recommendation on how to implement authorization](#Recommendation-on-how-to-implement-authorization)
-- [External entity identity propagation](#External-entity-identity-propagation)
-    - [Identity propagation: existing patterns](#Identity-propagation:-existing-patterns)
-        - [Send the external entity identity as a clear or self-signed data structures](#Send-the-external-entity-identity-as-a-clear-or-self-signed-data-structures)
-        - [Using a data structures signed by a trusted issuer](#Using-a-data-structures-signed-by-a-trusted-issuer)
-    - [Recommendation on how to implement identity propogation](#Recommendation-on-how-to-implement-identity-propogation)
-- [Service-to-service authentication](#Service-to-service-authentication)
-    - [Service-to-service authentication: existing patterns](#Service-to-service-authentication:-existing-patterns)
-        - [Mutual transport layer security](#Mutual-transport-layer-security)
-        - [Token based](#Token-based)
-- [References](#References)
-
 ## Edge-level authorization
 
 In simple scenario, authorization can happen only at the edge level (API gateway). The API gateway can be leveraged to centralize enforcement of authorization for all downstream microservices, eliminating the need to provide authentication and access control for each of the individual services. In such case, [NIST recommends](https://doi.org/10.6028/NIST.SP.800-204) to implement mitigating controls such as mutual authentication to prevent direct, anonymous connections to the internal services (API gateway bypass). It should be noted that authorization at the edge layer has a [following limitations](https://www.youtube.com/watch?v=UnXjwCWgBKU):
@@ -149,6 +129,38 @@ Token based approach works at the application layer. Token is a container and ma
     - low latency
     - should be apply to non-critical requests
 In most cases, token-based authentication works over TLS that provides confidentiality and integrity of data in transit.
+
+## Logging
+
+Logging services in microservice-based systems aim to meet the principle of accountability and traceability and help detect security anomalies in operations via log analysis. Therefore, it is vital for application security architects to understand and adequately use existing architecture patterns to implement audit logging in microservices-based systems for security operations. A high-level architecture design is shown in the picture below and based on the following principles:
+
+- microservice writes a log message to a local file using standard output (via stdout, stderr)
+- logging agent periodically pulls log messages and sends (publish) them to the message broker (e.g., NATS, Apache Kafka);
+- central logging service subscribes to messages in the message broker, receives and processes them.
+
+![Logging pattern](../assets/ms_logging_pattern.png)
+
+High-level recommendations to logging subsystem architecture with its rationales are listed below.
+
+1. Microservice shall not send log messages directly to the central logging subsystem using network communication. Microservice shall write its log message to a local log file:
+    - this allows to mitigate the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice: in case of logging service outage, microservice will still write log messages to the local file (without data loss), after logging service recovery logs will be available to shipping;
+2. There shall be a dedicated component (logging agent) decoupled from the microservice. The logging agent shall collect log data on the microservice  (read local log file) and send it to the central logging subsystem. Due to possible network latency issues, the logging agent shall be deployed on the same host (virtual or physical machine) with the microservice:
+    - this allows mitigating the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice
+    - in case of logging agent failure, microservice still writes information to the log file, logging agent after recovery will read the file and send information to message broker;
+3. A possible DoS attack on the central logging subsystem logging agent shall not use an asynchronous request/response pattern to send log messages. There shall be a message broker to implement the asynchronous connection between the logging agent and central logging service:
+    - this allows to mitigate the threat of data loss due to logging service failure in case of its flooding by legitimate microservice
+    - in case of logging service outage, microservice will still write log messages to the local file (without data loss) after logging service recovery logs will be available to shipping;
+4. Logging agent and message broker shall use mutual authentication (e.g., based on TLS) to encrypt all transmitted data (log messages) and authenticate themselves:
+    - this allows mitigating threat: microservice spoofing, logging/transport system spoofing, network traffic injection, sniffing network traffic
+5. Message broker shall enforce access control policy to mitigate unauthorized access and implement the principle of least privileges:
+    - this allows mitigating the threat of microservice elevation of privileges
+6. Logging agent shall filter/sanitize output log messages to sensitive data (e.g., PII, passwords, API keys) will never send to the central logging subsystem (data minimization principle). For a comprehensive overview of items that should be excluded from logging, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#data-to-exclude).
+7. Microservices shall generate a correlation ID that uniquely identifies every call chain and helps group log messages to investigate them. The logging agent shall include a correlation ID in every log message.
+8. Logging agent shall periodically provide health and status data to indicate its availability or non-availability.
+9. Logging agent shall publish log messages in structured logs format (e.g., JSON, CSV).
+10. Logging agent shall append log messages with context data, e.g., platform context (hostname, container name), runtime context (class name, filename).
+
+For comprehensive overview of events that should be logged and possible data format, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#which-events-to-log) and [Application Logging Vocabulary Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.md)
 
 ## References
 

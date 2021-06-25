@@ -257,7 +257,6 @@ Many issues can be prevented by following some best practices when writing the D
 - Ensure the base image version is pinned
 - Ensure the OS packages versions are pinned
 - Avoid the use of `ADD` in favor of `COPY`
-- Avoid the use of `apt/apk upgrade`
 - Avoid curl bashing in `RUN` directives
 
 References:

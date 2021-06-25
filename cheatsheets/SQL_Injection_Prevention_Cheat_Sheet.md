@@ -17,13 +17,13 @@ This article provides a set of simple techniques for preventing SQL Injection vu
 
 - **Option 1: Use of Prepared Statements (with Parameterized Queries)**
 - **Option 2: Use of Stored Procedures**
-- **Option 3: Whitelist Input Validation**
+- **Option 3: Allow-list Input Validation**
 - **Option 4: Escaping All User Supplied Input**
 
 **Additional Defenses:**
 
 - **Also: Enforcing Least Privilege**
-- **Also: Performing Whitelist Input Validation as a Secondary Defense**
+- **Also: Performing Allow-list Input Validation as a Secondary Defense**
 
 **Unsafe Example:**
 
@@ -148,7 +148,7 @@ The following code example uses a `SqlCommand`, .NET's implementation of the sto
  End Try
 ```
 
-### Defense Option 3: Whitelist Input Validation
+### Defense Option 3: Allow-list Input Validation
 
 Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.
 
@@ -182,7 +182,7 @@ public String someMethod(boolean sortOrder) {
 
 Any time user input can be converted to a non-String, like a date, numeric, boolean, enumerated type, etc. before it is appended to a query, or used to select a value to append to the query, this ensures it is safe to do so.
 
-Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong whitelist input validation is described in the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong input validation is described in the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
 ### Defense Option 4: Escaping All User-Supplied Input
 
@@ -386,7 +386,7 @@ PDO is the universal option. If you're connecting to a database other than MySQL
 Beyond adopting one of the four primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:
 
 - **Least Privilege**
-- **Whitelist Input Validation**
+- **Allow-list Input Validation**
 
 ### Least Privilege
 
@@ -416,7 +416,7 @@ You can use SQL views to further increase the granularity of access by limiting 
 
 The designer could use views to compensate for this limitation; revoke all access to the table (from all DB users except the owner/admin) and create a view that outputs the hash of the password field and not the field itself. Any SQL injection attack that succeeds in stealing DB information will be restricted to stealing the hash of the passwords (could even be a keyed hash), since no DB user for any of the web applications has access to the table itself.
 
-### Whitelist Input Validation
+### Allow-list Input Validation
 
 In addition to being a primary defense when nothing else is possible (e.g., when a bind variable isn't legal), input validation can also be a secondary defense used to detect unauthorized input before it is passed to the SQL query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md). Proceed with caution here. Validated data is not necessarily safe to insert into SQL queries via string building.
 

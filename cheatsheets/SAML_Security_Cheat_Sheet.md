@@ -99,7 +99,7 @@ Unsolicited Response is inherently [less secure](https://www.identityserver.com/
 - Follow the validation process mentioned in [SAML Profiles (section 4.1.5)](https://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf). This step will help counter the following attacks:
     - Replay (6.1.2)
     - Message Insertion (6.1.3)
-- If the contract of the `RelayState` parameter is a URL, make sure the URL is validated and whitelisted. This step will help counter the following attack:
+- If the contract of the `RelayState` parameter is a URL, make sure the URL is validated and explicitly on an allow list. This step will help counter the following attack:
     - [Open Redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html)
 - Implement proper replay detection either at the response or assertion level. This will help counter the following attack:
     - Replay (6.1.2)

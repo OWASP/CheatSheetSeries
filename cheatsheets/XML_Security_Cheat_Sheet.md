@@ -218,7 +218,7 @@ After selecting the appropriate data type, developers may apply additional restr
 
 ##### Prefixed Values
 
-Certain types of values should only be restricted to specific sets: traffic lights will have only three types of colors, only 12 months are available, and so on. It is possible that the schema has these restrictions in place for each element or attribute. This is the most perfect whitelist scenario for an application: only specific values will be accepted. Such a constraint is called `enumeration` in XML schema. The following example restricts the contents of the element month to 12 possible values:
+Certain types of values should only be restricted to specific sets: traffic lights will have only three types of colors, only 12 months are available, and so on. It is possible that the schema has these restrictions in place for each element or attribute. This is the most perfect allow-list scenario for an application: only specific values will be accepted. Such a constraint is called `enumeration` in XML schema. The following example restricts the contents of the element month to 12 possible values:
 
 ```xml
 <xs:element name="month">
