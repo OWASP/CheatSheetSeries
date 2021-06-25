@@ -32,12 +32,12 @@ See the OWASP Cheat Sheets on [Input Validation](Input_Validation_Cheat_Sheet.md
 
 #### General Practices
 
-Validate all incoming data to only allow valid values (i.e. whitelist).
+Validate all incoming data to only allow valid values (i.e. allow list).
 
 - Use specific GraphQL [data types](https://graphql.org/learn/schema/#type-language) such as [scalars](https://graphql.org/learn/schema/#scalar-types) or [enums](https://graphql.org/learn/schema/#enumeration-types). Write custom GraphQL [validators](https://graphql.org/learn/validation/) for more complex validations. [Custom scalars](https://itnext.io/custom-scalars-in-graphql-9c26f43133f3) may also come in handy.
 - Define [schemas for mutations input](https://graphql.org/learn/schema/#input-types).
-- [Whitelist allowed characters](Input_Validation_Cheat_Sheet.md#whitelisting-vs-blacklisting) - don't use a blacklist
-    - The stricter the whitelist the better. A lot of times a good starting point is only allowing alphanumeric, non-unicode characters because it will disallow many attacks.
+- [List allowed characters](Input_Validation_Cheat_Sheet.md#allow-list-vs-block-list) - don't use a block list
+    - The stricter the list of allowed characters the better. A lot of times a good starting point is only allowing alphanumeric, non-unicode characters because it will disallow many attacks.
 - To properly handle unicode input, use a [single internal character encoding](Input_Validation_Cheat_Sheet.md#validating-free-form-unicode-text)
 - Gracefully [reject invalid input](Error_Handling_Cheat_Sheet.md), being careful not to reveal excessive information about how the API and its validation works.
 

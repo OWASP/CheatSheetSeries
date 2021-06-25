@@ -67,16 +67,16 @@ To make dynamic updates to HTML in the DOM safe, we recommend:
  2. JavaScript encoding all untrusted input, as shown in these examples:
 
 ```javascript
- element.innerHTML = "<%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%>";
- element.outerHTML = "<%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%>";
+ var ESAPI = require('node-esapi');
+ element.innerHTML = "<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>";
+ element.outerHTML = "<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>";
 ```
 
 ```javascript
- document.write("<%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%>");
- document.writeln("<%=Encoder.encodeForJS(Encoder.encodeForHTML(untrustedData))%>");
+ var ESAPI = require('node-esapi');
+ document.write("<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>");
+ document.writeln("<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTML(untrustedData))%>");
 ```
-
-**Note:** The `Encoder.encodeForHTML()` and `Encoder.encodeForJS()` are just notional encoders. Various options for actual encoders are listed later in this document.
 
 ## RULE \#2 - JavaScript Escape Before Inserting Untrusted Data into HTML Attribute Subcontext within the Execution Context
 
@@ -89,23 +89,25 @@ For example, the general rule is to HTML Attribute encode untrusted data (data f
 ### SAFE but BROKEN example
 
 ```javascript
+ var ESAPI = require('node-esapi');
  var x = document.createElement("input");
  x.setAttribute("name", "company_name");
  // In the following line of code, companyName represents untrusted user input
- // The Encoder.encodeForHTMLAttr() is unnecessary and causes double-encoding
- x.setAttribute("value", '<%=Encoder.encodeForJS(Encoder.encodeForHTMLAttr(companyName))%>');
+ // The ESAPI.encoder().encodeForHTMLAttribute() is unnecessary and causes double-encoding
+ x.setAttribute("value", '<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForHTMLAttribute(companyName))%>');
  var form1 = document.forms[0];
  form1.appendChild(x);
 ```
 
-The problem is that if companyName had the value "Johnson & Johnson". What would be displayed in the input text field would be "Johnson & Johnson". The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.
+The problem is that if companyName had the value "Johnson & Johnson". What would be displayed in the input text field would be "Johnson &#x26;amp; Johnson". The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.
 
 ### SAFE and FUNCTIONALLY CORRECT example
 
 ```javascript
+ var ESAPI = require('node-esapi');
  var x = document.createElement("input");
  x.setAttribute("name", "company_name");
- x.setAttribute("value", '<%=Encoder.encodeForJS(companyName)%>');
+ x.setAttribute("value", '<%=ESAPI.encoder().encodeForJS(companyName)%>');
  var form1 = document.forms[0];
  form1.appendChild(x);
 ```
@@ -227,7 +229,8 @@ Normally executing JavaScript from a CSS context required either passing `javasc
 From my experience, calling the `expression()` function from an execution context (JavaScript) has been disabled. In order to mitigate against the CSS `url()` method, ensure that you are URL encoding the data passed to the CSS `url()` method.
 
 ```javascript
-document.body.style.backgroundImage = "url(<%=Encoder.encodeForJS(Encoder.encodeForURL(companyName))%>)";
+var ESAPI = require('node-esapi');
+document.body.style.backgroundImage = "url(<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForURL(companyName))%>)";
 ```
 
 ## RULE \#5 - URL Escape then JavaScript Escape Before Inserting Untrusted Data into URL Attribute Subcontext within the Execution Context
@@ -235,8 +238,9 @@ document.body.style.backgroundImage = "url(<%=Encoder.encodeForJS(Encoder.encode
 The logic which parses URLs in both execution and rendering contexts looks to be the same. Therefore there is little change in the encoding rules for URL attributes in an execution (DOM) context.
 
 ```javascript
+var ESAPI = require('node-esapi');
 var x = document.createElement("a");
-x.setAttribute("href", '<%=Encoder.encodeForJS(Encoder.encodeForURL(userRelativePath))%>');
+x.setAttribute("href", '<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForURL(userRelativePath))%>');
 var y = document.createTextElement("Click Me To Test");
 x.appendChild(y);
 document.body.appendChild(x);
@@ -294,7 +298,7 @@ var x = "<%= Encode.forJavaScript(untrustedData) %>";
 
 ### GUIDELINE \#3 - Use document.createElement("..."), element.setAttribute("...","value"), element.appendChild(...) and similar to build dynamic interfaces
 
-`document.createElement("...")`, `element.setAttribute("...","value")`, `element.appendChild(...)` and similar are save ways to build dynamic interfaces.
+`document.createElement("...")`, `element.setAttribute("...","value")`, `element.appendChild(...)` and similar are safe ways to build dynamic interfaces.
 
 Please note, `element.setAttribute` is only safe for a limited number of attributes.
 
@@ -328,10 +332,11 @@ Ensure to follow step 3 above to make sure that the untrusted data is not sent t
 The example that follows illustrates using closures to avoid double JavaScript encoding.
 
 ```javascript
+ var ESAPI = require('node-esapi');
  setTimeout((function(param) { return function() {
           customFunction(param);
         }
- })("<%=Encoder.encodeForJS(untrustedData)%>"), y);
+ })("<%=ESAPI.encoder().encodeForJS(untrustedData)%>"), y);
 ```
 
 The other alternative is using N-levels of encoding.
@@ -368,18 +373,20 @@ If **A** is double JavaScript encoded then the following **if** check will retur
 
 This brings up an interesting design point. Ideally, the correct way to apply encoding and avoid the problem stated above is to server-side encode for the output context where data is introduced into the application.
 
-Then client-side encode (using a JavaScript encoding library such as [ESAPI4JS](https://owasp.org/www-project-enterprise-security-api/)) for the individual subcontext (DOM methods) which untrusted data is passed to. [ESAPI4JS](https://owasp.org/www-project-enterprise-security-api/) and [jQuery Encoder](https://github.com/chrisisbeef/jquery-encoder/blob/master/src/jquery.jquery-encoder.js) are two client side encoding libraries developed by Chris Schmidt.
+Then client-side encode (using a JavaScript encoding library such as [node-esapi](https://github.com/ESAPI/node-esapi/)) for the individual subcontext (DOM methods) which untrusted data is passed to.
 
 Here are some examples of how they are used:
 
 ```javascript
 //server-side encoding
-var input = "<%=Encoder.encodeForJS(untrustedData)%>";
+var ESAPI = require('node-esapi');
+var input = "<%=ESAPI.encoder().encodeForJS(untrustedData)%>";
 ```
 
 ```javascript
 //HTML encoding is happening in JavaScript
-document.writeln(ESAPI4JS.encodeForHTML(input));
+var ESAPI = require('node-esapi');
+document.writeln(ESAPI.encoder().encodeForHTML(input));
 ```
 
 One option is utilize ECMAScript 5 immutable properties in the JavaScript library.
@@ -408,43 +415,40 @@ function escapeHTML(str) {
 }
 ```
 
-Chris Schmidt has put together another implementation of a JavaScript encoder [here](http://yet-another-dev.blogspot.com/2011/02/client-side-contextual-encoding-for.html).
+### GUIDELINE \#6 - Use untrusted data on only the right side of an expression
 
-### GUIDELINE \#6 - Limit the usage of untrusted data to only right side operations
-
-Not only is it good design to limit the usage of untrusted data to right side operations, but also be aware of data which may be passed to the application which look like code (eg. `location`, `eval()`).
-
-If you want to change different object attributes based on user input then use a level of indirection.
-Instead of:
+Use untrusted data on only the right side of an expression, especially data that looks like code and may be passed to the application (e.g., `location` and `eval()`).
 
 ```javascript
-window[userData] = "moreUserData";
+window[userDataOnLeftSide] = "userDataOnRightSide";
 ```
 
-Do the following instead:
-
-```javascript
-if (userData === "location") {
-   window.location = "static/path/or/properly/url/encoded/value";
-}
-```
+Using untrusted user data on the left side of the expression allows an attacker to subvert internal and external attributes of the window object, whereas using user input on the right side of the expression doesn't allow direct manipulation.
 
 ### GUIDELINE \#7 - When URL encoding in DOM be aware of character set issues
 
 When URL encoding in DOM be aware of character set issues as the character set in JavaScript DOM is not clearly defined (Mike Samuel).
 
-### GUIDELINE \#8 - Limit access to properties objects when using object\[x\] accessors
+### GUIDELINE \#8 - Limit access to object properties when using object\[x\] accessors
 
-Limit access to properties objects when using `object[x]` accessors (Mike Samuel). In other words use a level of indirection between untrusted input and specified object properties.
+Limit access to object properties when using `object[x]` accessors (Mike Samuel). In other words, add a level of indirection between untrusted input and specified object properties.
 
-Here is an example of the problem when using map types:
+Here is an example of the problem using map types:
 
 ```javascript
 var myMapType = {};
 myMapType[<%=untrustedData%>] = "moreUntrustedData";
 ```
 
-Although the developer writing the code above was trying to add additional keyed elements to the `myMapType` object. This could be used by an attacker to subvert internal and external attributes of the `myMapType` object.
+The developer writing the code above was trying to add additional keyed elements to the `myMapType` object. However, this could be used by an attacker to subvert internal and external attributes of the `myMapType` object.
+
+A better approach would be to use the following:
+
+```javascript
+if (untrustedData === 'location') {
+  myMapType.location = "moreUntrustedData";
+}
+```
 
 ### GUIDELINE \#9 - Run your JavaScript in a ECMAScript 5 canopy or sandbox
 
@@ -475,7 +479,7 @@ In the above example, untrusted data started in the rendering URL context (`href
 Because the data was introduced in JavaScript code and passed to a URL subcontext the appropriate server-side encoding would be the following:
 
 ```html
-<a href="javascript:myFunction('<%=Encoder.encodeForJS(Encoder.encodeForURL(untrustedData)) %>', 'test');">
+<a href="javascript:myFunction('<%=ESAPI.encoder().encodeForJS(ESAPI.encoder().encodeForURL(untrustedData)) %>', 'test');">
 Click Me</a>
  ...
 ```
@@ -484,11 +488,11 @@ Or if you were using ECMAScript 5 with an immutable JavaScript client-side encod
 
 ```html
 <!-- server side URL encoding has been removed.  Now only JavaScript encoding on server side. -->
-<a href="javascript:myFunction('<%=Encoder.encodeForJS(untrustedData)%>', 'test');">Click Me</a>
+<a href="javascript:myFunction('<%=ESAPI.encoder().encodeForJS(untrustedData)%>', 'test');">Click Me</a>
  ...
 <script>
 Function myFunction (url,name) {
-    var encodedURL = ESAPI4JS.encodeForURL(url);  //URL encoding using client-side scripts
+    var encodedURL = ESAPI.encoder().encodeForURL(url);  //URL encoding using client-side scripts
     window.location = encodedURL;
 }
 </script>
@@ -504,11 +508,11 @@ There are a number of open source encoding libraries out there:
 4. [Jtidy](http://jtidy.sourceforge.net/)
 5. Your company's custom implementation.
 
-Some work on a black list while others ignore important characters like "&lt;" and "&gt;".
+Some work on a block list while others ignore important characters like "&lt;" and "&gt;".
 
 Java Encoder is an active project providing supports for HTML, CSS and JavaScript encoding.
 
-ESAPI is one of the few which works on a whitelist and encodes all non-alphanumeric characters. It is important to use an encoding library that understands which characters can be used to exploit vulnerabilities in their respective contexts. Misconceptions abound related to the proper encoding that is required.
+ESAPI is one of the few which works on an allow list and encodes all non-alphanumeric characters. It is important to use an encoding library that understands which characters can be used to exploit vulnerabilities in their respective contexts. Misconceptions abound related to the proper encoding that is required.
 
 ### Encoding Misconceptions
 
@@ -532,7 +536,7 @@ Let's look at the sample page and script:
 
 ```html
 <form name="myForm" ...>
-  <input type="text" name="lName" value="<%=Encoder.encodeForHTML(last_name)%>">
+  <input type="text" name="lName" value="<%=ESAPI.encoder().encodeForHTML(last_name)%>">
  ...
 </form>
 <script>
@@ -557,3 +561,16 @@ Some papers or guides advocate its use as an alternative to `innerHTML` to mitig
 ```
 
 The `innerText` feature was originally introduced by Internet Explorer, and was formally specified in the HTML standard in 2016 after being adopted by all major browser vendors.
+
+### Detect DOM XSS using variant analysis
+
+**Vulnerable code:**
+
+```
+<script>
+var x = location.hash.split("#")[1];
+document.write(x);
+</script>
+```
+
+Semgrep rule to identify above dom xss [link](https://semgrep.dev/s/we30).

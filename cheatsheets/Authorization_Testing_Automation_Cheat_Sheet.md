@@ -2,41 +2,41 @@
 
 ## Introduction
 
-Authorizations definition and implementation is one of the important protection measure of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to go live, the most significant number of issues related to authorization came in the maintenance lifetime of the application.
+Authorizations definition and implementation is one of the important protection measures of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to going live, the most significant number of issues related to authorization come in the maintenance lifetime of the application.
 
-This situation is often explained by the fact that features are added/modified and no review of the authorizations was performed on the application before the publishing of the new release, for cost or time issue reason.
+This situation is often explained by the fact that features are added/modified and no review of the authorizations is performed on the application before the publishing of the new release, for cost or time issue reason.
 
 ## Context
 
-In order to try to address this situation, it's can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations definition.
+In order to try to address this situation, it can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations' definition.
 
-An authorization is often composed by 2 elements (also named dimensions): The **Feature** and the **Logical Role** that can access it (sometime a third dimension named **Data** is added in order to define a access that include a filtering at business data level).
+An authorization is often composed by 2 elements (also named dimensions): The **Feature**, and the **Logical Role** that can access it (sometime a third dimension named **Data** is added in order to define access that includes a filtering at business data level).
 
-The representation of the different combinations of these 2 dimensions is often named an **Authorization matrix** and is often formalized in an Microsoft Excel file.
+The representation of the different combinations of these 2 dimensions is often named an **Authorization matrix** and is often formalized in a spreadsheet.
 
 During a test of an authorization, a **Logical Role** is also called a **Point Of View**.
 
 ## Objective
 
-This article describe a proposition of implementation in order to automate the tests of an *authorization matrix*.
+This article describes a proposition of implementation in order to automate the tests of an *authorization matrix*.
 
-This article use the assumption that 2 dimensions are used to represents an authorization for the technical proposition described and take as example a application exposing REST services.
+This article assumes that 2 dimensions are used to represent an authorization for the technical proposition described and takes an application exposing REST services as an example.
 
 The objective is to provide starting ideas/hints in order to create a tailored way of testing of the authorization matrix for the target application.
 
 ## Proposition
 
-In order to achieve the full automation of the evaluation of the *authorization matrix*, the following actions has been performed:
+In order to achieve the full automation of the evaluation of the *authorization matrix*, the following actions have been performed:
 
 1. Formalize the authorization matrix in a pivot format file allowing:
-    1. The processing by a program in a easy way.
+    1. The processing by a program easily.
     2. To be read and updated by a human for the follow-up of the authorization combinations.
     3. Hierarchy in the information in order to easily materialize the different combinations.
-    4. The maximum possible of independence from the technology and design used to implements the application exposing the features.
+    4. The maximum possible of independence from the technology and design used to implement the application exposing the features.
 
 2. Create a set of integration tests that fully use the authorization matrix pivot file as input source in order to evaluate the different combinations with:
     1. The minimum possible of maintenance when the authorization matrix pivot file is updated.
-    2. A clear indication, in case of failed test, of the source authorization combination that do not respect the authorization matrix.
+    2. A clear indication, in case of failed test, of the source authorization combination that does not respect the authorization matrix.
 
 ### Authorization matrix pivot file
 
@@ -44,26 +44,26 @@ The XML format has been used to formalize the authorization matrix.
 
 The XML structure contains 3 main sections:
 
-- Node **roles**: This node describe the possible logical roles used in the system, is used to provide a list and the explanation of the different roles (authorization level).
-- Node **services**: This node list and describe the available services exposed by the system and the associated logical role(s) that can call them.
-- Node **services-testing**: This node provide a test payload for each service if the service use input data other than coming from URL or path.
+- Node **roles**: This node describes the possible logical roles used in the system, is used to provide a list, and the explanation of the different roles (authorization level).
+- Node **services**: This node lists and describes the available services exposed by the system, and the associated logical role(s) that can call them.
+- Node **services-testing**: This node provides a test payload for each service if the service uses input data other than the one coming from URL or path.
 
-This is an example of the XML used to represents the authorization:
+This is an example of the XML used to represent the authorization:
 
 > Placeholders (values between {}) are used to mark location where test value must be placed by the integration tests if needed
 
 ``` xml
   <?xml version="1.0" encoding="UTF-8"?>
   <!--
-      This file materialize the authorization matrix for the different
+      This file materializes the authorization matrix for the different
       services exposed by the system.
 
-      It will be used by the tests as a input sources for the different tests cases:
-      1) Evaluate legitimate access and is correct implementation
+      It will be used by the tests as a input source for the different tests cases:
+      1) Evaluate legitimate access and its correct implementation
       2) Identify not legitimate access (authorization definition issue
       on service implementation)
 
-      The "name" attribute is used for identify uniquely a SERVICE or a ROLE.
+      The "name" attribute is used to uniquely identify a SERVICE or a ROLE.
   -->
   <authorization-matrix>
 
@@ -74,9 +74,9 @@ This is an example of the XML used to represents the authorization:
           <role name="ANONYMOUS"
           description="Indicate that no authorization is needed"/>
           <role name="BASIC"
-          description="Role affected to a standard user (lowest access right just above anonymous)"/>
+          description="Role affecting a standard user (lowest access right just above anonymous)"/>
           <role name="ADMIN"
-          description="Role affected to a administrator user (highest access right)"/>
+          description="Role affecting an administrator user (highest access right)"/>
       </roles>
 
       <!-- List and describe the available services exposed by the system and the associated
@@ -130,9 +130,9 @@ This is an example of the XML used to represents the authorization:
 
 Integration tests are implemented using a maximum of factorized code and one test case by **Point Of View (POV)** has been created in order to group the verifications by profile of access level (logical role) and facilitate the rendering/identification of the errors.
 
-Parsing, object mapping and access to the authorization matrix information has been implemented using XML marshalling/unmarshalling built-in features provided by the technology used to implements the tests (JAXB here) in order to limit the code to the one in charge of performing the tests.
+Parsing, object mapping and access to the authorization matrix information has been implemented using XML marshalling/unmarshalling built-in features provided by the technology used to implement the tests (JAXB here) in order to limit the code to the one in charge of performing the tests.
 
-This the implementation of the integration tests case class:
+This is the implementation of the integration tests case class:
 
 ``` java
   import org.owasp.pocauthztesting.enumeration.SecurityRole;
@@ -375,7 +375,7 @@ This the implementation of the integration tests case class:
   }
 ```
 
-In case of detection of a authorization issue(s) the output is the following:
+In case of detecting an authorization issue(s) the output is the following:
 
 ```java
 testAccessUsingAnonymousUserPointOfView(org.owasp.pocauthztesting.AuthorizationMatrixIT)
@@ -396,9 +396,9 @@ Access issues detected using the BASIC USER point of view:
     a response code 200 that is not the expected one (403 expected).
 ```
 
-## Rendering of the authorization matrix for audit / review
+## Rendering of the authorization matrix for an audit / review
 
-Even if the authorization matrix is stored in a human readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.
+Even if the authorization matrix is stored in a human-readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.
 
 The Following XSL stylesheet can be used:
 

@@ -83,7 +83,7 @@ It is a good idea to do this when:
 
 It is generally not a good idea to use this method for widely and publicly available websites that will have an average user. For example, it wouldn't be a good idea to implement this for a website like Facebook. While this technique can prevent the user from having to type a password (thus protecting against an average keylogger from stealing it), it is still considered a good idea to consider using both a password and TLS client authentication combined.
 
-Additionally, if the client is behind an enterprise proxy which performs SSL/TLS decryption, this will break certificate authentication unless the site is whitelisted on the proxy.
+Additionally, if the client is behind an enterprise proxy which performs SSL/TLS decryption, this will break certificate authentication unless the site is allowed on the proxy.
 
 For more information, see: [Client-authenticated TLS handshake](https://en.wikipedia.org/wiki/Transport_Layer_Security#Client-authenticated_TLS_handshake)
 

@@ -16,7 +16,7 @@ Sample codes used in tips are located [here](https://github.com/righettod/inject
 
 The following point can be applied, in a general way, to prevent *Injection* issue:
 
-1. Apply **Input Validation** (using whitelist approach) combined with **Output Sanitizing+Escaping** on user input/output.
+1. Apply **Input Validation** (using "allow list" approach) combined with **Output Sanitizing+Escaping** on user input/output.
 2. If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.
 
 Additional advices are provided on this [cheatsheet](Input_Validation_Cheat_Sheet.md).
@@ -29,7 +29,7 @@ Additional advices are provided on this [cheatsheet](Input_Validation_Cheat_Shee
 
 #### Symptom
 
-Injection of this type occur when the application use untrusted user input to build a SQL query using a String and execute it.
+Injection of this type occur when the application uses untrusted user input to build an SQL query using a String and execute it.
 
 #### How to prevent
 
@@ -101,7 +101,7 @@ try (Connection con = DriverManager.getConnection(jdbcUrl)) {
 
 #### Symptom
 
-Injection of this type occur when the application use untrusted user input to build a JPA query using a String and execute it. It's quite similar to SQL injection but here the altered language is not SQL but JPA QL.
+Injection of this type occur when the application uses untrusted user input to build a JPA query using a String and execute it. It's quite similar to SQL injection but here the altered language is not SQL but JPA QL.
 
 #### How to prevent
 
@@ -143,7 +143,7 @@ try {
 
 #### Symptom
 
-Injection of this type occur when the application use untrusted user input to build a Operating System command using a String and execute it.
+Injection of this type occur when the application uses untrusted user input to build an Operating System command using a String and execute it.
 
 #### How to prevent
 
@@ -167,7 +167,7 @@ Assert.assertTrue(host.isReachable(5000));
 
 #### Symptom
 
-Injection of this type occur when the application use untrusted user input to build a XPath query using a String and execute it.
+Injection of this type occur when the application uses untrusted user input to build a XPath query using a String and execute it.
 
 #### How to prevent
 
@@ -248,18 +248,18 @@ Assert.assertTrue(book.getTextContent().contains("Ralls, Kim"));
 
 #### Symptom
 
-Injection of this type occur when the application use untrusted user input to build a HTTP response and sent it to browser.
+Injection of this type occur when the application uses untrusted user input to build an HTTP response and sent it to browser.
 
 #### How to prevent
 
-Either apply strict input validation (whitelist approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).
+Either apply strict input validation ("allow list" approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).
 
 #### Example
 
 ``` java
 /*
 INPUT WAY: Receive data from user
-Here it's recommended to use strict input validation using whitelist approach.
+Here it's recommended to use strict input validation using "allow list" approach.
 In fact, you ensure that only allowed characters are part of the input received.
 */
 
@@ -314,11 +314,11 @@ A dedicated [cheatsheet](LDAP_Injection_Prevention_Cheat_Sheet.md) has been crea
 
 #### Symptom
 
-Injection of this type occur when the application use untrusted user input to build a NoSQL API call expression.
+Injection of this type occur when the application uses untrusted user input to build a NoSQL API call expression.
 
 #### How to prevent
 
-As there many NoSQL database system and each one use a API for call, it's important to ensure that user input received and used to build the API call expression do not contains any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It's also important to not use string concatenation to build API call expression but use the API to create the expression.
+As there many NoSQL database system and each one use an API for call, it's important to ensure that user input received and used to build the API call expression does not contain any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It's also important to not use string concatenation to build API call expression but use the API to create the expression.
 
 #### Example - MongoDB
 

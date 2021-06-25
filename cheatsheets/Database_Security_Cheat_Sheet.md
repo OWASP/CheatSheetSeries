@@ -61,7 +61,7 @@ The permissions assigned to database user accounts should be based on the princi
 
 - Do not use the built-in `root`, `sa` or `SYS` accounts.
 - Do not grant the account administrative rights over the database instance.
-- Only allow the account to connect from whitelisted hosts.
+- Only allow the account to connect from allowed hosts.
     - This would often be `localhost` or the address of the application server.
 - Only grant the account access to the specific databases it needs.
     - Development, UAT and Production environments should all use separate databases and accounts.

@@ -18,9 +18,9 @@ A host or service's certificate or public key can be added to an application at 
 
 You should pin anytime you want to be relatively certain of the remote host's identity or when operating in a hostile environment. Since one or both are almost always true, you should probably pin all the time.
 
-### When Do You Whitelist
+### When Do You Allow-list
 
-If you are working for an organization which practices "egress filtering" as part of a Data Loss Prevention (DLP) strategy, you will likely encounter *Interception Proxies*. I like to refer to these things as **"good" bad guys** (as opposed to **"bad" bad guys**) since both break end-to-end security and we can't tell them apart. In this case, **do not** offer to whitelist the interception proxy since it defeats your security goals. Add the interception proxy's public key to your pinset after being **instructed** to do so by the folks in Risk Acceptance.
+If you are working for an organization which practices "egress filtering" as part of a Data Loss Prevention (DLP) strategy, you will likely encounter *Interception Proxies*. I like to refer to these things as **"good" bad guys** (as opposed to **"bad" bad guys**) since both break end-to-end security and we can't tell them apart. In this case, **do not** offer to allow-list the interception proxy since it defeats your security goals. Add the interception proxy's public key to your pinset after being **instructed** to do so by the folks in Risk Acceptance.
 
 ### How Do You Pin
 
@@ -89,6 +89,8 @@ The Android documentation provides an example of how SSL validation can be custo
 Lastly, if you want to validate whether the pinning is successful, please follow instructions from the Mobile Security Testing Guide's [ntroduction into testing network communication](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04f-Testing-Network-Communication.md#testing-network-communication) and the [Android specific network testing](https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md#android-network-apis).
 
 ### iOS
+
+Apple suggests pinning a CA public key by specifying it in `Info.plist` file under App Transport Security Settings. More details in [Identity Pinning: How to configure server certificates for your app](https://developer.apple.com/news/?id=g9ejcf8y) article.
 
 [TrustKit](https://github.com/datatheorem/TrustKit), an open-source SSL pinning library for iOS and macOS is available. It provides an easy-to-use API for implementing pinning, and has been deployed in many apps.
 

@@ -17,7 +17,7 @@ Additionally, while the following sections discuss the disadvantage and weakness
 
 ## Advantages
 
-The most common way that user accounts get compromised on applications is through weak, re-used or stolen passwords. Despite any technical security controls implemented on the application, users are liable to choose weak passwords, or to use the same password on different applications. As developers or system administrators, it should be assumed that users' passwords will be compromised as some point, and the system should be designed in order to defend against this.
+The most common way that user accounts get compromised on applications is through weak, re-used or stolen passwords. Despite any technical security controls implemented on the application, users are liable to choose weak passwords, or to use the same password on different applications. As developers or system administrators, it should be assumed that users' passwords will be compromised at some point, and the system should be designed in order to defend against this.
 
 Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force, [credential stuffing](Credential_Stuffing_Prevention_Cheat_Sheet.md) and password spraying, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984).
 
@@ -40,7 +40,7 @@ However, the following recommendations are generally appropriate for most applic
 
 - Provide the option for users to enable MFA on their accounts using [TOTP](#software-totp-tokens).
 - Require MFA for administrative or other high privileged users.
-- Consider whitelisting corporate IP ranges so that MFA is not required from them.
+- Consider allowing corporate IP ranges so that MFA is not required from them.
 - Allow the user to remember the use of MFA in their browser, so they are not prompted every time they login.
 - Implement a secure process to allow users to reset their MFA.
 
@@ -65,7 +65,7 @@ Having to frequently login with MFA creates an additional burden for users, and 
     - This can either be permanent, or for a period of a few days.
     - This needs to be done with more than just a cookie, which could be stolen by an attacker.
         - For example, a cookie matched to the previous IP address the cookie was issued for.
-- Whitelisting corporate IP ranges (or, more strictly, using location as a second factor).
+- Allow corporate IP ranges (or, more strictly, using location as a second factor).
     - This doesn't protect against malicious insiders, or a user's workstation being compromised.
 - Only requiring MFA for sensitive actions, not for the initial login.
     - This will depend heavily on the functionality in the application.
@@ -225,7 +225,7 @@ Certificates are supported by all major web browsers, and once installed require
 
 - Using digital certificates requires backend PKI system.
 - Installing certificates can be difficult for users, particularly in a highly restricted environment.
-- Enterprise proxy servers which perform SSL decryption will prevent he use of certificates.
+- Enterprise proxy servers which perform SSL decryption will prevent the use of certificates.
 - The certificates are stored on the user's workstation, and as such can be stolen if their system is compromised.
 
 ### Smartcards
@@ -302,6 +302,7 @@ The are a number of common types of biometrics that are used, including:
 - Require manual enrolment of the user's physical attributes.
 - Custom (sometimes expensive) hardware is often required to read biometrics.
 - Modern browsers do not have native support, so custom client-side software is required.
+- Privacy concerns: Sensitive physical information must be stored about users.
 - If compromised, biometric data can be difficult to change.
 
 ## Location
@@ -312,7 +313,7 @@ When talking about location, access to the application that the user is authenti
 
 ### Source IP Ranges
 
-The source IP address the user is connecting from can be used as a factor, typically in a white-list based approach. This could either be based on a static white-list (such as corporate office ranges) or a dynamic white-list (such as previous IP addresses the user has authenticated from).
+The source IP address the user is connecting from can be used as a factor, typically in an allow-list based approach. This could either be based on a static list (such as corporate office ranges) or a dynamic list (such as previous IP addresses the user has authenticated from).
 
 #### Pros
 

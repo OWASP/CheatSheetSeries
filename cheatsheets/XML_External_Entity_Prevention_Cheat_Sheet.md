@@ -286,6 +286,7 @@ SAXBuilder builder = new SAXBuilder();
 builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl",true);
 builder.setFeature("http://xml.org/sax/features/external-general-entities", false);
 builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+builder.setExpandEntities(false);
 Document doc = builder.build(new File(fileName));
 ```
 
@@ -433,7 +434,7 @@ The following table lists all supported .NET XML parsers and their default safet
 
 ### LINQ to XML
 
-Both the `XElement` and `XDocument` objects in the `System.Xml.Linq` library are safe from XXE injection by default. `XElement` parses only the elements within the XML file, so DTDs are ignored altogether. `XDocument` has DTDs [disabled by default](https://github.com/dotnet/docs/blob/master/docs/visual-basic/programming-guide/concepts/linq/linq-to-xml-security.md), and is only unsafe if constructed with a different unsafe XML parser.
+Both the `XElement` and `XDocument` objects in the `System.Xml.Linq` library are safe from XXE injection by default. `XElement` parses only the elements within the XML file, so DTDs are ignored altogether. `XDocument` has DTDs [disabled by default](https://docs.microsoft.com/en-us/dotnet/standard/linq/linq-xml-security), and is only unsafe if constructed with a different unsafe XML parser.
 
 ### XmlDictionaryReader
 

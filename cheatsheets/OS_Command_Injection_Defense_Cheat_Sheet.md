@@ -54,10 +54,10 @@ If calling a system command that incorporates user-supplied cannot be avoided, t
 
 **Input validation:** The values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:
 
-- When it comes to the **commands** used, these must be validated against a whitelist of allowed commands.
+- When it comes to the **commands** used, these must be validated against a list of allowed commands.
 - In regards to the **arguments** used for these commands, they should be validated using the following options:
-    - **Positive or whitelist input validation**: Where are the arguments allowed explicitly defined.
-    - **White list Regular Expression**: Where a whitelist of good, allowed characters and the maximum length of the string are defined. Ensure that metacharacters like ones specified in `Note A` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers and does not contain metacharacters. The length is also being limited to 3-10 characters: `^[a-z0-9]{3,10}$`
+    - **Positive or allow list input validation**: Where are the arguments allowed explicitly defined.
+    - **Allow list Regular Expression**: Where a list of good, allowed characters and the maximum length of the string are defined. Ensure that metacharacters like ones specified in `Note A` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers and does not contain metacharacters. The length is also being limited to 3-10 characters: `^[a-z0-9]{3,10}$`
 
 **Note A:**
 

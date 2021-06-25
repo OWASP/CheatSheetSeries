@@ -203,17 +203,17 @@ This problem is inherent to JWT because a token only becomes invalid when it exp
 
 #### How to Prevent
 
-A way to protect against this is to implement a token blacklist that will be used to mimic the "logout" feature that exists with traditional session management system.
+A way to protect against this is to implement a token block list that will be used to mimic the "logout" feature that exists with traditional session management system.
 
-The blacklist will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.
+The block list will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.
 
-When the user wants to "logout" then it call a dedicated service that will add the provided user token to the blacklist resulting in an immediate invalidation of the token for further usage in the application.
+When the user wants to "logout" then it call a dedicated service that will add the provided user token to the block list resulting in an immediate invalidation of the token for further usage in the application.
 
 #### Implementation Example
 
-##### Blacklist Storage
+##### Block List Storage
 
-A database table with the following structure will be used as the central blacklist storage.
+A database table with the following structure will be used as the central block list storage.
 
 ``` sql
 create table if not exists revoked_token(jwt_token_digest varchar(255) primary key,
@@ -222,7 +222,7 @@ revocation_date timestamp default now());
 
 ##### Token Revocation Management
 
-Code in charge of adding a token to the blacklist and checking if a token is revoked.
+Code in charge of adding a token to the block list and checking if a token is revoked.
 
 ``` java
 /**

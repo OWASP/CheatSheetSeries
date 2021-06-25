@@ -13,10 +13,11 @@ The following short guidelines can be used as a quick reference to protect the f
 - **Use a side-channel to communicate the method to reset their password.**
 - **Use [URL tokens](#url-tokens) for the simplest and fastest implementation.**
 - **Ensure that generated tokens or codes are:**
-    - **Randomly genererated using a cryptographically safe algorithm.**
+    - **Randomly generated using a cryptographically safe algorithm.**
     - **Sufficiently long to protect against brute-force attacks.**
     - **Stored securely.**
     - **Single use and expire after an appropriate period.**
+- **Do not make a change to the account until a valid token is presented, such as locking out the account**
 
 This cheat sheet is focused on resetting users passwords. For guidance on resetting multifactor authentication (MFA), see the relevant section in the [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md#resetting-mfa).
 
@@ -74,7 +75,7 @@ URL tokens are passed in the query string of the URL, and are typically sent to 
 
 1. Generate a token to the user and attach it in the URL query string.
 2. Send this token to the user via email.
-   - Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. The URL should be either be hard-coded, or should be validated against a whitelist of trusted domains.
+   - Don't rely on the [Host](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) header while creating the reset URLs to avoid [Host Header Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection) attacks. The URL should be either be hard-coded, or should be validated against a list of trusted domains.
    - Ensure that the URL is using HTTPS.
 3. The user receives the email, and browses to the URL with the attached token.
    - Ensure that the reset password page adds the [Referrer Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) tag with the `noreferrer` value in order to avoid [referrer leakage](https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage).
@@ -115,3 +116,7 @@ While implementing this method, the following practices should be followed:
 ### Security Questions
 
 Security questions should not be used as the sole mechanism for resetting passwords due to their answers frequently being easily guessable or obtainable by attackers. However, they can provide an additional layer of security when combined with the other methods discussed in this cheat sheet. If they are used, then ensure that secure questions are chosen as discussed in the [Security Questions cheat sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md).
+
+## Account Lockout
+
+Accounts should not be locked out in response to a forgotten password attack, as this can be used to deny access to users with known usernames. For more details on account lockouts, see the [Authenication Cheat Sheet](Authentication_Cheat_Sheet.md).

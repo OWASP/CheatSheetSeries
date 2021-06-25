@@ -202,7 +202,7 @@ Specific Risky Functionality
 
 *File Uploads*
 
--   [Test that acceptable file types are whitelisted and non-whitelisted types are rejected](/Test_Upload_of_Unexpected_File_Types_(OTG-BUSLOGIC-008)\ "wikilink")
+-   [Test that acceptable file types are allowed and non-allowed types are rejected](/Test_Upload_of_Unexpected_File_Types_(OTG-BUSLOGIC-008)\ "wikilink")
 -   Test that file size limits, upload frequency and total file counts are defined and are enforced
 -   Test that file contents match the defined file type
 -   [Test that all file uploads have anti-virus scanning in place](/Test_Upload_of_Malicious_Files_(OTG-BUSLOGIC-009)\ "wikilink")

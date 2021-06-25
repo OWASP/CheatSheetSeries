@@ -33,13 +33,13 @@ Input validation can be implemented using any programming technique that allows 
 - Array of allowed values for small sets of string parameters (e.g. days of week).
 - Regular expressions for any other structured data covering the whole input string `(^...$)` and **not** using "any character" wildcard (such as `.` or `\S`)
 
-### Whitelisting vs blacklisting
+### Allow list vs block list
 
-It is a common mistake to use black list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.
+It is a common mistake to use block list validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.
 
 Plus, such filters frequently prevent authorized input, like `O'Brian`, where the `'` character is fully legitimate. For more information on XSS filter evasion please see the [this wiki page](https://owasp.org/www-community/xss-filter-evasion-cheatsheet).
 
-White list validation is appropriate for all input fields provided by the user. White list validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.
+Allow list validation is appropriate for all input fields provided by the user. Allow list validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.
 
 If it's well structured data, like dates, social security numbers, zip codes, email addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.
 
@@ -47,15 +47,15 @@ If the input field comes from a fixed set of options, like a drop down list or r
 
 ### Validating free-form Unicode text
 
-Free-form text, especially with Unicode characters, is perceived as difficult to validate due to a relatively large space of characters that need to be whitelisted.
+Free-form text, especially with Unicode characters, is perceived as difficult to validate due to a relatively large space of characters that need to be allowed.
 
 It's also free-form text input that highlights the importance of proper context-aware output encoding and quite clearly demonstrates that input validation is **not** the primary safeguards against Cross-Site Scripting. If your users want to type apostrophe `'` or less-than sign `<` in their comment field, they might have perfectly legitimate reason for that and the application's job is to properly handle it throughout the whole life cycle of the data.
 
 The primary means of input validation for free-form text input should be:
 
 - **Normalization:** Ensure canonical encoding is used across all the text and no invalid characters are present.
-- **Character category whitelisting:** Unicode allows whitelisting categories such as "decimal digits" or "letters" which not only covers the Latin alphabet but also various other scripts used globally (e.g. Arabic, Cyrillic, CJK ideographs etc).
-- **Individual character whitelisting:** If you allow letters and ideographs in names and also want to allow apostrophe `'` for Irish names, but don't want to allow the whole punctuation category.
+- **Character category allow-listing:** Unicode allows listing categories such as "decimal digits" or "letters" which not only covers the Latin alphabet but also various other scripts used globally (e.g. Arabic, Cyrillic, CJK ideographs etc).
+- **Individual character allow-listing:** If you allow letters and ideographs in names and also want to allow apostrophe `'` for Irish names, but don't want to allow the whole punctuation category.
 
 References:
 
@@ -67,13 +67,15 @@ Developing regular expressions can be complicated, and is well beyond the scope 
 
 There are lots of resources on the internet about how to write regular expressions, including this [site](https://www.regular-expressions.info/) and the [OWASP Validation Regex Repository](https://owasp.org/www-community/OWASP_Validation_Regex_Repository).
 
+When designing regular expression, be aware of (RegEx Denial of Service (ReDoS) attacks)[https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS]. These attacks cause a program using a poorly designed Regular Expression to operate very slowly and utilize CPU resources for a very long time.
+
 In summary, input validation should:
 
 - Be applied to all input data, at minimum.
 - Define the allowed set of characters to be accepted.
 - Define a minimum and maximum length for the data (e.g. `{1,25}` ).
 
-## White List Regular Expression Examples
+## Allow List Regular Expression Examples
 
 Validating a U.S. Zip Code (5 digits plus optional -4)
 
@@ -110,7 +112,7 @@ public void doPost( HttpServletRequest request, HttpServletResponse respon
 }
 ```
 
-Some white list validators have also been predefined in various open source packages that you can leverage. For example:
+Some Allow list validators have also been predefined in various open source packages that you can leverage. For example:
 
 - [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/)
 
@@ -155,7 +157,7 @@ Check the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md).
 
 ### Beware of "special" files
 
-The upload feature should be using a whitelist approach to only allow specific file types and extensions. However, it is important to be aware of the following file types that, if allowed, could result in security vulnerabilities:
+The upload feature should be using an allow-list approach to only allow specific file types and extensions. However, it is important to be aware of the following file types that, if allowed, could result in security vulnerabilities:
 
 - **crossdomain.xml** / **clientaccesspolicy.xml:** allows cross-domain data loading in Flash, Java and Silverlight. If permitted on sites with authentication this can permit cross-domain data theft and CSRF attacks. Note this can get pretty complicated depending on the specific plugin version in question, so its best to just prohibit files named "crossdomain.xml" or "clientaccesspolicy.xml".
 - **.htaccess** and **.htpasswd:** Provides server configuration options on a per-directory basis, and should not be permitted. See [HTACCESS documentation](http://en.wikipedia.org/wiki/Htaccess).
@@ -217,7 +219,7 @@ Blocking disposable email addresses is almost impossible, as there are a large n
 
 If these lists are used to block the use of disposable email addresses then the user should be presented with a message explaining why they are blocked (although they are likely to simply search for another disposable provider rather than giving their legitimate address).
 
-If it is essential that disposable email addresses are blocked, then registrations should only be allowed from specifically whitelisted email providers. However, if this includes public providers such as Google or Yahoo, users can simply register their own disposable address with them.
+If it is essential that disposable email addresses are blocked, then registrations should only be allowed from specifically-allowed email providers. However, if this includes public providers such as Google or Yahoo, users can simply register their own disposable address with them.
 
 #### Sub-Addressing
 
