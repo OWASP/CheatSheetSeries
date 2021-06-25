@@ -208,6 +208,15 @@ Multi-factor authentication (MFA) is by far the best defence against the majorit
 
 The [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md) contains further guidance on implementing MFA.
 
+There are two specific security characteristics that allow MFA to be more secure than a password;
+
+1. All MFA use a form of Tokens that are time-based (and may be single use)
+2. Tokens are designed to be public and both client and server are able to agree that each has a secret without that secret actually being exposed to attack during communication between client and server
+
+If your implementation of password Authentication follows the 'Password as a HMAC' approach, it shares the same security characteristics as MFA and you might then consider MFA to be an Authorization mechanism only, lowering the friction for users during Authentication with no reduced security characteristics.
+
+- [Avoid Password Transmission](Avoid_Password_Transmission_Cheat_Sheet.md)
+
 #### Account Lockout
 
 The most common protection against these attacks is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.
