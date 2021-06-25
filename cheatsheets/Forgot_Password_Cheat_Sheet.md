@@ -13,7 +13,7 @@ The following short guidelines can be used as a quick reference to protect the f
 - **Use a side-channel to communicate the method to reset their password.**
 - **Use [URL tokens](#url-tokens) for the simplest and fastest implementation.**
 - **Ensure that generated tokens or codes are:**
-    - **Randomly genererated using a cryptographically safe algorithm.**
+    - **Randomly generated using a cryptographically safe algorithm.**
     - **Sufficiently long to protect against brute-force attacks.**
     - **Stored securely.**
     - **Single use and expire after an appropriate period.**
