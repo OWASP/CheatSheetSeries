@@ -62,28 +62,38 @@ See: [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_S
 
 The login page and all subsequent authenticated pages must be exclusively accessed over TLS or other strong transport. The initial login page referred to as the "login landing page", must be served over TLS or other strong transport. Failure to utilize TLS or other strong transport for the login landing page allows an attacker to modify the login form action, causing the user's credentials to be posted to an arbitrary location. Failure to utilize TLS or other strong transport for authenticated pages after login enables an attacker to view the unencrypted session ID and compromise the user's authenticated session.
 
-### Require Re-authentication for Sensitive Features
+### Require Authorization for Sensitive Features
 
-In order to mitigate CSRF and session hijacking, it's important to require the current credentials for an account before updating sensitive account information such as the user's password, user's email, or before sensitive transactions, such as shipping a purchase to a new address. Without this countermeasure, an attacker may be able to execute sensitive transactions through a CSRF or XSS attack without needing to know the user's current credentials. Additionally, an attacker may get temporary physical access to a user's browser or steal their session ID to take over the user's session.
+Perform Authorization when any sensitive transaction is requested and before updating sensitive account information such as the user's password, user's email, or before sensitive transactions, such as shipping a purchase to a new address.
 
-### Consider Strong Transaction Authentication
+See: [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md).
 
-Some applications should use a second factor to check whether a user may perform sensitive operations. For more information, see the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md).
+Without an Authorization mechanism at the time of any sensitive transaction an attacker may be able to execute sensitive transactions unchallenged through a CSRF or XSS attack, unchallenged because Authorization is how you verify requester identity and that they have their current credentials. Without Authorization there is no challenges for an attacker and no need for them to know the user's current credentials or prove they are who they claim to be.
+
+### Consider additional Authentication factors
+
+Some applications should use a second factor to check whether a user may perform sensitive operations. For more information, see the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md) that explains the role a second factor plays for Authorization.
 
 #### TLS Client Authentication
 
-TLS Client Authentication, also known as two-way TLS authentication, consists of both, browser and server, sending their respective TLS certificates during the TLS handshake process. Just as you can validate the authenticity of a server by using the certificate and asking a well known Certificate Authority (CA) if the certificate is valid, the server can authenticate the user by receiving a certificate from the client and validating against a third party CA or its own CA. To do this, the server must provide the user with a certificate generated specifically for him, assigning values to the subject so that these can be used to determine what user the certificate should validate. The user installs the certificate on a browser and now uses it for the website.
+TLS Client Authentication is Mutual-TLS, also known as mTLS, which consists of both browser and server sending their respective TLS certificates to each other during the TLS handshake process.
+Just as you can validate the authenticity of a server by using the certificate and asking a well known Certificate Authority (CA) if the certificate is valid, the server can authenticate the client device by receiving a certificate from the client and validating against it's corresponding public CA (or private CA if both client and server share a private network).
+To do this, the server must provide the client with a certificate generated specifically for the client machine identity, assigning values to the _subject_ that are used to determine appropriate validation.
+To enable Mutual-TLS the client machine must install the certificate to the client operating system certificate store, or install to a browser certificate store directly. Enterprise software known as Mobile Device Management (MDM) or Active Directory Group Policy are common tools to automate this certification distribution and installation, and there are visual interfaces for most browsers and operating systems if an end-user must install the client certificate manually themselves.
 
 It is a good idea to do this when:
 
-- It is acceptable (or even preferred) that the user only has access to the website from only a single computer/browser.
-- The user is not easily scared by the process of installing TLS certificates on his browser, or there will be someone, probably from IT support, that will do this for the user.
-- The website requires an extra step of security.
-- It is also a good thing to use when the website is for an intranet of a company or organization.
+- It is acceptable (or even preferred) that the user only has access to the website from only a _single identity_ either on a single computer and browser or spanning multiple computers and browsers
+- Lacking automation of certificate distribution nd installation, the user is not easily scared by the process of installing TLS certificates on their browser, or there will be someone, probably from IT support, that will do this for the user.
+- The website or server requires assurance of the client machine identity to increase the security for the user when connecting to the website or server.
+- Mutual-TLS is commonly needed to use internal websites, on an intranet, of a company or organization.
 
-It is generally not a good idea to use this method for widely and publicly available websites that will have an average user. For example, it wouldn't be a good idea to implement this for a website like Facebook. While this technique can prevent the user from having to type a password (thus protecting against an average keylogger from stealing it), it is still considered a good idea to consider using both a password and TLS client authentication combined.
+What concerns and issues to be aware of:
 
-Additionally, if the client is behind an enterprise proxy which performs SSL/TLS decryption, this will break certificate authentication unless the site is whitelisted on the proxy.
+- It is generally considered not a good idea to use this method for widely or publicly available websites that will have an average user. For example, it wouldn't be a good idea to implement this for a website like Facebook unless it is expected that all users install a special Facebook certificate on every user device which might limit Facebook users to those who cannot or will not install aforementioned certificate
+- While this technique can prevent the user from having to type a password (thus protecting against an average keylogger from stealing it), it is still considered a good idea to consider using some challenge-response mechanism like password as well as the Mutual-TLS client Authentication combined for Authorization purposes.
+
+If the client is behind an forward proxy which performs network traffic inspection, this may interfere with Mutual-TLS Client authentication depending on the server-side configuration of the website and configuration relationship with the forward proxy.
 
 For more information, see: [Client-authenticated TLS handshake](https://en.wikipedia.org/wiki/Transport_Layer_Security#Client-authenticated_TLS_handshake)
 
@@ -93,13 +103,13 @@ Incorrectly implemented error messages in the case of authentication functionali
 
 #### Authentication Responses
 
-Using any of the authentication mechanisms (login, password reset or password recovery), an application must respond with a generic error message regardless of whether:
+Using any of the authentication mechanisms (login, password reset or password recovery), an application must respond with a generic error message (and typically using HTTP Response code 403 and no significantly different response time) regardless of whether:
 
 - The user ID or password was incorrect.
 - The account does not exist.
 - The account is locked or disabled.
 
-The account registration feature should also be taken into consideration, and the same approach of generic error message can be applied regarding the case in which the user exists.
+The account registration feature should also be taken into consideration, and the same approach of generic error message can be applied regarding the case in which the new user data exists as a previously registered user. Leaking previously known user data can be used by attackers to derive correct information from a dataset which has both unknown and valid data.
 
 The objective is to prevent the creation of a [discrepancy factor](https://cwe.mitre.org/data/definitions/204.html), allowing an attacker to mount a user enumeration action against the application.
 
