@@ -19,11 +19,11 @@ For information on validating email addresses, please visit the [input validatio
 ### Authentication Solution and Sensitive Accounts
 
 - Do **NOT** allow login with sensitive accounts (i.e. accounts that can be used internally within the solution such as to a back-end / middle-ware / DB) to any front-end user-interface
-- Do **NOT** use the same authentication solution (e.g. IDP / AD) used internally for unsecured access (e.g. public access / DMZ)
+- Do **NOT** use the same Authentication solution (e.g. IDP / AD) used internally for unsecured access (e.g. public access / DMZ)
 
 ### Implement Proper Password Strength Controls
 
-A key concern when using passwords for authentication is password strength. A "strong" password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:
+A key concern when using passwords for Authentication is password strength. A "strong" password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:
 
 - Password Length
     - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
@@ -38,7 +38,7 @@ A key concern when using passwords for authentication is password strength. A "s
 #### For more detailed information check
 
 - [ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements)
-- [Passwords Evolved: Authentication Guidance for the Modern Era](https://www.troyhunt.com/passwords-evolved-authentication-guidance-for-the-modern-era/)
+- [Passwords Evolved: Authentication Guidance for the Modern Era](https://www.troyhunt.com/passwords-evolved-Authentication-guidance-for-the-modern-era/)
 
 ### Implement Secure Password Recovery Mechanism
 
@@ -93,17 +93,17 @@ What concerns and issues to be aware of:
 - It is generally considered not a good idea to use this method for widely or publicly available websites that will have an average user. For example, it wouldn't be a good idea to implement this for a website like Facebook unless it is expected that all users install a special Facebook certificate on every user device which might limit Facebook users to those who cannot or will not install aforementioned certificate
 - While this technique can prevent the user from having to type a password (thus protecting against an average keylogger from stealing it), it is still considered a good idea to consider using some challenge-response mechanism like password as well as the Mutual-TLS client Authentication combined for Authorization purposes.
 
-If the client is behind an forward proxy which performs network traffic inspection, this may interfere with Mutual-TLS Client authentication depending on the server-side configuration of the website and configuration relationship with the forward proxy.
+If the client is behind an forward proxy which performs network traffic inspection, this may interfere with Mutual-TLS Client Authentication depending on the server-side configuration of the website and configuration relationship with the forward proxy.
 
 For more information, see: [Client-authenticated TLS handshake](https://en.wikipedia.org/wiki/Transport_Layer_Security#Client-authenticated_TLS_handshake)
 
 ### Authentication and Error Messages
 
-Incorrectly implemented error messages in the case of authentication functionality can be used for the purposes of user ID and password enumeration. An application should respond (both HTTP and HTML) in a generic manner.
+Incorrectly implemented error messages in the case of Authentication functionality can be used for the purposes of user ID and password enumeration. An application should respond (both HTTP and HTML) in a generic manner.
 
 #### Authentication Responses
 
-Using any of the authentication mechanisms (login, password reset or password recovery), an application must respond with a generic error message (and typically using HTTP Response code 403 and no significantly different response time) regardless of whether:
+Using any of the Authentication mechanisms (login, password reset or password recovery), an application must respond with a generic error message (and typically using HTTP Response code 403 and no significantly different response time) regardless of whether:
 
 - The user ID or password was incorrect.
 - The account does not exist.
@@ -188,7 +188,7 @@ Correct response example:
 
 ##### Error Codes and URLs
 
-The application may return a different [HTTP Error code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) depending on the authentication attempt response. It may respond with a 200 for a positive result and a 403 for a negative result. Even though a generic error page is shown to a user, the HTTP response code may differ which can leak information about whether the account is valid or not.
+The application may return a different [HTTP Error code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) depending on the Authentication attempt response. It may respond with a 200 for a positive result and a 403 for a negative result. Even though a generic error page is shown to a user, the HTTP response code may differ which can leak information about whether the account is valid or not.
 
 Error disclosure can also be used as a discrepancy factor, consult the [error handling cheat sheet](Error_Handling_Cheat_Sheet.md) regarding the global handling of different errors in an application.
 
@@ -208,7 +208,7 @@ The following sections will focus primarily on preventing brute-force attacks, a
 
 #### Multi-Factor Authentication
 
-Multi-factor authentication (MFA) is by far the best defence against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
+Multi-factor Authentication (MFA) is by far the best defence against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
 
 The [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md) contains further guidance on implementing MFA.
 
@@ -228,59 +228,60 @@ When designing an account lockout system, care must be taken to prevent it from 
 
 #### CAPTCHA
 
-The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques or can be outsourced to services which can solve them. As such, the use of CAPTCHA should be viewed as a defence-in-depth control to make brute-force attacks more time consuming and expensive, rather than as a preventative.
+The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many older CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques or can be outsourced to services which can solve them. As such, the use of CAPTCHA should be viewed as a defence-in-depth control to make brute-force attacks more time consuming and expensive, rather than as a preventative. New CAPTCHA implementations require no user interaction and therefore avoid automation that leverages visual pattern matching entirely (and have no user friction at all).
 
-It may be more user-friendly to only require a CAPTCHA be solved after a small number of failed login attempts, rather than requiring it from the very first login.
+It may be more user-friendly to only require a older CAPTCHA where solving visual patterns after a small number of failed login attempts, rather than requiring it from the very first login. Where possible you should always use the new CAPTCHA implementations that have no user interaction, for all sensitive transactions.
 
 #### Security Questions and Memorable Words
 
-The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does **not** constitute multi-factor authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so they must be carefully chosen. The [Choosing and Using Security Questions cheat sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) contains further guidance on this.
+The addition of a security question or memorable word can also help protect against automated attacks, especially when the user is asked to enter a number of randomly chosen characters from the word. It should be noted that this does **not** constitute multi-factor Authentication, as both factors are the same (something you know). Furthermore, security questions are often weak and have predictable answers, so they must be carefully chosen. The [Choosing and Using Security Questions cheat sheet](Choosing_and_Using_Security_Questions_Cheat_Sheet.md) contains further guidance on this.
 
 ## Logging and Monitoring
 
-Enable logging and monitoring of authentication functions to detect attacks/failures on a real-time basis
+Enable logging and monitoring of Authentication functions to detect attacks/failures on a real-time basis
 
 - Ensure that all failures are logged and reviewed
 - Ensure that all password failures are logged and reviewed
 - Ensure that all account lockouts are logged and reviewed
 
-## Use of authentication protocols that require no password
+## Use of Authentication protocols that require no password
 
-While authentication through a user/password combination and using multi-factor authentication is considered generally secure, there are use cases where it isn't considered the best option or even safe. Examples of this are third party applications that desire connecting to the web application, either from a mobile device, another website, desktop or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn't in your control. For this, and other use cases, there are several authentication protocols that can protect you from exposing your users' data to attackers.
+While Authentication through a user/password combination and using multi-factor Authentication is considered generally secure, there are use cases where it isn't considered the best option or even safe. Examples of this are third party applications that desire connecting to the web application, either from a mobile device, another website, desktop or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn't in your control. For this, and other use cases, there are several Authentication protocols that can protect you from exposing your users' data to attackers.
 
 ### OAuth
 
-Open Authorization (OAuth) is a protocol that allows an application to authenticate against a server as a user, without requiring passwords or any third party server that acts as an identity provider. It uses a token generated by the server and provides how the authorization flows most occur, so that a client, such as a mobile application, can tell the server what user is using the service.
+Open Authorization (OAuth) is a protocol that allows an application to trust Authentication of a user against a prior established Authentication mechanism for ongoing Authorization decisions, [OAuth is not an Authentication protocol](https://oauth.net/articles/Authentication/). In some cases the Authentication occurs without requiring passwords depending on the chosen prior established Authentication mechanism that OAuth has been configured to convey.
 
-The recommendation is to use and implement OAuth 1.0a or OAuth 2.0 since the very first version (OAuth1.0) has been found to be vulnerable to session fixation.
+OAuth is providing Authorization and will generate a token representing a trust relationship so that a client, such as a mobile application, can assure a serverof their authority to perform delegated requests on behalf of a trusted identity.
 
-OAuth 2.0 relies on HTTPS for security and is currently used and implemented by APIs from companies such as Facebook, Google, Twitter and Microsoft. OAuth1.0a is more difficult to use because it requires the use of cryptographic libraries for digital signatures. However, since OAuth1.0a does not rely on HTTPS for security, it can be more suited for higher-risk transactions.
+The recommendation is to use and implement OAuth 2.0 due to flaws and vulnerabilities found in previous versions, such as session fixation and exposing secrets in plain text during communication. OAuth 2.0 mandates HTTPS for transport security.
 
-### OpenId
+### OpenID Connect (OIDC)
 
-OpenId is an HTTP-based protocol that uses identity providers to validate that a user is whom he says he is. It is a very simple protocol which allows a service provider initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user in multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.
+OpenID Connect is an HTTP-based protocol built on top of OAuth 2.0 that uses identity providers to validate that a user is whom they say they are.
+It is a very simple protocol which allows a service provider to provide single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OIDC identity provider and be the same user in multiple websites, without the need to provide any website with the password, except for the OIDC identity provider.
 
-Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well-known identity providers for OpenId are Stack Exchange, Google, Facebook and Yahoo!
+Due to its simplicity and that it provides protection of passwords, OIDC has been well adopted. Some of the well-known identity providers for OIDC are Stack Exchange, Google, Facebook and Yahoo!
 
-For non-enterprise environments, OpenId is considered a secure and often better choice, as long as the identity provider is of trust.
+For non-enterprise environments, OIDC is considered a secure and often better choice, as long as the OIDC identity provider is trusted.
 
 ### SAML
 
-Security Assertion Markup Language (SAML) is often considered to compete with OpenId. The most recommended version is 2.0 since it is very features complete and provides strong security. Like OpenId, SAML uses identity providers, but unlike OpenId, it is XML-based and provides more flexibility. SAML is based on browser redirects which send XML data. Furthermore, SAML isn't only initiated by a service provider; it can also be initiated from the identity provider. This allows the user to navigate through different portals while still being authenticated without having to do anything, making the process transparent.
+Security Assertion Markup Language (SAML) is often considered to compete with OIDC. The most recommended version is 2.0 since it is considered to be 'feature complete' and has no known systemic vulnerabilities, though many implementation flaws and weaknesses exist. Like OIDC, SAML uses identity providers, but unlike OIDC, it is XML-based and provides more flexibility. SAML is based on browser redirects which send XML data. Furthermore, SAML isn't only initiated by a service provider; it can also be initiated from the identity provider. This allows the user to navigate through different portals while still being authenticated without having to do anything, making the process transparent.
 
-While OpenId has taken most of the consumer market, SAML is often the choice for enterprise applications. The reason for this is often that there are few OpenId identity providers which are considered of enterprise-class (meaning that the way they validate the user identity doesn't have high standards required for enterprise identity). It is more common to see SAML being used inside of intranet websites, sometimes even using a server from the intranet as the identity provider.
+While OIDC has taken most of the consumer market, SAML is often the choice for enterprise applications. The reason for this is often that there are few OIDC identity providers which are considered of enterprise-class (meaning that the way they validate the user identity doesn't have high standards required for enterprise identity). It is more common to see SAML being used inside of intranet websites, sometimes even using a server from the intranet as the identity provider.
 
-In the past few years, applications like SAP ERP and SharePoint (SharePoint by using Active Directory Federation Services 2.0) have decided to use SAML 2.0 authentication as an often preferred method for single sign-on implementations whenever enterprise federation is required for web services and web applications.
+In the past few years, applications like SAP ERP and SharePoint (SharePoint by using Active Directory Federation Services 2.0) have decided to use SAML 2.0 Authentication as an often preferred method for single sign-on implementations whenever enterprise federation is required for web services and web applications.
 
 **See also: [SAML Security Cheat Sheet](SAML_Security_Cheat_Sheet.md)**
 
 ### FIDO
 
-The Fast Identity Online (FIDO) Alliance has created two protocols to facilitate online authentication: the Universal Authentication Framework (UAF) protocol and the Universal Second Factor (U2F) protocol. While UAF focuses on passwordless authentication, U2F allows the addition of a second factor to existing password-based authentication. Both protocols are based on a public key cryptography challenge-response model.
+The Fast Identity Online (FIDO) Alliance has created two protocols to facilitate online Authentication: the Universal Authentication Framework (UAF) protocol and the Universal Second Factor (U2F) protocol. While UAF focuses on password-less Authentication, U2F allows the addition of a second factor to existing password-based Authentication. Both protocols are based on a public key cryptography challenge-response model.
 
-UAF takes advantage of existing security technologies present on devices for authentication including fingerprint sensors, cameras(face biometrics), microphones(voice biometrics), Trusted Execution Environments(TEEs), Secure Elements(SEs) and others. The protocol is designed to plug-in these device capabilities into a common authentication framework. UAF works with both native applications and web applications.
+UAF takes advantage of existing security technologies present on devices for Authentication including fingerprint sensors, cameras(face biometrics), microphones(voice biometrics), Trusted Execution Environments(TEEs), Secure Elements(SEs) and others. The protocol is designed to plug-in these device capabilities into a common Authentication framework. UAF works with both native applications and web applications.
 
-U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides **protection against phishing** by using the URL of the website to look up the stored authentication key.
+U2F augments password-based Authentication using a hardware token (typically USB) that stores cryptographic keys and uses them for signing. The user can use the same token as a second factor for Authorization of multiple applications. U2F works with web applications. It provides **protection against phishing** by using the URL of the website to look up the stored cryptographic key.
 
 ## Password Managers
 
