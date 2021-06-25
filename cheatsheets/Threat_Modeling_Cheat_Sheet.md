@@ -35,6 +35,8 @@ A *data flow diagram* is a depiction of how information flows through your syste
 
 A *trust boundary* (in the context of threat modeling) is a location on the data flow diagram where data changes its level of trust. Any place where data is passed between two processes is typically a trust boundary. If your application reads a file from disk, there's a trust boundary between the application and the file because outside processes and users can modify the data in the file. If your application makes a call to a remote process, or a remote process makes calls to your application, that's a trust boundary. If you read data from a database, there's typically a trust boundary because other processes can modify the data in the database. Any place you accept user input in any form is always a trust boundary.
 
+In addtion to the above terminologies, it is important to be familiar with the key threat modeling principles defined in the [Threat Modeling Manifesto](https://www.threatmodelingmanifesto.org)project. Those principles are considered throughout the following steps in this cheat sheet.
+
 ## Getting Started
 
 ### Define Business Objectives
@@ -246,7 +248,6 @@ Here we will highlight two risk methodology that could be used:
 
 **DREAD** formula is:
 
-
 Risk Value = (Damage + Affected users) x (Reproducibility + Exploitability + Discoverability).
 
 Then the risk level is determined using defined thresholds below.
@@ -261,9 +262,7 @@ The idea behind addressing the impact earlier in PASTA approach is that the audi
 
 Application security risk assessments are not enough because they are very binary and leverage a control framework basis for denoting risks. It is recommended to contextually look at threats impacts, probability and effectiveness of countermeasures that may be present.
 
-
-R = (T * V * P * I) / Countermeasures
-
+R = (T*V*P*I) / Countermeasures
 
 For more details [about PASTA](https://owasp.org/www-pdf-archive/AppSecEU2012_PASTA.pdf).
 
@@ -288,7 +287,7 @@ For the designers or the architects: they should assign the risk mitigation to t
 
 ### Agree on risk mitigation with risk owners and stakeholders
 
-After identifying the risk owners, it is important to review the mitigation controls for each of the identified risks. Some controls might be inapplicable, you should propose other mitigation controls or discuss with the risk owners the possible compensation controls. 
+After identifying the risk owners, it is important to review the mitigation controls for each of the identified risks. Some controls might be inapplicable, you should propose other mitigation controls or discuss with the risk owners the possible compensation controls.
 
 ### Build your risk treatment strategy
 
@@ -317,6 +316,6 @@ Application threat modeling is an ongoing process, in addition to the changes th
 
 ## Appendix
 
-- Mikko Kontio, Architectural manifesto: Designing software architectures, Part 5
+- Mikko Kontio, Architectural manifesto: Designing software architectures, Part 5.
 - Hui LM, Leung CW, Fan CK and Wong TN, "modeling agent-based systems with UML". Proceedings of the Fifth Asia Pacific Industrial Engineering and Management Systems Conference.
 - References for the “4+1” View Model of Software Architecture: Kruchten, Philippe. Architectural Blueprints — The “4+1” View Model of Software Architecture. IEEE Software 12 (6), pp. 42-50.
