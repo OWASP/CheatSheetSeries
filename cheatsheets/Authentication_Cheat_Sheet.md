@@ -248,7 +248,7 @@ OAuth 2.0 relies on HTTPS for security and is currently used and implemented by 
 
 ### OpenId
 
-OpenId is an HTTP-based protocol that uses identity providers to validate that a user is whom he says he is. It is a very simple protocol which allows a service provider initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user in multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.
+OpenId is an HTTP-based protocol that uses identity providers to validate that a user is who they say they are. It is a very simple protocol which allows a service provider initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user in multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.
 
 Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well-known identity providers for OpenId are Stack Exchange, Google, Facebook and Yahoo!
 

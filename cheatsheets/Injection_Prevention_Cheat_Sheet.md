@@ -76,7 +76,7 @@ The time delay exploitation technique is very useful when the tester find a Blin
 http://www.example.com/product.php?id=10 AND IF(version() like '5%', sleep(10), 'false'))--
 ```
 
-In this example the tester if checking whether the MySql version is 5.x or not, making the server to delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn't need to wait for the response. Sometimes he can set a very high value (e.g. 100) and cancel the request after some seconds.
+In this example the tester is checking whether the MySql version is 5.x or not, making the server delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn't need to wait for the response. Sometimes they can set a very high value (e.g. 100) and cancel the request after some seconds.
 
 ###### Out of band Exploitation technique
 

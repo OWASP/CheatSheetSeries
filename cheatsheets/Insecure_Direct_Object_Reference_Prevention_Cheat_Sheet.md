@@ -25,7 +25,7 @@ EMP-00002
 
 Based on this, an attacker can build a collection of valid ID from *EMP-00000* to *EMP-99999*.
 
-To be exploited, an IDOR issue must be combined with an [Access Control](Access_Control_Cheat_Sheet.md) issue because it's the Access Control issue that "allow" the attacker to access to the object for which he have guessed the identifier through is enumeration attack.
+To be exploited, an IDOR issue must be combined with an [Access Control](Access_Control_Cheat_Sheet.md) issue because it's the Access Control issue that "allows" the attacker to access the object for which they have guessed the identifier through the enumeration attack.
 
 ## Additional remarks
 
