@@ -39,6 +39,16 @@ This project is only possible thanks to the work of many dedicated volunteers. E
 
 This [link](https://cheatsheetseries.owasp.org/bundle.zip) allows you to download a build (ZIP archive) of the offline website.
 
+### Local build [![pyVersion3x](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/downloads/)
+
+The OWASP Cheat Sheet Series website can be built and tested locally by issuing the following commands:
+
+```sh
+make install-python-requirements
+make generate-site
+make serve  # Binds port 8000
+```
+
 ## Contributors
 
 - **From 2014 to 2018:** [V1](CONTRIBUTOR-V1.md) - Initial version of the project hosted on the [OWASP WIKI](https://wiki.owasp.org).
