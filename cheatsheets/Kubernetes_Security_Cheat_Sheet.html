@@ -2614,7 +2614,7 @@ To enable RBAC, start the API server with the --authorization-mode flag set to a
 <li>Do not expose the dashboard without additional authentication to the public. There is no need to access such a powerful tool from outside your LAN</li>
 <li>Turn on RBAC, so you can limit the service account the dashboard uses</li>
 <li>Do not grant the service account of the dashboard high privileges</li>
-<li>Grant permissions per user, so each user only can see what he is supposed to see</li>
+<li>Grant permissions per user, so each user only can see what they are supposed to see</li>
 <li>If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)</li>
 <li>Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.</li>
 <li>Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled.  This can be done with either embeded OIDC <code>id_tokens</code> or using Kubernetes Impersonation.  This allows you to use the dashboard with the user's credentials instead of using a privileged <code>ServiceAccount</code>.  This method can be used on both on-prem and managed cloud clusters.</li>

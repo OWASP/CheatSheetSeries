@@ -2094,7 +2094,7 @@
 <div class="codehilite"><pre><span></span><code>http://www.example.com/product.php?id=10 AND IF(version() like &#39;5%&#39;, sleep(10), &#39;false&#39;))--
 </code></pre></div>
 
-<p>In this example the tester if checking whether the MySql version is 5.x or not, making the server to delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn't need to wait for the response. Sometimes he can set a very high value (e.g. 100) and cancel the request after some seconds.</p>
+<p>In this example the tester is checking whether the MySql version is 5.x or not, making the server delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn't need to wait for the response. Sometimes they can set a very high value (e.g. 100) and cancel the request after some seconds.</p>
 <h6 id="out-of-band-exploitation-technique">Out of band Exploitation technique<a class="headerlink" href="#out-of-band-exploitation-technique" title="Permanent link">&para;</a></h6>
 <p>This technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester's server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section.</p>
 <h5 id="remediation">Remediation<a class="headerlink" href="#remediation" title="Permanent link">&para;</a></h5>
