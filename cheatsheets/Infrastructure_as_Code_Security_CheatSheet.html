@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Infrastructure_as_Code_Security_CheatSheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.8">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.9">
     
     
       
@@ -1338,7 +1338,7 @@ SPDX-License-Identifier: CC-BY-SA-3.0
 <ul>
 <li>IDE plugins - Leverage standard security plug-ins in the integrated development environment (IDE) which helps in the early detection of potential risks and drastically reduces the time to address any issues later in the development cycle. Plugins such as TFLint, Checkov, Docker Linter, docker-vulnerability-extension, Security Scan, Contrast Security etc, help in the security assessment of the IaC</li>
 <li>Threat modelling - Build the threat modelling landscape earlier in the development cycle to ensure there is enough visibility of the high-risk, high-volume aspects of the code and flexibility to include security throughout to ensure the assets are safely managed</li>
-<li>Managing secrets -  The secrets usually are confidential data and information such as application tokens required for authentication, passwords, and SSH (Secure Shell Keys). The problem is not the secrets, but where you store them. If you are using a simple text or word file or SCMs like Git, then the secrets can be easily exposed. Use vaults for storing all your secrets and refer them inside configuration files instead of the secrets. Opensource tools such as truffleHog, git-sercrets, GitGaurdian and similar can be utilized to detect such vulnerable management of secrets</li>
+<li>Managing secrets -  The secrets usually are confidential data and information such as application tokens required for authentication, passwords, and SSH (Secure Shell Keys). The problem is not the secrets, but where you store them. If you are using a simple text or word file or SCMs like Git, then the secrets can be easily exposed. Use vaults for storing all your secrets and refer them inside configuration files instead of the secrets. Opensource tools such as truffleHog, git-secrets, GitGaurdian and similar can be utilized to detect such vulnerable management of secrets</li>
 <li>Version control - Version control is the practice of tracking and managing changes to software code. Ensure all the changes to the IaC is tracked with the right set of information that helps in any revert operation. The important part is that you’re checking in those changes alongside the features they support and not separately. A feature’s infrastructure requirements should be a part of a feature’s branch or merge request. Opensource tools such as Git, GitHub, Bitbucket etc. can be used as the source code version control system</li>
 <li>Principle of least privilege - define the access management policies based on the principle of least privilege with the following priority items:
 Defining who is and is not authorized to create/update/run/delete the scripts and inventory.</li>
@@ -1448,10 +1448,10 @@ CI/CD pipeline and Consolidated reporting - enabling the security checks to be m
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.76f349be.min.js"></script>
+      <script src="../assets/javascripts/bundle.82b56eb2.min.js"></script>
       
     
   </body>
