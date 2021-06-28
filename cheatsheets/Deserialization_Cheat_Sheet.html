@@ -1698,19 +1698,17 @@
 <ol>
 <li>The uses of <code>pickle/c_pickle/_pickle</code> with <code>load/loads</code>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pickle</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pickle</span>
 <span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot; cos.system(S&#39;dir&#39;)tR. &quot;&quot;&quot;</span>
 <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
-
 <ol>
 <li>Uses of <code>PyYAML</code> with <code>load</code>:</li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">yaml</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">yaml</span>
 <span class="n">document</span> <span class="o">=</span> <span class="s2">&quot;!!python/object/apply:os.system [&#39;ipconfig&#39;]&quot;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">document</span><span class="p">))</span>
 </code></pre></div>
-
 <ol>
 <li>Uses of <code>jsonpickle</code> with <code>encode</code> or <code>store</code> methods.</li>
 </ol>
@@ -1740,21 +1738,19 @@
 <p>If there are data members of an object that should never be controlled by end users during deserialization or exposed to users during serialization, they should be declared as <a href="https://docs.oracle.com/javase/7/docs/platform/serialization/spec/serial-arch.html#7231">the <code>transient</code> keyword</a> (section <em>Protecting Sensitive Information</em>).</p>
 <p>For a class that defined as Serializable, the sensitive information variable should be declared as <code>private transient</code>.</p>
 <p>For example, the class myAccount, the variable 'profit' and 'margin' were declared as transient to avoid to be serialized:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">myAccount</span> <span class="kd">implements</span> <span class="n">Serializable</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">myAccount</span> <span class="kd">implements</span> <span class="n">Serializable</span>
 <span class="p">{</span>
     <span class="kd">private</span> <span class="kd">transient</span> <span class="kt">double</span> <span class="n">profit</span><span class="p">;</span> <span class="c1">// declared transient</span>
 
     <span class="kd">private</span> <span class="kd">transient</span> <span class="kt">double</span> <span class="n">margin</span><span class="p">;</span> <span class="c1">// declared transient</span>
     <span class="p">....</span>
 </code></pre></div>
-
 <h4 id="prevent-deserialization-of-domain-objects">Prevent Deserialization of Domain Objects<a class="headerlink" href="#prevent-deserialization-of-domain-objects" title="Permanent link">&para;</a></h4>
 <p>Some of your application objects may be forced to implement Serializable due to their hierarchy. To guarantee that your application objects can't be deserialized, a <code>readObject()</code> method should be declared (with a <code>final</code> modifier) which always throws an exception:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">private</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">readObject</span><span class="p">(</span><span class="n">ObjectInputStream</span> <span class="n">in</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">readObject</span><span class="p">(</span><span class="n">ObjectInputStream</span> <span class="n">in</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span> <span class="p">{</span>
     <span class="k">throw</span> <span class="k">new</span> <span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="p">(</span><span class="s">&quot;Cannot be deserialized&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="harden-your-own-javaioobjectinputstream">Harden Your Own java.io.ObjectInputStream<a class="headerlink" href="#harden-your-own-javaioobjectinputstream" title="Permanent link">&para;</a></h4>
 <p>The <code>java.io.ObjectInputStream</code> class is used to deserialize objects. It's possible to harden its behavior by subclassing it. This is the best solution if:</p>
 <ul>
@@ -1764,7 +1760,7 @@
 <p>The general idea is to override <a href="http://docs.oracle.com/javase/7/docs/api/java/io/ObjectInputStream.html#resolveClass(java.io.ObjectStreamClass)"><code>ObjectInputStream.html#resolveClass()</code></a> in order to restrict which classes are allowed to be deserialized.</p>
 <p>Because this call happens before a <code>readObject()</code> is called, you can be sure that no deserialization activity will occur unless the type is one that you wish to allow.</p>
 <p>A simple example of this shown here, where the the <code>LookAheadObjectInputStream</code> class is guaranteed not to deserialize any other type besides the <code>Bicycle</code> class:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LookAheadObjectInputStream</span> <span class="kd">extends</span> <span class="n">ObjectInputStream</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LookAheadObjectInputStream</span> <span class="kd">extends</span> <span class="n">ObjectInputStream</span> <span class="p">{</span>
 
     <span class="kd">public</span> <span class="nf">LookAheadObjectInputStream</span><span class="p">(</span><span class="n">InputStream</span> <span class="n">inputStream</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
         <span class="kd">super</span><span class="p">(</span><span class="n">inputStream</span><span class="p">);</span>
@@ -1782,7 +1778,6 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>More complete implementations of this approach have been proposed by various community members:</p>
 <ul>
 <li><a href="https://github.com/ikkisoft/SerialKiller">NibbleSec</a> - a library that allows creating lists of classes that are allowed to be deserialized</li>
@@ -1794,9 +1789,8 @@
 <p>Globally changing <code>ObjectInputStream</code> is only safe for block-listing known malicious types, because it's not possible to know for all applications what the expected classes to be deserialized are. Fortunately, there are very few classes needed in the blocklist to be safe from all the known attack vectors, today.</p>
 <p>It's inevitable that more "gadget" classes will be discovered that can be abused. However, there is an incredible amount of vulnerable software exposed today, in need of a fix. In some cases, "fixing" the vulnerability may involve re-architecting messaging systems and breaking backwards compatibility as developers move towards not accepting serialized objects.</p>
 <p>To enable these agents, simply add a new JVM parameter:</p>
-<div class="codehilite"><pre><span></span><code>-javaagent:name-of-agent.jar
+<div class="highlight"><pre><span></span><code>-javaagent:name-of-agent.jar
 </code></pre></div>
-
 <p>Agents taking this approach have been released by various community members:</p>
 <ul>
 <li><a href="https://github.com/Contrast-Security-OSS/contrast-rO0">rO0 by Contrast Security</a></li>
@@ -1812,9 +1806,8 @@
 <p>Look for any serializers where the type is set by a user controlled variable.</p>
 <h4 id="blackbox-review_2">BlackBox Review<a class="headerlink" href="#blackbox-review_2" title="Permanent link">&para;</a></h4>
 <p>Search for the following base64 encoded content that starts with:</p>
-<div class="codehilite"><pre><span></span><code>AAEAAAD/////
+<div class="highlight"><pre><span></span><code>AAEAAAD/////
 </code></pre></div>
-
 <p>Search for content with the following text:</p>
 <ol>
 <li><code>TypeObject</code></li>
@@ -1823,27 +1816,24 @@
 <h4 id="general-precautions">General Precautions<a class="headerlink" href="#general-precautions" title="Permanent link">&para;</a></h4>
 <p>Don't allow the datastream to define the type of object that the stream will be deserialized to. You can prevent this by for example using the <code>DataContractSerializer</code> or <code>XmlSerializer</code> if at all possible.</p>
 <p>Where <code>JSON.Net</code> is being used make sure the <code>TypeNameHandling</code> is only set to <code>None</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">TypeNameHandling</span> <span class="p">=</span> <span class="n">TypeNameHandling</span><span class="p">.</span><span class="n">None</span>
+<div class="highlight"><pre><span></span><code><span class="n">TypeNameHandling</span> <span class="p">=</span> <span class="n">TypeNameHandling</span><span class="p">.</span><span class="n">None</span>
 </code></pre></div>
-
 <p>If <code>JavaScriptSerializer</code> is to be used then do not use it with a <code>JavaScriptTypeResolver</code>.</p>
 <p>If you must deserialise data streams that define their own type, then restrict the types that are allowed to be deserialized. One should be aware that this is still risky as many native .Net types potentially dangerous in themselves. e.g.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">FileInfo</span>
+<div class="highlight"><pre><span></span><code><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">FileInfo</span>
 </code></pre></div>
-
 <p><code>FileInfo</code> objects that reference files actually on the server can when deserialized, change the properties of those files e.g. to read-only, creating a potential denial of service attack.</p>
 <p>Even if you have limited the types that can be deserialised remember that some types have properties that are risky. <code>System.ComponentModel.DataAnnotations.ValidationException</code>, for example has a property <code>Value</code> of type <code>Object</code>. if this type is the type allowed for deserialization then an attacker can set the <code>Value</code> property to any object type they choose.</p>
 <p>Attackers should be prevented from steering the type that will be instantiated. If this is possible then even <code>DataContractSerializer</code> or <code>XmlSerializer</code> can be subverted e.g.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Action below is dangerous if the attacker can change the data in the database</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// Action below is dangerous if the attacker can change the data in the database</span>
 <span class="kt">var</span> <span class="n">typename</span> <span class="p">=</span> <span class="n">GetTransactionTypeFromDatabase</span><span class="p">();</span>
 
 <span class="kt">var</span> <span class="n">serializer</span> <span class="p">=</span> <span class="k">new</span> <span class="n">DataContractJsonSerializer</span><span class="p">(</span><span class="n">Type</span><span class="p">.</span><span class="n">GetType</span><span class="p">(</span><span class="n">typename</span><span class="p">));</span>
 
 <span class="kt">var</span> <span class="n">obj</span> <span class="p">=</span> <span class="n">serializer</span><span class="p">.</span><span class="n">ReadObject</span><span class="p">(</span><span class="n">ms</span><span class="p">);</span>
 </code></pre></div>
-
 <p>Execution can occur within certain .Net types during deserialization. Creating a control such as the one shown below is ineffective.</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">var</span> <span class="n">suspectObject</span> <span class="p">=</span> <span class="n">myBinaryFormatter</span><span class="p">.</span><span class="n">Deserialize</span><span class="p">(</span><span class="n">untrustedData</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span> <span class="n">suspectObject</span> <span class="p">=</span> <span class="n">myBinaryFormatter</span><span class="p">.</span><span class="n">Deserialize</span><span class="p">(</span><span class="n">untrustedData</span><span class="p">);</span>
 
 <span class="c1">//Check below is too late! Execution may have already occurred.</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">suspectObject</span> <span class="k">is</span> <span class="n">SomeDangerousObjectType</span><span class="p">)</span>
@@ -1851,7 +1841,6 @@
     <span class="c1">//generate warnings and dispose of suspectObject</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>For <code>BinaryFormatter</code> and <code>JSON.Net</code> it is possible to create a safer form of allow-list control using a custom <code>SerializationBinder</code>.</p>
 <p>Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. <strong>A deserializer can only instantiate types that it knows about</strong>.</p>
 <p>Try to keep any code that might create potential gadgets separate from any code that has internet connectivity. As an example <code>System.Windows.Data.ObjectDataProvider</code> used in WPF applications is a known gadget that allows arbitrary method invocation. It would be risky to have this a reference to this assembly in a REST service project that deserializes untrusted data.</p>

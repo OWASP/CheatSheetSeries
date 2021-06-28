@@ -1623,17 +1623,14 @@
 <h5 id="always-return-json-with-an-object-on-the-outside">Always return JSON with an Object on the outside<a class="headerlink" href="#always-return-json-with-an-object-on-the-outside" title="Permanent link">&para;</a></h5>
 <p>Always have the outside primitive be an object for JSON strings:</p>
 <p><strong>Exploitable:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span> <span class="s2">&quot;inside an array&quot;</span><span class="p">}]</span>
+<div class="highlight"><pre><span></span><code><span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span> <span class="s2">&quot;inside an array&quot;</span><span class="p">}]</span>
 </code></pre></div>
-
 <p><strong>Not exploitable:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span> <span class="s2">&quot;not inside an array&quot;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span> <span class="s2">&quot;not inside an array&quot;</span><span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Also not exploitable:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;result&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span> <span class="s2">&quot;inside an array&quot;</span><span class="p">}]}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;result&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span> <span class="s2">&quot;inside an array&quot;</span><span class="p">}]}</span>
 </code></pre></div>
-
 <h4 id="avoid-writing-serialization-code-server-side">Avoid writing serialization code Server Side<a class="headerlink" href="#avoid-writing-serialization-code-server-side" title="Permanent link">&para;</a></h4>
 <p>Remember ref vs. value types! Look for an existing library that has been reviewed.</p>
 <h4 id="services-can-be-called-by-users-directly">Services can be called by users directly<a class="headerlink" href="#services-can-be-called-by-users-directly" title="Permanent link">&para;</a></h4>

@@ -1590,15 +1590,14 @@
 <p>SQL Injection is best prevented through the use of <a href="SQL_Injection_Prevention_Cheat_Sheet.html"><em>parameterized queries</em></a>. The following chart demonstrates, with real-world code samples, how to build parameterized queries in most of the common web languages. The purpose of these code samples is to demonstrate to the web developer how to avoid SQL Injection when building database queries within a web application.</p>
 <h3 id="prepared-statement-examples">Prepared Statement Examples<a class="headerlink" href="#prepared-statement-examples" title="Permanent link">&para;</a></h3>
 <h4 id="using-java-built-in-feature">Using Java built-in feature<a class="headerlink" href="#using-java-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="n">String</span> <span class="n">custname</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">String</span> <span class="n">custname</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
 <span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ? &quot;</span><span class="p">;</span>  
 <span class="n">PreparedStatement</span> <span class="n">pstmt</span> <span class="o">=</span> <span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span> <span class="n">query</span> <span class="p">);</span>
 <span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="n">custname</span><span class="p">);</span>
 <span class="n">ResultSet</span> <span class="n">results</span> <span class="o">=</span> <span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span> <span class="p">);</span>
 </code></pre></div>
-
 <h4 id="using-java-with-hibernate">Using Java with Hibernate<a class="headerlink" href="#using-java-with-hibernate" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="c1">//HQL</span>
+<div class="highlight"><pre><span></span><code><span class="c1">//HQL</span>
 <span class="nd">@Entity</span> <span class="c1">// declare as entity;</span>
 <span class="nd">@NamedQuery</span><span class="p">(</span>
  <span class="n">name</span><span class="o">=</span><span class="s">&quot;findByDescription&quot;</span><span class="p">,</span>
@@ -1625,9 +1624,8 @@
 <span class="n">Inventory</span> <span class="n">inv</span> <span class="o">=</span> <span class="p">(</span><span class="n">Inventory</span><span class="p">)</span> <span class="n">session</span><span class="p">.</span><span class="na">createCriteria</span><span class="p">(</span><span class="n">Inventory</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">add</span>
 <span class="p">(</span><span class="n">Restrictions</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span> <span class="n">userSuppliedParameter</span><span class="p">)).</span><span class="na">uniqueResult</span><span class="p">();</span>
 </code></pre></div>
-
 <h4 id="using-net-built-in-feature">Using .NET built-in feature<a class="headerlink" href="#using-net-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="n">String</span> <span class="n">query</span> <span class="p">=</span> <span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">String</span> <span class="n">query</span> <span class="p">=</span> <span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>
 <span class="k">try</span> <span class="p">{</span>
    <span class="n">OleDbCommand</span> <span class="n">command</span> <span class="p">=</span> <span class="k">new</span> <span class="n">OleDbCommand</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">connection</span><span class="p">);</span>
    <span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">OleDbParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">,</span> <span class="n">CustomerName</span> <span class="n">Name</span><span class="p">.</span><span class="n">Text</span><span class="p">));</span>
@@ -1637,16 +1635,14 @@
    <span class="c1">// error handling</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="using-asp-net-built-in-feature">Using ASP .NET built-in feature<a class="headerlink" href="#using-asp-net-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="kt">string</span> <span class="n">sql</span> <span class="p">=</span> <span class="s">&quot;SELECT * FROM Customers WHERE CustomerId = @CustomerId&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kt">string</span> <span class="n">sql</span> <span class="p">=</span> <span class="s">&quot;SELECT * FROM Customers WHERE CustomerId = @CustomerId&quot;</span><span class="p">;</span>
 <span class="n">SqlCommand</span> <span class="n">command</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SqlCommand</span><span class="p">(</span><span class="n">sql</span><span class="p">);</span>
 <span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">SqlParameter</span><span class="p">(</span><span class="s">&quot;@CustomerId&quot;</span><span class="p">,</span> <span class="n">System</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">SqlDbType</span><span class="p">.</span><span class="n">Int</span><span class="p">));</span>
 <span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">[</span><span class="s">&quot;@CustomerId&quot;</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
 </code></pre></div>
-
 <h4 id="using-ruby-with-activerecord">Using Ruby with ActiveRecord<a class="headerlink" href="#using-ruby-with-activerecord" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="c1">## Create</span>
+<div class="highlight"><pre><span></span><code><span class="c1">## Create</span>
 <span class="no">Project</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">&#39;owasp&#39;</span><span class="p">)</span>
 <span class="c1">## Read</span>
 <span class="no">Project</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:conditions</span> <span class="o">=&gt;</span> <span class="s2">&quot;name = ?&quot;</span><span class="p">,</span> <span class="nb">name</span><span class="p">)</span>
@@ -1657,31 +1653,26 @@
 <span class="c1">## Delete</span>
 <span class="no">Project</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
 </code></pre></div>
-
 <h4 id="using-ruby-built-in-feature">Using Ruby built-in feature<a class="headerlink" href="#using-ruby-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="n">insert_new_user</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">prepare</span> <span class="s2">&quot;INSERT INTO users (name, age, gender) VALUES (?, ? ,?)&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">insert_new_user</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">prepare</span> <span class="s2">&quot;INSERT INTO users (name, age, gender) VALUES (?, ? ,?)&quot;</span>
 <span class="n">insert_new_user</span><span class="o">.</span><span class="n">execute</span> <span class="s1">&#39;aizatto&#39;</span><span class="p">,</span> <span class="s1">&#39;20&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span>
 </code></pre></div>
-
 <h4 id="using-php-with-php-data-objects">Using PHP with PHP Data Objects<a class="headerlink" href="#using-php-with-php-data-objects" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="x">$stmt = $dbh-&gt;prepare(&quot;INSERT INTO REGISTRY (name, value) VALUES (:name, :value)&quot;);</span>
+<div class="highlight"><pre><span></span><code><span class="x">$stmt = $dbh-&gt;prepare(&quot;INSERT INTO REGISTRY (name, value) VALUES (:name, :value)&quot;);</span>
 <span class="x">$stmt-&gt;bindParam(&#39;:name&#39;, $name);</span>
 <span class="x">$stmt-&gt;bindParam(&#39;:value&#39;, $value);</span>
 </code></pre></div>
-
 <h4 id="using-cold-fusion-built-in-feature">Using Cold Fusion built-in feature<a class="headerlink" href="#using-cold-fusion-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;cfquery</span> <span class="na">name =</span> <span class="s">&quot;getFirst&quot;</span> <span class="na">dataSource =</span> <span class="s">&quot;cfsnippets&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span></span><code>&lt;cfquery name = &quot;getFirst&quot; dataSource = &quot;cfsnippets&quot;&gt;
     SELECT * FROM #strDatabasePrefix#_courses WHERE intCourseID =
-    <span class="nt">&lt;cfqueryparam</span> <span class="na">value =</span> <span class="s">#intCourseID#</span> <span class="na">CFSQLType =</span> <span class="s">&quot;CF_SQL_INTEGER&quot;</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/cfquery&gt;</span>
+    &lt;cfqueryparam value = #intCourseID# CFSQLType = &quot;CF_SQL_INTEGER&quot;&gt;
+&lt;/cfquery&gt;
 </code></pre></div>
-
 <h4 id="using-perl-with-database-independent-interface">Using PERL with Database Independent Interface<a class="headerlink" href="#using-perl-with-database-independent-interface" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="k">my</span> <span class="nv">$sql</span> <span class="o">=</span> <span class="s">&quot;INSERT INTO foo (bar, baz) VALUES ( ?, ? )&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">my</span> <span class="nv">$sql</span> <span class="o">=</span> <span class="s">&quot;INSERT INTO foo (bar, baz) VALUES ( ?, ? )&quot;</span><span class="p">;</span>
 <span class="k">my</span> <span class="nv">$sth</span> <span class="o">=</span> <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="n">prepare</span><span class="p">(</span> <span class="nv">$sql</span> <span class="p">);</span>
 <span class="nv">$sth</span><span class="o">-&gt;</span><span class="n">execute</span><span class="p">(</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span> <span class="p">);</span>
 </code></pre></div>
-
 <h3 id="stored-procedure-examples">Stored Procedure Examples<a class="headerlink" href="#stored-procedure-examples" title="Permanent link">&para;</a></h3>
 <p>The SQL you write in your web application isn't the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities.</p>
 <p>To ensure this dynamic SQL is secure, you can parameterize this dynamic SQL too using bind variables.</p>
@@ -1689,14 +1680,13 @@
 <h4 id="oracle-using-plsql">Oracle using PL/SQL<a class="headerlink" href="#oracle-using-plsql" title="Permanent link">&para;</a></h4>
 <h5 id="normal-stored-procedure">Normal Stored Procedure<a class="headerlink" href="#normal-stored-procedure" title="Permanent link">&para;</a></h5>
 <p>No dynamic SQL being created. Parameters passed in to stored procedures are naturally bound to their location within the query without anything special being required:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">PROCEDURE</span> <span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span> <span class="nb">varchar</span><span class="p">,</span> <span class="n">Dept</span> <span class="nb">varchar</span><span class="p">)</span> <span class="k">AS</span> <span class="k">BEGIN</span>
+<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span> <span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span> <span class="nb">varchar</span><span class="p">,</span> <span class="n">Dept</span> <span class="nb">varchar</span><span class="p">)</span> <span class="k">AS</span> <span class="k">BEGIN</span>
    <span class="k">SELECT</span> <span class="n">balance</span> <span class="k">FROM</span> <span class="n">accounts_table</span> <span class="k">WHERE</span> <span class="n">user_ID</span> <span class="o">=</span> <span class="n">UserID</span> <span class="k">AND</span> <span class="n">department</span> <span class="o">=</span> <span class="n">Dept</span><span class="p">;</span>
 <span class="k">END</span><span class="p">;</span>
 </code></pre></div>
-
 <h5 id="stored-procedure-using-bind-variables-in-sql-run-with-execute">Stored Procedure Using Bind Variables in SQL Run with EXECUTE<a class="headerlink" href="#stored-procedure-using-bind-variables-in-sql-run-with-execute" title="Permanent link">&para;</a></h5>
 <p>Bind variables are used to tell the database that the inputs to this dynamic SQL are 'data' and not possibly code:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">PROCEDURE</span> <span class="n">AnotherSafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span> <span class="nb">varchar</span><span class="p">,</span> <span class="n">Dept</span> <span class="nb">varchar</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span> <span class="n">AnotherSafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span> <span class="nb">varchar</span><span class="p">,</span> <span class="n">Dept</span> <span class="nb">varchar</span><span class="p">)</span>
           <span class="k">AS</span> <span class="n">stmt</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">400</span><span class="p">);</span> <span class="k">result</span> <span class="nb">NUMBER</span><span class="p">;</span>
 <span class="k">BEGIN</span>
    <span class="n">stmt</span> <span class="p">:</span><span class="o">=</span> <span class="s1">&#39;SELECT balance FROM accounts_table WHERE user_ID = :1</span>
@@ -1705,18 +1695,16 @@
    <span class="k">RETURN</span> <span class="k">result</span><span class="p">;</span>
 <span class="k">END</span><span class="p">;</span>
 </code></pre></div>
-
 <h4 id="sql-server-using-transact-sql">SQL Server using Transact-SQL<a class="headerlink" href="#sql-server-using-transact-sql" title="Permanent link">&para;</a></h4>
 <h5 id="normal-stored-procedure_1">Normal Stored Procedure<a class="headerlink" href="#normal-stored-procedure_1" title="Permanent link">&para;</a></h5>
 <p>No dynamic SQL being created. Parameters passed in to stored procedures are naturally bound to their location within the query without anything special being required:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">PROCEDURE</span> <span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="o">@</span><span class="n">Dept</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="k">AS</span> <span class="k">BEGIN</span>
+<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span> <span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="o">@</span><span class="n">Dept</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="k">AS</span> <span class="k">BEGIN</span>
    <span class="k">SELECT</span> <span class="n">balance</span> <span class="k">FROM</span> <span class="n">accounts_table</span> <span class="k">WHERE</span> <span class="n">user_ID</span> <span class="o">=</span> <span class="o">@</span><span class="n">UserID</span> <span class="k">AND</span> <span class="n">department</span> <span class="o">=</span> <span class="o">@</span><span class="n">Dept</span>
 <span class="k">END</span>
 </code></pre></div>
-
 <h5 id="stored-procedure-using-bind-variables-in-sql-run-with-exec">Stored Procedure Using Bind Variables in SQL Run with EXEC<a class="headerlink" href="#stored-procedure-using-bind-variables-in-sql-run-with-exec" title="Permanent link">&para;</a></h5>
 <p>Bind variables are used to tell the database that the inputs to this dynamic SQL are 'data' and not possibly code:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">PROCEDURE</span> <span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="o">@</span><span class="n">Dept</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="k">AS</span> <span class="k">BEGIN</span>
+<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span> <span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="o">@</span><span class="n">Dept</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="k">AS</span> <span class="k">BEGIN</span>
    <span class="k">DECLARE</span> <span class="o">@</span><span class="k">sql</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
    <span class="k">SELECT</span> <span class="o">@</span><span class="k">sql</span> <span class="o">=</span> <span class="s1">&#39;SELECT balance FROM accounts_table WHERE &#39;</span>
                  <span class="o">+</span> <span class="s1">&#39;user_ID = @UID AND department = @DPT&#39;</span>
@@ -1725,7 +1713,6 @@
                       <span class="o">@</span><span class="n">UID</span><span class="o">=@</span><span class="n">UserID</span><span class="p">,</span> <span class="o">@</span><span class="n">DPT</span><span class="o">=@</span><span class="n">Dept</span>
 <span class="k">END</span>
 </code></pre></div>
-
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="http://bobby-tables.com/">The Bobby Tables site (inspired by the XKCD webcomic) has numerous examples in different languages of parameterized Prepared Statements and Stored Procedures</a></li>

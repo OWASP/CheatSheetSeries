@@ -1436,14 +1436,13 @@
 <h2 id="configuration-file">Configuration file<a class="headerlink" href="#configuration-file" title="Permanent link">&para;</a></h2>
 <p>The JAAS configuration file contains a <code>LoginModule</code> stanza for each <code>LoginModule</code> available for logging on to the application.</p>
 <p>A stanza from a JAAS configuration file:</p>
-<div class="codehilite"><pre><span></span><code>Branches
+<div class="highlight"><pre><span></span><code>Branches
 {
     USNavy.AppLoginModule required
     debug=true
     succeeded=true;
 }
 </code></pre></div>
-
 <p>Note the placement of the semicolons, terminating both <code>LoginModule</code> entries and stanzas.</p>
 <p>The word required indicates the <code>LoginContext</code>'s <code>login()</code> method must be successful when logging in the user. The <code>LoginModule</code>-specific values <code>debug</code> and <code>succeeded</code> are passed to the <code>LoginModule</code>.</p>
 <p>They are defined by the <code>LoginModule</code> and their usage is managed inside the <code>LoginModule</code>. Note, Options are Configured using key-value pairing such as <code>debug="true"</code> and the key and value should be separated by a <code>=</code> sign.</p>
@@ -1451,7 +1450,7 @@
 <ul>
 <li>Execution syntax:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>Java –Djava.security.auth.login.config==packageName/packageName.config
+<div class="highlight"><pre><span></span><code>Java –Djava.security.auth.login.config==packageName/packageName.config
         packageName.Main Stanza1
 
 Where:
@@ -1460,7 +1459,6 @@ Where:
     packageName.Main specifies Main.java in the Java package, packageName.
     Stanza1 is the name of the stanza Main() should read from the config file.
 </code></pre></div>
-
 <ul>
 <li>When executed, the 1st command-line argument is the stanza from the config file. The Stanza names the <code>LoginModule</code> to be used. The 2nd argument is the <code>CallbackHandler</code>.</li>
 <li>Create a new <code>LoginContext</code> with the arguments passed to <code>Main.java</code>.<ul>
@@ -1507,12 +1505,11 @@ Where:
 </ul>
 <h3 id="login">login()<a class="headerlink" href="#login" title="Permanent link">&para;</a></h3>
 <p>Captures user supplied login information. The code snippet below declares an array of two callback objects which, when passed to the <code>callbackHandler.handle</code> method in the <code>callbackHandler.java</code> program, will be loaded with a username and password provided interactively by the user:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">NameCallback</span> <span class="n">nameCB</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NameCallback</span><span class="p">(</span><span class="s">&quot;Username&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">NameCallback</span> <span class="n">nameCB</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NameCallback</span><span class="p">(</span><span class="s">&quot;Username&quot;</span><span class="p">);</span>
 <span class="n">PasswordCallback</span> <span class="n">passwordCB</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PasswordCallback</span> <span class="p">(</span><span class="s">&quot;Password&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 <span class="n">Callback</span><span class="o">[]</span> <span class="n">callbacks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Callback</span><span class="o">[]</span> <span class="p">{</span> <span class="n">nameCB</span><span class="p">,</span> <span class="n">passwordCB</span> <span class="p">};</span>
 <span class="n">callbackHandler</span><span class="p">.</span><span class="na">handle</span> <span class="p">(</span><span class="n">callbacks</span><span class="p">);</span>
 </code></pre></div>
-
 <ul>
 <li>Authenticates the user</li>
 <li>Retrieves the user supplied information from the callback objects:<ul>
@@ -1533,7 +1530,7 @@ Where:
 <p>Principals (i.e. Identities the subject has other than their login name) such as employee number or membership ID in a user group are added to the subject.</p>
 <p>Below, is an example <code>commit()</code> method where first, for each group the authenticated user has membership in, the group name is added as a principal to the subject. The subject's username is then added to their public credentials.</p>
 <p>Code snippet setting then adding any principals and a public credentials to a subject:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">commit</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">commit</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">If</span> <span class="p">(</span><span class="n">userAuthenticated</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">Set</span> <span class="n">groups</span> <span class="o">=</span> <span class="n">UserService</span><span class="p">.</span><span class="na">findGroups</span> <span class="p">(</span><span class="n">username</span><span class="p">);</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">Iterator</span> <span class="n">itr</span> <span class="o">=</span> <span class="n">groups</span><span class="p">.</span><span class="na">iterator</span> <span class="p">();</span> <span class="n">itr</span><span class="p">.</span><span class="na">hasNext</span> <span class="p">();</span> <span class="p">{</span>
@@ -1546,12 +1543,11 @@ Where:
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="abort">abort()<a class="headerlink" href="#abort" title="Permanent link">&para;</a></h3>
 <p>The <code>abort()</code> method is called when authentication doesn't succeed. Before the <code>abort()</code> method exits the <code>LoginModule</code>, care should be taken to reset state including the username and password input fields.</p>
 <h3 id="logout">logout()<a class="headerlink" href="#logout" title="Permanent link">&para;</a></h3>
 <p>The release of the users principals and credentials when <code>LoginContext.logout</code> is called:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">logout</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">logout</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">subject</span><span class="p">.</span><span class="na">isReadOnly</span><span class="p">())</span> <span class="p">{</span>
         <span class="n">Set</span> <span class="n">principals</span> <span class="o">=</span> <span class="n">subject</span><span class="p">.</span><span class="na">getPrincipals</span><span class="p">(</span><span class="n">UserGroupPrincipal</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
         <span class="n">subject</span><span class="p">.</span><span class="na">getPrincipals</span><span class="p">().</span><span class="na">removeAll</span><span class="p">(</span><span class="n">principals</span><span class="p">);</span>
@@ -1563,14 +1559,13 @@ Where:
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h2 id="callbackhandlerjava">CallbackHandler.java<a class="headerlink" href="#callbackhandlerjava" title="Permanent link">&para;</a></h2>
 <p>The <code>callbackHandler</code> is in a source (<code>.java</code>) file separate from any single <code>LoginModule</code> so that it can service a multitude of LoginModules with differing callback objects:</p>
 <ul>
 <li>Creates instance of the <code>CallbackHandler</code> class and has only one method, <code>handle()</code>.</li>
 <li>A <code>CallbackHandler</code> servicing a LoginModule requiring username &amp; password to login:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">handle</span><span class="p">(</span><span class="n">Callback</span><span class="o">[]</span> <span class="n">callbacks</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">handle</span><span class="p">(</span><span class="n">Callback</span><span class="o">[]</span> <span class="n">callbacks</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">callbacks</span><span class="p">.</span><span class="na">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">Callback</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callbacks</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">callback</span> <span class="k">instanceof</span> <span class="n">NameCallback</span><span class="p">)</span> <span class="p">{</span>
@@ -1583,7 +1578,6 @@ Where:
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://jaasbook.wordpress.com/2009/09/27/intro/">JAAS in Action</a>, Michael Coté, posted on September 27, 2009, URL as 5/14/2012.</li>

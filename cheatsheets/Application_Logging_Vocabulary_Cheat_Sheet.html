@@ -2346,25 +2346,24 @@
 </ol>
 <h2 id="format">Format<a class="headerlink" href="#format" title="Permanent link">&para;</a></h2>
 <p><em>NOTE: All dates should be logged in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format </em><em>WITH</em><em> UTC offset to ensure maximum portability</em></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-    <span class="s">&quot;datetime&quot;</span><span class="o">:</span> <span class="s">&quot;2021-01-01T01:01:01-0700&quot;</span><span class="p">,</span>
-    <span class="s">&quot;appid&quot;</span><span class="o">:</span> <span class="s">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
-    <span class="s">&quot;event&quot;</span><span class="o">:</span> <span class="s">&quot;AUTHN_login_success:joebob1&quot;</span><span class="p">,</span>
-    <span class="s">&quot;level&quot;</span><span class="o">:</span> <span class="s">&quot;INFO&quot;</span><span class="p">,</span>
-    <span class="s">&quot;description&quot;</span><span class="o">:</span> <span class="s">&quot;User joebob1 login successfully&quot;</span><span class="p">,</span>
-    <span class="s">&quot;useragent&quot;</span><span class="o">:</span> <span class="s">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36&quot;</span><span class="p">,</span>
-    <span class="s">&quot;source_ip&quot;</span><span class="o">:</span> <span class="s">&quot;165.225.50.94&quot;</span><span class="p">,</span>
-    <span class="s">&quot;host_ip&quot;</span><span class="o">:</span> <span class="s">&quot;10.12.7.9&quot;</span><span class="p">,</span>
-    <span class="s">&quot;hostname&quot;</span><span class="o">:</span> <span class="s">&quot;portalauth.foobar.com&quot;</span><span class="p">,</span>
-    <span class="s">&quot;protocol&quot;</span><span class="o">:</span> <span class="s">&quot;https&quot;</span><span class="p">,</span>
-    <span class="s">&quot;port&quot;</span><span class="o">:</span> <span class="s">&quot;440&quot;</span><span class="p">,</span>
-    <span class="s">&quot;request_uri&quot;</span><span class="o">:</span> <span class="s">&quot;/api/v2/auth/&quot;</span><span class="p">,</span>
-    <span class="s">&quot;request_method&quot;</span><span class="o">:</span> <span class="s">&quot;POST&quot;</span><span class="p">,</span>
-    <span class="s">&quot;region&quot;</span><span class="o">:</span> <span class="s">&quot;AWS-US-WEST-2&quot;</span><span class="p">,</span>
-    <span class="s">&quot;geo&quot;</span><span class="o">:</span> <span class="s">&quot;USA&quot;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2021-01-01T01:01:01-0700&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;AUTHN_login_success:joebob1&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;User joebob1 login successfully&quot;,
+    &quot;useragent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36&quot;,
+    &quot;source_ip&quot;: &quot;165.225.50.94&quot;,
+    &quot;host_ip&quot;: &quot;10.12.7.9&quot;,
+    &quot;hostname&quot;: &quot;portalauth.foobar.com&quot;,
+    &quot;protocol&quot;: &quot;https&quot;,
+    &quot;port&quot;: &quot;440&quot;,
+    &quot;request_uri&quot;: &quot;/api/v2/auth/&quot;,
+    &quot;request_method&quot;: &quot;POST&quot;,
+    &quot;region&quot;: &quot;AWS-US-WEST-2&quot;,
+    &quot;geo&quot;: &quot;USA&quot;
+}
 </code></pre></div>
-
 <h2 id="the-vocabulary">The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permanent link">&para;</a></h2>
 <p>What follows are the various event types that should be captured. For each event type there is a prefix like "authn" and additional data that should be included for that event.</p>
 <p>Portions of the full logging format are included for example, but a complete event log should follow the format above.</p>
@@ -2376,7 +2375,7 @@ All login events should be recorded including success.</p>
 <p><strong>Level:</strong>
 INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authn_login_success:joebob1&quot;,
@@ -2385,7 +2384,6 @@ INFO</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authn_login_successafterfailuseridretries">authn_login_successafterfail[:userid,retries]<a class="headerlink" href="#authn_login_successafterfailuseridretries" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2393,7 +2391,7 @@ The user successfully logged in after previously failing.</p>
 <p><strong>Level:</strong>
 INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authn_login_success:joebob1,2&quot;,
@@ -2402,7 +2400,6 @@ INFO</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authn_login_failuserid">authn_login_fail[:userid]<a class="headerlink" href="#authn_login_failuserid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2410,7 +2407,7 @@ All login events should be recorded including failure.</p>
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authn_login_fail:joebob1&quot;,
@@ -2419,7 +2416,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authn_login_fail_maxuseridmaxlimitint">authn_login_fail_max[:userid,maxlimit(int)]<a class="headerlink" href="#authn_login_fail_maxuseridmaxlimitint" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2427,7 +2423,7 @@ All login events should be recorded including failure.</p>
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authn_login_fail_max:joebob1,3&quot;,
@@ -2436,7 +2432,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authn_login_lockuseridreason">authn_login_lock[:userid,reason]<a class="headerlink" href="#authn_login_lockuseridreason" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2451,7 +2446,7 @@ WARN</p>
 <li>other: Other</li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authn_login_lock:joebob1,maxretries&quot;,
@@ -2460,23 +2455,21 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authn_token_deleteappid">authn_token_delete[:appid]<a class="headerlink" href="#authn_token_deleteappid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 When a token is deleted it should be recorded</p>
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
-    <span class="s2">&quot;</span><span class="s">datetime</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">2019-01-01 00:00:00,000</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">appid</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">foobar.netportal_auth</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">event</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">authn_token_delete:foobarapi</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">level</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">WARN</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">description</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">The token for foobarapi has been deleted</span><span class="s2">&quot;</span>,
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;authn_token_delete:foobarapi&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;The token for foobarapi has been deleted&quot;,
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authn_password_changeuserid">authn_password_change[:userid]<a class="headerlink" href="#authn_password_changeuserid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2484,7 +2477,7 @@ Every password change should be logged, including the userid that it was for.</p
 <p><strong>Level:</strong>
 INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authn_password_change:joebob1&quot;,
@@ -2493,14 +2486,13 @@ INFO</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authn_impossible_traveluseridregion1region2">authn_impossible_travel[:userid,region1,region2]<a class="headerlink" href="#authn_impossible_traveluseridregion1region2" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 When a user is logged in from one city and suddenly appears in another, too far away to have traveled in a reasonable timeframe, this often indicates a potential account takeover.</p>
 <p><strong>Level:</strong>: CRITICAL</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authn_impossible_travel:joebob1,US-OR,CN-SH&quot;,
@@ -2509,46 +2501,43 @@ When a user is logged in from one city and suddenly appears in another, too far 
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authn_token_createduserid-entitlements">authn_token_created[:userid, entitlement(s)]<a class="headerlink" href="#authn_token_createduserid-entitlements" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 When a token is created for service access it should be recorded</p>
 <p><strong>Level:</strong>: INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
-    <span class="s2">&quot;</span><span class="s">datetime</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">2019-01-01 00:00:00,000</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">appid</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">aws.foobar.com</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">event</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">authn_token_created:app.foobarapi.prod,create,read,update</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">level</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">INFO</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">description</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">A token has been created for app.foobarapi.prod with create,read,update</span><span class="s2">&quot;</span>,
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;aws.foobar.com&quot;,
+    &quot;event&quot;: &quot;authn_token_created:app.foobarapi.prod,create,read,update&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;A token has been created for app.foobarapi.prod with create,read,update&quot;,
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authn_token_revokeduseridtokenid">authn_token_revoked[:userid,tokenid]<a class="headerlink" href="#authn_token_revokeduseridtokenid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 A token has been revoked for the given account.</p>
 <p><strong>Level:</strong>: INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
-    <span class="s2">&quot;</span><span class="s">datetime</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">2019-01-01 00:00:00,000</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">appid</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">aws.foobar.com</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">event</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">authn_token_revoked:app.foobarapi.prod,xyz-abc-123-gfk</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">level</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">INFO</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">description</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">Token ID: xyz-abc-123-gfk was revoked for user app.foobarapi.prod</span><span class="s2">&quot;</span>,
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;aws.foobar.com&quot;,
+    &quot;event&quot;: &quot;authn_token_revoked:app.foobarapi.prod,xyz-abc-123-gfk&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;Token ID: xyz-abc-123-gfk was revoked for user app.foobarapi.prod&quot;,
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authn_token_reuseuseridtokenid">authn_token_reuse[:userid,tokenid]<a class="headerlink" href="#authn_token_reuseuseridtokenid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 A previously revoked token was attempted to be reused.</p>
 <p><strong>Level:</strong>: CRITICAL</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;aws.foobar.com&quot;,
     &quot;event&quot;: &quot;authn_token_reuse:app.foobarapi.prod,xyz-abc-123-gfk&quot;,
@@ -2557,7 +2546,6 @@ A previously revoked token was attempted to be reused.</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h2 id="authorization-authz">Authorization [AUTHZ]<a class="headerlink" href="#authorization-authz" title="Permanent link">&para;</a></h2>
 <hr />
@@ -2566,7 +2554,7 @@ A previously revoked token was attempted to be reused.</p>
 An attempt was made to access a resource which was unauthorized</p>
 <p><strong>Level:</strong>: CRITICAL</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authz_fail:joebob1,resource&quot;,
@@ -2575,14 +2563,13 @@ An attempt was made to access a resource which was unauthorized</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authz_changeuseridfromto">authz_change[:userid,from,to]<a class="headerlink" href="#authz_changeuseridfromto" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 The user or entity entitlements was changed</p>
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authz_change:joebob1,user,admin&quot;,
@@ -2591,14 +2578,13 @@ The user or entity entitlements was changed</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="authz_adminuseridevent">authz_admin[:userid,event]<a class="headerlink" href="#authz_adminuseridevent" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 All activity by privileged users such as admin should be recorded.</p>
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authz_admin:joebob1,user_privilege_change&quot;,
@@ -2607,7 +2593,6 @@ All activity by privileged users such as admin should be recorded.</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h2 id="excessive-use-excess">Excessive Use [EXCESS]<a class="headerlink" href="#excessive-use-excess" title="Permanent link">&para;</a></h2>
 <h3 id="excess_rate_limit_exceededuseridmax">excess_rate_limit_exceeded[userid,max]<a class="headerlink" href="#excess_rate_limit_exceededuseridmax" title="Permanent link">&para;</a></h3>
@@ -2615,7 +2600,7 @@ All activity by privileged users such as admin should be recorded.</p>
 Expected service limit ceilings should be established and alerted when exceeded, even if simply for managing costs and scaling.</p>
 <p><strong>Level:</strong>: WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;excess_rate_limit_exceeded:app.foobarapi.prod,100000&quot;,
@@ -2624,7 +2609,6 @@ Expected service limit ceilings should be established and alerted when exceeded,
     ...
 }
 </code></pre></div>
-
 <hr />
 <h2 id="file-upload-upload">File Upload [UPLOAD]<a class="headerlink" href="#file-upload-upload" title="Permanent link">&para;</a></h2>
 <h3 id="upload_completeuseridfilenametype">upload_complete[userid,filename,type]<a class="headerlink" href="#upload_completeuseridfilenametype" title="Permanent link">&para;</a></h3>
@@ -2632,64 +2616,60 @@ Expected service limit ceilings should be established and alerted when exceeded,
 On successful file upload the first step in the validation process is that the upload has completed.</p>
 <p><strong>Level:</strong>: INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>    <span class="p">{</span>
-    <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;appid&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;upload_complete:joebob1,user_generated_content.png,PNG&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;User joebob1 has uploaded user_generated_content.png&quot;</span><span class="p">,</span>
-    <span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code>    {
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;upload_complete:joebob1,user_generated_content.png,PNG&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;User joebob1 has uploaded user_generated_content.png&quot;,
+    ...
+}
 </code></pre></div>
-
 <hr />
 <h3 id="upload_storedfilenamefromto">upload_stored[filename,from,to]<a class="headerlink" href="#upload_storedfilenamefromto" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 One step in good file upload validation is to move/rename the file and when providing the content back to end users, never reference the original filename in the download. This is true both when storing in a filesystem as well as in block storage.</p>
 <p><strong>Level:</strong>: INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-    <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;appid&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;upload_stored:user_generated_content.png,kjsdhkrjhwijhsiuhdf000010202002&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;File user_generated_content.png was stored in the database with key abcdefghijk101010101&quot;</span><span class="p">,</span>
-    <span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;upload_stored:user_generated_content.png,kjsdhkrjhwijhsiuhdf000010202002&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;File user_generated_content.png was stored in the database with key abcdefghijk101010101&quot;,
+    ...
+}
 </code></pre></div>
-
 <hr />
 <h3 id="upload_validationfilenamevirusscanimagemagickfailedincompletepassed">upload_validation[filename,(virusscan|imagemagick|...):(FAILED|incomplete|passed)]<a class="headerlink" href="#upload_validationfilenamevirusscanimagemagickfailedincompletepassed" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 All file uploads should have some validation performed, both for correctness (is in fact of file type x), and for safety (does not contain a virus).</p>
 <p><strong>Level:</strong>: INFO|CRITICAL</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-    <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;appid&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;upload_validation:filename,virusscan:FAILED&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;CRITICAL&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;File user_generated_content.png FAILED virus scan and was purged&quot;</span><span class="p">,</span>
-    <span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;upload_validation:filename,virusscan:FAILED&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
+    &quot;description&quot;: &quot;File user_generated_content.png FAILED virus scan and was purged&quot;,
+    ...
+}
 </code></pre></div>
-
 <hr />
 <h3 id="upload_deleteuseridfileid">upload_delete[userid,fileid]<a class="headerlink" href="#upload_deleteuseridfileid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 When a file is deleted for normal reasons it should be recorded.</p>
 <p><strong>Level:</strong>: INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-    <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;appid&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;upload_delete:joebob1,&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;User joebob1 has marked file abcdefghijk101010101 for deletion.&quot;</span><span class="p">,</span>
-    <span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;upload_delete:joebob1,&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;User joebob1 has marked file abcdefghijk101010101 for deletion.&quot;,
+    ...
+}
 </code></pre></div>
-
 <hr />
 <h2 id="input-validation-input">Input Validation [INPUT]<a class="headerlink" href="#input-validation-input" title="Permanent link">&para;</a></h2>
 <h3 id="input_validation_failfielduserid">input_validation_fail[:field,userid]<a class="headerlink" href="#input_validation_failfielduserid" title="Permanent link">&para;</a></h3>
@@ -2698,7 +2678,7 @@ When input validation fails on the server-side it must either be because a) suff
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;input_validation_fail:date_of_birth,joebob1&quot;,
@@ -2707,7 +2687,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h2 id="malicious-behavior-malicious">Malicious Behavior [MALICIOUS<a class="headerlink" href="#malicious-behavior-malicious" title="Permanent link">&para;</a></h2>
 <h3 id="malicious_excess_404useridipuseragent">malicious_excess_404:[userid|IP,useragent]<a class="headerlink" href="#malicious_excess_404useridipuseragent" title="Permanent link">&para;</a></h3>
@@ -2716,16 +2695,15 @@ When a user makes numerous requests for files that don't exist it often is an in
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">{</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;datetime&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;appid&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;event&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;malicious_excess404:123.456.789.101,M@l1c10us-Hax0rB0t0-v1&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;level&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;WARN&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;description&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;A user at 123.456.789.101 has generated a large number of 404 requests.&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="p">...</span><span class="w"></span>
-<span class="err">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;malicious_excess404:123.456.789.101,M@l1c10us-Hax0rB0t0-v1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;A user at 123.456.789.101 has generated a large number of 404 requests.&quot;,
+    ...
+}
 </code></pre></div>
-
 <hr />
 <h3 id="malicious_extraneoususeridipinputnameuseragent">malicious_extraneous:[userid|IP,inputname,useragent]<a class="headerlink" href="#malicious_extraneoususeridipinputnameuseragent" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2733,16 +2711,15 @@ When a user submits data to a backend handler that was not expected it can indic
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">{</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;datetime&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;appid&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;event&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;malicious_extraneous:dr@evil.com,creditcardnum,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;level&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;WARN&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;description&quot;</span><span class="err">:</span><span class="w"> </span><span class="ss">&quot;User dr@evil.com included field creditcardnum in the request which is not handled by this service.&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="p">...</span><span class="w"></span>
-<span class="err">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;malicious_extraneous:dr@evil.com,creditcardnum,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User dr@evil.com included field creditcardnum in the request which is not handled by this service.&quot;,
+    ...
+}
 </code></pre></div>
-
 <hr />
 <h3 id="malicious_attack_tooluseridiptoolnameuseragent">malicious_attack_tool:[userid|IP,toolname,useragent]<a class="headerlink" href="#malicious_attack_tooluseridiptoolnameuseragent" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2751,16 +2728,15 @@ When obvious attack tools are identified either by signature or by user agent th
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-    <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="s2">&quot;2019-01-01 00:00:00,000&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;appid&quot;</span><span class="p">:</span> <span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;malicious_attack_tool:127.0.0.1,nikto,Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;WARN&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Attack traffic indicating use of Nikto coming from 127.0.0.1&quot;</span><span class="p">,</span>
-    <span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;malicious_attack_tool:127.0.0.1,nikto,Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;Attack traffic indicating use of Nikto coming from 127.0.0.1&quot;,
+    ...
+}
 </code></pre></div>
-
 <hr />
 <h3 id="malicious_corsuseridipuseragentreferer">malicious_cors:[userid|IP,useragent,referer]<a class="headerlink" href="#malicious_corsuseridipuseragentreferer" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2769,16 +2745,15 @@ When attempts are made from unauthorized origins they should of course be blocke
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-    <span class="err">&quot;datetime&quot;:</span> <span class="err">&quot;2019-01-01</span> <span class="err">00:00:00,000&quot;,</span>
-    <span class="err">&quot;appid&quot;:</span> <span class="err">&quot;foobar.netportal_auth&quot;,</span>
-    <span class="err">&quot;event&quot;:</span> <span class="err">&quot;</span><span class="n">malicious_cors</span><span class="p">:</span><span class="mf">127.0.0.1</span><span class="p">,</span><span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">X11</span><span class="p">;</span> <span class="err">Linux</span> <span class="err">x86_64</span><span class="p">;</span> <span class="n">rv</span><span class="p">:</span><span class="mf">10.0</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">10.0</span><span class="p">,</span><span class="n">attack</span><span class="o">.</span><span class="n">evil</span><span class="o">.</span><span class="n">com</span><span class="s2">&quot;,</span>
-<span class="s2">    &quot;</span><span class="kc">level</span><span class="s2">&quot;: &quot;</span><span class="n">WARN</span><span class="s2">&quot;,</span>
-<span class="s2">    &quot;</span><span class="n">description</span><span class="s2">&quot;: &quot;</span><span class="n">An</span> <span class="n">illegal</span> <span class="kc">cross</span><span class="o">-</span><span class="n">origin</span> <span class="n">request</span> <span class="n">from</span> <span class="mf">127.0.0.1</span> <span class="n">was</span> <span class="n">refered</span> <span class="n">from</span> <span class="n">attack</span><span class="o">.</span><span class="n">evil</span><span class="o">.</span><span class="n">com</span><span class="err">&quot;</span>
-    <span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;malicious_cors:127.0.0.1,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0,attack.evil.com&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;An illegal cross-origin request from 127.0.0.1 was refered from attack.evil.com&quot;
+    ...
+}
 </code></pre></div>
-
 <hr />
 <h3 id="malicious_direct_referenceuseridip-useragent">malicious_direct_reference:[userid|IP, useragent]<a class="headerlink" href="#malicious_direct_referenceuseridip-useragent" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2786,16 +2761,15 @@ A common attack against authentication and authorization is to directly access a
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-    <span class="err">&quot;datetime&quot;:</span> <span class="err">&quot;2019-01-01</span> <span class="err">00:00:00,000&quot;,</span>
-    <span class="err">&quot;appid&quot;:</span> <span class="err">&quot;foobar.netportal_auth&quot;,</span>
-    <span class="err">&quot;event&quot;:</span> <span class="err">&quot;</span><span class="n">malicious_direct</span><span class="p">:</span><span class="n">joebob1</span><span class="p">,</span> <span class="n">Mozilla</span><span class="o">/</span><span class="mf">5.0</span> <span class="p">(</span><span class="n">X11</span><span class="p">;</span> <span class="err">Linux</span> <span class="err">x86_64</span><span class="p">;</span> <span class="n">rv</span><span class="p">:</span><span class="mf">10.0</span><span class="p">)</span> <span class="n">Gecko</span><span class="o">/</span><span class="mi">20100101</span> <span class="n">Firefox</span><span class="o">/</span><span class="mf">10.0</span><span class="s2">&quot;,</span>
-<span class="s2">    &quot;</span><span class="kc">level</span><span class="s2">&quot;: &quot;</span><span class="n">WARN</span><span class="s2">&quot;,</span>
-<span class="s2">    &quot;</span><span class="n">description</span><span class="s2">&quot;: &quot;</span><span class="n">User</span> <span class="n">joebob1</span> <span class="n">attempted</span> <span class="kc">to</span> <span class="n">access</span> <span class="n">an</span> <span class="n">object</span> <span class="kc">to</span> <span class="n">which</span> <span class="n">they</span> <span class="n">are</span> <span class="n">not</span> <span class="n">authorized</span><span class="err">&quot;</span><span class="p">,</span>
-    <span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;malicious_direct:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 attempted to access an object to which they are not authorized&quot;,
+    ...
+}
 </code></pre></div>
-
 <hr />
 <h2 id="privilege-changes-privilege">Privilege Changes [PRIVILEGE]<a class="headerlink" href="#privilege-changes-privilege" title="Permanent link">&para;</a></h2>
 <p>This section focuses on object privilege changes such as read/write/execute permissions or objects in a database having authorization meta-information changed.</p>
@@ -2807,7 +2781,7 @@ Tracking changes to objects to which there are access control restrictions can u
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;malicious_direct:joebob1, /users/admin/some/important/path,0511,0777&quot;,
@@ -2816,7 +2790,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h2 id="sensitive-data-changes-data">Sensitive Data Changes [DATA]<a class="headerlink" href="#sensitive-data-changes-data" title="Permanent link">&para;</a></h2>
 <p>It's not necessary to log or alert on changes to all files, but in the case of highly sensitive files or data it is important that we monitor and alert on changes.</p>
@@ -2827,7 +2800,7 @@ When a new piece of data is created and marked as sensitive or placed into a dir
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;sensitive_create:joebob1, /users/admin/some/important/path&quot;,
@@ -2836,7 +2809,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="sensitive_readuseridfileobject">sensitive_read:[userid,file|object]<a class="headerlink" href="#sensitive_readuseridfileobject" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2844,7 +2816,7 @@ All data marked as sensitive or placed into a directory/table/repository where s
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;sensitive_read:joebob1, /users/admin/some/important/path&quot;,
@@ -2853,7 +2825,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="sensitive_updateuseridfileobject">sensitive_update:[userid,file|object]<a class="headerlink" href="#sensitive_updateuseridfileobject" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2861,7 +2832,7 @@ All data marked as sensitive or placed into a directory/table/repository where s
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;sensitive_update:joebob1, /users/admin/some/important/path&quot;,
@@ -2870,7 +2841,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="sensitive_deleteuseridfileobject">sensitive_delete:[userid,file|object]<a class="headerlink" href="#sensitive_deleteuseridfileobject" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2878,16 +2848,15 @@ All data marked as sensitive or placed into a directory/table/repository where s
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
-    <span class="s2">&quot;</span><span class="s">datetime</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">2019-01-01 00:00:00,000</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">appid</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">foobar.netportal_auth</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">event</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">sensitive_delete:joebob1, /users/admin/some/important/path</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">level</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">WARN</span><span class="s2">&quot;</span>,
-    <span class="s2">&quot;</span><span class="s">description</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">User joebob1 marked file /users/admin/some/important/path for deletion</span><span class="s2">&quot;</span>,
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;sensitive_delete:joebob1, /users/admin/some/important/path&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 marked file /users/admin/some/important/path for deletion&quot;,
     ...
 }
 </code></pre></div>
-
 <hr />
 <h2 id="sequence-errors-sequence">Sequence Errors [SEQUENCE]<a class="headerlink" href="#sequence-errors-sequence" title="Permanent link">&para;</a></h2>
 <p>Also called a <strong><em>business logic attack</em></strong>, if a specific path is expected through a system and an attempt is made to skip or change the order of that path it could indicate malicious intent.</p>
@@ -2898,7 +2867,7 @@ Tracking changes to objects to which there are access control restrictions can u
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;malicious_direct:joebob1, /users/admin/some/important/path,0511,0777&quot;,
@@ -2907,7 +2876,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h2 id="session-management-session">Session Management [SESSION]<a class="headerlink" href="#session-management-session" title="Permanent link">&para;</a></h2>
 <h3 id="session_createduserid">session_created:[userid]<a class="headerlink" href="#session_createduserid" title="Permanent link">&para;</a></h3>
@@ -2916,7 +2884,7 @@ When a new authenticated session is created that session may be logged and activ
 <p><strong>Level:</strong>
 INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>    {
+<div class="highlight"><pre><span></span><code>    {
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;session_created:joebob1&quot;,
@@ -2925,7 +2893,6 @@ INFO</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="session_reneweduserid">session_renewed:[userid]<a class="headerlink" href="#session_reneweduserid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2933,7 +2900,7 @@ When a user is warned of session to be expired/revoked and chooses to extend the
 <p><strong>Level:</strong>
 INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;session_renewed:joebob1&quot;,
@@ -2942,7 +2909,6 @@ INFO</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="session_expireduseridreason">session_expired:[userid,reason]<a class="headerlink" href="#session_expireduseridreason" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2950,7 +2916,7 @@ When a session expires, especially in the case of an authenticated session or wi
 <p><strong>Level:</strong>
 INFO</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;session_expired:joebob1,revoked&quot;,
@@ -2959,7 +2925,6 @@ INFO</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="session_use_after_expireuserid">session_use_after_expire:[userid]<a class="headerlink" href="#session_use_after_expireuserid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -2967,7 +2932,7 @@ In the case a user attempts to access systems with an expire session it may be h
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;session_use_after_expire:joebob1&quot;,
@@ -2976,7 +2941,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h2 id="system-events-sys">System Events [SYS]<a class="headerlink" href="#system-events-sys" title="Permanent link">&para;</a></h2>
 <h3 id="sys_startupuserid">sys_startup:[userid]<a class="headerlink" href="#sys_startupuserid" title="Permanent link">&para;</a></h3>
@@ -2985,7 +2949,7 @@ When a system is first started it can be valuable to log the startup, even if th
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;sys_startup:joebob1&quot;,
@@ -2994,7 +2958,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="sys_shutdownuserid">sys_shutdown:[userid]<a class="headerlink" href="#sys_shutdownuserid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -3002,7 +2965,7 @@ When a system is shutdown it can be valuable to log the event, even if the syste
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;sys_shutdown:joebob1&quot;,
@@ -3011,7 +2974,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="sys_restartuserid">sys_restart:[userid]<a class="headerlink" href="#sys_restartuserid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -3019,7 +2981,7 @@ When a system is restarted it can be valuable to log the event, even if the syst
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;sys_restart:joebob1&quot;,
@@ -3028,7 +2990,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="sys_crashreason">sys_crash[:reason]<a class="headerlink" href="#sys_crashreason" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -3036,7 +2997,7 @@ If possible to catch an unstable condition resulting in the crash of a system, l
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;sys_crash:outofmemory,
@@ -3045,7 +3006,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="sys_monitor_disableduseridmonitor">sys_monitor_disabled:[userid,monitor]<a class="headerlink" href="#sys_monitor_disableduseridmonitor" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -3053,7 +3013,7 @@ If your systems contain agents responsible for file integrity, resources, loggin
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;sys_monitor_disabled:joebob1,crowdstrike&quot;,
@@ -3062,7 +3022,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="sys_monitor_enableduseridmonitor">sys_monitor_enabled:[userid,monitor]<a class="headerlink" href="#sys_monitor_enableduseridmonitor" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -3070,7 +3029,7 @@ If your systems contain agents responsible for file integrity, resources, loggin
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;sys_monitor_enabled:joebob1,crowdstrike&quot;,
@@ -3079,7 +3038,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h2 id="user-management-user">User Management [USER]<a class="headerlink" href="#user-management-user" title="Permanent link">&para;</a></h2>
 <h3 id="user_createduseridnewuseridattributesonetwothree">user_created:[userid,newuserid,attributes[one,two,three]]<a class="headerlink" href="#user_createduseridnewuseridattributesonetwothree" title="Permanent link">&para;</a></h3>
@@ -3088,7 +3046,7 @@ When creating new users, logging the specifics of the user creation event is hel
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;user_created:joebob1,user1,admin:create,update,delete&quot;,
@@ -3097,7 +3055,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="user_updateduseridonuseridattributesonetwothree">user_updated:[userid,onuserid,attributes[one,two,three]]<a class="headerlink" href="#user_updateduseridonuseridattributesonetwothree" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -3105,7 +3062,7 @@ When updating users, logging the specifics of the user update event is helpful, 
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;user_updated:joebob1,user1,admin:create,update,delete&quot;,
@@ -3114,7 +3071,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="user_archiveduseridonuserid">user_archived:[userid,onuserid]<a class="headerlink" href="#user_archiveduseridonuserid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -3122,7 +3078,7 @@ It is always best to archive users rather than deleting, except where required. 
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;user_archived:joebob1,user1&quot;,
@@ -3131,7 +3087,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h3 id="user_deleteduseridonuserid">user_deleted:[userid,onuserid]<a class="headerlink" href="#user_deleteduseridonuserid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -3139,7 +3094,7 @@ It is always best to archive users rather than deleting, except where required. 
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code>{
+<div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;user_deleted:joebob1,user1&quot;,
@@ -3148,7 +3103,6 @@ WARN</p>
     ...
 }
 </code></pre></div>
-
 <hr />
 <h2 id="exclusions">Exclusions<a class="headerlink" href="#exclusions" title="Permanent link">&para;</a></h2>
 <p>As important as what you DO log is what you DON'T log. Private or secret information, source code, keys, certs, etc. should never be logged.</p>

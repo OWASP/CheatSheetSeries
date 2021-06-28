@@ -1724,7 +1724,7 @@
 <p>If the provider has given the team a list of the impacted functions, protective code must wrap the calls to these functions to ensure that the input and the output data is safe.</p>
 <p>Moreover, security devices, such as the Web Application Firewall (WAF), can handle such issues by protecting the internal applications through parameter validation and by generating detection rules for those specific libraries. Yet, in this cheat sheet, the focus is set on the application level in order to patch the vulnerability as close as possible to the source.</p>
 <p><em>Example using java code in which the impacted function suffers from a <a href="https://www.netsparker.com/blog/web-security/remote-code-evaluation-execution/">Remote Code Execution</a> issue:</em></p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">callFunctionWithRCEIssue</span><span class="p">(</span><span class="n">String</span> <span class="n">externalInput</span><span class="p">){</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">callFunctionWithRCEIssue</span><span class="p">(</span><span class="n">String</span> <span class="n">externalInput</span><span class="p">){</span>
     <span class="c1">//Apply input validation on the external input using regex</span>
     <span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9]{1,50}&quot;</span><span class="p">,</span> <span class="n">externalInput</span><span class="p">)){</span>
         <span class="c1">//Call the flawed function using safe input</span>
@@ -1736,7 +1736,6 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>If the provider has provided nothing about the vulnerability, <a href="#-case-3">Case 3</a> can be applied skipping the <em>step 2</em> of this case. We assume here that, at least, the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures">CVE</a> has been provided.</p>
 <p><strong>Step 2:</strong></p>
 <p>If the provider has provided the team with the exploitation code, and the team made a security wrapper around the vulnerable library/code, execute the exploitation code in order to ensure that the library is now secure and doesn't affect the application.</p>
@@ -1770,10 +1769,9 @@
 <p><em>Example:</em></p>
 <p>The team has an application using the Jackson API in a version exposed to the <a href="https://nvd.nist.gov/vuln/detail/CVE-2016-3720">CVE-2016-3720</a>.</p>
 <p>The description of the CVE is as follows:</p>
-<div class="codehilite"><pre><span></span><code>XML external entity (XXE) vulnerability in XmlMapper in the Data format extension for Jackson
+<div class="highlight"><pre><span></span><code>XML external entity (XXE) vulnerability in XmlMapper in the Data format extension for Jackson
 (aka jackson-dataformat-xml) allows attackers to have unspecified impact via unknown vectors.
 </code></pre></div>
-
 <p>Based on these information, the team determines that the necessary patching will be to add a <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">pre-validation of any XML data</a> passed to the Jakson API to prevent <a href="https://www.acunetix.com/blog/articles/xml-external-entity-xxe-vulnerabilities/">XML external entity (XXE)</a> vulnerability.</p>
 <p><strong>Step 3:</strong></p>
 <p>If possible, create a unit test that mimics the vulnerability in order to ensure that the patch is effective and have a way to continuously ensure that the patch is in place during the evolution of the project.</p>

@@ -1698,9 +1698,8 @@
 <h3 id="use-strong-diffie-hellman-parameters">Use Strong Diffie-Hellman Parameters<a class="headerlink" href="#use-strong-diffie-hellman-parameters" title="Permanent link">&para;</a></h3>
 <p>Where ciphers that use the ephemeral Diffie-Hellman key exchange are in use (signified by the "DHE" or "EDH" strings in the cipher name) sufficiently secure Diffie-Hellman parameters (at least 2048 bits) should be used</p>
 <p>The following command can be used to generate 2048 bit parameters:</p>
-<div class="codehilite"><pre><span></span><code>openssl dhparam <span class="m">2048</span> -out dhparam2048.pem
+<div class="highlight"><pre><span></span><code>openssl dhparam <span class="m">2048</span> -out dhparam2048.pem
 </code></pre></div>
-
 <p>The <a href="https://weakdh.org/sysadmin.html">Weak DH</a> website provides guidance on how various web servers can be configured to use these generated parameters.</p>
 <h3 id="disable-compression">Disable Compression<a class="headerlink" href="#disable-compression" title="Permanent link">&para;</a></h3>
 <p>TLS compression should be disabled in order to protect against a vulnerability (nicknamed <a href="https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/">CRIME</a>) which could potentially allow sensitive information such as session cookies to be recovered by an attacker.</p>
@@ -1789,11 +1788,10 @@
 <h3 id="prevent-caching-of-sensitive-data">Prevent Caching of Sensitive Data<a class="headerlink" href="#prevent-caching-of-sensitive-data" title="Permanent link">&para;</a></h3>
 <p>Although TLS provides protection of data while it is in transit, it does not provide any protection for data once it has reached the requesting system. As such, this information may be stored in the cache of the user's browser, or by any intercepting proxies which are configured to perform TLS decryption.</p>
 <p>Where sensitive data is returned in responses, HTTP headers should be used to instruct the browser and any proxy servers not to cache the information, in order to prevent it being stored or returned to other users. This can be achieved by setting the following HTTP headers in the response:</p>
-<div class="codehilite"><pre><span></span><code>Cache-Control: no-cache, no-store, must-revalidate
+<div class="highlight"><pre><span></span><code>Cache-Control: no-cache, no-store, must-revalidate
 Pragma: no-cache
 Expires: 0
 </code></pre></div>
-
 <h3 id="use-http-strict-transport-security">Use HTTP Strict Transport Security<a class="headerlink" href="#use-http-strict-transport-security" title="Permanent link">&para;</a></h3>
 <p>HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS, and also prevents the user from bypassing certificate warnings. See the <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security cheatsheet</a> for further information on implementing HSTS.</p>
 <h3 id="consider-the-use-of-client-side-certificates">Consider the use of Client-Side Certificates<a class="headerlink" href="#consider-the-use-of-client-side-certificates" title="Permanent link">&para;</a></h3>

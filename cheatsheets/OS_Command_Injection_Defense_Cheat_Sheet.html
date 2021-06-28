@@ -1545,14 +1545,12 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Command injection (or OS Command Injection) is a type of injection where software that constructs a system command using externally influenced input does not correctly neutralize the input from special elements that can modify the initially intended command.</p>
 <p>For example, if the supplied value is:</p>
-<div class="codehilite"><pre><span></span><code>calc
+<div class="highlight"><pre><span></span><code>calc
 </code></pre></div>
-
 <p>when typed in a Windows command prompt, the application <em>Calculator</em> is displayed.</p>
 <p>However, if the supplied value has been tampered with, and now it is:</p>
-<div class="codehilite"><pre><span></span><code>calc <span class="p">&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;test&quot;</span>
+<div class="highlight"><pre><span></span><code>calc <span class="p">&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;test&quot;</span>
 </code></pre></div>
-
 <p>when executed, it changes the meaning of the initial intended value.</p>
 <p>Now, both the <em>Calculator</em> application and the value <em>test</em> are displayed:</p>
 <p><img alt="CommandInjection" src="../assets/OS_Command_Injection_Defense_Cheat_Sheet_CmdInjection.png" /></p>
@@ -1580,9 +1578,8 @@
 </li>
 </ul>
 <p><strong>Note A:</strong></p>
-<div class="codehilite"><pre><span></span><code>&amp; |  ; $ &gt; &lt; ` \ !
+<div class="highlight"><pre><span></span><code>&amp; |  ; $ &gt; &lt; ` \ !
 </code></pre></div>
-
 <h2 id="additional-defenses">Additional Defenses<a class="headerlink" href="#additional-defenses" title="Permanent link">&para;</a></h2>
 <p>On top of primary defenses, parameterizations, and input validation, we also recommend adopting all of these additional defenses to provide defense in depth.</p>
 <p>These additional defenses are:</p>
@@ -1599,7 +1596,7 @@
 <p><strong><code>Runtime.exec</code> does NOT try to invoke the shell at any point and does not support shell metacharacters</strong>.</p>
 <p>The key difference is that much of the functionality provided by the shell that could be used for mischief (chaining commands using  <code>&amp;</code>, <code>&amp;&amp;</code>, <code>|</code>, <code>||</code>, etc,  redirecting input and output) would simply end up as a parameter being passed to the first command, likely causing a syntax error or being thrown out as an invalid parameter.</p>
 <p><em>Code to test the note above:</em></p>
-<div class="codehilite"><pre><span></span><code><span class="n">String</span><span class="o">[]</span> <span class="n">specialChars</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]</span><span class="p">{</span><span class="s">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s">&quot;&amp;&amp;&quot;</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">,</span> <span class="s">&quot;||&quot;</span><span class="p">};</span>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="o">[]</span> <span class="n">specialChars</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]</span><span class="p">{</span><span class="s">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s">&quot;&amp;&amp;&quot;</span><span class="p">,</span> <span class="s">&quot;|&quot;</span><span class="p">,</span> <span class="s">&quot;||&quot;</span><span class="p">};</span>
 <span class="n">String</span> <span class="n">payload</span> <span class="o">=</span> <span class="s">&quot;cmd /c whoami&quot;</span><span class="p">;</span>
 <span class="n">String</span> <span class="n">cmdTemplate</span> <span class="o">=</span> <span class="s">&quot;java -version %s &quot;</span> <span class="o">+</span> <span class="n">payload</span><span class="p">;</span>
 <span class="n">String</span> <span class="n">cmd</span><span class="p">;</span>
@@ -1625,9 +1622,8 @@
 <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&quot;ERROR :\n%s\n&quot;</span><span class="p">,</span> <span class="n">IOUtils</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">getErrorStream</span><span class="p">(),</span>
                   <span class="s">&quot;utf-8&quot;</span><span class="p">));</span>
 </code></pre></div>
-
 <p><em>Result of the test:</em></p>
-<div class="codehilite"><pre><span></span><code>##### TEST CMD: java -version &amp; cmd /c whoami
+<div class="highlight"><pre><span></span><code>##### TEST CMD: java -version &amp; cmd /c whoami
 RC    : 0
 OUT   :
 
@@ -1662,15 +1658,13 @@ mydomain\simpleuser
 
 ERROR :
 </code></pre></div>
-
 <p><em>Incorrect usage:</em></p>
-<div class="codehilite"><pre><span></span><code><span class="n">ProcessBuilder</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;C:\DoStuff.exe -arg1 -arg2&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;C:\DoStuff.exe -arg1 -arg2&quot;</span><span class="p">);</span>
 </code></pre></div>
-
 <p>In this example, the command together with the arguments are passed as a one string, making it easy to manipulate that expression and inject malicious strings.</p>
 <p><em>Correct Usage:</em></p>
 <p>Here is an example that starts a process with a modified working directory. The command and each of the arguments are passed separately. This makes it easy to validate each term and reduces the risk of malicious strings being inserted.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ProcessBuilder</span> <span class="n">pb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;TrustedCmd&quot;</span><span class="p">,</span> <span class="s">&quot;TrustedArg1&quot;</span><span class="p">,</span> <span class="s">&quot;TrustedArg2&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span> <span class="n">pb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;TrustedCmd&quot;</span><span class="p">,</span> <span class="s">&quot;TrustedArg1&quot;</span><span class="p">,</span> <span class="s">&quot;TrustedArg2&quot;</span><span class="p">);</span>
 
 <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">env</span> <span class="o">=</span> <span class="n">pb</span><span class="p">.</span><span class="na">environment</span><span class="p">();</span>
 
@@ -1678,10 +1672,9 @@ ERROR :
 
 <span class="n">Process</span> <span class="n">p</span> <span class="o">=</span> <span class="n">pb</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
-
 <h3 id="net">.Net<a class="headerlink" href="#net" title="Permanent link">&para;</a></h3>
 <p>In .Net use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2">System.Diagnostics.Process.Start</a> to call underlying OS functions.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span> <span class="n">process</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span> <span class="n">process</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
 
 <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span> <span class="n">startInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span><span class="p">();</span>
 
@@ -1693,7 +1686,6 @@ ERROR :
 
 <span class="n">process</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
 </code></pre></div>
-
 <h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
 <p>In PHP use <a href="https://www.php.net/manual/en/function.escapeshellarg.php">escapeshellarg()</a> or <a href="https://www.php.net/manual/en/function.escapeshellcmd.php">escapeshellcmd()</a> rather than <a href="https://www.php.net/manual/en/function.exec.php">exec()</a>, <a href="https://www.php.net/manual/en/function.system.php">system()</a>, <a href="https://www.php.net/manual/en/function.passthru.php">passthru()</a>.</p>
 <h2 id="related-articles">Related articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>

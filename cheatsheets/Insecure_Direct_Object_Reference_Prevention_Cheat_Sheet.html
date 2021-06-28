@@ -1334,12 +1334,11 @@
 <p>Enumeration attack can be described in the way in which the attacker build a collection of valid identifiers using the discovered format/pattern and test them against the application.</p>
 <p><strong>For example:</strong></p>
 <p>Imagine an HR application exposing a service accepting employee ID in order to return the employee information and for which the format/pattern of the employee ID is the following:</p>
-<div class="codehilite"><pre><span></span><code>EMP-00000
+<div class="highlight"><pre><span></span><code>EMP-00000
 EMP-00001
 EMP-00002
 ...
 </code></pre></div>
-
 <p>Based on this, an attacker can build a collection of valid ID from <em>EMP-00000</em> to <em>EMP-99999</em>.</p>
 <p>To be exploited, an IDOR issue must be combined with an <a href="Access_Control_Cheat_Sheet.html">Access Control</a> issue because it's the Access Control issue that "allows" the attacker to access the object for which they have guessed the identifier through the enumeration attack.</p>
 <h2 id="additional-remarks">Additional remarks<a class="headerlink" href="#additional-remarks" title="Permanent link">&para;</a></h2>
@@ -1360,7 +1359,7 @@ EMP-00002
 <li>Makes creation of a collection a enumeration values more difficult to achieve because, even if attacker can guess the hash algorithm from the ID size, it cannot reproduce value due to the salt that is not tied to the hidden value.</li>
 </ul>
 <p>This is the implementation of the utility class that generate the identifier to use for exchange with the front end side:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.xml.bind.DatatypeConverter</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.xml.bind.DatatypeConverter</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">java.security.MessageDigest</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">java.security.NoSuchAlgorithmException</span><span class="p">;</span>
@@ -1410,9 +1409,8 @@ EMP-00002
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>This is the example of services using the front identifier:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">/**</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
 <span class="cm"> * Service to list all available movies</span>
 <span class="cm"> *</span>
 <span class="cm"> * @return The collection of movies ID and name as JSON response</span>
@@ -1473,9 +1471,8 @@ EMP-00002
     <span class="k">return</span> <span class="n">movie</span><span class="p">.</span><span class="na">get</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>This is the value object used:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Movie</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Movie</span> <span class="p">{</span>
     <span class="cm">/**</span>
 <span class="cm">     * We indicate to serializer that this field must never be serialized</span>
 <span class="cm">     *</span>
@@ -1487,7 +1484,6 @@ EMP-00002
 <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h2 id="sources-of-the-prototype">Sources of the prototype<a class="headerlink" href="#sources-of-the-prototype" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/righettod/poc-idor">GitHub repository</a>.</p>
                 

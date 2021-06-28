@@ -1827,30 +1827,26 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
 <h2 id="token-structure">Token Structure<a class="headerlink" href="#token-structure" title="Permanent link">&para;</a></h2>
 <p>Token structure example taken from <a href="https://jwt.io/#debugger">JWT.IO</a>:</p>
 <p><code>[Base64(HEADER)].[Base64(PAYLOAD)].[Base64(SIGNATURE)]</code></p>
-<div class="codehilite"><pre><span></span><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+<div class="highlight"><pre><span></span><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
 eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.
 TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 </code></pre></div>
-
 <p>Chunk 1: <strong>Header</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
   <span class="nt">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Chunk 2: <strong>Payload</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
   <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
   <span class="nt">&quot;admin&quot;</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Chunk 3: <strong>Signature</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nx">HMACSHA256</span><span class="p">(</span> <span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">header</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">payload</span><span class="p">),</span> <span class="nx">KEY</span> <span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nx">HMACSHA256</span><span class="p">(</span> <span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">header</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">payload</span><span class="p">),</span> <span class="nx">KEY</span> <span class="p">)</span>
 </code></pre></div>
-
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT) with Java.</p>
 <p>The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens.</p>
@@ -1867,7 +1863,7 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <p>First, use a JWT library that is not exposed to this vulnerability.</p>
 <p>Last, during token validation, explicitly request that the expected algorithm was used.</p>
 <h4 id="implementation-example">Implementation Example<a class="headerlink" href="#implementation-example" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span>
 <span class="kd">private</span> <span class="kd">transient</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">keyHMAC</span> <span class="o">=</span> <span class="p">...;</span>
 
 <span class="p">...</span>
@@ -1879,7 +1875,6 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <span class="c1">//Verify the token, if the verification fail then a exception is throwed</span>
 <span class="n">DecodedJWT</span> <span class="n">decodedToken</span> <span class="o">=</span> <span class="n">verifier</span><span class="p">.</span><span class="na">verify</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
 </code></pre></div>
-
 <h3 id="token-sidejacking">Token Sidejacking<a class="headerlink" href="#token-sidejacking" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_1">Symptom<a class="headerlink" href="#symptom_1" title="Permanent link">&para;</a></h4>
 <p>This attack occurs when a token has been intercepted/stolen by an attacker and they use it to gain access to the system using targeted user identity.</p>
@@ -1893,7 +1888,7 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <p>During token validation, if the received token does not contain the right context (for example, if it has been replayed), then it must be rejected.</p>
 <h4 id="implementation-example_1">Implementation example<a class="headerlink" href="#implementation-example_1" title="Permanent link">&para;</a></h4>
 <p>Code to create the token after successful authentication.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span>
 <span class="kd">private</span> <span class="kd">transient</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">keyHMAC</span> <span class="o">=</span> <span class="p">...;</span>
 <span class="c1">// Random data generator</span>
 <span class="kd">private</span> <span class="n">SecureRandom</span> <span class="n">secureRandom</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SecureRandom</span><span class="p">();</span>
@@ -1935,9 +1930,8 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
    <span class="p">.</span><span class="na">withHeader</span><span class="p">(</span><span class="n">headerClaims</span><span class="p">)</span>
    <span class="p">.</span><span class="na">sign</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">.</span><span class="na">HMAC256</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">keyHMAC</span><span class="p">));</span>
 </code></pre></div>
-
 <p>Code to validate the token.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span>
 <span class="kd">private</span> <span class="kd">transient</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">keyHMAC</span> <span class="o">=</span> <span class="p">...;</span>
 
 <span class="p">...</span>
@@ -1968,7 +1962,6 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <span class="c1">//Verify the token, if the verification fail then an exception is thrown</span>
 <span class="n">DecodedJWT</span> <span class="n">decodedToken</span> <span class="o">=</span> <span class="n">verifier</span><span class="p">.</span><span class="na">verify</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
 </code></pre></div>
-
 <h3 id="no-built-in-token-revocation-by-the-user">No Built-In Token Revocation by the User<a class="headerlink" href="#no-built-in-token-revocation-by-the-user" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_2">Symptom<a class="headerlink" href="#symptom_2" title="Permanent link">&para;</a></h4>
 <p>This problem is inherent to JWT because a token only becomes invalid when it expires. The user has no built-in feature to explicitly revoke the validity of a token. This means that if it is stolen, a user cannot revoke the token itself thereby blocking the attacker.</p>
@@ -1979,13 +1972,12 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <h4 id="implementation-example_2">Implementation Example<a class="headerlink" href="#implementation-example_2" title="Permanent link">&para;</a></h4>
 <h5 id="block-list-storage">Block List Storage<a class="headerlink" href="#block-list-storage" title="Permanent link">&para;</a></h5>
 <p>A database table with the following structure will be used as the central block list storage.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">create</span> <span class="k">table</span> <span class="k">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">revoked_token</span><span class="p">(</span><span class="n">jwt_token_digest</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+<div class="highlight"><pre><span></span><code><span class="k">create</span> <span class="k">table</span> <span class="k">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">revoked_token</span><span class="p">(</span><span class="n">jwt_token_digest</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
 <span class="n">revocation_date</span> <span class="k">timestamp</span> <span class="k">default</span> <span class="n">now</span><span class="p">());</span>
 </code></pre></div>
-
 <h5 id="token-revocation-management">Token Revocation Management<a class="headerlink" href="#token-revocation-management" title="Permanent link">&para;</a></h5>
 <p>Code in charge of adding a token to the block list and checking if a token is revoked.</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">/**</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
 <span class="cm">* Handle the revocation of the token (logout).</span>
 <span class="cm">* Use a DB in order to allow multiple instances to check for revoked token</span>
 <span class="cm">* and allow cleanup at centralized DB level.</span>
@@ -2066,7 +2058,6 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
      <span class="p">}</span>
  <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="token-information-disclosure">Token Information Disclosure<a class="headerlink" href="#token-information-disclosure" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_3">Symptom<a class="headerlink" href="#symptom_3" title="Permanent link">&para;</a></h4>
 <p>This attack occurs when an attacker has access to a token (or a set of tokens) and extracts information stored in it (the contents of JWT tokens are base64 encoded, but is not encrypted by default) in order to obtain information about the system. Information can be for example the security roles, login format...</p>
@@ -2075,7 +2066,7 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <p>It's also important to protect the ciphered data against attack like <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle.html">Padding Oracle</a> or any other attack using cryptanalysis.</p>
 <p>In order to achieve all these goals, the <em>AES-<a href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM</a></em> algorithm is used which provides <em>Authenticated Encryption with Associated Data</em>.</p>
 <p>More details from <a href="https://github.com/google/tink/blob/master/docs/PRIMITIVES.md#deterministic-authenticated-encryption-with-associated-data">here</a>:</p>
-<div class="codehilite"><pre><span></span><code>AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric
+<div class="highlight"><pre><span></span><code>AEAD primitive (Authenticated Encryption with Associated Data) provides functionality of symmetric
 authenticated encryption.
 
 Implementations of this primitive are secure against adaptive chosen ciphertext attacks.
@@ -2088,13 +2079,12 @@ integrity (ie. data has not been tampered with) of that data, but not its secrec
 
 See RFC5116: https://tools.ietf.org/html/rfc5116
 </code></pre></div>
-
 <p><strong>Note:</strong></p>
 <p>Here ciphering is added mainly to hide internal information but it's very important to remember that the first protection against tampering of the JWT token is the signature. So, the token signature and its verification must be always in place.</p>
 <h4 id="implementation-example_3">Implementation Example<a class="headerlink" href="#implementation-example_3" title="Permanent link">&para;</a></h4>
 <h5 id="token-ciphering">Token Ciphering<a class="headerlink" href="#token-ciphering" title="Permanent link">&para;</a></h5>
 <p>Code in charge of managing the ciphering. <a href="https://github.com/google/tink">Google Tink</a> dedicated crypto library is used to handle ciphering operations in order to use built-in best practices provided by this library.</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">/**</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
 <span class="cm"> * Handle ciphering and deciphering of the token using AES-GCM.</span>
 <span class="cm"> *</span>
 <span class="cm"> * @see &quot;https://github.com/google/tink/blob/master/docs/JAVA-HOWTO.md&quot;</span>
@@ -2160,11 +2150,10 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h5 id="creation-validation-of-the-token">Creation / Validation of the Token<a class="headerlink" href="#creation-validation-of-the-token" title="Permanent link">&para;</a></h5>
 <p>Use the token ciphering handler during the creation and the validation of the token.</p>
 <p>Load keys (ciphering key was generated and stored using <a href="https://github.com/google/tink/blob/master/docs/JAVA-HOWTO.md#generating-new-keysets">Google Tink</a>) and setup cipher.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">//Load keys from configuration text/json files in order to avoid to storing keys as a String in JVM memory</span>
+<div class="highlight"><pre><span></span><code><span class="c1">//Load keys from configuration text/json files in order to avoid to storing keys as a String in JVM memory</span>
 <span class="kd">private</span> <span class="kd">transient</span> <span class="kt">byte</span><span class="o">[]</span> <span class="n">keyHMAC</span> <span class="o">=</span> <span class="n">Files</span><span class="p">.</span><span class="na">readAllBytes</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;src&quot;</span><span class="p">,</span> <span class="s">&quot;main&quot;</span><span class="p">,</span> <span class="s">&quot;conf&quot;</span><span class="p">,</span> <span class="s">&quot;key-hmac.txt&quot;</span><span class="p">));</span>
 <span class="kd">private</span> <span class="kd">transient</span> <span class="n">KeysetHandle</span> <span class="n">keyCiphering</span> <span class="o">=</span> <span class="n">CleartextKeysetHandle</span><span class="p">.</span><span class="na">read</span><span class="p">(</span><span class="n">JsonKeysetReader</span><span class="p">.</span><span class="na">withFile</span><span class="p">(</span>
 <span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;src&quot;</span><span class="p">,</span> <span class="s">&quot;main&quot;</span><span class="p">,</span> <span class="s">&quot;conf&quot;</span><span class="p">,</span> <span class="s">&quot;key-ciphering.json&quot;</span><span class="p">).</span><span class="na">toFile</span><span class="p">()));</span>
@@ -2174,22 +2163,19 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 <span class="c1">//Init token ciphering handler</span>
 <span class="n">TokenCipher</span> <span class="n">tokenCipher</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TokenCipher</span><span class="p">();</span>
 </code></pre></div>
-
 <p>Token creation.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">//Generate the JWT token using the JWT API...</span>
+<div class="highlight"><pre><span></span><code><span class="c1">//Generate the JWT token using the JWT API...</span>
 <span class="c1">//Cipher the token (String JSON representation)</span>
 <span class="n">String</span> <span class="n">cipheredToken</span> <span class="o">=</span> <span class="n">tokenCipher</span><span class="p">.</span><span class="na">cipherToken</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="na">keyCiphering</span><span class="p">);</span>
 <span class="c1">//Send the ciphered token encoded in HEX to the client in HTTP response...</span>
 </code></pre></div>
-
 <p>Token validation.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">//Retrieve the ciphered token encoded in HEX from the HTTP request...</span>
+<div class="highlight"><pre><span></span><code><span class="c1">//Retrieve the ciphered token encoded in HEX from the HTTP request...</span>
 <span class="c1">//Decipher the token</span>
 <span class="n">String</span> <span class="n">token</span> <span class="o">=</span> <span class="n">tokenCipher</span><span class="p">.</span><span class="na">decipherToken</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="na">keyCiphering</span><span class="p">);</span>
 <span class="c1">//Verify the token using the JWT API...</span>
 <span class="c1">//Verify access...</span>
 </code></pre></div>
-
 <h3 id="token-storage-on-client-side">Token Storage on Client Side<a class="headerlink" href="#token-storage-on-client-side" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_4">Symptom<a class="headerlink" href="#symptom_4" title="Permanent link">&para;</a></h4>
 <p>This occurs when an application stores the token in a manner exhibiting the following behavior:</p>
@@ -2212,7 +2198,7 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 </ul>
 <h4 id="implementation-example_4">Implementation Example<a class="headerlink" href="#implementation-example_4" title="Permanent link">&para;</a></h4>
 <p>JavaScript code to store the token after authentication.</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">/* Handle request for JWT token and local storage*/</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/* Handle request for JWT token and local storage*/</span>
 <span class="kd">function</span> <span class="nx">authenticate</span><span class="p">()</span> <span class="p">{</span>
     <span class="kd">const</span> <span class="nx">login</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#login&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
     <span class="kd">const</span> <span class="nx">postData</span> <span class="o">=</span> <span class="s2">&quot;login=&quot;</span> <span class="o">+</span> <span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">login</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;password=test&quot;</span><span class="p">;</span>
@@ -2233,9 +2219,8 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
     <span class="p">});</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>JavaScript code to add the token as a <em>Bearer</em> HTTP Authentication header when calling a service, for example a service to validate token here.</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">/* Handle request for JWT token validation */</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/* Handle request for JWT token validation */</span>
 <span class="kd">function</span> <span class="nx">validateToken</span><span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">);</span>
 
@@ -2261,7 +2246,6 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
     <span class="p">});</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="weak-token-secret">Weak Token Secret<a class="headerlink" href="#weak-token-secret" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_5">Symptom<a class="headerlink" href="#symptom_5" title="Permanent link">&para;</a></h4>
 <p>When the token is protected using an HMAC based algorithm, the security of the token is entirely dependent on the strength of the secret used with the HMAC. If an attacker can obtain a valid JWT, they can then carry out an offline attack and attempt to crack the secret using tools such as <a href="https://github.com/magnumripper/JohnTheRipper">John the Ripper</a> or <a href="https://github.com/hashcat/hashcat">Hashcat</a>.</p>

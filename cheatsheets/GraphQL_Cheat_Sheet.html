@@ -1781,7 +1781,7 @@
 <p>In GraphQL each query has a depth (<em>e.g.</em> nested objects) and each object requested in a query can have an amount specified (<em>e.g.</em> 99999999 of an object). By default these can both be unlimited which may lead to a DoS. You should set limits on depth and amount to prevent DoS, but this usually requires a small custom implementation as it is not natively supported by GraphQL. See <a href="https://www.apollographql.com/blog/securing-your-graphql-api-from-malicious-queries-16130a324a6b">this</a> and <a href="https://www.howtographql.com/advanced/4-security/">this</a> page for more information about these attacks and how to add depth and amount limiting. Adding <a href="https://graphql.org/learn/pagination/">pagination</a> can also help performance.</p>
 <p>APIs using graphql-java can utilize the built-in <a href="https://github.com/graphql-java/graphql-java/blob/master/src/main/java/graphql/analysis/MaxQueryDepthInstrumentation.java">MaxQueryDepthInstrumentation</a> for depth limiting. APIs using JavaScript can use <a href="https://github.com/stems/graphql-depth-limit">graphql-depth-limit</a> to implement depth limiting and <a href="https://github.com/joonhocho/graphql-input-number">graphql-input-number</a> to implement amount limiting.</p>
 <p>Here is an example of a GraphQL query with depth N:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">query</span> <span class="nx">evil</span> <span class="p">{</span>            <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="mf">0</span>
+<div class="highlight"><pre><span></span><code><span class="nx">query</span> <span class="nx">evil</span> <span class="p">{</span>            <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="mf">0</span>
   <span class="nx">album</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span> <span class="mf">42</span><span class="p">)</span> <span class="p">{</span>       <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="mf">1</span>
     <span class="nx">songs</span> <span class="p">{</span>             <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="mf">2</span>
       <span class="nx">album</span> <span class="p">{</span>           <span class="err">#</span> <span class="nx">Depth</span><span class="o">:</span> <span class="mf">3</span>
@@ -1792,9 +1792,8 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Here is an example of a GraphQL query requesting 99999999 of an object:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">query</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="nx">query</span> <span class="p">{</span>
   <span class="nx">author</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;abc&quot;</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">posts</span><span class="p">(</span><span class="nx">first</span><span class="o">:</span> <span class="mf">99999999</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">title</span>
@@ -1802,13 +1801,12 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="timeouts">Timeouts<a class="headerlink" href="#timeouts" title="Permanent link">&para;</a></h4>
 <p>Adding timeouts can be a simple way to limit how many resources any single request can consume. But timeouts are not always effective since they may not activate until a malicious query has already consumed excessive resources. Timeout requirements will differ by API and data fetching mechanism; there isn't one timeout value that will work across the board.</p>
 <p>At the application level, timeouts can be added for queries and resolver functions. This option is usually more effective since the query/resolution can be stopped once the timeout is reached. GraphQL does not natively support query timeouts so custom code is required. See <a href="https://medium.com/workflowgen/graphql-query-timeout-and-complexity-management-fab4d7315d8d">this blog post</a> for more about using timeouts with GraphQL or the two examples below.</p>
 <p><strong><em>JavaScript Timeout Example</em></strong></p>
 <p>Code snippet from <a href="https://stackoverflow.com/a/53277955/1200388">this SO answer</a>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">request</span><span class="p">.</span><span class="nx">incrementResolverCount</span> <span class="o">=</span>  <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="nx">request</span><span class="p">.</span><span class="nx">incrementResolverCount</span> <span class="o">=</span>  <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">runTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">startTime</span><span class="p">;</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">runTime</span> <span class="o">&gt;</span> <span class="mf">10000</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// a timeout of 10 seconds</span>
       <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">logTimeoutError</span><span class="p">)</span> <span class="p">{</span>
@@ -1820,9 +1818,8 @@
     <span class="k">this</span><span class="p">.</span><span class="nx">resolverCount</span><span class="o">++</span><span class="p">;</span>
   <span class="p">};</span>
 </code></pre></div>
-
 <p><strong><em>Java Timeout Example using <a href="https://www.graphql-java.com/documentation/v11/instrumentation/">Instrumentation</a></em></strong></p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TimeoutInstrumentation</span> <span class="kd">extends</span> <span class="n">SimpleInstrumentation</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TimeoutInstrumentation</span> <span class="kd">extends</span> <span class="n">SimpleInstrumentation</span> <span class="p">{</span>
     <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="n">DataFetcher</span><span class="o">&lt;?&gt;</span> <span class="n">instrumentDataFetcher</span><span class="p">(</span>
             <span class="n">DataFetcher</span><span class="o">&lt;?&gt;</span> <span class="n">dataFetcher</span><span class="p">,</span> <span class="n">InstrumentationFieldFetchParameters</span> <span class="n">parameters</span>
@@ -1835,7 +1832,6 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong><em>Infrastructure Timeout</em></strong></p>
 <p>Another option to add a timeout that is usually easier is adding a timeout on an HTTP server (<a href="https://httpd.apache.org/docs/2.4/mod/core.html#timeout">Apache/httpd</a>, <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#send_timeout">nginx</a>), reverse proxy, or load balancer. However, infrastructure timeouts are often inaccurate and can be bypassed more easily than application-level ones.</p>
 <h4 id="query-cost-analysis">Query Cost Analysis<a class="headerlink" href="#query-cost-analysis" title="Permanent link">&para;</a></h4>
@@ -1876,7 +1872,7 @@
 <p>GraphQL supports mutation, or manipulation of data, in addition to its most common use case of data fetching. If an API implements/allows mutation then there may need to be access controls put in place to restrict which consumers, if any, can modify data through the API. Setups that require mutation access control would include APIs where only read access is intended for requesters or where only certain parties should be able to modify certain fields.</p>
 <h3 id="batching-attacks">Batching Attacks<a class="headerlink" href="#batching-attacks" title="Permanent link">&para;</a></h3>
 <p>GraphQL supports batching requests, also known as <a href="https://www.apollographql.com/blog/query-batching-in-apollo-63acfd859862/">query batching</a>. This lets callers to either batch multiple queries or batch requests for multiple object instances in a single network call, which allows for what is called a <a href="https://lab.wallarm.com/graphql-batching-attack/">batching attack</a>. This is a form of brute force attack, specific to GraphQL, that usually allows for faster and less detectable exploits. Here is the most common way to do query batching:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">[</span>
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
   <span class="p">{</span>
     <span class="nx">query</span><span class="o">:</span> <span class="o">&lt;</span> <span class="nx">query</span> <span class="mf">0</span> <span class="o">&gt;</span><span class="p">,</span>
     <span class="nx">variables</span><span class="o">:</span> <span class="o">&lt;</span> <span class="nx">variables</span> <span class="k">for</span> <span class="nx">query</span> <span class="mf">0</span> <span class="o">&gt;</span><span class="p">,</span>
@@ -1891,9 +1887,8 @@
   <span class="p">}</span>
 <span class="p">]</span>
 </code></pre></div>
-
 <p>And here is an example query of a single batched GraphQL call requesting multiple different instances of the <code>droid</code> object:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">query</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="nx">query</span> <span class="p">{</span>
   <span class="nx">droid</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span> <span class="s2">&quot;2000&quot;</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">name</span>
   <span class="p">}</span>
@@ -1905,7 +1900,6 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>In this case it could be used to enumerate every possible <code>droid</code> object that is stored on the server in very few network requests as opposed to a standard REST API where the requester would need to submit a different network request for every different <code>droid</code> ID they want to request. This type of attack can lead to the following issues:</p>
 <ul>
 <li>Application-level DoS attacks - A high number of queries or object requests in a single network call could cause a database to hang or exhaust other available resources (<em>e.g.</em> memory, CPU, downstream services).</li>
@@ -1935,20 +1929,18 @@
 <p>The safest and usually easiest approach is to just disable introspection and GraphiQL system-wide. See <a href="https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/">this page</a> or consult your GraphQL implementation's documentation to learn how to disable introspection altogether. If your implementation does not natively support disabling introspection or if you would like to allow some consumers/roles to have this access you can build a filter in your service to only allow approved consumers to access the introspection system.</p>
 <p>Keep in mind that even if introspection is disabled, attackers can still guess fields by brute forcing them. Furthermore, GraphQL has a built-in feature to return a hint when a field name that the requester provides is similar (but incorrect) to an existing field (<em>e.g.</em> request has <code>usr</code> and the response will ask <code>Did you mean "user?"</code>). You should consider disabling this feature to decrease the exposure, but not all implementations of GraphQL support doing so. <a href="https://github.com/szski/shapeshifter">Shapeshifter</a> is one tool that <a href="https://www.youtube.com/watch?v=NPDp7GHmMa0&amp;t=2580">should be able to do this</a>.</p>
 <p><strong><em>Disable Introspection - Java</em></strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">GraphQLSchema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">GraphQLSchema</span><span class="p">.</span><span class="na">newSchema</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="n">GraphQLSchema</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">GraphQLSchema</span><span class="p">.</span><span class="na">newSchema</span><span class="p">()</span>
     <span class="p">.</span><span class="na">query</span><span class="p">(</span><span class="n">StarWarsSchema</span><span class="p">.</span><span class="na">queryType</span><span class="p">)</span>
     <span class="p">.</span><span class="na">fieldVisibility</span><span class="p">(</span> <span class="n">NoIntrospectionGraphqlFieldVisibility</span><span class="p">.</span><span class="na">NO_INTROSPECTION_FIELD_VISIBILITY</span> <span class="p">)</span>
     <span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-
 <p><strong><em>Disable Introspection &amp; GraphiQL - JavaScript</em></strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/graphql&#39;</span><span class="p">,</span> <span class="nx">graphqlHTTP</span><span class="p">({</span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/graphql&#39;</span><span class="p">,</span> <span class="nx">graphqlHTTP</span><span class="p">({</span>
   <span class="nx">schema</span><span class="o">:</span> <span class="nx">MySessionAwareGraphQLSchema</span><span class="p">,</span>
 <span class="o">+</span> <span class="nx">validationRules</span><span class="o">:</span> <span class="p">[</span><span class="nx">NoIntrospection</span><span class="p">]</span>
   <span class="nx">graphiql</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="s1">&#39;development&#39;</span><span class="p">,</span>
 <span class="p">}));</span>
 </code></pre></div>
-
 <h4 id="dont-return-excessive-errors">Don't Return Excessive Errors<a class="headerlink" href="#dont-return-excessive-errors" title="Permanent link">&para;</a></h4>
 <p>GraphQL APIs in production shouldn't return stack traces or be in debug mode. Doing this is implementation specific, but using middleware is one popular way to have better control over errors the server returns. To <a href="https://www.apollographql.com/docs/apollo-server/data/errors/">disable excessive errors</a> with Apollo Server, either pass <code>debug: false</code> to the Apollo Server constructor or set the <code>NODE_ENV</code> environment variable to 'production' or 'test'. However, if you would like to log the stack trace internally without returning it to the user see <a href="https://www.apollographql.com/docs/apollo-server/data/errors/#masking-and-logging-errors">here</a> for how to mask and log errors so they are available to the developers but not callers of the API.</p>
 <h2 id="other-resources">Other Resources<a class="headerlink" href="#other-resources" title="Permanent link">&para;</a></h2>

@@ -1485,40 +1485,36 @@
 <p>Based on this, let’s ensure that we use the Long Term Support (LTS) version of Node.js, and the minimal <code>alpine</code> image type to have the smallest size and software footprint on the image:</p>
 <h3 id="from-nodelts-alpine">FROM node:lts-alpine<a class="headerlink" href="#from-nodelts-alpine" title="Permanent link">&para;</a></h3>
 <p>Nonetheless, this base image directive will still pull new builds of that tag. We can find the <code>SHA256</code> hash for it in the <a href="https://hub.docker.com/layers/node/library/node/lts-alpine/images/sha256-51e341881c2b77e52778921c685e711a186a71b8c6f62ff2edfc6b6950225a2f?context=explore">Docker Hub for this Node.js tag</a>, or by running the following command once we pulled this image locally, and locate the <code>Digest</code> field in the output:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">$</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span>
-<span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="p">:</span> <span class="n">Pulling</span> <span class="n">from</span> <span class="n">library</span><span class="o">/</span><span class="n">node</span>
-<span class="mi">0</span><span class="n">a6724ff3fcd</span><span class="p">:</span> <span class="n">Already</span> <span class="n">exists</span>
-<span class="mi">9383</span><span class="n">f33fa9f3</span><span class="p">:</span> <span class="n">Already</span> <span class="n">exists</span>
-<span class="n">b6ae88d676fe</span><span class="p">:</span> <span class="n">Already</span> <span class="n">exists</span>
-<span class="mf">565e01</span><span class="n">e00588</span><span class="p">:</span> <span class="n">Already</span> <span class="n">exists</span>
-<span class="n">Digest</span><span class="p">:</span> <span class="n">sha256</span><span class="p">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span>
-<span class="n">Status</span><span class="p">:</span> <span class="n">Downloaded</span> <span class="n">newer</span> <span class="n">image</span> <span class="k">for</span> <span class="n">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span>
-<span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">library</span><span class="o">/</span><span class="n">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span>
+<div class="highlight"><pre><span></span><code>$ docker pull node:lts-alpine
+lts-alpine: Pulling from library/node
+0a6724ff3fcd: Already exists
+9383f33fa9f3: Already exists
+b6ae88d676fe: Already exists
+565e01e00588: Already exists
+Digest: sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
+Status: Downloaded newer image for node:lts-alpine
+docker.io/library/node:lts-alpine
 </code></pre></div>
-
 <p>Another way to find the <code>SHA256</code> hash is by running the following command:</p>
-<div class="codehilite"><pre><span></span><code>$ docker images --digests
+<div class="highlight"><pre><span></span><code>$ docker images --digests
 REPOSITORY                     TAG              DIGEST                                                                    IMAGE ID       CREATED             SIZE
-node                           lts-alpine       sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a   51d926a5599d   <span class="m">2</span> weeks ago         116MB
+node                           lts-alpine       sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a   51d926a5599d   2 weeks ago         116MB
 </code></pre></div>
-
 <p>Now we can update the Dockerfile for this Node.js Docker image as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">node</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
-<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span><span class="w"></span>
-<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code>FROM node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+RUN npm install
+CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
-
 <p>However, the Dockerfile above, only specifies the Node.js Docker image name without an image tag which creates ambiguity for which exact image tag is being used—it’s not readable, hard to maintain and doesn’t create a good developer experience.</p>
 <p>Let’s fix it by updating the Dockerfile, providing the full base image tag for the Node.js version that corresponds to that <code>SHA256</code> hash:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
-<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span><span class="w"></span>
-<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code>FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+RUN npm install
+CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
-
 <h2 id="2-install-only-production-dependencies-in-the-nodejs-docker-image">2) Install only production dependencies in the Node.js Docker image<a class="headerlink" href="#2-install-only-production-dependencies-in-the-nodejs-docker-image" title="Permanent link">&para;</a></h2>
 <p>The following Dockerfile directive installs all dependencies in the container, including <code>devDependencies</code>, which aren’t needed for a functional application to work. It adds an unneeded security risk from packages used as development dependencies, as well as inflating the image size unnecessarily.</p>
 <p><strong><code>RUN npm install</code></strong></p>
@@ -1526,13 +1522,12 @@ node                           lts-alpine       sha256:b2da3316acdc2bec442190a1f
 <p>In the case of building a Docker image for production we want to ensure that we only install production dependencies in a deterministic way, and this brings us to the following recommendation for the best practice for installing npm dependencies in a container image:</p>
 <p><strong><code>RUN npm ci --only=production</code></strong></p>
 <p>The updated Dockerfile contents in this stage are as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
-<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
-<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code>FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+RUN npm ci --only=production
+CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
-
 <h2 id="3-optimize-nodejs-tooling-for-production">3) Optimize Node.js tooling for production<a class="headerlink" href="#3-optimize-nodejs-tooling-for-production" title="Permanent link">&para;</a></h2>
 <p>When you build your Node.js Docker image for production, you want to ensure that all frameworks and libraries are using the optimal settings for performance and security.</p>
 <p>This brings us to add the following Dockerfile directive:</p>
@@ -1545,34 +1540,31 @@ node                           lts-alpine       sha256:b2da3316acdc2bec442190a1f
 <p>The performance impact of the <code>NODE_ENV</code> variable could be very significant.</p>
 <p>Many of the other libraries that you are relying on may also expect this variable to be set, so we should set this in our Dockerfile.</p>
 <p>The updated Dockerfile should now read as follows with the <code>NODE_ENV</code> environment variable setting baked in:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
-<span class="n">ENV</span><span class="w"> </span><span class="n">NODE_ENV</span><span class="w"> </span><span class="n">production</span><span class="w"></span>
-<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
-<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code>FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
+ENV NODE_ENV production
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+RUN npm ci --only=production
+CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
-
 <h2 id="4-dont-run-containers-as-root">4) Don’t run containers as root<a class="headerlink" href="#4-dont-run-containers-as-root" title="Permanent link">&para;</a></h2>
 <p>The principle of least privilege is a long-time security control from the early days of Unix and we should always follow this when we’re running our containerized Node.js web applications.</p>
 <p>The threat assessment is pretty straight-forward—if an attacker is able to compromise the web application in a way that allows for <a href="https://owasp.org/www-community/attacks/Command_Injection">command injection</a> or <a href="https://owasp.org/www-community/attacks/Path_Traversal">directory path traversal</a>, then these will be invoked with the user who owns the application process. If that process happens to be root then they can do virtually everything within the container, including [attempting a container escape or <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/03-Testing_for_Privilege_Escalation">privilege escalation</a>. Why would we want to risk it? You’re right, we don’t.</p>
 <p>Repeat after me: <strong>“friends don’t let friends run containers as root!”</strong></p>
 <p>The official <code>node</code> Docker image, as well as its variants like <code>alpine</code>, include a least-privileged user of the same name: <code>node</code>. However, it’s not enough to just run the process as <code>node</code>. For example, the following might not be ideal for an application to function well:</p>
-<div class="codehilite"><pre><span></span><code>USER node
+<div class="highlight"><pre><span></span><code>USER node
 CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
-
 <p>The reason for that is the <code>USER</code> Dockerfile directive only ensures that the process is owned by the <code>node</code> user. What about all the files we copied earlier with the <code>COPY</code> instruction? They are owned by root. That’s how Docker works by default.</p>
 <p>The complete and proper way of dropping privileges is as follows, also showing our up to date Dockerfile practices up to this point:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
-<span class="n">ENV</span><span class="w"> </span><span class="n">NODE_ENV</span><span class="w"> </span><span class="n">production</span><span class="w"></span>
-<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="nl">node</span><span class="p">:</span><span class="n">node</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
-<span class="k">USER</span><span class="w"> </span><span class="n">node</span><span class="w"></span>
-<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code>FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
+ENV NODE_ENV production
+WORKDIR /usr/src/app
+COPY --chown=node:node . /usr/src/app
+RUN npm ci --only=production
+USER node
+CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
-
 <h2 id="5-properly-handle-events-to-safely-terminate-a-nodejs-docker-web-application">5) Properly handle events to safely terminate a Node.js Docker web application<a class="headerlink" href="#5-properly-handle-events-to-safely-terminate-a-nodejs-docker-web-application" title="Permanent link">&para;</a></h2>
 <p>One of the most common mistakes I see with blogs and articles about containerizing Node.js applications when running in Docker containers is the way that they invoke the process. All of the following and their variants are bad patterns you should avoid:</p>
 <ul>
@@ -1592,12 +1584,11 @@ CMD &quot;npm&quot; &quot;start&quot;
 <p><strong><code>CMD "npm" "start"</code></strong></p>
 <p>The caveat here is two fold. Firstly, we’re indirectly running the node application by directly invoking the npm client. Who’s to say that the npm CLI forwards all events to the node runtime? It actually doesn’t, and we can easily test that.</p>
 <p>Make sure that in your Node.js application you set an event handler for the <code>SIGHUP</code> signal which logs to the console every time you’re sending an event. A simple code example should look as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">function</span> <span class="nf">handle</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="p">{</span>
-   <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="err">`</span><span class="o">*^!</span><span class="mi">@4</span><span class="o">=&gt;</span> <span class="n">Received</span> <span class="nl">event</span><span class="p">:</span> <span class="n">$</span><span class="p">{</span><span class="n">signal</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="n">process</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="err">&#39;</span><span class="n">SIGHUP</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code>function handle(signal) {
+   console.log(`*^!@4=&gt; Received event: ${signal}`)
+}
+process.on(&#39;SIGHUP&#39;, handle)
 </code></pre></div>
-
 <p>Then run the container, and once it’s up specifically send it the <code>SIGHUP</code> signal using the <code>docker</code> CLI and the special <code>--signal</code> command-line flag:</p>
 <p><strong><code>$ docker kill --signal=SIGHUP elastic\_archimedes</code></strong></p>
 <p>Nothing happened, right? That’s because the npm client doesn’t forward any signals to the node process that it spawned.</p>
@@ -1614,47 +1605,44 @@ CMD &quot;npm&quot; &quot;start&quot;
 <p>To <a href="https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md#handling-kernel-signals">quote the Node.js Docker working group recommendation</a> on this:  “Node.js was not designed to run as PID 1 which leads to unexpected behaviour when running inside of Docker. For example, a Node.js process running as PID 1 will not respond to SIGINT (CTRL-C) and similar signals”.</p>
 <p>The way to go about it then is to use a tool that will act like an init process, in that it is invoked with PID 1, then spawns our Node.js application as another process whilst ensuring that all signals are proxied to that Node.js process. If possible, we’d like a small as possible tooling footprint for doing so to not risk having security vulnerabilities added to our container image.</p>
 <p>One such tool is <a href="https://engineeringblog.yelp.com/2016/01/dumb-init-an-init-for-docker.html">dumb-init</a> which is statically linked and has a small footprint. Here’s how we’ll set it up:</p>
-<div class="codehilite"><pre><span></span><code>RUN apk add dumb-init
+<div class="highlight"><pre><span></span><code>RUN apk add dumb-init
 CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 </code></pre></div>
-
 <p>This brings us to the following up to date Dockerfile. You’ll notice that we placed the <code>dumb-init</code> package install right after the image declaration, so we can take advantage of Docker’s caching of layers:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">apk</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">dumb</span><span class="o">-</span><span class="n">init</span><span class="w"></span>
-<span class="n">ENV</span><span class="w"> </span><span class="n">NODE_ENV</span><span class="w"> </span><span class="n">production</span><span class="w"></span>
-<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="nl">node</span><span class="p">:</span><span class="n">node</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
-<span class="k">USER</span><span class="w"> </span><span class="n">node</span><span class="w"></span>
-<span class="n">CMD</span><span class="w"> </span><span class="o">[</span><span class="n">&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;</span><span class="o">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code>FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
+RUN apk add dumb-init
+ENV NODE_ENV production
+WORKDIR /usr/src/app
+COPY --chown=node:node . .
+RUN npm ci --only=production
+USER node
+CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 </code></pre></div>
-
 <p>Good to know: <code>docker kill</code> and <code>docker stop</code> commands only send signals to the container process with PID 1. If you’re running a shell script that runs your Node.js application, then take note that a shell instance—such as <code>/bin/sh</code>, for example—doesn’t forward signals to child processes, which means your app will never get a <code>SIGTERM</code>.</p>
 <h2 id="6-graceful-tear-down-for-your-nodejs-web-applications">6) Graceful tear down for your Node.js web applications<a class="headerlink" href="#6-graceful-tear-down-for-your-nodejs-web-applications" title="Permanent link">&para;</a></h2>
 <p>If we’re already discussing process signals that terminate applications, let’s make sure we’re shutting them down properly and gracefully without disrupting users.</p>
 <p>When a Node.js application receives an interrupt signal, also known as <code>SIGINT</code>, or <code>CTRL+C</code>, it will cause an abrupt process kill, unless any event handlers were set of course to handle it in a different behavior. This means that connected clients to a web application will be immediately disconnected. Now, imagine hundreds of Node.js web containers orchestrated by Kubernetes, going up and down as needs arise to scale or manage errors. Not the greatest user experience.</p>
 <p>You can easily simulate this problem. Here’s a stock Fastify web application example, with an inherent delayed response of 60 seconds for an endpoint:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">fastify</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="err">&#39;</span><span class="o">/</span><span class="n">delayed</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">async</span> <span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">reply</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
- <span class="k">const</span> <span class="n">SECONDS_DELAY</span> <span class="o">=</span> <span class="mi">60000</span>
- <span class="n">await</span> <span class="n">new</span> <span class="n">Promise</span><span class="p">(</span><span class="n">resolve</span> <span class="o">=&gt;</span> <span class="p">{</span>
-     <span class="n">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="n">resolve</span><span class="p">(),</span> <span class="n">SECONDS_DELAY</span><span class="p">)</span>
- <span class="p">})</span>
- <span class="k">return</span> <span class="p">{</span> <span class="nl">hello</span><span class="p">:</span> <span class="err">&#39;</span><span class="n">delayed</span> <span class="n">world</span><span class="err">&#39;</span> <span class="p">}</span>
-<span class="p">})</span>
+<div class="highlight"><pre><span></span><code>fastify.get(&#39;/delayed&#39;, async (request, reply) =&gt; {
+ const SECONDS_DELAY = 60000
+ await new Promise(resolve =&gt; {
+     setTimeout(() =&gt; resolve(), SECONDS_DELAY)
+ })
+ return { hello: &#39;delayed world&#39; }
+})
 
-<span class="k">const</span> <span class="n">start</span> <span class="o">=</span> <span class="n">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
- <span class="n">try</span> <span class="p">{</span>
-   <span class="n">await</span> <span class="n">fastify</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">PORT</span><span class="p">,</span> <span class="n">HOST</span><span class="p">)</span>
-   <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="err">`</span><span class="o">*^!</span><span class="mi">@4</span><span class="o">=&gt;</span> <span class="n">Process</span> <span class="kt">id</span><span class="o">:</span> <span class="n">$</span><span class="p">{</span><span class="n">process</span><span class="p">.</span><span class="n">pid</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
- <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
-   <span class="n">fastify</span><span class="p">.</span><span class="n">log</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-   <span class="n">process</span><span class="p">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
- <span class="p">}</span>
-<span class="p">}</span>
+const start = async () =&gt; {
+ try {
+   await fastify.listen(PORT, HOST)
+   console.log(`*^!@4=&gt; Process id: ${process.pid}`)
+ } catch (err) {
+   fastify.log.error(err)
+   process.exit(1)
+ }
+}
 
-<span class="n">start</span><span class="p">()</span>
+start()
 </code></pre></div>
-
 <p>Run this application and once it’s running send a simple HTTP request to this endpoint:</p>
 <p><code>$ time curl https://localhost:3000/delayed</code></p>
 <p>Hit <code>CTRL+C</code> in the running Node.js console window and you’ll see that the curl request exited abruptly. This simulates the same experience your users would receive when containers tear down.</p>
@@ -1666,18 +1654,17 @@ CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 </ol>
 <p>Specifically with Fastify, we can have our handler call on <a href="https://www.fastify.io/docs/latest/Server/">fastify.close()</a> which returns a promise that we will await, and Fastify will also take care to respond to every new connection with the HTTP status code 503 to signal that the application is unavailable.</p>
 <p>Let’s add our event handler:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">async</span> <span class="n">function</span> <span class="n">closeGracefully</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="p">{</span>
-   <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="err">`</span><span class="o">*^!</span><span class="mi">@4</span><span class="o">=&gt;</span> <span class="n">Received</span> <span class="n">signal</span> <span class="n">to</span> <span class="nl">terminate</span><span class="p">:</span> <span class="n">$</span><span class="p">{</span><span class="n">signal</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code>async function closeGracefully(signal) {
+   console.log(`*^!@4=&gt; Received signal to terminate: ${signal}`)
 
-   <span class="n">await</span> <span class="n">fastify</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-   <span class="c1">// await db.close() if we have a db connection in this app</span>
-   <span class="c1">// await other things we should cleanup nicely</span>
-   <span class="n">process</span><span class="p">.</span><span class="n">exit</span><span class="p">()</span>
-<span class="p">}</span>
-<span class="n">process</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="err">&#39;</span><span class="n">SIGINT</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">closeGracefully</span><span class="p">)</span>
-<span class="n">process</span><span class="p">.</span><span class="n">on</span><span class="p">(</span><span class="err">&#39;</span><span class="n">SIGTERM</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">closeGracefully</span><span class="p">)</span>
+   await fastify.close()
+   // await db.close() if we have a db connection in this app
+   // await other things we should cleanup nicely
+   process.exit()
+}
+process.on(&#39;SIGINT&#39;, closeGracefully)
+process.on(&#39;SIGTERM&#39;, closeGracefully)
 </code></pre></div>
-
 <p>Admittedly, this is more of a generic web application concern than Dockerfile related, but is even more important in orchestrated environments.</p>
 <h2 id="7-find-and-fix-security-vulnerabilities-in-your-nodejs-docker-image">7) Find and fix security vulnerabilities in your Node.js docker image<a class="headerlink" href="#7-find-and-fix-security-vulnerabilities-in-your-nodejs-docker-image" title="Permanent link">&para;</a></h2>
 <p>See <a href="https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-9-use-static-analysis-tools">Docker Security Cheat Sheet - Use static analysis tools</a></p>
@@ -1687,39 +1674,35 @@ CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 <p>The use-case here to avoid sensitive information leakage is more common than you think.</p>
 <p>If you’re building Docker images for work, there’s a high chance that you also maintain private npm packages. If that’s the case, then you probably needed to find some way to make that secret <code>NPM_TOKEN</code> available to the npm install.</p>
 <p>Here’s an example for what I’m talking about:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">apk</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">dumb</span><span class="o">-</span><span class="n">init</span><span class="w"></span>
-<span class="n">ENV</span><span class="w"> </span><span class="n">NODE_ENV</span><span class="w"> </span><span class="n">production</span><span class="w"></span>
-<span class="n">ENV</span><span class="w"> </span><span class="n">NPM_TOKEN</span><span class="w"> </span><span class="mi">1234</span><span class="w"></span>
-<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="nl">node</span><span class="p">:</span><span class="n">node</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"></span>
-<span class="n">#RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">echo</span><span class="w"> </span><span class="ss">&quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">npmrc</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="err">\</span><span class="w"></span>
-<span class="w">   </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"></span>
-<span class="k">USER</span><span class="w"> </span><span class="n">node</span><span class="w"></span>
-<span class="n">CMD</span><span class="w"> </span><span class="o">[</span><span class="n">&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;</span><span class="o">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code>FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
+RUN apk add dumb-init
+ENV NODE_ENV production
+ENV NPM_TOKEN 1234
+WORKDIR /usr/src/app
+COPY --chown=node:node . .
+#RUN npm ci --only=production
+RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &amp;&amp; \
+   npm ci --only=production
+USER node
+CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 </code></pre></div>
-
 <p>Doing this, however, leaves the <code>.npmrc</code> file with the secret npm token inside the Docker image. You could attempt to improve it by deleting it afterwards, like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">RUN</span> <span class="n">echo</span> <span class="s">&quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot;</span> <span class="o">&gt;</span> <span class="p">.</span><span class="n">npmrc</span> <span class="o">&amp;&amp;</span> \
-   <span class="n">npm</span> <span class="n">ci</span> <span class="o">--</span><span class="n">only</span><span class="o">=</span><span class="n">production</span>
-<span class="n">RUN</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">.</span><span class="n">npmrc</span>
+<div class="highlight"><pre><span></span><code>RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &amp;&amp; \
+   npm ci --only=production
+RUN rm -rf .npmrc
 </code></pre></div>
-
 <p>However, now the <code>.npmrc</code> file is available in a different layer of the Docker image. If this Docker image is public, or someone is able to access it somehow, then your token is compromised. A better improvement would be as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">RUN</span> <span class="n">echo</span> <span class="s">&quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot;</span> <span class="o">&gt;</span> <span class="p">.</span><span class="n">npmrc</span> <span class="o">&amp;&amp;</span> \
-   <span class="n">npm</span> <span class="n">ci</span> <span class="o">--</span><span class="n">only</span><span class="o">=</span><span class="n">production</span><span class="p">;</span> \
-   <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">.</span><span class="n">npmrc</span>
+<div class="highlight"><pre><span></span><code>RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &amp;&amp; \
+   npm ci --only=production; \
+   rm -rf .npmrc
 </code></pre></div>
-
 <p>The problem now is that the Dockerfile itself needs to be treated as a secret asset, because it contains the secret npm token inside it.</p>
 <p>Luckily, Docker supports a way to pass arguments into the build process:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ARG</span> <span class="n">NPM_TOKEN</span>
-<span class="n">RUN</span> <span class="n">echo</span> <span class="s">&quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot;</span> <span class="o">&gt;</span> <span class="p">.</span><span class="n">npmrc</span> <span class="o">&amp;&amp;</span> \
-   <span class="n">npm</span> <span class="n">ci</span> <span class="o">--</span><span class="n">only</span><span class="o">=</span><span class="n">production</span><span class="p">;</span> \
-   <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="p">.</span><span class="n">npmrc</span>
+<div class="highlight"><pre><span></span><code>ARG NPM_TOKEN
+RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &amp;&amp; \
+   npm ci --only=production; \
+   rm -rf .npmrc
 </code></pre></div>
-
 <p>And then we build it as follows:</p>
 <p><strong><code>$ docker build . -t nodejs-tutorial --build-arg NPM\_TOKEN=1234</code></strong></p>
 <p>I know you were thinking that we’re all done at this point but, sorry to disappoint 🙂</p>
@@ -1727,77 +1710,72 @@ CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 <p>What’s the problem now, you ponder? Build arguments passed like that to Docker are kept in the history log. Let’s see with our own eyes. Run this command:</p>
 <p><strong><code>$ docker history nodejs-tutorial</code></strong></p>
 <p>which prints the following:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">IMAGE</span>          <span class="n">CREATED</span>              <span class="n">CREATED</span> <span class="n">BY</span>                                      <span class="n">SIZE</span>      <span class="n">COMMENT</span>
-<span class="n">b4c2c78acaba</span>   <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">CMD</span> <span class="p">[</span><span class="s">&quot;dumb-init&quot;</span> <span class="s">&quot;node&quot;</span> <span class="s">&quot;server.js&quot;</span><span class="p">]</span>            <span class="mh">0</span><span class="n">B</span>        <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
-<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">USER</span> <span class="n">node</span>                                       <span class="mh">0</span><span class="n">B</span>        <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
-<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">RUN</span> <span class="o">|</span><span class="mh">1</span> <span class="n">NPM_TOKEN</span><span class="o">=</span><span class="mh">1234</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="n">echo</span> <span class="s">&quot;//reg…   5.71MB    buildkit.dockerfile.v0</span>
-<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">ARG</span> <span class="n">NPM_TOKEN</span>                                   <span class="mh">0</span><span class="n">B</span>        <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
-<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">COPY</span> <span class="p">.</span> <span class="p">.</span> <span class="p">#</span> <span class="n">buildkit</span>                             <span class="mf">15.3</span><span class="n">kB</span>    <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
-<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">WORKDIR</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>                            <span class="mh">0</span><span class="n">B</span>        <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
-<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">ENV</span> <span class="n">NODE_ENV</span><span class="o">=</span><span class="n">production</span>                         <span class="mh">0</span><span class="n">B</span>        <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
-<span class="o">&lt;</span><span class="n">missing</span><span class="o">&gt;</span>      <span class="n">About</span> <span class="n">a</span> <span class="n">minute</span> <span class="n">ago</span>   <span class="n">RUN</span> <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="n">apk</span> <span class="n">add</span> <span class="n">dumb</span><span class="o">-</span><span class="n">init</span> <span class="p">#</span> <span class="n">buildkit</span>     <span class="mf">1.65</span><span class="n">MB</span>    <span class="n">buildkit</span><span class="p">.</span><span class="n">dockerfile</span><span class="p">.</span><span class="n">v0</span>
+<div class="highlight"><pre><span></span><code>IMAGE          CREATED              CREATED BY                                      SIZE      COMMENT
+b4c2c78acaba   About a minute ago   CMD [&quot;dumb-init&quot; &quot;node&quot; &quot;server.js&quot;]            0B        buildkit.dockerfile.v0
+&lt;missing&gt;      About a minute ago   USER node                                       0B        buildkit.dockerfile.v0
+&lt;missing&gt;      About a minute ago   RUN |1 NPM_TOKEN=1234 /bin/sh -c echo &quot;//reg…   5.71MB    buildkit.dockerfile.v0
+&lt;missing&gt;      About a minute ago   ARG NPM_TOKEN                                   0B        buildkit.dockerfile.v0
+&lt;missing&gt;      About a minute ago   COPY . . # buildkit                             15.3kB    buildkit.dockerfile.v0
+&lt;missing&gt;      About a minute ago   WORKDIR /usr/src/app                            0B        buildkit.dockerfile.v0
+&lt;missing&gt;      About a minute ago   ENV NODE_ENV=production                         0B        buildkit.dockerfile.v0
+&lt;missing&gt;      About a minute ago   RUN /bin/sh -c apk add dumb-init # buildkit     1.65MB    buildkit.dockerfile.v0
 </code></pre></div>
-
 <p>Did you spot the secret npm token there? That’s what I mean.</p>
 <p>There’s a great way to manage secrets for the container image, but this is the time to introduce multi-stage builds as a mitigation for this issue, as well as showing how we can build minimal images.</p>
 <h3 id="introducing-multi-stage-builds-for-nodejs-docker-images">Introducing multi-stage builds for Node.js Docker images<a class="headerlink" href="#introducing-multi-stage-builds-for-nodejs-docker-images" title="Permanent link">&para;</a></h3>
 <p>Just like that principle in software development of Separation of Concerns, we’ll apply the same ideas in order to build our Node.js Docker images. We’ll have one image that we use to build everything that we need for the Node.js application to run, which in a Node.js world, means installing npm packages, and compiling native npm modules if necessary. That will be our first stage.</p>
 <p>The second Docker image, representing the second stage of the Docker build, will be the production Docker image. This second and last stage is the image that we actually optimize for and publish to a registry, if we have one. That first image that we’ll refer to as the <code>build</code> image, gets discarded and is left as a dangling image in the Docker host that built it, until it gets cleaned.</p>
 <p>Here is the update to our Dockerfile that represents our progress so far, but separated into two stages:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">#</span><span class="w"> </span><span class="o">--------------&gt;</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="nc">image</span><span class="w"></span>
-<span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">latest</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">build</span><span class="w"></span>
-<span class="n">ARG</span><span class="w"> </span><span class="n">NPM_TOKEN</span><span class="w"></span>
-<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="n">package</span><span class="o">*</span><span class="p">.</span><span class="n">json</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">echo</span><span class="w"> </span><span class="ss">&quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">npmrc</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="err">\</span><span class="w"></span>
-<span class="w">   </span><span class="n">npm</span><span class="w"> </span><span class="n">ci</span><span class="w"> </span><span class="o">--</span><span class="k">only</span><span class="o">=</span><span class="n">production</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="err">\</span><span class="w"></span>
-<span class="w">   </span><span class="n">rm</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="p">.</span><span class="n">npmrc</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code># --------------&gt; The build image
+FROM node:latest AS build
+ARG NPM_TOKEN
+WORKDIR /usr/src/app
+COPY package*.json /usr/src/app/
+RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &amp;&amp; \
+   npm ci --only=production &amp;&amp; \
+   rm -f .npmrc
 
-<span class="err">#</span><span class="w"> </span><span class="o">--------------&gt;</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">production</span><span class="w"> </span><span class="nc">image</span><span class="w"></span>
-<span class="k">FROM</span><span class="w"> </span><span class="nl">node</span><span class="p">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">apk</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">dumb</span><span class="o">-</span><span class="n">init</span><span class="w"></span>
-<span class="n">ENV</span><span class="w"> </span><span class="n">NODE_ENV</span><span class="w"> </span><span class="n">production</span><span class="w"></span>
-<span class="k">USER</span><span class="w"> </span><span class="n">node</span><span class="w"></span>
-<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="nl">node</span><span class="p">:</span><span class="n">node</span><span class="w"> </span><span class="o">--</span><span class="k">from</span><span class="o">=</span><span class="n">build</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="nl">node</span><span class="p">:</span><span class="n">node</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">CMD</span><span class="w"> </span><span class="o">[</span><span class="n">&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;</span><span class="o">]</span><span class="w"></span>
+# --------------&gt; The production image
+FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
+RUN apk add dumb-init
+ENV NODE_ENV production
+USER node
+WORKDIR /usr/src/app
+COPY --chown=node:node --from=build /usr/src/app/node_modules /usr/src/app/node_modules
+COPY --chown=node:node . /usr/src/app
+CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 </code></pre></div>
-
 <p>As you can see, I chose a bigger image for the <code>build</code> stage because I might need tooling like <code>gcc</code> (the GNU Compiler Collection) to compile native npm packages, or for other needs.</p>
 <p>In the second stage, there’s a special notation for the <code>COPY</code> directive that copies the <code>node_modules/</code> folder from the build Docker image into this new production base image.</p>
 <p>Also, now, do you see that <code>NPM_TOKEN</code> passed as build argument to the <code>build</code> intermediary Docker image? It’s not visible anymore in the <code>docker history nodejs-tutorial</code> command output because it doesn’t exist in our production docker image.</p>
 <h2 id="9-keeping-unnecessary-files-out-of-your-nodejs-docker-images">9) Keeping unnecessary files out of your Node.js Docker images<a class="headerlink" href="#9-keeping-unnecessary-files-out-of-your-nodejs-docker-images" title="Permanent link">&para;</a></h2>
 <p>You have a <code>.gitignore</code> file to avoid polluting the git repository with unnecessary files, and potentially sensitive files too, right? The same applies to Docker images.</p>
 <p>Docker has a <code>.dockerignore</code> which will ensure it skips sending any glob pattern matches inside it to the Docker daemon. Here is a list of files to give you an idea of what you might be putting into your Docker image that we’d ideally want to avoid:</p>
-<div class="codehilite"><pre><span></span><code><span class="na">.dockerignore</span>
-<span class="nf">node_modules</span>
-<span class="nf">npm-debug.log</span>
-<span class="nf">Dockerfile</span>
-<span class="na">.git</span>
-<span class="na">.gitignore</span>
+<div class="highlight"><pre><span></span><code>.dockerignore
+node_modules
+npm-debug.log
+Dockerfile
+.git
+.gitignore
 </code></pre></div>
-
 <p>As you can see, the <code>node_modules/</code> is actually quite important to skip because if we hadn’t ignored it, then the simplistic Dockerfile version that we started with would have caused the local <code>node_modules/</code> folder to be copied over to the container as-is.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="n">node</span><span class="nv">@sha256</span><span class="err">:</span><span class="n">b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a</span><span class="w"></span>
-<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">COPY</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="w"></span>
-<span class="n">RUN</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">install</span><span class="w"></span>
-<span class="n">CMD</span><span class="w"> </span><span class="ss">&quot;npm&quot;</span><span class="w"> </span><span class="ss">&quot;start&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code>FROM node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+RUN npm install
+CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
-
 <p>In fact, it’s even more important to have a <code>.dockerignore</code> file when you are practicing multi-stage Docker builds. To refresh your memory on how the 2nd stage Docker build looks like:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp"># --------------&gt; The production image</span>
-<span class="n">FROM</span> <span class="n">node</span><span class="o">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span>
-<span class="n">RUN</span> <span class="n">apk</span> <span class="n">add</span> <span class="n">dumb</span><span class="o">-</span><span class="n">init</span>
-<span class="n">ENV</span> <span class="n">NODE_ENV</span> <span class="n">production</span>
-<span class="n">USER</span> <span class="n">node</span>
-<span class="n">WORKDIR</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>
-<span class="n">COPY</span> <span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="n">node</span><span class="o">:</span><span class="n">node</span> <span class="o">--</span><span class="n">from</span><span class="o">=</span><span class="kr">build</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span>
-<span class="n">COPY</span> <span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="n">node</span><span class="o">:</span><span class="n">node</span> <span class="p">.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>
-<span class="n">CMD</span> <span class="p">[</span><span class="s">&quot;dumb-init&quot;</span><span class="p">,</span> <span class="s">&quot;node&quot;</span><span class="p">,</span> <span class="s">&quot;server.js&quot;</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code># --------------&gt; The production image
+FROM node:lts-alpine
+RUN apk add dumb-init
+ENV NODE_ENV production
+USER node
+WORKDIR /usr/src/app
+COPY --chown=node:node --from=build /usr/src/app/node_modules /usr/src/app/node_modules
+COPY --chown=node:node . /usr/src/app
+CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 </code></pre></div>
-
 <p>The importance of having a <code>.dockerignore</code> is that when we do a <code>COPY . /usr/src/app</code> from the 2nd Dockerfile stage, we’re also copying over any local node_modules/ to the Docker image. That’s a big no-no as we may be copying over modified source code inside <code>node_modules/</code>.</p>
 <p>On top of that, since we’re using the wildcard <code>COPY .</code> we may also be copying into the Docker image sensitive files that include credentials or local configuration.</p>
 <p>The take-away here for a <code>.dockerignore</code> file is:</p>
@@ -1819,39 +1797,36 @@ CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 <li>Lastly, let’s not forget to add the <code>.npmrc</code> file to the contents of the <code>.dockerignore</code> file so it doesn’t make it into the image at all, for either the build nor production images.</li>
 </ul>
 <p>Let’s see how all of it works together. First the updated <code>.dockerignore</code> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="na">.dockerignore</span>
-<span class="nf">node_modules</span>
-<span class="nf">npm-debug.log</span>
-<span class="nf">Dockerfile</span>
-<span class="na">.git</span>
-<span class="na">.gitignore</span>
-<span class="na">.npmrc</span>
+<div class="highlight"><pre><span></span><code>.dockerignore
+node_modules
+npm-debug.log
+Dockerfile
+.git
+.gitignore
+.npmrc
 </code></pre></div>
-
 <p>Then, the complete Dockerfile, with the updated RUN directive to install npm packages while specifying the <code>.npmrc</code> mount point:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp"># --------------&gt; The build image</span>
-<span class="n">FROM</span> <span class="n">node</span><span class="o">:</span><span class="n">latest</span> <span class="kr">AS</span> <span class="kr">build</span>
-<span class="n">WORKDIR</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>
-<span class="n">COPY</span> <span class="n">package</span><span class="o">*</span><span class="p">.</span><span class="n">json</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span>
-<span class="n">RUN</span> <span class="o">--</span><span class="n">mount</span><span class="o">=</span><span class="kr">type</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="mo">0644</span><span class="p">,</span><span class="n">id</span><span class="o">=</span><span class="n">npmrc</span><span class="p">,</span><span class="n">target</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="p">.</span><span class="n">npmrc</span> <span class="n">npm</span> <span class="n">ci</span> <span class="o">--</span><span class="kr">only</span><span class="o">=</span><span class="n">production</span>
+<div class="highlight"><pre><span></span><code># --------------&gt; The build image
+FROM node:latest AS build
+WORKDIR /usr/src/app
+COPY package*.json /usr/src/app/
+RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/app/.npmrc npm ci --only=production
 
-<span class="cp"># --------------&gt; The production image</span>
-<span class="n">FROM</span> <span class="n">node</span><span class="o">:</span><span class="n">lts</span><span class="o">-</span><span class="n">alpine</span>
-<span class="n">RUN</span> <span class="n">apk</span> <span class="n">add</span> <span class="n">dumb</span><span class="o">-</span><span class="n">init</span>
-<span class="n">ENV</span> <span class="n">NODE_ENV</span> <span class="n">production</span>
-<span class="n">USER</span> <span class="n">node</span>
-<span class="n">WORKDIR</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>
-<span class="n">COPY</span> <span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="n">node</span><span class="o">:</span><span class="n">node</span> <span class="o">--</span><span class="n">from</span><span class="o">=</span><span class="kr">build</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">node_modules</span>
-<span class="n">COPY</span> <span class="o">--</span><span class="n">chown</span><span class="o">=</span><span class="n">node</span><span class="o">:</span><span class="n">node</span> <span class="p">.</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">app</span>
-<span class="n">CMD</span> <span class="p">[</span><span class="s">&quot;dumb-init&quot;</span><span class="p">,</span> <span class="s">&quot;node&quot;</span><span class="p">,</span> <span class="s">&quot;server.js&quot;</span><span class="p">]</span>
+# --------------&gt; The production image
+FROM node:lts-alpine
+RUN apk add dumb-init
+ENV NODE_ENV production
+USER node
+WORKDIR /usr/src/app
+COPY --chown=node:node --from=build /usr/src/app/node_modules /usr/src/app/node_modules
+COPY --chown=node:node . /usr/src/app
+CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 </code></pre></div>
-
 <p>And finally, the command that builds the Node.js Docker image:</p>
-<div class="codehilite"><pre><span></span><code>docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
+<div class="highlight"><pre><span></span><code>docker build . -t nodejs-tutorial --secret id=npmrc,src=.npmrc
 </code></pre></div>
-
 <p><strong>Note:</strong> Secrets are a new feature in Docker and if you’re using an older version, you might need to enable it Buildkit as follows:</p>
-<div class="codehilite"><pre><span></span><code>DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234 --secret id=npmrc,src=.npmrc
+<div class="highlight"><pre><span></span><code>DOCKER_BUILDKIT=1 docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234 --secret id=npmrc,src=.npmrc
 </code></pre></div>
                 
                   

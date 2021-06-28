@@ -1650,19 +1650,17 @@
 </ul>
 <h2 id="allow-list-regular-expression-examples">Allow List Regular Expression Examples<a class="headerlink" href="#allow-list-regular-expression-examples" title="Permanent link">&para;</a></h2>
 <p>Validating a U.S. Zip Code (5 digits plus optional -4)</p>
-<div class="codehilite"><pre><span></span><code>^\d{5}(-\d{4})?$
+<div class="highlight"><pre><span></span><code>^\d{5}(-\d{4})?$
 </code></pre></div>
-
 <p>Validating U.S. State Selection From a Drop-Down Menu</p>
-<div class="codehilite"><pre><span></span><code>^(AA|AE|AP|AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FM|FL|GA|GU|
+<div class="highlight"><pre><span></span><code>^(AA|AE|AP|AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FM|FL|GA|GU|
 HI|ID|IL|IN|IA|KS|KY|LA|ME|MH|MD|MA|MI|MN|MS|MO|MT|NE|
 NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PW|PA|PR|RI|SC|SD|TN|
 TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 </code></pre></div>
-
 <p><strong>Java Regex Usage Example:</strong></p>
 <p>Example validating the parameter "zip" using a regular expression.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Pattern</span> <span class="n">zipPattern</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;^\d{5}(-\d{4})?$&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Pattern</span> <span class="n">zipPattern</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;^\d{5}(-\d{4})?$&quot;</span><span class="p">);</span>
 
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="p">(</span> <span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">try</span> <span class="p">{</span>
@@ -1676,7 +1674,6 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Some Allow list validators have also been predefined in various open source packages that you can leverage. For example:</p>
 <ul>
 <li><a href="http://commons.apache.org/proper/commons-validator/">Apache Commons Validator</a></li>

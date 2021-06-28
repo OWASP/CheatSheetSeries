@@ -1401,7 +1401,7 @@
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
 <p>Issues at the error handling level can reveal a lot of information about the target and can also be used to identify injection points in the target's features.</p>
 <p>Below is an example of the disclosure of a technology stack, here the Struts2 and Tomcat versions, via an exception rendered to the user:</p>
-<div class="codehilite"><pre><span></span><code>HTTP Status 500 - For input string: &quot;null&quot;
+<div class="highlight"><pre><span></span><code>HTTP Status 500 - For input string: &quot;null&quot;
 
 type Exception report
 
@@ -1428,12 +1428,10 @@ java.lang.NumberFormatException: For input string: &quot;null&quot;
 
 note: The full stack trace of the root cause is available in the Apache Tomcat/7.0.56 logs.
 </code></pre></div>
-
 <p>Below is an example of disclosure of a SQL query error, along with the site installation path, that can be used to identify an injection point:</p>
-<div class="codehilite"><pre><span></span><code>Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given
+<div class="highlight"><pre><span></span><code>Warning: odbc_fetch_array() expects parameter /1 to be resource, boolean given
 in D:\app\index_new.php on line 188
 </code></pre></div>
-
 <p>The <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/01-Information_Gathering/">OWASP Testing Guide</a> provides different techniques to obtain technical information from an application.</p>
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>The article shows how to configure a global error handler as part of your application's runtime configuration. In some cases, it may be more efficient to define this error handler as part of your code. The outcome being that when an unexpected error occurs then a generic response is returned by the application but the error details are logged server side for investigation, and not returned to the user.</p>
@@ -1448,7 +1446,7 @@ in D:\app\index_new.php on line 188
 <p>We propose here a configuration that can be used from Servlet specification <em>version 2.5</em> and above.</p>
 <p>With this configuration, any unexpected error will cause a redirection to the page <strong>error.jsp</strong> in which the error will be traced and a generic response will be returned.</p>
 <p>Configuration of the redirection into the <strong>web.xml</strong> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;web-app</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">ns=</span><span class="s">&quot;http://java.sun.com/xml/ns/javaee&quot;</span>
 <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;</span>
 <span class="na">version=</span><span class="s">&quot;3.0&quot;</span><span class="nt">&gt;</span>
@@ -1460,9 +1458,8 @@ in D:\app\index_new.php on line 188
 ...
 <span class="nt">&lt;/web-app&gt;</span>
 </code></pre></div>
-
 <p>Content of the <strong>error.jsp</strong> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">language</span><span class="o">=</span><span class="s">&quot;java&quot;</span> <span class="n">isErrorPage</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;application/json; charset=UTF-8&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">language</span><span class="o">=</span><span class="s">&quot;java&quot;</span> <span class="n">isErrorPage</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;application/json; charset=UTF-8&quot;</span>
     <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="o">%&gt;</span>
 <span class="o">&lt;%</span>
 <span class="n">String</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="n">exception</span><span class="p">.</span><span class="na">getMessage</span><span class="p">();</span>
@@ -1477,11 +1474,10 @@ in D:\app\index_new.php on line 188
 <span class="o">%&gt;</span>
 <span class="p">{</span><span class="s">&quot;message&quot;</span><span class="p">:</span><span class="s">&quot;An error occur, please retry&quot;</span><span class="p">}</span>
 </code></pre></div>
-
 <h3 id="java-springmvcspringboot-web-application">Java SpringMVC/SpringBoot web application<a class="headerlink" href="#java-springmvcspringboot-web-application" title="Permanent link">&para;</a></h3>
 <p>With <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html">SpringMVC</a> or <a href="https://spring.io/projects/spring-boot">SpringBoot</a>, you can define a global error handler by implementing the following class in your project.</p>
 <p>We indicate to the handler, via the annotation <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html">@ExceptionHandler</a>, to act when any exception extending the class <em>java.lang.Exception</em> is thrown by the application.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">net.minidev.json.JSONObject</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">net.minidev.json.JSONObject</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.http.HttpHeaders</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.http.HttpStatus</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.springframework.http.MediaType</span><span class="p">;</span>
@@ -1515,7 +1511,6 @@ in D:\app\index_new.php on line 188
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>References:</p>
 <ul>
 <li><a href="https://www.baeldung.com/exception-handling-for-rest-with-spring">Exception handling with Spring</a></li>
@@ -1524,7 +1519,7 @@ in D:\app\index_new.php on line 188
 <h3 id="asp-net-core-web-application">ASP NET Core web application<a class="headerlink" href="#asp-net-core-web-application" title="Permanent link">&para;</a></h3>
 <p>With <a href="https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.2">ASP.NET Core</a>, you can define a global error handler by indicating that the exception handler is a dedicated API Controller.</p>
 <p>Content of the API Controller dedicated to the error handling:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Authorization</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Authorization</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Diagnostics</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
@@ -1575,9 +1570,8 @@ in D:\app\index_new.php on line 188
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Definition in the application <strong>Startup.cs</strong> file of the mapping of the exception handler to the dedicated error handling API controller:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Builder</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Builder</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Hosting</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">Microsoft.AspNetCore.Mvc</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">Microsoft.Extensions.Configuration</span><span class="p">;</span>
@@ -1616,7 +1610,6 @@ in D:\app\index_new.php on line 188
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>References:</p>
 <ul>
 <li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-2.1">Exception handling with ASP.Net Core</a></li>
@@ -1624,7 +1617,7 @@ in D:\app\index_new.php on line 188
 <h3 id="asp-net-web-api-web-application">ASP NET Web API web application<a class="headerlink" href="#asp-net-web-api-web-application" title="Permanent link">&para;</a></h3>
 <p>With <a href="https://www.asp.net/web-api">ASP.NET Web API</a> (from the standard .NET framework and not from the .NET Core framework), you can define and register handlers in order to trace and handle any error that occurs in the application.</p>
 <p>Definition of the handler for the tracing of the error details:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Web.Http.ExceptionHandling</span><span class="p">;</span>
 
 <span class="k">namespace</span> <span class="nn">MyProject.Security</span>
@@ -1648,9 +1641,8 @@ in D:\app\index_new.php on line 188
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Definition of the handler for the management of the error in order to return a generic response:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">using</span> <span class="nn">Newtonsoft.Json</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
@@ -1707,9 +1699,8 @@ in D:\app\index_new.php on line 188
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Registration of the both handlers in the application <strong>WebApiConfig.cs</strong> file:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span> <span class="nn">MyProject.Security</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">using</span> <span class="nn">MyProject.Security</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Web.Http</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Web.Http.ExceptionHandling</span><span class="p">;</span>
 
@@ -1728,9 +1719,8 @@ in D:\app\index_new.php on line 188
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Setting ccustomErrors section to the <strong>Web.config</strong> file within the <code>csharp &lt;system.web&gt;</code> node as follows.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="n">configuration</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="n">configuration</span><span class="p">&gt;</span>
     <span class="p">...</span>
     <span class="p">&lt;</span><span class="n">system</span><span class="p">.</span><span class="n">web</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="n">customErrors</span> <span class="n">mode</span><span class="p">=</span><span class="s">&quot;RemoteOnly&quot;</span>
@@ -1739,7 +1729,6 @@ in D:\app\index_new.php on line 188
     <span class="p">&lt;/</span><span class="n">system</span><span class="p">.</span><span class="n">web</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="n">configuration</span><span class="p">&gt;</span>
 </code></pre></div>
-
 <p>References:</p>
 <ul>
 <li>

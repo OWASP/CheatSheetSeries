@@ -1893,7 +1893,7 @@
 <ul>
 <li>First implementation using the "quick exit" approach</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>IF USER_EXISTS(username) THEN
+<div class="highlight"><pre><span></span><code>IF USER_EXISTS(username) THEN
     password_hash=HASH(password)
     IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
     IF NOT IS_VALID THEN
@@ -1903,18 +1903,16 @@ ELSE
    RETURN Error(&quot;Invalid Username or Password!&quot;)
 ENDIF
 </code></pre></div>
-
 <p>It can be clearly seen that if the user doesn't exist, the application will directly throw an error. Otherwise, when the user exists and the password doesn't, it is apparent that there will be more processing before the application errors out. In return, the response time will be different for the same error, allowing the attacker to differentiate between a wrong username and a wrong password.</p>
 <ul>
 <li>Second implementation without relying on the "quick exit" approach:</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>password_hash=HASH(password)
+<div class="highlight"><pre><span></span><code>password_hash=HASH(password)
 IS_VALID=LOOKUP_CREDENTIALS_IN_STORE(username, password_hash)
 IF NOT IS_VALID THEN
    RETURN Error(&quot;Invalid Username or Password!&quot;)
 ENDIF
 </code></pre></div>
-
 <p>This code will go through the same process no matter what the user or the password is, allowing the application to return in approximately the same response time.</p>
 <p>The problem with returning a generic error message for the user is a User Experience (UX) matter. A legitimate user might feel confused with the generic messages, thus making it hard for them to use the application, and might after several retries, leave the application because of its complexity. The decision to return a <em>generic error message</em> can be determined based on the criticality of the application and its data. For example, for critical applications, the team can decide that under the failure scenario, a user will always be redirected to the support page and a <em>generic error message</em> will be returned.</p>
 <p>Regarding the user enumeration itself, protection against <a href="#protect-against-automated-attacks">brute-force attack</a> are also effective because they prevent an attacker from applying the enumeration at scale. Usage of <a href="https://en.wikipedia.org/wiki/CAPTCHA">CAPTCHA</a> can be applied on a feature for which a <em>generic error message</em> cannot be returned because the <em>user experience</em> must be preserved.</p>

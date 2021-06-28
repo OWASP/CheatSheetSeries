@@ -1937,7 +1937,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h4 id="how-to-prevent">How to prevent<a class="headerlink" href="#how-to-prevent" title="Permanent link">&para;</a></h4>
 <p>Use <em>Query Parameterization</em> in order to prevent injection.</p>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="cm">/*No DB framework used here in order to show the real use of</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/*No DB framework used here in order to show the real use of</span>
 <span class="cm">  Prepared Statement from Java API*/</span>
 <span class="cm">/*Open connection with H2 database and use it*/</span>
 <span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;org.h2.Driver&quot;</span><span class="p">);</span>
@@ -1991,7 +1991,6 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a></li>
@@ -2002,7 +2001,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h4 id="how-to-prevent_1">How to prevent<a class="headerlink" href="#how-to-prevent_1" title="Permanent link">&para;</a></h4>
 <p>Use Java Persistence Query Language <strong>Query Parameterization</strong> in order to prevent injection.</p>
 <h4 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="n">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 <span class="k">try</span> <span class="p">{</span>
     <span class="cm">/* Get a ref on EntityManager to access DB */</span>
     <span class="n">entityManager</span> <span class="o">=</span> <span class="n">Persistence</span><span class="p">.</span><span class="na">createEntityManagerFactory</span><span class="p">(</span><span class="s">&quot;testJPA&quot;</span><span class="p">).</span><span class="na">createEntityManager</span><span class="p">();</span>
@@ -2026,7 +2025,6 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://software-security.sans.org/developer-how-to/fix-sql-injection-in-java-persistence-api-jpa">SQLi and JPA</a></li>
@@ -2037,13 +2035,12 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h4 id="how-to-prevent_2">How to prevent<a class="headerlink" href="#how-to-prevent_2" title="Permanent link">&para;</a></h4>
 <p>Use technology stack <strong>API</strong> in order to prevent injection.</p>
 <h4 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="cm">/* The context taken is, for example, to perform a PING against a computer.</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/* The context taken is, for example, to perform a PING against a computer.</span>
 <span class="cm">* The prevention is to use the feature provided by the Java API instead of building</span>
 <span class="cm">* a system command as String and execute it */</span>
 <span class="n">InetAddress</span> <span class="n">host</span> <span class="o">=</span> <span class="n">InetAddress</span><span class="p">.</span><span class="na">getByName</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">);</span>
 <span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">host</span><span class="p">.</span><span class="na">isReachable</span><span class="p">(</span><span class="mi">5000</span><span class="p">));</span>
 </code></pre></div>
-
 <h4 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://owasp.org/www-community/attacks/Command_Injection">Command Injection</a></li>
@@ -2055,7 +2052,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <p>Use <strong>XPath Variable Resolver</strong> in order to prevent injection.</p>
 <h4 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">&para;</a></h4>
 <p><strong>Variable Resolver</strong> implementation.</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">/**</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
 <span class="cm"> * Resolver in order to define parameter for XPATH expression.</span>
 <span class="cm"> *</span>
 <span class="cm"> */</span>
@@ -2083,9 +2080,8 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Code using it to perform XPath query.</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">/*Create a XML document builder factory*/</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/*Create a XML document builder factory*/</span>
 <span class="n">DocumentBuilderFactory</span> <span class="n">dbf</span> <span class="o">=</span> <span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
 
 <span class="cm">/*Disable External Entity resolution for differents cases*/</span>
@@ -2114,7 +2110,6 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <span class="n">Element</span> <span class="n">book</span> <span class="o">=</span> <span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="n">nodesList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 <span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="na">getTextContent</span><span class="p">().</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;Ralls, Kim&quot;</span><span class="p">));</span>
 </code></pre></div>
-
 <h4 id="references_3">References<a class="headerlink" href="#references_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://owasp.org/www-community/attacks/XPATH_Injection">XPATH Injection</a></li>
@@ -2125,7 +2120,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h4 id="how-to-prevent_4">How to prevent<a class="headerlink" href="#how-to-prevent_4" title="Permanent link">&para;</a></h4>
 <p>Either apply strict input validation ("allow list" approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).</p>
 <h4 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code><span class="cm">/*</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/*</span>
 <span class="cm">INPUT WAY: Receive data from user</span>
 <span class="cm">Here it&#39;s recommended to use strict input validation using &quot;allow list&quot; approach.</span>
 <span class="cm">In fact, you ensure that only allowed characters are part of the input received.</span>
@@ -2166,7 +2161,6 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <span class="n">String</span> <span class="n">finalSafeOutputExpected</span> <span class="o">=</span> <span class="s">&quot;You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;&quot;</span><span class="p">;</span>
 <span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">finalSafeOutputExpected</span><span class="p">,</span> <span class="n">safeOutput</span><span class="p">);</span>
 </code></pre></div>
-
 <h4 id="references_4">References<a class="headerlink" href="#references_4" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://owasp.org/www-community/attacks/xss/">XSS</a></li>
@@ -2182,7 +2176,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h4 id="how-to-prevent_5">How to prevent<a class="headerlink" href="#how-to-prevent_5" title="Permanent link">&para;</a></h4>
 <p>As there many NoSQL database system and each one use an API for call, it's important to ensure that user input received and used to build the API call expression does not contain any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It's also important to not use string concatenation to build API call expression but use the API to create the expression.</p>
 <h4 id="example-mongodb">Example - MongoDB<a class="headerlink" href="#example-mongodb" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span><code> <span class="cm">/* Here use MongoDB as target NoSQL DB */</span>
+<div class="highlight"><pre><span></span><code> <span class="cm">/* Here use MongoDB as target NoSQL DB */</span>
 <span class="n">String</span> <span class="n">userInput</span> <span class="o">=</span> <span class="s">&quot;Brooklyn&quot;</span><span class="p">;</span>
 
 <span class="cm">/* First ensure that the input do no contains any special characters</span>
@@ -2223,7 +2217,6 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
     <span class="p">});</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="references_5">References<a class="headerlink" href="#references_5" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection.html">Testing for NoSQL injection</a></li>
@@ -2242,7 +2235,7 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 </ul>
 <h4 id="example-using-log4j2">Example using Log4j2<a class="headerlink" href="#example-using-log4j2" title="Permanent link">&para;</a></h4>
 <p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout\%7CLog4j2">Pattern <em>encode{}{CRLF}</em></a>, introduced in <a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api">Log4j2 v2.10.0</a>, and the <em>-500m</em> message size limit.:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;Configuration</span> <span class="na">status=</span><span class="s">&quot;error&quot;</span> <span class="na">name=</span><span class="s">&quot;SecureLoggingPolicy&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;Appenders&gt;</span>
         <span class="nt">&lt;RollingFile</span> <span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span> <span class="na">fileName=</span><span class="s">&quot;App.log&quot;</span> <span class="na">filePattern=</span><span class="s">&quot;App-%i.log&quot;</span> <span class="na">ignoreExceptions=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
@@ -2264,9 +2257,8 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
     <span class="nt">&lt;/Loggers&gt;</span>
 <span class="nt">&lt;/Configuration&gt;</span>
 </code></pre></div>
-
 <p>Usage of the logger at code level:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.logging.log4j.LogManager</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.logging.log4j.LogManager</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.logging.log4j.Logger</span><span class="p">;</span>
 <span class="p">...</span>
 <span class="c1">// No special action needed because security actions are</span>
@@ -2275,10 +2267,9 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">logMessage</span><span class="p">);</span>
 <span class="p">...</span>
 </code></pre></div>
-
 <h4 id="example-using-logback-with-the-owasp-security-logging-library">Example using Logback with the OWASP Security Logging library<a class="headerlink" href="#example-using-logback-with-the-owasp-security-logging-library" title="Permanent link">&para;</a></h4>
 <p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging">CRLFConverter</a>, provided by the <a href="https://owasp.org/www-project-security-logging/">OWASP Security Logging Project</a>, and the <em>-500msg</em> message size limit:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;configuration&gt;</span>
     <span class="c">&lt;!-- Define the CRLFConverter --&gt;</span>
     <span class="nt">&lt;conversionRule</span> <span class="na">conversionWord=</span><span class="s">&quot;crlf&quot;</span> <span class="na">converterClass=</span><span class="s">&quot;org.owasp.security.logging.mask.CRLFConverter&quot;</span> <span class="nt">/&gt;</span>
@@ -2303,10 +2294,9 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
     <span class="nt">&lt;/root&gt;</span>
 <span class="nt">&lt;/configuration&gt;</span>
 </code></pre></div>
-
 <p>You also have to add the <a href="https://github.com/javabeanz/owasp-security-logging/wiki/Usage-with-Logback">OWASP Security Logging</a> dependency to your project.</p>
 <p>Usage of the logger at code level:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.slf4j.Logger</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.slf4j.Logger</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
 <span class="p">...</span>
 <span class="c1">// No special action needed because security actions</span>
@@ -2315,12 +2305,11 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">logMessage</span><span class="p">);</span>
 <span class="p">...</span>
 </code></pre></div>
-
 <h4 id="references_6">References<a class="headerlink" href="#references_6" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout">PatternLayout</a> (See the <code>encode{}{CRLF}</code> function)</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent log injection.
+<div class="highlight"><pre><span></span><code>Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent log injection.
 
 It prevents XSS attacks against viewing logs using a browser.
 
@@ -2328,7 +2317,6 @@ OWASP recommends defending against XSS attacks in such situations in the log vie
 not by preencoding all the log messages with HTML encoding as such log entries may be used/viewed in many
 other log viewing/analysis tools that don&#39;t expect the log data to be pre-HTML encoded.
 </code></pre></div>
-
 <ul>
 <li><a href="https://logging.apache.org/log4j/2.x/manual/configuration.html">LOG4J Configuration</a></li>
 <li><a href="https://logging.apache.org/log4j/2.x/manual/appenders.html">LOG4J Appender</a></li>

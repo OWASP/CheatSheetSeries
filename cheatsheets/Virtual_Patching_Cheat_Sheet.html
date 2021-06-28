@@ -1703,11 +1703,10 @@
 </ol>
 <h2 id="example-public-vulnerability">Example Public Vulnerability<a class="headerlink" href="#example-public-vulnerability" title="Permanent link">&para;</a></h2>
 <p>Let's take the following <a href="https://packetstormsecurity.com/files/119217/WordPress-Shopping-Cart-8.1.14-Shell-Upload-SQL-Injection.html">SQL Injection vulnerability</a> as our example for the remainder of this article:</p>
-<div class="codehilite"><pre><span></span><code>WordPress Shopping Cart Plugin for WordPress
+<div class="highlight"><pre><span></span><code>WordPress Shopping Cart Plugin for WordPress
 /wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php
 reqID Parameter prone to SQL Injection.
 </code></pre></div>
-
 <p><strong>Description</strong>:</p>
 <p>WordPress Shopping Cart Plugin for WordPress contains a flaw that may allow an attacker to carry out an SQL injection attack.</p>
 <p>The issue is due to the <code>/wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php</code> script not properly sanitizing user-supplied input to the <code>reqID</code> parameter.</p>
@@ -1767,7 +1766,7 @@ reqID Parameter prone to SQL Injection.
 <p>Positive security model (allow list) is a comprehensive security mechanism that provides an independent input validation envelope to an application. The model specifies the characteristics of valid input (character set, length, etc…) and denies anything that does not conform. By defining rules for every parameter in every page in the application the application is protected by an additional security envelop independent from its code.</p>
 <h5 id="example-allow-list-modsecurity-virtual-patch">Example Allow List ModSecurity Virtual Patch<a class="headerlink" href="#example-allow-list-modsecurity-virtual-patch" title="Permanent link">&para;</a></h5>
 <p>In order to create an allow-list virtual patch, you must be able to verify what the normal, expected input values are. If you have implemented proper audit logging as part of the Preparation Phase, then you should be able to review audit logs to identify the format of expected input types. In this case, the <code>reqID</code> parameter is supposed to only hold integer characters so we can use this virtual patch:</p>
-<div class="codehilite"><pre><span></span><code>##
+<div class="highlight"><pre><span></span><code>##
 ## Verify we only receive 1 parameter called &quot;reqID&quot;
 ##
 SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php&quot; &quot;chain,id:1,phase:2,t:none,t:Utf8toUnicode,t:urlDecodeUni,t:normalizePathWin,t:lowercase,block,msg:&#39;Input Validation Error for \&#39;reqID\&#39; parameter - Duplicate Parameters Names Seen.&#39;,logdata:&#39;%{matched_var}&#39;&quot;
@@ -1779,7 +1778,6 @@ SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scri
 SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php&quot; &quot;chain,id:2,phase:2,t:none,t:Utf8toUnicode,t:urlDecodeUni,t:normalizePathWin,t:lowercase,block,msg:&#39;Input Validation Error for \&#39;reqID\&#39; parameter.&#39;,logdata:&#39;%{args.reqid}&#39;&quot;
   SecRule ARGS:/reqID/ &quot;!@rx ^[0-9]+$&quot;
 </code></pre></div>
-
 <p>This virtual patch will inspect the <code>reqID</code> parameter value on the specified page and prevent any characters other than integers as input.</p>
 <ul>
 <li><strong>Note</strong> - You should make sure to assign rule IDs properly and track them in the bug tracking system.</li>
@@ -1789,25 +1787,22 @@ SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scri
 <p>A negative security model (block list) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.</p>
 <h5 id="example-block-list-modsecurity-virtual-patch">Example Block List ModSecurity Virtual Patch<a class="headerlink" href="#example-block-list-modsecurity-virtual-patch" title="Permanent link">&para;</a></h5>
 <p>Here is the example <a href="https://packetstormsecurity.com/files/119217/WordPress-Shopping-Cart-8.1.14-Shell-Upload-SQL-Injection.html">PoC code</a> that was supplied by the public advisory:</p>
-<div class="codehilite"><pre><span></span><code>http://localhost/wordpress/wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php?reqID=1&#39; or 1=&#39;1
+<div class="highlight"><pre><span></span><code>http://localhost/wordpress/wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php?reqID=1&#39; or 1=&#39;1
 </code></pre></div>
-
 <p>Looking at the payload, we can see that the attacker is inserting a single quote character and then adding additional SQL query logic to the end. Based on this data, we could disallow the single quote character like this:</p>
-<div class="codehilite"><pre><span></span><code>SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php&quot; &quot;chain,id:1,phase:2,t:none,t:Utf8toUnicode,t:urlDecodeUni,t:normalizePathWin,t:lowercase,block,msg:&#39;Input Validation Error for \&#39;reqID\&#39; parameter.&#39;,logdata:&#39;%{args.reqid}&#39;&quot;
+<div class="highlight"><pre><span></span><code>SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php&quot; &quot;chain,id:1,phase:2,t:none,t:Utf8toUnicode,t:urlDecodeUni,t:normalizePathWin,t:lowercase,block,msg:&#39;Input Validation Error for \&#39;reqID\&#39; parameter.&#39;,logdata:&#39;%{args.reqid}&#39;&quot;
   SecRule ARGS:/reqID/ &quot;@pm &#39;&quot;
 </code></pre></div>
-
 <h4 id="which-method-is-better-for-virtual-patching-positive-or-negative-security">Which Method is Better for Virtual Patching – Positive or Negative Security<a class="headerlink" href="#which-method-is-better-for-virtual-patching-positive-or-negative-security" title="Permanent link">&para;</a></h4>
 <p>A virtual patch may employ either a positive or negative security model. Which one you decide to use depends on the situation and a few different considerations. For example, negative security rules can usually be implemented more quickly, however the possible evasions are more likely.</p>
 <p>Positive security rules, only the other hand, provides better protection however it is often a manual process and thus is not scalable and difficult to maintain for large/dynamic sites. While manual positive security rules for an entire site may not be feasible, a positive security model can be selectively employed when a vulnerability alert identifies a specific location with a problem.</p>
 <h4 id="beware-of-exploit-specific-virtual-patches">Beware of Exploit-Specific Virtual Patches<a class="headerlink" href="#beware-of-exploit-specific-virtual-patches" title="Permanent link">&para;</a></h4>
 <p>You want to resist the urge to take the easy road and quickly create an <strong>exploit-specific virtual patch</strong>.</p>
 <p>For instance, if an authorized penetration test identified an XSS vulnerability on a page and used the following attack payload in the report:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
   <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;XSS Test&#39;</span><span class="p">)</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-
 <p>It would not be wise to implement a virtual patch that simply blocks that exact payload. While it may provide some immediate protection, its long term value is significantly decreased.</p>
 <h3 id="automated-virtual-patch-creation">Automated Virtual Patch Creation<a class="headerlink" href="#automated-virtual-patch-creation" title="Permanent link">&para;</a></h3>
 <p>Manual patch creation may become unfeasible as the number of vulnerabilities grow and automated means may become necessary. If the vulnerabilities were identified using automated tools and an XML report is available, it is possible to leverage automated processes to auto-convert this vulnerability data into virtual patches for protection systems.</p>

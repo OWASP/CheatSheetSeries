@@ -1487,21 +1487,19 @@
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <p>The examples in this guide use Hibernate Validator (the reference implementation for Bean Validation 1.1).</p>
 <p>Add Hibernate Validator to your <strong>pom.xml</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;dependency&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;dependency&gt;</span>
    <span class="nt">&lt;groupId&gt;</span>org.hibernate<span class="nt">&lt;/groupId&gt;</span>
    <span class="nt">&lt;artifactId&gt;</span>hibernate-validator<span class="nt">&lt;/artifactId&gt;</span>
    <span class="nt">&lt;version&gt;</span>5.2.4.Final<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></div>
-
 <p>Enable bean validation support in Spring's <strong>context.xml</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">&lt;beans:beans</span> <span class="err">...</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;beans:beans</span> <span class="err">...</span>
    <span class="err">...</span>
    <span class="err">&lt;mvc:annotation-driven</span> <span class="nt">/&gt;</span>
    ...
 <span class="nt">&lt;/beans:beans&gt;</span>
 </code></pre></div>
-
 <p>For more info, please see the <a href="https://hibernate.org/validator/documentation/getting-started/">setup guide</a></p>
 <h2 id="basics">Basics<a class="headerlink" href="#basics" title="Permanent link">&para;</a></h2>
 <p>In order to get started using Bean Validation, you must add validation constraints (<code>@Pattern</code>, <code>@Digits</code>, <code>@Min</code>, <code>@Max</code>, <code>@Size</code>, <code>@Past</code>, <code>@Future</code>, <code>@CreditCardNumber</code>, <code>@Email</code>, <code>@URL</code>, etc.) to your model and then utilize the <code>@Valid</code> annotation when passing your model around in various application layers.</p>
@@ -1530,7 +1528,7 @@
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Pattern</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Pattern</span><span class="p">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Article</span>  <span class="p">{</span>
  <span class="c1">//Constraint: Alpha Numeric article titles only using a regular expression</span>
@@ -1547,9 +1545,8 @@
 
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Controller</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.company.app.model.Article</span><span class="p">;</span>
 
 <span class="nd">@Controller</span>
@@ -1574,7 +1571,6 @@
  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="digits">@Digits<a class="headerlink" href="#digits" title="Permanent link">&para;</a></h3>
 <p><strong>Annotation</strong>:</p>
 <p><code>@Digits(integer=,fraction=)</code></p>
@@ -1585,7 +1581,7 @@
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Digits</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Digits</span><span class="p">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customer</span> <span class="p">{</span>
   <span class="c1">//Constraint: Age can only be 3 digits long or less</span>
@@ -1603,9 +1599,8 @@
     <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Controller</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.company.app.model.Customer</span><span class="p">;</span>
 
 <span class="nd">@Controller</span>
@@ -1632,7 +1627,6 @@
  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="size">@Size<a class="headerlink" href="#size" title="Permanent link">&para;</a></h3>
 <p><strong>Annotation</strong>:</p>
 <p><code>@Size(min=,</code> <code>max=)</code></p>
@@ -1643,7 +1637,7 @@
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Size</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Size</span><span class="p">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Message</span> <span class="p">{</span>
 
@@ -1662,9 +1656,8 @@
 <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Controller</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.company.app.model.Message</span><span class="p">;</span>
 
 <span class="nd">@Controller</span>
@@ -1691,7 +1684,6 @@
 <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="past-future">@Past / @Future<a class="headerlink" href="#past-future" title="Permanent link">&para;</a></h3>
 <p><strong>Annotation</strong>:</p>
 <p><code>@Past,</code> <code>@Future</code></p>
@@ -1702,7 +1694,7 @@
 <p><strong>Reference</strong>:</p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Past</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Past</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Future</span><span class="p">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">DoctorVisit</span> <span class="p">{</span>
@@ -1734,9 +1726,8 @@
 <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Controller</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.company.app.model.DoctorVisit</span><span class="p">;</span>
 
 <span class="nd">@Controller</span>
@@ -1763,7 +1754,6 @@
    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="combining-constraints">Combining Constraints<a class="headerlink" href="#combining-constraints" title="Permanent link">&para;</a></h3>
 <p>Validation annotations can be combined in any suitable way. For instance, to specify a valid reviewRating value between 1 and 5, specify the validation like this :</p>
 <p><strong>Annotation</strong>:</p>
@@ -1775,7 +1765,7 @@
 <p><strong>Reference:</strong></p>
 <p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Min</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Min</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.hibernate.validator.constraints.Max</span><span class="p">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Review</span> <span class="p">{</span>
@@ -1795,9 +1785,8 @@
  <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Controller</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.validation.Valid</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.company.app.model.ReviewRating</span><span class="p">;</span>
 
 <span class="nd">@Controller</span>
@@ -1824,7 +1813,6 @@
    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="cascading-constraints">Cascading Constraints<a class="headerlink" href="#cascading-constraints" title="Permanent link">&para;</a></h3>
 <p>Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch03.html#_cascaded_validation">@Valid</a></p>
 <h3 id="additional-constraints">Additional Constraints<a class="headerlink" href="#additional-constraints" title="Permanent link">&para;</a></h3>
@@ -1845,10 +1833,9 @@
 <p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html">documentation</a>.</p>
 <h2 id="error-messages">Error Messages<a class="headerlink" href="#error-messages" title="Permanent link">&para;</a></h2>
 <p>It is possible to specify a message ID with the validation annotation, so that error messages are customized :</p>
-<div class="codehilite"><pre><span></span><code><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span> <span class="o">=</span> <span class="s">&quot;[a-zA-Z0-9 ]&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">&quot;article.title.error&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span> <span class="o">=</span> <span class="s">&quot;[a-zA-Z0-9 ]&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">&quot;article.title.error&quot;</span><span class="p">)</span>
 <span class="kd">private</span> <span class="n">String</span> <span class="n">articleTitle</span><span class="p">;</span>
 </code></pre></div>
-
 <p>Spring MVC will then look up a message with ID <em>article.title.error</em> in a defined MessageSource. More on this <a href="https://www.silverbaytech.com/2013/04/16/custom-messages-in-spring-validation/">documentation</a>.</p>
                 
                   

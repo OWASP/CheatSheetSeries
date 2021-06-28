@@ -1679,14 +1679,13 @@
 <li>For HTML links, add the attribute <code>rel="noopener noreferrer"</code> to every link.</li>
 <li>For JavaScript, use this function to open a window (or tab):</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kd">function</span> <span class="nx">openPopup</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">windowFeatures</span><span class="p">){</span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">openPopup</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">windowFeatures</span><span class="p">){</span>
   <span class="c1">//Open the popup and set the opener and referrer policy instruction</span>
   <span class="kd">var</span> <span class="nx">newWindow</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="s1">&#39;noopener,noreferrer,&#39;</span> <span class="o">+</span> <span class="nx">windowFeatures</span><span class="p">);</span>
   <span class="c1">//Reset the opener link</span>
   <span class="nx">newWindow</span><span class="p">.</span><span class="nx">opener</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <ul>
 <li>Add the HTTP response header <code>Referrer-Policy: no-referrer</code> to every HTTP response sent by the application (<a href="https://owasp.org/www-project-secure-headers/">Header Referrer-Policy information</a>. This configuration will ensure that no referrer information is sent along with requests from the page.</li>
 </ul>
@@ -1720,9 +1719,8 @@
 <blockquote>
 <p>Access a financial account from a public computer. Even though one is logged-off, the next person who uses the machine can log-in because the browser autocomplete functionality. To mitigate this, we tell the input fields not to assist in any way.</p>
 </blockquote>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">spellcheck</span><span class="o">=</span><span class="s">&quot;false&quot;</span> <span class="na">autocomplete</span><span class="o">=</span><span class="s">&quot;off&quot;</span> <span class="na">autocorrect</span><span class="o">=</span><span class="s">&quot;off&quot;</span> <span class="na">autocapitalize</span><span class="o">=</span><span class="s">&quot;off&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">input</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">spellcheck</span><span class="o">=</span><span class="s">&quot;false&quot;</span> <span class="na">autocomplete</span><span class="o">=</span><span class="s">&quot;off&quot;</span> <span class="na">autocorrect</span><span class="o">=</span><span class="s">&quot;off&quot;</span> <span class="na">autocapitalize</span><span class="o">=</span><span class="s">&quot;off&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">input</span><span class="p">&gt;</span>
 </code></pre></div>
-
 <p>Text areas and input fields for PII (name, email, address, phone number) and login credentials (username, password) should be prevented from being stored in the browser. Use these HTML5 attributes to prevent the browser from storing PII from your form:</p>
 <ul>
 <li><code>spellcheck="false"</code></li>
@@ -1757,7 +1755,7 @@
 <p>During a websocket channel initiation, the browser sends the <strong>Origin</strong> HTTP request header that contains the source domain initiation for the request to handshake. Even if this header can be spoofed in a forged HTTP request (not browser based), it cannot be overridden or forced in a browser context. It then represents a good candidate to apply filtering according to an expected value.</p>
 <p>An example of an attack using this vector, named <em>Cross-Site WebSocket Hijacking (CSWSH)</em>, is described <a href="https://www.christian-schneider.net/CrossSiteWebSocketHijacking.html">here</a>.</p>
 <p>The code below defines a configuration that applies filtering based on an "allow list" of origins. This ensures that only allowed origins can establish a full handshake:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.owasp.encoder.Encode</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.owasp.encoder.Encode</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.slf4j.Logger</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
 
@@ -1805,14 +1803,13 @@
 
 <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="authentication-and-inputoutput-validation">Authentication and Input/Output validation<a class="headerlink" href="#authentication-and-inputoutput-validation" title="Permanent link">&para;</a></h3>
 <p>When using websocket as communication channel, it's important to use an authentication method allowing the user to receive an access <em>Token</em> that is not automatically sent by the browser and then must be explicitly sent by the client code during each exchange.</p>
 <p><a href="https://jwt.io/introduction/">JSON Web Token</a> is a good candidate, because it allows the transport of access ticket information in a stateless and not alterable way. Moreover, it defines a validity timeframe. You can find additional information about JWT token hardening on this <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html">cheat sheet</a>.</p>
 <p><a href="http://json-schema.org/">JSON Validation Schema</a> are used to define and validate the expected content in input and ouput messages.</p>
 <p>The code below defines the complete authentication messages flow handling:</p>
 <p><strong>Authentication Web Socket endpoint</strong> - Provide a WS endpoint that enables authentication exchange</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.configurator.EndpointConfigurator</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.configurator.EndpointConfigurator</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.decoder.AuthenticationRequestDecoder</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.encoder.AuthenticationResponseEncoder</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.handler.AuthenticationMessageHandler</span><span class="p">;</span>
@@ -1888,9 +1885,8 @@
 
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Authentication message handler</strong> - Handle all authentication requests</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.enumeration.AccessLevel</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.enumeration.AccessLevel</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.util.AuthenticationUtils</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.vo.AuthenticationRequest</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.vo.AuthenticationResponse</span><span class="p">;</span>
@@ -1974,9 +1970,8 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Utility class to manage JWT token</strong> - Handle the issuing and the validation of the access token. Simple JWT token has been used for the example (focus was made here on the global WS endpoint implementation) here without extra hardening (see this <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html">cheat sheet</a> to apply extra hardening on the JWT token)</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.auth0.jwt.JWT</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.auth0.jwt.JWT</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.auth0.jwt.JWTVerifier</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.auth0.jwt.algorithms.Algorithm</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.auth0.jwt.interfaces.DecodedJWT</span><span class="p">;</span>
@@ -2035,9 +2030,8 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong>JSON schema of the input and output authentication message</strong> - Define the expected structure of the input and output messages from the authentication endpoint point of view</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
     <span class="nt">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;http://json-schema.org/schema#&quot;</span><span class="p">,</span>
     <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;AuthenticationRequest&quot;</span><span class="p">,</span>
     <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
@@ -2080,9 +2074,8 @@
 <span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Authentication message decoder and encoder</strong> - Perform the JSON serialization/deserialization and the input/output validation using dedicated JSON Schema. It makes it possible to systematically ensure that all messages received and sent by the endpoint strictly respect the expected structure and content.</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.JsonNode</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.JsonNode</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.github.fge.jackson.JsonLoader</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.github.fge.jsonschema.core.exceptions.ProcessingException</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.github.fge.jsonschema.core.report.ProcessingReport</span><span class="p">;</span>
@@ -2191,8 +2184,7 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.JsonNode</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.fasterxml.jackson.databind.JsonNode</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.github.fge.jackson.JsonLoader</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.github.fge.jsonschema.core.exceptions.ProcessingException</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.github.fge.jsonschema.core.report.ProcessingReport</span><span class="p">;</span>
@@ -2279,7 +2271,6 @@
 
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Note that the same approach is used in the messages handling part of the POC. All messages exchanged between the client and the server are systematically validated using the same way, using dedicated JSON schemas linked to messages dedicated Encoder/Decoder (serialization/deserialization).</p>
 <h3 id="authorization-and-access-token-explicit-invalidation">Authorization and access token explicit invalidation<a class="headerlink" href="#authorization-and-access-token-explicit-invalidation" title="Permanent link">&para;</a></h3>
 <p>Authorization information is stored in the access token using the JWT <em>Claim</em> feature (in the POC the name of the claim is <em>access_level</em>). Authorization is validated when a request is received and before any other action using the user input information.</p>
@@ -2287,7 +2278,7 @@
 <p>Explicit token invalidation is interesting from a user's point of view because, often when tokens are used, the validity timeframe of the token is relatively long (it's common to see a valid timeframe superior to 1 hour) so it's important to allow a user to have a way to indicate to the system "OK, I have finished my exchange with you, so you can close our exchange session and cleanup associated links".</p>
 <p>It also helps the user to revoke itself of current access if a malicious concurrent access is detected using the same token (case of token stealing).</p>
 <p><strong>Token block list</strong> - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.commons.jcs.JCS</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.commons.jcs.JCS</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.commons.jcs.access.CacheAccess</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.commons.jcs.access.exception.CacheException</span><span class="p">;</span>
 
@@ -2370,9 +2361,8 @@
 
 <span class="p">}</span>
 </code></pre></div>
-
 <p><strong>Message handling</strong> - Process a request from a user to add a message in the list. Show a authorization validation approach example</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.auth0.jwt.interfaces.Claim</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">com.auth0.jwt.interfaces.Claim</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.auth0.jwt.interfaces.DecodedJWT</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.enumeration.AccessLevel</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.util.AccessTokenBlocklistUtils</span><span class="p">;</span>
@@ -2484,17 +2474,15 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="confidentiality-and-integrity">Confidentiality and Integrity<a class="headerlink" href="#confidentiality-and-integrity" title="Permanent link">&para;</a></h3>
 <p>If the raw version of the protocol is used (protocol <code>ws://</code>) then the transferred data is exposed to eavesdropping and potential on-the-fly alteration.</p>
 <p>Example of capture using <a href="https://www.wireshark.org/">Wireshark</a> and searching for password exchanges in the stored PCAP file, not printable characters has been explicitly removed from the command result:</p>
-<div class="codehilite"><pre><span></span><code>$ grep -aE <span class="s1">&#39;(password)&#39;</span> capture.pcap
+<div class="highlight"><pre><span></span><code>$ grep -aE <span class="s1">&#39;(password)&#39;</span> capture.pcap
 <span class="o">{</span><span class="s2">&quot;login&quot;</span>:<span class="s2">&quot;bob&quot;</span>,<span class="s2">&quot;password&quot;</span>:<span class="s2">&quot;bob123&quot;</span><span class="o">}</span>
 </code></pre></div>
-
 <p>There is a way to check, at WebSocket endpoint level, if the channel is secure by calling the method <code>isSecure()</code> on the <em>session</em> object instance.</p>
 <p>Example of implementation in the method of the endpoint in charge of setup of the session and affects the message handler:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">/**</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
 <span class="cm"> * Handle the beginning of an exchange</span>
 <span class="cm"> *</span>
 <span class="cm"> * @param session Exchange session information</span>
@@ -2519,7 +2507,6 @@
     <span class="n">LOG</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;[AuthenticationEndpoint] Session {} message handler affected for processing&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="na">getId</span><span class="p">());</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Expose WebSocket endpoints only on <a href="https://kaazing.com/html5-websocket-security-is-strong/">wss://</a> protocol (WebSockets over SSL/TLS) in order to ensure <em>Confidentiality</em> and <em>Integrity</em> of the traffic like using HTTP over SSL/TLS to secure HTTP exchanges.</p>
                 
                   

@@ -1398,59 +1398,50 @@
 <h2 id="safe-url-redirects">Safe URL Redirects<a class="headerlink" href="#safe-url-redirects" title="Permanent link">&para;</a></h2>
 <p>When we want to redirect a user automatically to another page (without an action of the visitor such as clicking on a hyperlink) you might implement a code such as the following:</p>
 <p>Java</p>
-<div class="codehilite"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="s">&quot;http://www.mysite.com&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="s">&quot;http://www.mysite.com&quot;</span><span class="p">);</span>
 </code></pre></div>
-
 <p>PHP</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
 <span class="cm">/* Redirect browser */</span>
 <span class="nb">header</span><span class="p">(</span><span class="s2">&quot;Location: http://www.mysite.com&quot;</span><span class="p">);</span>
 <span class="cm">/* Exit to prevent the rest of the code from executing */</span>
 <span class="k">exit</span><span class="p">;</span>
 <span class="cp">?&gt;</span><span class="x"></span>
 </code></pre></div>
-
 <p>ASP .NET</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">&quot;~/folder/Login.aspx&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">&quot;~/folder/Login.aspx&quot;</span><span class="p">)</span>
 </code></pre></div>
-
 <p>Rails</p>
-<div class="codehilite"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">login_path</span>
+<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">login_path</span>
 </code></pre></div>
-
 <p>In the examples above, the URL is being explicitly declared in the code and cannot be manipulated by an attacker.</p>
 <h2 id="dangerous-url-redirects">Dangerous URL Redirects<a class="headerlink" href="#dangerous-url-redirects" title="Permanent link">&para;</a></h2>
 <p>The following examples demonstrate unsafe redirect and forward code.</p>
 <h3 id="dangerous-url-redirect-example-1">Dangerous URL Redirect Example 1<a class="headerlink" href="#dangerous-url-redirect-example-1" title="Permanent link">&para;</a></h3>
 <p>The following Java code receives the URL from the parameter named <code>url</code> (<a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">GET or POST</a>) and redirects to that URL:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">));</span>
+<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">));</span>
 </code></pre></div>
-
 <p>The following PHP code obtains a URL from the query string (via the parameter named <code>url</code>) and then redirects the user to that URL. Additionally, the PHP code after this <code>header()</code> function will continue to execute, so if the user configures their browser to ignore the redirect, they may be able to access the rest of the page.</p>
-<div class="codehilite"><pre><span></span><code><span class="x">$redirect_url = $_GET[&#39;url&#39;];</span>
+<div class="highlight"><pre><span></span><code><span class="x">$redirect_url = $_GET[&#39;url&#39;];</span>
 <span class="x">header(&quot;Location: &quot; . $redirect_url);</span>
 </code></pre></div>
-
 <p>A similar example of C# .NET Vulnerable Code:</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">string</span> <span class="n">url</span> <span class="p">=</span> <span class="n">request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><span class="kt">string</span> <span class="n">url</span> <span class="p">=</span> <span class="n">request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">];</span>
 <span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
 </code></pre></div>
-
 <p>And in Rails:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span>
 </code></pre></div>
-
 <p>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.</p>
 <p>If no validation is applied, a malicious user could create a hyperlink to redirect your users to an unvalidated malicious website, for example:</p>
-<div class="codehilite"><pre><span></span><code> http://example.com/example.php?url=http://malicious.example.com
+<div class="highlight"><pre><span></span><code> http://example.com/example.php?url=http://malicious.example.com
 </code></pre></div>
-
 <p>The user sees the link directing to the original trusted site (<code>example.com</code>) and does not realize the redirection that could take place</p>
 <h3 id="dangerous-url-redirect-example-2">Dangerous URL Redirect Example 2<a class="headerlink" href="#dangerous-url-redirect-example-2" title="Permanent link">&para;</a></h3>
 <p><a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/preventing-open-redirection-attacks">ASP .NET MVC 1 &amp; 2 websites</a> are particularly vulnerable to open redirection attacks. In order to avoid this vulnerability, you need to apply MVC 3.</p>
 <p>The code for the LogOn action in an ASP.NET MVC 2 application is shown below. After a successful login, the controller returns a redirect to the returnUrl. You can see that no validation is being performed against the returnUrl parameter.</p>
 <p>ASP.NET MVC 2 LogOn action in <code>AccountController.cs</code> (see Microsoft Docs link provided above for the context):</p>
-<div class="codehilite"><pre><span></span><code><span class="na">[HttpPost]</span>
+<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span>
  <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">LogOn</span><span class="p">(</span><span class="n">LogOnModel</span> <span class="n">model</span><span class="p">,</span> <span class="kt">string</span> <span class="n">returnUrl</span><span class="p">)</span>
  <span class="p">{</span>
    <span class="k">if</span> <span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
@@ -1477,16 +1468,14 @@
    <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
  <span class="p">}</span>
 </code></pre></div>
-
 <h3 id="dangerous-forward-example">Dangerous Forward Example<a class="headerlink" href="#dangerous-forward-example" title="Permanent link">&para;</a></h3>
 <p>When applications allow user input to forward requests between different parts of the site, the application must check that the user is authorized to access the URL, perform the functions it provides, and it is an appropriate URL request.</p>
 <p>If the application fails to perform these checks, an attacker crafted URL may pass the application's access control check and then forward the attacker to an administrative function that is not normally permitted.</p>
 <p>Example:</p>
-<div class="codehilite"><pre><span></span><code>http://www.example.com/function.jsp?fwd=admin.jsp
+<div class="highlight"><pre><span></span><code>http://www.example.com/function.jsp?fwd=admin.jsp
 </code></pre></div>
-
 <p>The following code is a Java servlet that will receive a <code>GET</code> request with a URL parameter named <code>fwd</code> in the request to forward to the address specified in the URL parameter. The servlet will retrieve the URL parameter value <a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">from the request</a> and complete the server-side forward processing before responding to the browser.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ForwardServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ForwardServlet</span> <span class="kd">extends</span> <span class="n">HttpServlet</span>
 <span class="p">{</span>
   <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span>
                     <span class="kd">throws</span> <span class="n">ServletException</span><span class="p">,</span> <span class="n">IOException</span> <span class="p">{</span>
@@ -1506,7 +1495,6 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h2 id="preventing-unvalidated-redirects-and-forwards">Preventing Unvalidated Redirects and Forwards<a class="headerlink" href="#preventing-unvalidated-redirects-and-forwards" title="Permanent link">&para;</a></h2>
 <p>Safe use of redirects and forwards can be done in a number of ways:</p>
 <ul>

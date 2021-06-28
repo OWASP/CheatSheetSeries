@@ -2091,9 +2091,8 @@
 <p>When using dynamic SQL within a stored procedure, the application must properly sanitize the user input to eliminate the risk of code injection. If not sanitized, the user could enter malicious SQL that will be executed within the stored procedure.</p>
 <h6 id="time-delay-exploitation-technique">Time delay Exploitation technique<a class="headerlink" href="#time-delay-exploitation-technique" title="Permanent link">&para;</a></h6>
 <p>The time delay exploitation technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. This technique consists in sending an injected query and in case the conditional is true, the tester can monitor the time taken to for the server to respond. If there is a delay, the tester can assume the result of the conditional query is true. This exploitation technique can be different from DBMS to DBMS (check DBMS specific section).</p>
-<div class="codehilite"><pre><span></span><code>http://www.example.com/product.php?id=10 AND IF(version() like &#39;5%&#39;, sleep(10), &#39;false&#39;))--
+<div class="highlight"><pre><span></span><code>http://www.example.com/product.php?id=10 AND IF(version() like &#39;5%&#39;, sleep(10), &#39;false&#39;))--
 </code></pre></div>
-
 <p>In this example the tester is checking whether the MySql version is 5.x or not, making the server delay the answer by 10 seconds. The tester can increase the delay time and monitor the responses. The tester also doesn't need to wait for the response. Sometimes they can set a very high value (e.g. 100) and cancel the request after some seconds.</p>
 <h6 id="out-of-band-exploitation-technique">Out of band Exploitation technique<a class="headerlink" href="#out-of-band-exploitation-technique" title="Permanent link">&para;</a></h6>
 <p>This technique is very useful when the tester find a Blind SQL Injection situation, in which nothing is known on the outcome of an operation. The technique consists of the use of DBMS functions to perform an out of band connection and deliver the results of the injected query as part of the request to the tester's server. Like the error based techniques, each DBMS has its own functions. Check for specific DBMS section.</p>
@@ -2113,7 +2112,7 @@
 <h5 id="example-code-java">Example code - Java<a class="headerlink" href="#example-code-java" title="Permanent link">&para;</a></h5>
 <h6 id="safe-java-prepared-statement-example">Safe Java Prepared Statement Example<a class="headerlink" href="#safe-java-prepared-statement-example" title="Permanent link">&para;</a></h6>
 <p>The following code example uses a <code>PreparedStatement</code>, Java's implementation of a parameterized query, to execute the same database query.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// This should REALLY be validated too</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// This should REALLY be validated too</span>
 <span class="n">String</span> <span class="n">custname</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
 <span class="c1">// Perform input validation to detect attacks</span>
 <span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>
@@ -2121,11 +2120,10 @@
 <span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">custname</span><span class="p">);</span>
 <span class="n">ResultSet</span> <span class="n">results</span> <span class="o">=</span> <span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">();</span>
 </code></pre></div>
-
 <p>We have shown examples in Java, but practically all other languages, including Cold Fusion, and Classic ASP, support parameterized query interfaces.</p>
 <h6 id="safe-java-stored-procedure-example">Safe Java Stored Procedure Example<a class="headerlink" href="#safe-java-stored-procedure-example" title="Permanent link">&para;</a></h6>
 <p>The following code example uses a <code>CallableStatement</code>, Java's implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// This should REALLY be validated</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// This should REALLY be validated</span>
 <span class="n">String</span> <span class="n">custname</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
 <span class="k">try</span> <span class="p">{</span>
  <span class="n">CallableStatement</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">connection</span><span class="p">.</span><span class="na">prepareCall</span><span class="p">(</span><span class="s">&quot;{call sp_getAccountBalance(?)}&quot;</span><span class="p">);</span>
@@ -2136,7 +2134,6 @@
  <span class="c1">// Logging and error handling...</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="ldap-injection">LDAP Injection<a class="headerlink" href="#ldap-injection" title="Permanent link">&para;</a></h4>
 <p>LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements through techniques similar to <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a>. LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. For more information on LDAP Injection attacks, visit <a href="https://owasp.org/www-community/attacks/LDAP_Injection">LDAP injection</a>.</p>
 <p><a href="https://owasp.org/www-community/attacks/LDAP_Injection">LDAP injection</a> attacks are common due to two factors:</p>
@@ -2153,24 +2150,21 @@
 <h6 id="escape-all-variables-using-the-right-ldap-encoding-function">Escape all variables using the right LDAP encoding function<a class="headerlink" href="#escape-all-variables-using-the-right-ldap-encoding-function" title="Permanent link">&para;</a></h6>
 <p>The main way LDAP stores names is based on DN (<a href="https://ldapwiki.com/wiki/Distinguished%20Names">distinguished name</a>). You can think of this like a unique identifier. These are sometimes used to access resources, like a username.</p>
 <p>A DN might look like this</p>
-<div class="codehilite"><pre><span></span><code>cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu
+<div class="highlight"><pre><span></span><code>cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu
 </code></pre></div>
-
 <p>or</p>
-<div class="codehilite"><pre><span></span><code>uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com
+<div class="highlight"><pre><span></span><code>uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com
 </code></pre></div>
-
 <p>There are certain characters that are considered special characters in a DN. The exhaustive list is the following: <code>\ # + &lt; &gt; , ; " =</code> and leading or trailing spaces</p>
 <p>Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users will certain attributes, you may do so with search filters. In a search filter, you can use standard boolean logic to get a list of users matching an arbitrary constraint. Search filters are written in Polish notation AKA prefix notation.</p>
 <p>Example:</p>
-<div class="codehilite"><pre><span></span><code>(&amp;(ou=Physics)(| (manager=cn=Freeman Dyson,ou=Physics,dc=Caltech,dc=edu)
+<div class="highlight"><pre><span></span><code>(&amp;(ou=Physics)(| (manager=cn=Freeman Dyson,ou=Physics,dc=Caltech,dc=edu)
 (manager=cn=Albert Einstein,ou=Physics,dc=Princeton,dc=edu) ))
 </code></pre></div>
-
 <p>When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource.</p>
 <h5 id="example-code-java_1">Example code - Java<a class="headerlink" href="#example-code-java_1" title="Permanent link">&para;</a></h5>
 <h6 id="safe-java-for-ldap-escaping-example">Safe Java for LDAP escaping Example<a class="headerlink" href="#safe-java-for-ldap-escaping-example" title="Permanent link">&para;</a></h6>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="n">String</span> <span class="nf">escapeDN</span> <span class="p">(</span><span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="n">String</span> <span class="nf">escapeDN</span> <span class="p">(</span><span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
  <span class="c1">//From RFC 2253 and the / character for JNDI</span>
  <span class="kd">final</span> <span class="kt">char</span><span class="o">[]</span> <span class="n">META_CHARS</span> <span class="o">=</span> <span class="p">{</span><span class="sc">&#39;+&#39;</span><span class="p">,</span> <span class="sc">&#39;&quot;&#39;</span><span class="p">,</span> <span class="sc">&#39;&lt;&#39;</span><span class="p">,</span> <span class="sc">&#39;&gt;&#39;</span><span class="p">,</span> <span class="sc">&#39;;&#39;</span><span class="p">,</span> <span class="sc">&#39;/&#39;</span><span class="p">};</span>
  <span class="n">String</span> <span class="n">escapedStr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
@@ -2187,9 +2181,8 @@
  <span class="k">return</span> <span class="n">escapedStr</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <p>Note, that the backslash character is a Java String literal and a regular expression escape character.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span> <span class="n">String</span> <span class="nf">escapeSearchFilter</span> <span class="p">(</span><span class="n">String</span> <span class="n">filter</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="n">String</span> <span class="nf">escapeSearchFilter</span> <span class="p">(</span><span class="n">String</span> <span class="n">filter</span><span class="p">)</span> <span class="p">{</span>
  <span class="c1">//From RFC 2254</span>
  <span class="n">String</span> <span class="n">escapedStr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="p">(</span><span class="n">filter</span><span class="p">);</span>
  <span class="n">escapedStr</span> <span class="o">=</span> <span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\5c&quot;</span><span class="p">);</span>
@@ -2201,7 +2194,6 @@
  <span class="k">return</span> <span class="n">escapedStr</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-
 <h4 id="xpath-injection">XPath Injection<a class="headerlink" href="#xpath-injection" title="Permanent link">&para;</a></h4>
 <p>TODO</p>
 <h3 id="scripting-languages">Scripting languages<a class="headerlink" href="#scripting-languages" title="Permanent link">&para;</a></h3>
@@ -2234,18 +2226,16 @@
 <p><code>^[a-z0-9]{3,10}$</code></p>
 <h4 id="example-code-java_2">Example code - Java<a class="headerlink" href="#example-code-java_2" title="Permanent link">&para;</a></h4>
 <h5 id="incorrect-usage">Incorrect Usage<a class="headerlink" href="#incorrect-usage" title="Permanent link">&para;</a></h5>
-<div class="codehilite"><pre><span></span><code><span class="n">ProcessBuilder</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;C:\DoStuff.exe -arg1 -arg2&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;C:\DoStuff.exe -arg1 -arg2&quot;</span><span class="p">);</span>
 </code></pre></div>
-
 <p>In this example, the command together with the arguments are passed as a one string, making easy to manipulate that expression and inject malicious strings.</p>
 <h5 id="correct-usage">Correct Usage<a class="headerlink" href="#correct-usage" title="Permanent link">&para;</a></h5>
 <p>Here is an example that starts a process with a modified working directory. The command and each of the arguments are passed separately. This make it easy to validated each term and reduces the risk to insert malicious strings.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ProcessBuilder</span> <span class="n">pb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;TrustedCmd&quot;</span><span class="p">,</span> <span class="s">&quot;TrustedArg1&quot;</span><span class="p">,</span> <span class="s">&quot;TrustedArg2&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span> <span class="n">pb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;TrustedCmd&quot;</span><span class="p">,</span> <span class="s">&quot;TrustedArg1&quot;</span><span class="p">,</span> <span class="s">&quot;TrustedArg2&quot;</span><span class="p">);</span>
 <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">env</span> <span class="o">=</span> <span class="n">pb</span><span class="p">.</span><span class="na">environment</span><span class="p">();</span>
 <span class="n">pb</span><span class="p">.</span><span class="na">directory</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;TrustedDir&quot;</span><span class="p">));</span>
 <span class="n">Process</span> <span class="n">p</span> <span class="o">=</span> <span class="n">pb</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
-
 <h3 id="network-protocols">Network Protocols<a class="headerlink" href="#network-protocols" title="Permanent link">&para;</a></h3>
 <p>Web applications often communicate with network daemons (like SMTP, IMAP, FTP) where user input becomes part of the communication stream. Here it is possible to inject command sequences to abuse an established session.</p>
 <h2 id="injection-prevention-rules">Injection Prevention Rules<a class="headerlink" href="#injection-prevention-rules" title="Permanent link">&para;</a></h2>

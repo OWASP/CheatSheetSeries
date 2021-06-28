@@ -1734,12 +1734,11 @@
 <p><strong>CSRF tokens should not be transmitted using cookies.</strong></p>
 <p>The CSRF token can be added through hidden fields, headers, and can be used with forms, and AJAX calls. Make sure that the token is not leaked in the server logs, or in the URL. CSRF tokens in GET requests are potentially leaked at several locations, such as the browser history, log files, network appliances that log the first line of an HTTP request, and Referer headers if the protected site links to an external site.</p>
 <p>For example:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/transfer.do&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/transfer.do&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;CSRFToken&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;OWY4NmQwODE4ODRjN2Q2NTlhMmZlYWEwYzU1YWQwMTVhM2JmNGYxYjJiMGI4MjJjZDE1ZDZMGYwMGEwOA==&quot;</span><span class="p">&gt;</span>
 [...]
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </code></pre></div>
-
 <p>Inserting the CSRF token in the custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because it <a href="#use-of-custom-request-headers">uses custom request headers</a>.</p>
 <h3 id="double-submit-cookie">Double Submit Cookie<a class="headerlink" href="#double-submit-cookie" title="Permanent link">&para;</a></h3>
 <p>If maintaining the state for CSRF token at server side is problematic, an alternative defense is to use the double submit cookie technique. This technique is easy to implement and is stateless. In this technique, we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (cryptographically strong) pseudorandom value and set it as a cookie on the user's machine separate from the session identifier. The site then requires that every transaction request include this pseudorandom value as a hidden form value (or other request parameter/header). If both of them match at server side, the server accepts it as legitimate request and if they don't, it would reject the request.</p>
@@ -1753,10 +1752,9 @@
 <p>The default Lax value provides a reasonable balance between security and usability for websites that want to maintain user's logged-in session after the user arrives from an external link. In the above GitHub scenario, the session cookie would be allowed when following a regular link from an external website while blocking it in CSRF-prone request methods such as POST. Only cross-site-requests that are allowed in Lax mode are the ones that have top-level navigations and are also <a href="https://tools.ietf.org/html/rfc7231#section-4.2.1">safe</a> HTTP methods.</p>
 <p>For more details on the <code>SameSite</code> values, check the following <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1">section</a> from the <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02">rfc</a>.</p>
 <p>Example of cookies using this attribute:</p>
-<div class="codehilite"><pre><span></span><code>Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
+<div class="highlight"><pre><span></span><code>Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
 Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 </code></pre></div>
-
 <p>All desktop browsers and almost all mobile browsers now support the <code>SameSite</code> attribute. To keep track of the browsers implementing it and the usage of the attribute, refer to the following <a href="https://caniuse.com/#feat=same-site-cookie-attribute">service</a>. Note that Chrome has <a href="https://blog.chromium.org/2019/10/developers-get-ready-for-new.html">announced</a> that they will mark cookies as <code>SameSite=Lax</code> by default from Chrome 80 (due in February 2020), and Firefox and Edge are both planning to follow suit. Additionally, the <code>Secure</code> flag will be required for cookies that are marked as <code>SameSite=None</code>.</p>
 <p>It is important to note that this attribute should be implemented as an additional layer <em>defense in depth</em> concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1">section</a>. This attribute should not replace having a CSRF Token. Instead, it should co-exist with that token in order to protect the user in a more robust way.</p>
 <h3 id="verifying-origin-with-standard-headers">Verifying Origin With Standard Headers<a class="headerlink" href="#verifying-origin-with-standard-headers" title="Permanent link">&para;</a></h3>
@@ -1837,16 +1835,15 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 <h3 id="storing-the-csrf-token-value-in-the-dom">Storing the CSRF Token Value in the DOM<a class="headerlink" href="#storing-the-csrf-token-value-in-the-dom" title="Permanent link">&para;</a></h3>
 <p>A CSRF token can be included in the <code>&lt;meta&gt;</code> tag as shown below. All subsequent calls in the page can extract the CSRF token from this <code>&lt;meta&gt;</code> tag. It can also be stored in a JavaScript variable or anywhere on the DOM. However, it is not recommended to store it in cookies or browser local storage.</p>
 <p>The following code snippet can be used to include a CSRF token as a <code>&lt;meta&gt;</code> tag:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;csrf-token&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;{{ csrf_token() }}&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;csrf-token&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;{{ csrf_token() }}&quot;</span><span class="p">&gt;</span>
 </code></pre></div>
-
 <p>The exact syntax of populating the content attribute would depend on your web application's backend programming language.</p>
 <h3 id="overriding-defaults-to-set-custom-header">Overriding Defaults to Set Custom Header<a class="headerlink" href="#overriding-defaults-to-set-custom-header" title="Permanent link">&para;</a></h3>
 <p>Several JavaScript libraries allow for overriding default settings to have a header added automatically to all AJAX requests.</p>
 <h4 id="xmlhttprequest-native-javascript">XMLHttpRequest (Native JavaScript)<a class="headerlink" href="#xmlhttprequest-native-javascript" title="Permanent link">&para;</a></h4>
 <p>XMLHttpRequest's open() method can be overridden to set the <code>anti-csrf-token</code> header whenever the <code>open()</code> method is invoked next. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>This can be done as demonstrated in the following code snippet:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
     <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
     <span class="kd">function</span> <span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// these HTTP methods do not require CSRF protection</span>
@@ -1863,10 +1860,9 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
     <span class="p">};</span>
  <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-
 <h4 id="angularjs">AngularJS<a class="headerlink" href="#angularjs" title="Permanent link">&para;</a></h4>
 <p>AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS's documentation for <a href="https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults">$httpProvider</a>.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
     <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
 
     <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,</span> <span class="p">[]);</span>
@@ -1887,11 +1883,10 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
       <span class="p">}]);</span>
  <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-
 <p>This code snippet has been tested with AngularJS version 1.7.7.</p>
 <h4 id="axios">Axios<a class="headerlink" href="#axios" title="Permanent link">&para;</a></h4>
 <p><a href="https://github.com/axios/axios">Axios</a> allows us to set default headers for the POST, PUT, DELETE and PATCH actions.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
     <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
 
     <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
@@ -1904,12 +1899,11 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
     <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-
 <p>This code snippet has been tested with Axios version 0.18.0.</p>
 <h4 id="jquery">JQuery<a class="headerlink" href="#jquery" title="Permanent link">&para;</a></h4>
 <p>JQuery exposes an API called $.ajaxSetup() which can be used to add the <code>anti-csrf-token</code> header to the AJAX request. API documentation for <code>$.ajaxSetup()</code> can be found here. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>You can configure jQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
     <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;csrf-token&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
 
     <span class="kd">function</span> <span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
@@ -1926,7 +1920,6 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
     <span class="p">});</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-
 <p>This code snippet has been tested with jQuery version 3.3.1.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <h3 id="csrf">CSRF<a class="headerlink" href="#csrf" title="Permanent link">&para;</a></h3>
