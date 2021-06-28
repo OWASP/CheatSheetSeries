@@ -358,11 +358,24 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#what-is-access-control-authorization" class="md-nav__link">
-    What is Access Control / Authorization
+  <a href="#what-is-authorization" class="md-nav__link">
+    What is Authorization?
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-access-control" class="md-nav__link">
+    What is Access Control?
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Access Control?">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#access-control-policy" class="md-nav__link">
@@ -1306,11 +1319,24 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#what-is-access-control-authorization" class="md-nav__link">
-    What is Access Control / Authorization
+  <a href="#what-is-authorization" class="md-nav__link">
+    What is Authorization?
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-access-control" class="md-nav__link">
+    What is Access Control?
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Access Control?">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#access-control-policy" class="md-nav__link">
@@ -1382,8 +1408,20 @@
                 <h1 id="access-control-cheat-sheet">Access Control Cheat Sheet<a class="headerlink" href="#access-control-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This article is focused on providing clear, simple, actionable guidance for providing access control security in your applications. The objective is to guide developers, reviewers, designers, architects on designing, creating, and maintaining access controls in web applications.</p>
-<h3 id="what-is-access-control-authorization">What is Access Control / Authorization<a class="headerlink" href="#what-is-access-control-authorization" title="Permanent link">&para;</a></h3>
+<h3 id="what-is-authorization">What is Authorization?<a class="headerlink" href="#what-is-authorization" title="Permanent link">&para;</a></h3>
 <p>Authorization is the process where requests to access a particular resource should be granted or denied. It should be noted that authorization is not equivalent to authentication - as these terms and their definitions are frequently confused. Authentication is providing and validating identity. The authorization includes the execution rules that determine which functionality and data the user (or Principal) may access, ensuring the proper allocation of access rights after authentication is successful.</p>
+<p>It can be summarized as:</p>
+<blockquote>
+<p>The requested <strong>action</strong> is <strong>permitted</strong> at this <strong>time</strong> for this <strong>identity</strong></p>
+</blockquote>
+<p>Where:</p>
+<ul>
+<li><strong>Identity</strong> is <em>assured</em> when the requester is challenged at the time they make the request, which means they have just fulfilled a challenge/response mechanism to verify they are who they claim, in terms of identity. If the challenge occurred before the request there is no assurance, acknowledging there may be a trusted session, but without assurance through via <em>challenge</em> there can only be an unverified identity making this request</li>
+<li><strong>Action</strong> The purpose for an authorization mechanism, a requester is attempting to perform an action that is sensitive, requires elevated privileges, or has some other implication like user privacy or <em>material</em> impacts to the business.</li>
+<li><strong>Permitted</strong> means the identity has been checked for permission to perform the action, using Access Controls.</li>
+<li><strong>Time</strong> is extremely meaningful for the security characteristics of Authorization because it is the responsibility of the server to verify that the request is being processed <em>now</em> and that is when the request was made. If it was made earlier being replayed now, or has been time skewed to a future time, the server should reject the request as it is not relevant to the current Authorization context.</li>
+</ul>
+<h2 id="what-is-access-control">What is Access Control?<a class="headerlink" href="#what-is-access-control" title="Permanent link">&para;</a></h2>
 <p>Web applications need access controls to allow users (with varying privileges) to use the application. They also need administrators to manage the application’s access control rules and the granting of permissions or entitlements to users and other entities. Various access control design methodologies are available. To choose the most appropriate one, a risk assessment needs to be performed to identify threats and vulnerabilities specific to your application, so that the proper access control methodology is appropriate for your application.</p>
 <h3 id="access-control-policy">Access Control Policy<a class="headerlink" href="#access-control-policy" title="Permanent link">&para;</a></h3>
 <p>Why do we need an access control policy for web development?</p>
