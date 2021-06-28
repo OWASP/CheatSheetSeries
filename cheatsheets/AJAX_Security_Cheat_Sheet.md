@@ -1,4 +1,4 @@
-# AJAX Security Cheat Sheet
+# AJAX Security Cheat Sheeta
 
 ## Introduction
 
