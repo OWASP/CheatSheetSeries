@@ -149,7 +149,7 @@ Add a comment in the project *README* explaining that the issue (specify the rel
 
 #### Context
 
-Provider inform the team that he cannot fix the issue, so no patched version will be released at all (applies also if provider does not want to fix the issue or does not answer at all).
+Provider informs the team that they cannot fix the issue, so no patched version will be released at all (applies also if provider does not want to fix the issue or does not answer at all).
 
 In this case the only information given to the development team is the [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures).
 

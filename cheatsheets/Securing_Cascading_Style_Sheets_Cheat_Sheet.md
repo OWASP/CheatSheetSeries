@@ -31,7 +31,7 @@ Now, let's examine what are the risks associated with this style of coding.
 
 Motivated Attackers always take a look at `*.CSS` files to learn the features of the application even without being logged in.
 
-For instance: Jim is a motivated attacker and always tries to look into CSS files from the View-Source even before other attacks. When Jim looks into the CSS file, he sees that there are different features and different roles based on the CSS selectors like `.profileSettings,` `.editUser,` `.addUser,` `.deleteUser` and so on. Jim can use the CSS for intel gathering to help gain access to sensitive roles.This isa form of attacker due diligence even before trying to perform dangerous attacks to gain access to the web application.
+For instance: Jim is a motivated attacker and always tries to look into CSS files from the View-Source even before other attacks. When Jim looks into the CSS file, they see that there are different features and different roles based on the CSS selectors like `.profileSettings,` `.editUser,` `.addUser,` `.deleteUser` and so on. Jim can use the CSS for intel gathering to help gain access to sensitive roles. This is a form of attacker due diligence even before trying to perform dangerous attacks to gain access to the web application.
 
 In a nutshell, having global styling could reveal sensitive information that could be beneficial to the attacker.
 
