@@ -566,10 +566,10 @@ However, to completely disable XXE in an `NSXMLDocument` in any version of iOS y
 
 ## PHP
 
-Per [the PHP documentation](https://www.php.net/manual/en/function.libxml-disable-entity-loader.php), the following should be set when using the default PHP XML parser in order to prevent XXE:
+Per [the PHP documentation](https://www.php.net/manual/en/function.libxml-set-external-entity-loader.php), the following should be set when using the default PHP XML parser in order to prevent XXE:
 
 ``` php
-libxml_disable_entity_loader(true);
+libxml_set_external_entity_loader(null);
 ```
 
 A description of how to abuse this in PHP is presented in a good [SensePost article](https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/) describing a cool PHP based XXE vulnerability that was fixed in Facebook.
