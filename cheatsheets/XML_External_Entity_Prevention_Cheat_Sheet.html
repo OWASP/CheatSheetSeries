@@ -2482,8 +2482,8 @@
 </ul>
 <p>However, to completely disable XXE in an <code>NSXMLDocument</code> in any version of iOS you simply specify <code>NSXMLNodeLoadExternalEntitiesNever</code> when creating the <code>NSXMLDocument</code>.</p>
 <h2 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h2>
-<p>Per <a href="https://www.php.net/manual/en/function.libxml-disable-entity-loader.php">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</p>
-<div class="highlight"><pre><span></span><code><span class="x">libxml_disable_entity_loader(true);</span>
+<p>Per <a href="https://www.php.net/manual/en/function.libxml-set-external-entity-loader.php">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</p>
+<div class="highlight"><pre><span></span><code><span class="x">libxml_set_external_entity_loader(null);</span>
 </code></pre></div>
 <p>A description of how to abuse this in PHP is presented in a good <a href="https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/">SensePost article</a> describing a cool PHP based XXE vulnerability that was fixed in Facebook.</p>
 <h2 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
