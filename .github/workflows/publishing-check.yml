@@ -8,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
-      WORKFLOW_GOOGLE_ANALYTICS_KEY: 'none'
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
