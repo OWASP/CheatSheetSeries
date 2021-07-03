@@ -166,7 +166,7 @@ To prevent attacks via the dashboard, you should follow some tips:
 - Do not expose the dashboard without additional authentication to the public. There is no need to access such a powerful tool from outside your LAN
 - Turn on RBAC, so you can limit the service account the dashboard uses
 - Do not grant the service account of the dashboard high privileges
-- Grant permissions per user, so each user only can see what he is supposed to see
+- Grant permissions per user, so each user only can see what they are supposed to see
 - If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)
 - Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.
 - Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled.  This can be done with either embeded OIDC `id_tokens` or using Kubernetes Impersonation.  This allows you to use the dashboard with the user's credentials instead of using a privileged `ServiceAccount`.  This method can be used on both on-prem and managed cloud clusters.

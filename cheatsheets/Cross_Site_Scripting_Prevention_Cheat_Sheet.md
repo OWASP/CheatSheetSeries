@@ -161,7 +161,7 @@ window.setInterval('...EVEN IF YOU ENCODE UNTRUSTED DATA YOU ARE XSSED HERE...')
 </script>
 ```
 
-Except for alphanumeric characters, encode all characters less than 256 with the `\xHH` format to prevent switching out of the data value into the script context or into another attribute. **DO NOT** use any escaping shortcuts like `\"` because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to **escape-the-escape attacks** where the attacker sends `\"` and the vulnerable code turns that into `\\"` which enables the quote.
+Except for alphanumeric characters, encode all characters with the `\xHH` format to prevent switching out of the data value into the script context or into another attribute. **DO NOT** use any escaping shortcuts like `\"` because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to **escape-the-escape attacks** where the attacker sends `\"` and the vulnerable code turns that into `\\"` which enables the quote.
 
 If an event handler is properly quoted, breaking out requires the corresponding quote. However, we have intentionally made this rule quite broad because event handler attributes are often left unquoted. Unquoted attributes can be broken out of with many characters including `[space]` `%` `*` `+` `,` `-` `/` `;` `<` `=` `>` `^` and `|`.
 

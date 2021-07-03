@@ -32,7 +32,7 @@ Transaction authorization is implemented in order to protect for unauthorized wi
 
 User's computers cannot be trusted due to malware threats. Hence a method that prevents a user from identifying transaction on an external device cannot be considered as secure. Transaction data should be presented and acknowledged using an external authorization component.
 
-Such a transaction authorization components should be build using the *What You See Is What You Sign* principle. When a user authorizes a transaction he needs to know what he is authorizing. Based on this principle, an authorization method must permit a user to identify and acknowledge the data which are significant to a given transaction. For example, in the case of a wire transfer: the target account and amount.
+Such transaction authorization components should be built using the *What You See Is What You Sign* principle. When a user authorizes a transaction they need to know what they are authorizing. Based on this principle, an authorization method must permit a user to identify and acknowledge the data that is significant to a given transaction. For example, in the case of a wire transfer: the target account and amount.
 
 The decision about which transaction data can be considered as significant should be chosen based on:
 
@@ -44,7 +44,7 @@ For example when an SMS message is used to send significant transaction data, it
 
 In general, significant transaction data should always be presented as an inherent part of the transaction authorization process. Whereas the user experience should be designed to encourage users to verify the transaction data.
 
-If a transaction authentication process requires a user to enter transaction data into an external device, the user should be prompted for providing specific value (e.g. a target account number). Entering a value without meaningful prompt could be easily abused by malware using social engineering techniques as described in the example in paragraph 1.4. Also, for more detailed discussion of input overloading problems, see [here](http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf).
+If a transaction process requires a user to enter transaction data into an external device, the user should be prompted for providing specific value (e.g. a target account number). Entering a value without meaningful prompt could be easily abused by malware using social engineering techniques as described in the example in paragraph 1.4. Also, for more detailed discussion of input overloading problems, see [here](http://www.cl.cam.ac.uk/~sjm217/papers/fc09optimised.pdf).
 
 ### 1.2 Change of authorization token should be authorized using the current authorization token
 
@@ -73,7 +73,7 @@ Safeguards should allow the user to easily distinguish authentication from trans
 
 ### 1.5 Each transaction should be authorized using unique authorization credentials
 
-Some applications are asking for transaction authorization credentials only once, e.g. static password, code sent through SMS, token response. Afterwards a user is able to authorize any transaction during the whole user's session or at least he has to reuse the same credentials each time he needs to authorize a transaction. Such behavior is not sufficient to prevent malware attacks because malware will sniff such credentials and use them to authorize any transaction without the user's knowledge.
+Some applications are asking for transaction authorization credentials only once, e.g. static password, code sent through SMS, token response. Afterwards a user is able to authorize any transaction during the whole user's session or at least they have to reuse the same credentials each time they need to authorize a transaction. Such behavior is not sufficient to prevent malware attacks because malware will sniff such credentials and use them to authorize any transaction without the user's knowledge.
 
 ## 2. Non-functional guidelines
 

@@ -90,7 +90,7 @@ Because all interfaces are tested (and not just the public ones), your `CFLAGS` 
 
 You should also change `__attribute__` `((visibility` `("hidden")))` to `__attribute__` `((visibility` `("default")))`.
 
-Nearly everyone gets a positive test right, so no more needs to be said. The negative self tests are much more interesting, and you should concentrate on trying to make your program fail so you can verify its fails gracefully. Remember, a bad guy is not going to be courteous when he attempts to cause your program to fail. And its your project that takes egg on the face by way of a bug report or guest appearance on [Full Disclosure](https://nmap.org/mailman/listinfo/fulldisclosure) or [Bugtraq](https://www.securityfocus.com/archive) - not `<some library>` you included.
+Nearly everyone gets a positive test right, so no more needs to be said. The negative self tests are much more interesting, and you should concentrate on trying to make your program fail so you can verify it fails gracefully. Remember, a bad actor is not going to be courteous when they attempt to cause your program to fail. And it's your project that takes egg on the face by way of a bug report or guest appearance on [Full Disclosure](https://nmap.org/mailman/listinfo/fulldisclosure) or [Bugtraq](https://www.securityfocus.com/archive) - not `<some library>` you included.
 
 ### Auto Tools
 

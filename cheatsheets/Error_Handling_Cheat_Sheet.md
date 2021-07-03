@@ -54,21 +54,21 @@ The [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-gui
 
 ## Objective
 
-The article shows how to configure a global error handler at the configuration level when possible, otherwise at code level, in different technologies, in order to ensure that if an unexpected error occurs then a generic response is returned by the application but the error is traced on server side for investigation.
+The article shows how to configure a global error handler as part of your application's runtime configuration. In some cases, it may be more efficient to define this error handler as part of your code. The outcome being that when an unexpected error occurs then a generic response is returned by the application but the error details are logged server side for investigation, and not returned to the user.
 
 The following schema shows the target approach:
 
 ![Overview](../assets/Error_Handling_Cheat_Sheet_Overview.png)
 
-As most recent application topologies are *API based*, we assume in this article that the backend exposes only a REST API and does not contain any user interface content.
+As most recent application topologies are *API based*, we assume in this article that the backend exposes only a REST API and does not contain any user interface content. The application should try and exhaustively cover all possible failure modes and use 5xx errors only to indicate responses to requests that it cannot fulfill, but not provide any content as part of the response that would reveal implementation details.
 
 For the error logging operation itself, the [logging cheat sheet](Logging_Cheat_Sheet.md) should be used. This article focuses on the error handling part.
 
 ## Proposition
 
-For each technology, a setup will be proposed with configuration and code snippet.
+For each technology stack, the following configuration options are proposed:
 
-### Java classic web application
+### Standard Java Web Application
 
 For this kind of application, a global error handler can be configured at the **web.xml** deployment descriptor level.
 
@@ -104,14 +104,16 @@ String errorMessage = exception.getMessage();
 //We build a generic response with a JSON format because we are in a REST API app context
 //We also add an HTTP response header to indicate to the client app that the response is an error
 response.setHeader("X-ERROR", "true");
-response.setStatus(200);
+//Note that we're using an internal server error response
+//In some cases it may be prudent to return 4xx error codes, when we have misbehaving clients
+response.setStatus(500);
 %>
 {"message":"An error occur, please retry"}
 ```
 
 ### Java SpringMVC/SpringBoot web application
 
-With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](https://spring.io/projects/spring-boot), you can define a global error handler by simply implementing the following kind of class in your project.
+With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](https://spring.io/projects/spring-boot), you can define a global error handler by implementing the following class in your project.
 
 We indicate to the handler, via the annotation [@ExceptionHandler](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html), to act when any exception extending the class *java.lang.Exception* is thrown by the application.
 
@@ -142,8 +144,10 @@ public class RestResponseEntityExceptionHandler {
         responseHeaders.set("X-ERROR", "true");
         JSONObject responseBody = new JSONObject();
         responseBody.put("message", "An error occur, please retry");
+        //Note that we're using an internal server error response
+        //In some cases it may be prudent to return 4xx error codes, if we have misbehaving clients
         ResponseEntity<JSONObject> response = new ResponseEntity<>(responseBody, responseHeaders,
-                                                                   HttpStatus.OK);
+                                                                   HttpStatus.INTERNAL_SERVER_ERROR);
         return (ResponseEntity) response;
     }
 }
@@ -202,7 +206,9 @@ namespace MyProject.Controllers
                 "message", "An error occur, please retry"
             } };
             JsonResult response = new JsonResult(responseBody);
-            response.StatusCode = (int)HttpStatusCode.OK;
+            //Note that we're using an internal server error response
+            //In some cases it may be prudent to return 4xx error codes, if we have misbehaving clients
+            response.StatusCode = (int)HttpStatusCode.InternalServerError;
             Request.HttpContext.Response.Headers.Remove("X-ERROR");
             Request.HttpContext.Response.Headers.Add("X-ERROR", "true");
             return response;
@@ -338,7 +344,9 @@ namespace MyProject.Security
                 var responseBody = new Dictionary<String, String>{ {
                     "message", "An error occur, please retry"
                 } };
-                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                // Note that we're using an internal server error response
+                // In some cases it may be prudent to return 4xx error codes, if we have misbehaving clients 
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
                 response.Headers.Add("X-ERROR", "true");
                 response.Content = new StringContent(JsonConvert.SerializeObject(responseBody),
                                                      Encoding.UTF8, "application/json");
@@ -394,3 +402,7 @@ References:
 ## Sources of the prototype
 
 The source code of all the sandbox projects created to find the right setup to use is stored in this [GitHub repository](https://github.com/righettod/poc-error-handling).
+
+## Appendix HTTP Errors
+
+A reference for HTTP errors can be found here [RFC 2616](https://www.ietf.org/rfc/rfc2616.txt). Using error messages that do not provide implementation details is important to avoid information leakage. In general, consider using 4xx error codes for requests that are due to an error on the part of the HTTP client (e.g. unauthorized access, request body too large) and use 5xx to indicate errors that are triggered on server side, due to an unforseen bug. Ensure that applications are monitored for 5xx errors which are a good indication of the application failing for some sets of inputs.
