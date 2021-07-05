@@ -13,7 +13,7 @@ copyright: ©Copyright 2021 - CheatSheets Series Team - This work is licensed un
 #Config
 docs_dir: cheatsheets/
 google_analytics:
-  - !!python/object/apply:os.getenv ["WORKFLOW_GOOGLE_ANALYTICS_KEY"]
+  - !!python/object/apply:os.getenv ["WORKFLOW_GOOGLE_ANALYTICS_KEY", "none"]
   - auto
 use_directory_urls: false
 plugins:

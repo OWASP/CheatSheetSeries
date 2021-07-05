@@ -1,34 +1,23 @@
-name: Publishing Check
+name: Build website
 
-on:
-  pull_request:
-    branches:
-    - master
+on: [push, pull_request]
 
 jobs:
   build:
-    name: Publishing Check
+    name: Build website
     runs-on: ubuntu-latest
     env:
       CI: true
     steps:
-    - name: Setup Action
-      uses: actions/checkout@v2.3.4
-    - name: Setup Node
-      uses: actions/setup-node@v2.1.5
-      with:
-        node-version: 12.x
-    - name: SetUp python
-      uses: actions/setup-python@v2.2.1
-      with:
-        python-version: '3.x'
-    - name: Install python dependencies
-      run: pip install requests feedgen wheel
-    - name: Install python mkdocs dependencies
-      run: pip install mkdocs mkdocs-material pymdown-extensions
-    - name: Set Permission
-      run: chmod +x scripts/Generate_Site_mkDocs.sh
-    - name: Run Script
-      run: cd scripts && bash Generate_Site_mkDocs.sh
-    - name: List generated files
-      run: ls -al generated/site/
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9.5'
+      - name: Install Python dependencies
+        run: make install-python-requirements
+      - name: Build website
+        run: (cd scripts && bash Generate_Site_mkDocs.sh)
+      - name: List generated files
+        run: ls -lah generated/site/
