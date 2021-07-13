@@ -407,7 +407,7 @@ Castor is a data binding framework for Java. It allows conversion between Java o
 
 The following information for XXE injection in .NET is directly from this [web application of unit tests by Dean Fleming](https://github.com/deanf1/dotnet-security-unit-tests).
 
-This web application covers all currently supported .NET XML parsers, and has test cases for each demonstrating when they are safe from XXE injection and when they are not.
+This web application covers all currently supported .NET XML parsers, and has test cases for each demonstrating when they are safe from XXE injection and when they are not, but tests are only with injection from file and not direct DTD (used by DoS attacks).
 
 Previously, this information was based on [James Jardine's excellent .NET XXE article](https://www.jardinesoftware.net/2016/05/26/xxe-and-net/).
 
@@ -415,26 +415,15 @@ It originally provided more recent and more detailed information than the older 
 
 The following table lists all supported .NET XML parsers and their default safety levels:
 
-| XML Parser            | Safe by default? |
-|-----------------------|------------------|
-| LINQ to XML           | Yes              |
-| XmlDictionaryReader   | Yes              |
-| XmlDocument           |                  |
-| ...prior to 4.5.2     | No               |
-| ...in versions 4.5.2+ | Yes              |
-| XmlNodeReader         | Yes              |
-| XmlReader             | Yes              |
-| XmlTextReader         |                  |
-| ...prior to 4.5.2     | No               |
-| ...in versions 4.5.2+ | Yes              |
-| XPathNavigator        |                  |
-| ...prior to 4.5.2     | No               |
-| ...in versions 4.5.2+ | Yes              |
-| XslCompiledTransform  | Yes              |
+| Attack Type             | LINQ to XML     | XmlDictionaryReader   | XmlDocument (4.5.2-)  | XmlDocument (4.5.2+)  | XmlNodeReader    | XmlReader  | XmlTextReader(4.5.2-) | XmlTextReader(4.5.2+) | XPathNavigator(4.5.2-)    | XPathNavigator(4.5.2+)    | XslCompiledTransform  |
+|-------------------------|-----------------|-----------------------|-----------------------|-----------------------|------------------|------------|-----------------------|-----------------------|---------------------------|---------------------------|-----------------------|
+| External entity Attacks | Safe            | Safe                  | Vulnerable            | Safe                  | Safe             | Safe       | Vulnerable            | Safe                  | Vulnerable                | Safe                      | Safe                  |
+| Billion Laughs          | Vulnerable      | N.a.                  | Vulnerable            | Vulnerable            | Safe             | Safe       | Vulnerable            | Vulnerable            | Vulnerable                | Vulnerable                | Safe                  |
 
 ### LINQ to XML
 
-Both the `XElement` and `XDocument` objects in the `System.Xml.Linq` library are safe from XXE injection by default. `XElement` parses only the elements within the XML file, so DTDs are ignored altogether. `XDocument` has DTDs [disabled by default](https://docs.microsoft.com/en-us/dotnet/standard/linq/linq-xml-security), and is only unsafe if constructed with a different unsafe XML parser.
+Both the `XElement` and `XDocument` objects in the `System.Xml.Linq` library are safe from XXE injection drom external file by default, but not for DoS attack. `XElement` parses only the elements within the XML file, so DTDs are ignored altogether. `XDocument` has XmlResolver [disabled by default](https://docs.microsoft.com/en-us/dotnet/standard/linq/linq-xml-security), but DTDs [enable by default](https://referencesource.microsoft.com/#System.Xml.Linq/System/Xml/Linq/XLinq.cs,71f4626a3d6f9bad). so it's safe from SSRF but **not** [Billion laughs attack](https://en.wikipedia.org/wiki/Billion_laughs_attack).
+For made safe from beetween attack types follow [Microsoft on how to prevent XXE and XML Denial of Service in .NET](http://msdn.microsoft.com/en-us/magazine/ee335713.aspx)
 
 ### XmlDictionaryReader
 
