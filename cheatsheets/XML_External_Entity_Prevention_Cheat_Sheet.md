@@ -420,7 +420,6 @@ The following table lists all supported .NET XML parsers and their default safet
 | External entity Attacks | Safe            | Safe                  | Vulnerable            | Safe                  | Safe             | Safe       | Vulnerable            | Safe                  | Vulnerable                | Safe                      | Safe                  |
 | Billion Laughs          | Vulnerable      | N.a.                  | Vulnerable            | Vulnerable            | Safe             | Safe       | Vulnerable            | Vulnerable            | Vulnerable                | Vulnerable                | Safe                  |
 
-
 ### LINQ to XML
 
 Both the `XElement` and `XDocument` objects in the `System.Xml.Linq` library are safe from XXE injection drom external file by default, but not for DoS attack. `XElement` parses only the elements within the XML file, so DTDs are ignored altogether. `XDocument` has XmlResolver [disabled by default](https://docs.microsoft.com/en-us/dotnet/standard/linq/linq-xml-security), but DTDs [enable by default](https://referencesource.microsoft.com/#System.Xml.Linq/System/Xml/Linq/XLinq.cs,71f4626a3d6f9bad). so it's safe from SSRF but **not** [Billion laughs attack](https://en.wikipedia.org/wiki/Billion_laughs_attack).
