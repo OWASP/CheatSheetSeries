@@ -98,7 +98,7 @@ The advantages of using this methodology are:
 Problems that can be encountered while using this methodology:
 
 - When OrBAC is the only Access Control policy in place, it is far too overly permissive to be considered an appropriate security characteristic for Authorization purposes at the data access action, but completely appropriate for Authorization purposes to act on behalf of an organization without any specificity on what action can be permitted on the data at the stage or OrBAC decision.
-- Certain limits may exist that means it is not feasible for all of the permitted customers to have their own 'Role' given to an individual that may actually be Authorized, so it is common in cases where customer number exceed the limitation for a new tpe of 'group of roles' to be used that span many organizations. when this occurs there is no longer any assurances that an individual organization can trust defeating hte purpose of the OrBAC approach entirely
+- Certain limits may exist that means it is not feasible for all of the permitted customers to have their own 'Role' given to an individual that may actually be Authorized, so it is common in cases where customer number exceed the limitation for a new type of 'group of roles' to be used that span many organizations. When this occurs there is no longer any assurances that an individual organization can trust defeating the purpose of the OrBAC approach entirely
 
 The areas of caution while using ABAC are:
 
