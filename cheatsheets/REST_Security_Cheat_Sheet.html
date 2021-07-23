@@ -1511,7 +1511,7 @@
 <p>See the <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a> for additional information.</p>
 <p>Consider the use of mutually authenticated client-side certificates to provide additional protection for highly privileged web services.</p>
 <h2 id="access-control">Access Control<a class="headerlink" href="#access-control" title="Permanent link">&para;</a></h2>
-<p>Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple microservices following the RESTful style.</p>
+<p>Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorization logic and session management. This has several drawbacks for modern architectures which compose multiple microservices following the RESTful style.</p>
 <ul>
 <li>in order to minimize latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints</li>
 <li>user authentication should be centralised in a Identity Provider (IdP), which issues access tokens</li>
@@ -1530,7 +1530,7 @@
 <ul>
 <li>A relying party must verify the integrity of the JWT based on its own configuration or hard-coded logic. It must not rely on the information of the JWT header to select the verification algorithm. See <a href="https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html">here</a> and <a href="https://www.youtube.com/watch?v=bW5pS4e_MX8&gt;">here</a></li>
 </ul>
-<p>Some claims have been standardised and should be present in JWT used for access controls. At least the following of the standard claims should be verified:</p>
+<p>Some claims have been standardized and should be present in JWT used for access controls. At least the following of the standard claims should be verified:</p>
 <ul>
 <li><code>iss</code> or issuer - is this a trusted issuer? Is it the expected owner of the signing key?</li>
 <li><code>aud</code> or audience - is the relying party in the target audience for this JWT?</li>
@@ -1604,7 +1604,7 @@
 <ul>
 <li>Write audit logs before and after security related events.</li>
 <li>Consider logging token validation errors in order to detect attacks.</li>
-<li>Take care of log injection attacks by sanitising log data beforehand.</li>
+<li>Take care of log injection attacks by sanitizing log data beforehand.</li>
 </ul>
 <h2 id="security-headers">Security Headers<a class="headerlink" href="#security-headers" title="Permanent link">&para;</a></h2>
 <p>There are a number of <a href="https://owasp.org/www-project-secure-headers/">security related headers</a> that can be returned in the HTTP responses to instruct browsers to act in specific ways. However, some of these headers are intended to be used with HTML responses, and as such may provide little or no security benefits on an API that does not return HTML.</p>
