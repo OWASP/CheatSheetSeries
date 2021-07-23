@@ -30,7 +30,7 @@ Consider the use of mutually authenticated client-side certificates to provide a
 
 ## Access Control
 
-Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorisation logic and session management. This has several drawbacks for modern architectures which compose multiple microservices following the RESTful style.
+Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorization logic and session management. This has several drawbacks for modern architectures which compose multiple microservices following the RESTful style.
 
 - in order to minimize latency and reduce coupling between services, the access control decision should be taken locally by REST endpoints
 - user authentication should be centralised in a Identity Provider (IdP), which issues access tokens
@@ -49,7 +49,7 @@ The relying party or token consumer validates a JWT by verifying its integrity a
 
 - A relying party must verify the integrity of the JWT based on its own configuration or hard-coded logic. It must not rely on the information of the JWT header to select the verification algorithm. See [here](https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html) and [here](https://www.youtube.com/watch?v=bW5pS4e_MX8>)
 
-Some claims have been standardised and should be present in JWT used for access controls. At least the following of the standard claims should be verified:
+Some claims have been standardized and should be present in JWT used for access controls. At least the following of the standard claims should be verified:
 
 - `iss` or issuer - is this a trusted issuer? Is it the expected owner of the signing key?
 - `aud` or audience - is the relying party in the target audience for this JWT?
@@ -129,7 +129,7 @@ Services including script code (e.g. JavaScript) in their responses must be espe
 
 - Write audit logs before and after security related events.
 - Consider logging token validation errors in order to detect attacks.
-- Take care of log injection attacks by sanitising log data beforehand.
+- Take care of log injection attacks by sanitizing log data beforehand.
 
 ## Security Headers
 
