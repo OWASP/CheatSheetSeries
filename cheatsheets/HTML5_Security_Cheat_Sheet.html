@@ -1613,7 +1613,7 @@
 <li>Validate URLs passed to <code>XMLHttpRequest.open</code>. Current browsers allow these URLs to be cross domain; this behavior can lead to code injection by a remote attacker. Pay extra attention to absolute URLs.</li>
 <li>Ensure that URLs responding with <code>Access-Control-Allow-Origin: *</code> do not include any sensitive content or information that might aid attacker in further attacks. Use the <code>Access-Control-Allow-Origin</code> header only on chosen URLs that need to be accessed cross-domain. Don't use the header for the whole domain.</li>
 <li>Allow only selected, trusted domains in the <code>Access-Control-Allow-Origin</code> header. Prefer allowing specific domains over blocking or allowing any domain (do not use <code>*</code> wildcard nor blindly return the <code>Origin</code> header content without any checks).</li>
-<li>Keep in mind that CORS does not prevent the requested data from going to an unauthenticated location. It's still important for the server to perform usual <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF</a> prevention.</li>
+<li>Keep in mind that CORS does not prevent the requested data from going to an unauthorized location. It's still important for the server to perform usual <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF</a> prevention.</li>
 <li>While the RFC recommends a pre-flight request with the <code>OPTIONS</code> verb, current implementations might not perform this request, so it's important that "ordinary" (<code>GET</code> and <code>POST</code>) requests perform any access control necessary.</li>
 <li>Discard requests received over plain HTTP with HTTPS origins to prevent mixed content bugs.</li>
 <li>Don't rely only on the Origin header for Access Control checks. Browser always sends this header in CORS requests, but may be spoofed outside the browser. Application-level protocols should be used to protect sensitive data.</li>
@@ -1639,11 +1639,12 @@
 <h2 id="storage-apis">Storage APIs<a class="headerlink" href="#storage-apis" title="Permanent link">&para;</a></h2>
 <h3 id="local-storage">Local Storage<a class="headerlink" href="#local-storage" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Also known as Offline Storage, Web Storage. Underlying storage mechanism may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it's recommended not to store any sensitive information in local storage.</li>
+<li>Also known as Offline Storage, Web Storage. Underlying storage mechanism may vary from one user agent to the next. In other words, any authentication your application requires can be bypassed by a user with local privileges to the machine on which the data is stored. Therefore, it's recommended to avoid storing any sensitive information in local storage where authentication would be assumed.</li>
+<li>Due to the browser's security guarantees it is appropriate to use local storage where access to the data is not assuming authentication or authorization.</li>
 <li>Use the object sessionStorage instead of localStorage if persistent storage is not needed. sessionStorage object is available only to that window/tab until the window is closed.</li>
 <li>A single <a href="https://owasp.org/www-community/attacks/xss/">Cross Site Scripting</a> can be used to steal all the data in these objects, so again it's recommended not to store sensitive information in local storage.</li>
 <li>A single <a href="https://owasp.org/www-community/attacks/xss/">Cross Site Scripting</a> can be used to load malicious data into these objects too, so don't consider objects in these to be trusted.</li>
-<li>Pay extra attention to "localStorage.getItem" and "setItem" calls implemented in HTML5 page. It helps in detecting when developers build solutions that put sensitive information in local storage, which is a bad practice.</li>
+<li>Pay extra attention to "localStorage.getItem" and "setItem" calls implemented in HTML5 page. It helps in detecting when developers build solutions that put sensitive information in local storage, which can be a severe risk if authentication or authorization to that data is incorrectly assumed.</li>
 <li>Do not store session identifiers in local storage as the data is always accessible by JavaScript. Cookies can mitigate this risk using the <code>httpOnly</code> flag.</li>
 <li>There is no way to restrict the visibility of an object to a specific path like with the attribute path of HTTP Cookies, every object is shared within an origin and protected with the Same Origin Policy. Avoid host multiple applications on the same origin, all of them would share the same localStorage object, use different subdomains instead.</li>
 </ul>
@@ -1809,8 +1810,8 @@
 </code></pre></div>
 <h3 id="authentication-and-inputoutput-validation">Authentication and Input/Output validation<a class="headerlink" href="#authentication-and-inputoutput-validation" title="Permanent link">&para;</a></h3>
 <p>When using websocket as communication channel, it's important to use an authentication method allowing the user to receive an access <em>Token</em> that is not automatically sent by the browser and then must be explicitly sent by the client code during each exchange.</p>
-<p><a href="https://jwt.io/introduction/">JSON Web Token</a> is a good candidate, because it allows the transport of access ticket information in a stateless and not alterable way. Moreover, it defines a validity timeframe. You can find additional information about JWT token hardening on this <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html">cheat sheet</a>.</p>
-<p><a href="http://json-schema.org/">JSON Validation Schema</a> are used to define and validate the expected content in input and ouput messages.</p>
+<p>HMAC digests are the simplest method, and <a href="https://jwt.io/introduction/">JSON Web Token</a> is a good feature rich alternative, because it allows the transport of access ticket information in a stateless and not alterable way. Moreover, it defines a validity timeframe. You can find additional information about JWT token hardening on this <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html">cheat sheet</a>.</p>
+<p><a href="http://json-schema.org/">JSON Validation Schema</a> are used to define and validate the expected content in input and output messages.</p>
 <p>The code below defines the complete authentication messages flow handling:</p>
 <p><strong>Authentication Web Socket endpoint</strong> - Provide a WS endpoint that enables authentication exchange</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.owasp.pocwebsocket.configurator.EndpointConfigurator</span><span class="p">;</span>
