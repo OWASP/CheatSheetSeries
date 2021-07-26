@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Abuse_Case_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.0">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.1">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.fe914879.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.1118c9be.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ba0d045b.min.css">
@@ -1693,27 +1693,12 @@ that lead to proper protection of these critical business use cases.
 <p><a href="https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements">Synopsys source</a></p>
 <h4 id="how-to-define-the-list-of-abuse-cases">How to define the list of Abuse Cases<a class="headerlink" href="#how-to-define-the-list-of-abuse-cases" title="Permanent link">&para;</a></h4>
 <p>There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).</p>
-<p>The project <a href="https://owasp.org/www-project-samm/">OWASP Open SAMM</a> proposes the following approach in the <em>Activity A</em> of the Security Practice <em>Threat Assessment</em> for the Maturity level 2:</p>
-<div class="highlight"><pre><span></span><code>Further considering the threats to the organization, conduct a more formal analysis to determine
-potential misuse or abuse of functionality. Typically, this process begins with identification of
-normal usage scenarios, e.g. use-case diagrams if available.
+<p>The project <a href="https://owasp.org/www-project-samm/">OWASP Open SAMM</a> proposes the following approach in the <em>Stream B</em> of the Security Practice <em>Requirements Driven Testing</em> for the Maturity level 2:</p>
+<div class="highlight"><pre><span></span><code>Misuse and abuse cases describe unintended and malicious use scenarios of the application, describing how an attacker could do this. Create misuse and abuse cases to misuse or exploit the weaknesses of controls in software features to attack an application. Use abuse-case models for an application to serve as fuel for identification of concrete security tests that directly or indirectly exploit the abuse scenarios.
 
-If a formal abuse-case technique isn&#39;t used, generate a set of abuse-cases for each scenario by
-starting with a statement of normal usage and brainstorming ways in which the statement might be
-negated, in whole or in part. The simplest way to get started is to insert the word &quot;no&quot; or &quot;not&quot; into
-the usage statement in as many ways as possible, typically around nouns and verbs. Each usage scenario
-should generate several possible abuse-case statements.
-
-Further elaborate the abuse-case statements to include any application-specific concerns based on the
-business function of the software. The ultimate goal is for the completed set of abuse statements to
-form a model for usage patterns that should be disallowed by the software. If desired, these abuse
-cases can be combined with existing threat models.
-
-After initial creation, abuse-case models should be updated for active projects during the design
-phase. For existing projects, new requirements should be analyzed for potential abuse, and existing
-projects should opportunistically build abuse-cases for established functionality where practical.
+Abuse of functionality, sometimes referred to as a “business logic attack”, depends on the design and implementation of application functions and features. An example is using a password reset flow to enumerate accounts. As part of business logic testing, identify the business rules that are important for the application and turn them into experiments to verify whether the application properly enforces the business rule. For example, on a stock trading application, is the attacker allowed to start a trade at the beginning of the day and lock in a price, hold the transaction open until the end of the day, then complete the sale if the stock price has risen or cancel if the price dropped?
 </code></pre></div>
-<p>Open SAMM source: <a href="https://wiki.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2">Threat Assessment Level 2 Activity A</a></p>
+<p>Open SAMM source: <a href="https://owaspsamm.org/model/verification/requirements-driven-testing/stream-b/">Verification Requirement Driven Testing Stream B</a></p>
 <p>Another way to achieve the building of the list can be the following (more bottom-up and collaboratively oriented):</p>
 <p>Make a workshop that includes people with the following profiles:</p>
 <ul>
