@@ -167,7 +167,7 @@ APIs using graphql-java can utilize the built-in [MaxQueryComplexityInstrumentat
 
 #### Rate Limiting
 
-Enforcing rate limiting on a per IP (for anonymous access) or user (for authenticated access) basis can help limit a single user's ability to spam requests to the service and impact performance. Ideally this can be done with a WAF, API gateway, or web server ([Nginx](https://www.nginx.com/blog/rate-limiting-nginx/), [Apache](https://httpd.apache.org/docs/2.4/mod/mod_ratelimit.html)/[HTTPD](https://github.com/jzdziarski/mod_evasive)) to reduce the effort of adding rate limiting.
+Enforcing rate limiting on a per IP or user (for anonymous and unauthorized access) basis can help limit a single user's ability to spam requests to the service and impact performance. Ideally this can be done with a WAF, API gateway, or web server ([Nginx](https://www.nginx.com/blog/rate-limiting-nginx/), [Apache](https://httpd.apache.org/docs/2.4/mod/mod_ratelimit.html)/[HTTPD](https://github.com/jzdziarski/mod_evasive)) to reduce the effort of adding rate limiting.
 
 Or you could get somewhat complex with throttling and implement it in your code (non-trivial). See "Throttling" [here](https://www.howtographql.com/advanced/4-security/) for more about GraphQL-specific rate limiting.
 
@@ -277,7 +277,7 @@ By default, most GraphQL implementations have some insecure default configuratio
 
 #### Introspection + GraphiQL
 
-Many implementations of GraphQL have Introspection and GraphiQL enabled by default and leave them accessible without requiring authentication. This is problematic because introspection allows the requester to learn all about supported schema and queries (see a [real-world example](https://hackerone.com/reports/291531) abusing this). Introspection might be how the API owner wants to educate consumers about how to use the API. However, the preferred way to educate consumers about a service is through a separate documentation channel such as a wiki, Git Readme, or readthedocs.
+Many implementations of GraphQL have Introspection and GraphiQL enabled by default and leave them accessible without requiring authorization. This is problematic because introspection allows the requester to learn all about supported schema and queries (see a [real-world example](https://hackerone.com/reports/291531) abusing this). Introspection might be how the API owner wants to educate consumers about how to use the API. However, the preferred way to educate consumers about a service is through a separate documentation channel such as a wiki, Git Readme, or readthedocs.
 
 The safest and usually easiest approach is to just disable introspection and GraphiQL system-wide. See [this page](https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/) or consult your GraphQL implementation's documentation to learn how to disable introspection altogether. If your implementation does not natively support disabling introspection or if you would like to allow some consumers/roles to have this access you can build a filter in your service to only allow approved consumers to access the introspection system.
 
