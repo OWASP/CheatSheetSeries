@@ -70,30 +70,15 @@ that lead to proper protection of these critical business use cases.
 
 There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).
 
-The project [OWASP Open SAMM](https://owasp.org/www-project-samm/) proposes the following approach in the *Activity A* of the Security Practice *Threat Assessment* for the Maturity level 2:
+The project [OWASP Open SAMM](https://owasp.org/www-project-samm/) proposes the following approach in the *Stream B* of the Security Practice *Requirements Driven Testing* for the Maturity level 2:
 
 ```text
-Further considering the threats to the organization, conduct a more formal analysis to determine
-potential misuse or abuse of functionality. Typically, this process begins with identification of
-normal usage scenarios, e.g. use-case diagrams if available.
+Misuse and abuse cases describe unintended and malicious use scenarios of the application, describing how an attacker could do this. Create misuse and abuse cases to misuse or exploit the weaknesses of controls in software features to attack an application. Use abuse-case models for an application to serve as fuel for identification of concrete security tests that directly or indirectly exploit the abuse scenarios.
 
-If a formal abuse-case technique isn't used, generate a set of abuse-cases for each scenario by
-starting with a statement of normal usage and brainstorming ways in which the statement might be
-negated, in whole or in part. The simplest way to get started is to insert the word "no" or "not" into
-the usage statement in as many ways as possible, typically around nouns and verbs. Each usage scenario
-should generate several possible abuse-case statements.
-
-Further elaborate the abuse-case statements to include any application-specific concerns based on the
-business function of the software. The ultimate goal is for the completed set of abuse statements to
-form a model for usage patterns that should be disallowed by the software. If desired, these abuse
-cases can be combined with existing threat models.
-
-After initial creation, abuse-case models should be updated for active projects during the design
-phase. For existing projects, new requirements should be analyzed for potential abuse, and existing
-projects should opportunistically build abuse-cases for established functionality where practical.
+Abuse of functionality, sometimes referred to as a “business logic attack”, depends on the design and implementation of application functions and features. An example is using a password reset flow to enumerate accounts. As part of business logic testing, identify the business rules that are important for the application and turn them into experiments to verify whether the application properly enforces the business rule. For example, on a stock trading application, is the attacker allowed to start a trade at the beginning of the day and lock in a price, hold the transaction open until the end of the day, then complete the sale if the stock price has risen or cancel if the price dropped?
 ```
 
-Open SAMM source: [Threat Assessment Level 2 Activity A](https://wiki.owasp.org/index.php/SAMM_-_Threat_Assessment_-_2)
+Open SAMM source: [Verification Requirement Driven Testing Stream B](https://owaspsamm.org/model/verification/requirements-driven-testing/stream-b/)
 
 Another way to achieve the building of the list can be the following (more bottom-up and collaboratively oriented):
 
