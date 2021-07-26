@@ -167,7 +167,7 @@ APIs using graphql-java can utilize the built-in [MaxQueryComplexityInstrumentat
 
 #### Rate Limiting
 
-Enforcing rate limiting on a per IP (for anonymous access) or user (for authorized access) basis can help limit a single user's ability to spam requests to the service and impact performance. Ideally this can be done with a WAF, API gateway, or web server ([Nginx](https://www.nginx.com/blog/rate-limiting-nginx/), [Apache](https://httpd.apache.org/docs/2.4/mod/mod_ratelimit.html)/[HTTPD](https://github.com/jzdziarski/mod_evasive)) to reduce the effort of adding rate limiting.
+Enforcing rate limiting on a per IP or user (for anonymous and unauthorized access) basis can help limit a single user's ability to spam requests to the service and impact performance. Ideally this can be done with a WAF, API gateway, or web server ([Nginx](https://www.nginx.com/blog/rate-limiting-nginx/), [Apache](https://httpd.apache.org/docs/2.4/mod/mod_ratelimit.html)/[HTTPD](https://github.com/jzdziarski/mod_evasive)) to reduce the effort of adding rate limiting.
 
 Or you could get somewhat complex with throttling and implement it in your code (non-trivial). See "Throttling" [here](https://www.howtographql.com/advanced/4-security/) for more about GraphQL-specific rate limiting.
 
