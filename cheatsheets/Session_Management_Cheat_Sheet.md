@@ -334,7 +334,7 @@ Web applications can use JavaScript code to capture all the web browser tab or w
 
 ### Disable Web Browser Cross-Tab Sessions
 
-Web applications can use JavaScript code once the user has logged in and a session has been established to force the user to authenticate again intentionally if a new web browser tab or window is opened against the same web application. The web application does not want to allow multiple web browser tabs or windows to share the same session. Therefore, the application tries to force the web browser to not share the same session ID simultaneously between them.
+Web applications can use JavaScript code once the user has logged in and a session has been established to force the user to re-authenticate if a new web browser tab or window is opened against the same web application. The web application does not want to allow multiple web browser tabs or windows to share the same session. Therefore, the application tries to force the web browser to not share the same session ID simultaneously between them.
 
 **NOTE**: This mechanism cannot be implemented if the session ID is exchanged through cookies, as cookies are shared by all web browser tabs/windows.
 
