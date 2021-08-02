@@ -15,7 +15,7 @@ Developers may end up updating the `.gitignore` file, but forget to update `.npm
 
 Another good practice to adopt is making use of the `files` property in package.json, which works as a whitelist and specifies the array of files to be included in the package that is to be created and installed (while the ignore file functions as a blacklist). The `files` property and an ignore file can both be used together to determine which files should explicitly be included, as well as excluded, from the package. When using both, the former the `files` property in package.json takes precedence over the ignore file.
 
-When a package is published, the npm CLI will verbosely display the archive being created. To be extra careful, add a `--dry-run` command line argument to your publish command in order to first review how the tarball is created without actually publishing it to the registry.
+When a package is published, the npm CLI will verbosely display the archive being created. To be extra careful, add a `--dry-run` command-line argument to your publish command in order to first review how the tarball is created without actually publishing it to the registry.
 
 In January 2019, npm shared on their blog that they added a [mechanism that automatically revokes a token](https://blog.npmjs.org/post/182015409750/automated-token-revocation-for-when-you) if they detect that one has been published with a package.
 
@@ -27,7 +27,7 @@ Both Yarn, and npm act the same during dependency installation . When they detec
 
 This kind of situation can be hazardous for build and production environments as they could pull in unintended package versions and render the entire benefit of a lockfile futile.
 
-Luckily, there is a way to tell both Yarn and npm to adhere to a specified set of dependencies and their versions by referencing them from the lockfile. Any inconsistency will abort the installation. The command line should read as follows:
+Luckily, there is a way to tell both Yarn and npm to adhere to a specified set of dependencies and their versions by referencing them from the lockfile. Any inconsistency will abort the installation. The command-line should read as follows:
 
 - If you’re using Yarn, run `yarn install --frozen-lockfile`.
 - If you’re using npm run `npm ci`.
@@ -68,7 +68,7 @@ Call the doctor! The npm CLI incorporates a health assessment tool to diagnose y
 
 ## 5) Audit for vulnerabilities in open source dependencies
 
-The npm ecosystem is the single largest repository of application libraries amongst all the other language ecosystems. The registry and the libraries in it are at the core for JavaScript developers as they are able to leverage work that others have already built and incorporate it into their code-base. With that said, the increasing adoption of open source libraries in applications brings with it an increased risk of introducing security vulnerabilities.
+The npm ecosystem is the single largest repository of application libraries amongst all the other language ecosystems. The registry and the libraries in it are at the core for JavaScript developers as they are able to leverage work that others have already built and incorporate it into their codebase. With that said, the increasing adoption of open source libraries in applications brings with it an increased risk of introducing security vulnerabilities.
 
 Many popular npm packages have been found to be vulnerable and may carry a significant risk without proper security auditing of your project’s dependencies. Some examples are npm [request](https://snyk.io/vuln/npm:request:20160119), [superagent](https://snyk.io/vuln/search?q=superagent&type=npm), [mongoose](https://snyk.io/vuln/search?q=mongoose&type=npm), and even security-related packages like [jsonwebtoken](https://snyk.io/vuln/npm:jsonwebtoken:20150331), and  [validator](https://snyk.io/vuln/search?q=validator&type=npm).
 
@@ -114,19 +114,19 @@ Enabling 2FA is an easy and significant win for an npm security best practices. 
 - Authorization-only—when a user logs in to npm via the website or the CLI, or performs other sets of actions such as changing profile information.
 - Authorization and write-mode—profile and log-in actions, as well as write actions such as managing tokens and packages, and minor support for team and package visibility information.
 
-Equip yourself with an authentication application, such as Google Authentication, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command line person, it’s also easy to enable 2FA when using a supported npm client version (>=5.5.1):
+Equip yourself with an authentication application, such as Google Authentication, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command-line person, it’s also easy to enable 2FA when using a supported npm client version (>=5.5.1):
 
 ```sh
 npm profile enable-2fa auth-and-writes
 ```
 
-Follow the command line instructions to enable 2FA, and to save emergency authentication codes. If you wish to enable 2FA mode for login and profile changes only, you may replace the `auth-and-writes` with `auth-only` in the code as it appears above.
+Follow the command-line instructions to enable 2FA, and to save emergency authentication codes. If you wish to enable 2FA mode for login and profile changes only, you may replace the `auth-and-writes` with `auth-only` in the code as it appears above.
 
 ## 9) Use npm author tokens
 
 Every time you log in with the npm CLI, a token is generated for your user and authenticates you to the npm registry. Tokens make it easy to perform npm registry-related actions during CI and automated procedures, such as accessing private modules on the registry or publishing new versions from a build step.
 
-Tokens can be managed through the npm registry website, as well as using the npm command line client. An example of using the CLI to create  a read-only token that is restricted to a specific IPv4 address range is as follows:
+Tokens can be managed through the npm registry website, as well as using the npm command-line client. An example of using the CLI to create  a read-only token that is restricted to a specific IPv4 address range is as follows:
 
 ```sh
 npm token create --read-only --cidr=192.0.2.0/24
