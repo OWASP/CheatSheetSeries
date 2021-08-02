@@ -1,12 +1,17 @@
-In the following npm cheatsheet, we’re going to focus on [10 npm security best practices](https://snyk.io/blog/ten-npm-security-best-practices) and productivity tips, useful for JavaScript and Node.js developers. 
+# npm Security best practices
+
+In the following npm cheatsheet, we’re going to focus on [10 npm security best practices](https://snyk.io/blog/ten-npm-security-best-practices) and productivity tips, useful for JavaScript and Node.js developers.
 
 ## 1) Avoid publishing secrets to the npm registry
 
 Whether you’re making use of API keys, passwords or other secrets, they can very easily end up leaking into source control or even a published package on the public npm registry. You may have secrets in your working directory in designated files such as a `.env` which should be added to a `.gitignore` to avoid committing it to a SCM, but what happen when you publish an npm package from the project’s directory?
 
 The npm CLI packs up a project into a tar archive (tarball) in order to push it to the registry. The following criteria determine which files and directories are added to the tarball:
+
 - If there is either a `.gitignore` or a `.npmignore` file, the contents of the file are used as an ignore pattern when preparing the package for publication.
-- If both ignore files exist, everything not located in `.npmignore` is published to the registry. This condition is a common source of confusion and is a problem that can lead to leaking secrets. Developers may end up updating the `.gitignore` file, but forget to update `.npmignore` as well, which can lead to a potentially sensitive file not being pushed to source control, but still being included in the npm package.
+- If both ignore files exist, everything not located in `.npmignore` is published to the registry. This condition is a common source of confusion and is a problem that can lead to leaking secrets. 
+
+Developers may end up updating the `.gitignore` file, but forget to update `.npmignore` as well, which can lead to a potentially sensitive file not being pushed to source control, but still being included in the npm package.
 
 Another good practice to adopt is making use of the `files` property in package.json, which works as a whitelist and specifies the array of files to be included in the package that is to be created and installed (while the ignore file functions as a blacklist). The `files` property and an ignore file can both be used together to determine which files should explicitly be included, as well as excluded, from the package. When using both, the former the `files` property in package.json takes precedence over the ignore file.
 
@@ -23,6 +28,7 @@ Both Yarn, and npm act the same during dependency installation . When they detec
 This kind of situation can be hazardous for build and production environments as they could pull in unintended package versions and render the entire benefit of a lockfile futile.
 
 Luckily, there is a way to tell both Yarn and npm to adhere to a specified set of dependencies and their versions by referencing them from the lockfile. Any inconsistency will abort the installation. The command line should read as follows:
+
 - If you’re using Yarn, run `yarn install --frozen-lockfile`.
 - If you’re using npm run `npm ci`.
 
@@ -40,8 +46,6 @@ Apply these npm security best practices in order to minimize the malicious modul
 - When installing packages make sure to add the `--ignore-scripts` suffix to disable the execution of any scripts by third-party packages.
 - Consider adding `ignore-scripts` to your `.npmrc` project file, or to your global npm configuration.
 
-
-
 ## 4) Assess npm project health
 
 ### npm outdated command
@@ -55,6 +59,7 @@ The npm CLI can provide information about the freshness of dependencies you use 
 Between the variety of Node.js package managers, and different versions of Node.js you may have installed in your path, how do you verify a healthy npm installation and working environment? Whether you’re working with the npm CLI in a development environment or within a CI, it is important to assess that everything is working as expected.
 
 Call the doctor! The npm CLI incorporates a health assessment tool to diagnose your environment for a well-working npm interaction. Run `npm doctor` to review your npm setup:
+
 - Check the official npm registry is reachable, and display the currently configured registry.
 - Check that Git is available.
 - Review installed npm and Node.js versions.
@@ -68,9 +73,9 @@ The npm ecosystem is the single largest repository of application libraries amon
 Many popular npm packages have been found to be vulnerable and may carry a significant risk without proper security auditing of your project’s dependencies. Some examples are npm [request](https://snyk.io/vuln/npm:request:20160119), [superagent](https://snyk.io/vuln/search?q=superagent&type=npm), [mongoose](https://snyk.io/vuln/search?q=mongoose&type=npm), and even security-related packages like [jsonwebtoken](https://snyk.io/vuln/npm:jsonwebtoken:20150331), and  [validator](https://snyk.io/vuln/search?q=validator&type=npm).
 
 Security doesn’t end by just scanning for security vulnerabilities when installing a package but should also be streamlined with developer workflows to be effectively adopted throughout the entire lifecycle of software development, and monitored continuously when code is deployed:
-- Scan for security vulnerabilities in third-party open source projects (https://owasp.org/www-community/Component_Analysis)
-- Monitor snapshots of your project's manifests so you can receive alerts when new CVEs impact them
 
+- Scan for security vulnerabilities in [third-party open source projects](https://owasp.org/www-community/Component_Analysis)
+- Monitor snapshots of your project's manifests so you can receive alerts when new CVEs impact them
 
 ## 6) Use a local npm proxy
 
@@ -105,13 +110,14 @@ In October 2017, npm officially announced support for two-factor authentication 
 Even though 2FA has been supported on the npm registry for a while now, it seems to be slowly adopted with one example being the eslint-scope incident in mid-2018 when a stolen developer account on the ESLint team lead to a [malicious version of eslint-scope](https://snyk.io/vuln/npm:eslint-scope) being published by bad actors.
 
 Enabling 2FA is an easy and significant win for an npm security best practices. The registry supports two modes for enabling 2FA in a user’s account:
+
 - Authorization-only—when a user logs in to npm via the website or the CLI, or performs other sets of actions such as changing profile information.
 - Authorization and write-mode—profile and log-in actions, as well as write actions such as managing tokens and packages, and minor support for team and package visibility information.
 
 Equip yourself with an authentication application, such as Google Authentication, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command line person, it’s also easy to enable 2FA when using a supported npm client version (>=5.5.1):
 
-```
-$ npm profile enable-2fa auth-and-writes
+```sh
+npm profile enable-2fa auth-and-writes
 ```
 
 Follow the command line instructions to enable 2FA, and to save emergency authentication codes. If you wish to enable 2FA mode for login and profile changes only, you may replace the `auth-and-writes` with `auth-only` in the code as it appears above.
@@ -122,8 +128,8 @@ Every time you log in with the npm CLI, a token is generated for your user and a
 
 Tokens can be managed through the npm registry website, as well as using the npm command line client. An example of using the CLI to create  a read-only token that is restricted to a specific IPv4 address range is as follows:
 
-```
-$ npm token create --read-only --cidr=192.0.2.0/24
+```sh
+npm token create --read-only --cidr=192.0.2.0/24
 ```
 
 To verify which tokens are created for your user or to revoke tokens in cases of emergency, you can use `npm token list` or `npm token revoke` respectively.
@@ -151,6 +157,7 @@ We have been tracking tens of malicious packages in the npm ecosystem; they have
 One of the main targets for typosquatting attacks are the user credentials, since any package has access to environment variables via the global variable process.env. Other examples we’ve seen in the past include the case with event-stream, where the attack targeted developers in the hopes of [injecting malicious code](https://snyk.io/blog/a-post-mortem-of-the-malicious-event-stream-backdoor) into an application’s source code.
 
 Closing our list of ten npm security best practices are the following tips to reduce the risk of such attacks:
+
 - Be extra-careful when copy-pasting package installation instructions into the terminal. Make sure to verify in the source code repository as well as on the npm registry that this is indeed the package you are intending to install. You might verify the metadata of the package with `npm info` to fetch more information about contributors and latest versions.
 - Default to having an npm logged-out user in your daily work routines so your credentials won’t be the weak spot that would lead to easily compromising your account.
 - When installing packages, append the `--ignore-scripts` to reduce the risk of arbitrary command execution. For example: `npm install my-malicious-package --ignore-scripts`
