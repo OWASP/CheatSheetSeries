@@ -210,7 +210,7 @@ var initData = <%= data.to_json %>;
 
 ##### JSON serialization
 
-A safe JSON serializer will allow developers to serialize JSON as string of literal JavaScript which can be embedded in an HTML in the contents of the `<script>` tag. HTML characters and JavaScript line terminators need be encoded. Consider the [Yahoo JavaScript Serializer](https://github.com/yahoo/serialize-javascript) for this task.
+A safe JSON serializer will allow developers to serialize JSON as a string of literal JavaScript which can be embedded in an HTML in the contents of the `<script>` tag. HTML characters and JavaScript line terminators need be encoded. Consider the [Yahoo JavaScript Serializer](https://github.com/yahoo/serialize-javascript) for this task.
 
 ##### HTML entity encoding
 
