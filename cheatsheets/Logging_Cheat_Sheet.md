@@ -15,7 +15,7 @@ Application logging should be always be included for security events. Applicatio
 - Identifying security incidents
 - Monitoring policy violations
 - Establishing baselines
-- Assisting non-repudiation controls
+- Assisting non-repudiation controls (note that the trait non-repudiation is hard to achieve for logs because their trustworthyness is often just based on the logging party being audited properly while machanisms like digital signatures are hard to utilize here)
 - Providing information about problems and unusual conditions
 - Contributing additional application-specific data for incident investigation which is lacking in other log sources
 - Helping defend against vulnerability identification and exploitation through attack detection
