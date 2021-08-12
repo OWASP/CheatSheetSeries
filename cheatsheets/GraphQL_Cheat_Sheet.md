@@ -321,7 +321,7 @@ GraphQL APIs in production shouldn't return stack traces or be in debug mode. Do
 - [https://nordicapis.com/security-points-to-consider-before-implementing-graphql/](https://nordicapis.com/security-points-to-consider-before-implementing-graphql/)
 - [Limiting resource usage to prevent DoS (timeouts, throttling, complexity management, depth limiting, etc.)](https://developer.github.com/v4/guides/resource-limitations/)
 - [GraphQL Security Perspectives](https://www.abhaybhargav.com/from-the-trenches-diy-security-perspectives-of-graphql/)
-- [A developer's security perspective of GraphQL](https://medium.com/planes-agency/how-to-survive-a-penetration-test-as-a-graphql-developer-2759cababf8e)
+- [A developer's security perspective of GraphQL](https://planes.studio/blog/how-to-survive-a-penetration-test-as-a-graph-ql-developer)
 
 ### More on GraphQL Attacks
 
