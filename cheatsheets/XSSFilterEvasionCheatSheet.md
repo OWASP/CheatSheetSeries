@@ -116,9 +116,9 @@ This is also a viable XSS attack against the above string $tmp\_string=\~ s/.\*\
 
 Used to break up the cross site scripting attack:
 
-<!-- markdownlint-disable -->
+<!-- markdownlint-disable MD010-->
 `<IMG SRC="jav	ascript:alert('XSS');">`
-<!-- markdownlint-enable -->
+<!-- markdownlint-enable MD010-->
 
 ### Embedded Encoded Tab
 
