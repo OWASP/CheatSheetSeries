@@ -156,7 +156,7 @@ Based on the same idea as above, however,expanded on it, using Rnake fuzzer. The
 
 ````
 <BODY onload!#$%&()*~+-_.,:;?@[/|\]^`=alert("XSS")>
-```
+````
 
 Yair Amit brought this to my attention that there is slightly different behavior between the IE and Gecko rendering engines that allows just a slash between the tag and the parameter with no spaces. This could be useful if the system does not allow spaces.
 
