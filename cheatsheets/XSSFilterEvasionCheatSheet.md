@@ -719,10 +719,12 @@ Again padding is allowed, although you must keep it above 4 total characters per
 
 Let's mix and match base encoding and throw in some tabs and newlines - why browsers allow this, I'll never know). The tabs and newlines only work if this is encapsulated with quotes:
 
+<!-- markdownlint-disable MD010-->
 ```html
 <A HREF="h 
 tt  p://6	6.000146.0x7.147/">XSS</A>
 ```
+<!-- markdownlint-enable MD010-->
 
 #### Protocol Resolution Bypass
 
@@ -764,7 +766,9 @@ Extra dot for absolute DNS:
 
 #### Content Replace as Attack Vector
 
+<!-- markdownlint-disable MD010-->
 Assuming `http://www.google.com/` is programmatically replaced with nothing). I actually used a similar attack vector against several separate real world XSS filters by using the conversion filter itself (here is an example) to help create the attack vector (IE: `java&\#x09;script:` was converted into `java	script:`, which renders in IE, Netscape 8.1+ in secure site mode and Opera):
+<!-- markdownlint-enable MD010-->
 
 `<A HREF="http://www.google.com/ogle.com/">XSS</A>`
 
