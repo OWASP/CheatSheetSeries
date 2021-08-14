@@ -81,7 +81,7 @@ The areas of caution while using ABAC are:
 
 - Consider that good ABAC only works in scenarios where data is relatively static, or not frequently being created or changing in any way.
 - ABAC works best when there are clear data owners who can permit others access to the data intentionally.
-- Avoid starting ABAC when there is any chance new data can not be given a data owner to grant access, or when you find that data access defaults are overly permissive to excess of users or when the default attribute covers an excess fo data.
+- Avoid starting ABAC when there is any chance new data can not be given a data owner to grant access, or when you find that data access defaults are overly permissive to excess of users or when the default attribute covers an excess of data.
 
 ### Organization-Based Access Control (OrBAC)
 

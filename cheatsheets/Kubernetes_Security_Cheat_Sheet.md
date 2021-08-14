@@ -169,7 +169,7 @@ To prevent attacks via the dashboard, you should follow some tips:
 - Grant permissions per user, so each user only can see what they are supposed to see
 - If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)
 - Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.
-- Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled.  This can be done with either embeded OIDC `id_tokens` or using Kubernetes Impersonation.  This allows you to use the dashboard with the user's credentials instead of using a privileged `ServiceAccount`.  This method can be used on both on-prem and managed cloud clusters.
+- Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled.  This can be done with either embedded OIDC `id_tokens` or using Kubernetes Impersonation.  This allows you to use the dashboard with the user's credentials instead of using a privileged `ServiceAccount`.  This method can be used on both on-prem and managed cloud clusters.
 
 ## Kubernetes Security Best Practices: Build Phase
 
@@ -205,7 +205,7 @@ For more information on ditroless images, refer to <https://github.com/GoogleCon
 
 #### Scratch image
 
-An empty image, ideal for statically compiled languages like Go. Because the image is empty - the attack surface it truely minimal - only your code!
+An empty image, ideal for statically compiled languages like Go. Because the image is empty - the attack surface it truly minimal - only your code!
 
 For more information, refer to <https://hub.docker.com/_/scratch>
 

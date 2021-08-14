@@ -119,4 +119,4 @@ Security questions should not be used as the sole mechanism for resetting passwo
 
 ## Account Lockout
 
-Accounts should not be locked out in response to a forgotten password attack, as this can be used to deny access to users with known usernames. For more details on account lockouts, see the [Authenication Cheat Sheet](Authentication_Cheat_Sheet.md).
+Accounts should not be locked out in response to a forgotten password attack, as this can be used to deny access to users with known usernames. For more details on account lockouts, see the [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).

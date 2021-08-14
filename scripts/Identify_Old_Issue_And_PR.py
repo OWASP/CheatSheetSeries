@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Python3 script to identify any Issue or PR meeting the following criterias:
+Python3 script to identify any Issue or PR meeting the following criteria:
 - For Issue (Comments of the issue do not contain the info when a PR is referenced):
     - Has assignees
     - Has not the label HELP_WANTED or INTERNAL
@@ -27,7 +27,7 @@ ISSUE_API = "https://api.github.com/repos/OWASP/CheatSheetSeries/issues?page=1&p
 ## Expiration delay
 MAX_MONTHS_ALLOWED = 1
 
-# Define utility function: Cf criteria in the comment of the script for the criterias
+# Define utility function: Cf criteria in the comment of the script for the criteria
 def is_old_issue(issue):
     has_assignees = (len(issue["assignees"]) > 0)
     has_help_wanted_label = False

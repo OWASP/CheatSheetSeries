@@ -4,7 +4,7 @@ This document proposes a standard vocabulary for logging security events. The in
 
 ## Overview
 
-Each year IBM Security comissions the Ponemon Institute to survey companies around the world for information related to security breaches, mitigation, and the associated costs; the result is called the Cost of a Data Breach Report.
+Each year IBM Security commissions the Ponemon Institute to survey companies around the world for information related to security breaches, mitigation, and the associated costs; the result is called the Cost of a Data Breach Report.
 
 In addition to the millions of dollars lost due to breaches the report finds that the **mean time to identify** a breach continues to hover around **200 days**. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.
 
@@ -622,7 +622,7 @@ WARN
 **Description**
 When attempts are made from unauthorized origins they should of course be blocked, but also logged whenever possible. Even if we block an illegal cross-origin request the fact that the request is being made could be an indication of attack.
 
-*NOTE: Did you know that the word "referer" is mispelled in the original HTTP specification? The correct spelling should be "referrer" but the original typo persists to this day and is used here intentionally.*
+*NOTE: Did you know that the word "referer" is misspelled in the original HTTP specification? The correct spelling should be "referrer" but the original typo persists to this day and is used here intentionally.*
 
 **Level:**
 WARN
@@ -635,7 +635,7 @@ WARN
     "appid": "foobar.netportal_auth",
     "event": "malicious_cors:127.0.0.1,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0,attack.evil.com",
     "level": "WARN",
-    "description": "An illegal cross-origin request from 127.0.0.1 was refered from attack.evil.com"
+    "description": "An illegal cross-origin request from 127.0.0.1 was referred from attack.evil.com"
     ...
 }
 ```

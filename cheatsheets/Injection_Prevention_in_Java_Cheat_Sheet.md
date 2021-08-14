@@ -213,7 +213,7 @@ Code using it to perform XPath query.
 /*Create a XML document builder factory*/
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-/*Disable External Entity resolution for differents cases*/
+/*Disable External Entity resolution for different cases*/
 //Do not performed here in order to focus on variable resolver code
 //but do it for production code !
 

@@ -15,7 +15,7 @@ Application logging should be always be included for security events. Applicatio
 - Identifying security incidents
 - Monitoring policy violations
 - Establishing baselines
-- Assisting non-repudiation controls (note that the trait non-repudiation is hard to achieve for logs because their trustworthyness is often just based on the logging party being audited properly while machanisms like digital signatures are hard to utilize here)
+- Assisting non-repudiation controls (note that the trait non-repudiation is hard to achieve for logs because their trustworthiness is often just based on the logging party being audited properly while mechanisms like digital signatures are hard to utilize here)
 - Providing information about problems and unusual conditions
 - Contributing additional application-specific data for incident investigation which is lacking in other log sources
 - Helping defend against vulnerability identification and exploitation through attack detection
@@ -196,7 +196,7 @@ In some systems, sanitization can be undertaken post log collection, and prior t
 It may be desirable to be able to alter the level of logging (type of events based on severity or threat level, amount of detail recorded). If this is implemented, ensure that:
 
 - The default level must provide sufficient detail for business needs
-- It should not be possible to completely inactivate application logging or logging of events that are necessary for compliance requirements
+- It should not be possible to completely deactivate application logging or logging of events that are necessary for compliance requirements
 - Alterations to the level/extent of logging must be intrinsic to the application (e.g. undertaken automatically by the application based on an approved algorithm) or follow change management processes (e.g. changes to configuration data, modification of source code)
 - The logging level must be verified periodically
 
