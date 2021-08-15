@@ -23,7 +23,7 @@ This Cheat Sheet provides guidance for application builders on how to deploy OAu
    - [Authorization Server Mix-Up Protection](#authorization-server-mix-up-protection)
    - [PKCE Considerations](#pkce-considerations)
 - [Use Cases](#use-cases)
-   - [Classic Web Applicaiton](#classic-web-applicaiton)
+   - [Classic Web Application](#classic-web-application)
    - [Single Page Application](#single-page-application)
    - [Mobile Application](#mobile-application)
    - [Backend Service](#backend-service)
@@ -104,7 +104,7 @@ How to validate and target the proper authorization server
 
 ## Use Cases
 
-### Classic Web Applicaiton
+### Classic Web Application
 
 ### Single Page Application
 

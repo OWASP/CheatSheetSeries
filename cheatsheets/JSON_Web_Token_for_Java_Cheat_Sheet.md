@@ -91,7 +91,7 @@ private transient byte[] keyHMAC = ...;
 //explicitly the use of the HMAC-256 hashing algorithm
 JWTVerifier verifier = JWT.require(Algorithm.HMAC256(keyHMAC)).build();
 
-//Verify the token, if the verification fail then a exception is throwed
+//Verify the token, if the verification fail then a exception is thrown
 DecodedJWT decodedToken = verifier.verify(token);
 ```
 
@@ -108,7 +108,7 @@ A way to prevent it is to add a "user context" in the token. A user context will
 - A random string that will be generated during the authentication phase. It will be sent to the client as an hardened cookie (flags: [HttpOnly + Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies) + [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies) + [cookie prefixes](https://googlechrome.github.io/samples/cookie-prefixes/)).
 - A SHA256 hash of the random string will be stored in the token (instead of the raw value) in order to prevent any XSS issues allowing the attacker to read the random string value and setting the expected cookie.
 
-IP addresses should not be used because there are some legitimate situations in which the IP address can change during the same session. For example, when an user accesses an application through their mobile device and the mobile operator changes during the exchange, then the IP address may (often) change. Moreover, using the IP address can potentially cause issues with [European GDPR](http://www.eugdpr.org/) compliancy.
+IP addresses should not be used because there are some legitimate situations in which the IP address can change during the same session. For example, when an user accesses an application through their mobile device and the mobile operator changes during the exchange, then the IP address may (often) change. Moreover, using the IP address can potentially cause issues with [European GDPR](http://www.eugdpr.org/) compliance.
 
 During token validation, if the received token does not contain the right context (for example, if it has been replayed), then it must be rejected.
 

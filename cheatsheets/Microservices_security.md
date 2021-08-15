@@ -68,7 +68,7 @@ Netfix presented ([link](https://www.youtube.com/watch?v=R6tUNpRpdnY), [link](ht
     - gateways and proxies level at a coarse level of granularity;
     - microservice level using shared authorization library/components to enforce fine-granted decisions;
     - microservice business code level to implement business-specific access control rules.
-6. Access control policy formal procedures like development, approvement, rolling-out must be implemented.
+6. Access control policy formal procedures like development, approval, rolling-out must be implemented.
 
 ## External entity identity propagation
 
@@ -80,12 +80,12 @@ To make fine-granted authorization decision at the microservice level microservi
 
 In that approach calling microservice extracts external entity identity from incoming request (e.g. via parsing incoming access token), creates data structure (e.g. JSON or self-signed JWT) with context and passes that on to an internal microservices.
 In this scenario recipient microservice has to trust the calling microservice -- if the calling microservice want to violate access control rules, it can do so by setting any user/client ID or user roles it wants as the HTTP header. That approach is applicable in a highly trusted environment in which every microservice is developed by trusted development team according with secure software development practices.
-![Clear text ID propogation](../assets/ID_propogation.png)
+![Clear text ID propagation](../assets/ID_propogation.png)
 
 #### Using a data structures signed by a trusted issuer
 
 In this pattern after the external request is authenticated by authentication service at the edge layer, a data structure representing external entity identity (e.g., contained user ID, user roles/groups or permissions) is generated, signed or encrypted by the trusted issuer and propagated  to internal microservices.
-![Signed ID propogation](../assets/Signed_ID_propogation.png)
+![Signed ID propagation](../assets/Signed_ID_propogation.png)
 
 [Netflix presented](https://www.infoq.com/presentations/netflix-user-identity/) a real case of using that pattern: structure called “Passport” that contains user ID and its attributes and HMAC protected is created at the edge level for each incoming request, propagated to internal microservices and never exposes outside:
 
@@ -95,10 +95,10 @@ In this pattern after the external request is authenticated by authentication se
 4. Internal services can extract user identity in order to enforce authorization (e.g. to implement identity-based authorization) using wrappers.
 5. If necessary, internal service can propagate “Passport” structure to downstream services in the call chain.
 
-![Netflix ID propogation approach](../assets/Netflix_ID_prop.png)
+![Netflix ID propagation approach](../assets/Netflix_ID_prop.png)
 It should be mentioned that pattern is external access token agnostic and allows to decouple external entity and its internal representation.
 
-### Recommendation on how to implement identity propogation
+### Recommendation on how to implement identity propagation
 
 1. In order to implement external access token agnostic and extendable system decouple access tokens issued for external entity from its internal representation. Use single data structure to represent and propagate external entity identity among microservices. Edge-level service has to verify incoming external access token, issue internal entity representation structure and propagate it to downstream services.
 2. Using an internal entity representation structure signed (symmetric or asymmetric encryption) by a trusted issuer is recommended pattern adopted by community.
@@ -116,7 +116,7 @@ In mTLS approach each microservice can legitimately identify who it talks to, in
 #### Token based
 
 Token based approach works at the application layer. Token is a container and may contain caller ID (microservice ID) and its permissions (scopes). Caller microservice can obtain signed token by invoking special security token service using its own service ID and password and then attaches it to every outgoing requests e.g., via HTTP headers. Called microservice can extract token and validate it online or offline.
-![Signed ID propogation](../assets/Token_validation.png)
+![Signed ID propagation](../assets/Token_validation.png)
 
 1. Online scenario:
     - to validate incoming token microservice invokes centralized service token service via network call;

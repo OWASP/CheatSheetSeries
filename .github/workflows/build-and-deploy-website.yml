@@ -49,7 +49,7 @@ jobs:
       uses: actions/checkout@v1
     - name: Install dependencies
       run: sudo apt-get install -y unzip zip
-    - name: Swith to offline website (gh-pages) branch
+    - name: Switch to offline website (gh-pages) branch
       run: git checkout gh-pages
     - name: Remove previous version website files
       run: |

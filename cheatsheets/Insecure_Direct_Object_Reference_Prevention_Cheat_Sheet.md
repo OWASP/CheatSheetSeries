@@ -125,7 +125,7 @@ public Map<String, String> listAllMovies() {
     try {
         this.movies.forEach(m -> {
             try {
-                //Compute the front end ID fof the current element
+                //Compute the front end ID for the current element
                 String frontEndId = IDORUtil.computeFrontEndIdentifier(m.getBackendIdentifier());
                 //Add the computed ID and the associated item name to the result map
                 result.put(frontEndId, m.getName());
