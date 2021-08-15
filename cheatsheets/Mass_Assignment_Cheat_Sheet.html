@@ -1815,7 +1815,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 <p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setDisallowedFields-java.lang.String...-">here</a> for the documentation.</p>
 <h3 id="nodejs-mongoose">NodeJS + Mongoose<a class="headerlink" href="#nodejs-mongoose" title="Permanent link">&para;</a></h3>
 <h4 id="allow-listing_1">Allow-listing<a class="headerlink" href="#allow-listing_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">UserSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">UserSchema</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
     <span class="nx">userid</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
     <span class="nx">password</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
     <span class="nx">email</span> <span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
@@ -1829,13 +1829,13 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 <span class="kd">var</span> <span class="nx">User</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span> <span class="nx">UserSchema</span><span class="p">);</span>
 
 <span class="nx">_</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">User</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="p">));</span>
 </code></pre></div>
 <p>Take a look <a href="http://underscorejs.org/#pick">here</a> for the documentation.</p>
 <h4 id="block-listing_1">Block-listing<a class="headerlink" href="#block-listing_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">massAssign</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose-mass-assign&#39;</span><span class="p">);</span>
 
-<span class="kd">var</span> <span class="nx">UserSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
+<span class="kd">var</span> <span class="nx">UserSchema</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
     <span class="nx">userid</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
     <span class="nx">password</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
     <span class="nx">email</span> <span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
@@ -1850,7 +1850,7 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 <span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">User</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
 
 <span class="cm">/** Instance method, useful for updating**/</span>
-<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">User</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">User</span><span class="p">;</span>
 <span class="nx">user</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
 
 <span class="cm">/** Static massUpdate method **/</span>

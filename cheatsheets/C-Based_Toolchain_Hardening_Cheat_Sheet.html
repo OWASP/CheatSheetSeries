@@ -1782,7 +1782,7 @@ override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 <p>In addition to <code>NDEBUG</code> (Release) and <code>DEBUG</code> (Debug), you have two additional cross products: both are defined or neither are defined. Defining both should be an error, and defining neither should default to a release configuration. Below is from <a href="https://code.google.com/archive/p/owasp-esapi-cplusplus/source/default/source">ESAPI C++ EsapiCommon.h</a>, which is the configuration file used by all source files:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Only one or the other, but not both</span>
 <span class="cp">##if (defined(DEBUG) || defined(_DEBUG)) &amp;&amp; (defined(NDEBUG)</span>
-                                           <span class="o">||</span> <span class="n">defined</span><span class="p">(</span><span class="n">_NDEBUG</span><span class="p">))</span>
+<span class="w">                                           </span><span class="o">||</span><span class="w"> </span><span class="n">defined</span><span class="p">(</span><span class="n">_NDEBUG</span><span class="p">))</span><span class="w"></span>
 <span class="cp">## error Both DEBUG and NDEBUG are defined.</span>
 <span class="cp">##endif</span>
 
@@ -1841,41 +1841,41 @@ override LDFLAGS := $(ESAPI_LDFLAGS) $(LDFLAGS)
 <span class="cp">##endif</span>
 </code></pre></div>
 <p>At program startup, a <code>SIGTRAP</code> handler will be installed if one is not provided by another component:</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">struct</span> <span class="nc">DebugTrapHandler</span>
-    <span class="p">{</span>
-      <span class="n">DebugTrapHandler</span><span class="p">()</span>
-      <span class="p">{</span>
-        <span class="k">struct</span> <span class="nc">sigaction</span> <span class="n">new_handler</span><span class="p">,</span> <span class="n">old_handler</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="k">struct</span> <span class="nc">DebugTrapHandler</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">DebugTrapHandler</span><span class="p">()</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">struct</span> <span class="nc">sigaction</span><span class="w"> </span><span class="n">new_handler</span><span class="p">,</span><span class="w"> </span><span class="n">old_handler</span><span class="p">;</span><span class="w"></span>
 
-        <span class="k">do</span>
-          <span class="p">{</span>
-            <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">do</span><span class="w"></span>
+<span class="w">          </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">sigaction</span> <span class="p">(</span><span class="n">SIGTRAP</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">old_handler</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span> <span class="c1">// Failed</span>
+<span class="w">            </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sigaction</span><span class="w"> </span><span class="p">(</span><span class="n">SIGTRAP</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">old_handler</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="c1">// Failed</span>
 
-            <span class="c1">// Don&#39;t step on another&#39;s handler</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">old_handler</span><span class="p">.</span><span class="n">sa_handler</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="c1">// Don&#39;t step on another&#39;s handler</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">old_handler</span><span class="p">.</span><span class="n">sa_handler</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 
-            <span class="n">new_handler</span><span class="p">.</span><span class="n">sa_handler</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">DebugTrapHandler</span><span class="o">::</span><span class="n">NullHandler</span><span class="p">;</span>
-            <span class="n">new_handler</span><span class="p">.</span><span class="n">sa_flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="w">            </span><span class="n">new_handler</span><span class="p">.</span><span class="n">sa_handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">DebugTrapHandler</span><span class="o">::</span><span class="n">NullHandler</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">new_handler</span><span class="p">.</span><span class="n">sa_flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
 
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">sigemptyset</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">new_handler</span><span class="p">.</span><span class="n">sa_mask</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span> <span class="c1">// Failed</span>
+<span class="w">            </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sigemptyset</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">new_handler</span><span class="p">.</span><span class="n">sa_mask</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="c1">// Failed</span>
 
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">sigaction</span> <span class="p">(</span><span class="n">SIGTRAP</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">new_handler</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span> <span class="c1">// Failed</span>
+<span class="w">            </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sigaction</span><span class="w"> </span><span class="p">(</span><span class="n">SIGTRAP</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">new_handler</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span><span class="w"> </span><span class="c1">// Failed</span>
 
-          <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-      <span class="p">}</span>
+<span class="w">          </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
 
-      <span class="k">static</span> <span class="kt">void</span> <span class="n">NullHandler</span><span class="p">(</span><span class="kt">int</span> <span class="cm">/*unused*/</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+<span class="w">      </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">NullHandler</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="cm">/*unused*/</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 
-    <span class="p">};</span>
+<span class="w">    </span><span class="p">};</span><span class="w"></span>
 
-    <span class="c1">// We specify a relatively low priority, to make sure we run before other CTORs</span>
-    <span class="c1">// http://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Attributes.html#C_002b_002b-Attributes</span>
-    <span class="k">static</span> <span class="k">const</span> <span class="n">DebugTrapHandler</span> <span class="n">g_dummyHandler</span> <span class="n">__attribute__</span> <span class="p">((</span><span class="n">init_priority</span> <span class="p">(</span><span class="mi">110</span><span class="p">)));</span>
+<span class="w">    </span><span class="c1">// We specify a relatively low priority, to make sure we run before other CTORs</span>
+<span class="w">    </span><span class="c1">// http://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Attributes.html#C_002b_002b-Attributes</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">DebugTrapHandler</span><span class="w"> </span><span class="n">g_dummyHandler</span><span class="w"> </span><span class="n">__attribute__</span><span class="w"> </span><span class="p">((</span><span class="n">init_priority</span><span class="w"> </span><span class="p">(</span><span class="mi">110</span><span class="p">)));</span><span class="w"></span>
 </code></pre></div>
 <p>On a Windows platform, you would call <code>_set_invalid_parameter_handler</code> (and possibly <code>set_unexpected</code> or <code>set_terminate</code>) to install a new handler.</p>
 <p>Live hosts running production code should always define <code>NDEBUG</code> (i.e., release configuration), which means they do not assert or auto-abort. Auto-abortion is not acceptable behavior, and anyone who asks for the behavior is completely abusing the functionality of "program diagnostics". If a program wants a core dump, then it should create the dump rather than crashing.</p>
@@ -2006,96 +2006,96 @@ override LDFLAGS :<span class="o">=</span> <span class="k">$(</span>MY_LD_FLAGS<
 <p>From the tables above, a lot of warnings have been enabled to help detect possible programming mistakes. The potential mistakes are detected via compiler which carries around a lot of contextual information during its code analysis phase. At times, you will receive spurious warnings because the compiler is not <em>that</em> smart. Its understandable and even a good thing (how would you like to be out of a job because a program writes its own programs?). At times you will have to learn how to work with the compiler's warning system to suppress warnings. Notice what was not said: turn off the warnings.</p>
 <p>Suppressing warnings placates the compiler for spurious noise so you can get to the issues that matter (you are separating the wheat from the chaff). This section will offer some hints and point out some potential minefields. First is an unused parameter (for example, <code>argc</code> or <code>argv</code>). Suppressing unused parameter warnings is especially helpful for C++ and interface programming, where parameters are often unused. For this warning, simply define an "UNUSED" macro and warp the parameter:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">##define UNUSED_PARAMETER(x) ((void)x)</span>
-<span class="err">…</span>
+<span class="err">…</span><span class="w"></span>
 
-<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
-<span class="p">{</span>
-    <span class="n">UNUSED_PARAMETER</span><span class="p">(</span><span class="n">argc</span><span class="p">);</span>
-    <span class="n">UNUSED_PARAMETER</span><span class="p">(</span><span class="n">argv</span><span class="p">);</span>
-    <span class="err">…</span>
-<span class="p">}</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UNUSED_PARAMETER</span><span class="p">(</span><span class="n">argc</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">UNUSED_PARAMETER</span><span class="p">(</span><span class="n">argv</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="err">…</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>A potential minefield lies near "comparing unsigned and signed" values, and <code>-Wconversion</code> will catch it for you. This is because C/C++ promotion rules state the signed value will be promoted to an unsigned value and then compared. That means <code>-1</code> <code>&gt;</code> <code>1</code> after promotion! To fix this, you cannot blindly cast - you must first range test the value:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">GetX</span><span class="p">();</span>
-<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">GetY</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetX</span><span class="p">();</span><span class="w"></span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetY</span><span class="p">();</span><span class="w"></span>
 
-<span class="n">ASSERT</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">);</span>
-<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">))</span>
-    <span class="n">throw</span> <span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? X is negative.&quot;</span><span class="p">);</span>
+<span class="n">ASSERT</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? X is negative.&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="k">if</span><span class="p">(</span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x is greater than y&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-<span class="k">else</span>
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x is not greater than y&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;x is greater than y&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="k">else</span><span class="w"></span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;x is not greater than y&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
 <p>Notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with <code>x</code>. Just run the program and wait for it to tell you there is a problem. If there is a problem, the program will snap the debugger (and more importantly, not call a useless <code>abort()</code> as specified by Posix). It beats the snot out of <code>printf</code> that are removed when no longer needed or pollute outputs.</p>
 <p>Another conversion problem you will encounter conversion between types, and <code>-Wconversion</code> will also catch it for you. The following will always have an opportunity to fail, and should light up like a Christmas tree:</p>
-<div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">sockaddr_in</span> <span class="n">addr</span><span class="p">;</span>
-<span class="err">…</span>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">sockaddr_in</span><span class="w"> </span><span class="n">addr</span><span class="p">;</span><span class="w"></span>
+<span class="err">…</span><span class="w"></span>
 
-<span class="n">addr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]));</span>
+<span class="n">addr</span><span class="p">.</span><span class="n">sin_port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">htons</span><span class="p">(</span><span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]));</span><span class="w"></span>
 </code></pre></div>
 <p>The following would probably serve you much better. Notice <code>atoi</code> and fiends are not used because they can silently fail. In addition, the code is instrumented so you don't need to waste a lot of time debugging potential problems:</p>
-<div class="highlight"><pre><span></span><code><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">cstr</span> <span class="o">=</span> <span class="n">GetPortString</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">cstr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetPortString</span><span class="p">();</span><span class="w"></span>
 
-<span class="n">ASSERT</span><span class="p">(</span><span class="n">cstr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">);</span>
-<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">cstr</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">))</span>
-    <span class="n">throw</span> <span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Port string is not valid.&quot;</span><span class="p">);</span>
+<span class="n">ASSERT</span><span class="p">(</span><span class="n">cstr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">cstr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Port string is not valid.&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">istringstream</span> <span class="nf">iss</span><span class="p">(</span><span class="n">cstr</span><span class="p">);</span>
-<span class="kt">long</span> <span class="kt">long</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">iss</span> <span class="o">&gt;&gt;</span> <span class="n">t</span><span class="p">;</span>
+<span class="n">istringstream</span><span class="w"> </span><span class="nf">iss</span><span class="p">(</span><span class="n">cstr</span><span class="p">);</span><span class="w"></span>
+<span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">iss</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">ASSERT</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">iss</span><span class="p">.</span><span class="n">fail</span><span class="p">()));</span>
-<span class="k">if</span><span class="p">(</span><span class="n">iss</span><span class="p">.</span><span class="n">fail</span><span class="p">())</span>
-    <span class="n">throw</span> <span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Failed to read port.&quot;</span><span class="p">);</span>
+<span class="n">ASSERT</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">iss</span><span class="p">.</span><span class="n">fail</span><span class="p">()));</span><span class="w"></span>
+<span class="k">if</span><span class="p">(</span><span class="n">iss</span><span class="p">.</span><span class="n">fail</span><span class="p">())</span><span class="w"></span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Failed to read port.&quot;</span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Should this be a port above the reserved range ([0-1024] on Unix)?</span>
-<span class="n">ASSERT</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
-<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">))</span>
-    <span class="n">throw</span> <span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Port is too small&quot;</span><span class="p">);</span>
+<span class="n">ASSERT</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Port is too small&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">ASSERT</span><span class="p">(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">long</span> <span class="kt">long</span><span class="o">&gt;</span><span class="p">(</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">()));</span>
-<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">long</span> <span class="kt">long</span><span class="o">&gt;</span><span class="p">(</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">())))</span>
-    <span class="n">throw</span> <span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Port is too large&quot;</span><span class="p">);</span>
+<span class="n">ASSERT</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;</span><span class="p">(</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">()));</span><span class="w"></span>
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="o">&gt;</span><span class="p">(</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">())))</span><span class="w"></span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Port is too large&quot;</span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// OK to use port</span>
-<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port</span> <span class="o">=</span> <span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
-<span class="err">…</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span><span class="p">);</span><span class="w"></span>
+<span class="err">…</span><span class="w"></span>
 </code></pre></div>
 <p>Again, notice the code above will debug itself - you don't need to set a breakpoint to see if there is a problem with <code>port</code>. This code will continue checking conditions, years after being instrumented (assuming to wrote code to read a config file early in the project). There's no need to remove the <code>ASSERT</code>s as with <code>printf</code> since they are silent guardians.</p>
 <p>Another useful suppression trick is too avoid ignoring return values. Not only is it useful to suppress the warning, its required for correct code. For example, <code>snprint</code> will alert you to truncations through its return value. You should not make them silent truncations by ignoring the warning or casting to <code>void</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">char</span> <span class="n">path</span><span class="p">[</span><span class="n">PATH_MAX</span><span class="p">];</span>
-<span class="err">…</span>
+<div class="highlight"><pre><span></span><code><span class="kt">char</span><span class="w"> </span><span class="n">path</span><span class="p">[</span><span class="n">PATH_MAX</span><span class="p">];</span><span class="w"></span>
+<span class="err">…</span><span class="w"></span>
 
-<span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="s">&quot;%s/%s&quot;</span><span class="p">,</span> <span class="n">GetDirectory</span><span class="p">(),</span> <span class="n">GetObjectName</span><span class="p">());</span>
-<span class="n">ASSERT</span><span class="p">(</span><span class="n">ret</span> <span class="o">!=</span> <span class="mi">-1</span><span class="p">);</span>
-<span class="n">ASSERT</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">ret</span> <span class="o">&gt;=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">)));</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">snprintf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;%s/%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">GetDirectory</span><span class="p">(),</span><span class="w"> </span><span class="n">GetObjectName</span><span class="p">());</span><span class="w"></span>
+<span class="n">ASSERT</span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span><span class="w"></span>
+<span class="n">ASSERT</span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">)));</span><span class="w"></span>
 
-<span class="k">if</span><span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="mi">-1</span> <span class="o">||</span> <span class="n">ret</span> <span class="o">&gt;=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
-    <span class="n">throw</span> <span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Unable to build full object name&quot;</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">ret</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">path</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">throw</span><span class="w"> </span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;WTF??? Unable to build full object name&quot;</span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// OK to use path</span>
-<span class="err">…</span>
+<span class="err">…</span><span class="w"></span>
 </code></pre></div>
 <p>The problem is pandemic, and not just boring user land programs. Projects which offer high integrity code, such as SELinux, suffer silent truncations. The following is from an approved SELinux patch even though a comment was made that it suffered silent truncations in its <code>security_compute_create_name</code> function from <code>compute_create.c</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="mi">12</span>  <span class="kt">int</span> <span class="n">security_compute_create_raw</span><span class="p">(</span><span class="n">security_context_t</span> <span class="n">scon</span><span class="p">,</span>
-<span class="mi">13</span>                                  <span class="n">security_context_t</span> <span class="n">tcon</span><span class="p">,</span>
-<span class="mi">14</span>                                  <span class="n">security_class_t</span>   <span class="n">tclass</span><span class="p">,</span>
-<span class="mi">15</span>                                  <span class="n">security_context_t</span> <span class="o">*</span> <span class="n">newcon</span><span class="p">)</span>
-<span class="mi">16</span>  <span class="p">{</span>
-<span class="mi">17</span>    <span class="kt">char</span> <span class="n">path</span><span class="p">[</span><span class="n">PATH_MAX</span><span class="p">];</span>
-<span class="mi">18</span>    <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">;</span>
-<span class="mi">19</span>    <span class="kt">size_t</span> <span class="n">size</span><span class="p">;</span>
-<span class="mi">20</span>    <span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="n">ret</span><span class="p">;</span>
-<span class="mi">21</span>
-<span class="mi">22</span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">selinux_mnt</span><span class="p">)</span> <span class="p">{</span>
-<span class="mi">23</span>      <span class="n">errno</span> <span class="o">=</span> <span class="n">ENOENT</span><span class="p">;</span>
-<span class="mi">24</span>      <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span>
-<span class="mi">25</span>    <span class="p">}</span>
-<span class="mi">26</span>
-<span class="mi">27</span>    <span class="n">snprintf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">path</span><span class="p">,</span> <span class="s">&quot;%s/create&quot;</span><span class="p">,</span> <span class="n">selinux_mnt</span><span class="p">);</span>
-<span class="mi">28</span>    <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">O_RDWR</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="mi">12</span><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">security_compute_create_raw</span><span class="p">(</span><span class="n">security_context_t</span><span class="w"> </span><span class="n">scon</span><span class="p">,</span><span class="w"></span>
+<span class="mi">13</span><span class="w">                                  </span><span class="n">security_context_t</span><span class="w"> </span><span class="n">tcon</span><span class="p">,</span><span class="w"></span>
+<span class="mi">14</span><span class="w">                                  </span><span class="n">security_class_t</span><span class="w">   </span><span class="n">tclass</span><span class="p">,</span><span class="w"></span>
+<span class="mi">15</span><span class="w">                                  </span><span class="n">security_context_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">newcon</span><span class="p">)</span><span class="w"></span>
+<span class="mi">16</span><span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="mi">17</span><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">path</span><span class="p">[</span><span class="n">PATH_MAX</span><span class="p">];</span><span class="w"></span>
+<span class="mi">18</span><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">;</span><span class="w"></span>
+<span class="mi">19</span><span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+<span class="mi">20</span><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span><span class="w"></span>
+<span class="mi">21</span><span class="w"></span>
+<span class="mi">22</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">selinux_mnt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="mi">23</span><span class="w">      </span><span class="n">errno</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ENOENT</span><span class="p">;</span><span class="w"></span>
+<span class="mi">24</span><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="mi">25</span><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="mi">26</span><span class="w"></span>
+<span class="mi">27</span><span class="w">    </span><span class="n">snprintf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;%s/create&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">selinux_mnt</span><span class="p">);</span><span class="w"></span>
+<span class="mi">28</span><span class="w">    </span><span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">O_RDWR</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p>Unlike other examples, the above code will not debug itself, and you will have to set breakpoints and trace calls to determine the point of first failure. (And the code above gambles that the truncated file does not exist or is not under an adversary's control by blindly performing the <code>open</code>).</p>
 <h2 id="runtime">Runtime<a class="headerlink" href="#runtime" title="Permanent link">&para;</a></h2>

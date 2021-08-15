@@ -1905,7 +1905,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li>The application will receive the parameter name for the token to pass to the <em>TargetedApplication</em> via a dedicated input parameter for which it will only allow the characters set <code>[a-z]{1,10}</code>.</li>
 <li>The application will receive the token itself via a dedicated input parameter for which it will only allow the characters set <code>[a-zA-Z0-9]{20}</code>.</li>
 <li>The application will receive and validate (from a security point of view) any business data needed to perform a valid call.</li>
-<li>The application will build the HTTP POST request <strong>using only validated informations</strong> and will send it (<em>don't forget to disable the support for <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">redirection</a> in the web client used</em>).</li>
+<li>The application will build the HTTP POST request <strong>using only validated information</strong> and will send it (<em>don't forget to disable the support for <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">redirection</a> in the web client used</em>).</li>
 </ol>
 <p><strong>Hints for the step 2 regarding the verification on an IP address:</strong></p>
 <p>As mentioned above, not every SDK provide a built-in feature to verify if an IP (V4 + V6) is private/public. So, the following approach can be used based on a block list composed of the private IP ranges (<em>example is given in python in order to be easy to understand and portable to others technologies</em>) :</p>

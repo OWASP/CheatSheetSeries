@@ -2092,17 +2092,17 @@
 </ul>
 <h3 id="libxerces-c">libxerces-c<a class="headerlink" href="#libxerces-c" title="Permanent link">&para;</a></h3>
 <p>Use of <code>XercesDOMParser</code> do this to prevent XXE:</p>
-<div class="highlight"><pre><span></span><code><span class="n">XercesDOMParser</span> <span class="o">*</span><span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">XercesDOMParser</span><span class="p">;</span>
-<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setCreateEntityReferenceNodes</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
-<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setDisableDefaultEntityResolution</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">XercesDOMParser</span><span class="w"> </span><span class="o">*</span><span class="n">parser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XercesDOMParser</span><span class="p">;</span><span class="w"></span>
+<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setCreateEntityReferenceNodes</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setDisableDefaultEntityResolution</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p>Use of SAXParser, do this to prevent XXE:</p>
-<div class="highlight"><pre><span></span><code><span class="n">SAXParser</span><span class="o">*</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SAXParser</span><span class="p">;</span>
-<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setDisableDefaultEntityResolution</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">SAXParser</span><span class="o">*</span><span class="w"> </span><span class="n">parser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXParser</span><span class="p">;</span><span class="w"></span>
+<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setDisableDefaultEntityResolution</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p>Use of SAX2XMLReader, do this to prevent XXE:</p>
-<div class="highlight"><pre><span></span><code><span class="n">SAX2XMLReader</span><span class="o">*</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">XMLReaderFactory</span><span class="o">::</span><span class="n">createXMLReader</span><span class="p">();</span>
-<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setFeature</span><span class="p">(</span><span class="n">XMLUni</span><span class="o">::</span><span class="n">fgXercesDisableDefaultEntityResolution</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">SAX2XMLReader</span><span class="o">*</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMLReaderFactory</span><span class="o">::</span><span class="n">createXMLReader</span><span class="p">();</span><span class="w"></span>
+<span class="n">parser</span><span class="o">-&gt;</span><span class="n">setFeature</span><span class="p">(</span><span class="n">XMLUni</span><span class="o">::</span><span class="n">fgXercesDisableDefaultEntityResolution</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <h2 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h2>
 <p>Java applications using XML libraries are particularly vulnerable to XXE because the default settings for most Java XML parsers is to have XXE enabled. To use these parsers safely, you have to explicitly disable XXE in the parser you use. The following describes how to disable XXE in the most commonly used XML parsers for Java.</p>
@@ -2403,7 +2403,7 @@
 </table>
 <h3 id="linq-to-xml">LINQ to XML<a class="headerlink" href="#linq-to-xml" title="Permanent link">&para;</a></h3>
 <p>Both the <code>XElement</code> and <code>XDocument</code> objects in the <code>System.Xml.Linq</code> library are safe from XXE injection drom external file by default, but not for DoS attack. <code>XElement</code> parses only the elements within the XML file, so DTDs are ignored altogether. <code>XDocument</code> has XmlResolver <a href="https://docs.microsoft.com/en-us/dotnet/standard/linq/linq-xml-security">disabled by default</a>, but DTDs <a href="https://referencesource.microsoft.com/#System.Xml.Linq/System/Xml/Linq/XLinq.cs,71f4626a3d6f9bad">enable by default</a>. so it's safe from SSRF but <strong>not</strong> <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">Billion laughs attack</a>.
-For made safe from beetween attack types follow <a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx">Microsoft on how to prevent XXE and XML Denial of Service in .NET</a></p>
+For made safe from between attack types follow <a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx">Microsoft on how to prevent XXE and XML Denial of Service in .NET</a></p>
 <h3 id="xmldictionaryreader">XmlDictionaryReader<a class="headerlink" href="#xmldictionaryreader" title="Permanent link">&para;</a></h3>
 <p><code>System.Xml.XmlDictionaryReader</code> is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that "CData elements not valid at top level of an XML document". It becomes unsafe if constructed with a different unsafe XML parser.</p>
 <h3 id="xmldocument">XmlDocument<a class="headerlink" href="#xmldocument" title="Permanent link">&para;</a></h3>

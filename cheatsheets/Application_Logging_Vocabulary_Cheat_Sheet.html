@@ -2312,7 +2312,7 @@
                 <h1 id="application-logging-vocabulary-cheat-sheet">Application Logging Vocabulary Cheat Sheet<a class="headerlink" href="#application-logging-vocabulary-cheat-sheet" title="Permanent link">&para;</a></h1>
 <p>This document proposes a standard vocabulary for logging security events. The intent is to simplify monitoring and alerting such that, assuming developers trap errors and log them using this vocabulary, monitoring and alerting would be improved by simply keying on these terms.</p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>Each year IBM Security comissions the Ponemon Institute to survey companies around the world for information related to security breaches, mitigation, and the associated costs; the result is called the Cost of a Data Breach Report.</p>
+<p>Each year IBM Security commissions the Ponemon Institute to survey companies around the world for information related to security breaches, mitigation, and the associated costs; the result is called the Cost of a Data Breach Report.</p>
 <p>In addition to the millions of dollars lost due to breaches the report finds that the <strong>mean time to identify</strong> a breach continues to hover around <strong>200 days</strong>. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.</p>
 <p><img alt="IBM Cost of Data Breach Report 2020" src="../assets/cost-of-breach-2020.png" /></p>
 <blockquote>
@@ -2757,7 +2757,7 @@ WARN</p>
 <h3 id="malicious_corsuseridipuseragentreferer">malicious_cors:[userid|IP,useragent,referer]<a class="headerlink" href="#malicious_corsuseridipuseragentreferer" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 When attempts are made from unauthorized origins they should of course be blocked, but also logged whenever possible. Even if we block an illegal cross-origin request the fact that the request is being made could be an indication of attack.</p>
-<p><em>NOTE: Did you know that the word "referer" is mispelled in the original HTTP specification? The correct spelling should be "referrer" but the original typo persists to this day and is used here intentionally.</em></p>
+<p><em>NOTE: Did you know that the word "referer" is misspelled in the original HTTP specification? The correct spelling should be "referrer" but the original typo persists to this day and is used here intentionally.</em></p>
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
@@ -2766,7 +2766,7 @@ WARN</p>
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;malicious_cors:127.0.0.1,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0,attack.evil.com&quot;,
     &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;An illegal cross-origin request from 127.0.0.1 was refered from attack.evil.com&quot;
+    &quot;description&quot;: &quot;An illegal cross-origin request from 127.0.0.1 was referred from attack.evil.com&quot;
     ...
 }
 </code></pre></div>

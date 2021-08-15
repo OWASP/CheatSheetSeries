@@ -1438,7 +1438,7 @@ EMP-00002
     <span class="k">try</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="na">movies</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="p">{</span>
             <span class="k">try</span> <span class="p">{</span>
-                <span class="c1">//Compute the front end ID fof the current element</span>
+                <span class="c1">//Compute the front end ID for the current element</span>
                 <span class="n">String</span> <span class="n">frontEndId</span> <span class="o">=</span> <span class="n">IDORUtil</span><span class="p">.</span><span class="na">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">());</span>
                 <span class="c1">//Add the computed ID and the associated item name to the result map</span>
                 <span class="n">result</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">frontEndId</span><span class="p">,</span> <span class="n">m</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span>

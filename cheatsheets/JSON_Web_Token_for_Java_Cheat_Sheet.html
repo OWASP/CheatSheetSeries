@@ -1888,7 +1888,7 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <span class="c1">//explicitly the use of the HMAC-256 hashing algorithm</span>
 <span class="n">JWTVerifier</span> <span class="n">verifier</span> <span class="o">=</span> <span class="n">JWT</span><span class="p">.</span><span class="na">require</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">.</span><span class="na">HMAC256</span><span class="p">(</span><span class="n">keyHMAC</span><span class="p">)).</span><span class="na">build</span><span class="p">();</span>
 
-<span class="c1">//Verify the token, if the verification fail then a exception is throwed</span>
+<span class="c1">//Verify the token, if the verification fail then a exception is thrown</span>
 <span class="n">DecodedJWT</span> <span class="n">decodedToken</span> <span class="o">=</span> <span class="n">verifier</span><span class="p">.</span><span class="na">verify</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="token-sidejacking">Token Sidejacking<a class="headerlink" href="#token-sidejacking" title="Permanent link">&para;</a></h3>
@@ -1900,7 +1900,7 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <li>A random string that will be generated during the authentication phase. It will be sent to the client as an hardened cookie (flags: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies">HttpOnly + Secure</a> + <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies">SameSite</a> + <a href="https://googlechrome.github.io/samples/cookie-prefixes/">cookie prefixes</a>).</li>
 <li>A SHA256 hash of the random string will be stored in the token (instead of the raw value) in order to prevent any XSS issues allowing the attacker to read the random string value and setting the expected cookie.</li>
 </ul>
-<p>IP addresses should not be used because there are some legitimate situations in which the IP address can change during the same session. For example, when an user accesses an application through their mobile device and the mobile operator changes during the exchange, then the IP address may (often) change. Moreover, using the IP address can potentially cause issues with <a href="http://www.eugdpr.org/">European GDPR</a> compliancy.</p>
+<p>IP addresses should not be used because there are some legitimate situations in which the IP address can change during the same session. For example, when an user accesses an application through their mobile device and the mobile operator changes during the exchange, then the IP address may (often) change. Moreover, using the IP address can potentially cause issues with <a href="http://www.eugdpr.org/">European GDPR</a> compliance.</p>
 <p>During token validation, if the received token does not contain the right context (for example, if it has been replayed), then it must be rejected.</p>
 <h4 id="implementation-example_1">Implementation example<a class="headerlink" href="#implementation-example_1" title="Permanent link">&para;</a></h4>
 <p>Code to create the token after successful authentication.</p>

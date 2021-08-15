@@ -2028,10 +2028,10 @@ For detailed information on input validation, please refer to <a href="https://c
 <h4 id="perform-application-activity-logging">Perform application activity logging<a class="headerlink" href="#perform-application-activity-logging" title="Permanent link">&para;</a></h4>
 <p>Logging application activity is an encouraged good practice. It makes it easier to debug any errors encountered during application runtime. It is also useful for security concerns, since it can be used during incident response. In addition, these logs can be used to feed Intrusion Detection/Prevention Systems (IDS/IPS). In Node.js, there are modules such as <a href="https://www.npmjs.com/package/winston">Winston</a>, <a href="https://www.npmjs.com/package/bunyan">Bunyan</a>, or <a href="https://www.npmjs.com/package/pino">Pino</a> to perform application activity logging. These modules enable streaming and querying logs, and they provide a way to handle uncaught exceptions.</p>
 <p>With the following code, you can log application activities in both console and a desired log file:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(</span><span class="nx">Winston</span><span class="p">.</span><span class="nx">Logger</span><span class="p">)</span> <span class="p">({</span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">logger</span> <span class="o">=</span> <span class="ow">new</span> <span class="p">(</span><span class="nx">Winston</span><span class="p">.</span><span class="nx">Logger</span><span class="p">)</span> <span class="p">({</span>
     <span class="nx">transports</span><span class="o">:</span> <span class="p">[</span>
-        <span class="k">new</span> <span class="p">(</span><span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">Console</span><span class="p">)(),</span>
-        <span class="k">new</span> <span class="p">(</span><span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">File</span><span class="p">)({</span> <span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;application.log&#39;</span> <span class="p">})</span>
+        <span class="ow">new</span> <span class="p">(</span><span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">Console</span><span class="p">)(),</span>
+        <span class="ow">new</span> <span class="p">(</span><span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">File</span><span class="p">)({</span> <span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;application.log&#39;</span> <span class="p">})</span>
     <span class="p">],</span>
     <span class="nx">level</span><span class="o">:</span> <span class="s1">&#39;verbose&#39;</span>
 <span class="p">});</span>
@@ -2069,8 +2069,8 @@ For detailed information on input validation, please refer to <a href="https://c
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">ExpressBrute</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-brute&#39;</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ExpressBrute</span><span class="p">.</span><span class="nx">MemoryStore</span><span class="p">();</span> <span class="c1">// stores state locally, don&#39;t use this in production</span>
-<span class="kd">const</span> <span class="nx">bruteforce</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ExpressBrute</span><span class="p">(</span><span class="nx">store</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">store</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">ExpressBrute</span><span class="p">.</span><span class="nx">MemoryStore</span><span class="p">();</span> <span class="c1">// stores state locally, don&#39;t use this in production</span>
+<span class="kd">const</span> <span class="nx">bruteforce</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">ExpressBrute</span><span class="p">(</span><span class="nx">store</span><span class="p">);</span>
 
 <span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/auth&#39;</span><span class="p">,</span>
     <span class="nx">bruteforce</span><span class="p">.</span><span class="nx">prevent</span><span class="p">,</span> <span class="c1">// error 429 if we hit this route too often</span>
@@ -2080,7 +2080,7 @@ For detailed information on input validation, please refer to <a href="https://c
 <span class="p">);</span>
 </code></pre></div>
 <p>Apart from <a href="https://libraries.io/npm/express-bouncer">express-bouncer</a> and <a href="https://libraries.io/npm/express-brute">express-brute</a>, the <a href="https://libraries.io/npm/rate-limiter">rate-limiter</a> module can also help to prevent brute-forcing attacks. It enables specifying how many requests a specific IP address can make during a specified time period.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">limiter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RateLimiter</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">limiter</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">RateLimiter</span><span class="p">();</span>
 <span class="nx">limiter</span><span class="p">.</span><span class="nx">addLimit</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="mf">5</span><span class="p">,</span> <span class="mf">500</span><span class="p">);</span> <span class="c1">// login page can be requested 5 times at max within 500 seconds</span>
 </code></pre></div>
 <p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html#captcha">CAPTCHA usage</a> is also another common mechanism used against brute-forcing. There are modules developed for Node.js CAPTCHAs. A common module used in Node.js applications is <a href="https://www.npmjs.com/package/svg-captcha">svg-captcha</a>. It can be used as follows:</p>
@@ -2158,7 +2158,7 @@ For detailed information on input validation, please refer to <a href="https://c
     <span class="c1">//in case of an error</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="kd">const</span> <span class="nx">emitter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">myEventEmitter</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">emitter</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">myEventEmitter</span><span class="p">();</span>
 <span class="nx">emitter</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
     <span class="c1">//Perform necessary error handling here</span>
 <span class="p">});</span>

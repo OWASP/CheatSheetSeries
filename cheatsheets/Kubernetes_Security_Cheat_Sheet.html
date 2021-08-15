@@ -2632,7 +2632,7 @@ To enable RBAC, start the API server with the --authorization-mode flag set to a
 <li>Grant permissions per user, so each user only can see what they are supposed to see</li>
 <li>If you are using network policies, you can block requests to the dashboard even from internal pods (this will not affect the proxy tunnel via kubectl proxy)</li>
 <li>Before version 1.8, the dashboard had a service account with full privileges, so check that there is no role binding for cluster-admin left.</li>
-<li>Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled.  This can be done with either embeded OIDC <code>id_tokens</code> or using Kubernetes Impersonation.  This allows you to use the dashboard with the user's credentials instead of using a privileged <code>ServiceAccount</code>.  This method can be used on both on-prem and managed cloud clusters.</li>
+<li>Deploy the dashboard with an authenticating reverse proxy, with multi-factor authentication enabled.  This can be done with either embedded OIDC <code>id_tokens</code> or using Kubernetes Impersonation.  This allows you to use the dashboard with the user's credentials instead of using a privileged <code>ServiceAccount</code>.  This method can be used on both on-prem and managed cloud clusters.</li>
 </ul>
 <h2 id="kubernetes-security-best-practices-build-phase">Kubernetes Security Best Practices: Build Phase<a class="headerlink" href="#kubernetes-security-best-practices-build-phase" title="Permanent link">&para;</a></h2>
 <p>Securing containers and Kubernetes starts in the build phase with securing your container images. The two main things to do here are to build secure images and to scan those images for any known vulnerabilities.</p>
@@ -2651,7 +2651,7 @@ To enable RBAC, start the API server with the --authorization-mode flag set to a
 <p>Distroless images contains less packages compared to other images, and does not includes shell, which reduce the attack surface.</p>
 <p>For more information on ditroless images, refer to <a href="https://github.com/GoogleContainerTools/distroless">https://github.com/GoogleContainerTools/distroless</a>.</p>
 <h4 id="scratch-image">Scratch image<a class="headerlink" href="#scratch-image" title="Permanent link">&para;</a></h4>
-<p>An empty image, ideal for statically compiled languages like Go. Because the image is empty - the attack surface it truely minimal - only your code!</p>
+<p>An empty image, ideal for statically compiled languages like Go. Because the image is empty - the attack surface it truly minimal - only your code!</p>
 <p>For more information, refer to <a href="https://hub.docker.com/_/scratch">https://hub.docker.com/_/scratch</a></p>
 <h3 id="use-the-latest-imagesensure-images-are-up-to-date">Use the latest images/ensure images are up to date<a class="headerlink" href="#use-the-latest-imagesensure-images-are-up-to-date" title="Permanent link">&para;</a></h3>
 <p>Ensure your images (and any third-party tools you include) are up to date and utilizing the latest versions of their components.</p>
